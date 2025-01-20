@@ -107,8 +107,8 @@ class SeaonRankController extends GetxController {
     }
   }
 
-  void goSeasonRankDialog() {
-    showModalBottomSheet(
+  void goSeasonRankDialog() async {
+    await showModalBottomSheet(
         isScrollControlled: true,
         context: Get.context!,
         // barrierColor: Colors.transparent,
@@ -116,6 +116,7 @@ class SeaonRankController extends GetxController {
         builder: (context) {
           return const SeasonRankDialog();
         });
+    pageviewIndex.value = 0;
   }
 
   void goSeasonRewardDialog() {
@@ -149,7 +150,7 @@ class SeaonRankController extends GetxController {
   onVisibilityChanged(VisibilityInfo visibilityInfo, int index) {
     var visiblePercentage = visibilityInfo.visibleFraction * 100;
     // Check if the item is mostly visible in the viewport and it's the target item.
-    if (index == 9) {
+    if (index == 3) {
       visiblePercentage < 50 ? isShow.value = true : isShow.value = false;
     }
   }

@@ -20,30 +20,33 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return VerticalDragBackWidget(
+        onWidgetOut: () {
+          print('666');
+        },
         child: Container(
-      height: 650.h,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
-      child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 8.5.w, bottom: 17.5.w),
-            width: 44.w,
-            height: 4.w,
-            decoration: BoxDecoration(
-                color: AppColors.c000000.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(2.w)),
+          height: 650.h,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 8.5.w, bottom: 17.5.w),
+                width: 44.w,
+                height: 4.w,
+                decoration: BoxDecoration(
+                    color: AppColors.c000000.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(2.w)),
+              ),
+              _seasonRankHeaderWidget(),
+              5.vGap,
+              const Divider(
+                height: 1,
+                color: AppColors.cD4D4D4,
+              ),
+              Expanded(child: _seasonRankBodyWidget())
+            ],
           ),
-          _seasonRankHeaderWidget(),
-          5.vGap,
-          const Divider(
-            height: 1,
-            color: AppColors.cD4D4D4,
-          ),
-          Expanded(child: _seasonRankBodyWidget())
-        ],
-      ),
-    ));
+        ));
   }
 
   Widget _seasonRankHeaderWidget() {
@@ -182,7 +185,7 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
     return Obx(() {
       // controller.seasonRankList[controller.pageviewIndex.value];
       return Container(
-          color: index == 9 ? AppColors.cFF7954 : Colors.white,
+          color: index == 3 ? AppColors.cFF7954 : Colors.white,
           padding: EdgeInsets.symmetric(vertical: 17.w),
           child: Row(
             children: [

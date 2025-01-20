@@ -14,8 +14,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
 
   @override
   Widget build(BuildContext context) {
-    return VerticalDragBackWidget(
-        child: Container(
+    return Container(
       height: 650.h,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
@@ -47,14 +46,13 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
                     itemCount: controller.cupDefineList.length,
-                    reverse: true,
                     itemBuilder: (context, index) {
                       return _matchLevelItemWidget(index);
                     },
                   )))
         ],
       ),
-    ));
+    );
   }
 
   Widget _matchLevelItemWidget(int index) {
@@ -75,15 +73,15 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                   width: 2.w,
                   child: Column(
                     children: [
-                      if (index == controller.cupDefineList.length - 1)
-                        const Spacer(),
+                      if (index == 0) const Spacer(),
                       Expanded(
                         child: Container(
                             width: 2.w,
                             height: double.infinity,
                             color: AppColors.cB3B3B3),
                       ),
-                      if (index == 0) const Spacer(),
+                      if (index == controller.cupDefineList.length - 1)
+                        const Spacer(),
                     ],
                   ),
                 ),
@@ -121,7 +119,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                     IconWidget(
                         iconWidth: 46.w,
                         icon:
-                            'assets/images/manager/${controller.cupDefineList[index].cupPicId}.png',
+                            'assets/images/manager/${controller.cupDefineList.reversed.toList()[index].cupPicId}.png',
                         fieldPath: Assets.managerUiManagerGameGrade01),
                     16.hGap,
                     Expanded(
@@ -129,7 +127,9 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            controller.cupDefineList[index].backUp,
+                            controller.cupDefineList.reversed
+                                .toList()[index]
+                                .backUp,
                             style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
                           ),
                           Container(
@@ -140,7 +140,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                                   icon: Assets.managerUiManagerIconCurrency04),
                               5.hGap,
                               Text(
-                                ' ${controller.cupDefineList[index].cupNum[1].toInt()}',
+                                ' ${controller.cupDefineList.reversed.toList()[index].cupNum[1].toInt()}',
                                 style:
                                     14.w5(fontFamily: FontFamily.fOswaldMedium),
                               ),

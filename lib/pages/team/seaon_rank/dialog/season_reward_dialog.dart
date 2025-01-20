@@ -19,46 +19,47 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
   @override
   Widget build(BuildContext context) {
     return VerticalDragBackWidget(
-        child: Container(
-      height: 650.h,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
-      child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 8.5.w, bottom: 17.5.w),
-            width: 44.w,
-            height: 4.w,
-            decoration: BoxDecoration(
-                color: AppColors.c000000.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(2.w)),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 16.w),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Season Rewards',
-              style: 19.w5(fontFamily: FontFamily.fOswaldMedium),
+      child: Container(
+        height: 650.h,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 8.5.w, bottom: 17.5.w),
+              width: 44.w,
+              height: 4.w,
+              decoration: BoxDecoration(
+                  color: AppColors.c000000.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(2.w)),
             ),
-          ),
-          10.vGap,
-          const Divider(
-            height: 1,
-            color: AppColors.cD4D4D4,
-          ),
-          Expanded(
-              child: Obx(() => ListView.separated(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    itemCount: controller.cupDefineList.length,
-                    itemBuilder: (context, index) {
-                      return _rewardsItemWidget(index);
-                    },
-                    separatorBuilder: (context, index) =>
-                        const Divider(height: 1, color: AppColors.cD4D4D4),
-                  )))
-        ],
+            Container(
+              padding: EdgeInsets.only(left: 16.w),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Season Rewards',
+                style: 19.w5(fontFamily: FontFamily.fOswaldMedium),
+              ),
+            ),
+            10.vGap,
+            const Divider(
+              height: 1,
+              color: AppColors.cD4D4D4,
+            ),
+            Expanded(
+                child: Obx(() => ListView.separated(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      itemCount: controller.cupDefineList.length,
+                      itemBuilder: (context, index) {
+                        return _rewardsItemWidget(index);
+                      },
+                      separatorBuilder: (context, index) =>
+                          const Divider(height: 1, color: AppColors.cD4D4D4),
+                    )))
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _rewardsItemWidget(int index) {
