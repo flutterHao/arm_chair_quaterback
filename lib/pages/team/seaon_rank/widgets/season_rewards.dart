@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -19,7 +20,7 @@ class SeasonRewardsWidget extends StatefulWidget {
 }
 
 class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
-  SeaonRankController seasonRankCtr = Get.find();
+  SeaonRankController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,6 +50,10 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
   }
 
   Widget _rewardsWidget() {
+    var cupReward = "1_101_300,1_503_2,1_604_5";
+
+    ///赛季奖励数据转list
+    List<String> cupRewardList = cupReward.split(',');
     return Container(
       padding: EdgeInsets.all(13.w),
       decoration: BoxDecoration(
@@ -57,45 +62,34 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'This season reached: Legendary Manager 4',
+            'This season reached: ${controller.getCupDefineItem(controller.teamSimpleEntity.value.cupRankId).backUp}',
             style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
           ),
           10.vGap,
           Row(
             children: [
-              ...List.generate(
-                  3,
-                  (cupIndex) => Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 2.w),
-                        height: 57.w,
-                        child: Column(
-                          children: [
-                            Expanded(
-                                child: cupIndex == 0
-                                    ? IconWidget(
-                                        iconWidth: 41.w,
-                                        iconHeight: 41.w,
-                                        fit: BoxFit.contain,
-                                        icon: Assets.managerUiManagerGift01)
-                                    : cupIndex == 1
-                                        ? IconWidget(
-                                            iconWidth: 40.w,
-                                            iconHeight: 32.w,
-                                            fit: BoxFit.contain,
-                                            icon: Assets.commonUiCommonProp05)
-                                        : IconWidget(
-                                            iconWidth: 34.w,
-                                            iconHeight: 34.w,
-                                            fit: BoxFit.contain,
-                                            icon: Assets
-                                                .commonUiCommonIconCurrency02)),
-                            Text('$cupIndex k',
-                                style: 14
-                                    .w5(fontFamily: FontFamily.fOswaldRegular))
-                          ],
-                        ),
-                      )),
+              ...cupRewardList.map((cupItem) {
+                int propId = int.tryParse(cupItem.split('_')[1]) ?? 0;
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.w),
+                  height: 57.w,
+                  child: Column(
+                    children: [
+                      Expanded(
+                          child: IconWidget(
+                              iconWidth: 41.w,
+                              iconHeight: 41.w,
+                              fit: BoxFit.contain,
+                              fieldPath: Assets.managerUiManagerGift00,
+                              icon: Utils.getPropIconUrl(propId))),
+                      Text(
+                          controller
+                              .formatToK(int.parse(cupItem.split('_')[2])),
+                          style: 14.w5(fontFamily: FontFamily.fOswaldRegular))
+                    ],
+                  ),
+                );
+              }),
               const Spacer(),
               Padding(
                 padding: EdgeInsets.only(top: 7.w),
@@ -127,7 +121,7 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
 
   Widget _detailButton() {
     return MtInkWell(
-      onTap: () => seasonRankCtr.goSeasonRewardDialog(),
+      onTap: () => controller.goSeasonRewardDialog(),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         // mainAxisAlignment: MainAxisAlignment.end,

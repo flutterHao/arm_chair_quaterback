@@ -41,6 +41,7 @@ import 'package:arm_chair_quaterback/pages/team/seaon_rank/binding.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
+import 'package:arm_chair_quaterback/pages/team/team_historty/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/start_upgrade_widget.dart';
@@ -197,6 +198,12 @@ class AppPages {
       name: RouteNames.seaonRankPage,
       page: () => const SeaonRankPage(),
       binding: SeaonRankBinding(),
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.teamHistory,
+      page: () => const TeamHistortyPage(),
+      // binding: TeamHistortBinding(),
     ),
   ];
 }

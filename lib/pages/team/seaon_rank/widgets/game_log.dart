@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -112,6 +113,9 @@ class GameLogWidget extends GetView<SeaonRankController> {
                 ),
                 15.vGap,
                 MtInkWell(
+                  onTap: () {
+                    // Get.toNamed(RouteNames.teamHistory);
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

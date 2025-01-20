@@ -144,9 +144,9 @@ class SeaonRankController extends GetxController {
         });
   }
 
-  int getCupDefineNum(int cupRankId) {
+  CupDefineEntity getCupDefineItem(int cupRankId) {
     var item = cupDefineList.firstWhere((e) => e.cupNumId == cupRankId);
-    return item.cupNum[1];
+    return item;
   }
 
   String getcupUrl(int cardId) {

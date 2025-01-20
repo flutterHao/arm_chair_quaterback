@@ -77,7 +77,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                             icon: Assets.managerUiManagerIconCurrency04),
                         5.hGap,
                         Text(
-                          '${controller.teamSimpleEntity.value.cup}/${controller.getCupDefineNum(controller.teamSimpleEntity.value.cupRankId)}',
+                          '${controller.teamSimpleEntity.value.cup}/${controller.getCupDefineItem(controller.teamSimpleEntity.value.cupRankId).cupNum[1]}',
                           style: 14.w5(fontFamily: FontFamily.fOswaldMedium),
                         ),
                         const Spacer(),
@@ -97,8 +97,10 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                             progressColor: AppColors.c000000,
                             backgroundColor: AppColors.cFFFFFF,
                             progress: controller.teamSimpleEntity.value.cup /
-                                controller.getCupDefineNum(controller
-                                    .teamSimpleEntity.value.cupRankId)),
+                                controller
+                                    .getCupDefineItem(controller
+                                        .teamSimpleEntity.value.cupRankId)
+                                    .cupNum[1]),
                       ),
                       Positioned(
                         top: 0.w,
