@@ -2,7 +2,6 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/controller.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +22,10 @@ class _SeasonTopWidgetState extends State<SeasonTopWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
+    return Container(
+        width: double.infinity,
+        color: AppColors.c1F1F1F,
+        child: SizedBox(
             width: 375.w,
             child: AspectRatio(
               aspectRatio: 375 / 189, // 宽高比
@@ -53,9 +53,7 @@ class _SeasonTopWidgetState extends State<SeasonTopWidget> {
                             color: AppColors.cFFFFFF,
                             fontFamily: FontFamily.fRobotoRegular),
                       ),
-
                       const Spacer(),
-
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -106,9 +104,7 @@ class _SeasonTopWidgetState extends State<SeasonTopWidget> {
                   );
                 }),
               ),
-            )),
-      ],
-    );
+            )));
   }
 
   Widget _seasonTimeWidget(String time, String title) {

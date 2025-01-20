@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -20,35 +21,38 @@ class LegendaryManagerWidget extends StatefulWidget {
 
 class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
   SeaonRankController controller = Get.find();
+  final GlobalKey globalKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(top: 9.w),
-        child: Obx(() => Stack(
-              children: [
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cFFFFFF,
-                      borderRadius: BorderRadius.circular(4.5.w)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'LEGENDARY MANAGER 3',
-                        style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
+        child: RepaintBoundary(
+            key: globalKey,
+            child: Obx(() => Stack(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.w, horizontal: 20.w),
+                      decoration: BoxDecoration(
+                          color: AppColors.cFFFFFF,
+                          borderRadius: BorderRadius.circular(4.5.w)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'LEGENDARY MANAGER 3',
+                            style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
+                          ),
+                          22.vGap,
+                          _processWidget(),
+                          18.vGap,
+                          _contestsWonWidget()
+                        ],
                       ),
-                      22.vGap,
-                      _processWidget(),
-                      18.vGap,
-                      _contestsWonWidget()
-                    ],
-                  ),
-                ),
-                Positioned(right: 10.w, top: 10.w, child: _shareButton())
-              ],
-            )));
+                    ),
+                    Positioned(right: 10.w, top: 10.w, child: _shareButton())
+                  ],
+                ))));
   }
 
   Widget _processWidget() {
@@ -93,7 +97,9 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                             progressColor: AppColors.c000000,
                             backgroundColor: AppColors.cFFFFFF,
                             progress: controller.teamSimpleEntity.value.cup /
-                                controller.teamSimpleEntity.value.maxCup),
+                                (controller.teamSimpleEntity.value.maxCup != 0
+                                    ? controller.teamSimpleEntity.value.maxCup
+                                    : 1)),
                       ),
                       Positioned(
                         top: 0.w,
@@ -179,7 +185,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
   Widget _shareButton() {
     return InkWell(
       onTap: () {
-        print('shark');
+        Utils.generateAndShareImage(globalKey);
       },
       child: Container(
         width: 24.w,

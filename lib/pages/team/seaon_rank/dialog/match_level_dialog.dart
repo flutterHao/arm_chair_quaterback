@@ -1,6 +1,8 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -14,20 +16,14 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VerticalDragBackWidget(
+        child: Container(
       height: 650.h,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 8.5.w, bottom: 17.5.w),
-            width: 44.w,
-            height: 4.w,
-            decoration: BoxDecoration(
-                color: AppColors.c000000.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(2.w)),
-          ),
+          const DialogTopBtn(),
           Container(
             padding: EdgeInsets.only(left: 16.w),
             alignment: Alignment.centerLeft,
@@ -52,7 +48,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                   )))
         ],
       ),
-    );
+    ));
   }
 
   Widget _matchLevelItemWidget(int index) {

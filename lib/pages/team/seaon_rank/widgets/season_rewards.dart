@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -99,7 +100,11 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
               Padding(
                 padding: EdgeInsets.only(top: 7.w),
                 child: MtInkWell(
-                    onTap: () => seasonRankCtr.goSeasonRewardDialog(),
+                    onTap: () {
+                      Get.back();
+                      TeamIndexController teamIndexController = Get.find();
+                      teamIndexController.scroToMatch();
+                    },
                     child: Container(
                       width: 60.w,
                       height: 40.w,
@@ -128,9 +133,7 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
 
   Widget _detailButton() {
     return MtInkWell(
-      onTap: () {
-        seasonRankCtr.goSeasonRewardDialog();
-      },
+      onTap: () => seasonRankCtr.goSeasonRewardDialog(),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         // mainAxisAlignment: MainAxisAlignment.end,
