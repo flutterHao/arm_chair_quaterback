@@ -147,7 +147,11 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
                               controller.onVisibilityChanged(
                                   visibilityInfo, index);
                             },
-                            child: _seasonRankItemWidget(index));
+                            child: _seasonRankItemWidget(
+                                index,
+                                index == 2
+                                    ? AppColors.cFF7954
+                                    : AppColors.c000000));
                       },
                       separatorBuilder: (context, index) =>
                           const Divider(color: AppColors.cD4D4D4, height: 1),
@@ -182,13 +186,15 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
     return Obx(() {
       // controller.seasonRankList[controller.pageviewIndex.value];
       return Container(
-          color: index == 3 ? AppColors.cFF7954 : Colors.white,
+          color: Colors.white,
           padding: EdgeInsets.symmetric(vertical: 17.w),
           child: Row(
             children: [
               Text(
                 '${index + 1}',
-                style: 19.w5(fontFamily: FontFamily.fOswaldMedium),
+                style: 19.w5(
+                  fontFamily: FontFamily.fOswaldMedium,
+                ),
               ),
               20.hGap,
               ClipOval(
