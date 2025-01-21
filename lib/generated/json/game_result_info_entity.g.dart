@@ -16,8 +16,8 @@ GameResultInfoEntity $GameResultInfoEntityFromJson(Map<String, dynamic> json) {
   if (homeTeamResult != null) {
     gameResultInfoEntity.homeTeamResult = homeTeamResult;
   }
-  final GameResultInfoAwayTeamResult? awayTeamResult = jsonConvert.convert<
-      GameResultInfoAwayTeamResult>(json['awayTeamResult']);
+  final GameResultInfoHomeTeamResult? awayTeamResult = jsonConvert.convert<
+      GameResultInfoHomeTeamResult>(json['awayTeamResult']);
   if (awayTeamResult != null) {
     gameResultInfoEntity.awayTeamResult = awayTeamResult;
   }
@@ -76,7 +76,7 @@ extension GameResultInfoEntityExtension on GameResultInfoEntity {
     int? gameId,
     int? gameType,
     GameResultInfoHomeTeamResult? homeTeamResult,
-    GameResultInfoAwayTeamResult? awayTeamResult,
+    GameResultInfoHomeTeamResult? awayTeamResult,
     List<GameResultInfoGameScoreBoard>? gameScoreBoard,
     List<GameResultInfoPlayerResults>? playerResults,
     List<GameResultInfoGameScoreBoardDetail>? gameScoreBoardDetail,

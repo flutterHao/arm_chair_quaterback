@@ -34,7 +34,7 @@ class TeamHistortyPage extends GetView<TeamHistortyController> {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
             child: Column(
               children: [
-                // const HistoryQuarterWidget(),
+                const HistoryQuarterWidget(),
                 const HistoryStatusWidget()
 
                 // GetBuilder<TeamBattleV2Controller>(

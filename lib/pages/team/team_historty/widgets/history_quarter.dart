@@ -25,7 +25,6 @@ class HistoryQuarterWidget extends StatelessWidget {
     var list = ['1st', '2nd', '3rd', '4th'];
     return Container(
       height: 122.w,
-      // margin: EdgeInsets.only(top: hasTopMargin ? 9.w : 0),
       margin: EdgeInsets.only(top: 9.w),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -44,7 +43,6 @@ class HistoryQuarterWidget extends StatelessWidget {
             gridLinesVisibility: GridLinesVisibility.none,
             verticalScrollPhysics: const NeverScrollableScrollPhysics(),
             source: HistoryQuarterGridSource(list),
-            // source: DataGridSource(teamBattleV2Controller, list),
             columns: [
               GridColumn(
                   columnName: 'id',
@@ -101,7 +99,7 @@ class HistoryQuarterWidget extends StatelessWidget {
 }
 
 class HistoryLineOne {
-  final GameResultInfoEntity team;
+  final GameResultInfoHomeTeamResult team;
   final Color color;
 
   HistoryLineOne(this.team, this.color);
@@ -115,34 +113,40 @@ class HistoryQuarterGridSource extends DataGridSource {
   final TeamHistortyController controller = Get.find();
   List<DataGridRow> _buildDataGridRows() {
     List<DataGridRow> result = [];
-    List<DataGridCell<dynamic>> list = getQuarters(true,
-        HistoryLineOne(controller.gameResultInfoEntity, AppColors.c1F8FE5));
-    List<DataGridCell<dynamic>> list2 = getQuarters(false,
-        HistoryLineOne(controller.gameResultInfoEntity, AppColors.cD60D20));
+    List<DataGridCell<dynamic>> list = getQuarters(
+        true,
+        HistoryLineOne(
+            controller.gameResultInfoEntity.homeTeamResult, AppColors.c1F8FE5),
+        controller.gameResultInfoEntity.gameScoreBoard[0]);
+    List<DataGridCell<dynamic>> list2 = getQuarters(
+        false,
+        HistoryLineOne(
+            controller.gameResultInfoEntity.awayTeamResult, AppColors.cD60D20),
+        controller.gameResultInfoEntity.gameScoreBoard[1]);
     result.add(DataGridRow(cells: list));
     result.add(DataGridRow(cells: list2));
     return result;
   }
 
-  List<DataGridCell<dynamic>> getQuarters(bool isHome, HistoryLineOne teamId) {
+  List<DataGridCell<dynamic>> getQuarters(bool isHome, HistoryLineOne teamId,
+      GameResultInfoGameScoreBoard gameScoreBoard) {
     List<DataGridCell<dynamic>> list = [];
     list.add(DataGridCell<HistoryLineOne>(columnName: 'id', value: teamId));
-    var list2 = quarter.map((e) {
-      int value = 0;
-      // if (events.containsKey(e)) {
-      //   var event = events[e]!;
-      //   value =
-      //       isHome ? event.last.quarterHomeScore : event.last.quarterAwayScore;
-      // }
+    var list2 = quarter.mapIndexed((index, e) {
+      var value = 0;
+      if (index == 0) {
+        value = gameScoreBoard.quarter1;
+      } else if (index == 1) {
+        value = gameScoreBoard.quarter2;
+      } else if (index == 2) {
+        value = gameScoreBoard.quarter3;
+      } else if (index == 3) {
+        value = gameScoreBoard.quarter4;
+      }
       return DataGridCell<int>(columnName: '4th', value: value);
     }).toList();
     list.addAll(list2);
-    var value2 = 0;
-    // if (events.isNotEmpty) {
-    //   var key = events.keys.last;
-    //   value2 =
-    //       isHome ? events[key]!.last.homeScore : events[key]!.last.awayScore;
-    // }
+    var value2 = gameScoreBoard.total;
     list.add(DataGridCell<int>(columnName: 'total', value: value2));
     return list;
   }
@@ -170,8 +174,7 @@ class HistoryQuarterGridSource extends DataGridSource {
                     borderRadius: BorderRadius.circular(11.w),
                     border: Border.all(color: teamInfo.color, width: 1.w)),
                 child: ImageWidget(
-                  url:
-                      Utils.getAvaterUrl(teamInfo.team.homeTeamResult.teamLogo),
+                  url: Utils.getAvaterUrl(teamInfo.team.teamLogo),
                   borderRadius: BorderRadius.circular(10.w),
                   imageFailedPath: Assets.teamUiHead03,
                   width: 20.w,
@@ -185,7 +188,7 @@ class HistoryQuarterGridSource extends DataGridSource {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      teamInfo.team.homeTeamResult.teamName,
+                      teamInfo.team.teamName,
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,

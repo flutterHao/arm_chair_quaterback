@@ -8,7 +8,8 @@ class GameResultInfoEntity {
   late int gameId = 0;
   late int gameType = 0;
   late GameResultInfoHomeTeamResult homeTeamResult;
-  late GameResultInfoAwayTeamResult awayTeamResult;
+  // late GameResultInfoAwayTeamResult awayTeamResult;
+  late GameResultInfoHomeTeamResult awayTeamResult;
   late List<GameResultInfoGameScoreBoard> gameScoreBoard = [];
   late List<GameResultInfoPlayerResults> playerResults = [];
   late List<GameResultInfoGameScoreBoardDetail> gameScoreBoardDetail = [];
