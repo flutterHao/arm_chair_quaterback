@@ -1,6 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -81,7 +80,9 @@ class GameLogWidget extends GetView<SeaonRankController> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: NetworkImage(Utils.getAvaterUrl(
-                                gameSchedule.homeTeamLogo))))),
+                                gameSchedule.awayTeamLogo == 0
+                                    ? 2
+                                    : gameSchedule.awayTeamLogo))))),
                 4.vGap,
                 Text(
                   gameSchedule.homeTeamName,
@@ -114,7 +115,7 @@ class GameLogWidget extends GetView<SeaonRankController> {
                 15.vGap,
                 MtInkWell(
                   onTap: () {
-                    Get.toNamed(RouteNames.teamHistory);
+                    controller.goTeamHistory();
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -164,8 +165,11 @@ class GameLogWidget extends GetView<SeaonRankController> {
                         border:
                             Border.all(color: AppColors.cD60D20, width: 1.5.w),
                         image: DecorationImage(
-                            image: NetworkImage(
-                                Utils.getAvaterUrl(gameSchedule.awayTeamLogo))),
+                          image: NetworkImage(Utils.getAvaterUrl(
+                              gameSchedule.awayTeamLogo == 0
+                                  ? 1
+                                  : gameSchedule.awayTeamLogo)),
+                        ),
                         shape: BoxShape.circle)),
                 4.vGap,
                 Text(

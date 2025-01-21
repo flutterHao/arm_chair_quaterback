@@ -8,6 +8,7 @@ import 'dart:convert';
 
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
@@ -197,5 +198,12 @@ class PicksApi {
     List json = await httpUtil
         .post(Api.getGameSchedules, data: {"teamId": teamId, "limit": limit});
     return json.map((e) => GameSchedule.fromJson(e)).toList();
+  }
+
+  static Future<GameResultInfoEntity> getGameResultInfo(int gameId) async {
+    var json =
+        await httpUtil.post(Api.getGameResultInfo, data: {"gameId": gameId});
+    print(666);
+    return GameResultInfoEntity.fromJson(json);
   }
 }

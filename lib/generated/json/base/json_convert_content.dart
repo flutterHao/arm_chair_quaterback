@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/gilr_entity.dart';
@@ -342,6 +343,79 @@ class JsonConvert {
     if (<GameEventEntity>[] is M) {
       return data.map<GameEventEntity>((Map<String, dynamic> e) =>
           GameEventEntity.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoEntity>[] is M) {
+      return data.map<GameResultInfoEntity>((Map<String, dynamic> e) =>
+          GameResultInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoHomeTeamResult>[] is M) {
+      return data.map<GameResultInfoHomeTeamResult>((Map<String, dynamic> e) =>
+          GameResultInfoHomeTeamResult.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoHomeTeamResultTeamPlayers>[] is M) {
+      return data.map<GameResultInfoHomeTeamResultTeamPlayers>((
+          Map<String, dynamic> e) =>
+          GameResultInfoHomeTeamResultTeamPlayers.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoHomeTeamResultTeamPlayersPotential>[] is M) {
+      return data.map<GameResultInfoHomeTeamResultTeamPlayersPotential>((
+          Map<String, dynamic> e) =>
+          GameResultInfoHomeTeamResultTeamPlayersPotential.fromJson(e))
+          .toList() as M;
+    }
+    if (<GameResultInfoHomeTeamResultTeamPlayersUpStarBase>[] is M) {
+      return data.map<GameResultInfoHomeTeamResultTeamPlayersUpStarBase>((
+          Map<String, dynamic> e) =>
+          GameResultInfoHomeTeamResultTeamPlayersUpStarBase.fromJson(e))
+          .toList() as M;
+    }
+    if (<GameResultInfoHomeTeamResultDropAwardData>[] is M) {
+      return data.map<GameResultInfoHomeTeamResultDropAwardData>((
+          Map<String, dynamic> e) =>
+          GameResultInfoHomeTeamResultDropAwardData.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoAwayTeamResult>[] is M) {
+      return data.map<GameResultInfoAwayTeamResult>((Map<String, dynamic> e) =>
+          GameResultInfoAwayTeamResult.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoAwayTeamResultTeamPlayers>[] is M) {
+      return data.map<GameResultInfoAwayTeamResultTeamPlayers>((
+          Map<String, dynamic> e) =>
+          GameResultInfoAwayTeamResultTeamPlayers.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoAwayTeamResultTeamPlayersPotential>[] is M) {
+      return data.map<GameResultInfoAwayTeamResultTeamPlayersPotential>((
+          Map<String, dynamic> e) =>
+          GameResultInfoAwayTeamResultTeamPlayersPotential.fromJson(e))
+          .toList() as M;
+    }
+    if (<GameResultInfoAwayTeamResultTeamPlayersUpStarBase>[] is M) {
+      return data.map<GameResultInfoAwayTeamResultTeamPlayersUpStarBase>((
+          Map<String, dynamic> e) =>
+          GameResultInfoAwayTeamResultTeamPlayersUpStarBase.fromJson(e))
+          .toList() as M;
+    }
+    if (<GameResultInfoAwayTeamResultDropAwardData>[] is M) {
+      return data.map<GameResultInfoAwayTeamResultDropAwardData>((
+          Map<String, dynamic> e) =>
+          GameResultInfoAwayTeamResultDropAwardData.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoGameScoreBoard>[] is M) {
+      return data.map<GameResultInfoGameScoreBoard>((Map<String, dynamic> e) =>
+          GameResultInfoGameScoreBoard.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoPlayerResults>[] is M) {
+      return data.map<GameResultInfoPlayerResults>((Map<String, dynamic> e) =>
+          GameResultInfoPlayerResults.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoGameScoreBoardDetail>[] is M) {
+      return data.map<GameResultInfoGameScoreBoardDetail>((
+          Map<String, dynamic> e) =>
+          GameResultInfoGameScoreBoardDetail.fromJson(e)).toList() as M;
+    }
+    if (<GameResultInfoGsGameSchedule>[] is M) {
+      return data.map<GameResultInfoGsGameSchedule>((Map<String, dynamic> e) =>
+          GameResultInfoGsGameSchedule.fromJson(e)).toList() as M;
     }
     if (<GameSchedulesEntity>[] is M) {
       return data.map<GameSchedulesEntity>((Map<String, dynamic> e) =>
@@ -1141,6 +1215,35 @@ class JsonConvertClassCollection {
     (DailyTaskWheelEntity).toString(): DailyTaskWheelEntity.fromJson,
     (DanMaKuEntity).toString(): DanMaKuEntity.fromJson,
     (GameEventEntity).toString(): GameEventEntity.fromJson,
+    (GameResultInfoEntity).toString(): GameResultInfoEntity.fromJson,
+    (GameResultInfoHomeTeamResult).toString(): GameResultInfoHomeTeamResult
+        .fromJson,
+    (GameResultInfoHomeTeamResultTeamPlayers)
+        .toString(): GameResultInfoHomeTeamResultTeamPlayers.fromJson,
+    (GameResultInfoHomeTeamResultTeamPlayersPotential)
+        .toString(): GameResultInfoHomeTeamResultTeamPlayersPotential.fromJson,
+    (GameResultInfoHomeTeamResultTeamPlayersUpStarBase)
+        .toString(): GameResultInfoHomeTeamResultTeamPlayersUpStarBase.fromJson,
+    (GameResultInfoHomeTeamResultDropAwardData)
+        .toString(): GameResultInfoHomeTeamResultDropAwardData.fromJson,
+    (GameResultInfoAwayTeamResult).toString(): GameResultInfoAwayTeamResult
+        .fromJson,
+    (GameResultInfoAwayTeamResultTeamPlayers)
+        .toString(): GameResultInfoAwayTeamResultTeamPlayers.fromJson,
+    (GameResultInfoAwayTeamResultTeamPlayersPotential)
+        .toString(): GameResultInfoAwayTeamResultTeamPlayersPotential.fromJson,
+    (GameResultInfoAwayTeamResultTeamPlayersUpStarBase)
+        .toString(): GameResultInfoAwayTeamResultTeamPlayersUpStarBase.fromJson,
+    (GameResultInfoAwayTeamResultDropAwardData)
+        .toString(): GameResultInfoAwayTeamResultDropAwardData.fromJson,
+    (GameResultInfoGameScoreBoard).toString(): GameResultInfoGameScoreBoard
+        .fromJson,
+    (GameResultInfoPlayerResults).toString(): GameResultInfoPlayerResults
+        .fromJson,
+    (GameResultInfoGameScoreBoardDetail)
+        .toString(): GameResultInfoGameScoreBoardDetail.fromJson,
+    (GameResultInfoGsGameSchedule).toString(): GameResultInfoGsGameSchedule
+        .fromJson,
     (GameSchedulesEntity).toString(): GameSchedulesEntity.fromJson,
     (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
     (GirlEntity).toString(): GirlEntity.fromJson,

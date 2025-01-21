@@ -17,6 +17,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 class SeasonRankDialog extends GetView<SeaonRankController> {
   const SeasonRankDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -35,7 +36,14 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
             height: 1,
             color: AppColors.cD4D4D4,
           ),
-          Expanded(child: _seasonRankBodyWidget())
+          Expanded(
+              key: controller.ranksBodyGlobalKey,
+              child: PageView.builder(
+                  itemCount: controller.seasonRankList.length,
+                  controller: controller.seaDialogPageController,
+                  itemBuilder: (context, pageIndex) {
+                    return SeasonRankItemView(pageIndex);
+                  }))
         ],
       ),
     ));
@@ -121,60 +129,138 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
           )),
     );
   }
+}
 
-  Widget _seasonRankBodyWidget() {
-    return PageView.builder(
-        itemCount: controller.seasonRankList.length,
-        controller: controller.seaDialogPageController,
-        itemBuilder: (context, pageIndex) {
-          return Obx(() => Stack(
-                children: [
-                  Container(
-                    child: ListView.separated(
-                      // controller: scrollController,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      itemCount: 20,
-                      itemBuilder: (context, index) {
-                        return VisibilityDetector(
-                            key: Key('item_$index'),
-                            onVisibilityChanged:
-                                (VisibilityInfo visibilityInfo) {
-                              controller.onVisibilityChanged(
-                                  visibilityInfo, index);
-                            },
-                            child: _seasonRankItemWidget(
-                                index,
-                                index == 2
-                                    ? AppColors.cFF7954
-                                    : AppColors.c000000));
-                      },
-                      separatorBuilder: (context, index) =>
-                          const Divider(color: AppColors.cD4D4D4, height: 1),
-                    ),
-                  ),
-                  AnimatedPositioned(
-                      duration: const Duration(milliseconds: 300),
-                      bottom: controller.isShow.value ? 0 : -100,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 2.w),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.cDEDEDE,
-                                blurRadius: 10,
-                              )
-                            ]),
-                        child: _seasonRankItemWidget(
-                            controller.seasonRankList.length - 1,
-                            AppColors.cFF7954),
-                      ))
-                ],
-              ));
-        });
+class SeasonRankItemView extends StatefulWidget {
+  const SeasonRankItemView(this.pageIndex, {super.key});
+  final int pageIndex;
+  @override
+  State<SeasonRankItemView> createState() => _SeasonRankItemViewState();
+}
+
+class _SeasonRankItemViewState extends State<SeasonRankItemView> {
+  ScrollController scrollController = ScrollController();
+  SeaonRankController controller = Get.find();
+  double rankItemHeight = .0;
+  double rankBodyHeight = .0;
+  final GlobalKey _globalKey = GlobalKey();
+  RxBool isShowBottom = false.obs;
+  RxBool isShowTop = false.obs;
+  var activeIndex = 10;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+  }
+
+  void _afterLayout(_) {
+    final RenderBox ranksBodyRenderBox =
+        controller.ranksBodyGlobalKey.currentContext!.findRenderObject()
+            as RenderBox;
+    rankBodyHeight = ranksBodyRenderBox.size.height;
+    final RenderBox renderBox =
+        _globalKey.currentContext!.findRenderObject() as RenderBox;
+    rankItemHeight = renderBox.size.height;
+    isShowBottom.value = activeIndex * rankItemHeight > rankBodyHeight;
+
+    scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    var rankItemTop = activeIndex * rankItemHeight;
+    if (scrollController.position.extentBefore +
+                rankBodyHeight -
+                rankItemHeight >
+            rankItemTop &&
+        scrollController.position.extentBefore < rankItemTop) {
+      isShowBottom.value = false;
+      isShowTop.value = false;
+    } else if (scrollController.position.extentBefore +
+            rankBodyHeight -
+            rankItemHeight <
+        rankItemTop) {
+      isShowBottom.value = true;
+    } else {
+      isShowTop.value = true;
+    }
+  }
+
+  @override
+  void dispose() {
+    // 移除监听器并释放控制器资源
+    scrollController.removeListener(_scrollListener);
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Stack(
+          children: [
+            Container(
+              child: ListView.separated(
+                controller: scrollController,
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return Container(
+                    key: index == 0 ? _globalKey : null,
+                    child: _seasonRankItemWidget(
+                        index,
+                        index == activeIndex
+                            ? AppColors.cFF7954
+                            : AppColors.c000000),
+                  );
+                },
+                separatorBuilder: (context, index) =>
+                    const Divider(color: AppColors.cD4D4D4, height: 1),
+              ),
+            ),
+            Positioned(
+                // duration: const Duration(milliseconds: 300),
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Visibility(
+                    visible: isShowBottom.value,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.w),
+                      decoration:
+                          const BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(
+                          color: AppColors.cDEDEDE,
+                          blurRadius: 10,
+                        )
+                      ]),
+                      child: _seasonRankItemWidget(
+                          controller.seasonRankList.length - 1,
+                          AppColors.cFF7954),
+                    ))),
+            Positioned(
+                // duration: const Duration(milliseconds: 300),
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Visibility(
+                    visible: isShowTop.value,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.w),
+                      decoration:
+                          const BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(
+                          color: AppColors.cDEDEDE,
+                          blurRadius: 10,
+                        )
+                      ]),
+                      child: _seasonRankItemWidget(
+                          controller.seasonRankList.length - 1,
+                          AppColors.cFF7954),
+                    )))
+          ],
+        ));
   }
 
   Widget _seasonRankItemWidget(int index, [Color color = AppColors.c000000]) {

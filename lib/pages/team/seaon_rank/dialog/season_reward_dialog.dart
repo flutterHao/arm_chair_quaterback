@@ -67,7 +67,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
 
     ///赛季奖励数据转list
     List<String> cupRewardList =
-        controller.cupDefineList[index].cupReward.split(',');
+        controller.cupDefineList[index].cupReward.split('|');
     Widget cupRewardWidget = Container(
       padding: EdgeInsets.all(13.w),
       child: Column(

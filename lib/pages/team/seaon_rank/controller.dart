@@ -5,10 +5,13 @@ import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/match_level_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_rank_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_reward_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -33,6 +36,7 @@ class SeaonRankController extends GetxController {
   late Rx<TeamSimpleEntity> teamSimpleEntity;
   RxBool isShow = true.obs;
   RxList<GameSchedule> gameScheduleList = RxList();
+  GlobalKey ranksBodyGlobalKey = GlobalKey();
   RxList<List> seasonRankList = [
     ['1'],
     ['a'],
@@ -155,11 +159,17 @@ class SeaonRankController extends GetxController {
   }
 
   ///监听元素是否可见
-  onVisibilityChanged(VisibilityInfo visibilityInfo, int index) {
+  void onVisibilityChanged(VisibilityInfo visibilityInfo, int index) {
     var visiblePercentage = visibilityInfo.visibleFraction * 100;
     // Check if the item is mostly visible in the viewport and it's the target item.
     if (index == 3) {
       visiblePercentage < 50 ? isShow.value = true : isShow.value = false;
     }
+  }
+
+  void goTeamHistory() async {
+    // Get.put(TeamBattleController(Get.context!));
+    // Get.put(TeamBattleV2Controller(Get.context!));
+    Get.toNamed(RouteNames.teamHistory);
   }
 }
