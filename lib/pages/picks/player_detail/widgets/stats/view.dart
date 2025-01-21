@@ -222,10 +222,12 @@ class _StatsPageState extends State<StatsPage>
                                                     )),
                                                 GridColumn(
                                                     columnName: "value",
-                                                    width: 180.w,
+                                                    columnWidthMode:
+                                                    ColumnWidthMode.fill,
                                                     label: Container(
                                                       alignment:
                                                           Alignment.center,
+                                                      padding: EdgeInsets.only(left: 16.w),
                                                       decoration: const BoxDecoration(
                                                           border: Border(
                                                               bottom: BorderSide(
@@ -243,13 +245,11 @@ class _StatsPageState extends State<StatsPage>
                                                     )),
                                                 GridColumn(
                                                     columnName: "gp",
-                                                    columnWidthMode:
-                                                        ColumnWidthMode.fill,
                                                     label: Container(
                                                       alignment:
-                                                          Alignment.centerLeft,
+                                                          Alignment.center,
                                                       padding: EdgeInsets.only(
-                                                          right: 16.w),
+                                                          right: 45.w,left: 16.w),
                                                       decoration: const BoxDecoration(
                                                           border: Border(
                                                               bottom: BorderSide(
@@ -335,10 +335,12 @@ class _StatsPageState extends State<StatsPage>
                                                     )),
                                                 GridColumn(
                                                     columnName: "value",
-                                                    width: 180.w,
+                                                    columnWidthMode:
+                                                    ColumnWidthMode.fill,
                                                     label: Container(
                                                       alignment:
                                                       Alignment.center,
+                                                      padding: EdgeInsets.only(left: 16.w),
                                                       decoration: const BoxDecoration(
                                                           border: Border(
                                                               bottom: BorderSide(
@@ -356,13 +358,11 @@ class _StatsPageState extends State<StatsPage>
                                                     )),
                                                 GridColumn(
                                                     columnName: "gp",
-                                                    columnWidthMode:
-                                                    ColumnWidthMode.fill,
                                                     label: Container(
                                                       alignment:
-                                                      Alignment.centerLeft,
+                                                      Alignment.center,
                                                       padding: EdgeInsets.only(
-                                                          right: 16.w),
+                                                          right: 45.w,left: 16.w),
                                                       decoration: const BoxDecoration(
                                                           border: Border(
                                                               bottom: BorderSide(

@@ -1,7 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/stats/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,6 +57,7 @@ class PerGameDatasource extends DataGridSource {
       }else if (e.columnName == "value") {
         return Container(
             alignment: Alignment.center,
+            padding: EdgeInsets.only(left: 16.w),
             decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: AppColors.cE6E6E6, width: 1),
@@ -71,18 +71,22 @@ class PerGameDatasource extends DataGridSource {
             ));
       }else{
         return Container(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: AppColors.cE6E6E6, width: 1),
                 )),
             margin: EdgeInsets.only(right: 16.w),
-            child: Text(
-              "${e.value}",
-              style: 12.w4(
-                  color: AppColors.c000000,
-                  height: 1,
-                  fontFamily: FontFamily.fRobotoRegular),
+            child: Container(
+              padding: EdgeInsets.only(
+                right: 29.w,left: 16.w),
+              child: Text(
+                "${e.value}",
+                style: 12.w4(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular),
+              ),
             ));
       }
     }).toList();
