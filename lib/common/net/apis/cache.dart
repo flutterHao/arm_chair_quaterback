@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.da
 import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/config/wheel_random_reward_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
@@ -75,6 +76,7 @@ class CacheApi {
   static List<PlayerCollectCollects> playerBookRuleList = [];
   static List<MissionDefineEntity> missionDefineList = [];
   static List<GameConstantEntity> gameConstantList = [];
+  static List<WheelRandomRewardEntity> wheelRandomRewardList = [];
 
   static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
   static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
@@ -381,5 +383,15 @@ class CacheApi {
     List list = await HttpUtil().post(Api.cGameConstant);
     return gameConstantList =
         list.map((item) => GameConstantEntity.fromJson(item)).toList();
+  }
+
+  /// 转盘随机奖励配置表
+  static Future<List<WheelRandomRewardEntity>> getWheelRandomReward() async {
+    if (wheelRandomRewardList.isNotEmpty) {
+      return wheelRandomRewardList;
+    }
+    List list = await HttpUtil().post(Api.cWheelRandomReward);
+    return wheelRandomRewardList =
+        list.map((item) => WheelRandomRewardEntity.fromJson(item)).toList();
   }
 }

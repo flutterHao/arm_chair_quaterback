@@ -124,6 +124,7 @@ class Api {
   static const String cWheelRewardType =
       "$CONFIG_BASE_PATH/WheelRewardType.json";
   static const String cMissionDefine = "$CONFIG_BASE_PATH/MissionDefine.json";
+  static const String cWheelRandomReward = "$CONFIG_BASE_PATH/WheelRandomReward.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -192,6 +193,7 @@ class Api {
   static const String turntable = "$API_BASE_PATH/turntable/turntable";
   static const String reLife = "$API_BASE_PATH/turntable/reLife";
   static const String claimRewards = "$API_BASE_PATH/turntable/claimRewards";
+  static const String giveUp = "$API_BASE_PATH/turntable/giveUp";
 
   ///mission
   static const String getTeamMissionList =

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
+import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,7 @@ class WheelWidget extends StatefulWidget {
 }
 
 class _WheelWidgetState extends State<WheelWidget>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   /// 总数
   int size = 0;
 
@@ -45,9 +46,11 @@ class _WheelWidgetState extends State<WheelWidget>
   List<int> cornerItemIndexList = [];
 
   late EasyAnimationController animationController;
+  late EasyAnimationController scaleController;
 
   var isAnimatingStatus = false.obs;
   var isAnimateEnd = false.obs;
+  var active = false;
 
   @override
   void initState() {
@@ -59,6 +62,12 @@ class _WheelWidgetState extends State<WheelWidget>
         end: size * 4,
         duration: const Duration(milliseconds: 300 * 4),
         curve: Curves.easeOut);
+    scaleController = EasyAnimationController(
+        vsync: this,
+        begin: 0,
+        end: 1.3,
+        duration: const Duration(milliseconds: 1500),
+        curve: Curves.elasticOut);
     cornerItemIndexList = [
       0,
       widget.rowCount - 1,
@@ -67,32 +76,44 @@ class _WheelWidgetState extends State<WheelWidget>
     ];
     if (widget.controller != null) {
       widget.controller!._startWheel = startWheel;
+      widget.controller!._setActive = setActive;
     }
   }
 
   @override
   void dispose() {
     animationController.dispose();
+    scaleController.dispose();
     super.dispose();
   }
 
+  setActive(bool activeStatus) {
+    active = activeStatus;
+    scaleController.stop();
+  }
 
-  startWheel(Function? onEnd,int? index) {
+  startWheel(Function? onEnd, int? index) {
     if (animationController.controller.isAnimating) {
       return;
     }
     Random random = Random();
-    var nextInt = random.nextInt(3)+4;
-    animationController.set(0, size * nextInt + (index??0),
+    var nextInt = random.nextInt(3) + 4;
+    var end = size * nextInt + (index ?? 0);
+    print('wheel--index--end--:$index--$end');
+    animationController.set(0, end,
         curve: Curves.easeOut, duration: const Duration(milliseconds: 800 * 6));
     isAnimatingStatus.value = true;
     isAnimateEnd.value = false;
+    widget.controller?._isAnimating = true;
     animationController.forward(from: 0).then((_) {
+      widget.controller?._isAnimating = false;
+
       /// 动画结束 开启其他动画
       Future.delayed(const Duration(milliseconds: 300), () {
         onEnd?.call();
         isAnimatingStatus.value = false;
         isAnimateEnd.value = true;
+        scaleController.repeat();
       });
     });
   }
@@ -157,35 +178,40 @@ class _WheelWidgetState extends State<WheelWidget>
             left: left,
             top: top,
             child: Obx(() {
-              //todo 选中状态
               int value = (animationController.value.value % size).toInt();
               var isFirst = (index == value && isAnimatingStatus.value);
               var isSecond = (index == value - 1 && isAnimatingStatus.value);
               var isThird = (index == value - 2 && isAnimatingStatus.value);
               var isFour = (index == value - 3 && isAnimatingStatus.value);
+              num scale = 1;
               Color bgColor, borderColor, shadowColor;
               if (isFirst) {
                 bgColor = AppColors.cFFFFFF;
                 borderColor = AppColors.cFF7954;
                 shadowColor = AppColors.cFF7954;
+                scale = 1.3;
               } else if (isSecond) {
                 bgColor = AppColors.cFFFFFF.withOpacity(0.8);
                 borderColor = AppColors.cFF7954.withOpacity(0.8);
                 shadowColor = AppColors.cFF7954.withOpacity(0.8);
+                scale = 1.2;
               } else if (isThird) {
                 bgColor = AppColors.cFFFFFF.withOpacity(0.6);
                 borderColor = AppColors.cFF7954.withOpacity(0.6);
                 shadowColor = AppColors.cFF7954.withOpacity(0.6);
+                scale = 1.1;
               } else if (isFour) {
                 bgColor = AppColors.cFFFFFF.withOpacity(0.4);
                 borderColor = AppColors.cFF7954.withOpacity(0.4);
                 shadowColor = AppColors.cFF7954.withOpacity(0.4);
-              } else if (index == value && isAnimateEnd.value) {
+              } else if (index == value &&
+                  isAnimateEnd.value &&
+                  (widget.controller?._active ?? false)) {
                 bgColor = AppColors.cFF7954;
                 borderColor = AppColors.cFF7954;
                 shadowColor = AppColors.cTransparent;
               } else {
-                if (widget.controller?._active??false) {
+                if (widget.controller?._active ?? false) {
                   bgColor = AppColors.c666666;
                   borderColor = AppColors.ccccccc;
                   shadowColor = AppColors.c666666;
@@ -225,7 +251,22 @@ class _WheelWidgetState extends State<WheelWidget>
                         width: isFirst || isSecond || isThird ? 2.w : 1.w,
                       ),
                     ),
-                    child: widget.builder(index),
+                    child: Opacity(
+                        opacity: widget.controller?._active ?? false ? 1 : 0.7,
+                        child: Obx(() {
+                          var temp = scaleController.value.value;
+                          if (index == value &&
+                              isAnimateEnd.value &&
+                              (widget.controller?._active ?? false) &&
+                              !Get.find<DailyTaskController>()
+                                  .showRandomReward
+                                  .value) {
+                            scale = temp;
+                          }
+                          return Transform.scale(
+                              scale: scale.toDouble(),
+                              child: widget.builder(index));
+                        })),
                   ),
                 ],
               );
@@ -236,11 +277,19 @@ class _WheelWidgetState extends State<WheelWidget>
 }
 
 class WheelController {
-  Function(Function? onEnd,int? index)? _startWheel;
+  Function(Function? onEnd, int? index)? _startWheel;
+  Function(bool active)? _setActive;
   bool _active = false;
+  int _index = 0;
+  bool _isAnimating = false;
 
-  start({Function? onEnd,int? index}) {
-    return _startWheel?.call(onEnd,index);
+  bool get isAnimating => _isAnimating;
+
+  int get index => _index;
+
+  start({Function? onEnd, int? index}) {
+    _index = index ?? 0;
+    return _startWheel?.call(onEnd, index);
   }
 
   active(bool active) {

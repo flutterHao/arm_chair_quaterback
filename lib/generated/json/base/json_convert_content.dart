@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.da
 import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/config/wheel_random_reward_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
@@ -327,6 +328,10 @@ class JsonConvert {
     if (<PropDefineEntity>[] is M) {
       return data.map<PropDefineEntity>((Map<String, dynamic> e) =>
           PropDefineEntity.fromJson(e)).toList() as M;
+    }
+    if (<WheelRandomRewardEntity>[] is M) {
+      return data.map<WheelRandomRewardEntity>((Map<String, dynamic> e) =>
+          WheelRandomRewardEntity.fromJson(e)).toList() as M;
     }
     if (<CupDefineEntity>[] is M) {
       return data.map<CupDefineEntity>((Map<String, dynamic> e) =>
@@ -1211,6 +1216,7 @@ class JsonConvertClassCollection {
     (CardPackDefineEntity).toString(): CardPackDefineEntity.fromJson,
     (GameConstantEntity).toString(): GameConstantEntity.fromJson,
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
+    (WheelRandomRewardEntity).toString(): WheelRandomRewardEntity.fromJson,
     (CupDefineEntity).toString(): CupDefineEntity.fromJson,
     (DailyTaskWheelEntity).toString(): DailyTaskWheelEntity.fromJson,
     (DanMaKuEntity).toString(): DanMaKuEntity.fromJson,

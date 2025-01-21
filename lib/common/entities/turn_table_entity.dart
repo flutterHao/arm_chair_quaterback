@@ -25,6 +25,9 @@ class TurnTableEntity {
   /// 比赛比分
   String? matchScore ;
 
+  /// 随机奖励中奖id（抽中问号后要展示的中奖id）
+  int unKnowRewardId = 0;
+
   TurnTableEntity();
 
   factory TurnTableEntity.fromJson(Map<String, dynamic> json) =>

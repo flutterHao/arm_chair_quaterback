@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
@@ -12,15 +13,20 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/success_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/wheel_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -28,14 +34,16 @@ class DailyTaskController extends GetxController
     with GetSingleTickerProviderStateMixin {
   DailyTaskController();
 
-  late WheelController wheelController;
+  WheelController outerWheelController = WheelController();
+  WheelController innerTopWheelController = WheelController();
+  WheelController innerBottomWheelController = WheelController();
 
   var scrollController = ScrollController();
-  PageController? pageController;
+  PageController? btnPageController;
 
   PageController? centerPageController;
   PageController girlPageController =
-      PageController(initialPage: 1, viewportFraction: 0.75);
+      PageController(initialPage: 1, viewportFraction: 0.65);
 
   var loadStatus = LoadDataStatus.loading.obs;
   late TurnTableEntity turnTableEntity;
@@ -45,18 +53,23 @@ class DailyTaskController extends GetxController
 
   Timer? _dailyTimer;
   var dailyCountDown = 0.obs;
+  var leftScore = 0.obs;
+  var rightScore = 0.obs;
+  var showRandomReward = false.obs;
+
+  /// spin按钮是否可点击
+  var isSpinBtnEnable = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    wheelController = WheelController();
     initData();
   }
 
   @override
   void dispose() {
     scrollController.dispose();
-    pageController?.dispose();
+    btnPageController?.dispose();
     centerPageController?.dispose();
     girlPageController.dispose();
     _dailyTimer?.cancel();
@@ -99,17 +112,25 @@ class DailyTaskController extends GetxController
       MineApi.getTeamMissionList(3),
       CacheApi.getMissionDefine(),
       CacheApi.getGameConstant(),
+      CacheApi.getWheelRandomReward(),
     ]).then((result) {
       turnTableEntity = result[3] as TurnTableEntity;
+      if (turnTableEntity.currentLife == 0) {
+        showReLifeDialog();
+      }
       if (turnTableEntity.circle == 1) {
-        wheelController.active(true);
+        outerWheelController.active(true);
+      } else if (turnTableEntity.circle == 2) {
+        innerTopWheelController.active(true);
+      } else if (turnTableEntity.circle == 3) {
+        innerBottomWheelController.active(true);
       }
       int initialPage = 0;
-      if (turnTableEntity.isStart != 0 && pageController == null) {
+      if (turnTableEntity.isStart != 0 && btnPageController == null) {
         initialPage = 1;
       }
       centerPageController = PageController(initialPage: initialPage);
-      pageController = PageController(initialPage: initialPage);
+      btnPageController = PageController(initialPage: initialPage);
       var wml = result[5] as List<TeamMissionEntity>;
       wml.sort((a, b) => a.missionDefineId.compareTo(b.missionDefineId));
       weekMissionList = wml.map((e) {
@@ -131,17 +152,212 @@ class DailyTaskController extends GetxController
   Future reLife() {
     return MineApi.reLife().then((result) {
       turnTableEntity = result;
+      outerWheelController.active(false);
+      innerTopWheelController.active(false);
+      innerBottomWheelController.active(false);
+      if (turnTableEntity.circle == 1) {
+        outerWheelController.active(true);
+      } else if (turnTableEntity.circle == 2) {
+        innerTopWheelController.active(true);
+      } else if (turnTableEntity.circle == 3) {
+        innerBottomWheelController.active(true);
+      }
       Get.find<HomeController>().refreshMoneyCoinWidget();
       update([idSlotPan]);
+    }, onError: (e) {
+      // ErrorUtils.toast(e);
+    });
+  }
+
+  Future giveUp() {
+    return MineApi.giveUp().then((result) {
+      Get.back();
     }, onError: (e) {
       ErrorUtils.toast(e);
     });
   }
 
+  Future showReLifeDialog() {
+    return BottomTipDialog.show(
+        context: Get.context!,
+        height: 384.w,
+        btnDirection: Axis.horizontal,
+        icon: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconWidget(
+                iconWidth: 41.w, icon: Assets.managerUiManagerIconWheelHurt),
+            13.hGap,
+            IconWidget(
+                iconWidth: 41.w, icon: Assets.managerUiManagerIconWheelHurt),
+            13.hGap,
+            IconWidget(
+                iconWidth: 41.w, icon: Assets.managerUiManagerIconWheelHurt),
+          ],
+        ),
+        title: "YOU’RE OUT",
+        desc:
+            "If you give up now,you’ll lose everything!Continue playing to keep your rewards and win some mor.",
+        centerWidget: SizedBox(
+          height: 97.w,
+          child: Stack(
+            children: [
+              Positioned(
+                  right: 51.w,
+                  bottom: 9.w,
+                  child: Row(
+                    children: [
+                      Text(
+                        "COST:",
+                        style: 16.w5(
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldMedium,
+                        ),
+                      ),
+                      12.hGap,
+                      IconWidget(
+                          iconWidth: 24.w,
+                          icon: getImageByAward(getReLifeCost())),
+                      3.hGap,
+                      Text(
+                        getPropNum(getReLifeCost()),
+                        style: 16.w5(
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldMedium,
+                        ),
+                      ),
+                    ],
+                  ))
+            ],
+          ),
+        ),
+        confirmStr: "PLAY ON",
+        cancelStr: "GIVE UP",
+        cancelBgColor: AppColors.cD60D20,
+        onTap: () async {
+          await reLife();
+          Get.back();
+        },
+        cancelTap: () async {
+          if (getTurnRewardList().isNotEmpty) {
+            Get.back();
+            showGiveUp2();
+          } else {
+            await giveUp();
+            Get.back();
+          }
+        });
+  }
+
+  Future showGiveUp2() {
+    return BottomTipDialog.show(
+        context: Get.context!,
+        height: 534.w,
+        btnDirection: Axis.horizontal,
+        cancelStr: "GIVE UP",
+        confirmStr: "STAY",
+        cancelBgColor: AppColors.cD60D20,
+        title: "YOU’LL LOSE THESE REWARDS",
+        desc:
+            "If you give up now, you will lose all the rewards gathered so far!",
+        centerWidget: Column(
+          children: [
+            27.vGap,
+            Divider(
+              color: AppColors.cD1D1D1,
+              height: 1.w,
+            ),
+            Container(
+              height: 190.w,
+              margin: EdgeInsets.symmetric(horizontal: 59.w),
+              child: GridView.builder(
+                  itemCount: getTurnRewardList().length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4),
+                  itemBuilder: (context, index) {
+                    var item = getTurnRewardList()[index];
+                    return Column(
+                      children: [
+                        SizedBox(
+                          width: 41.w,
+                          height: 41.w,
+                          child: Center(
+                            child: IconWidget(
+                                iconWidth: 34.w,
+                                icon: getImageByPath(
+                                    item.propDefineEntity.propIcon)),
+                          ),
+                        ),
+                        Text(
+                          getPropNum(item.awardItem),
+                          style: 14.w4(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fRobotoRegular,
+                          ),
+                        )
+                      ],
+                    );
+                  }),
+            ),
+            SizedBox(
+              height: 44.w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "COST:",
+                    style: 16.w5(
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium,
+                    ),
+                  ),
+                  12.hGap,
+                  IconWidget(
+                      iconWidth: 24.w, icon: getImageByAward(getReLifeCost())),
+                  3.hGap,
+                  Text(
+                    getPropNum(getReLifeCost()),
+                    style: 16.w5(
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium,
+                    ),
+                  ),
+                  51.hGap,
+                ],
+              ),
+            ),
+          ],
+        ),
+        onTap: () async {
+          await reLife();
+          Get.back();
+        },
+        cancelTap: () async {
+          print('give up 2 ----');
+          await giveUp();
+          Get.back();
+        });
+  }
+
   void spin({Function? onEnd}) {
+    if (turnTableEntity.currentLife == 0) {
+      showReLifeDialog();
+      return;
+    }
+    if (showRandomReward.value) {
+      return;
+    }
+
+    if (!isSpinBtnEnable.value) {
+      return;
+    }
+    isSpinBtnEnable.value = false;
     MineApi.turntable().then((result) {
-      turnTableEntity = result;
-      var awardItem = getAwardList(turnTableEntity.currentAward!)[0];
+      var beforeTurnTableEntity =
+          TurnTableEntity.fromJson(turnTableEntity.toJson());
+      var awardItem = getAwardList(result.currentAward!)[0];
       List<DailyTaskWheelEntity> taskWheelList = [];
       if (result.circle == 1) {
         taskWheelList = getOutWheel();
@@ -153,18 +369,73 @@ class DailyTaskController extends GetxController
         taskWheelList = getInnerCenterGirlWheel();
       }
       var index = taskWheelList.indexWhere((e) => e.id == result.currentId);
-      _startSpin(
-          onEnd: () {
-            /// 转盘转完之后再更新界面
-            update([idSlotPan]);
-            onEnd?.call();
-          },
-          index: index);
-      if (pageController?.page == 0) {
+      if (result.circle == 4) {
+        /// 抽到妹子碎片
+        var random = Random().nextInt(3) + 3;
+        var page = index + random;
+        girlPageController
+            .animateToPage(page,
+                duration: const Duration(seconds: 4), curve: Curves.easeInOut)
+            .then((_) {
+          Future.delayed(const Duration(seconds: 2), () {
+            /// 弹出成功弹框
+            isSpinBtnEnable.value = true;
+            claimRewards();
+          });
+        });
+      } else {
+        _startSpin(beforeTurnTableEntity, onEnd: () {
+          /// 转盘转完之后再更新界面
+          update([idSlotPan]);
+          onEnd?.call();
+          turnTableEntity = result;
+          outerWheelController.active(false);
+          innerTopWheelController.active(false);
+          innerBottomWheelController.active(false);
+          if (turnTableEntity.circle == 1) {
+            outerWheelController.active(true);
+          } else if (turnTableEntity.circle == 2) {
+            innerTopWheelController.active(true);
+          } else if (turnTableEntity.circle == 3) {
+            innerBottomWheelController.active(true);
+          }
+          if (turnTableEntity.currentLife == 0) {
+            showReLifeDialog();
+          }
+          if (awardItem.type == 0 && awardItem.id == 103) {
+            ///抽中比赛类型
+            centerPageController
+                ?.animateToPage(2,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut)
+                .then((_) {
+              leftScore.value = getLeftScore();
+              rightScore.value = getRightScore();
+            });
+            Future.delayed(const Duration(seconds: 3), () {
+              centerPageController
+                  ?.animateToPage(1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut)
+                  .then((_) {
+                leftScore.value = 0;
+                rightScore.value = 0;
+                isSpinBtnEnable.value = true;
+              });
+            });
+          } else if (awardItem.type == 0 && awardItem.id == 104) {
+            /// 抽中问号
+            showRandomReward.value = true;
+          } else {
+            isSpinBtnEnable.value = true;
+          }
+        }, index: index);
+      }
+      if (btnPageController?.page == 0) {
         centerPageController?.animateToPage(1,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut);
-        pageController?.animateToPage(1,
+        btnPageController?.animateToPage(1,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut);
       }
@@ -173,14 +444,22 @@ class DailyTaskController extends GetxController
     });
   }
 
-  void _startSpin({Function? onEnd, int index = 0}) {
+  void _startSpin(TurnTableEntity temp, {Function? onEnd, int index = 0}) {
+    WheelController wheelController;
+    if (temp.circle == 1) {
+      wheelController = outerWheelController;
+    } else if (temp.circle == 2) {
+      wheelController = innerTopWheelController;
+    } else {
+      wheelController = innerBottomWheelController;
+    }
     if (scrollController.offset > 0) {
       scrollController
           .animateTo(0,
               duration: const Duration(milliseconds: 300), curve: Curves.linear)
           .then((_) {
         Future.delayed(const Duration(milliseconds: 300), () {
-          wheelController.start(onEnd: onEnd);
+          wheelController.start(onEnd: onEnd, index: index);
         });
       });
     } else {
@@ -189,7 +468,7 @@ class DailyTaskController extends GetxController
   }
 
   void claimRewards() {
-    MineApi.claimRewards().then((result) {
+    MineApi.claimRewards().then((result) async {
       var hasBall = result.where((e) => e.id == 306).isNotEmpty;
       var hasLuckyCoin = result.where((e) => e.id == 201).isNotEmpty;
       var hasMoneyOrBetCoin =
@@ -205,10 +484,16 @@ class DailyTaskController extends GetxController
       if (hasLuckyCoin) {
         getTeamProp();
       }
-      /// 退出弹框
-      Get.back();
-      /// 退出页面
-      Get.back();
+
+      await showModalBottomSheet(
+          isScrollControlled: true,
+          isDismissible: false,
+          backgroundColor: AppColors.cTransparent,
+          context: Get.context!,
+          builder: (context) {
+            return const SuccessWidget();
+          });
+
     }, onError: (e) {
       ErrorUtils.toast(e);
     });
@@ -393,11 +678,13 @@ class DailyTaskController extends GetxController
       var split = element.split("_");
       var id = int.parse(split[1]);
       var propDefineEntity =
-          CacheApi.propDefineList!.firstWhere((e) => e.propId == id);
-      list.add(TurnRewardItem(
-          AwardItem(
-              int.parse(split[1]), int.parse(split[2]), int.parse(split[0])),
-          propDefineEntity));
+          CacheApi.propDefineList!.firstWhereOrNull((e) => e.propId == id);
+      if (propDefineEntity != null) {
+        list.add(TurnRewardItem(
+            AwardItem(
+                int.parse(split[1]), int.parse(split[2]), int.parse(split[0])),
+            propDefineEntity));
+      }
     });
     return list;
   }
@@ -435,6 +722,9 @@ class DailyTaskController extends GetxController
     List<AwardItem> list = [];
     var split = str.split('|');
     for (var element in split) {
+      if (element.isEmpty) {
+        continue;
+      }
       var split2 = element.split("_");
       list.add(AwardItem(
           int.parse(split2[1]), int.parse(split2[2]), int.parse(split2[0])));
@@ -442,24 +732,72 @@ class DailyTaskController extends GetxController
     return list;
   }
 
-  int getReLifeCost() {
+  AwardItem getReLifeCost() {
     var gameConstant = Utils.getGameConstant(10015);
     var list = getAwardList(gameConstant?.constantStrVal ?? '');
+    if (turnTableEntity.reLifeCount >= list.length) {
+      return list.last;
+    }
+    return list[turnTableEntity.reLifeCount];
+  }
+
+  int getLeftScore() {
+    return int.parse(turnTableEntity.matchScore?.split(':')[0] ?? "0");
+  }
+
+  int getRightScore() {
+    return int.parse(turnTableEntity.matchScore?.split(':')[1] ?? "0");
+  }
+
+  /// 随机奖励抽奖结束
+  onRandomAwardEnd() {
+    Future.delayed(const Duration(seconds: 2), () {
+      showRandomReward.value = false;
+      isSpinBtnEnable.value = true;
+    });
+  }
+
+  TurnRewardItem? getGirlReward() {
+    var turnRewardList = getTurnRewardList();
+    var innerCenterGirlWheel = getInnerCenterGirlWheel();
+    var list = turnRewardList.where((f) {
+      var firstWhereOrNull = innerCenterGirlWheel.firstWhereOrNull((e) =>
+          f.awardItem.type == e.rewardType && f.awardItem.id == e.reward);
+      return firstWhereOrNull != null;
+    }).toList();
     if (list.isEmpty) {
-      return 0;
+      return null;
     }
-    if (turnTableEntity.reLifeCount > list.length) {
-      return list.last.num;
-    }
-    return list[turnTableEntity.reLifeCount - 1].num;
+    return list.first;
   }
 
-  int getLeftScore(){
-    return int.parse(turnTableEntity.matchScore?.split(':')[0]??"0");
-  }
+  /// 临时背包奖励
+  List<TurnRewardItem> getSuccessTurnRewardList() {
+    if (turnTableEntity.awardPool.isEmpty) {
+      return [];
+    }
+    List<TurnRewardItem> list = [];
 
-  int getRightScore(){
-    return int.parse(turnTableEntity.matchScore?.split(':')[1]??"0");
+    /// 类型_id_数量 ，用 ｜ 分割；
+    turnTableEntity.awardPool.split("|").forEach((element) {
+      var split = element.split("_");
+      var id = int.parse(split[1]);
+      var propDefineEntity =
+          CacheApi.propDefineList!.firstWhereOrNull((e) => e.propId == id);
+      if (propDefineEntity != null) {
+        list.add(TurnRewardItem(
+            AwardItem(
+                int.parse(split[1]), int.parse(split[2]), int.parse(split[0])),
+            propDefineEntity));
+      }
+    });
+    var girlReward = getGirlReward();
+    if (girlReward != null) {
+      list.removeWhere((e) =>
+          e.awardItem.type == girlReward.awardItem.type &&
+          e.awardItem.id == girlReward.awardItem.id);
+    }
+    return list;
   }
 
   static String get idMain => "id_main";
@@ -485,6 +823,11 @@ class AwardItem {
 
   factory AwardItem.fromJson(Map<String, dynamic> json) =>
       AwardItem(json["id"], json['num'], json["type"]);
+
+  @override
+  String toString() {
+    return 'AwardItem{num: $num, id: $id, type: $type}';
+  }
 }
 
 class TurnRewardItem {

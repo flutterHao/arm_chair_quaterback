@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -97,7 +98,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: MediaQuery.of(context).padding.top,
+                            height: Platform.isIOS?MediaQuery.of(context).padding.top:0,
                           ),
                           31.vGap,
                           Container(

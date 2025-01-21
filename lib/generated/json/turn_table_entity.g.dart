@@ -61,6 +61,10 @@ TurnTableEntity $TurnTableEntityFromJson(Map<String, dynamic> json) {
   if (matchScore != null) {
     turnTableEntity.matchScore = matchScore;
   }
+  final int? unKnowRewardId = jsonConvert.convert<int>(json['unKnowRewardId']);
+  if (unKnowRewardId != null) {
+    turnTableEntity.unKnowRewardId = unKnowRewardId;
+  }
   return turnTableEntity;
 }
 
@@ -80,6 +84,7 @@ Map<String, dynamic> $TurnTableEntityToJson(TurnTableEntity entity) {
   data['awardPool'] = entity.awardPool;
   data['isStart'] = entity.isStart;
   data['matchScore'] = entity.matchScore;
+  data['unKnowRewardId'] = entity.unKnowRewardId;
   return data;
 }
 
@@ -99,6 +104,7 @@ extension TurnTableEntityExtension on TurnTableEntity {
     String? awardPool,
     int? isStart,
     String? matchScore,
+    int? unKnowRewardId,
   }) {
     return TurnTableEntity()
       ..currentAward = currentAward ?? this.currentAward
@@ -114,6 +120,7 @@ extension TurnTableEntityExtension on TurnTableEntity {
       ..circle = circle ?? this.circle
       ..awardPool = awardPool ?? this.awardPool
       ..isStart = isStart ?? this.isStart
-      ..matchScore = matchScore ?? this.matchScore;
+      ..matchScore = matchScore ?? this.matchScore
+      ..unKnowRewardId = unKnowRewardId ?? this.unKnowRewardId;
   }
 }

@@ -9,13 +9,15 @@ import 'package:get/get.dart';
 ///created at 2024/12/12/10:59
 
 class DialogTopBtn extends StatelessWidget {
-  const DialogTopBtn({super.key});
+  const DialogTopBtn({super.key, this.onTap});
+
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return MtInkWell(
       minScale: 1.0,
-      onTap: ()=> Get.back(),
+      onTap: ()=> onTap??Get.back(),
       child: Container(
         width: 44.w,
         height: 4.w,

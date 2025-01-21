@@ -63,7 +63,13 @@ class EasyAnimationController<T> {
     controller.stop(canceled: canceled);
   }
 
-  void set(T begin,T end,{Curve? curve,Duration? duration}){
+  TickerFuture repeat(
+      {double? min, double? max, bool reverse = false, Duration? period}) {
+    return controller.repeat(
+        min: min, max: min, reverse: reverse, period: period);
+  }
+
+  void set(T begin, T end, {Curve? curve, Duration? duration}) {
     _tween = Tween(begin: begin, end: end);
     if (curve != null) {
       CurvedAnimation curvedAnimation = CurvedAnimation(
@@ -72,7 +78,7 @@ class EasyAnimationController<T> {
     } else {
       _animation = _tween.animate(_animationController);
     }
-    if(duration != null){
+    if (duration != null) {
       controller.duration = duration;
     }
   }

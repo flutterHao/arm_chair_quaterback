@@ -6,8 +6,8 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/widgets/rounder_border_progress_bar_
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
+import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/random_reward_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/reward_package_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/success_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/week_price/week_prize_widget.dart';
@@ -74,70 +75,12 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                                           height: 117.w,
                                           child: PageView(
                                             controller:
-                                                controller.pageController,
+                                                controller.btnPageController,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             children: [
                                               _buildStartWidget(),
                                               _buildPackageAndSpin(context),
-                                              Container(
-                                                decoration: const BoxDecoration(
-                                                    image: DecorationImage(
-                                                        image: AssetImage(Assets
-                                                            .managerUiManagerWheelBg01))),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        ImageWidget(
-                                                          url: Utils.getAvaterUrl(
-                                                              controller
-                                                                  .turnTableEntity
-                                                                  .teamId),
-                                                          width: 40.w,
-                                                        ),
-                                                        9.vGap,
-                                                        Text(
-                                                          "${controller.getLeftScore()}",
-                                                          style: 14.w5(
-                                                            color: AppColors
-                                                                .cFFFFFF,
-                                                            height: 1,
-                                                            fontFamily: FontFamily
-                                                                .fRobotoRegular,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        ImageWidget(
-                                                          url: "",
-                                                          imageFailedPath: Assets
-                                                              .testTestTeamLogo,
-                                                          width: 40.w,
-                                                        ),
-                                                        9.vGap,
-                                                        Text(
-                                                          "${controller.getRightScore()}",
-                                                          style: 14.w5(
-                                                            color: AppColors
-                                                                .cFFFFFF,
-                                                            height: 1,
-                                                            fontFamily: FontFamily
-                                                                .fRobotoRegular,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              )
                                             ],
                                           ),
                                         ),
@@ -283,6 +226,8 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                             builder: (_) {
                               return RewardPackageWidget(
                                 claimAndExit: () {
+                                  /// 退出弹框
+                                  Get.back();
                                   controller.claimRewards();
                                 },
                               );
@@ -334,101 +279,30 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                       if (controller.turnTableEntity.currentLife > 0) {
                         return;
                       }
-                      BottomTipDialog.show(
-                          context: context,
-                          height: 384.w,
-                          btnDirection: Axis.horizontal,
-                          icon: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconWidget(
-                                  iconWidth: 41.w,
-                                  icon: Assets.managerUiManagerIconWheelHurt),
-                              13.hGap,
-                              IconWidget(
-                                  iconWidth: 41.w,
-                                  icon: Assets.managerUiManagerIconWheelHurt),
-                              13.hGap,
-                              IconWidget(
-                                  iconWidth: 41.w,
-                                  icon: Assets.managerUiManagerIconWheelHurt),
-                            ],
-                          ),
-                          title: "YOU’RE OUT",
-                          desc:
-                              "If you give up now,you’ll lose everything!Continue playing to keep your rewards and win some mor.",
-                          centerWidget: SizedBox(
-                            height: 97.w,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                    right: 51.w,
-                                    bottom: 9.w,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "COST:",
-                                          style: 16.w5(
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium,
-                                          ),
-                                        ),
-                                        12.hGap,
-                                        IconWidget(
-                                            iconWidth: 24.w,
-                                            icon: Assets.commonUiCommonProp05),
-                                        3.hGap,
-                                        Text(
-                                          "${controller.getReLifeCost()}k",
-                                          style: 16.w5(
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium,
-                                          ),
-                                        ),
-                                      ],
-                                    ))
-                              ],
-                            ),
-                          ),
-                          confirmStr: "PLAY ON",
-                          cancelStr: "GIVE UP",
-                          cancelBgColor: AppColors.cD60D20,
-                          onTap: () async {
-                            await controller.reLife();
-                            Get.back();
-                            //
-                            // showModalBottomSheet(
-                            //     isScrollControlled: true,
-                            //     backgroundColor: AppColors.cTransparent,
-                            //     context: context,
-                            //     builder: (_) {
-                            //       return const SuccessWidget();
-                            //     });
-                          },
-                          cancelTap: () {
-                            Get.back();
-                          });
                     });
                   },
-                  child: Container(
-                    height: 51.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.c000000,
-                      borderRadius: BorderRadius.circular(9.w),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "SPIN",
-                        style: 23.w5(
-                          color: AppColors.cFFFFFF,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldMedium,
+                  child: Obx(() {
+                    return AnimatedContainer(
+                      height: 51.w,
+                      decoration: BoxDecoration(
+                        color: controller.isSpinBtnEnable.value
+                            ? AppColors.c000000
+                            : AppColors.cF2F2F2,
+                        borderRadius: BorderRadius.circular(9.w),
+                      ),
+                      duration: const Duration(milliseconds: 200),
+                      child: Center(
+                        child: Text(
+                          "SPIN",
+                          style: 23.w5(
+                            color: AppColors.cFFFFFF,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                 ),
               ),
             ],
@@ -436,68 +310,6 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         ],
       ),
     );
-  }
-
-  void showGiveUp2(BuildContext context) {
-    BottomTipDialog.show(
-        context: context,
-        height: 534.w,
-        btnDirection: Axis.horizontal,
-        cancelStr: "GIVE UP",
-        confirmStr: "STAY",
-        cancelBgColor: AppColors.cD60D20,
-        title: "YOU’LL LOSE THESE REWARDS",
-        desc:
-            "If you give up now, you will lose all the rewards gathered so far!",
-        centerWidget: Column(
-          children: [
-            27.vGap,
-            Divider(
-              color: AppColors.cD1D1D1,
-              height: 1.w,
-            ),
-            Container(
-              height: 190.w,
-              margin: EdgeInsets.symmetric(horizontal: 59.w),
-              child: GridView.builder(
-                  itemCount: controller.getTurnRewardList().length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4),
-                  itemBuilder: (context, index) {
-                    var item = controller.getTurnRewardList()[index];
-                    return Column(
-                      children: [
-                        SizedBox(
-                          width: 41.w,
-                          height: 41.w,
-                          child: Center(
-                            child: IconWidget(
-                                iconWidth: 34.w,
-                                icon: controller.getImageByPath(
-                                    item.propDefineEntity.propIcon)),
-                          ),
-                        ),
-                        Text(
-                          controller.getPropNum(item.awardItem),
-                          style: 14.w4(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fRobotoRegular,
-                          ),
-                        )
-                      ],
-                    );
-                  }),
-            ),
-            44.vGap,
-          ],
-        ),
-        onTap: () {
-          Get.back();
-        },
-        cancelTap: () {
-          print('give up 2 ----');
-        });
   }
 
   Widget _buildStartWidget() {
@@ -716,22 +528,42 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         itemHeight: 52.w,
         radius: 4.w,
         bigRadius: 18.w,
-        controller: controller.wheelController,
+        controller: controller.outerWheelController,
         builder: (index) {
           // return list[index];
           var item = controller.getOutWheel()[index];
           var size = 30.w;
-          return Image.asset(
-            controller.getImage(item),
-            width: size,
-            height: size,
-            errorBuilder: (context, error, s) {
-              return Image.asset(
-                Assets.managerUiManagerGift00,
+          return Center(
+            child: Builder(builder: (context) {
+              var child = Image.asset(
+                controller.getImage(item),
                 width: size,
                 height: size,
+                errorBuilder: (context, error, s) {
+                  return Image.asset(
+                    Assets.managerUiManagerGift00,
+                    width: size,
+                    height: size,
+                  );
+                },
               );
-            },
+              if (item.rewardType == 0 && item.reward == 104) {
+                /// 随机奖励(问号)特殊处理
+                return Obx(() {
+                  var showRandomReward = controller.showRandomReward.value;
+                  if (controller.outerWheelController.index == index &&
+                      showRandomReward) {
+                    return RandomRewardWidget(
+                      targetId: controller.turnTableEntity.unKnowRewardId,
+                      size: size,
+                      onEnd: controller.onRandomAwardEnd,
+                    );
+                  }
+                  return child;
+                });
+              }
+              return child;
+            }),
           );
           return IconWidget(iconWidth: size, icon: controller.getImage(item));
         },
@@ -778,21 +610,24 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                 itemHeight: 31.w,
                 radius: 2.w,
                 bigRadius: 9.w,
+                controller: controller.innerTopWheelController,
                 builder: (index) {
                   // return list[index];
                   var item = controller.getInnerTopWheel()[index];
                   var size = 30.w * 31 / 52;
-                  return Image.asset(
-                    controller.getImage(item),
-                    width: size,
-                    height: size,
-                    errorBuilder: (context, error, s) {
-                      return Image.asset(
-                        Assets.managerUiManagerGift00,
-                        width: size,
-                        height: size,
-                      );
-                    },
+                  return Center(
+                    child: Image.asset(
+                      controller.getImage(item),
+                      width: size,
+                      height: size,
+                      errorBuilder: (context, error, s) {
+                        return Image.asset(
+                          Assets.managerUiManagerGift00,
+                          width: size,
+                          height: size,
+                        );
+                      },
+                    ),
                   );
                   return IconWidget(
                       iconWidth: size, icon: controller.getImage(item));
@@ -834,21 +669,24 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                 itemHeight: 31.w,
                 radius: 2.w,
                 bigRadius: 9.w,
+                controller: controller.innerBottomWheelController,
                 builder: (index) {
                   // return list[index];
                   var item = controller.getInnerBottomWheel()[index];
                   var size = 30.w * 31 / 52;
-                  return Image.asset(
-                    controller.getImage(item),
-                    width: size,
-                    height: size,
-                    errorBuilder: (context, error, s) {
-                      return Image.asset(
-                        Assets.managerUiManagerGift00,
-                        width: size,
-                        height: size,
-                      );
-                    },
+                  return Center(
+                    child: Image.asset(
+                      controller.getImage(item),
+                      width: size,
+                      height: size,
+                      errorBuilder: (context, error, s) {
+                        return Image.asset(
+                          Assets.managerUiManagerGift00,
+                          width: size,
+                          height: size,
+                        );
+                      },
+                    ),
                   );
                   return IconWidget(
                       iconWidth: size, icon: controller.getImage(item));
@@ -856,7 +694,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
 
             /// 电池
             Builder(builder: (context) {
-              bool isFull = controller.getBatteryCount() ==
+              bool isFull = controller.getBatteryCount() >=
                   controller.getBatteryTotalCount();
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -898,25 +736,15 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                               right: Radius.circular(2.w));
                         }
                         return Expanded(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 15.w,
-                                  decoration: BoxDecoration(
-                                    color: isActive
-                                        ? AppColors.c9EEB53
-                                        : AppColors.c4D4D4D,
-                                    borderRadius: borderRadius,
-                                  ),
-                                ),
-                              ),
-                              // if (!isLast)
-                              SizedBox(
-                                width: 2.w,
-                                height: 15.w,
-                              )
-                            ],
+                          child: Container(
+                            height: 15.w,
+                            margin: EdgeInsets.symmetric(horizontal: 1.w),
+                            decoration: BoxDecoration(
+                              color: isActive
+                                  ? AppColors.c9EEB53
+                                  : AppColors.c4D4D4D,
+                              borderRadius: borderRadius,
+                            ),
                           ),
                         );
                       }),
@@ -1150,6 +978,8 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                         scrollDirection: Axis.vertical,
                         controller: controller.girlPageController,
                         itemBuilder: (BuildContext context, int index) {
+                          var item =
+                              controller.getInnerCenterGirlWheel()[index];
                           return SizedBox(
                             width: 47.w,
                             height: 47.w,
@@ -1157,13 +987,16 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(4.w),
                                   child: Opacity(
-                                    opacity: 0.7,
+                                    opacity:
+                                        controller.turnTableEntity.circle == 4
+                                            ? 1
+                                            : 0.7,
                                     child: SizedBox(
                                         width: 47.w,
                                         height: 47.w,
                                         child: IconWidget(
                                             iconWidth: 47.w,
-                                            icon: Assets.teamUiHead01)),
+                                            icon: controller.getImage(item))),
                                   )),
                             ),
                           );
@@ -1173,6 +1006,64 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                   ],
                 ),
               ),
+            ),
+          ),
+          Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Assets.managerUiManagerWheelBg01))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ImageWidget(
+                      url:
+                          Utils.getAvaterUrl(controller.turnTableEntity.teamId),
+                      width: 40.w,
+                      imageFailedPath: Assets.teamUiHead03,
+                      borderRadius: BorderRadius.circular(20.w),
+                    ),
+                    20.vGap,
+                    Obx(() {
+                      return AnimatedNum(
+                        number: controller.leftScore.value,
+                        fromZero: true,
+                        textStyle: 14.w5(
+                          color: AppColors.cFFFFFF,
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular,
+                        ),
+                      );
+                    })
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ImageWidget(
+                      url: "",
+                      imageFailedPath: Assets.testTestTeamLogo,
+                      width: 40.w,
+                      borderRadius: BorderRadius.circular(20.w),
+                    ),
+                    20.vGap,
+                    Obx(() {
+                      return AnimatedNum(
+                        number: controller.rightScore.value,
+                        fromZero: true,
+                        textStyle: 14.w5(
+                          color: AppColors.cFFFFFF,
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular,
+                        ),
+                      );
+                    })
+                  ],
+                )
+              ],
             ),
           )
         ],

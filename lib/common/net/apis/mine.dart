@@ -47,4 +47,10 @@ class MineApi {
     });
     return json.map((e) => TeamMissionEntity.fromJson(e)).toList();
   }
+
+  /// 领取转盘奖励
+  static Future<dynamic> giveUp() async {
+    var json = await httpUtil.post(Api.giveUp);
+    return json;
+  }
 }

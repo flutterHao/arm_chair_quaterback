@@ -169,7 +169,7 @@ class LeagueController extends GetxController
       picksDefineEntity = result[0] as PicksDefineEntity;
       List<GameSchedulesInfo> list = result[1] as List<GameSchedulesInfo>;
 
-      noDataDayList = getDataTimes()
+      noDataDayList = getAllDataTimes()
           .where((e) => list
               .where((l) => MyDateUtils.isSameDay(
                   MyDateUtils.getDateTimeByMs(l.gameStartTime), e))
