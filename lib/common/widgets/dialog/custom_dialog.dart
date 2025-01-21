@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/comfirm_button.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -46,14 +47,15 @@ class CustomBottomDialog extends StatelessWidget {
           borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
       child: Column(
         children: [
-          12.vGap,
-          Container(
-            decoration: BoxDecoration(
-                color: AppColors.ccccccc,
-                borderRadius: BorderRadius.circular(2.w)),
-            height: 4.w,
-            width: 44.w,
-          ),
+          // 12.vGap,
+          // Container(
+          //   decoration: BoxDecoration(
+          //       color: AppColors.ccccccc,
+          //       borderRadius: BorderRadius.circular(2.w)),
+          //   height: 4.w,
+          //   width: 44.w,
+          // ),
+          const DialogTopBtn(),
           24.vGap,
           Text(
             title,
@@ -153,14 +155,7 @@ class SimpleBottomDialog extends StatelessWidget {
           borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
       child: Column(
         children: [
-          8.vGap,
-          Container(
-            decoration: BoxDecoration(
-                color: AppColors.ccccccc,
-                borderRadius: BorderRadius.circular(2.w)),
-            height: 4.w,
-            width: 44.w,
-          ),
+          const DialogTopBtn(),
           Expanded(child: child),
           if (onComfirm != null)
             Container(

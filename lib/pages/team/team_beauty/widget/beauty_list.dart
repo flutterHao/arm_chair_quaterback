@@ -30,6 +30,7 @@ class BeautyList extends GetView<BeautyController> {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
+                var item = controller.girlList[index];
                 return InkWell(
                   onTap: () {
                     if (index == 0) {
@@ -82,7 +83,7 @@ class BeautyList extends GetView<BeautyController> {
                                   // padding: EdgeInsets.only(top: 5.h),
                                   child: Image.asset(
                                     width: 200.h,
-                                    controller.beautyList[index],
+                                    item.girlImg,
                                     alignment: Alignment.topCenter,
                                     fit: BoxFit.cover,
                                   ),
@@ -91,7 +92,7 @@ class BeautyList extends GetView<BeautyController> {
                                     top: 6.h,
                                     left: 5.h,
                                     child: OutlinedText(
-                                        text: controller.gradeList[index],
+                                        text: item.grade,
                                         textStyle: TextStyle(
                                           fontSize: 21.h,
                                           fontFamily: FontFamily.fRobotoBlack,
@@ -99,7 +100,7 @@ class BeautyList extends GetView<BeautyController> {
                                         ))),
                               ],
                             ),
-                            if (index == controller.beautyList.length - 1)
+                            if (index == controller.girlList.length - 1)
                               Container(
                                 height: 112.h,
                                 width: 79.h,
@@ -123,7 +124,7 @@ class BeautyList extends GetView<BeautyController> {
                 );
               },
               separatorBuilder: (context, index) => 9.hGap,
-              itemCount: controller.beautyList.length,
+              itemCount: controller.girlList.length,
             ),
           ),
         ),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-01-13 16:21:48
+ * @LastEditTime: 2025-01-20 10:36:27
  */
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -142,7 +142,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                                     Get.back();
                                   });
                             }
-                            controller.cancelTactic();
+                            // controller.cancelTactic();
                           },
                           child: Container(
                             width: 30.w,

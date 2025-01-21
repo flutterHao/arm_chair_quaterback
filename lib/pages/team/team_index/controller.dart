@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-18 19:33:30
+ * @LastEditTime: 2025-01-20 10:53:07
  */
 
 import 'dart:async';
@@ -279,6 +279,7 @@ class TeamIndexController extends GetxController
       final diff = endTime.difference(now).inSeconds;
       int needTime =
           CacheApi.cardPackDefineMap[item.cardId]?.cardPackOpenTime ?? 0;
+      item.totalTimeValue = needTime;
       if (needTime ~/ 3600 > 0) {
         item.totalTime = "${needTime ~/ 3600} H";
       } else {
@@ -297,7 +298,7 @@ class TeamIndexController extends GetxController
             final minutes = ((v % 3600) ~/ 60).toString().padLeft(2, '0');
             final secs = (v % 60).toString().padLeft(2, '0');
             item.remainTime.value = "$hours:$minutes:$secs";
-            item.progress = (diff - v) / diff;
+            item.progress = (item.totalTimeValue - v) / item.totalTimeValue;
           },
           onComplete: getBattleBox,
           timer: battleBoxTimer,

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2024-12-20 15:57:40
+ * @LastEditTime: 2025-01-21 11:27:20
  */
 
 import 'dart:math';
@@ -82,19 +82,23 @@ class _BoxCardWidgetState extends State<BoxCardWidget>
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
-          double angle = _animation.value * 3.14;
-          return AnimatedScale(
-            duration: const Duration(milliseconds: 250),
-            scale: widget.player.isSelect.value ? 1.0 : 0.9,
-            child: Transform(
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.001)
-                ..rotateY(angle),
-              alignment: Alignment.center,
+          double angle = _animation.value * 3.14; //翻转角度
+          return Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(angle),
+            alignment: Alignment.center,
+            child: AnimatedScale(
+              duration: const Duration(milliseconds: 1000),
+              scale: widget.player.isSelect.value ? 1 : 0.9,
+              alignment: Alignment.bottomCenter,
+
+              ///isSmall 小卡
               child: widget.isSmall
                   ? Container(
                       width: 98.w + (widget.player.isSelect.value ? 6.w : 0),
                       height: 136.w + (widget.player.isSelect.value ? 6.w : 0),
+                      alignment: Alignment.bottomCenter,
                       decoration: BoxDecoration(
                           border: widget.player.isSelect.value
                               ? Border.all(width: 3.w, color: AppColors.cFF7954)
@@ -110,7 +114,7 @@ class _BoxCardWidgetState extends State<BoxCardWidget>
                             )
                           : Image.asset(
                               Assets.managerUiManagerPlayercardSmall,
-                              width: 88.w,
+                              width: 98.w,
                               fit: BoxFit.fill,
                             ),
                     )

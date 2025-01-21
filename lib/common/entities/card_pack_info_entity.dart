@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 17:54:17
- * @LastEditTime: 2024-12-18 10:06:14
+ * @LastEditTime: 2025-01-20 10:47:49
  */
 /*
  * @Description: 
@@ -52,6 +52,8 @@ class CardPackInfoCard {
   late int status = 0;
   @JSONField(deserialize: false)
   late String totalTime = "";
+  @JSONField(deserialize: false, serialize: false)
+  late int totalTimeValue = 180;
   late RxString remainTime = "00:00".obs;
   @JSONField(deserialize: false)
   double progress = 0;

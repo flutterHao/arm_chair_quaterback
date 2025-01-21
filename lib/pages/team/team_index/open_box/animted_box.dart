@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-01-13 11:35:49
+ * @LastEditTime: 2025-01-21 10:47:54
  */
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -42,7 +42,9 @@ class _AnimatedBoxState extends State<AnimatedBox>
     _compressScaleX = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.1), weight: 20),
       TweenSequenceItem(tween: Tween(begin: 1.1, end: 1.0), weight: 20),
-      TweenSequenceItem(tween: ConstantTween(1.0), weight: 60),
+      TweenSequenceItem(tween: ConstantTween(1.0), weight: 40),
+      TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.1), weight: 20),
+      TweenSequenceItem(tween: Tween(begin: 1.1, end: 1.0), weight: 20),
     ]).animate(_controller);
 
     _compressScaleY = TweenSequence([
@@ -58,8 +60,8 @@ class _AnimatedBoxState extends State<AnimatedBox>
     // 弹射跳起并恢复原形
     _jumpHeight = TweenSequence([
       TweenSequenceItem(tween: ConstantTween(0.0), weight: 40),
-      TweenSequenceItem(tween: Tween(begin: 0.0, end: 100.0), weight: 20),
-      TweenSequenceItem(tween: Tween(begin: 100.0, end: 0.0), weight: 20),
+      TweenSequenceItem(tween: Tween(begin: 0.0, end: 150.h), weight: 20),
+      TweenSequenceItem(tween: Tween(begin: 150.h, end: 0.0), weight: 20),
       TweenSequenceItem(tween: ConstantTween(0.0), weight: 20),
     ]).animate(_controller);
 

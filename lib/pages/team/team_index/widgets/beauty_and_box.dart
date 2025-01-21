@@ -55,8 +55,7 @@ class BeautyAndBoxView extends StatelessWidget {
                       fontSize: 121.sp,
                       letterSpacing: 0,
                       // color: AppColors.c262626,
-                      color: Color(beautyCtrl
-                          .backgroundColor[beautyCtrl.beautyIndex.value]),
+                      color: Color(beautyCtrl.currentGirl.bgColor),
                       height: 0.95,
                       fontFamily: FontFamily.fOswaldBold),
                 ),
@@ -109,9 +108,9 @@ class BeautyAndBoxView extends StatelessWidget {
                         ),
                         if (beautyCtrl.beautyIndex.value != 0)
                           Image.asset(
-                            beautyCtrl.beautyList[beautyCtrl.beautyIndex.value],
+                            beautyCtrl.currentGirl.girlImg,
                             fit: BoxFit.fitHeight,
-                            height: 500.w,
+                            height: 500.h,
                             alignment: Alignment.topCenter,
                           ),
                         ...beautyCtrl.hearts,
@@ -183,19 +182,18 @@ class BeautyAndBoxView extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      // Container(
-                      //   width: 34.w,
-                      //   height: 34.w,
-                      //   alignment: Alignment.center,
-                      //   margin: EdgeInsets.only(left: 16.w, right: 5.w),
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(6.w),
-                      //       border: Border.all(color: AppColors.c666666)),
-                      //   child: IconWidget(
-                      //       iconWidth: 19.w,
-                      //       icon: Assets
-                      //           .cheerleadersUiCheerleadersIconLoveletter),
-                      // ),
+                      Container(
+                        width: 34.w,
+                        height: 34.w,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(left: 16.w, right: 5.w),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.w),
+                            border: Border.all(color: AppColors.c666666)),
+                        child: IconWidget(
+                            iconWidth: 19.w,
+                            icon: Assets.commonUiCommonIconLoveletter),
+                      ),
                       16.hGap,
                       Text(
                         "Signed 10 top girls Signed 10",

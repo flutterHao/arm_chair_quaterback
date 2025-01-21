@@ -66,7 +66,7 @@ class BeautyProgress extends StatelessWidget {
               ),
               const Expanded(child: SizedBox.shrink()),
               if (controller.beautyIndex.value !=
-                  controller.beautyList.length - 1)
+                  controller.girlList.length - 1)
                 CircleProgressView(
                     backgroundColor: AppColors.c333333,
                     progressColor: AppColors.cFF5672,

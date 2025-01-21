@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2025-01-15 18:50:16
+ * @LastEditTime: 2025-01-20 11:23:42
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/receive_award_dilaog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -29,47 +30,35 @@ class FreeBoxDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<TeamIndexController>(
       builder: (controller) {
-        return CustomBottomDialog(
-            isShowCancelButton: false,
-            height: 400.w,
-            title: "GET FREE GIRF".toUpperCase(),
-            content: Container(
-              margin: EdgeInsets.symmetric(vertical: 10.w),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: controller.awardList.map((e) {
-                  return Container(
-                    margin: EdgeInsets.all(4.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        e.type == 2
-                            ? ImageWidget(
-                                url: Utils.getPlayUrl(e.id),
-                                width: 64.w,
-                              )
-                            : Image.asset(
-                                Utils.getPropIconUrl(e.id),
-                                width: 64.w,
-                              ),
-                        // Image.asset(
-                        //   Assets.picksUiPropsMoeny,
-                        //   width: 60.w,
-                        // ),
-                        10.hGap,
-                        Text(
-                          "x ${Utils.formatMoney(e.num)}",
-                          style: 14.w4(color: AppColors.c262626),
-                        )
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-            onComfirm: () {
-              // Get.back();
-            });
+        return ReceiveAwardDilaog(
+          awards: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: controller.awardList.map((e) {
+              return Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    e.type == 2
+                        ? ImageWidget(
+                            url: Utils.getPlayUrl(e.id),
+                            width: 32.w,
+                          )
+                        : Image.asset(
+                            Utils.getPropIconUrl(e.id),
+                            width: 32.w,
+                          ),
+                    7.5.vGap,
+                    Text(
+                      Utils.formatMoney(e.num),
+                      style: 14.w4(color: AppColors.c262626),
+                    )
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        );
       },
     );
   }

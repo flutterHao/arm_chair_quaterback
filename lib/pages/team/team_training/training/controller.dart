@@ -714,11 +714,12 @@ class TrainingController extends GetxController
         showProp.value = true;
         await Future.delayed(const Duration(milliseconds: 300));
         showProp.value = false;
+        taskValue.value = 0;
+        await Future.delayed(const Duration(milliseconds: 300));
       }
 
       //更新道具
       updateProp();
-
       taskValue.value = trainingInfo.training.taskItemCount;
       update(["training_page"]);
 
@@ -823,6 +824,7 @@ class TrainingController extends GetxController
     showCash.value = true;
     cash.value = cashs;
     caShScale.value = true;
+    updateScroller();
     Future.delayed(const Duration(milliseconds: 1000), () async {
       caShScale.value = false;
     });

@@ -265,22 +265,6 @@ class _Item extends StatelessWidget {
   }
 }
 
-Widget _reward() {
-  return Row(
-    children: [
-      _award(
-        Assets.teamUiMoney02,
-        Utils.formatMoney(500),
-      ),
-      42.5.hGap,
-      _award(
-        Assets.cheerleadersUiCheerleadersIconLoveletter,
-        "1",
-      ),
-    ],
-  );
-}
-
 Widget _award(String img, String num) {
   return Column(
     children: [

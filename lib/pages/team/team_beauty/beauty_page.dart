@@ -2,7 +2,7 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2025-01-18 12:06:33
+ * @LastEditTime: 2025-01-21 10:24:00
  */
 
 import 'dart:math';
@@ -26,64 +26,32 @@ import 'package:get/get.dart';
 class BeautyPage extends GetView<BeautyController> {
   const BeautyPage({super.key});
 
-  Widget _blackIconButton(
-      {required double top,
+  Widget _leftButton(
+      {required double bottom,
       required double width,
       required String icon,
       bool? visible,
-      bool withArrow = false,
       required Function onTap}) {
     return Positioned(
-      top: top + 48.h,
-      right: 16.w,
+      bottom: bottom + 192.h,
+      left: 16.w,
       child: MtInkWell(
         splashColor: Colors.transparent,
         onTap: () => onTap(),
         child: Visibility(
           visible: visible ?? !controller.expandedGirl,
-          child: SizedBox(
-            width: 41.h + 10.h,
+          child: Container(
+            width: 41.h,
             height: 41.h,
-            child: Stack(
-              children: [
-                if (withArrow)
-                  Positioned(
-                    left: 0,
-                    child: Container(
-                      width: 41.h,
-                      height: 41.h,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(left: 2.5.h),
-                      decoration: BoxDecoration(
-                        color: AppColors.cFFFFFF,
-                        borderRadius: BorderRadius.circular(9.w),
-                      ),
-                      child: Transform.rotate(
-                        angle: pi / 2,
-                        child: Image.asset(
-                          Assets.iconUiIconArrows04,
-                          width: 9.h,
-                          height: 5.h,
-                          fit: BoxFit.fill,
-                          color: AppColors.c000000,
-                        ),
-                      ),
-                    ),
-                  ),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    width: 41.h,
-                    height: 41.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.c000000,
-                      borderRadius: BorderRadius.circular(9.w),
-                    ),
-                    child: IconWidget(iconWidth: width, icon: icon),
-                  ),
-                ),
-              ],
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.c000000,
+              borderRadius: BorderRadius.circular(9.w),
+            ),
+            child: Image.asset(
+              icon,
+              width: 25.h,
+              fit: BoxFit.fitWidth,
             ),
           ),
         ),
@@ -91,52 +59,133 @@ class BeautyPage extends GetView<BeautyController> {
     );
   }
 
-  Widget _grade() {
+  Widget _clothList() {
+    List<String> list = [
+      Assets.cheerleadersUiCheerleadersIconClothing01,
+      Assets.cheerleadersUiCheerleadersIconClothing02,
+      Assets.cheerleadersUiCheerleadersIconClothing03,
+      Assets.cheerleadersUiCheerleadersIconClothing04,
+      Assets.cheerleadersUiCheerleadersIconClothing05
+    ];
     return Positioned(
-      top: 31.5.h + 48.h,
-      left: 0,
+      bottom: 192.h + 60.h,
+      right: 16.w - 3.5.h,
+      child: SizedBox(
+        width: 41.h + 3.5.h,
+        child: ListView.separated(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              bool isCur = controller.clothingIndex == index;
+              return MtInkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    controller.clothingIndex = index;
+                    controller.update();
+                  },
+                  child: Visibility(
+                    visible: !controller.expandedGirl,
+                    child: SizedBox(
+                      width: 41.h + 3.5.h,
+                      height: 41.h + 3.5.h,
+                      child: Stack(
+                        alignment: Alignment.bottomLeft,
+                        children: [
+                          Positioned(
+                            left: 0,
+                            bottom: 0,
+                            child: Container(
+                              width: 41.h,
+                              height: 41.h,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: isCur ? Colors.white : Colors.black,
+                                borderRadius: BorderRadius.circular(9.w),
+                              ),
+                              child: Image.asset(
+                                list[index],
+                                height: 29.h,
+                                color: !isCur ? Colors.white : Colors.black,
+                              ),
+                            ),
+                          ),
+                          if (isCur)
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Container(
+                                width: 16.h,
+                                height: 16.h,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: AppColors.c10A86A,
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(9.w),
+                                ),
+                                child: IconWidget(
+                                  iconWidth: 9.h,
+                                  icon: Assets.commonUiCommonStatusBarMission02,
+                                  iconColor: Colors.white,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ));
+            },
+            separatorBuilder: (context, index) => SizedBox(height: 18.h),
+            itemCount: list.length),
+      ),
+    );
+  }
+
+  Widget _grade() {
+    double top = controller.expandedGirl ? 0 : 48.w;
+    return Positioned(
+      // top: top + 123.w,
+      bottom: 192.h + 370.h,
+      left: 15.w,
       child: Visibility(
         visible: !controller.expandedGirl,
-        child: Container(
-          width: 68.w,
-          height: 41.w,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: AppColors.c000000,
-              borderRadius:
-                  BorderRadius.horizontal(right: Radius.circular(21.w))),
-          child: OutlinedText(
-            text: controller.gradeList[controller.beautyIndex.value],
-            textStyle: TextStyle(
-                fontFamily: FontFamily.fRobotoBlack,
-                height: 1,
-                fontSize: 30.spMin),
-          ),
+        child: OutlinedText(
+          text: controller.currentGirl.grade,
+          textStyle: TextStyle(
+              fontFamily: FontFamily.fRobotoBlack,
+              height: 1,
+              fontSize: 40.spMin),
         ),
       ),
     );
   }
 
-  Widget _backText({
-    required double top,
-    double? left,
-    required String text,
-    required Color color,
-    required double fontSize,
-    String? fontFamily,
-  }) {
+  Widget _expandedBt() {
+    double top = controller.expandedGirl ? 0 : 48.w;
     return Positioned(
-      top: top,
-      left: left,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: fontSize,
-          color: color,
-          // height: 0.8,
-          fontFamily: fontFamily ?? FontFamily.fOswaldMedium,
-        ),
+      // top: top + 107.h,
+      bottom: 192.h + 381.h,
+      right: 16.w,
+      child: MtInkWell(
+        onTap: () {
+          controller.expandedGirl = !controller.expandedGirl;
+          controller.update();
+        },
+        child: Container(
+            width: 41.h,
+            height: 41.h,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(9.h),
+            ),
+            child: Image.asset(
+              controller.expandedGirl
+                  ? Assets.cheerleadersUiCheerleadersIconFullscreen02
+                  : Assets.cheerleadersUiCheerleadersIconFullscreen01,
+              width: 25.h,
+              fit: BoxFit.fitWidth,
+            )),
       ),
     );
   }
@@ -152,109 +201,144 @@ class BeautyPage extends GetView<BeautyController> {
           border: Border.all(width: 0),
         ),
       ),
-      bodyWidget: Expanded(
+
+      floatWidgets: [
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
           child: GetBuilder<BeautyController>(
               init: BeautyController(),
               builder: (_) {
+                var top = controller.expandedGirl ? 0 : 48.w;
+                var colors = controller.currentGirl.backGroundColor
+                    .map((e) => Color(e))
+                    .toList();
                 return Container(
                   decoration: BoxDecoration(
-                    color: Color(controller
-                        .backgroundColor[controller.beautyIndex.value]),
-                    border: Border.all(width: 0),
-                  ),
+                      // color: Color(controller.currentGirl.),
+                      border: Border.all(width: 0),
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: colors)),
                   child: Stack(
-                    alignment: Alignment.center,
+                    alignment: Alignment.topCenter,
                     children: [
-                      _backText(
-                          top: 0.h,
-                          left: 75.5.w,
-                          text: "GIRLS",
-                          color: AppColors.cFFFFFF,
-                          fontFamily: FontFamily.fCalcioDemo,
-                          fontSize: 187.h),
-                      _backText(
-                          top: 193.h + 48.h,
-                          left: 10.w,
-                          text: "SEXY",
-                          color: AppColors.c000000,
-                          fontFamily: FontFamily.fOswaldMedium,
-                          fontSize: 20.h),
-                      _backText(
-                          top: 193.h + 48.h + 35.h,
-                          left: 0.w,
-                          text: "GIRLS",
-                          color: AppColors.c000000,
-                          fontFamily: FontFamily.fCalcioDemo,
-                          fontSize: 187.h),
                       Positioned(
-                        top: controller.expandedGirl ? 0 : 45.w,
+                        top: 169.h,
                         bottom: controller.expandedGirl ? 0 : 150.h,
                         child: InkWell(
                           onTap: () {
                             controller.expandedGirl = !controller.expandedGirl;
-
                             controller.update();
                           },
                           child: Image.asset(
-                            controller.beautyList[controller.beautyIndex.value],
-                            // height: ,
-                            // width: 250.w,
-                            fit: BoxFit.fitHeight,
+                            Assets.cheerleadersUiCheerleadersBgLight,
+                            width: 375.w,
+                            fit: BoxFit.fitWidth,
+                            color: Color(controller.currentGirl.lightColor),
+                            // color: Colors.white,
                             alignment: Alignment.topCenter,
                           ),
                         ),
                       ),
-                      _grade(),
-                      _blackIconButton(
-                        top: 34.h,
-                        width: 20.h,
-                        visible: true,
-                        icon: controller.expandedGirl
-                            ? Assets.cheerleadersUiCheerleadersIconFullscreen02
-                            : Assets.cheerleadersUiCheerleadersIconFullscreen01,
-                        onTap: () {
-                          controller.expandedGirl = !controller.expandedGirl;
-                          controller.update();
-                        },
+                      //文字
+                      Positioned(
+                        top: controller.expandedGirl ? 0 : 48.w + 5.w,
+                        left: -25.w,
+                        child: ShaderMask(
+                          shaderCallback: (Rect bounds) {
+                            return LinearGradient(
+                                    begin: Alignment.centerRight,
+                                    end: Alignment.centerLeft,
+                                    colors: controller
+                                        .currentGirl.backGroundColor
+                                        .map((e) => Color(e))
+                                        .toList())
+                                .createShader(bounds);
+                          },
+                          child: Text(
+                            "cheerle".toUpperCase(),
+                            style: TextStyle(
+                                fontSize: 121.sp,
+                                letterSpacing: 0,
+                                // color: AppColors.c262626,
+                                color: Colors.white,
+
+                                // color: Color(controller.backgroundColor[
+                                //     controller.beautyIndex.value]),
+                                height: 0.95,
+                                fontFamily: FontFamily.fOswaldBold),
+                          ),
+                        ),
                       ),
-                      _blackIconButton(
-                        top: 252.h,
+                      //美女
+                      Positioned(
+                        top: 48.w + 31.5.h,
+                        bottom: controller.expandedGirl ? 0 : 192.h,
+                        // right: 0,
+                        child: InkWell(
+                          onTap: () {
+                            controller.expandedGirl = !controller.expandedGirl;
+                            controller.update();
+                          },
+                          child: Image.asset(
+                            controller.currentGirl.girlImg,
+                            // height: ,
+                            // width: 361.w,
+                            // fit: BoxFit.fitWidth,
+                            // alignment: Alignment.topRight,
+                            // height: 534.h,
+                            fit: BoxFit.fitHeight,
+                            alignment: Alignment.bottomCenter,
+                            // color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      _grade(),
+
+                      _leftButton(
+                        bottom: 178.h,
                         width: 22.h,
                         icon: Assets.cheerleadersUiCheerleadersIconShow,
                         onTap: () {},
                       ),
-                      _blackIconButton(
-                        top: 311.h,
+                      _leftButton(
+                        bottom: 118.h,
                         width: 22.h,
                         icon: Assets.cheerleadersUiCheerleadersIconChat,
                         onTap: () {},
                       ),
-                      _blackIconButton(
-                        top: 370.h,
+                      _leftButton(
+                        bottom: 60.h,
                         width: 22.h,
                         icon: Assets.cheerleadersUiCheerleadersIconPhoto,
                         onTap: () {},
                       ),
-                      _blackIconButton(
-                        top: 429.h,
-                        width: 23.5.h,
-                        withArrow: true,
-                        icon: Assets.cheerleadersUiCheerleadersIconClothing,
-                        onTap: () {},
-                      ),
+
+                      _expandedBt(),
+                      _clothList(),
                       Positioned(
                         top: -1,
                         left: 0,
                         right: 0,
                         child: Visibility(
-                            visible: !controller.expandedGirl,
-                            child: const UserInfoBar(showPop: true)),
+                          visible: !controller.expandedGirl,
+                          child: Container(
+                            color: AppColors.c000000,
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).padding.top + 0.w),
+                            child: const UserInfoBar(showPop: true),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 );
-              })),
-      floatWidgets: [
+              }),
+        ),
         const Positioned(
           bottom: 0,
           left: 0,

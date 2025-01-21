@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 17:09:20
- * @LastEditTime: 2025-01-18 15:30:02
+ * @LastEditTime: 2025-01-20 12:13:24
  */
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -27,6 +27,9 @@ class IllustractionDragWidget extends StatefulWidget {
 class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
     with SingleTickerProviderStateMixin {
   IlluSctrationDtlCtrl ctrl = Get.find();
+
+  final max = 437.w;
+  final min = 143.w;
 
   ///手指按下的x位置
   double startY = -1;
@@ -65,22 +68,23 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
     tween = Tween(begin: 0, end: 1);
     animationController = AnimationController(vsync: this)
       ..addListener(() {
+        // Log.e("animationValue:${animation.value}");
         if (mounted && animation.value != 0 && !isReset) {
           ctrl.currentY = animation.value;
-          ctrl.scale = ((ctrl.currentY - 143.w) / 294.w).clamp(0, 1);
+          ctrl.scale = ((ctrl.currentY - min) / (max - min)).clamp(0, 1);
           Log.d(" ctrl.currentY${ctrl.currentY}---,scale__:${ctrl.scale}");
           ctrl.update(["detail"]);
           // setState(() {});
         }
       });
-    animation = tween.animate(animationController);
+    animation = tween.animate(CurvedAnimation(
+        parent: animationController, curve: Curves.bounceInOut));
   }
 
   @override
   Widget build(BuildContext context) {
     onVerticalDragStart(DragStartDetails detail) {
-      if (ctrl.scrollController.position.pixels != 0 &&
-          ctrl.currentY == 143.w) {
+      if (ctrl.scrollController.position.pixels != 0 && ctrl.currentY == min) {
         return;
       }
       startY = detail.localPosition.dy;
@@ -92,13 +96,13 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
 
     onVerticalDragEnd(DragEndDetails detail) {
       // if (ctrl.scrollController.position.pixels != 0 &&
-      //     ctrl.currentY == 143.w) {
+      //     ctrl.currentY == min) {
       //   return;
       // }
       // //结束更新当前位置
       offsetY = detail.localPosition.dy - startY;
-      ctrl.currentY = (ctrl.currentY + offsetY).clamp(143.w, 437.w);
-      ctrl.scale = (ctrl.currentY - 143.w) / 294.w;
+      ctrl.currentY = (ctrl.currentY + offsetY).clamp(min, max);
+      ctrl.scale = (ctrl.currentY - min) / (max - min);
       print(
           'onVerticalDragEnd-currentY:${ctrl.currentY}--offsetY:$offsetY--scale：${ctrl.scale}');
       // ctrl.update(["detail"]);
@@ -106,29 +110,27 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
     }
 
     onVerticalDragDown(DragDownDetails detail) {
-      if (ctrl.scrollController.position.pixels != 0 &&
-          ctrl.currentY == 143.w) {
+      if (ctrl.scrollController.position.pixels != 0 && ctrl.currentY == min) {
         return;
       }
       startY = detail.localPosition.dy;
     }
 
     onVerticalDragUpdate(DragUpdateDetails detail) {
-      if (ctrl.scrollController.position.pixels != 0 &&
-          ctrl.currentY == 143.w) {
+      if (ctrl.scrollController.position.pixels != 0 && ctrl.currentY == min) {
         return;
       }
       offsetY = detail.localPosition.dy - startY;
-      var cur = (ctrl.currentY + offsetY).clamp(143.w, 437.w);
+      var cur = (ctrl.currentY + offsetY).clamp(min, max);
       // ctrl.currentY = cur;
-      ctrl.scale = (cur - 143.w) / 294.w;
+      ctrl.scale = (cur - min) / (max - min);
       print('onVerticalDragUpdate-cur:$cur--scale：${ctrl.scale}');
 
       ctrl.update(["detail"]);
     }
 
     return Positioned(
-      top: (ctrl.currentY + offsetY).clamp(143.w, 437.w),
+      top: (ctrl.currentY + offsetY).clamp(min, max),
       // top: ctrl.currentY,
       left: 0.w,
       bottom: 0,
@@ -167,12 +169,13 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
     if ((offsetY > 0 && velocity > 1500) ||
         (offsetY > 100 && velocity > 1000) ||
         (offsetY > height / 5 && velocity >= 500) ||
-        offsetY > height * 2 / 5) {
+        offsetY > height * 2 / 5 ||
+        (offsetY < 0 && current > max - 50)) {
       tween.begin = current;
-      tween.end = 438.w;
+      tween.end = max;
     } else {
       tween.begin = current;
-      tween.end = 143.w;
+      tween.end = min;
     }
     offsetY = 0;
     isReset = false;

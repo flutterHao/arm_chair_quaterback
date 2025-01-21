@@ -128,6 +128,7 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
     int? openTime,
     int? status,
     String? totalTime,
+    int? totalTimeValue,
     RxString? remainTime,
     double? progress,
     RxBool? isOpen,
@@ -139,6 +140,7 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
       ..openTime = openTime ?? this.openTime
       ..status = status ?? this.status
       ..totalTime = totalTime ?? this.totalTime
+      ..totalTimeValue = totalTimeValue ?? this.totalTimeValue
       ..remainTime = remainTime ?? this.remainTime
       ..progress = progress ?? this.progress
       ..isOpen = isOpen ?? this.isOpen

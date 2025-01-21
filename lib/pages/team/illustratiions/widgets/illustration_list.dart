@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-01-18 16:36:23
+ * @LastEditTime: 2025-01-20 15:00:37
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -32,9 +32,9 @@ class IllustrationList extends StatelessWidget {
       builder: (ctrl) {
         var list = ctrl.onfilter();
         var activeList = list.where((e) => e.isActive == 0).toList();
-        activeList.sort((a, b) => b.isLight.compareTo(a.isLight));
+        // activeList.sort((a, b) => b.isLight.compareTo(a.isLight));
         var notActiveList = list.where((e) => e.isActive == 1).toList();
-        notActiveList.sort((a, b) => b.isLight.compareTo(a.isLight));
+        // notActiveList.sort((a, b) => b.isLight.compareTo(a.isLight));
         int length = list.where((e) => e.isLight == 1).length;
         return Column(
           children: [
