@@ -131,9 +131,9 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
               ),
               12.vGap,
               Text(
-                "${MyDateUtils.formatDate(MyDateUtils.getNowDateTime(),
+                "${MyDateUtils.formatDate(MyDateUtils.startOfNextDay(DateTime.now()),
                     format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(
-                    MyDateUtils.getNowDateTime())}",
+                    MyDateUtils.startOfNextDay(DateTime.now()))}",
                 style: 14.w4(
                   color: AppColors.c000000,
                   height: 1,

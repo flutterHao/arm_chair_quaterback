@@ -161,11 +161,11 @@ class _HistoryPageState extends State<HistoryPage>
           label: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              border: Border(
-                  right: BorderSide(
-                    color: AppColors.cE6E6E6,
-                    width: 1.w,
-                  ))),
+                border: Border(
+                    right: BorderSide(
+              color: AppColors.cE6E6E6,
+              width: 1.w,
+            ))),
             child: Text(
               'OPP',
               style: 12.w5(
@@ -175,12 +175,8 @@ class _HistoryPageState extends State<HistoryPage>
             ),
           )),
     ]);
-    var list = itemData[0].playerSeasonGameEntity.toJson().keys.toList();
-    for (int i = 0; i < list.length; i++) {
-      var key = list[i];
-      if (PlayerPropertyDataGridSource.excludeKeys.contains(key)) {
-        continue;
-      }
+    for (int i = 0; i < PlayerPropertyDataGridSource.ppKeys.length; i++) {
+      var key = PlayerPropertyDataGridSource.ppKeys[i];
       double width = 40.w;
 
       if (i == 0) {
@@ -192,7 +188,7 @@ class _HistoryPageState extends State<HistoryPage>
           label: Container(
             alignment: Alignment.center,
             child: Text(
-              key.toUpperCase(),
+              key,
               textAlign: TextAlign.center,
               style: 12.w5(
                   color: AppColors.c000000,

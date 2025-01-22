@@ -26,22 +26,84 @@ class PlayerPropertyDataGridSource extends DataGridSource {
           "text": items.teamEntity.shortEname,
         }),
       ];
-      var list2 = items.playerSeasonGameEntity
-          .toJson()
-          .keys
-          .map((e) => DataGridCell<dynamic>(columnName: e, value: {
-                "id": i,
-                "value": items.playerSeasonGameEntity.toJson()[e]
-              }))
-          .toList();
-      list.addAll(list2);
-      var where =
-          list.where((e) => !excludeKeys.contains(e.columnName)).toList();
-      var dataGridRow = DataGridRow(cells: where);
+      list.add(DataGridCell<dynamic>(columnName: 'MIN', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.min
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'PTS', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.pts
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'FGM', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.fgm
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'FGA', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.fga
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'REB', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.reb
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'OREB', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.oreb
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'DREB', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.dreb
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'AST', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.ast
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'BLK', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.blk
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'STL', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.stl
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'FTM', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.ftm
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'FTA', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.fta
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'PF', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.pf
+      }));
+      list.add(DataGridCell<dynamic>(columnName: 'TO', value: {
+        "id": i,
+        "value": items.playerSeasonGameEntity.to
+      }));
+      var dataGridRow = DataGridRow(cells: list);
       result.add(dataGridRow);
     }
     return result;
   }
+
+  static List<String> get ppKeys => [
+        "MIN",
+        "PTS",
+        "FGM",
+        "FGA",
+        "REB",
+        "OREB",
+        "DREB",
+        "AST",
+        "BLK",
+        "STL",
+        "FTM",
+        "FTA",
+        "PF",
+        "TO"
+      ];
 
   static List<String> get excludeKeys => [
         "espnId",
@@ -134,7 +196,9 @@ class PlayerPropertyDataGridSource extends DataGridSource {
           child: Text(
             (map["value"] as double).formatToString(),
             style: 12.w4(
-                color: map["value"] > avgValue ? AppColors.c000000 : AppColors.c4D4D4D,
+                color: map["value"] > avgValue
+                    ? AppColors.c000000
+                    : AppColors.c4D4D4D,
                 height: 1,
                 fontFamily: map["value"] > avgValue
                     ? FontFamily.fRobotoMedium

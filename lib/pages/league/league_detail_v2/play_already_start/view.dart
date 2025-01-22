@@ -226,6 +226,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
   }
 
   Container _teamStatsItemWidget(TeamStats item) {
+    var leftPercent = (item.leftValue+2) / (item.rightValue+item.leftValue+4) *100;
     return Container(
       height: 60.w,
       margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -266,9 +267,9 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
           3.5.vGap,
           SupportPercentProgressWidget(
             height: 12.w,
-            leftPercent: (item.getLeftPercent * 100).toInt(),
+            leftPercent: leftPercent.toInt(),
             leftColor: AppColors.cB3B3B3,
-            rightPercent: (100 - (item.getLeftPercent * 100).toInt()),
+            rightPercent: (100 - leftPercent).toInt(),
             rightColor: AppColors.c000000,
           )
         ],

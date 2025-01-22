@@ -34,39 +34,38 @@ class GuessHistoryItemController extends GetxController {
     }
   }
 
-
   @override
   dispose() {
+    timer?.cancel();
     super.dispose();
   }
 
   void startCountDown() {
     timer?.cancel();
     int ms = getLastTime();
-    var dateTimeByMs = MyDateUtils.getDateTimeByMs(ms);
-    var formatDate =
-        MyDateUtils.formatDate(dateTimeByMs, format: DateFormats.H_M_S);
-    openTime.value = formatDate;
+    var duration = Duration(milliseconds: ms);
+    openTime.value =
+        "${duration.inHours.toString().padLeft(2, "0")}:${duration.inMinutes.remainder(60).toString().padLeft(2, "0")}:${duration.inSeconds.remainder(60).toString().padLeft(2, "0")}";
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       int ms = getLastTime();
-      var dateTimeByMs = MyDateUtils.getDateTimeByMs(ms);
-      var formatDate =
-          MyDateUtils.formatDate(dateTimeByMs, format: DateFormats.H_M_S);
+      var duration = Duration(milliseconds: ms);
       if (ms <= 0) {
         /// 倒计时结算刷新数据
         Get.find<PicksHistoryController>().initData();
         t.cancel();
       }
 
-      openTime.value = formatDate;
+      openTime.value =
+          "${duration.inHours.toString().padLeft(2, "0")}:${duration.inMinutes.remainder(60).toString().padLeft(2, "0")}:${duration.inSeconds.remainder(60).toString().padLeft(2, "0")}";
     });
   }
 
   /// 获取开奖剩余时间，第二天的零点开奖
   int getLastTime() {
-    var nextDay = MyDateUtils.nextDay(MyDateUtils.getNowDateTime());
+    var nowDateTime = MyDateUtils.getNowDateTime();
+    var nextDay = nowDateTime.add(const Duration(days: 1));
     var nextDayStartTimeMS = MyDateUtils.getDayStartTimeMS(nextDay);
-    var ms = nextDayStartTimeMS - MyDateUtils.getNowDateMs();
+    var ms = nextDayStartTimeMS - nowDateTime.millisecondsSinceEpoch;
     return ms;
   }
 
