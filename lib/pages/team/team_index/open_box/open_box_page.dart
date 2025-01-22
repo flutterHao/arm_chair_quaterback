@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-01-21 11:33:45
+ * @LastEditTime: 2025-01-22 19:10:11
  */
 import 'dart:math';
 
@@ -14,12 +14,14 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/animated_arrow.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/animted_box.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/box_card_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/ripper_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -203,80 +205,122 @@ class OpenBoxPage extends GetView<TeamIndexController> {
     );
   }
 
-  Widget _cardWidget() {
-    double margin = controller.cardPackInfo.card.length <= 3 ? 50.w : 0.w;
-    double spacing = 10.w;
-
+  Widget _cardWidget(BuildContext context) {
     return Positioned(
-      top: 240.h,
+      top: 0.h,
       left: 0,
       right: 0,
+      bottom: 0,
       child: AnimatedOpacity(
         duration: 300.milliseconds,
-        opacity: (controller.step == 1 || controller.step == 3) ? 1 : 0,
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: margin),
+        opacity: (controller.step == 1 || controller.step >= 3) ? 1 : 0,
+        onEnd: () {
+          if (controller.step == 1) {
+            // item.playerCards
+            controller.shuffleCards(context, item);
+          }
+        },
+        child: Stack(
           alignment: Alignment.center,
-          height: (122 * 2 + spacing).w,
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: spacing,
-            runSpacing: spacing,
-            children: item.playerCards.map((e) {
-              Widget card = Obx(() {
-                return BoxCardWidget(
+          children: [
+            for (int i = 0; i < item.playerCards.length; i++)
+              Obx(() {
+                final e = item.playerCards[i];
+                Widget card = BoxCardWidget(
                   isFlipped: e.isOpen.value,
                   player: e,
                   onFlip: () async {
-                    int index = item.playerCards.indexOf(e);
-                    if (controller.step >= 3 || controller.isOpen) return;
-                    if (!e.isSelect.value) {
-                      //如果还没有选择先选牌
-                      for (var element in item.playerCards) {
-                        if (e.playerId == element.playerId) {
-                          e.isSelect.value = true;
-                        } else {
-                          element.isSelect.value = false;
-                        }
-                      }
-                      controller.forwardShake(
-                        e.playerId,
-                        item,
-                      );
-                      controller.update(["open_box_page"]);
-                    } else {
-                      controller.openBattleBox(
-                          controller.cardPackInfo.card.indexOf(item), e);
-                      controller.showBigCard(e);
-                    }
+                    controller.selectCard(item, e);
                   },
                 );
-              });
-              if (!e.isSelect.value) {
-                return AnimatedBuilder(
-                    animation: controller.breathController,
-                    builder: (context, child) {
-                      // return card;
-                      return Transform.scale(
-                          scale: controller.breathAnimation.value, child: card);
-                    });
-              }
-              return AnimatedBuilder(
-                  animation: controller.shakeAnimation,
-                  builder: (context, child) {
-                    return RotationTransition(
+
+                var dy =
+                    e.isSelect.value && controller.step == 1 && !e.isOpen.value
+                        ? 15.w
+                        : 0;
+                var curCard = item.playerCards[i];
+                return AnimatedPositioned(
+                  duration: 150.milliseconds,
+                  left: curCard.offset.value.dx +
+                      curCard.rotation.value * 1000.w, // 水平位置
+                  top: 180.h + curCard.offset.value.dy - dy, // 垂直位置
+                  child: SizedBox(
+                    width: 196.w,
+                    height: 221.w,
+                    // color: Colors.white,
+                    child: Stack(
                       alignment: Alignment.center,
-                      turns: controller.shakeAnimation,
-                      child: AnimatedSlide(
-                        duration: 100.milliseconds,
-                        offset: Offset(controller.shakeAnimation.value * 1,
-                            controller.shakeAnimation.value * 1),
-                        child: card,
-                      ),
-                    );
-                  });
-            }).toList(),
-          ),
+                      children: [
+                        if (e.isSelect.value && !e.isOpen.value)
+                          RipperAnimation(),
+                        if (e.isSelect.value && !e.isOpen.value)
+                          Positioned(
+                            top: 0,
+                            left: 11.5.w,
+                            child: Image.asset(
+                              height: 221.5.w,
+                              width: 165.5.w,
+                              fit: BoxFit.fill,
+                              Assets.managerUiManagerGiftEffect01,
+                            ),
+                          ),
+                        AnimatedRotation(
+                          duration: 150.milliseconds,
+                          turns: curCard.rotation.value,
+                          child: AnimatedScale(
+                            duration: const Duration(milliseconds: 100),
+                            scale: e.isSelect.value ? 1.0 : 0.9,
+                            alignment: Alignment.bottomCenter,
+                            child: (!e.isSelect.value) && controller.step < 3
+                                ? AnimatedBuilder(
+                                    animation: controller.breathController,
+                                    builder: (context, child) {
+                                      return Transform.scale(
+                                        scale: controller.breathAnimation.value,
+                                        child: card,
+                                      );
+                                    },
+                                  )
+                                : AnimatedBuilder(
+                                    animation: controller.shakeAnimation,
+                                    builder: (context, child) {
+                                      double angle =
+                                          controller.shakeAnimation.value *
+                                              pi *
+                                              controller.shake *
+                                              5;
+                                      if (e.isOpen.value) return card;
+                                      return RotationTransition(
+                                        alignment: Alignment.center,
+                                        turns: controller.shakeAnimation,
+                                        // child: card,
+                                        child: Transform(
+                                          transform: Matrix4.identity()
+                                            ..setEntry(3, 2, 0.001)
+                                            ..rotateX(angle)
+                                            ..rotateY(angle),
+                                          child: card,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            // for (int i = 0; i < item.playerCards.length; i++)
+            //   Positioned(
+            //     left: item.playerCards[i].offset.value.dx -
+            //         controller.cardWidth / 4,
+            //     top: 240.h + item.playerCards[i].offset.value.dy, // 垂直位置
+            //     child: Visibility(
+            //         visible: item.playerCards[i].isSelect.value,
+            //         child: const RipperAnimation()),
+            //   ),
+          ],
         ),
       ),
     );
@@ -390,12 +434,14 @@ class OpenBoxPage extends GetView<TeamIndexController> {
 
   Widget _continueText() {
     return Positioned(
-        bottom: 211.h,
+        bottom: 160.h,
         child: AnimatedOpacity(
-          duration: controller.step == 2 ? 1000.milliseconds : 200.milliseconds,
-          opacity: controller.step == 2 ? 1 : 0,
+          duration: (controller.step == 2 || controller.step == 4)
+              ? 1000.milliseconds
+              : 200.milliseconds,
+          opacity: (controller.step == 2 || controller.step == 4) ? 1 : 0,
           child: Text(
-            "Tap screen to continue".toUpperCase(),
+            "Tap to proceed".toUpperCase(),
             style: 19.w4(
               color: AppColors.c666666,
               fontFamily: FontFamily.fOswaldMedium,
@@ -405,44 +451,81 @@ class OpenBoxPage extends GetView<TeamIndexController> {
   }
 
   Widget _goBackButton() {
+    var show = controller.step == 3;
     return Positioned(
         // bottom: 188.h,
         top: 579.h + 50.h,
-        child: AnimatedScale(
-          duration: 300.milliseconds,
-          scale: controller.step == 3 ? 1 : 0,
-          child: MtInkWell(
-            onTap: () => Get.back(),
-            child: Container(
-              width: 165.w,
-              height: 45.w,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.w),
-                border: Border.all(color: AppColors.c666666, width: 1.w),
-              ),
-              child: Stack(
-                alignment: Alignment.centerLeft,
+        child: Visibility(
+          visible: show,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Column(
                 children: [
-                  Center(
+                  Row(children: [
+                    Text("COST:",
+                        style: 16.w4(
+                            fontFamily: FontFamily.fOswaldMedium,
+                            color: AppColors.cFFFFFF)),
+                    3.hGap,
+                    IconWidget(
+                      iconWidth: 20.w,
+                      icon: Assets.commonUiCommonIconCurrency02,
+                    ),
+                    4.hGap,
+                    Text("25",
+                        style: 16.w4(
+                            fontFamily: FontFamily.fOswaldMedium,
+                            color: AppColors.cFFFFFF)),
+                  ]),
+                  8.vGap,
+                  MtInkWell(
+                    onTap: () {
+                      controller.oneMore();
+                    },
+                    child: Container(
+                      width: 146.w,
+                      height: 41.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.w),
+                        border:
+                            Border.all(color: AppColors.c666666, width: 1.w),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "ONE MORE".toUpperCase(),
+                          style: 19.w4(
+                              color: AppColors.cFFFFFF,
+                              fontFamily: FontFamily.fOswaldMedium),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              9.hGap,
+              MtInkWell(
+                onTap: () => controller.gotIt(item),
+                child: Container(
+                  width: 146.w,
+                  height: 41.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.w),
+                    border: Border.all(color: AppColors.c666666, width: 1.w),
+                  ),
+                  child: Center(
                     child: Text(
-                      "GO BACK".toUpperCase(),
+                      "GOT IT".toUpperCase(),
                       style: 19.w4(
                           color: AppColors.cFFFFFF,
                           fontFamily: FontFamily.fOswaldMedium),
                     ),
                   ),
-                  Positioned(
-                    right: 8.w,
-                    child: IconWidget(
-                      iconWidth: 15.w,
-                      icon: Assets.iconUiIconArrows04,
-                      rotateAngle: -90,
-                    ),
-                  )
-                ],
-              ),
-            ),
+                ),
+              )
+            ],
           ),
         ));
   }
@@ -512,27 +595,11 @@ class OpenBoxPage extends GetView<TeamIndexController> {
     return HorizontalDragBackWidget(
       child: GetBuilder<TeamIndexController>(
           id: "open_box_page",
-          builder: (context) {
+          builder: (_) {
             // item.playerCards.shuffle();
             return GestureDetector(
-              onTap: controller.step == 2
-                  ? () async {
-                      if (item.playerCards.length == 1) {
-                        await controller.closeBigBox();
-                        Get.back();
-                      } else {
-                        await controller.closeBigBox();
-
-                        controller.step = 3;
-                        controller.update(["open_box_page"]);
-                        await Future.delayed(const Duration(milliseconds: 300));
-                        for (var e in item.playerCards) {
-                          await Future.delayed(
-                              const Duration(milliseconds: 100));
-                          e.isOpen.value = true;
-                        }
-                      }
-                    }
+              onTap: controller.step == 2 || controller.step == 4
+                  ? () => controller.toContinue(item)
                   : null,
               child: Container(
                 width: 375.w,
@@ -553,7 +620,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                     _bigCard(),
 
                     ///抽卡
-                    _cardWidget(),
+                    _cardWidget(context),
                     _rightBottomImage(),
 
                     /// 开宝箱

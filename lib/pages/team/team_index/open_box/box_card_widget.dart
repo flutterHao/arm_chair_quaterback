@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2025-01-21 11:27:20
+ * @LastEditTime: 2025-01-22 18:00:51
  */
 
 import 'dart:math';
@@ -88,54 +88,54 @@ class _BoxCardWidgetState extends State<BoxCardWidget>
               ..setEntry(3, 2, 0.001)
               ..rotateY(angle),
             alignment: Alignment.center,
-            child: AnimatedScale(
-              duration: const Duration(milliseconds: 1000),
-              scale: widget.player.isSelect.value ? 1 : 0.9,
-              alignment: Alignment.bottomCenter,
-
-              ///isSmall 小卡
-              child: widget.isSmall
-                  ? Container(
-                      width: 98.w + (widget.player.isSelect.value ? 6.w : 0),
-                      height: 136.w + (widget.player.isSelect.value ? 6.w : 0),
-                      alignment: Alignment.bottomCenter,
-                      decoration: BoxDecoration(
-                          border: widget.player.isSelect.value
-                              ? Border.all(width: 3.w, color: AppColors.cFF7954)
-                              : null,
-                          borderRadius: BorderRadius.circular(15.w)),
-                      child: angle >= pi / 2
-                          ? Transform(
+            child: widget.isSmall
+                ? Container(
+                    // width: 98.w + (widget.player.isSelect.value ? 6.w : 0),
+                    // height: 136.w + (widget.player.isSelect.value ? 6.w : 0),
+                    width: 108.w,
+                    height: 150.w,
+                    alignment: Alignment.bottomCenter,
+                    child: angle >= pi / 2
+                        ? Container(
+                            decoration: BoxDecoration(
+                                border: widget.player.isSelect.value
+                                    ? Border.all(
+                                        width: 3.w, color: AppColors.cFF7954)
+                                    : null,
+                                borderRadius: BorderRadius.circular(15.w)),
+                            child: Transform(
                               alignment: Alignment.center,
                               transform: Matrix4.identity()..scale(-1.0, 1.0),
                               child: SmallPlayerCard(
                                 playerId: widget.player.playerId,
                               ),
-                            )
-                          : Image.asset(
-                              Assets.managerUiManagerPlayercardSmall,
-                              width: 98.w,
-                              fit: BoxFit.fill,
                             ),
-                    )
-                  : Transform.scale(
-                      alignment: Alignment.topCenter,
-                      scale: 1.h / 1.w,
-                      child: angle >= pi / 2
-                          ? Transform(
-                              alignment: Alignment.center,
-                              transform: Matrix4.identity()..scale(-1.0, 1.0),
-                              child: BigPlayerCard(
-                                playerId: widget.player.playerId,
-                              ),
-                            )
-                          : Image.asset(
-                              Assets.managerUiManagerPlayercardBig,
-                              width: 174.w,
-                              fit: BoxFit.fill,
+                          )
+                        : Image.asset(
+                            widget.player.isSelect.value
+                                ? Assets.managerUiManagerPlayercardSmall00
+                                : Assets.managerUiManagerPlayercardSmall,
+                            width: widget.player.isSelect.value ? 108.w : 98.w,
+                            fit: BoxFit.fill,
+                          ),
+                  )
+                : Transform.scale(
+                    alignment: Alignment.topCenter,
+                    scale: 1.h / 1.w,
+                    child: angle >= pi / 2
+                        ? Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.identity()..scale(-1.0, 1.0),
+                            child: BigPlayerCard(
+                              playerId: widget.player.playerId,
                             ),
-                    ),
-            ),
+                          )
+                        : Image.asset(
+                            Assets.managerUiManagerPlayercardBig,
+                            width: 174.w,
+                            fit: BoxFit.fill,
+                          ),
+                  ),
           );
         },
       ),

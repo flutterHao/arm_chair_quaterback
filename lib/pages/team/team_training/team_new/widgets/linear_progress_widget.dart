@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2025-01-18 18:04:04
+ * @LastEditTime: 2025-01-21 12:16:08
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +138,7 @@ class OutLineProgressWidget extends StatelessWidget {
             AnimatedContainer(
               duration: 300.milliseconds,
               alignment: Alignment.centerLeft,
-              width: width * progress,
+              width: width * (progress.clamp(0, 1)),
               height: height,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(

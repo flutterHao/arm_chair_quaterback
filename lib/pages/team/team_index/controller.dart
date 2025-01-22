@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-20 10:53:07
+ * @LastEditTime: 2025-01-22 19:57:13
  */
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
@@ -16,6 +17,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/utils/future_retry.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -37,6 +39,11 @@ class TeamIndexController extends GetxController
     with GetTickerProviderStateMixin {
   TeamIndexController();
 
+  final runSpacing = 10.w;
+  final cardWidth = 98.w + 6.w;
+  final cardHeight = 136.w + 6.w;
+  final maxCardsPerRow = 3; // 假设每行最多3个卡片
+
   ///宝箱
   var box1Claimed = false.obs;
   var box2Claimed = false.obs;
@@ -52,13 +59,14 @@ class TeamIndexController extends GetxController
   RefreshController refreshController = RefreshController();
   bool recieved = false;
   RxInt cup = 0.obs;
-
+  //step:0 开宝箱 1选卡 2 展示选中的卡牌 3 展示所有,
   int step = 0;
   int selectIndex = -1;
 
   //摇动卡牌动画
   late AnimationController shakeController;
   late Animation<double> shakeAnimation;
+  late int shake = 1;
 
   //卡牌呼吸动画
   late AnimationController breathController;
@@ -70,8 +78,10 @@ class TeamIndexController extends GetxController
   RxBool showBackground3 = false.obs;
   Duration showBgDuration = const Duration(milliseconds: 200);
   RxBool showChangeText = false.obs;
-  bool isOpen = false;
+  bool isOpen = false; //防止重复点击
   bool loadDataSuccess = false;
+  bool isStartting = false;
+  bool canOneMore = true;
 
   late StreamSubscription<int> subscription;
 
@@ -87,7 +97,7 @@ class TeamIndexController extends GetxController
       }
     });
     shakeController = AnimationController(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
     shakeAnimation = TweenSequence([
@@ -101,7 +111,7 @@ class TeamIndexController extends GetxController
       ),
     )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          shakeController.reverse();
+          shakeController.reverse().then((v) => shake = shake * -1);
         } else if (status == AnimationStatus.dismissed) {
           shakeController.forward();
         }
@@ -185,7 +195,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, PlayerCardEntity card) async {
-    // return;
+    return;
     if (isOpen) return;
     isOpen = true;
     awardList = await TeamApi.opneBattleBox(index, card.playerId);
@@ -209,12 +219,15 @@ class TeamIndexController extends GetxController
   }
 
   Future toOpenBoxPage(CardPackInfoCard item) async {
+    canOneMore = true;
+    isStartting = false;
     isOpen = false;
     step = 0;
     for (var e in item.playerCards) {
-      e.isOpen.value = false;
+      e.isOpen.value = true;
       e.isSelect.value = false;
     }
+    setCardPosition(Get.context!, item, 0);
     await Get.to(
         opaque: false,
         () => OpenBoxPage(item: item),
@@ -354,6 +367,107 @@ class TeamIndexController extends GetxController
     }
   }
 
+  //type=0;初始化
+  Future setCardPosition(
+      BuildContext ctx, CardPackInfoCard item, int type) async {
+    //发放卡牌
+    double totalWidth = (cardWidth * maxCardsPerRow) +
+        (runSpacing * (maxCardsPerRow - 1)) +
+        89.w;
+
+    double startX = (MediaQuery.of(ctx).size.width - totalWidth) / 2;
+    int lenght = item.playerCards.length;
+    double totalWidth1 =
+        (cardWidth.w * (lenght - 3)) + (runSpacing * (lenght - 4)) + 89.w;
+    double startX1 = (MediaQuery.of(ctx).size.width - totalWidth1) / 2;
+    for (int i = 0; i < item.playerCards.length; i++) {
+      double dx = 0;
+      if (i >= 3) {
+        dx = startX1 + (i - 3) * (cardWidth + runSpacing);
+      } else {
+        dx = startX + (i % maxCardsPerRow) * (cardWidth + runSpacing);
+      }
+      double dy = (i ~/ maxCardsPerRow) * (cardHeight + 15.w) + 20.w;
+      item.playerCards[i].offset.value = Offset(dx, dy);
+      if (type != 0) await Future.delayed(const Duration(milliseconds: 150));
+    }
+  }
+
+  //洗牌
+  void shuffleCards(BuildContext context, CardPackInfoCard item) async {
+    // 计算起始位置，使卡片在屏幕中水平居中
+    double cneterX =
+        (MediaQuery.of(context).size.width - cardWidth) / 2 - 44.5.w;
+    double centerY =
+        item.playerCards.length <= 3 ? 0 : (cardHeight + runSpacing) / 2;
+    await Future.delayed(const Duration(milliseconds: 500));
+    //翻转卡牌到背面
+    for (var e in item.playerCards) {
+      e.isOpen.value = false;
+      e.isSelect.value = false;
+      await Future.delayed(const Duration(milliseconds: 300));
+    }
+    //聚拢卡牌
+    for (var e in item.playerCards) {
+      e.offset.value = Offset(cneterX, centerY);
+    }
+    //打乱卡牌
+    await shuffleAnimation(item);
+    item.playerCards.shuffle();
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    //发放卡牌
+    await setCardPosition(context, item, 1);
+    isStartting = true;
+  }
+
+  Future shuffleAnimation(CardPackInfoCard item) async {
+    for (int i = item.playerCards.length - 1; i >= 0; i--) {
+      var e = item.playerCards[i];
+      e.rotation.value = 0.05;
+
+      await Future.delayed(const Duration(milliseconds: 150)).then((v) {
+        // 设置 rotation 为 0
+        e.rotation.value = 0;
+
+        // 将当前卡片移到卡组末尾
+        item.playerCards.removeAt(i);
+        item.playerCards.add(e);
+
+        // 刷新 UI
+        update(["open_box_page"]);
+      });
+    }
+  }
+
+  void selectCard(CardPackInfoCard item, PlayerCardEntity player) async {
+    if (!isStartting) return;
+    if (step >= 3 || isOpen || player.isOpen.value) return;
+    if (!player.isSelect.value) {
+      // 如果还没有选择先选牌
+      for (var element in item.playerCards) {
+        if (player.playerId == element.playerId) {
+          player.isSelect.value = true;
+        } else {
+          if (!element.isOpen.value) element.isSelect.value = false;
+        }
+      }
+      forwardShake(
+        player.playerId,
+        item,
+      );
+      // item.playerCards.sort((a, b) {
+      //   int aSelect = a.isSelect.value ? 1 : 0;
+      //   int bSelect = b.isSelect.value ? 1 : 0;
+      //   return aSelect.compareTo(bSelect);
+      // });
+      update(["open_box_page"]);
+    } else {
+      openBattleBox(cardPackInfo.card.indexOf(item), player);
+      showBigCard(player);
+    }
+  }
+
   Future showBigCard(PlayerCardEntity card) async {
     shakeController.reset();
     shakeController.stop();
@@ -369,6 +483,40 @@ class TeamIndexController extends GetxController
     await Future.delayed(showBgDuration);
     card.isOpen.value = true;
     update(["open_box_page"]);
+  }
+
+  //展示打卡后继续
+  void toContinue(CardPackInfoCard item) async {
+    //下一步显示小卡或者one more
+    if (step == 2) {
+      if (item.playerCards.length == 1) {
+        await closeBigBox();
+        Get.back();
+      } else {
+        await closeBigBox();
+        canOneMore ? step = 3 : gotIt(item);
+        update(["open_box_page"]);
+      }
+    } else if (step == 4) {
+      Get.back();
+    }
+  }
+
+  //one more，返回到第一步
+  Future oneMore() async {
+    step = 1;
+    canOneMore = false;
+    update(["open_box_page"]);
+  }
+
+  //确定该卡,翻开所有卡结束
+  Future gotIt(CardPackInfoCard item) async {
+    step = 4;
+    update(["open_box_page"]);
+    for (var e in item.playerCards) {
+      await Future.delayed(const Duration(milliseconds: 100));
+      e.isOpen.value = true;
+    }
   }
 
   Future closeBigBox() async {
@@ -393,15 +541,15 @@ class TeamIndexController extends GetxController
 
   ///设置晃动动画，等级低轻微晃动
   void forwardShake(int currentId, CardPackInfoCard e) {
-    int milliseconds = 200;
+    int milliseconds = 300;
     //按照等级排序,3张以上3张剧烈晃动，一下两张
     e.players.sort((a, b) => _grade(a).compareTo(_grade(b)));
     if (e.players.length > 3) {
       int index = e.players.indexOf(currentId);
-      milliseconds = index < 3 ? 100 : 250;
+      milliseconds = index < 3 ? 200 : 500;
     } else {
       int index = e.players.indexOf(currentId);
-      milliseconds = index < 2 ? 100 : 250;
+      milliseconds = index < 2 ? 200 : 500;
     }
     shakeController.duration = Duration(milliseconds: milliseconds);
     shakeController.forward();
@@ -409,20 +557,25 @@ class TeamIndexController extends GetxController
 
   int _grade(int playerId) {
     String grade = Utils.getPlayBaseInfo(playerId).grade;
-    grade = grade.replaceAll("-", "").replaceAll("+", "");
-    switch (grade) {
-      case "S":
-        return 0;
-      case "A":
-        return 1;
-      case "B":
-        return 2;
-      case "C":
-        return 3;
-      case "D":
-        return 4;
-      default:
-        return 5;
-    }
+    int rank = _gradeMap[grade] ?? 0;
+    return rank;
   }
 }
+
+Map<String, int> _gradeMap = {
+  "S+": 0,
+  "S": 1,
+  "S-": 2,
+  "A+": 3,
+  "A": 4,
+  "A-": 5,
+  "B+": 6,
+  "B": 7,
+  "B-": 8,
+  "C+": 9,
+  "C": 10,
+  "C-": 11,
+  "D+": 12,
+  "D": 13,
+  "D-": 14,
+};

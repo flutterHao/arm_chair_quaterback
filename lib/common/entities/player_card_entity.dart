@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 21:56:49
- * @LastEditTime: 2025-01-13 10:46:22
+ * @LastEditTime: 2025-01-21 14:58:33
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/player_card_entity.g.dart';
+import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -16,8 +17,11 @@ class PlayerCardEntity {
   @JSONField(serialize: false, deserialize: false)
   late RxBool isSelect = false.obs;
   @JSONField(serialize: false, deserialize: false)
-  late RxBool isOpen = false.obs;
+  late RxBool isOpen = true.obs;
   late int playerId = 0;
+  @JSONField(serialize: false, deserialize: false)
+  late Rx<Offset> offset = Offset(0, 0).obs;
+  late Rx<double> rotation = 0.0.obs;
 
   PlayerCardEntity({this.playerId = 0});
 
