@@ -10,7 +10,9 @@
  * @Date: 2024-09-12 16:53:47
  * @LastEditTime: 2024-09-24 10:57:13
  */
+import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
+import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/utils/platform_file_manager.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
@@ -26,17 +28,12 @@ import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/inbox/index.dart';
-import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
-import 'package:arm_chair_quaterback/pages/message/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
-import 'package:arm_chair_quaterback/pages/trade/trade_index/view.dart';
 import 'package:common_utils/common_utils.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -52,6 +49,8 @@ class HomeController extends GetxController {
   };
 
   UserEntity userEntiry = UserEntity();
+  /// 未完成任务列表(进行中的任务)
+  List<TeamMissionEntity> ongoingTaskList = [];
 
   refreshMoneyCoinWidget() async {
     await refreshUserEntity();
@@ -186,6 +185,7 @@ class HomeController extends GetxController {
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
     WSInstance.init();
+    getOngoingDailyTaskList();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 
@@ -249,7 +249,17 @@ class HomeController extends GetxController {
   // }
 
   int getTeamId() {
-    int teamId = HomeController.to.userEntiry?.teamLoginInfo?.team?.teamId ?? 0;
+    int teamId = HomeController.to.userEntiry.teamLoginInfo?.team?.teamId ?? 0;
     return teamId;
+  }
+
+  Future<void> getOngoingDailyTaskList() async {
+    var result = await Future.wait([
+      MineApi.getTeamMissionList(2),
+      MineApi.getTeamMissionList(3),
+    ]);
+    List<TeamMissionEntity> list = [...result[0], ...result[1]];
+    ongoingTaskList = list.where((e)=> e.status != 3).toList();
+    update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 }

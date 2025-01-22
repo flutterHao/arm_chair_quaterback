@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/clipper/daily_task_bar_clipper.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
@@ -45,6 +46,7 @@ class UserInfoBar extends StatelessWidget {
         builder: (controller) {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+          bool hasDailyTask = controller.ongoingTaskList.isNotEmpty;
           return Stack(
             alignment: Alignment.center,
             children: [
@@ -56,6 +58,15 @@ class UserInfoBar extends StatelessWidget {
                   clipper: TitleBarClipper(55.w),
                   child: Container(
                     color: AppColors.c262626,
+                    child: ClipPath(
+                      clipper: DailyTaskBarClipper(55.w),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        color: hasDailyTask
+                            ? AppColors.cFF7954
+                            : AppColors.c262626,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -171,16 +182,20 @@ class UserInfoBar extends StatelessWidget {
                             IconWidget(
                               iconWidth: 20.w,
                               icon: Assets.commonUiCommonStatusBarMission01,
-                              iconColor: AppColors.c686868,
+                              iconColor: hasDailyTask
+                                  ? AppColors.c000000
+                                  : AppColors.c686868,
                             ),
-                            Positioned(
-                                bottom: 9.w,
-                                right: 10.w,
-                                child: IconWidget(
-                                  iconWidth: 14.w,
-                                  icon: Assets.commonUiCommonStatusBarMission02,
-                                  iconColor: AppColors.c23E8A9,
-                                ))
+                            if (!hasDailyTask)
+                              Positioned(
+                                  bottom: 9.w,
+                                  right: 10.w,
+                                  child: IconWidget(
+                                    iconWidth: 14.w,
+                                    icon:
+                                        Assets.commonUiCommonStatusBarMission02,
+                                    iconColor: AppColors.c23E8A9,
+                                  ))
                           ],
                         ),
                       );

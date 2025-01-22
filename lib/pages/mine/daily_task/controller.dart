@@ -484,6 +484,7 @@ class DailyTaskController extends GetxController
       if (hasLuckyCoin) {
         getTeamProp();
       }
+      Get.find<HomeController>().getOngoingDailyTaskList();
 
       await showModalBottomSheet(
           isScrollControlled: true,
@@ -517,6 +518,7 @@ class DailyTaskController extends GetxController
       if (hasLuckyCoin) {
         getTeamProp();
       }
+      Get.find<HomeController>().getOngoingDailyTaskList();
       if (hasMoneyOrBetCoin || hasLuckyCoin || hasBall) {
         showTopToastDialog(
             needBg: false,
