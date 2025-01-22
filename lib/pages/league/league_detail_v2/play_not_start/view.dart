@@ -71,19 +71,24 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                 Stack(
                   alignment: Alignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Transform(
-                          alignment: Alignment.center,
-                          transform: Matrix4.identity()..scale(-1.0, 1.0),
-                          child: IconWidget(
-                              iconWidth: MediaQuery.of(context).size.width / 2,
-                              icon: Assets.scoresUiScoresBattleBg),
-                        ),
-                        IconWidget(
-                            iconWidth: MediaQuery.of(context).size.width / 2,
-                            icon: Assets.scoresUiScoresBattleBg),
-                      ],
+                    LayoutBuilder(
+                      builder: (context,c) {
+                        return Row(
+                          children: [
+                            Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.identity()..scale(-1.0, 1.0),
+                              child: IconWidget(
+                                  iconWidth: c.maxWidth / 2,
+                                  fit: BoxFit.fitWidth,
+                                  icon: Assets.scoresUiScoresBattleBg),
+                            ),
+                            IconWidget(
+                                iconWidth: c.maxWidth / 2,
+                                icon: Assets.scoresUiScoresBattleBg),
+                          ],
+                        );
+                      }
                     ),
                     Positioned(
                         bottom: 0,

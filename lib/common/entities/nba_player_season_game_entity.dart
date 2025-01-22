@@ -49,6 +49,7 @@ class NbaPlayerSeasonGameEntity {
   late double threePm;
   late double to;
   late int awayTeamId;
+  late int gameStartTime;
 
   NbaPlayerSeasonGameEntity();
 

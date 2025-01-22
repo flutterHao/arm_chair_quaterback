@@ -146,6 +146,10 @@ NbaPlayerSeasonGameEntity $NbaPlayerSeasonGameEntityFromJson(
   if (awayTeamId != null) {
     nbaPlayerSeasonGameEntity.awayTeamId = awayTeamId;
   }
+  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gameStartTime != null) {
+    nbaPlayerSeasonGameEntity.gameStartTime = gameStartTime;
+  }
   return nbaPlayerSeasonGameEntity;
 }
 
@@ -177,6 +181,7 @@ Map<String, dynamic> $NbaPlayerSeasonGameEntityToJson(
   data['threePm'] = entity.threePm;
   data['to'] = entity.to;
   data['awayTeamId'] = entity.awayTeamId;
+  data['gameStartTime'] = entity.gameStartTime;
   return data;
 }
 
@@ -207,6 +212,7 @@ extension NbaPlayerSeasonGameEntityExtension on NbaPlayerSeasonGameEntity {
     double? threePm,
     double? to,
     int? awayTeamId,
+    int? gameStartTime,
   }) {
     return NbaPlayerSeasonGameEntity()
       ..fga = fga ?? this.fga
@@ -233,6 +239,7 @@ extension NbaPlayerSeasonGameEntityExtension on NbaPlayerSeasonGameEntity {
       ..teamId = teamId ?? this.teamId
       ..threePm = threePm ?? this.threePm
       ..to = to ?? this.to
-      ..awayTeamId = awayTeamId ?? this.awayTeamId;
+      ..awayTeamId = awayTeamId ?? this.awayTeamId
+      ..gameStartTime = gameStartTime ?? this.gameStartTime;
   }
 }

@@ -25,6 +25,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/wi
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -946,8 +947,10 @@ class TeamBattleV2Controller extends GetxController
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     /// app退到后台则直接返回
-    isGameOver.value = true;
-    Get.back();
+    if(!kIsWeb) {
+      isGameOver.value = true;
+      Get.back();
+    }
     super.didChangeAppLifecycleState(state);
   }
 

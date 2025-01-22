@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/controller.dart';
 import 'package:flutter/material.dart';
@@ -20,68 +22,56 @@ class PlayerPropertyDataGridSource extends DataGridSource {
     for (int i = 0; i < data.length; i++) {
       var items = data[i];
       var list = <DataGridCell<dynamic>>[
-        DataGridCell<int>(columnName: 'id', value: i),
+        DataGridCell<int>(
+            columnName: 'id',
+            value: items.playerSeasonGameEntity.gameStartTime),
         DataGridCell<Map>(columnName: 'opp', value: {
           "id": i,
           "text": items.teamEntity.shortEname,
         }),
       ];
-      list.add(DataGridCell<dynamic>(columnName: 'MIN', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.min
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'PTS', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.pts
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'FGM', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.fgm
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'FGA', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.fga
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'REB', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.reb
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'OREB', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.oreb
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'DREB', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.dreb
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'AST', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.ast
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'BLK', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.blk
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'STL', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.stl
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'FTM', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.ftm
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'FTA', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.fta
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'PF', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.pf
-      }));
-      list.add(DataGridCell<dynamic>(columnName: 'TO', value: {
-        "id": i,
-        "value": items.playerSeasonGameEntity.to
-      }));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'MIN',
+          value: {"id": i, "value": items.playerSeasonGameEntity.min}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'PTS',
+          value: {"id": i, "value": items.playerSeasonGameEntity.pts}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'FGM',
+          value: {"id": i, "value": items.playerSeasonGameEntity.fgm}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'FGA',
+          value: {"id": i, "value": items.playerSeasonGameEntity.fga}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'REB',
+          value: {"id": i, "value": items.playerSeasonGameEntity.reb}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'OREB',
+          value: {"id": i, "value": items.playerSeasonGameEntity.oreb}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'DREB',
+          value: {"id": i, "value": items.playerSeasonGameEntity.dreb}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'AST',
+          value: {"id": i, "value": items.playerSeasonGameEntity.ast}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'BLK',
+          value: {"id": i, "value": items.playerSeasonGameEntity.blk}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'STL',
+          value: {"id": i, "value": items.playerSeasonGameEntity.stl}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'FTM',
+          value: {"id": i, "value": items.playerSeasonGameEntity.ftm}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'FTA',
+          value: {"id": i, "value": items.playerSeasonGameEntity.fta}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'PF',
+          value: {"id": i, "value": items.playerSeasonGameEntity.pf}));
+      list.add(DataGridCell<dynamic>(
+          columnName: 'TO',
+          value: {"id": i, "value": items.playerSeasonGameEntity.to}));
       var dataGridRow = DataGridRow(cells: list);
       result.add(dataGridRow);
     }
@@ -134,7 +124,6 @@ class PlayerPropertyDataGridSource extends DataGridSource {
           0;
       Widget widget;
       if (i == 0) {
-        value = value + 1;
         widget = Container(
           alignment: Alignment.center,
           margin: EdgeInsets.only(left: 16.w),
@@ -147,7 +136,7 @@ class PlayerPropertyDataGridSource extends DataGridSource {
                 : AppColors.cE6E6E6,
           ))),
           child: Text(
-            value.toString(),
+            MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(value), format:DateFormats.PARAM_M_D),
             style: 10.w4(
                 color: AppColors.c000000,
                 height: 1,
