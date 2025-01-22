@@ -1,16 +1,15 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -98,7 +97,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: Platform.isIOS?MediaQuery.of(context).padding.top:0,
+                            height: kIsWeb?0:Platform.isIOS?MediaQuery.of(context).padding.top:0,
                           ),
                           31.vGap,
                           Container(

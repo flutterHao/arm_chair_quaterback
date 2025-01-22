@@ -476,7 +476,9 @@ class DailyTaskController extends GetxController
       if (hasBall) {
         try {
           Get.find<TrainingController>().getData();
-        } finally {}
+        } catch(e){
+          print('TrainingController not init');
+        }
       }
       if (hasMoneyOrBetCoin) {
         Get.find<HomeController>().refreshMoneyCoinWidget();
@@ -510,7 +512,9 @@ class DailyTaskController extends GetxController
       if (hasBall) {
         try {
           Get.find<TrainingController>().getData();
-        } finally {}
+        } catch(e){
+          print('TrainingController not init');
+        }
       }
       if (hasMoneyOrBetCoin) {
         Get.find<HomeController>().refreshMoneyCoinWidget();

@@ -57,6 +57,10 @@ class PlatformFileManager {
 
   // 保存文件
   static Future<void> saveFile(String fileName, String content) async {
+    if (kIsWeb) {
+      print('Web 不支持文件写入');
+      return;
+    }
     // 检查权限
     bool hasPermission = await requestPermission();
     if (!hasPermission) {

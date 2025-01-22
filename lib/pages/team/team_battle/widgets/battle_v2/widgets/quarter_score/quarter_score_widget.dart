@@ -69,7 +69,7 @@ class QuarterScoreWidget extends StatelessWidget {
               ...list.map((e) {
                 return GridColumn(
                     columnName: e,
-                    width: 38.w,
+                    columnWidthMode: ColumnWidthMode.fill,
                     label: Container(
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(

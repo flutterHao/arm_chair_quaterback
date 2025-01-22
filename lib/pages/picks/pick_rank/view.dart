@@ -57,7 +57,8 @@ class PickRankPage extends GetView<PickRankController> {
                                     image: DecorationImage(
                                         image: AssetImage(
                                             Assets.picksUiPickRanksBg),
-                                        fit: BoxFit.fitHeight)),
+                                        alignment: Alignment.topRight,
+                                        fit: BoxFit.cover)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

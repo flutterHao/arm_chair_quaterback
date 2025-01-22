@@ -646,6 +646,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
     }
     return Container(
       height: 122.w,
+      width: double.infinity,
       margin: EdgeInsets.only(top: 9.w),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -679,7 +680,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
               ...controller.getQuarterColumnNames().map((e) {
                 return GridColumn(
                     columnName: e,
-                    width: 38.w,
+                    columnWidthMode: ColumnWidthMode.fill,
                     label: Container(
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(
