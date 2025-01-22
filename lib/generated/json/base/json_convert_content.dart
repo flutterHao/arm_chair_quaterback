@@ -49,6 +49,7 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
@@ -743,6 +744,10 @@ class JsonConvert {
       return data.map<NewsSourceEntity>((Map<String, dynamic> e) =>
           NewsSourceEntity.fromJson(e)).toList() as M;
     }
+    if (<NowSeasonEntity>[] is M) {
+      return data.map<NowSeasonEntity>((Map<String, dynamic> e) =>
+          NowSeasonEntity.fromJson(e)).toList() as M;
+    }
     if (<PerGameEntity>[] is M) {
       return data.map<PerGameEntity>((Map<String, dynamic> e) =>
           PerGameEntity.fromJson(e)).toList() as M;
@@ -1371,6 +1376,7 @@ class JsonConvertClassCollection {
     (NewsListEntity).toString(): NewsListEntity.fromJson,
     (NewsListDetail).toString(): NewsListDetail.fromJson,
     (NewsSourceEntity).toString(): NewsSourceEntity.fromJson,
+    (NowSeasonEntity).toString(): NowSeasonEntity.fromJson,
     (PerGameEntity).toString(): PerGameEntity.fromJson,
     (PickTypeEntity).toString(): PickTypeEntity.fromJson,
     (PkEventUpdatedEntity).toString(): PkEventUpdatedEntity.fromJson,

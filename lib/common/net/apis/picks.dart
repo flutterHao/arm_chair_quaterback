@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.da
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
@@ -213,5 +214,10 @@ class PicksApi {
     var json = await httpUtil.post(Api.getSeasonRankInfo,
         data: {"seasonId": seasonId, "page": page, "pageSize": pageSize});
     return SeasonRankInfoEntity.fromJson(json);
+  }
+
+  static Future<NowSeasonEntity> getNowSeason() async {
+    var json = await httpUtil.post(Api.getNowSeason);
+    return NowSeasonEntity.fromJson(json);
   }
 }
