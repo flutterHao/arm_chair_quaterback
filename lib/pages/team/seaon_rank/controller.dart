@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -37,12 +39,8 @@ class SeaonRankController extends GetxController {
   RxBool isShow = true.obs;
   RxList<GameSchedule> gameScheduleList = RxList();
   GlobalKey ranksBodyGlobalKey = GlobalKey();
-  RxList<List> seasonRankList = [
-    ['1'],
-    ['a'],
-    ['/3.png']
-  ].obs;
-
+  RxList<SeasonRankInfoEntity> seasonRankList = RxList();
+  late Rx<SeasonRankInfoEntity> nowSeasonRankInfoEntity;
   @override
   void onInit() {
     super.onInit();
@@ -68,7 +66,15 @@ class SeaonRankController extends GetxController {
     teamSimpleEntity = (await PicksApi.getTeamSimple(teamId)).obs;
     cupDefineList.value = await CacheApi.getCupDefine();
     gameScheduleList.value = await PicksApi.getGameSchedules(teamId);
+    SeasonRankInfoEntity seasonRankInfoEntity =
+        await PicksApi.getSeasonRankInfo(1);
+    nowSeasonRankInfoEntity = seasonRankInfoEntity.obs;
+    seasonRankList.add(seasonRankInfoEntity);
     loadingStatus.value = LoadDataStatus.success;
+
+    // seasonRankList.add(res);
+    // seasonRankList.add(res);
+    // print(res);
   }
 
   void timeCountDown() {

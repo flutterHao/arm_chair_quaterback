@@ -1,10 +1,14 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -42,7 +46,8 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
                   itemCount: controller.seasonRankList.length,
                   controller: controller.seaDialogPageController,
                   itemBuilder: (context, pageIndex) {
-                    return SeasonRankItemView(pageIndex);
+                    return SeasonRankItemView(
+                        pageIndex, controller.seasonRankList[pageIndex]);
                   }))
         ],
       ),
@@ -132,21 +137,24 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
 }
 
 class SeasonRankItemView extends StatefulWidget {
-  const SeasonRankItemView(this.pageIndex, {super.key});
+  const SeasonRankItemView(this.pageIndex, this.seasonRankEntity, {super.key});
   final int pageIndex;
+  final SeasonRankInfoEntity seasonRankEntity;
   @override
   State<SeasonRankItemView> createState() => _SeasonRankItemViewState();
 }
 
 class _SeasonRankItemViewState extends State<SeasonRankItemView> {
   ScrollController scrollController = ScrollController();
-  SeaonRankController controller = Get.find();
+
+  final SeaonRankController controller = Get.find();
+  // final NabPlayerSeasonGameRankEntity seasonRankEntity =controller.seasonRankList[widget.pageIndex];
   double rankItemHeight = .0;
   double rankBodyHeight = .0;
   final GlobalKey _globalKey = GlobalKey();
   RxBool isShowBottom = false.obs;
   RxBool isShowTop = false.obs;
-  var activeIndex = 10;
+  var activeIndex = 2;
   @override
   void initState() {
     // TODO: implement initState
@@ -202,7 +210,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
               child: ListView.separated(
                 controller: scrollController,
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                itemCount: 20,
+                itemCount: widget.seasonRankEntity.ranks.length,
                 itemBuilder: (context, index) {
                   return Container(
                     key: index == 0 ? _globalKey : null,
@@ -264,61 +272,67 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
   }
 
   Widget _seasonRankItemWidget(int index, [Color color = AppColors.c000000]) {
-    return Obx(() {
-      // controller.seasonRankList[controller.pageviewIndex.value];
-      return Container(
-          color: Colors.white,
-          padding: EdgeInsets.symmetric(vertical: 17.w),
-          child: Row(
-            children: [
-              Text(
-                '${index + 1}',
-                style: 19.w5(
-                  fontFamily: FontFamily.fOswaldMedium,
-                ),
+    // controller.seasonRankList[controller.pageviewIndex.value];
+    return Container(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 17.w),
+        child: Row(
+          children: [
+            Text(
+              '${index + 1}',
+              style: 19.w5(
+                fontFamily: FontFamily.fOswaldMedium,
               ),
-              20.hGap,
-              ClipOval(
-                child: IconWidget(iconWidth: 39.w, icon: Assets.teamUiHead01),
+            ),
+            20.hGap,
+            ClipOval(
+              child: ImageWidget(
+                  width: 36.w,
+                  url: Utils.getAvaterUrl(
+                      widget.seasonRankEntity.ranks[index].teamLogo)),
+            ),
+            6.hGap,
+            Expanded(
+                child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.seasonRankEntity.ranks[index].teamName,
+                    style: 14
+                        .w5(fontFamily: FontFamily.fOswaldMedium, color: color),
+                  ),
+                  Text(
+                    'Win Rate  ${(widget.seasonRankEntity.ranks[index].winPro * 100).round()}%',
+                    style: 12.w4(
+                        color: AppColors.c4D4D4D,
+                        fontFamily: FontFamily.fRobotoRegular),
+                  ),
+                ],
               ),
-              6.hGap,
-              Expanded(
-                  child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'G Cleavinger',
-                      style: 14.w5(
-                          fontFamily: FontFamily.fOswaldMedium, color: color),
-                    ),
-                    Text(
-                      'Win Rate  ${controller.pageviewIndex.value}%',
-                      style: 12.w4(
-                          color: AppColors.c4D4D4D,
-                          fontFamily: FontFamily.fRobotoRegular),
-                    ),
-                  ],
-                ),
-              )),
-              SizedBox(
-                width: 100.w,
-                child: Row(
-                  children: [
-                    IconWidget(
-                        iconWidth: 22.w,
-                        icon: Assets.managerUiManagerGameGrade01),
-                    const Spacer(),
-                    IconWidget(
-                        iconWidth: 17.w,
-                        icon: Assets.managerUiManagerIconCurrency04),
-                    Text('+999w',
-                        style: 14.w5(fontFamily: FontFamily.fOswaldMedium))
-                  ],
-                ),
-              )
-            ],
-          ));
-    });
+            )),
+            SizedBox(
+              width: 100.w,
+              child: Row(
+                children: [
+                  IconWidget(
+                      iconWidth: 22.w,
+                      icon: Assets.managerUiManagerGameGrade01),
+                  const Spacer(),
+                  IconWidget(
+                      iconWidth: 17.w,
+                      icon: Assets.managerUiManagerIconCurrency04),
+                  2.hGap,
+                  SizedBox(
+                    width: 42.w,
+                    // alignment: Alignment.centerRight,
+                    child: Text('${widget.seasonRankEntity.ranks[index].cup}',
+                        style: 14.w5(fontFamily: FontFamily.fOswaldMedium)),
+                  )
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }

@@ -75,6 +75,7 @@ import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/schedule_choose_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
@@ -934,6 +935,18 @@ class JsonConvert {
       return data.map<Question>((Map<String, dynamic> e) =>
           Question.fromJson(e)).toList() as M;
     }
+    if (<SeasonRankInfoEntity>[] is M) {
+      return data.map<SeasonRankInfoEntity>((Map<String, dynamic> e) =>
+          SeasonRankInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<SeasonRankInfoRanks>[] is M) {
+      return data.map<SeasonRankInfoRanks>((Map<String, dynamic> e) =>
+          SeasonRankInfoRanks.fromJson(e)).toList() as M;
+    }
+    if (<SeasonRankInfoMyRank>[] is M) {
+      return data.map<SeasonRankInfoMyRank>((Map<String, dynamic> e) =>
+          SeasonRankInfoMyRank.fromJson(e)).toList() as M;
+    }
     if (<StarUpDefineEntity>[] is M) {
       return data.map<StarUpDefineEntity>((Map<String, dynamic> e) =>
           StarUpDefineEntity.fromJson(e)).toList() as M;
@@ -1413,6 +1426,9 @@ class JsonConvertClassCollection {
     (TeamPlayer).toString(): TeamPlayer.fromJson,
     (TeamHistory).toString(): TeamHistory.fromJson,
     (Question).toString(): Question.fromJson,
+    (SeasonRankInfoEntity).toString(): SeasonRankInfoEntity.fromJson,
+    (SeasonRankInfoRanks).toString(): SeasonRankInfoRanks.fromJson,
+    (SeasonRankInfoMyRank).toString(): SeasonRankInfoMyRank.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
     (StarUpDoneEntity).toString(): StarUpDoneEntity.fromJson,
     (StarUpDoneAddPotential).toString(): StarUpDoneAddPotential.fromJson,

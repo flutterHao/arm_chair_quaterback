@@ -25,12 +25,6 @@ class TeamHistortyController extends GetxController {
     _initData();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-    print('页面关闭');
-  }
-
   List<PlayerStatus> getPlayerStatusData() {
     var list = gameResultInfoEntity.homeTeamResult.teamPlayers;
     List<GameResultInfoGameScoreBoardDetail> scoreList =

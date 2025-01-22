@@ -1,7 +1,10 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/controller.dart';
@@ -17,7 +20,7 @@ class SeasonRankWidget extends StatefulWidget {
 }
 
 class _SeasonRankWidgetState extends State<SeasonRankWidget> {
-  SeaonRankController seasonRankCtr = Get.find();
+  SeaonRankController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,18 +49,21 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                 padding: EdgeInsets.symmetric(horizontal: 14.w),
                 child: Row(
                   children: [
-                    _secondSeasonWidget(),
+                    _secondSeasonWidget(
+                        controller.nowSeasonRankInfoEntity.value.ranks[1]),
                     11.hGap,
-                    _firstSeasonWidget(),
+                    _firstSeasonWidget(
+                        controller.nowSeasonRankInfoEntity.value.ranks[0]),
                     11.hGap,
-                    _thirdSeasonWidget()
+                    _thirdSeasonWidget(
+                        controller.nowSeasonRankInfoEntity.value.ranks[2])
                   ],
                 ),
               ),
               42.vGap,
               MtInkWell(
                 onTap: () {
-                  seasonRankCtr.goSeasonRankDialog();
+                  controller.goSeasonRankDialog();
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -76,7 +82,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
         ));
   }
 
-  Widget _secondSeasonWidget() {
+  Widget _secondSeasonWidget(SeasonRankInfoRanks rank) {
     return Expanded(
         child: Container(
       child: Column(
@@ -108,21 +114,20 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                       width: 51.w,
                       height: 51.w,
                       decoration: BoxDecoration(
-                          border: Border.all(
-                              color: AppColors.cFFFFFF, width: 2.5.w),
-                          image: const DecorationImage(
-                              image: AssetImage(Assets.teamUiHead01)),
+                          border:
+                              Border.all(color: AppColors.cFFFFFF, width: 2.w),
                           color: Colors.white,
-                          // boxShadow: const [
-                          //   BoxShadow(color: AppColors.c212021, blurRadius: 9)
-                          // ],
                           shape: BoxShape.circle),
+                      child: ClipOval(
+                          child: ImageWidget(
+                        url: Utils.getAvaterUrl(rank.teamLogo),
+                      )),
                     ),
                   ],
                 ),
                 9.vGap,
                 Text(
-                  'USER NAME',
+                  rank.teamName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: 14.w5(fontFamily: FontFamily.fOswaldMedium),
@@ -143,7 +148,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
     ));
   }
 
-  Widget _firstSeasonWidget() {
+  Widget _firstSeasonWidget(SeasonRankInfoRanks rank) {
     return Expanded(
         child: Container(
       child: Column(
@@ -174,18 +179,20 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                       width: 51.w,
                       height: 51.w,
                       decoration: BoxDecoration(
-                          border: Border.all(
-                              color: AppColors.cFFFFFF, width: 2.5.w),
-                          image: const DecorationImage(
-                              image: AssetImage(Assets.teamUiHead01)),
+                          border:
+                              Border.all(color: AppColors.cFFFFFF, width: 2.w),
                           color: Colors.white,
                           shape: BoxShape.circle),
+                      child: ClipOval(
+                          child: ImageWidget(
+                        url: Utils.getAvaterUrl(rank.teamLogo),
+                      )),
                     ),
                   ],
                 ),
                 9.vGap,
                 Text(
-                  'USER NAME',
+                  rank.teamName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: 14.w5(fontFamily: FontFamily.fOswaldMedium),
@@ -206,7 +213,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
     ));
   }
 
-  Widget _thirdSeasonWidget() {
+  Widget _thirdSeasonWidget(SeasonRankInfoRanks rank) {
     return Expanded(
         child: Container(
       child: Column(
@@ -239,21 +246,20 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                       width: 51.w,
                       height: 51.w,
                       decoration: BoxDecoration(
-                          border: Border.all(
-                              color: AppColors.cFFFFFF, width: 2.5.w),
-                          image: const DecorationImage(
-                              image: AssetImage(Assets.teamUiHead01)),
+                          border:
+                              Border.all(color: AppColors.cFFFFFF, width: 2.w),
                           color: Colors.white,
-                          // boxShadow: const [
-                          //   BoxShadow(color: AppColors.c212021, blurRadius: 9)
-                          // ],
                           shape: BoxShape.circle),
+                      child: ClipOval(
+                          child: ImageWidget(
+                        url: Utils.getAvaterUrl(rank.teamLogo),
+                      )),
                     ),
                   ],
                 ),
                 9.vGap,
                 Text(
-                  'USER NAME',
+                  rank.teamName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: 14.w5(fontFamily: FontFamily.fOswaldMedium),
@@ -275,7 +281,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
 
   Widget _detailButton() {
     return MtInkWell(
-      onTap: () => seasonRankCtr.goSeasonRankDialog(),
+      onTap: () => controller.goSeasonRankDialog(),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         // mainAxisAlignment: MainAxisAlignment.end,

@@ -38,17 +38,15 @@ class SeaonRankPage extends GetView<SeaonRankController> {
                     child: LoadStatusWidget(
                         loadDataStatus: controller.loadingStatus.value));
               }
-              return const Expanded(
-                  child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SeasonTopWidget(),
-                    SeasonRewardsWidget(),
-                    LegendaryManagerWidget(),
-                    SeasonRankWidget(),
-                    GameLogWidget(),
-                  ],
-                ),
+              return const SingleChildScrollView(
+                  child: Column(
+                children: [
+                  SeasonTopWidget(),
+                  SeasonRewardsWidget(),
+                  LegendaryManagerWidget(),
+                  SeasonRankWidget(),
+                  GameLogWidget(),
+                ],
               ));
             })),
           );

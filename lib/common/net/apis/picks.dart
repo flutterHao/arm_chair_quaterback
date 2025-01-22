@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dar
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
@@ -19,6 +20,7 @@ import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -203,7 +205,13 @@ class PicksApi {
   static Future<GameResultInfoEntity> getGameResultInfo(int gameId) async {
     var json =
         await httpUtil.post(Api.getGameResultInfo, data: {"gameId": gameId});
-    print(666);
     return GameResultInfoEntity.fromJson(json);
+  }
+
+  static Future<SeasonRankInfoEntity> getSeasonRankInfo(int seasonId,
+      [int page = 0, int pageSize = 50]) async {
+    var json = await httpUtil.post(Api.getSeasonRankInfo,
+        data: {"seasonId": seasonId, "page": page, "pageSize": pageSize});
+    return SeasonRankInfoEntity.fromJson(json);
   }
 }
