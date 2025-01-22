@@ -210,7 +210,7 @@ class PicksApi {
   }
 
   static Future<SeasonRankInfoEntity> getSeasonRankInfo(int seasonId,
-      [int page = 0, int pageSize = 50]) async {
+      {int page = 0, String pageSize = '50'}) async {
     var json = await httpUtil.post(Api.getSeasonRankInfo,
         data: {"seasonId": seasonId, "page": page, "pageSize": pageSize});
     return SeasonRankInfoEntity.fromJson(json);

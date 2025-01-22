@@ -70,7 +70,7 @@ class MyDateUtils {
 
   /// 获取昨天日期返回DateTime
   static DateTime getYesterday() {
-    var dateTime = new DateTime.fromMillisecondsSinceEpoch(
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(
         DateTime.now().millisecondsSinceEpoch - 24 * 60 * 60 * 1000);
     return dateTime;
   }
@@ -147,7 +147,6 @@ class MyDateUtils {
   /// 获取dateTime是星期几
   static String getWeekday(DateTime dateTime,
       {String languageCode = 'en', bool short = false}) {
-    if (dateTime == null) return "";
     String weekday = "";
     switch (dateTime.weekday) {
       case 1:
@@ -264,21 +263,21 @@ class MyDateUtils {
   /// is Week.
   /// 根据时间戳判断是否是本周
   static bool isWeek(int ms, {bool isUtc = false, int? locMs}) {
-    if (ms == null || ms <= 0) {
+    if (ms <= 0) {
       return false;
     }
-    DateTime _old = DateTime.fromMillisecondsSinceEpoch(ms, isUtc: isUtc);
-    DateTime _now;
+    DateTime old0 = DateTime.fromMillisecondsSinceEpoch(ms, isUtc: isUtc);
+    DateTime now0;
     if (locMs != null) {
-      _now = MyDateUtils.getDateTimeByMs(locMs, isUtc: isUtc);
+      now0 = MyDateUtils.getDateTimeByMs(locMs, isUtc: isUtc);
     } else {
-      _now = isUtc ? DateTime.now().toUtc() : DateTime.now().toLocal();
+      now0 = isUtc ? DateTime.now().toUtc() : DateTime.now().toLocal();
     }
 
     DateTime old =
-        _now.millisecondsSinceEpoch > _old.millisecondsSinceEpoch ? _old : _now;
+        now0.millisecondsSinceEpoch > old0.millisecondsSinceEpoch ? old0 : now0;
     DateTime now =
-        _now.millisecondsSinceEpoch > _old.millisecondsSinceEpoch ? _now : _old;
+        now0.millisecondsSinceEpoch > old0.millisecondsSinceEpoch ? now0 : old0;
     return (now.weekday >= old.weekday) &&
         (now.millisecondsSinceEpoch - old.millisecondsSinceEpoch <=
             7 * 24 * 60 * 60 * 1000);
@@ -744,6 +743,11 @@ class MyDateUtils {
   /// Aug 1,2024
   static String getEnMMDDYYYY(DateTime dateTime, {bool short = false}) {
     return "${getMonthEnName(dateTime, short: short)} ${dateTime.day},${dateTime.year}";
+  }
+
+  /// Aug 1
+  static String getEnMMDD(DateTime dateTime, {bool short = false}) {
+    return "${getMonthEnName(dateTime, short: short)} ${dateTime.day}";
   }
 
   /// 获取英文月份

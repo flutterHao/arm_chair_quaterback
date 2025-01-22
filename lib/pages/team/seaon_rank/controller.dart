@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
@@ -9,6 +10,8 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/match_level_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_rank_dialog.dart';
@@ -52,6 +55,12 @@ class SeaonRankController extends GetxController {
 
   /// 当前赛季信息
   late NowSeasonEntity nowSeasonEntity;
+
+  /// 赛季排行榜展示人数
+  GameConstantEntity? showNumGameConstantEntity;
+
+  /// 参与X场后上排行榜
+  GameConstantEntity? distanceSeasonGameConstantEntity;
   @override
   void onInit() {
     super.onInit();
@@ -78,15 +87,17 @@ class SeaonRankController extends GetxController {
     cupDefineList.value = await CacheApi.getCupDefine();
     gameScheduleList.value = await PicksApi.getGameSchedules(teamId);
     nowSeasonEntity = await PicksApi.getNowSeason();
+
+    /// 获取比赛常量
+    await CacheApi.getGameConstant();
+    showNumGameConstantEntity = Utils.getGameConstant(10018);
     SeasonRankInfoEntity seasonRankInfoEntity =
-        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId);
+        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId,
+            pageSize: showNumGameConstantEntity!.constantValue);
     nowSeasonRankInfoEntity = seasonRankInfoEntity.obs;
     seasonRankList.add(seasonRankInfoEntity);
     loadingStatus.value = LoadDataStatus.success;
-
-    // seasonRankList.add(res);
-    // seasonRankList.add(res);
-    // print(res);
+    distanceSeasonGameConstantEntity = Utils.getGameConstant(10019);
   }
 
   void timeCountDown() {
@@ -132,6 +143,23 @@ class SeaonRankController extends GetxController {
     }
   }
 
+  /// 格式化为W单位
+  String formatToW(num num) {
+    if (num >= 10000) {
+      double convertedNum = num / 10000;
+      String formattedNum = convertedNum.toStringAsFixed(1);
+
+      // 如果小数部分是 .0 则去掉小数点和零
+      if (formattedNum.endsWith('.0')) {
+        formattedNum = formattedNum.substring(0, formattedNum.length - 2);
+      }
+
+      return '$formattedNum' 'w';
+    } else {
+      return num.toString();
+    }
+  }
+
   void goSeasonRankDialog() async {
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -171,23 +199,21 @@ class SeaonRankController extends GetxController {
     return item;
   }
 
+  /// 获取杯牌图片
   String getcupUrl(int cardId) {
     var item = cupDefineList.firstWhere((e) => e.cupNumId == cardId);
     return 'assets/images/manager/${item.cupPicId}.png';
-  }
-
-  ///监听元素是否可见
-  void onVisibilityChanged(VisibilityInfo visibilityInfo, int index) {
-    var visiblePercentage = visibilityInfo.visibleFraction * 100;
-    // Check if the item is mostly visible in the viewport and it's the target item.
-    if (index == 3) {
-      visiblePercentage < 50 ? isShow.value = true : isShow.value = false;
-    }
   }
 
   void goTeamHistory() async {
     // Get.put(TeamBattleController(Get.context!));
     // Get.put(TeamBattleV2Controller(Get.context!));
     Get.toNamed(RouteNames.teamHistory);
+  }
+
+  /// 获取日期格式 July 01
+  String getEnMMDD(int time) {
+    return MyDateUtils.getEnMMDD(DateTime.fromMillisecondsSinceEpoch(time),
+        short: true);
   }
 }

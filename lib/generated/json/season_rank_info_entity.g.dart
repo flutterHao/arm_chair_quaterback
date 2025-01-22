@@ -3,6 +3,11 @@ import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dar
 
 SeasonRankInfoEntity $SeasonRankInfoEntityFromJson(Map<String, dynamic> json) {
   final SeasonRankInfoEntity seasonRankInfoEntity = SeasonRankInfoEntity();
+  final int? nowCycleEndTime = jsonConvert.convert<int>(
+      json['nowCycleEndTime']);
+  if (nowCycleEndTime != null) {
+    seasonRankInfoEntity.nowCycleEndTime = nowCycleEndTime;
+  }
   final List<SeasonRankInfoRanks>? ranks = (json['ranks'] as List<dynamic>?)
       ?.map(
           (e) =>
@@ -16,24 +21,51 @@ SeasonRankInfoEntity $SeasonRankInfoEntityFromJson(Map<String, dynamic> json) {
   if (myRank != null) {
     seasonRankInfoEntity.myRank = myRank;
   }
+  final SeasonRankInfoNextRank? lastRank = jsonConvert.convert<
+      SeasonRankInfoNextRank>(json['lastRank']);
+  if (lastRank != null) {
+    seasonRankInfoEntity.lastRank = lastRank;
+  }
+  final SeasonRankInfoNextRank? nextRank = jsonConvert.convert<
+      SeasonRankInfoNextRank>(json['nextRank']);
+  if (nextRank != null) {
+    seasonRankInfoEntity.nextRank = nextRank;
+  }
+  final int? nowCycleStartTime = jsonConvert.convert<int>(
+      json['nowCycleStartTime']);
+  if (nowCycleStartTime != null) {
+    seasonRankInfoEntity.nowCycleStartTime = nowCycleStartTime;
+  }
   return seasonRankInfoEntity;
 }
 
 Map<String, dynamic> $SeasonRankInfoEntityToJson(SeasonRankInfoEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
+  data['nowCycleEndTime'] = entity.nowCycleEndTime;
   data['ranks'] = entity.ranks.map((v) => v.toJson()).toList();
-  data['myRank'] = entity.myRank.toJson();
+  data['myRank'] = entity.myRank?.toJson();
+  data['lastRank'] = entity.lastRank?.toJson();
+  data['nextRank'] = entity.nextRank?.toJson();
+  data['nowCycleStartTime'] = entity.nowCycleStartTime;
   return data;
 }
 
 extension SeasonRankInfoEntityExtension on SeasonRankInfoEntity {
   SeasonRankInfoEntity copyWith({
+    int? nowCycleEndTime,
     List<SeasonRankInfoRanks>? ranks,
     SeasonRankInfoMyRank? myRank,
+    SeasonRankInfoNextRank? lastRank,
+    SeasonRankInfoNextRank? nextRank,
+    int? nowCycleStartTime,
   }) {
     return SeasonRankInfoEntity()
+      ..nowCycleEndTime = nowCycleEndTime ?? this.nowCycleEndTime
       ..ranks = ranks ?? this.ranks
-      ..myRank = myRank ?? this.myRank;
+      ..myRank = myRank ?? this.myRank
+      ..lastRank = lastRank ?? this.lastRank
+      ..nextRank = nextRank ?? this.nextRank
+      ..nowCycleStartTime = nowCycleStartTime ?? this.nowCycleStartTime;
   }
 }
 
@@ -141,21 +173,30 @@ extension SeasonRankInfoRanksExtension on SeasonRankInfoRanks {
 
 SeasonRankInfoMyRank $SeasonRankInfoMyRankFromJson(Map<String, dynamic> json) {
   final SeasonRankInfoMyRank seasonRankInfoMyRank = SeasonRankInfoMyRank();
-  final int? guessCount = jsonConvert.convert<int>(json['guessCount']);
-  if (guessCount != null) {
-    seasonRankInfoMyRank.guessCount = guessCount;
-  }
   final int? teamLogo = jsonConvert.convert<int>(json['teamLogo']);
   if (teamLogo != null) {
     seasonRankInfoMyRank.teamLogo = teamLogo;
   }
-  final int? chip = jsonConvert.convert<int>(json['chip']);
-  if (chip != null) {
-    seasonRankInfoMyRank.chip = chip;
+  final String? teamName = jsonConvert.convert<String>(json['teamName']);
+  if (teamName != null) {
+    seasonRankInfoMyRank.teamName = teamName;
   }
-  final int? success = jsonConvert.convert<int>(json['success']);
-  if (success != null) {
-    seasonRankInfoMyRank.success = success;
+  final String? receivedRewards = jsonConvert.convert<String>(
+      json['receivedRewards']);
+  if (receivedRewards != null) {
+    seasonRankInfoMyRank.receivedRewards = receivedRewards;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    seasonRankInfoMyRank.createTime = createTime;
+  }
+  final int? rankId = jsonConvert.convert<int>(json['rankId']);
+  if (rankId != null) {
+    seasonRankInfoMyRank.rankId = rankId;
+  }
+  final int? seasonId = jsonConvert.convert<int>(json['seasonId']);
+  if (seasonId != null) {
+    seasonRankInfoMyRank.seasonId = seasonId;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -165,56 +206,138 @@ SeasonRankInfoMyRank $SeasonRankInfoMyRankFromJson(Map<String, dynamic> json) {
   if (rank != null) {
     seasonRankInfoMyRank.rank = rank;
   }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    seasonRankInfoMyRank.updateTime = updateTime;
+  }
+  final double? winPro = jsonConvert.convert<double>(json['winPro']);
+  if (winPro != null) {
+    seasonRankInfoMyRank.winPro = winPro;
+  }
   final int? id = jsonConvert.convert<int>(json['id']);
   if (id != null) {
     seasonRankInfoMyRank.id = id;
   }
-  final int? cycle = jsonConvert.convert<int>(json['cycle']);
-  if (cycle != null) {
-    seasonRankInfoMyRank.cycle = cycle;
-  }
-  final int? win = jsonConvert.convert<int>(json['win']);
-  if (win != null) {
-    seasonRankInfoMyRank.win = win;
+  final int? cup = jsonConvert.convert<int>(json['cup']);
+  if (cup != null) {
+    seasonRankInfoMyRank.cup = cup;
   }
   return seasonRankInfoMyRank;
 }
 
 Map<String, dynamic> $SeasonRankInfoMyRankToJson(SeasonRankInfoMyRank entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['guessCount'] = entity.guessCount;
   data['teamLogo'] = entity.teamLogo;
-  data['chip'] = entity.chip;
-  data['success'] = entity.success;
+  data['teamName'] = entity.teamName;
+  data['receivedRewards'] = entity.receivedRewards;
+  data['createTime'] = entity.createTime;
+  data['rankId'] = entity.rankId;
+  data['seasonId'] = entity.seasonId;
   data['teamId'] = entity.teamId;
   data['rank'] = entity.rank;
+  data['updateTime'] = entity.updateTime;
+  data['winPro'] = entity.winPro;
   data['id'] = entity.id;
-  data['cycle'] = entity.cycle;
-  data['win'] = entity.win;
+  data['cup'] = entity.cup;
   return data;
 }
 
 extension SeasonRankInfoMyRankExtension on SeasonRankInfoMyRank {
   SeasonRankInfoMyRank copyWith({
-    int? guessCount,
     int? teamLogo,
-    int? chip,
-    int? success,
+    String? teamName,
+    String? receivedRewards,
+    int? createTime,
+    int? rankId,
+    int? seasonId,
     int? teamId,
     int? rank,
+    int? updateTime,
+    double? winPro,
     int? id,
-    int? cycle,
-    int? win,
+    int? cup,
   }) {
     return SeasonRankInfoMyRank()
-      ..guessCount = guessCount ?? this.guessCount
       ..teamLogo = teamLogo ?? this.teamLogo
-      ..chip = chip ?? this.chip
-      ..success = success ?? this.success
+      ..teamName = teamName ?? this.teamName
+      ..receivedRewards = receivedRewards ?? this.receivedRewards
+      ..createTime = createTime ?? this.createTime
+      ..rankId = rankId ?? this.rankId
+      ..seasonId = seasonId ?? this.seasonId
       ..teamId = teamId ?? this.teamId
       ..rank = rank ?? this.rank
+      ..updateTime = updateTime ?? this.updateTime
+      ..winPro = winPro ?? this.winPro
       ..id = id ?? this.id
-      ..cycle = cycle ?? this.cycle
-      ..win = win ?? this.win;
+      ..cup = cup ?? this.cup;
+  }
+}
+
+SeasonRankInfoNextRank $SeasonRankInfoNextRankFromJson(
+    Map<String, dynamic> json) {
+  final SeasonRankInfoNextRank seasonRankInfoNextRank = SeasonRankInfoNextRank();
+  final int? seasonEndTime = jsonConvert.convert<int>(json['seasonEndTime']);
+  if (seasonEndTime != null) {
+    seasonRankInfoNextRank.seasonEndTime = seasonEndTime;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    seasonRankInfoNextRank.createTime = createTime;
+  }
+  final int? seasonId = jsonConvert.convert<int>(json['seasonId']);
+  if (seasonId != null) {
+    seasonRankInfoNextRank.seasonId = seasonId;
+  }
+  final int? seasonDuration = jsonConvert.convert<int>(json['seasonDuration']);
+  if (seasonDuration != null) {
+    seasonRankInfoNextRank.seasonDuration = seasonDuration;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    seasonRankInfoNextRank.updateTime = updateTime;
+  }
+  final int? seasonNum = jsonConvert.convert<int>(json['seasonNum']);
+  if (seasonNum != null) {
+    seasonRankInfoNextRank.seasonNum = seasonNum;
+  }
+  final int? seasonStartTime = jsonConvert.convert<int>(
+      json['seasonStartTime']);
+  if (seasonStartTime != null) {
+    seasonRankInfoNextRank.seasonStartTime = seasonStartTime;
+  }
+  return seasonRankInfoNextRank;
+}
+
+Map<String, dynamic> $SeasonRankInfoNextRankToJson(
+    SeasonRankInfoNextRank entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['seasonEndTime'] = entity.seasonEndTime;
+  data['createTime'] = entity.createTime;
+  data['seasonId'] = entity.seasonId;
+  data['seasonDuration'] = entity.seasonDuration;
+  data['updateTime'] = entity.updateTime;
+  data['seasonNum'] = entity.seasonNum;
+  data['seasonStartTime'] = entity.seasonStartTime;
+  return data;
+}
+
+extension SeasonRankInfoNextRankExtension on SeasonRankInfoNextRank {
+  SeasonRankInfoNextRank copyWith({
+    int? seasonEndTime,
+    int? createTime,
+    int? seasonId,
+    int? seasonDuration,
+    int? updateTime,
+    int? seasonNum,
+    int? seasonStartTime,
+  }) {
+    return SeasonRankInfoNextRank()
+      ..seasonEndTime = seasonEndTime ?? this.seasonEndTime
+      ..createTime = createTime ?? this.createTime
+      ..seasonId = seasonId ?? this.seasonId
+      ..seasonDuration = seasonDuration ?? this.seasonDuration
+      ..updateTime = updateTime ?? this.updateTime
+      ..seasonNum = seasonNum ?? this.seasonNum
+      ..seasonStartTime = seasonStartTime ?? this.seasonStartTime;
   }
 }

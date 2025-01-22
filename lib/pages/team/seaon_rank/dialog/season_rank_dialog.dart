@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
@@ -30,27 +32,26 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
       height: 650.h,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
-      child: Column(
-        children: [
-          const DialogTopBtn(),
-          10.vGap,
-          _seasonRankHeaderWidget(),
-          5.vGap,
-          const Divider(
-            height: 1,
-            color: AppColors.cD4D4D4,
-          ),
-          Expanded(
-              key: controller.ranksBodyGlobalKey,
-              child: PageView.builder(
-                  itemCount: controller.seasonRankList.length,
-                  controller: controller.seaDialogPageController,
-                  itemBuilder: (context, pageIndex) {
-                    return SeasonRankItemView(
-                        pageIndex, controller.seasonRankList[pageIndex]);
-                  }))
-        ],
-      ),
+      child: Obx(() => Column(
+            children: [
+              const DialogTopBtn(),
+              10.vGap,
+              _seasonRankHeaderWidget(),
+              5.vGap,
+              const Divider(
+                height: 1,
+                color: AppColors.cD4D4D4,
+              ),
+              Expanded(
+                  key: controller.ranksBodyGlobalKey,
+                  child: PageView.builder(
+                      itemCount: controller.seasonRankList.length,
+                      controller: controller.seaDialogPageController,
+                      itemBuilder: (context, pageIndex) {
+                        return SeasonRankItemView(pageIndex);
+                      }))
+            ],
+          )),
     ));
   }
 
@@ -99,17 +100,40 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
                       border: Border.all(color: AppColors.cB3B3B3, width: 1)),
                   alignment: Alignment.center,
                   child: Text(
-                    'dec 12 - dec 14',
+                    '${controller.getEnMMDD(controller.seasonRankList[controller.pageviewIndex.value].nowCycleStartTime)} - ${controller.getEnMMDD(controller.seasonRankList[controller.pageviewIndex.value].nowCycleEndTime)}',
                     style: 12.w5(fontFamily: FontFamily.fOswaldRegular),
                   )),
               5.hGap,
               MtInkWell(
                   onTap: () async {
-                    await controller.seaDialogPageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.linear);
-                    controller.pageviewIndex.value =
-                        (controller.seaDialogPageController.page ?? 0).toInt();
+                    // if (controller
+                    //         .seasonRankList[controller.pageviewIndex.value]
+                    //         .nextRank !=
+                    //     null) {
+                    //   print('有下个赛季');
+
+                    //   print('添加新页面');
+                    //   SeasonRankInfoEntity res =
+                    //       await PicksApi.getSeasonRankInfo(
+                    //           controller
+                    //               .seasonRankList[
+                    //                   controller.pageviewIndex.value]
+                    //               .nextRank!
+                    //               .seasonId,
+                    //           pageSize: controller
+                    //               .showNumGameConstantEntity!.constantValue);
+                    //   controller.seasonRankList.add(res);
+                    //   print(controller.seasonRankList.length);
+                    //   await controller.seaDialogPageController.nextPage(
+                    //       duration: const Duration(milliseconds: 300),
+                    //       curve: Curves.linear);
+                    //   controller.pageviewIndex.value =
+                    //       (controller.seaDialogPageController.page ?? 0)
+                    //           .toInt();
+                    //   print(controller.pageviewIndex.value);
+                    // } else {
+                    //   print('没有下个赛季');
+                    // }
                   },
                   child: Container(
                     width: 28.w,
@@ -137,9 +161,9 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
 }
 
 class SeasonRankItemView extends StatefulWidget {
-  const SeasonRankItemView(this.pageIndex, this.seasonRankEntity, {super.key});
+  const SeasonRankItemView(this.pageIndex, {super.key});
   final int pageIndex;
-  final SeasonRankInfoEntity seasonRankEntity;
+
   @override
   State<SeasonRankItemView> createState() => _SeasonRankItemViewState();
 }
@@ -154,12 +178,37 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
   final GlobalKey _globalKey = GlobalKey();
   RxBool isShowBottom = false.obs;
   RxBool isShowTop = false.obs;
-  var activeIndex = 2;
+
+  ///未上榜显示条件
+  RxBool isNotSeasonList = false.obs;
+
+  ///我在榜单显示范围内索引
+  int activeIndex = 0;
+  SeasonRankInfoEntity? seasonRankEntity;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+    // print("controller.seasonRankList.length");
+    // print(controller.seasonRankList.length);
+    // print(widget.pageIndex);
+    seasonRankEntity = controller.seasonRankList[widget.pageIndex];
+    // print(seasonRankEntity == null);
+
+    ///我已上榜单
+    if (seasonRankEntity!.myRank != null) {
+      ///我在榜单显示范围内
+      if (seasonRankEntity!.myRank!.rank <=
+          int.parse(controller.showNumGameConstantEntity!.constantValue)) {
+        activeIndex = seasonRankEntity!.myRank!.rank - 1;
+        WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+      } else {
+        isShowBottom.value = true;
+      }
+    } else {
+      print('未上榜');
+      isNotSeasonList.value = true;
+    }
   }
 
   void _afterLayout(_) {
@@ -171,7 +220,6 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
         _globalKey.currentContext!.findRenderObject() as RenderBox;
     rankItemHeight = renderBox.size.height;
     isShowBottom.value = activeIndex * rankItemHeight > rankBodyHeight;
-
     scrollController.addListener(_scrollListener);
   }
 
@@ -210,7 +258,8 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
               child: ListView.separated(
                 controller: scrollController,
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                itemCount: widget.seasonRankEntity.ranks.length,
+                itemCount:
+                    controller.seasonRankList[widget.pageIndex].ranks.length,
                 itemBuilder: (context, index) {
                   return Container(
                     key: index == 0 ? _globalKey : null,
@@ -226,7 +275,6 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
               ),
             ),
             Positioned(
-                // duration: const Duration(milliseconds: 300),
                 bottom: 0,
                 left: 0,
                 right: 0,
@@ -242,12 +290,9 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                           blurRadius: 10,
                         )
                       ]),
-                      child: _seasonRankItemWidget(
-                          controller.seasonRankList.length - 1,
-                          AppColors.cFF7954),
+                      child: _myRankItemWidget(),
                     ))),
             Positioned(
-                // duration: const Duration(milliseconds: 300),
                 top: 0,
                 left: 0,
                 right: 0,
@@ -263,16 +308,32 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                           blurRadius: 10,
                         )
                       ]),
-                      child: _seasonRankItemWidget(
-                          controller.seasonRankList.length - 1,
-                          AppColors.cFF7954),
-                    )))
+                      child: _myRankItemWidget(),
+                    ))),
+
+            ///未上榜
+            Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Visibility(
+                    visible: isNotSeasonList.value,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      decoration:
+                          const BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(
+                          color: AppColors.cDEDEDE,
+                          blurRadius: 10,
+                        )
+                      ]),
+                      child: _isNotSeasonRankItemWidget(),
+                    ))),
           ],
         ));
   }
 
   Widget _seasonRankItemWidget(int index, [Color color = AppColors.c000000]) {
-    // controller.seasonRankList[controller.pageviewIndex.value];
     return Container(
         color: Colors.white,
         padding: EdgeInsets.symmetric(vertical: 17.w),
@@ -289,7 +350,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
               child: ImageWidget(
                   width: 36.w,
                   url: Utils.getAvaterUrl(
-                      widget.seasonRankEntity.ranks[index].teamLogo)),
+                      seasonRankEntity!.ranks[index].teamLogo)),
             ),
             6.hGap,
             Expanded(
@@ -298,12 +359,12 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.seasonRankEntity.ranks[index].teamName,
+                    seasonRankEntity!.ranks[index].teamName,
                     style: 14
                         .w5(fontFamily: FontFamily.fOswaldMedium, color: color),
                   ),
                   Text(
-                    'Win Rate  ${(widget.seasonRankEntity.ranks[index].winPro * 100).round()}%',
+                    'Win Rate  ${(seasonRankEntity!.ranks[index].winPro * 100).round()}%',
                     style: 12.w4(
                         color: AppColors.c4D4D4D,
                         fontFamily: FontFamily.fRobotoRegular),
@@ -326,7 +387,9 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                   SizedBox(
                     width: 42.w,
                     // alignment: Alignment.centerRight,
-                    child: Text('${widget.seasonRankEntity.ranks[index].cup}',
+                    child: Text(
+                        controller
+                            .formatToW(seasonRankEntity!.ranks[index].cup),
                         style: 14.w5(fontFamily: FontFamily.fOswaldMedium)),
                   )
                 ],
@@ -334,5 +397,116 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
             )
           ],
         ));
+  }
+
+  Widget _myRankItemWidget() {
+    return Container(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 17.w),
+        child: Row(
+          children: [
+            Text(
+              seasonRankEntity!.myRank!.rank >
+                      int.parse(
+                          controller.showNumGameConstantEntity!.constantValue)
+                  ? '${int.parse(controller.showNumGameConstantEntity!.constantValue)}'
+                  : '${seasonRankEntity!.myRank!.rank}',
+              style: 19.w5(
+                fontFamily: FontFamily.fOswaldMedium,
+              ),
+            ),
+            20.hGap,
+            ClipOval(
+              child: ImageWidget(
+                  width: 36.w,
+                  url: Utils.getAvaterUrl(seasonRankEntity!.myRank!.teamLogo)),
+            ),
+            6.hGap,
+            Expanded(
+                child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    seasonRankEntity!.myRank!.teamName,
+                    style: 14.w5(
+                        fontFamily: FontFamily.fOswaldMedium,
+                        color: AppColors.cFF7954),
+                  ),
+                  Text(
+                    'Win Rate  ${widget.pageIndex}%',
+                    // 'Win Rate  ${(widget.seasonRankEntity.myRank != null ? widget.seasonRankEntity.myRank!.winPro * 100 : 0).round()}%',
+                    style: 12.w4(
+                        color: AppColors.c4D4D4D,
+                        fontFamily: FontFamily.fRobotoRegular),
+                  ),
+                ],
+              ),
+            )),
+            SizedBox(
+              width: 100.w,
+              child: Row(
+                children: [
+                  IconWidget(
+                      iconWidth: 22.w,
+                      icon: Assets.managerUiManagerGameGrade01),
+                  const Spacer(),
+                  IconWidget(
+                      iconWidth: 17.w,
+                      icon: Assets.managerUiManagerIconCurrency04),
+                  2.hGap,
+                  SizedBox(
+                    width: 42.w,
+                    child: Text('${seasonRankEntity!.myRank!.cup}',
+                        style: 14.w5(fontFamily: FontFamily.fOswaldMedium)),
+                  )
+                ],
+              ),
+            )
+          ],
+        ));
+  }
+
+  Widget _isNotSeasonRankItemWidget() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14.w),
+      child: Row(
+        children: [
+          IconWidget(
+            iconWidth: 34.w,
+            icon: controller
+                .getcupUrl(controller.teamSimpleEntity.value.cupRankId),
+          ),
+          16.hGap,
+          Expanded(
+              child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text.rich(TextSpan(children: [
+                  TextSpan(
+                      text: '5',
+                      style: 24.w5(fontFamily: FontFamily.fOswaldBold)),
+                  TextSpan(
+                      text:
+                          '/${controller.distanceSeasonGameConstantEntity!.constantValue}',
+                      style: 16.w5(fontFamily: FontFamily.fOswaldMedium))
+                ])),
+                Text(
+                  '${controller.distanceSeasonGameConstantEntity!.constantValue} MATCH INTO RANK',
+                  style: 10.w4(fontFamily: FontFamily.fRobotoRegular),
+                ),
+              ],
+            ),
+          )),
+          const Spacer(),
+          IconWidget(
+            iconWidth: 7.w,
+            icon: Assets.commonUiCommonIconSystemJumpto,
+            iconColor: AppColors.c000000,
+          ),
+        ],
+      ),
+    );
   }
 }

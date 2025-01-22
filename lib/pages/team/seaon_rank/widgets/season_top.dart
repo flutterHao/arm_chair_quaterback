@@ -23,7 +23,7 @@ class _SeasonTopWidgetState extends State<SeasonTopWidget> {
         width: double.infinity,
         color: AppColors.c1F1F1F,
         child: SizedBox(
-            width: 375.w,
+            width: double.infinity,
             child: AspectRatio(
               aspectRatio: 375 / 189, // 宽高比
               child: Container(

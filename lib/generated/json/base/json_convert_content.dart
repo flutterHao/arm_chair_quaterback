@@ -952,6 +952,10 @@ class JsonConvert {
       return data.map<SeasonRankInfoMyRank>((Map<String, dynamic> e) =>
           SeasonRankInfoMyRank.fromJson(e)).toList() as M;
     }
+    if (<SeasonRankInfoNextRank>[] is M) {
+      return data.map<SeasonRankInfoNextRank>((Map<String, dynamic> e) =>
+          SeasonRankInfoNextRank.fromJson(e)).toList() as M;
+    }
     if (<StarUpDefineEntity>[] is M) {
       return data.map<StarUpDefineEntity>((Map<String, dynamic> e) =>
           StarUpDefineEntity.fromJson(e)).toList() as M;
@@ -1435,6 +1439,7 @@ class JsonConvertClassCollection {
     (SeasonRankInfoEntity).toString(): SeasonRankInfoEntity.fromJson,
     (SeasonRankInfoRanks).toString(): SeasonRankInfoRanks.fromJson,
     (SeasonRankInfoMyRank).toString(): SeasonRankInfoMyRank.fromJson,
+    (SeasonRankInfoNextRank).toString(): SeasonRankInfoNextRank.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
     (StarUpDoneEntity).toString(): StarUpDoneEntity.fromJson,
     (StarUpDoneAddPotential).toString(): StarUpDoneAddPotential.fromJson,
