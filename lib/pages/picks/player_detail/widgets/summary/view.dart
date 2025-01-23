@@ -29,10 +29,15 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SummaryPage extends StatefulWidget {
-  const SummaryPage({required this.playerId, super.key, this.tabStr});
+  const SummaryPage(
+      {required this.playerId,
+      super.key,
+      this.tabStr,
+      required this.playerDetailController});
 
   final int playerId;
   final String? tabStr;
+  final PlayerDetailController playerDetailController;
 
   @override
   State<SummaryPage> createState() => _SummaryPageState();
@@ -45,14 +50,17 @@ class _SummaryPageState extends State<SummaryPage>
 
   @override
   Widget build(BuildContext context) {
-    playerDetailController = Get.find();
-    controller =
-        Get.put(SummaryController(widget.playerId, initTabStr: widget.tabStr));
+    playerDetailController = widget.playerDetailController;
+    controller = Get.put(SummaryController(
+      widget.playerId,
+      playerDetailController,
+      initTabStr: widget.tabStr,
+    ));
     return GetBuilder<SummaryController>(
       init: controller,
       id: SummaryController.idSummaryMain,
       builder: (_) {
-        if(controller.loadStatus.value != LoadDataStatus.success){
+        if (controller.loadStatus.value != LoadDataStatus.success) {
           return Obx(() {
             return Center(
               child: LoadStatusWidget(
@@ -84,7 +92,8 @@ class _SummaryPageState extends State<SummaryPage>
                             child: Text(
                               "${controller.formatSeasonDate()} STATS",
                               style: 24.w7(
-                                  height: 1, fontFamily: FontFamily.fOswaldBold),
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldBold),
                             ),
                           ),
                           Divider(
@@ -107,7 +116,8 @@ class _SummaryPageState extends State<SummaryPage>
                                     physics: OneBoundaryScrollPhysics(
                                         scrollController: scrollController),
                                     itemBuilder: (context, index) {
-                                      PlayerRegular item = seasonAverageData[index];
+                                      PlayerRegular item =
+                                          seasonAverageData[index];
                                       bool lastIndex =
                                           seasonAverageData.length - 1 == index;
                                       return SizedBox(
@@ -124,8 +134,8 @@ class _SummaryPageState extends State<SummaryPage>
                                                   item.value.toStringAsFixed(1),
                                                   style: 21.w5(
                                                       height: 1,
-                                                      fontFamily:
-                                                          FontFamily.fOswaldMedium),
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium),
                                                 ),
                                                 6.vGap,
                                                 Text(
@@ -138,13 +148,15 @@ class _SummaryPageState extends State<SummaryPage>
                                                 ),
                                                 13.vGap,
                                                 Opacity(
-                                                    opacity:
-                                                        item.rank <= 100 ? 1 : 0,
+                                                    opacity: item.rank <= 100
+                                                        ? 1
+                                                        : 0,
                                                     child: Text(
                                                       Utils.getSortWithInt(
                                                           item.rank),
                                                       style: 12.w5(
-                                                          color: AppColors.cFF7954,
+                                                          color:
+                                                              AppColors.cFF7954,
                                                           height: 1,
                                                           fontFamily: FontFamily
                                                               .fRobotoMedium),
@@ -185,7 +197,8 @@ class _SummaryPageState extends State<SummaryPage>
                             child: Text(
                               "RECENT",
                               style: 24.w7(
-                                  height: 1, fontFamily: FontFamily.fOswaldBold),
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldBold),
                             ),
                           ),
                           25.vGap,
@@ -208,43 +221,48 @@ class _SummaryPageState extends State<SummaryPage>
                                                   .getTitles()
                                                   .toList()[index];
                                               return Obx(() {
-                                                bool isSelected =
-                                                    controller.currentIndex.value ==
-                                                        index;
+                                                bool isSelected = controller
+                                                        .currentIndex.value ==
+                                                    index;
                                                 return InkWell(
-                                                  onTap: () =>
-                                                      controller.onTabTap(index),
+                                                  onTap: () => controller
+                                                      .onTabTap(index),
                                                   child: Container(
                                                     margin: EdgeInsets.only(
                                                         right: 4.w,
-                                                        left:
-                                                            index == 0 ? 16.w : 0),
+                                                        left: index == 0
+                                                            ? 16.w
+                                                            : 0),
                                                     height: 28.w,
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal: 21.w),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 21.w),
                                                     alignment: Alignment.center,
                                                     decoration: BoxDecoration(
                                                         border: Border.all(
-                                                            color:
-                                                                AppColors.c666666,
+                                                            color: AppColors
+                                                                .c666666,
                                                             width: 1.w),
                                                         color: isSelected
                                                             ? AppColors.c262626
                                                             : AppColors.cFFFFFF,
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                14.w)),
+                                                            BorderRadius
+                                                                .circular(
+                                                                    14.w)),
                                                     child: Text(
                                                       key.replaceAll(",", "+"),
                                                       style: 16.w5(
-                                                          color: isSelected
-                                                              ? AppColors.cF2F2F2
-                                                              : AppColors.c262626,
-                                                          height: 1,
+                                                        color: isSelected
+                                                            ? AppColors.cF2F2F2
+                                                            : AppColors.c262626,
+                                                        height: 1,
                                                         fontFamily: isSelected
-                                                            ? FontFamily.fOswaldMedium
+                                                            ? FontFamily
+                                                                .fOswaldMedium
                                                             : FontFamily
-                                                            .fOswaldRegular,),
+                                                                .fOswaldRegular,
+                                                      ),
                                                     ),
                                                   ),
                                                 );
@@ -258,14 +276,15 @@ class _SummaryPageState extends State<SummaryPage>
                                       height: 1.w,
                                     ),
                                     Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 16.w),
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 16.w),
                                       child: Row(
                                         children: [
                                           Expanded(
                                               child: Container(
                                             height: 94.w,
-                                            padding: EdgeInsets.only(left: 14.w),
+                                            padding:
+                                                EdgeInsets.only(left: 14.w),
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -282,11 +301,12 @@ class _SummaryPageState extends State<SummaryPage>
                                                 ),
                                                 9.vGap,
                                                 Text(
-                                                  controller.getSeasonAvgWithTab(),
+                                                  controller
+                                                      .getSeasonAvgWithTab(),
                                                   style: 27.w7(
                                                       height: 1,
-                                                      fontFamily:
-                                                          FontFamily.fOswaldBold),
+                                                      fontFamily: FontFamily
+                                                          .fOswaldBold),
                                                 )
                                               ],
                                             ),
@@ -299,7 +319,8 @@ class _SummaryPageState extends State<SummaryPage>
                                           Expanded(
                                               child: Container(
                                             height: 94.w,
-                                            padding: EdgeInsets.only(left: 14.w),
+                                            padding:
+                                                EdgeInsets.only(left: 14.w),
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -319,8 +340,8 @@ class _SummaryPageState extends State<SummaryPage>
                                                   "${controller.getLast5AvgWithTab().format()}",
                                                   style: 27.w7(
                                                       height: 1,
-                                                      fontFamily:
-                                                          FontFamily.fOswaldBold),
+                                                      fontFamily: FontFamily
+                                                          .fOswaldBold),
                                                 )
                                               ],
                                             ),
@@ -343,7 +364,8 @@ class _SummaryPageState extends State<SummaryPage>
                                             padding: EdgeInsets.all(10.w),
                                             child: Stack(
                                               children: [
-                                                _buildDefaultColumnChart(context),
+                                                _buildDefaultColumnChart(
+                                                    context),
                                               ],
                                             ),
                                           ),
@@ -362,7 +384,8 @@ class _SummaryPageState extends State<SummaryPage>
                                                 horizontal: 35.w),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Row(
                                                   children: [
@@ -391,8 +414,8 @@ class _SummaryPageState extends State<SummaryPage>
                                                       .replaceAll(",", "+"),
                                                   style: 12.w5(
                                                     height: 1,
-                                                    fontFamily:
-                                                        FontFamily.fRobotoMedium,
+                                                    fontFamily: FontFamily
+                                                        .fRobotoMedium,
                                                   ),
                                                 ),
                                               ],
@@ -434,7 +457,8 @@ class _SummaryPageState extends State<SummaryPage>
                               children: [
                                 25.vGap,
                                 Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
                                   child: Text(
                                     "RECENT PICK",
                                     style: 24.w7(
@@ -449,7 +473,8 @@ class _SummaryPageState extends State<SummaryPage>
                                     context: context,
                                     removeTop: true,
                                     child: ListView.builder(
-                                        itemCount: controller.getTitles().length,
+                                        itemCount:
+                                            controller.getTitles().length,
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index) {
                                           var key = controller
@@ -457,7 +482,8 @@ class _SummaryPageState extends State<SummaryPage>
                                               .toList()[index];
                                           return Obx(() {
                                             bool isSelected = controller
-                                                    .currentRecentPickIndex.value ==
+                                                    .currentRecentPickIndex
+                                                    .value ==
                                                 index;
                                             return InkWell(
                                               onTap: () => controller
@@ -465,14 +491,16 @@ class _SummaryPageState extends State<SummaryPage>
                                               child: Container(
                                                 margin: EdgeInsets.only(
                                                     right: 4.w,
-                                                    left: index == 0 ? 16.w : 0),
+                                                    left:
+                                                        index == 0 ? 16.w : 0),
                                                 height: 28.w,
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal: 21.w),
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
                                                     border: Border.all(
-                                                        color: AppColors.c666666,
+                                                        color:
+                                                            AppColors.c666666,
                                                         width: 1.w),
                                                     color: isSelected
                                                         ? AppColors.c262626
@@ -483,14 +511,16 @@ class _SummaryPageState extends State<SummaryPage>
                                                 child: Text(
                                                   key.replaceAll(",", "+"),
                                                   style: 16.w5(
-                                                      color: isSelected
-                                                          ? AppColors.cF2F2F2
-                                                          : AppColors.c262626,
-                                                      height: 1,
+                                                    color: isSelected
+                                                        ? AppColors.cF2F2F2
+                                                        : AppColors.c262626,
+                                                    height: 1,
                                                     fontFamily: isSelected
-                                                        ? FontFamily.fOswaldMedium
+                                                        ? FontFamily
+                                                            .fOswaldMedium
                                                         : FontFamily
-                                                        .fOswaldRegular,),
+                                                            .fOswaldRegular,
+                                                  ),
                                                 ),
                                               ),
                                             );
@@ -876,7 +906,7 @@ class _SummaryPageState extends State<SummaryPage>
                     //   );
                     // }),
                     Builder(builder: (_) {
-                      if(controller.getOutComeWithTab().isEmpty){
+                      if (controller.getOutComeWithTab().isEmpty) {
                         return const SizedBox.shrink();
                       }
                       return Container(
@@ -895,20 +925,23 @@ class _SummaryPageState extends State<SummaryPage>
                               ),
                               child: Text(
                                 "OUTCOME",
-                                style: 19.w7(color: AppColors.c262626, height: 1),
+                                style:
+                                    19.w7(color: AppColors.c262626, height: 1),
                               ),
                             ),
                             SizedBox(
                               height: 150.w,
                               child: PageView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: controller.getOutComeWithTab().length,
+                                  itemCount:
+                                      controller.getOutComeWithTab().length,
                                   controller: PageController(
                                     viewportFraction: 324 / 375,
                                   ),
                                   padEnds: false,
                                   itemBuilder: (context, index) {
-                                    OutCome outCome = controller.getOutComeWithTab()[index];
+                                    OutCome outCome =
+                                        controller.getOutComeWithTab()[index];
                                     return Container(
                                       height: 96.w,
                                       width: 298.w,
@@ -919,16 +952,18 @@ class _SummaryPageState extends State<SummaryPage>
                                         left: 16.w,
                                       ),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12.w),
+                                        borderRadius:
+                                            BorderRadius.circular(12.w),
                                         border: Border.all(
                                           color: AppColors.cD9D9D9,
                                           width: 1.w,
                                         ),
                                       ),
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 18.w),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 18.w),
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -938,8 +973,7 @@ class _SummaryPageState extends State<SummaryPage>
                                             children: [
                                               Row(
                                                 children: [
-                                                  if (outCome
-                                                      .guessData != null)
+                                                  if (outCome.guessData != null)
                                                     Container(
                                                         margin: EdgeInsets.only(
                                                             right: 8.w),
@@ -948,26 +982,25 @@ class _SummaryPageState extends State<SummaryPage>
                                                           icon: Assets
                                                               .picksUiPicksHistoryPick,
                                                           iconColor: outCome
-                                                                      .guessData
-                                                                      !.success
-                                                                  ? AppColors
-                                                                      .cE71629
-                                                                  : AppColors
-                                                                      .c0FA76C,
+                                                                  .guessData!
+                                                                  .success
+                                                              ? AppColors
+                                                                  .cE71629
+                                                              : AppColors
+                                                                  .c0FA76C,
                                                         )),
                                                   Text(
                                                     "@${Utils.getTeamInfo(outCome.awayTeamId).shortEname}",
                                                     style: 14.w5(
                                                       color: AppColors.c000000,
                                                       height: 1,
-                                                      fontFamily:
-                                                          FontFamily.fOswaldMedium,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
                                                     ),
                                                   )
                                                 ],
                                               ),
-                                              if (outCome
-                                                  .guessData != null)
+                                              if (outCome.guessData != null)
                                                 Text(
                                                   "Result: ${outCome.guessData!.guessGameAttrValue}",
                                                   style: 14.w5(
@@ -976,18 +1009,18 @@ class _SummaryPageState extends State<SummaryPage>
                                                         ? AppColors.cE71629
                                                         : AppColors.c0FA76C,
                                                     height: 1,
-                                                    fontFamily:
-                                                        FontFamily.fOswaldMedium,
+                                                    fontFamily: FontFamily
+                                                        .fOswaldMedium,
                                                   ),
                                                 )
                                               else
                                                 Text(
-                                                  "Result: ${outCome.gameAttrValue??0}",
+                                                  "Result: ${outCome.gameAttrValue ?? 0}",
                                                   style: 14.w5(
                                                     color: AppColors.cB3B3B3,
                                                     height: 1,
-                                                    fontFamily:
-                                                        FontFamily.fOswaldMedium,
+                                                    fontFamily: FontFamily
+                                                        .fOswaldMedium,
                                                   ),
                                                 )
                                             ],
@@ -996,14 +1029,13 @@ class _SummaryPageState extends State<SummaryPage>
                                           Text.rich(
                                             TextSpan(children: [
                                               TextSpan(
-                                                  text: Utils.getLongName(outCome.key)),
-                                              if (outCome
-                                                  .guessData != null)
+                                                  text: Utils.getLongName(
+                                                      outCome.key)),
+                                              if (outCome.guessData != null)
                                                 TextSpan(
                                                     text:
                                                         " ${outCome.guessData!.guessChoice == 1 ? "MORE" : "LESS"}"),
-                                              if (outCome
-                                                  .guessData != null)
+                                              if (outCome.guessData != null)
                                                 TextSpan(
                                                     text:
                                                         " ${outCome.guessData!.guessReferenceValue}"),
@@ -1026,10 +1058,10 @@ class _SummaryPageState extends State<SummaryPage>
                                             children: [
                                               MtInkWell(
                                                 onTap: () => Get.toNamed(
-                                                    RouteNames.leagueLeagueDetail,
+                                                    RouteNames
+                                                        .leagueLeagueDetail,
                                                     arguments: {
-                                                      "gameId":
-                                                          outCome.gameId
+                                                      "gameId": outCome.gameId
                                                     }),
                                                 child: Row(
                                                   children: [
@@ -1039,22 +1071,25 @@ class _SummaryPageState extends State<SummaryPage>
                                                               outCome
                                                                   .gameStartTime),
                                                       style: TextStyle(
-                                                          color: AppColors.c000000,
+                                                          color:
+                                                              AppColors.c000000,
                                                           height: 1,
                                                           fontFamily: FontFamily
                                                               .fRobotoRegular,
                                                           fontSize: 10.w,
                                                           fontWeight:
                                                               FontWeight.w400,
-                                                          decoration: TextDecoration
-                                                              .underline),
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline),
                                                     ),
                                                     7.hGap,
                                                     IconWidget(
                                                       iconWidth: 4.w,
                                                       icon: Assets
                                                           .commonUiCommonIconSystemJumpto,
-                                                      iconColor: AppColors.c000000,
+                                                      iconColor:
+                                                          AppColors.c000000,
                                                     )
                                                   ],
                                                 ),
@@ -1065,13 +1100,15 @@ class _SummaryPageState extends State<SummaryPage>
                                                     iconWidth: 17.w,
                                                     icon: Assets
                                                         .picksUiPicksHistoryComment,
-                                                    iconColor: AppColors.c000000,
+                                                    iconColor:
+                                                        AppColors.c000000,
                                                   ),
                                                   6.hGap,
                                                   Text(
                                                     "${outCome.reviewsCount}",
                                                     style: 10.w4(
-                                                        color: AppColors.c000000,
+                                                        color:
+                                                            AppColors.c000000,
                                                         height: 1,
                                                         fontFamily: FontFamily
                                                             .fRobotoRegular),
@@ -1093,11 +1130,11 @@ class _SummaryPageState extends State<SummaryPage>
                     // _buildNews(),
                     Obx(() {
                       var picksIndexController =
-                      Get.find<PicksIndexController>();
+                          Get.find<PicksIndexController>();
                       var leagueController = Get.find<LeagueController>();
                       var value = picksIndexController.choiceSize.value;
                       value += leagueController.choiceSize.value;
-                      if(value>0){
+                      if (value > 0) {
                         return 94.vGap;
                       }
                       return 9.vGap;
@@ -1750,7 +1787,7 @@ class _SummaryPageState extends State<SummaryPage>
             height: 1,
             fontFamily: FontFamily.fOswaldMedium),
         plotBands: plotBands,
-        maximum: controller.getColumnMaxYValue()*1.2,
+        maximum: controller.getColumnMaxYValue() * 1.2,
         minimum: 0,
         axisLine: const AxisLine(width: 0),
         // maximum: controller.getColumnMaxYValue().toDouble(),

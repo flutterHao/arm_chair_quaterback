@@ -1,22 +1,19 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/keep_alive_wrapper.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/game.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/stats/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/view.dart';
@@ -37,6 +34,13 @@ class PlayerDetailPageArguments {
 class PlayerDetailPage extends GetView<PlayerDetailController> {
   const PlayerDetailPage({super.key, required this.arguments});
 
+
+
+  @override
+  String? get tag => getTag();
+
+  String getTag() => "player_detail_page_${AppPages.history.length}";
+
   final PlayerDetailPageArguments arguments;
 
   @override
@@ -45,6 +49,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
       responseDepth: const [0, 1, 3],
       child: GetBuilder<PlayerDetailController>(
         init: PlayerDetailController(arguments),
+        tag: getTag(),
         id: PlayerDetailController.idMain,
         builder: (_) {
           return BlackAppWidget(
@@ -99,6 +104,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         child: SummaryPage(
                           playerId: arguments.playerId,
                           tabStr: arguments.tabStr,
+                          playerDetailController: controller,
                         ),
                       ),
                       const KeepAliveWrapper(child: StatsPage()),

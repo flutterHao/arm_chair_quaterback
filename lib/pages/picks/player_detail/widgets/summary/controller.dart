@@ -37,10 +37,12 @@ class PlayerRegular {
 }
 
 class SummaryController extends GetxController {
-  SummaryController(this.playerId, {this.initTabStr});
+  SummaryController(this.playerId, this.playerDetailController, {this.initTabStr});
 
   final int playerId;
   final String? initTabStr;
+  final PlayerDetailController playerDetailController;
+
 
   var currentIndex = 0.obs;
 
@@ -112,7 +114,7 @@ class SummaryController extends GetxController {
     Future.wait([CacheApi.getNBATeamDefine(), CacheApi.getPickType()]).then(
         (result) {
       nbaPlayerBaseInfoEntity =
-          Get.find<PlayerDetailController>().nbaPlayerBaseInfoEntity;
+          playerDetailController.nbaPlayerBaseInfoEntity;
       if (initTabStr != null) {
         var i = nbaPlayerBaseInfoEntity?.guessInfos.keys
                 .toList()

@@ -72,20 +72,4 @@ class PlayerDetailController extends GetxController
 
   static get idMain => "player_detail_main";
 
-  /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  /// 在 [onDelete] 方法之前调用。
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }
