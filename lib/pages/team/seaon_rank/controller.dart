@@ -12,6 +12,9 @@ import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/match_level_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_rank_dialog.dart';
@@ -20,6 +23,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -276,6 +280,14 @@ class SeaonRankController extends GetxController {
   void receiveReward(int cupRankId) async {
     await PicksApi.getSeasonRankAward(cupRankId);
     teamSimpleEntity.value = await PicksApi.getTeamSimple(teamId);
-    EasyLoading.showSuccess('Received successfully');
+
+    showTopToastDialog(
+        needBg: false,
+        child: Container(
+            margin: EdgeInsets.only(top: 44.w),
+            child: AwardWidget(
+                image: Assets.managerUiManagerGift00,
+                text: "YOU GOT 3  treasure chest".toUpperCase())));
+    Get.back();
   }
 }

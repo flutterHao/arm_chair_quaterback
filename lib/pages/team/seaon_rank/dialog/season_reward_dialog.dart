@@ -145,8 +145,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
                     iconColor: AppColors.c10A86A,
                     icon: Assets.commonUiCommonStatusBarMission02),
               )))
-        // else if (isShowReceive)
-        else
+        else if (isShowReceive)
           Positioned(
               right: 18.w,
               bottom: 32.w,

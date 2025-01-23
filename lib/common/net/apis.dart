@@ -20,6 +20,10 @@ class Api {
   static const String getTeamInfo = "$API_BASE_PATH/team/getTeamInfo";
   static const String updateTeamInfo = "$API_BASE_PATH/team/updateTeamInfo";
   static const String getTeamProp = "$API_BASE_PATH/team/getTeamProp";
+  static const String getSeasonRankInfo =
+      '$API_BASE_PATH/team/getSeasonRankInfo';
+  static const String getSeasonRankAward =
+      '$API_BASE_PATH/team/getSeasonRankAward';
 
   ///NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
@@ -52,10 +56,6 @@ class Api {
       "$API_BASE_PATH/NBANews/getRelevantNews";
   static const String getGuessRankByCycle =
       "$API_BASE_PATH/NBANews/getGuessRankByCycle";
-  static const String getSeasonRankInfo =
-      '$API_BASE_PATH/NBANews/getSeasonRankInfo';
-  static const String getSeasonRankAward =
-      '$API_BASE_PATH/NBANews/getSeasonRankAward';
 
   ///NBAData
   static const String statTeamRank =
