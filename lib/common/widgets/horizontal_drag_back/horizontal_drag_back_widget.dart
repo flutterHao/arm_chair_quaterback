@@ -12,16 +12,19 @@ import 'package:flutter/material.dart';
 
 class HorizontalDragBackWidget extends StatefulWidget {
   const HorizontalDragBackWidget({
-    required this.child,
+    this.child,
+    this.builder,
     this.onWidgetOut,
     this.canPop = true,
     this.responseDepth = const [],
     this.hasScrollChild = false,
     this.noBackAnimation = false,
     super.key,
-  });
+  }) : assert(child != null || builder != null,
+            "child or builder cannot all be null");
 
-  final Widget child;
+  final Widget? child;
+  final Widget Function(BuildContext context)? builder;
 
   ///是否支持右滑返回，实体/虚拟按键返回
   final bool canPop;
@@ -74,6 +77,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   /// 页面退出中
   bool popping = false;
 
+  /// Get.back()/Navigator.pop() 标记
+  bool systemPopping = false;
+
   /// 进入动画
   late AnimationController enterAnimationController;
   late Animation<double> enterAnimation;
@@ -83,14 +89,14 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     super.initState();
     offsetX = 1000000;
     enterAnimationController = AnimationController(
-        vsync: this, duration:  Duration(milliseconds: Constant.transitionDuration));
+        vsync: this,
+        duration: Duration(milliseconds: Constant.transitionDuration));
     Future.delayed(Duration.zero, () {
       // print('horizontalDragBack----delayed---offsetX: $offsetX');
       enterAnimation = TweenSequence([
         // TweenSequenceItem(
         //     tween: Tween(begin: width, end: width / 2), weight: 0.2),
-        TweenSequenceItem(
-            tween: Tween(begin: width, end: 0.0), weight: 1),
+        TweenSequenceItem(tween: Tween(begin: width, end: 0.0), weight: 1),
       ]).animate(enterAnimationController)
         ..addListener(() {
           offsetX = enterAnimation.value;
@@ -107,8 +113,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       ..addListener(() {
         if (mounted && !isReset) {
           offsetX = animation.value;
-          if (!widget.noBackAnimation) {
+          if (!widget.noBackAnimation && !systemPopping) {
             setState(() {});
+            print('horizontalDragBack----33333---offsetX: $offsetX');
             dragBackAnimation();
           }
         }
@@ -132,7 +139,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   void dragBackAnimation({num? value}) {
     var horizontalDragBackParentState =
         HorizontalDragBackParentState.of(context);
-    HorizontalDragBackController().notify(value??offsetX,
+    HorizontalDragBackController().notify(value ?? offsetX,
         hasDragBackParent: horizontalDragBackParentState != null);
   }
 
@@ -211,90 +218,93 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       }
       if (!widget.noBackAnimation) {
         setState(() {});
+        print('horizontalDragBack----44444---offsetX: $offsetX');
         dragBackAnimation();
       }
     }
 
-    Widget child = NotificationListener<ScrollNotification>(
-      onNotification: (notification) {
-        /// 查看滚动容器的depth
-        // print('notification:${notification.runtimeType}'
-        //     ',pixels:${notification.metrics.pixels}'
-        //     ',minScrollExtent:${notification.metrics.minScrollExtent}'
-        //     ',axisDirection:${notification.metrics.axisDirection}'
-        //     ',depth:${notification.depth}');
-        if (notification is OverscrollNotification) {
-          // print('notification.metrics.pixels:${notification.metrics.pixels}');
-          if (notification.metrics.pixels <=
-                  notification.metrics.minScrollExtent &&
+    Widget content(BuildContext context) {
+      return NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          /// 查看滚动容器的depth
+          // print('notification:${notification.runtimeType}'
+          //     ',pixels:${notification.metrics.pixels}'
+          //     ',minScrollExtent:${notification.metrics.minScrollExtent}'
+          //     ',axisDirection:${notification.metrics.axisDirection}'
+          //     ',depth:${notification.depth}');
+          if (notification is OverscrollNotification) {
+            // print('notification.metrics.pixels:${notification.metrics.pixels}');
+            if (notification.metrics.pixels <=
+                    notification.metrics.minScrollExtent &&
+                !isOnLeftSide &&
+                notification.metrics.axisDirection == AxisDirection.right &&
+                startScrollFlag &&
+                checkDepth(notification)) {
+              //到达左边界
+              isOnLeftSide = true;
+            }
+          }
+          if (notification is ScrollUpdateNotification &&
               !isOnLeftSide &&
-              notification.metrics.axisDirection == AxisDirection.right &&
-              startScrollFlag &&
-              checkDepth(notification)) {
-            //到达左边界
-            isOnLeftSide = true;
+              startScrollFlag) {
+            // print(
+            //     'notification.metrics.pixels:${notification.metrics.pixels}');
+            if (notification.metrics.pixels <=
+                    notification.metrics.minScrollExtent &&
+                !isOnLeftSide &&
+                notification.metrics.axisDirection == AxisDirection.right &&
+                checkDepth(notification)) {
+              //到达左边界
+              isOnLeftSide = true;
+            }
           }
-        }
-        if (notification is ScrollUpdateNotification &&
-            !isOnLeftSide &&
-            startScrollFlag) {
-          // print(
-          //     'notification.metrics.pixels:${notification.metrics.pixels}');
-          if (notification.metrics.pixels <=
-                  notification.metrics.minScrollExtent &&
-              !isOnLeftSide &&
-              notification.metrics.axisDirection == AxisDirection.right &&
-              checkDepth(notification)) {
-            //到达左边界
-            isOnLeftSide = true;
+          if (notification is ScrollStartNotification) {
+            isOnLeftSide = false;
+            //在边界
+            if (notification.metrics.pixels <=
+                    notification.metrics.minScrollExtent &&
+                checkDepth(notification)) {
+              startScrollFlag = true;
+            }
           }
-        }
-        if (notification is ScrollStartNotification) {
-          isOnLeftSide = false;
-          //在边界
-          if (notification.metrics.pixels <=
-                  notification.metrics.minScrollExtent &&
-              checkDepth(notification)) {
-            startScrollFlag = true;
+          if (notification is ScrollEndNotification) {
+            startScrollFlag = false;
           }
-        }
-        if (notification is ScrollEndNotification) {
-          startScrollFlag = false;
-        }
-        // true 阻止向上冒泡 ,false 继续向上冒泡
-        return true;
-      },
-      child: RawGestureDetector(
-        gestures: {
-          CustomDragGestureRecognizer:
-              GestureRecognizerFactoryWithHandlers<CustomDragGestureRecognizer>(
-            () => CustomDragGestureRecognizer(),
-            (DragGestureRecognizer detector) {
-              detector
-                ..onDown = onHorizontalDragDown
-                ..onStart = onHorizontalDragStart
-                ..onUpdate = onHorizontalDragUpdate
-                ..onEnd = onHorizontalDragEnd
-                ..onCancel = onHorizontalDragCancel;
-            },
-          )
+          // true 阻止向上冒泡 ,false 继续向上冒泡
+          return true;
         },
-        child: Stack(
-          children: [
-            // Container(
-            //   color: Color.lerp(Colors.black.withOpacity(.3),
-            //       Colors.black.withOpacity(.0), offsetX / width),
-            // ),
-            Transform.translate(
-                offset: Offset((widget.noBackAnimation ? 0 : offsetX), 0),
-                child: widget.child),
-          ],
+        child: RawGestureDetector(
+          gestures: {
+            CustomDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                CustomDragGestureRecognizer>(
+              () => CustomDragGestureRecognizer(),
+              (DragGestureRecognizer detector) {
+                detector
+                  ..onDown = onHorizontalDragDown
+                  ..onStart = onHorizontalDragStart
+                  ..onUpdate = onHorizontalDragUpdate
+                  ..onEnd = onHorizontalDragEnd
+                  ..onCancel = onHorizontalDragCancel;
+              },
+            )
+          },
+          child: Stack(
+            children: [
+              // Container(
+              //   color: Color.lerp(Colors.black.withOpacity(.3),
+              //       Colors.black.withOpacity(.0), offsetX / width),
+              // ),
+              Transform.translate(
+                  offset: Offset((widget.noBackAnimation ? 0 : offsetX), 0),
+                  child: widget.child ?? widget.builder!.call(context)),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
 
-    if (!widget.hasScrollChild) {
-      child = GestureDetector(
+    Widget ges(BuildContext context) {
+      return GestureDetector(
           onHorizontalDragDown: (detail) {
             // print('onHorizontalDragDown');
             //处理没有滚动子组件的情况
@@ -309,21 +319,31 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
               isOnLeftSide = true;
             }
           },
-          child: child);
+          child: content(context));
     }
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (pop, _) {
-        print('onPopInvokedWithResult:$popping');
+        print('onPopInvokedWithResult:$pop,$popping');
         if (!pop && widget.canPop) {
           onTapBackKey();
-        }else{
-          if(!popping) {
+        } else {
+          if (!popping) {
+            /// Get.back()/Navigator.pop()进这里
+            systemPopping = true;
             dragBackAnimation(value: -1);
           }
         }
       },
-      child: HorizontalDragBackState(onTapBackKey: onTapBackKey, child: child),
+      child: HorizontalDragBackState(
+          onTapBackKey: onTapBackKey,
+          child: Builder(builder: (context) {
+            if (!widget.hasScrollChild) {
+              return ges(context);
+            }
+            return content(context);
+          })),
     );
   }
 

@@ -60,7 +60,6 @@ class _HorizontalDragBackParentWidgetState
       }
       setState(() {});
     });
-    // animationController?.reset();
     animationController?.forward(from: 0);
   }
 
