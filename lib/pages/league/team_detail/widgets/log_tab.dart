@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:05:53
- * @LastEditTime: 2025-01-16 19:52:15
+ * @LastEditTime: 2025-01-23 17:02:29
  */
 import 'dart:math';
 
@@ -108,7 +108,7 @@ class _Item extends StatelessWidget {
         height: 250.w,
         child: const Center(
           child: LoadStatusWidget(
-            loadDataStatus: LoadDataStatus.noData,
+            loadDataStatus: LoadDataStatus.loading,
           ),
         ),
       );

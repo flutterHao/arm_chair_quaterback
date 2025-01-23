@@ -15,7 +15,7 @@ class BeautyList extends GetView<BeautyController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BeautyController>(builder: (context) {
+    return GetBuilder<BeautyController>(builder: (_) {
       return Visibility(
         visible: !controller.expandedGirl,
         child: Container(

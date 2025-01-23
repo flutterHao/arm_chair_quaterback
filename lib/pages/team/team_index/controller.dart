@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-23 14:15:24
+ * @LastEditTime: 2025-01-23 19:12:09
  */
 
 import 'dart:async';
@@ -11,6 +11,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -20,6 +21,7 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/future_retry.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -145,30 +147,30 @@ class TeamIndexController extends GetxController
     final teamCtrl = Get.find<TeamController>();
     Future.wait([
       getBattleBox(),
-      getTeamInfoCup(),
       CacheApi.getPropDefine(),
       CacheApi.getCardPackDefine(),
       trainingCtrl.getData(),
       teamCtrl.initData()
     ]).then((v) {
       loadDataSuccess = true;
+      getTeamInfoCup();
     });
   }
 
-  void onRefresh() async {
-    final trainingCtrl = Get.find<TrainingController>();
-    final teamCtrl = Get.find<TeamController>();
-    Future.wait([
-      getBattleBox(),
-      getTeamInfoCup(),
-      CacheApi.getPropDefine(),
-      CacheApi.getCardPackDefine(),
-      trainingCtrl.getData(),
-      teamCtrl.initData()
-    ]).then((v) {}).whenComplete(() {
-      refreshController.refreshCompleted();
-    });
-  }
+  // void onRefresh() async {
+  //   final trainingCtrl = Get.find<TrainingController>();
+  //   final teamCtrl = Get.find<TeamController>();
+  //   Future.wait([
+  //     getBattleBox(),
+  //     getTeamInfoCup(),
+  //     CacheApi.getPropDefine(),
+  //     CacheApi.getCardPackDefine(),
+  //     trainingCtrl.getData(),
+  //     teamCtrl.initData()
+  //   ]).then((v) {}).whenComplete(() {
+  //     refreshController.refreshCompleted();
+  //   });
+  // }
 
   void matchBattle() async {
     await Get.toNamed(RouteNames.teamTeamBattle);
@@ -229,11 +231,12 @@ class TeamIndexController extends GetxController
       e.isSelect.value = false;
     }
     setCardPosition(Get.context!, item, 0);
-    await Get.to(
-        opaque: false,
-        () => OpenBoxPage(item: item),
-        duration: 300.milliseconds,
-        transition: Transition.fadeIn);
+    // await Get.to(
+    //     opaque: false,
+    //     () => OpenBoxPage(item: item),
+    //     duration: 300.milliseconds,
+    //     transition: Transition.fadeIn);
+    await Get.toNamed(RouteNames.openBoxPage, arguments: item);
   }
 
   ///开启免费宝箱
@@ -244,7 +247,8 @@ class TeamIndexController extends GetxController
 
   ///获取队伍信息Cup
   Future getTeamInfoCup() async {
-    TeamInfoEntity team = await PicksApi.getTeamInfo();
+    int teamId = HomeController.to.getTeamId();
+    TeamSimpleEntity team = await PicksApi.getTeamSimple(teamId);
     cup.value = team.cup;
   }
 
@@ -498,7 +502,7 @@ class TeamIndexController extends GetxController
 
   void selectCard(CardPackInfoCard item, PlayerCardEntity player) async {
     if (!isStartting) return;
-    if (step >= 3 || isOpen || player.isOpen.value) return;
+    if (step >= 3 || player.isOpen.value) return;
     if (!player.isSelect.value) {
       // 如果还没有选择先选牌
       for (var element in item.playerCards) {
@@ -542,19 +546,27 @@ class TeamIndexController extends GetxController
   }
 
   //展示打卡后继续
-  void toContinue(CardPackInfoCard item) async {
+  void toContinue(BuildContext ctx, CardPackInfoCard item) async {
     //下一步显示小卡或者one more
     if (step == 2) {
       if (item.playerCards.length == 1) {
         await closeBigBox();
-        Get.back();
+        back(ctx);
       } else {
         await closeBigBox();
         canOneMore ? step = 3 : gotIt(item);
         update(["open_box_page"]);
       }
     } else if (step == 4) {
-      Get.back();
+      back(ctx);
+    }
+  }
+
+  void back(context) {
+    if (HorizontalDragBackState.of(context) != null) {
+      HorizontalDragBackState.of(context)?.pop();
+    } else {
+      Navigator.pop(context);
     }
   }
 

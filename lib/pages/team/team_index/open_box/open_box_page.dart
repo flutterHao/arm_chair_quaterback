@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-01-23 10:50:00
+ * @LastEditTime: 2025-01-23 17:57:26
  */
 import 'dart:math';
 
@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -414,7 +415,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
             : const SizedBox.shrink());
   }
 
-  Widget _continueText() {
+  Widget _continueText(BuildContext context) {
     return Positioned(
         bottom: 160.h,
         child: AnimatedOpacity(
@@ -579,41 +580,44 @@ class OpenBoxPage extends GetView<TeamIndexController> {
           id: "open_box_page",
           builder: (_) {
             // item.playerCards.shuffle();
-            return GestureDetector(
-              onTap: controller.step == 2 || controller.step == 4
-                  ? () => controller.toContinue(item)
-                  : null,
-              child: Container(
-                width: 375.w,
-                height: 812.h,
-                decoration: const BoxDecoration(color: AppColors.c1A1A1A),
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    _backgroud(),
+            return Builder(builder: (context) {
+              return GestureDetector(
+                onTap: controller.step == 2 || controller.step == 4
+                    ? () => controller.toContinue(context, item)
+                    : null,
+                // onTap: () => controller.back(context),
+                child: Container(
+                  width: 375.w,
+                  height: 812.h,
+                  decoration: const BoxDecoration(color: AppColors.c1A1A1A),
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      _backgroud(),
 
-                    ///返回
-                    _goBackButton(),
+                      ///返回
+                      _goBackButton(),
 
-                    ///获得展示
-                    _colorBackgroud(),
-                    _continueText(),
-                    _congratulation(),
-                    _bigCard(),
+                      ///获得展示
+                      _colorBackgroud(),
+                      _continueText(context),
+                      _congratulation(),
+                      _bigCard(),
 
-                    ///抽卡
-                    _cardWidget(context),
-                    _rightBottomImage(),
+                      ///抽卡
+                      _cardWidget(context),
+                      _rightBottomImage(),
 
-                    /// 开宝箱
-                    _openTitle(),
-                    _changeTitle(),
-                    _rightBottom(),
-                    _boxWidget(),
-                  ],
+                      /// 开宝箱
+                      _openTitle(),
+                      _changeTitle(),
+                      _rightBottom(),
+                      _boxWidget(),
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
+            });
           }),
     );
   }

@@ -1,5 +1,7 @@
+import 'package:arm_chair_quaterback/common/entities/cup_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/battle_entity.g.dart';
@@ -24,6 +26,8 @@ class BattleEntity {
   late int newsBuffPlayerId;
   late double homeTeamReadiness;
   late double awayTeamReadiness;
+  late CupEntity homeTeamCup;
+  late CupEntity awayTeamCup;
 
   BattleEntity();
 
@@ -113,7 +117,6 @@ class UpStarBase {
     return jsonEncode(this);
   }
 }
-
 
 @JsonSerializable()
 class Preference {

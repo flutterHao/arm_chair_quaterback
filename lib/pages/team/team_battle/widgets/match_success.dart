@@ -121,13 +121,13 @@ class _MatchSuccessState extends State<MatchSuccess>
                                 children: [
                                   Text(
                                     "ME",
-                                    style:
-                                        10.w4(color: AppColors.c3B93FF, height: 1),
+                                    style: 10.w4(
+                                        color: AppColors.c3B93FF, height: 1),
                                   ),
                                   Text(
                                     controller.battleEntity.homeTeam.teamName,
-                                    style:
-                                        19.w7(color: AppColors.c262626, height: 1),
+                                    style: 19.w7(
+                                        color: AppColors.c262626, height: 1),
                                   )
                                 ],
                               ),
@@ -144,9 +144,9 @@ class _MatchSuccessState extends State<MatchSuccess>
                                       icon: Assets.teamUiIconTrophy01),
                                   6.hGap,
                                   Text(
-                                    "${controller.battleEntity.homeTeam.cup}",
-                                    style:
-                                        16.w7(color: AppColors.c262626, height: 1),
+                                    "${controller.battleEntity.homeTeamCup.cup}",
+                                    style: 16.w7(
+                                        color: AppColors.c262626, height: 1),
                                   ),
                                 ],
                               ),
@@ -164,8 +164,8 @@ class _MatchSuccessState extends State<MatchSuccess>
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(14.w),
                                 child: ImageWidget(
-                                  url: Utils.getTeamUrl(
-                                      controller.battleEntity.homeTeam.teamLogo),
+                                  url: Utils.getTeamUrl(controller
+                                      .battleEntity.homeTeam.teamLogo),
                                   imageFailedPath: Assets.teamUiHead01,
                                   width: 64.w,
                                   height: 64.w,
@@ -302,7 +302,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                                 icon: Assets.teamUiIconTrophy01),
                             6.hGap,
                             Text(
-                              "${controller.battleEntity.awayTeam.cup}",
+                              "${controller.battleEntity.awayTeamCup.cup}",
                               style: 16.w7(color: AppColors.c262626, height: 1),
                             ),
                           ],

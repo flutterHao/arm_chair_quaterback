@@ -136,6 +136,7 @@ Map<String, dynamic> $CardPackInfoCardToJson(CardPackInfoCard entity) {
 
 extension CardPackInfoCardExtension on CardPackInfoCard {
   CardPackInfoCard copyWith({
+    int? index,
     int? position,
     int? cardId,
     int? openTime,
@@ -149,6 +150,7 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
     List<PlayerCardEntity>? playerCards,
   }) {
     return CardPackInfoCard()
+      ..index = index ?? this.index
       ..position = position ?? this.position
       ..cardId = cardId ?? this.cardId
       ..openTime = openTime ?? this.openTime

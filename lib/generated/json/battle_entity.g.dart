@@ -1,8 +1,12 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/cup_entity.dart';
+
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+
+import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 
@@ -101,6 +105,16 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   if (awayTeamReadiness != null) {
     battleEntity.awayTeamReadiness = awayTeamReadiness;
   }
+  final CupEntity? homeTeamCup = jsonConvert.convert<CupEntity>(
+      json['homeTeamCup']);
+  if (homeTeamCup != null) {
+    battleEntity.homeTeamCup = homeTeamCup;
+  }
+  final CupEntity? awayTeamCup = jsonConvert.convert<CupEntity>(
+      json['awayTeamCup']);
+  if (awayTeamCup != null) {
+    battleEntity.awayTeamCup = awayTeamCup;
+  }
   return battleEntity;
 }
 
@@ -124,6 +138,8 @@ Map<String, dynamic> $BattleEntityToJson(BattleEntity entity) {
   data['newsBuffPlayerId'] = entity.newsBuffPlayerId;
   data['homeTeamReadiness'] = entity.homeTeamReadiness;
   data['awayTeamReadiness'] = entity.awayTeamReadiness;
+  data['homeTeamCup'] = entity.homeTeamCup.toJson();
+  data['awayTeamCup'] = entity.awayTeamCup.toJson();
   return data;
 }
 
@@ -145,6 +161,8 @@ extension BattleEntityExtension on BattleEntity {
     int? newsBuffPlayerId,
     double? homeTeamReadiness,
     double? awayTeamReadiness,
+    CupEntity? homeTeamCup,
+    CupEntity? awayTeamCup,
   }) {
     return BattleEntity()
       ..awayTeamPower = awayTeamPower ?? this.awayTeamPower
@@ -162,7 +180,9 @@ extension BattleEntityExtension on BattleEntity {
       ..newsBuffAdd = newsBuffAdd ?? this.newsBuffAdd
       ..newsBuffPlayerId = newsBuffPlayerId ?? this.newsBuffPlayerId
       ..homeTeamReadiness = homeTeamReadiness ?? this.homeTeamReadiness
-      ..awayTeamReadiness = awayTeamReadiness ?? this.awayTeamReadiness;
+      ..awayTeamReadiness = awayTeamReadiness ?? this.awayTeamReadiness
+      ..homeTeamCup = homeTeamCup ?? this.homeTeamCup
+      ..awayTeamCup = awayTeamCup ?? this.awayTeamCup;
   }
 }
 

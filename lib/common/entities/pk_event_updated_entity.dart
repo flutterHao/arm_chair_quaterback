@@ -19,6 +19,7 @@ class PkEventUpdatedEntity {
   late List<PkEventUpdatedPlayerInfos> homePlayerInfos = [];
   late int homeScore = 0;
   late int homeStrength = 0;
+
   /// 0|1，前面那个数是罚球数，后面那个数是罚球命中数
   late String parameter = '';
   late int receivePlayerId = 0;
@@ -33,8 +34,8 @@ class PkEventUpdatedEntity {
   late bool useSkillSuccess = false;
   late double awayPreparationLevel;
   late double homePreparationLevel;
-  late double awayCurrentStrength;
-  late double homeCurrentStrength;
+  late double awayCurrentStrength = 0;
+  late double homeCurrentStrength = 0;
 
   PkEventUpdatedEntity();
 
@@ -52,7 +53,7 @@ class PkEventUpdatedEntity {
   }
 
   /// 罚球命中个数
-  int getFreeThrowSuccessCount(){
+  int getFreeThrowSuccessCount() {
     if (parameter.isEmpty) {
       return 0;
     }
@@ -149,4 +150,3 @@ class PkEventUpdatedPlayerInfos {
     return jsonEncode(this);
   }
 }
-

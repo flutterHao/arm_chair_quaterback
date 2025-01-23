@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-01-18 19:50:55
+ * @LastEditTime: 2025-01-23 16:46:41
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -10,6 +10,7 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_detail.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
@@ -116,7 +117,7 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.openBoxPage,
-      page: () => OpenBoxPage(item: Get.arguments),
+      page: () => OpenBoxPage(item: Get.arguments as CardPackInfoCard),
       transition: Transition.fadeIn,
     ),
     GetPage(

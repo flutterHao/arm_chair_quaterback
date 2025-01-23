@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-12-30 21:31:58
+ * @LastEditTime: 2025-01-23 17:28:21
  */
 /*
  * @Description: 
@@ -155,9 +155,17 @@ Widget lock() {
               ),
             ),
             11.hGap,
-            Text(
-              "${controller.getLockCup()} Trophies Unlocked",
-              style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
+            Row(
+              children: [
+                IconWidget(
+                    iconWidth: 20.w,
+                    icon: Assets.managerUiManagerIconCurrency04),
+                4.hGap,
+                Text(
+                  "${controller.getLockCup()}  Unlocked",
+                  style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
+                )
+              ],
             )
           ],
         ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
@@ -62,7 +63,7 @@ class TeamBattleController extends GetxController
 
   Timer? _timer;
 
-  late TeamInfoEntity teamInfoEntity;
+  // late TeamInfoEntity teamInfoEntity;
   @override
   void onInit() {
     super.onInit();
@@ -87,13 +88,13 @@ class TeamBattleController extends GetxController
       CacheApi.getCompetitionVenue(),
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getNBATeamDefine(),
-      PicksApi.getTeamInfo(),
+      // PicksApi.getTeamInfo(),
       CacheApi.getCupDefine(),
       CacheApi.getDanMaKu(),
     ]).then((result) {
-      teamInfoEntity = result[4];
+      // teamInfoEntity = result[4];
       _timer?.cancel();
-      _timer = Timer(const Duration(seconds: 5),timeout);
+      _timer = Timer(const Duration(seconds: 5), timeout);
       subscription = WSInstance.teamMatch().listen((result) {
         // developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
         // print('result.serviceId--${result.serviceId}--:${result.payload}');
@@ -104,7 +105,7 @@ class TeamBattleController extends GetxController
           Get.back();
           return;
         }
-
+        var str = jsonEncode(result.payload["homeTeamCup"]);
         if (result.serviceId == Api.wsPkStartUpdated) {
           pkStartUpdatedEntity = PkStartUpdatedEntity.fromJson(result.payload);
         }
@@ -147,7 +148,7 @@ class TeamBattleController extends GetxController
     // });
   }
 
-  void timeout(){
+  void timeout() {
     print('timeout------');
     EasyLoading.showToast("MATCH FAILED");
     _timer?.cancel();
