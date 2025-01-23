@@ -111,4 +111,6 @@ class Constant {
   static String seasonId = "2024-25";
 
   static String imageSuffix = ".png";
+
+  static int transitionDuration = 200;
 }

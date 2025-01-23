@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:flutter/material.dart';
 
 /// 要放在HorizontalDragBackWidget上层
@@ -18,27 +19,56 @@ class HorizontalDragBackParentWidget extends StatefulWidget {
 }
 
 class _HorizontalDragBackParentWidgetState
-    extends State<HorizontalDragBackParentWidget> {
+    extends State<HorizontalDragBackParentWidget>
+    with SingleTickerProviderStateMixin {
   late StreamController<num> controller = StreamController();
   num? offsetX;
+  AnimationController? animationController;
+
+  Animation<double>? animation;
 
   @override
   void initState() {
     super.initState();
     HorizontalDragBackController().addController(controller);
     controller.stream.listen((num value) {
-      // print('horizontalDragBack----2222---offsetX: $value');
-      offsetX = value;
-      setState(() {
-
-      });
+      print('horizontalDragBack----2222---offsetX: $value');
+      if(animationController?.isAnimating??false){
+        return;
+      }
+      if (value == -1 ) {
+        // if(animationController?.isAnimating??true) {
+          backAnimation();
+        // }
+      } else {
+        offsetX = value;
+        setState(() {});
+      }
     });
+  }
+
+  backAnimation() {
+    animationController ??= AnimationController(
+        vsync: this, duration: Duration(milliseconds: Constant.transitionDuration));
+    var begin =  MediaQuery.of(context).size.width;
+    print('begin111: $begin');
+    animation = Tween(begin: 0.0, end: begin).animate(animationController!)..addListener(() {
+      print('begin222: ${animation!.value}');
+      offsetX = animation!.value;
+      if(offsetX == 0){
+        offsetX = null;
+      }
+      setState(() {});
+    });
+    // animationController?.reset();
+    animationController?.forward(from: 0);
   }
 
   @override
   void dispose() {
     HorizontalDragBackController().removeController(controller);
     controller.close();
+    animationController?.dispose();
     super.dispose();
   }
 
@@ -48,7 +78,9 @@ class _HorizontalDragBackParentWidgetState
     return HorizontalDragBackParentState(
       controller: controller,
       child: Transform.translate(
-        offset: Offset(offsetX==null?0:min(0,(-width+(offsetX??0))/10*3), 0),
+        offset: Offset(
+            offsetX == null ? 0 : min(0, (-width + (offsetX ?? 0)) / 10 * 3),
+            0),
         child: widget.child,
       ),
     );
@@ -72,8 +104,7 @@ class HorizontalDragBackParentState extends InheritedWidget {
   }
 }
 
-class HorizontalDragBackController{
-
+class HorizontalDragBackController {
   final List<StreamController> _controllers = [];
 
   static final HorizontalDragBackController _instance =
@@ -81,26 +112,26 @@ class HorizontalDragBackController{
 
   factory HorizontalDragBackController() => _instance;
 
-  void addController(StreamController controller){
+  void addController(StreamController controller) {
     _controllers.add(controller);
   }
 
-  void removeController(StreamController controller){
+  void removeController(StreamController controller) {
     _controllers.remove(controller);
   }
 
-  void notify(num value,{bool hasDragBackParent = false}){
-    if(_controllers.isEmpty){
+  void notify(num value, {bool hasDragBackParent = false}) {
+    if (_controllers.isEmpty) {
       return;
     }
-    if(hasDragBackParent){
+    if (hasDragBackParent) {
       var length = _controllers.length;
-      if(length<2){
+      if (length < 2) {
         return;
       }
-      var controller = _controllers[length-2];
+      var controller = _controllers[length - 2];
       controller.add(value);
-    }else{
+    } else {
       _controllers.last.add(value);
     }
   }

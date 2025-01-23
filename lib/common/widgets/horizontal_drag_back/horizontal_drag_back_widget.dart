@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/widgets/getsure_recognizer/custom_drag_gesture_recognizer.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
 import 'package:flutter/gestures.dart';
@@ -70,6 +71,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   // 开始滚动时是否在边界
   bool startScrollFlag = false;
 
+  /// 页面退出中
+  bool popping = false;
+
   /// 进入动画
   late AnimationController enterAnimationController;
   late Animation<double> enterAnimation;
@@ -79,7 +83,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     super.initState();
     offsetX = 1000000;
     enterAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 200));
+        vsync: this, duration:  Duration(milliseconds: Constant.transitionDuration));
     Future.delayed(Duration.zero, () {
       // print('horizontalDragBack----delayed---offsetX: $offsetX');
       enterAnimation = TweenSequence([
@@ -125,10 +129,10 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     animation = tween.animate(animationController);
   }
 
-  void dragBackAnimation() {
+  void dragBackAnimation({num? value}) {
     var horizontalDragBackParentState =
         HorizontalDragBackParentState.of(context);
-    HorizontalDragBackController().notify(offsetX,
+    HorizontalDragBackController().notify(value??offsetX,
         hasDragBackParent: horizontalDragBackParentState != null);
   }
 
@@ -310,9 +314,13 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (pop, _) {
-        print('onPopInvokedWithResult:$pop');
+        print('onPopInvokedWithResult:$popping');
         if (!pop && widget.canPop) {
           onTapBackKey();
+        }else{
+          if(!popping) {
+            dragBackAnimation(value: -1);
+          }
         }
       },
       child: HorizontalDragBackState(onTapBackKey: onTapBackKey, child: child),
@@ -338,6 +346,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       tween.end = width;
       animationController.duration = Duration(
           milliseconds: velocity > 1000 ? minMilliseconds : maxMilliseconds);
+      popping = true;
     } else {
       tween.begin = beforeResetOffsetX;
       tween.end = 0.0;
@@ -359,6 +368,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     tween.end = width;
     animationController.duration = Duration(milliseconds: maxMilliseconds);
     animationController.forward(from: 0);
+    popping = true;
   }
 }
 
