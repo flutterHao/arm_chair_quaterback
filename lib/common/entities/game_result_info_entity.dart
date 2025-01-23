@@ -1,6 +1,9 @@
+import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/game_result_info_entity.g.dart';
 import 'dart:convert';
+
+import 'package:arm_chair_quaterback/pages/league/team_detail/widgets/log_tab.dart';
 export 'package:arm_chair_quaterback/generated/json/game_result_info_entity.g.dart';
 
 @JsonSerializable()
@@ -12,7 +15,7 @@ class GameResultInfoEntity {
   late GameResultInfoHomeTeamResult awayTeamResult;
   late List<GameResultInfoGameScoreBoard> gameScoreBoard = [];
   late List<GameResultInfoPlayerResults> playerResults = [];
-  late List<GameResultInfoGameScoreBoardDetail> gameScoreBoardDetail = [];
+  late List<ScoreBoardDetailList> gameScoreBoardDetail = [];
   late GameResultInfoGsGameSchedule gsGameSchedule;
 
   GameResultInfoEntity();

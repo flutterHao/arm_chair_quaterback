@@ -1,5 +1,9 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+
+import 'package:arm_chair_quaterback/pages/league/team_detail/widgets/log_tab.dart';
+
 
 GameResultInfoEntity $GameResultInfoEntityFromJson(Map<String, dynamic> json) {
   final GameResultInfoEntity gameResultInfoEntity = GameResultInfoEntity();
@@ -40,11 +44,12 @@ GameResultInfoEntity $GameResultInfoEntityFromJson(Map<String, dynamic> json) {
     gameResultInfoEntity.playerResults = playerResults;
   }
   final List<
-      GameResultInfoGameScoreBoardDetail>? gameScoreBoardDetail = (json['gameScoreBoardDetail'] as List<
-      dynamic>?)?.map(
+      ScoreBoardDetailList>? gameScoreBoardDetail = (json['gameScoreBoardDetail'] as List<
+      dynamic>?)
+      ?.map(
           (e) =>
-      jsonConvert.convert<GameResultInfoGameScoreBoardDetail>(
-          e) as GameResultInfoGameScoreBoardDetail).toList();
+      jsonConvert.convert<ScoreBoardDetailList>(e) as ScoreBoardDetailList)
+      .toList();
   if (gameScoreBoardDetail != null) {
     gameResultInfoEntity.gameScoreBoardDetail = gameScoreBoardDetail;
   }
@@ -79,7 +84,7 @@ extension GameResultInfoEntityExtension on GameResultInfoEntity {
     GameResultInfoHomeTeamResult? awayTeamResult,
     List<GameResultInfoGameScoreBoard>? gameScoreBoard,
     List<GameResultInfoPlayerResults>? playerResults,
-    List<GameResultInfoGameScoreBoardDetail>? gameScoreBoardDetail,
+    List<ScoreBoardDetailList>? gameScoreBoardDetail,
     GameResultInfoGsGameSchedule? gsGameSchedule,
   }) {
     return GameResultInfoEntity()

@@ -30,8 +30,9 @@ import 'package:visibility_detector/visibility_detector.dart';
 class SeaonRankController extends GetxController {
   SeaonRankController();
   Timer? _timer;
-  var gameStartTimeMs =
-      DateTime.now().add(const Duration(days: 3)).millisecondsSinceEpoch;
+
+  ///赛季结束时间
+  late int seasonEndTime;
   RxInt gameStartTimesCountDown = 0.obs;
 
   int day = 0;
@@ -74,7 +75,7 @@ class SeaonRankController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    timeCountDown();
+
     initData();
   }
 
@@ -105,7 +106,9 @@ class SeaonRankController extends GetxController {
         await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId,
             pageSize: showNumGameConstantEntity!.constantValue);
     nowSeasonRankInfoEntity = seasonRankInfoEntity.obs;
+    seasonEndTime = nowSeasonEntity.seasonEndTime;
     seasonRankList.add(seasonRankInfoEntity);
+    timeCountDown();
     loadingStatus.value = LoadDataStatus.success;
     distanceSeasonGameConstantEntity = Utils.getGameConstant(10019);
   }
@@ -113,7 +116,7 @@ class SeaonRankController extends GetxController {
   void timeCountDown() {
     _timer?.cancel();
     var nowMs = DateTime.now().millisecondsSinceEpoch;
-    var diff = gameStartTimeMs - nowMs;
+    var diff = seasonEndTime - nowMs;
 
     if (diff <= 0) {
       return;

@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/co
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_court.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/game_over_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/player_status/player_status_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_historty/widgets/history_game_leader.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/widgets/history_quarter.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/widgets/history_status.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,8 @@ class TeamHistortyPage extends GetView<TeamHistortyController> {
             child: Column(
               children: [
                 const HistoryQuarterWidget(),
-                const HistoryStatusWidget()
-
+                const HistoryStatusWidget(),
+                const HistoryGameLeaderWidget()
                 // GetBuilder<TeamBattleV2Controller>(
                 //     id: TeamBattleV2Controller.idQuarterScore,
                 //     builder: (_) {
