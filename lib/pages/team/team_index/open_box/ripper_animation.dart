@@ -36,7 +36,7 @@ class _RipperAnimationState extends State<RipperAnimation>
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1000))
       ..addStatusListener(_scanStatusListener);
-    animation = Tween(begin: 0.0, end: 1.0).animate(animationController)
+    animation = Tween(begin: 0.5, end: 1.0).animate(animationController)
       ..addListener(_animationListener);
     animationController.forward();
   }

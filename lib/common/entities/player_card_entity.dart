@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 21:56:49
- * @LastEditTime: 2025-01-21 14:58:33
+ * @LastEditTime: 2025-01-23 12:14:48
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/player_card_entity.g.dart';

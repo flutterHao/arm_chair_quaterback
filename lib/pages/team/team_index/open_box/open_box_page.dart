@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-01-22 19:10:11
+ * @LastEditTime: 2025-01-23 10:50:00
  */
 import 'dart:math';
 
@@ -136,27 +136,8 @@ class OpenBoxPage extends GetView<TeamIndexController> {
         child: Column(
           children: [
             AnimatedBox(
-              onTap: () async {
-                //如果只有一张牌跳过第一步选牌
-                if (item.playerCards.length == 1) {
-                  controller.step = 2;
-                  var player = item.playerCards.first;
-                  player.isSelect.value = true;
-                  controller.shakeController.reset();
-                  controller.forwardShake(player.playerId, item);
-                  controller.update(["open_box_page"]);
-                  await Future.delayed(const Duration(milliseconds: 500));
-
-                  controller.openBattleBox(
-                      controller.cardPackInfo.card.indexOf(item), player);
-                } else {
-                  controller.step = 1;
-                }
-                controller.showChangeText.value = false;
-                controller.update(["open_box_page"]);
-                Future.delayed(1000.milliseconds).then((v) {
-                  controller.showChangeText.value = true;
-                });
+              onTap: () {
+                controller.clickkBox(item);
               },
               child: Image.asset(
                 Utils.getBoxImageUrl(item.cardId),
@@ -216,7 +197,6 @@ class OpenBoxPage extends GetView<TeamIndexController> {
         opacity: (controller.step == 1 || controller.step >= 3) ? 1 : 0,
         onEnd: () {
           if (controller.step == 1) {
-            // item.playerCards
             controller.shuffleCards(context, item);
           }
         },
@@ -227,6 +207,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
               Obx(() {
                 final e = item.playerCards[i];
                 Widget card = BoxCardWidget(
+                  duration: 400.milliseconds,
                   isFlipped: e.isOpen.value,
                   player: e,
                   onFlip: () async {
@@ -240,6 +221,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                         : 0;
                 var curCard = item.playerCards[i];
                 return AnimatedPositioned(
+                  curve: Curves.decelerate,
                   duration: 150.milliseconds,
                   left: curCard.offset.value.dx +
                       curCard.rotation.value * 1000.w, // 水平位置

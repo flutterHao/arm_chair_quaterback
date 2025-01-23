@@ -65,9 +65,8 @@ class FreeBoxDialog extends StatelessWidget {
 }
 
 class BattleBoxDialog extends StatelessWidget {
-  const BattleBoxDialog({super.key, required this.item, required this.index});
+  const BattleBoxDialog({super.key, required this.item});
   final CardPackInfoCard item;
-  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -224,10 +223,10 @@ class BattleBoxDialog extends StatelessWidget {
               MtInkWell(
                 onTap: () {
                   if (item.status == 0 && isUnlock) {
-                    controller.activeBattleBox(index);
+                    controller.activeBattleBox(item.index);
                   } else if (item.status == 1) {
                     controller.speedOpneBattleBox(
-                        index,
+                        item.index,
                         CacheApi.cardPackDefineMap[item.cardId]
                                 ?.cardPackOpenNow ??
                             0);

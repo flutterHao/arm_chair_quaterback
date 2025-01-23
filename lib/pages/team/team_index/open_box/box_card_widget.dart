@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2025-01-22 18:00:51
+ * @LastEditTime: 2025-01-23 10:47:08
  */
 
 import 'dart:math';
@@ -21,6 +21,7 @@ class BoxCardWidget extends StatefulWidget {
   final double? width;
   final bool isSmall;
   final PlayerCardEntity player;
+  final Duration duration;
 
   const BoxCardWidget({
     super.key,
@@ -29,6 +30,7 @@ class BoxCardWidget extends StatefulWidget {
     this.width,
     this.isSmall = true,
     required this.player,
+    this.duration = const Duration(milliseconds: 500),
   });
 
   @override
@@ -44,7 +46,7 @@ class _BoxCardWidgetState extends State<BoxCardWidget>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: widget.duration,
       vsync: this,
     );
 

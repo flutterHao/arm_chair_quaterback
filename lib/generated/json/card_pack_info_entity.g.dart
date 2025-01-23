@@ -7,6 +7,10 @@ import 'package:get/get.dart';
 
 CardPackInfoEntity $CardPackInfoEntityFromJson(Map<String, dynamic> json) {
   final CardPackInfoEntity cardPackInfoEntity = CardPackInfoEntity();
+  final int? position = jsonConvert.convert<int>(json['position']);
+  if (position != null) {
+    cardPackInfoEntity.position = position;
+  }
   final int? rankIndex = jsonConvert.convert<int>(json['rankIndex']);
   if (rankIndex != null) {
     cardPackInfoEntity.rankIndex = rankIndex;
@@ -47,6 +51,7 @@ CardPackInfoEntity $CardPackInfoEntityFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $CardPackInfoEntityToJson(CardPackInfoEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
+  data['position'] = entity.position;
   data['rankIndex'] = entity.rankIndex;
   data['createTime'] = entity.createTime;
   data['teamId'] = entity.teamId;
@@ -60,6 +65,7 @@ Map<String, dynamic> $CardPackInfoEntityToJson(CardPackInfoEntity entity) {
 
 extension CardPackInfoEntityExtension on CardPackInfoEntity {
   CardPackInfoEntity copyWith({
+    int? position,
     int? rankIndex,
     int? createTime,
     int? teamId,
@@ -71,6 +77,7 @@ extension CardPackInfoEntityExtension on CardPackInfoEntity {
     RxString? freeTimeString,
   }) {
     return CardPackInfoEntity()
+      ..position = position ?? this.position
       ..rankIndex = rankIndex ?? this.rankIndex
       ..createTime = createTime ?? this.createTime
       ..teamId = teamId ?? this.teamId
@@ -85,6 +92,10 @@ extension CardPackInfoEntityExtension on CardPackInfoEntity {
 
 CardPackInfoCard $CardPackInfoCardFromJson(Map<String, dynamic> json) {
   final CardPackInfoCard cardPackInfoCard = CardPackInfoCard();
+  final int? position = jsonConvert.convert<int>(json['position']);
+  if (position != null) {
+    cardPackInfoCard.position = position;
+  }
   final int? cardId = jsonConvert.convert<int>(json['cardId']);
   if (cardId != null) {
     cardPackInfoCard.cardId = cardId;
@@ -112,6 +123,7 @@ CardPackInfoCard $CardPackInfoCardFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $CardPackInfoCardToJson(CardPackInfoCard entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
+  data['position'] = entity.position;
   data['cardId'] = entity.cardId;
   data['openTime'] = entity.openTime;
   data['status'] = entity.status;
@@ -124,6 +136,7 @@ Map<String, dynamic> $CardPackInfoCardToJson(CardPackInfoCard entity) {
 
 extension CardPackInfoCardExtension on CardPackInfoCard {
   CardPackInfoCard copyWith({
+    int? position,
     int? cardId,
     int? openTime,
     int? status,
@@ -136,6 +149,7 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
     List<PlayerCardEntity>? playerCards,
   }) {
     return CardPackInfoCard()
+      ..position = position ?? this.position
       ..cardId = cardId ?? this.cardId
       ..openTime = openTime ?? this.openTime
       ..status = status ?? this.status

@@ -167,7 +167,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                             isScrollControlled: true,
                             context: Get.context!,
                             builder: (context) {
-                              return BattleBoxDialog(item: item, index: index);
+                              return BattleBoxDialog(item: item);
                             });
                       }
                     },

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-22 19:57:13
+ * @LastEditTime: 2025-01-23 14:15:24
  */
 
 import 'dart:async';
@@ -42,7 +42,7 @@ class TeamIndexController extends GetxController
   final runSpacing = 10.w;
   final cardWidth = 98.w + 6.w;
   final cardHeight = 136.w + 6.w;
-  final maxCardsPerRow = 3; // 假设每行最多3个卡片
+  final maxRow = 3; // 假设每行最多3个卡片
 
   ///宝箱
   var box1Claimed = false.obs;
@@ -89,7 +89,7 @@ class TeamIndexController extends GetxController
   void onInit() {
     super.onInit();
     for (int i = 0; i < 4; i++) {
-      cardPackInfo.card.add(CardPackInfoCard(status: -1));
+      cardPackInfo.card.add(CardPackInfoCard(status: -1, position: i + 1));
     }
     subscription = WSInstance.netStream.listen((_) {
       if (!loadDataSuccess) {
@@ -184,6 +184,7 @@ class TeamIndexController extends GetxController
   ///获取战斗宝箱信息
   Future getBattleBox() async {
     cardPackInfo = await TeamApi.getBattleBox();
+
     handlerBatterBoxData();
   }
 
@@ -195,7 +196,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, PlayerCardEntity card) async {
-    return;
+    // return;
     if (isOpen) return;
     isOpen = true;
     awardList = await TeamApi.opneBattleBox(index, card.playerId);
@@ -261,6 +262,11 @@ class TeamIndexController extends GetxController
   }
 
   void handlerBatterBoxData() {
+    //设置卡牌index
+    for (var i = 0; i < cardPackInfo.card.length; i++) {
+      cardPackInfo.card[i].index = i;
+    }
+
     /// 免费宝箱
     recieved = cardPackInfo.freeGiftCount == 0 &&
         cardPackInfo.freeGiftTime > DateTime.now().millisecondsSinceEpoch;
@@ -280,11 +286,16 @@ class TeamIndexController extends GetxController
       );
     }
 
-    /// 战斗宝箱
-    int lenght = cardPackInfo.card.length;
-    for (int i = lenght; i < 4; i++) {
-      cardPackInfo.card.add(CardPackInfoCard(status: -1));
+    /// 战斗宝箱,设置位置
+    for (int i = 0; i < 4; i++) {
+      CardPackInfoCard? card =
+          cardPackInfo.card.firstWhereOrNull((e) => e.position == i + 1);
+      if (card == null) {
+        cardPackInfo.card
+            .insert(i, CardPackInfoCard(status: -1, position: i + 1));
+      }
     }
+    cardPackInfo.card.sort((a, b) => a.position.compareTo(b.position));
 
     for (var item in cardPackInfo.card) {
       final now = DateTime.now();
@@ -367,39 +378,85 @@ class TeamIndexController extends GetxController
     }
   }
 
-  //type=0;初始化
-  Future setCardPosition(
-      BuildContext ctx, CardPackInfoCard item, int type) async {
-    //发放卡牌
-    double totalWidth = (cardWidth * maxCardsPerRow) +
-        (runSpacing * (maxCardsPerRow - 1)) +
-        89.w;
+  Future clickkBox(CardPackInfoCard item) async {
+    //如果只有一张牌跳过第一步选牌
+    if (item.playerCards.length == 1) {
+      step = 2;
+      var player = item.playerCards.first;
+      player.isSelect.value = true;
+      shakeController.reset();
+      forwardShake(player.playerId, item);
+      update(["open_box_page"]);
+      await Future.delayed(const Duration(milliseconds: 500));
 
-    double startX = (MediaQuery.of(ctx).size.width - totalWidth) / 2;
-    int lenght = item.playerCards.length;
-    double totalWidth1 =
-        (cardWidth.w * (lenght - 3)) + (runSpacing * (lenght - 4)) + 89.w;
-    double startX1 = (MediaQuery.of(ctx).size.width - totalWidth1) / 2;
-    for (int i = 0; i < item.playerCards.length; i++) {
-      double dx = 0;
-      if (i >= 3) {
-        dx = startX1 + (i - 3) * (cardWidth + runSpacing);
-      } else {
-        dx = startX + (i % maxCardsPerRow) * (cardWidth + runSpacing);
+      openBattleBox(item.index, player);
+    } else {
+      step = 1;
+    }
+
+    showChangeText.value = false;
+    update(["open_box_page"]);
+    setCardPosition(Get.context!, item, 1, duration: 10);
+    Future.delayed(1000.milliseconds).then((v) {
+      showChangeText.value = true;
+    });
+  }
+
+  //type=0;合拢 初始化, 1分散卡牌
+  Future setCardPosition(BuildContext ctx, CardPackInfoCard item, int type,
+      {int duration = 80}) async {
+    if (type == 0) {
+      double cneterX = (MediaQuery.of(ctx).size.width - cardWidth) / 2 - 44.5.w;
+      double centerY = (cardHeight + runSpacing) / 2;
+      for (var e in item.playerCards) {
+        e.offset.value = Offset(cneterX, centerY);
       }
-      double dy = (i ~/ maxCardsPerRow) * (cardHeight + 15.w) + 20.w;
-      item.playerCards[i].offset.value = Offset(dx, dy);
-      if (type != 0) await Future.delayed(const Duration(milliseconds: 150));
+    } else {
+      int lenght = item.playerCards.length;
+
+      if (item.playerCards.length > 3) {
+        //第一行
+        double totalWidth =
+            (cardWidth * maxRow) + (runSpacing * (maxRow - 1)) + 89.w;
+        double startX = (MediaQuery.of(ctx).size.width - totalWidth) / 2;
+        //第二行
+        double totalWidth1 =
+            (cardWidth * (lenght - 3)) + (runSpacing * (lenght - 4)) + 89.w;
+        double startX1 = (MediaQuery.of(ctx).size.width - totalWidth1) / 2;
+        for (int i = 0; i < lenght; i++) {
+          double dx = 0;
+          if (i < 3) {
+            dx = startX + (i % maxRow) * (cardWidth + runSpacing);
+          } else {
+            dx = startX1 + (i - 3) * (cardWidth + runSpacing);
+          }
+          double dy = (i ~/ maxRow) * (cardHeight + 15.w) + 20.w;
+          item.playerCards[i].offset.value = Offset(dx, dy);
+          await Future.delayed(Duration(milliseconds: duration));
+        }
+      } else {
+        double totalWidth = (cardWidth * 2) + runSpacing + 89.w;
+        double startX = (MediaQuery.of(ctx).size.width - totalWidth) / 2;
+        //第二行
+        double totalWidth1 = cardWidth + 89.w;
+        double startX1 = (MediaQuery.of(ctx).size.width - totalWidth1) / 2;
+        for (int i = 0; i < lenght; i++) {
+          double dx = 0;
+          if (i < 2) {
+            dx = startX + (i % 2) * (cardWidth + runSpacing);
+          } else {
+            dx = startX1 + (i - 2) * (cardWidth + runSpacing);
+          }
+          double dy = (i ~/ 2) * (cardHeight + 15.w) + 20.w;
+          item.playerCards[i].offset.value = Offset(dx, dy);
+          await Future.delayed(Duration(milliseconds: duration));
+        }
+      }
     }
   }
 
   //洗牌
   void shuffleCards(BuildContext context, CardPackInfoCard item) async {
-    // 计算起始位置，使卡片在屏幕中水平居中
-    double cneterX =
-        (MediaQuery.of(context).size.width - cardWidth) / 2 - 44.5.w;
-    double centerY =
-        item.playerCards.length <= 3 ? 0 : (cardHeight + runSpacing) / 2;
     await Future.delayed(const Duration(milliseconds: 500));
     //翻转卡牌到背面
     for (var e in item.playerCards) {
@@ -408,10 +465,8 @@ class TeamIndexController extends GetxController
       await Future.delayed(const Duration(milliseconds: 300));
     }
     //聚拢卡牌
-    for (var e in item.playerCards) {
-      e.offset.value = Offset(cneterX, centerY);
-    }
-    //打乱卡牌
+    await setCardPosition(context, item, 0);
+    //洗牌
     await shuffleAnimation(item);
     item.playerCards.shuffle();
     await Future.delayed(const Duration(milliseconds: 300));
@@ -421,21 +476,22 @@ class TeamIndexController extends GetxController
     isStartting = true;
   }
 
+  //洗牌
   Future shuffleAnimation(CardPackInfoCard item) async {
-    for (int i = item.playerCards.length - 1; i >= 0; i--) {
-      var e = item.playerCards[i];
+    Random random = Random();
+    int len = item.playerCards.length;
+    for (int i = 0; i <= 15; i++) {
+      int index = random.nextInt(len);
+      var e = item.playerCards[index];
       e.rotation.value = 0.05;
-
       await Future.delayed(const Duration(milliseconds: 150)).then((v) {
-        // 设置 rotation 为 0
-        e.rotation.value = 0;
-
+        item.playerCards
+            .sort((a, b) => a.rotation.value.compareTo(b.rotation.value));
         // 将当前卡片移到卡组末尾
-        item.playerCards.removeAt(i);
-        item.playerCards.add(e);
-
-        // 刷新 UI
+        // item.playerCards.removeAt(index);
+        // item.playerCards.add(e);
         update(["open_box_page"]);
+        e.rotation.value = 0;
       });
     }
   }
@@ -463,7 +519,7 @@ class TeamIndexController extends GetxController
       // });
       update(["open_box_page"]);
     } else {
-      openBattleBox(cardPackInfo.card.indexOf(item), player);
+      openBattleBox(item.index, player);
       showBigCard(player);
     }
   }

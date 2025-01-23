@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 17:54:17
- * @LastEditTime: 2025-01-20 10:47:49
+ * @LastEditTime: 2025-01-23 12:26:54
  */
 /*
  * @Description: 
@@ -19,6 +19,7 @@ export 'package:arm_chair_quaterback/generated/json/card_pack_info_entity.g.dart
 
 @JsonSerializable()
 class CardPackInfoEntity {
+  late int position = 1;
   late int rankIndex = 0;
   late int createTime = 0;
   late int teamId = 0;
@@ -45,6 +46,9 @@ class CardPackInfoEntity {
 
 @JsonSerializable()
 class CardPackInfoCard {
+  @JSONField(deserialize: false, serialize: false)
+  int index = 0;
+  int position = 1;
   late int cardId = 0;
   late int openTime = 0;
 
@@ -63,7 +67,7 @@ class CardPackInfoCard {
   @JSONField(deserialize: false, serialize: false)
   List<PlayerCardEntity> playerCards = [];
 
-  CardPackInfoCard({this.status = 0});
+  CardPackInfoCard({this.status = 0, this.position = 1});
 
   factory CardPackInfoCard.fromJson(Map<String, dynamic> json) {
     var entity = $CardPackInfoCardFromJson(json);
