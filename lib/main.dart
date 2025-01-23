@@ -74,9 +74,8 @@ class MyApp extends StatelessWidget {
                   // logWriterCallback: Log.write,
                   // defaultTransition: Transition.rightToLeft,
                   transitionDuration:  Duration(milliseconds: Constant.transitionDuration),
-                  defaultTransition: Transition.rightToLeft,
-                  // customTransition:
-                  //     HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
+                  customTransition:
+                      HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
                    // defaultTransition: Transition.noTransition,
                 ),
               ),

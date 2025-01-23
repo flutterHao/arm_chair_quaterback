@@ -51,6 +51,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   ///移动的距离
   double offsetX = 0;
+  bool isFirst = true;
 
   /// 布局宽度
   double width = 0;
@@ -87,7 +88,6 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   @override
   void initState() {
     super.initState();
-    offsetX = 1000000;
     enterAnimationController = AnimationController(
         vsync: this,
         duration: Duration(milliseconds: Constant.transitionDuration));
@@ -99,10 +99,10 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         TweenSequenceItem(tween: Tween(begin: width, end: 0.0), weight: 1),
       ]).animate(enterAnimationController)
         ..addListener(() {
-          offsetX = enterAnimation.value;
-          // print('horizontalDragBack----11111---offsetX: $offsetX');
-          dragBackAnimation();
+          print('horizontalDragBack----11111---offsetX: $offsetX');
+          // offsetX = enterAnimation.value;
           setState(() {});
+          dragBackAnimation(value: enterAnimation.value);
         });
       enterAnimationController.forward();
     });
@@ -151,8 +151,12 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   @override
   Widget build(BuildContext context) {
-    // print('widget.noBackAnimation----------:${widget.noBackAnimation}');
     width = MediaQuery.of(context).size.width;
+    if(isFirst){
+      isFirst = false;
+      offsetX = 0;
+    }
+    // print('widget.noBackAnimation----------:${widget.noBackAnimation}');
     onHorizontalDragStart(DragStartDetails detail) {
       if (!isOnLeftSide) {
         return;
@@ -288,17 +292,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
               },
             )
           },
-          child: Stack(
-            children: [
-              // Container(
-              //   color: Color.lerp(Colors.black.withOpacity(.3),
-              //       Colors.black.withOpacity(.0), offsetX / width),
-              // ),
-              Transform.translate(
-                  offset: Offset((widget.noBackAnimation ? 0 : offsetX), 0),
-                  child: widget.child ?? widget.builder!.call(context)),
-            ],
-          ),
+          child: Transform.translate(
+              offset: Offset((widget.noBackAnimation ? 0 : offsetX), 0),
+              child: widget.child ?? widget.builder!.call(context)),
         ),
       );
     }

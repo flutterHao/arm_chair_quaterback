@@ -18,7 +18,7 @@ class HalfSlideRightToLeftTransition extends CustomTransition {
     // 设置缩放动画和透明度动画
     return SlideTransition(
       position: Tween<Offset>(
-        begin: const Offset(0.7, 0.0),
+        begin: const Offset(1, 0.0),
         end: Offset.zero,
       ).animate(CurvedAnimation(parent: animation, curve: Curves.linear)),
       child: child,

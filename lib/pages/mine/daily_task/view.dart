@@ -339,6 +339,8 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         ),
         MtInkWell(
           onTap: () {
+            Get.back();
+            return;
             controller.spin();
           },
           child: Container(
