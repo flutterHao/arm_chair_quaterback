@@ -84,12 +84,7 @@ class UserInfoBar extends StatelessWidget {
                           InkWell(
                             onTap: onClickPop ??
                                 () {
-                                  if (HorizontalDragBackState.of(context) !=
-                                      null) {
-                                    HorizontalDragBackState.of(context)?.pop();
-                                  } else {
-                                    Navigator.pop(context);
-                                  }
+                                  Navigator.pop(context);
                                 },
                             child: Container(
                                 width: 36.w,

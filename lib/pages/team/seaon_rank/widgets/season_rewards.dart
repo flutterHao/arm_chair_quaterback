@@ -96,7 +96,7 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
                 padding: EdgeInsets.only(top: 7.w),
                 child: MtInkWell(
                     onTap: () {
-                      HorizontalDragBackState.of(context)!.pop();
+                      Get.back();
                       TeamIndexController teamIndexController = Get.find();
                       teamIndexController.scroToMatch();
                     },

@@ -51,7 +51,6 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   ///移动的距离
   double offsetX = 0;
-  bool isFirst = true;
 
   /// 布局宽度
   double width = 0;
@@ -99,9 +98,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         TweenSequenceItem(tween: Tween(begin: width, end: 0.0), weight: 1),
       ]).animate(enterAnimationController)
         ..addListener(() {
-          print('horizontalDragBack----11111---offsetX: $offsetX');
+          // print('horizontalDragBack----11111---offsetX: $offsetX');
           // offsetX = enterAnimation.value;
-          setState(() {});
           dragBackAnimation(value: enterAnimation.value);
         });
       enterAnimationController.forward();
@@ -115,7 +113,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           offsetX = animation.value;
           if (!widget.noBackAnimation && !systemPopping) {
             setState(() {});
-            print('horizontalDragBack----33333---offsetX: $offsetX');
+            // print('horizontalDragBack----33333---offsetX: $offsetX');
             dragBackAnimation();
           }
         }
@@ -152,10 +150,6 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
-    if(isFirst){
-      isFirst = false;
-      offsetX = 0;
-    }
     // print('widget.noBackAnimation----------:${widget.noBackAnimation}');
     onHorizontalDragStart(DragStartDetails detail) {
       if (!isOnLeftSide) {
@@ -222,7 +216,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       }
       if (!widget.noBackAnimation) {
         setState(() {});
-        print('horizontalDragBack----44444---offsetX: $offsetX');
+        // print('horizontalDragBack----44444---offsetX: $offsetX');
         dragBackAnimation();
       }
     }
@@ -319,12 +313,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     }
 
     return PopScope(
-      canPop: false,
       onPopInvokedWithResult: (pop, _) {
         print('onPopInvokedWithResult:$pop,$popping');
-        if (!pop && widget.canPop) {
-          onTapBackKey();
-        } else {
+        if (widget.canPop) {
           if (!popping) {
             /// Get.back()/Navigator.pop()进这里
             systemPopping = true;
@@ -332,14 +323,12 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           }
         }
       },
-      child: HorizontalDragBackState(
-          onTapBackKey: onTapBackKey,
-          child: Builder(builder: (context) {
-            if (!widget.hasScrollChild) {
-              return ges(context);
-            }
-            return content(context);
-          })),
+      child: Builder(builder: (context) {
+        if (!widget.hasScrollChild) {
+          return ges(context);
+        }
+        return content(context);
+      }),
     );
   }
 
@@ -379,33 +368,4 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     super.dispose();
   }
 
-  void onTapBackKey() {
-    tween.begin = 0.0;
-    tween.end = width;
-    animationController.duration = Duration(milliseconds: maxMilliseconds);
-    animationController.forward(from: 0);
-    popping = true;
-  }
-}
-
-class HorizontalDragBackState extends InheritedWidget {
-  final Function? _onTapBackKey;
-
-  const HorizontalDragBackState(
-      {super.key, Function? onTapBackKey, required super.child})
-      : _onTapBackKey = onTapBackKey;
-
-  @override
-  bool updateShouldNotify(covariant HorizontalDragBackState oldWidget) {
-    return oldWidget._onTapBackKey != _onTapBackKey;
-  }
-
-  static HorizontalDragBackState? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<HorizontalDragBackState>();
-  }
-
-  pop() {
-    _onTapBackKey?.call();
-  }
 }

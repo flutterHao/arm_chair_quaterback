@@ -32,14 +32,12 @@ class _HorizontalDragBackParentWidgetState
     super.initState();
     HorizontalDragBackController().addController(controller);
     controller.stream.listen((num value) {
-      print('horizontalDragBack----2222---offsetX: $value');
-      if(animationController?.isAnimating??false){
+      // print('horizontalDragBack----2222---offsetX: $value');
+      if (animationController?.isAnimating ?? false) {
         return;
       }
-      if (value == -1 ) {
-        // if(animationController?.isAnimating??true) {
-          backAnimation();
-        // }
+      if (value == -1) {
+        backAnimation();
       } else {
         offsetX = value;
         setState(() {});
@@ -49,17 +47,18 @@ class _HorizontalDragBackParentWidgetState
 
   backAnimation() {
     animationController ??= AnimationController(
-        vsync: this, duration: Duration(milliseconds: Constant.transitionDuration));
-    var begin =  MediaQuery.of(context).size.width;
-    print('begin111: $begin');
-    animation = Tween(begin: 0.0, end: begin).animate(animationController!)..addListener(() {
-      print('begin222: ${animation!.value}');
-      offsetX = animation!.value;
-      if(offsetX == 0){
-        offsetX = null;
-      }
-      setState(() {});
-    });
+        vsync: this,
+        duration: Duration(milliseconds: Constant.transitionDuration));
+    var begin = MediaQuery.of(context).size.width;
+    animation = Tween(begin: 0.0, end: begin).animate(animationController!)
+      ..addListener(() {
+        // print('begin222: ${animation!.value}');
+        offsetX = animation!.value;
+        if (offsetX == 0) {
+          offsetX = null;
+        }
+        setState(() {});
+      });
     animationController?.forward(from: 0);
   }
 
