@@ -327,7 +327,8 @@ class _GameState extends State<Game>
                                           icon: Assets.teamUiIconTrophy01),
                                       28.vGap,
                                       Text(
-                                        "${controller.teamInfoEntity?.cup ?? 0}",
+                                        // "${controller.teamInfoEntity?.cup ?? 0}",
+                                        "0",
                                         style: 21.w7(
                                             color: AppColors.cFFFFFF,
                                             height: 1),
@@ -339,7 +340,8 @@ class _GameState extends State<Game>
                                       ),
                                       20.vGap,
                                       Text(
-                                        "${controller.teamInfoEntity?.maxCup ?? 0}",
+                                        // "${controller.teamInfoEntity?.maxCup ?? 0}",
+                                        "0",
                                         style: 21.w7(
                                             color: AppColors.cFFFFFF,
                                             height: 1),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-23 20:35:37
+ * @LastEditTime: 2025-01-23 20:48:16
  */
 
 import 'dart:async';
@@ -198,7 +198,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, PlayerCardEntity card) async {
-    return;
+    // return;
     if (isOpen) return;
     isOpen = true;
     awardList = await TeamApi.opneBattleBox(index, card.playerId);
@@ -502,7 +502,7 @@ class TeamIndexController extends GetxController
 
   void selectCard(CardPackInfoCard item, PlayerCardEntity player) async {
     if (!isStartting) return;
-    if (step >= 3 || player.isOpen.value) return;
+    if (step != 1 || player.isOpen.value) return;
     if (!player.isSelect.value) {
       // 如果还没有选择先选牌
       for (var element in item.playerCards) {

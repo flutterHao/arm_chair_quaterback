@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/cup_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -258,13 +259,13 @@ class GameOverController extends GetxController {
     }
   }
 
-  TeamInfoEntity getHomeTeam() {
-    var homeTeam = Get.find<TeamBattleController>().battleEntity.homeTeam;
+  CupEntity getHomeTeam() {
+    var homeTeam = Get.find<TeamBattleController>().battleEntity.homeTeamCup;
     return homeTeam;
   }
 
-  TeamInfoEntity getAwayTeam() {
-    var awayTeam = Get.find<TeamBattleController>().battleEntity.awayTeam;
+  CupEntity getAwayTeam() {
+    var awayTeam = Get.find<TeamBattleController>().battleEntity.awayTeamCup;
     return awayTeam;
   }
 

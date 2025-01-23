@@ -30,9 +30,9 @@ class TeamInfoEntity {
   late int lastOffLineTime;
   late int beforeGuessWinningStreak;
   late int totalChargeNum;
-  late int cup;
-  late int maxCup;
-  late int cupRankId;
+  // late int cup;
+  // late int maxCup;
+  // late int cupRankId;
   late int helpStep;
   late String createIp;
   late int totalGames;
