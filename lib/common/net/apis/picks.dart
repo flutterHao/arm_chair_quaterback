@@ -220,4 +220,9 @@ class PicksApi {
     var json = await httpUtil.post(Api.getNowSeason);
     return NowSeasonEntity.fromJson(json);
   }
+
+  /// 获取赛季排行榜奖励
+  static Future getSeasonRankAward(int cupRankId) async {
+    await httpUtil.post(Api.getSeasonRankAward, data: {"rankId": cupRankId});
+  }
 }

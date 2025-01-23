@@ -19,6 +19,7 @@ import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_reward_
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -64,6 +65,8 @@ class SeaonRankController extends GetxController {
   GameConstantEntity? distanceSeasonGameConstantEntity;
 
   PageController pageController = PageController();
+
+  late int teamId;
   @override
   void onInit() {
     super.onInit();
@@ -85,7 +88,7 @@ class SeaonRankController extends GetxController {
 
   Future initData() async {
     HomeController homeController = Get.find();
-    int teamId = homeController.userEntiry.teamLoginInfo?.team?.teamId ?? 0;
+    teamId = homeController.userEntiry.teamLoginInfo?.team?.teamId ?? 0;
     teamSimpleEntity = (await PicksApi.getTeamSimple(teamId)).obs;
     cupDefineList.value = await CacheApi.getCupDefine();
     gameScheduleList.value = await PicksApi.getGameSchedules(teamId);
@@ -259,12 +262,20 @@ class SeaonRankController extends GetxController {
             await PicksApi.getSeasonRankInfo(
                 seasonRankList[pageviewIndex.value].lastRank!.seasonId,
                 pageSize: showNumGameConstantEntity!.constantValue);
-        await Future.delayed(const Duration(milliseconds: 500));
+
         seasonRankList.insert(0, seasonRankInfoEntity);
         rankDialogloadingStatus.value = LoadDataStatus.success;
         // ++pageviewIndex.value;
         pageController.jumpToPage(pageviewIndex.value);
       }
     }
+  }
+
+  ///领取奖励
+  ///cupRankId:领取的段位杯牌id
+  void receiveReward(int cupRankId) async {
+    await PicksApi.getSeasonRankAward(cupRankId);
+    teamSimpleEntity.value = await PicksApi.getTeamSimple(teamId);
+    EasyLoading.showSuccess('Received successfully');
   }
 }

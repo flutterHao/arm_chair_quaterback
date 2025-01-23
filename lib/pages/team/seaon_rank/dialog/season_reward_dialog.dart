@@ -59,11 +59,16 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
 
   Widget _rewardsItemWidget(int index) {
     ///判断是否满足领取条件
-    bool isShowReceive = !(controller.teamSimpleEntity.value.cupRankId <
-        controller.cupDefineList[index].cupNumId);
+    ///满足领取条件段位id <= 当前段位id
+    bool isShowReceive = controller.cupDefineList[index].cupNumId <=
+        controller.teamSimpleEntity.value.cupRankId;
 
     /// 判断是否已经领取
-    bool haveReceive = true;
+    bool haveReceive = controller
+        .nowSeasonRankInfoEntity.value.myRank!.receivedRewards
+        .split(',')
+        .toList()
+        .contains(controller.cupDefineList[index].cupNumId.toString());
 
     ///赛季奖励数据转list
     List<String> cupRewardList =
@@ -140,23 +145,26 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
                     iconColor: AppColors.c10A86A,
                     icon: Assets.commonUiCommonStatusBarMission02),
               )))
-        else if (index == 2)
+        // else if (isShowReceive)
+        else
           Positioned(
               right: 18.w,
               bottom: 32.w,
               child: MtInkWell(
+                  onTap: () => controller
+                      .receiveReward(controller.cupDefineList[index].cupNumId),
                   child: Container(
-                width: 59.w,
-                height: 40.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.w),
-                    color: AppColors.c000000),
-                child: Text('claim'.toUpperCase(),
-                    style: 16.w5(
-                        color: Colors.white,
-                        fontFamily: FontFamily.fOswaldMedium)),
-              )))
+                    width: 59.w,
+                    height: 40.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.w),
+                        color: AppColors.c000000),
+                    child: Text('claim'.toUpperCase(),
+                        style: 16.w5(
+                            color: Colors.white,
+                            fontFamily: FontFamily.fOswaldMedium)),
+                  )))
       ],
     );
   }

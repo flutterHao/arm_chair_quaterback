@@ -54,6 +54,8 @@ class Api {
       "$API_BASE_PATH/NBANews/getGuessRankByCycle";
   static const String getSeasonRankInfo =
       '$API_BASE_PATH/NBANews/getSeasonRankInfo';
+  static const String getSeasonRankAward =
+      '$API_BASE_PATH/NBANews/getSeasonRankAward';
 
   ///NBAData
   static const String statTeamRank =
