@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
+import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 
@@ -23,10 +25,14 @@ extension PlayerCardEntityExtension on PlayerCardEntity {
     RxBool? isSelect,
     RxBool? isOpen,
     int? playerId,
+    Rx<Offset>? offset,
+    Rx<double>? rotation,
   }) {
     return PlayerCardEntity()
       ..isSelect = isSelect ?? this.isSelect
       ..isOpen = isOpen ?? this.isOpen
-      ..playerId = playerId ?? this.playerId;
+      ..playerId = playerId ?? this.playerId
+      ..offset = offset ?? this.offset
+      ..rotation = rotation ?? this.rotation;
   }
 }

@@ -21,6 +21,7 @@ class PlayerCardEntity {
   late int playerId = 0;
   @JSONField(serialize: false, deserialize: false)
   late Rx<Offset> offset = Offset(0, 0).obs;
+  @JSONField(serialize: false, deserialize: false)
   late Rx<double> rotation = 0.0.obs;
 
   PlayerCardEntity({this.playerId = 0});

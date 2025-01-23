@@ -34,7 +34,7 @@ class SeaonRankController extends GetxController {
   int minute = 0;
   int second = 0;
 
-  final PageController seaDialogPageController = PageController();
+  // final PageController seaDialogPageController = PageController();
 
   RxInt pageviewIndex = 0.obs;
   RxList<CupDefineEntity> cupDefineList = RxList<CupDefineEntity>();
@@ -215,5 +215,41 @@ class SeaonRankController extends GetxController {
   String getEnMMDD(int time) {
     return MyDateUtils.getEnMMDD(DateTime.fromMillisecondsSinceEpoch(time),
         short: true);
+  }
+
+  /// 下一页
+  void nextSeasonRank() async {
+    /// 判断是否还有下一页
+    if (seasonRankList[pageviewIndex.value].nextRank != null) {
+      /// 判断是否还有下一页数据
+      if (seasonRankList.length > pageviewIndex.value + 1) {
+        /// 直接下一页
+        ++pageviewIndex.value;
+      } else {
+        SeasonRankInfoEntity res = await PicksApi.getSeasonRankInfo(
+            seasonRankList[pageviewIndex.value].nextRank!.seasonId,
+            pageSize: showNumGameConstantEntity!.constantValue);
+        seasonRankList.add(res);
+        ++pageviewIndex.value;
+      }
+    } else {
+      print('没有下个赛季');
+    }
+  }
+
+  /// 上一页
+  void preSeasonRank() async {
+    /// 判断是否还有上一页
+    if (seasonRankList[pageviewIndex.value].lastRank != null) {
+      /// 判断是否还有上一页数据
+      if (pageviewIndex.value > 0) {
+        /// 直接上一页
+        --pageviewIndex.value;
+      } else {
+        SeasonRankInfoEntity res = await PicksApi.getSeasonRankInfo(
+            seasonRankList[pageviewIndex.value].lastRank!.seasonId,
+            pageSize: showNumGameConstantEntity!.constantValue);
+      }
+    }
   }
 }

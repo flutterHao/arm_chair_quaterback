@@ -32,26 +32,21 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
       height: 650.h,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
-      child: Obx(() => Column(
-            children: [
-              const DialogTopBtn(),
-              10.vGap,
-              _seasonRankHeaderWidget(),
-              5.vGap,
-              const Divider(
-                height: 1,
-                color: AppColors.cD4D4D4,
-              ),
-              Expanded(
-                  key: controller.ranksBodyGlobalKey,
-                  child: PageView.builder(
-                      itemCount: controller.seasonRankList.length,
-                      controller: controller.seaDialogPageController,
-                      itemBuilder: (context, pageIndex) {
-                        return SeasonRankItemView(pageIndex);
-                      }))
-            ],
-          )),
+      child: Column(
+        children: [
+          const DialogTopBtn(),
+          10.vGap,
+          _seasonRankHeaderWidget(),
+          5.vGap,
+          const Divider(
+            height: 1,
+            color: AppColors.cD4D4D4,
+          ),
+          Expanded(
+              key: controller.ranksBodyGlobalKey,
+              child: const SeasonRankItemView())
+        ],
+      ),
     ));
   }
 
@@ -67,11 +62,12 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
               const Spacer(),
               MtInkWell(
                   onTap: () async {
-                    await controller.seaDialogPageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.linear);
-                    controller.pageviewIndex.value =
-                        (controller.seaDialogPageController.page ?? 0).toInt();
+                    controller.pageviewIndex.value--;
+                    // await controller.seaDialogPageController.previousPage(
+                    //     duration: const Duration(milliseconds: 300),
+                    //     curve: Curves.linear);
+                    // controller.pageviewIndex.value =
+                    //     (controller.seaDialogPageController.page ?? 0).toInt();
                   },
                   child: Container(
                       width: 28.w,
@@ -104,36 +100,10 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
                     style: 12.w5(fontFamily: FontFamily.fOswaldRegular),
                   )),
               5.hGap,
+              Text('${controller.pageviewIndex.value}'),
               MtInkWell(
                   onTap: () async {
-                    // if (controller
-                    //         .seasonRankList[controller.pageviewIndex.value]
-                    //         .nextRank !=
-                    //     null) {
-                    //   print('有下个赛季');
-
-                    //   print('添加新页面');
-                    //   SeasonRankInfoEntity res =
-                    //       await PicksApi.getSeasonRankInfo(
-                    //           controller
-                    //               .seasonRankList[
-                    //                   controller.pageviewIndex.value]
-                    //               .nextRank!
-                    //               .seasonId,
-                    //           pageSize: controller
-                    //               .showNumGameConstantEntity!.constantValue);
-                    //   controller.seasonRankList.add(res);
-                    //   print(controller.seasonRankList.length);
-                    //   await controller.seaDialogPageController.nextPage(
-                    //       duration: const Duration(milliseconds: 300),
-                    //       curve: Curves.linear);
-                    //   controller.pageviewIndex.value =
-                    //       (controller.seaDialogPageController.page ?? 0)
-                    //           .toInt();
-                    //   print(controller.pageviewIndex.value);
-                    // } else {
-                    //   print('没有下个赛季');
-                    // }
+                    controller.nextSeasonRank();
                   },
                   child: Container(
                     width: 28.w,
@@ -161,8 +131,7 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
 }
 
 class SeasonRankItemView extends StatefulWidget {
-  const SeasonRankItemView(this.pageIndex, {super.key});
-  final int pageIndex;
+  const SeasonRankItemView({super.key});
 
   @override
   State<SeasonRankItemView> createState() => _SeasonRankItemViewState();
@@ -184,23 +153,20 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
 
   ///我在榜单显示范围内索引
   int activeIndex = 0;
-  SeasonRankInfoEntity? seasonRankEntity;
+  late SeasonRankInfoEntity seasonRankEntity;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // print("controller.seasonRankList.length");
-    // print(controller.seasonRankList.length);
-    // print(widget.pageIndex);
-    seasonRankEntity = controller.seasonRankList[widget.pageIndex];
-    // print(seasonRankEntity == null);
+    seasonRankEntity = controller.seasonRankList[0];
+    print('initState6666');
 
     ///我已上榜单
-    if (seasonRankEntity!.myRank != null) {
+    if (seasonRankEntity.myRank != null) {
       ///我在榜单显示范围内
-      if (seasonRankEntity!.myRank!.rank <=
+      if (seasonRankEntity.myRank!.rank <=
           int.parse(controller.showNumGameConstantEntity!.constantValue)) {
-        activeIndex = seasonRankEntity!.myRank!.rank - 1;
+        activeIndex = seasonRankEntity.myRank!.rank - 1;
         WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
       } else {
         isShowBottom.value = true;
@@ -258,8 +224,10 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
               child: ListView.separated(
                 controller: scrollController,
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                itemCount:
-                    controller.seasonRankList[widget.pageIndex].ranks.length,
+                itemCount: controller
+                    .seasonRankList[controller.pageviewIndex.value]
+                    .ranks
+                    .length,
                 itemBuilder: (context, index) {
                   return Container(
                     key: index == 0 ? _globalKey : null,
@@ -349,8 +317,8 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
             ClipOval(
               child: ImageWidget(
                   width: 36.w,
-                  url: Utils.getAvaterUrl(
-                      seasonRankEntity!.ranks[index].teamLogo)),
+                  url: Utils.getAvaterUrl(seasonRankEntity
+                      .ranks[controller.pageviewIndex.value].teamLogo)),
             ),
             6.hGap,
             Expanded(
@@ -359,12 +327,13 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    seasonRankEntity!.ranks[index].teamName,
+                    seasonRankEntity
+                        .ranks[controller.pageviewIndex.value].teamName,
                     style: 14
                         .w5(fontFamily: FontFamily.fOswaldMedium, color: color),
                   ),
                   Text(
-                    'Win Rate  ${(seasonRankEntity!.ranks[index].winPro * 100).round()}%',
+                    'Win Rate  ${(seasonRankEntity.ranks[controller.pageviewIndex.value].winPro * 100).round()}%',
                     style: 12.w4(
                         color: AppColors.c4D4D4D,
                         fontFamily: FontFamily.fRobotoRegular),
@@ -388,8 +357,8 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                     width: 42.w,
                     // alignment: Alignment.centerRight,
                     child: Text(
-                        controller
-                            .formatToW(seasonRankEntity!.ranks[index].cup),
+                        controller.formatToW(seasonRankEntity
+                            .ranks[controller.pageviewIndex.value].cup),
                         style: 14.w5(fontFamily: FontFamily.fOswaldMedium)),
                   )
                 ],
@@ -406,11 +375,11 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
         child: Row(
           children: [
             Text(
-              seasonRankEntity!.myRank!.rank >
+              seasonRankEntity.myRank!.rank >
                       int.parse(
                           controller.showNumGameConstantEntity!.constantValue)
                   ? '${int.parse(controller.showNumGameConstantEntity!.constantValue)}'
-                  : '${seasonRankEntity!.myRank!.rank}',
+                  : '${seasonRankEntity.myRank!.rank}',
               style: 19.w5(
                 fontFamily: FontFamily.fOswaldMedium,
               ),
@@ -419,7 +388,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
             ClipOval(
               child: ImageWidget(
                   width: 36.w,
-                  url: Utils.getAvaterUrl(seasonRankEntity!.myRank!.teamLogo)),
+                  url: Utils.getAvaterUrl(seasonRankEntity.myRank!.teamLogo)),
             ),
             6.hGap,
             Expanded(
@@ -428,13 +397,13 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    seasonRankEntity!.myRank!.teamName,
+                    seasonRankEntity.myRank!.teamName,
                     style: 14.w5(
                         fontFamily: FontFamily.fOswaldMedium,
                         color: AppColors.cFF7954),
                   ),
                   Text(
-                    'Win Rate  ${widget.pageIndex}%',
+                    'Win Rate  ${(seasonRankEntity.myRank!.winPro * 100).round()}%',
                     // 'Win Rate  ${(widget.seasonRankEntity.myRank != null ? widget.seasonRankEntity.myRank!.winPro * 100 : 0).round()}%',
                     style: 12.w4(
                         color: AppColors.c4D4D4D,
@@ -457,7 +426,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                   2.hGap,
                   SizedBox(
                     width: 42.w,
-                    child: Text('${seasonRankEntity!.myRank!.cup}',
+                    child: Text('${seasonRankEntity.myRank!.cup}',
                         style: 14.w5(fontFamily: FontFamily.fOswaldMedium)),
                   )
                 ],

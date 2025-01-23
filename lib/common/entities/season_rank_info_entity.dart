@@ -7,9 +7,9 @@ export 'package:arm_chair_quaterback/generated/json/season_rank_info_entity.g.da
 class SeasonRankInfoEntity {
   late int nowCycleEndTime = 0;
   late List<SeasonRankInfoRanks> ranks = [];
-  late SeasonRankInfoMyRank? myRank;
-  late SeasonRankInfoNextRank? lastRank;
-  late SeasonRankInfoNextRank? nextRank;
+  SeasonRankInfoMyRank? myRank;
+  SeasonRankInfoNextRank? lastRank;
+  SeasonRankInfoNextRank? nextRank;
   late int nowCycleStartTime = 0;
 
   SeasonRankInfoEntity();
@@ -36,7 +36,7 @@ class SeasonRankInfoRanks {
   late int teamId = 0;
   late int rank = 0;
   late int updateTime = 0;
-  late double winPro;
+  late double winPro = 0.0;
   late int id = 0;
   late int cup = 0;
 
@@ -64,7 +64,7 @@ class SeasonRankInfoMyRank {
   late int teamId = 0;
   late int rank = 0;
   late int updateTime = 0;
-  late double winPro;
+  late double winPro = 0.0;
   late int id = 0;
   late int cup = 0;
 
