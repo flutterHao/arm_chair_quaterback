@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-16 18:49:21
+ * @LastEditTime: 2025-01-23 21:14:39
  */
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
@@ -94,15 +94,16 @@ class TeamDetailController extends GetxController
       teamDetailEntity = v;
       teamDetailEntity.gameSchedules
           .sort((a, b) => a.gameStartTime.compareTo(b.gameStartTime));
-      for (int i = 0; i < teamDetailEntity.gameSchedules.length; i++) {
-        if (teamDetailEntity.gameSchedules[i].status != 2) {
-          double offsetx = (193.5.w + 9.w) * (i > 0 ? i - 1 : 0);
-          scrollController.jumpTo(offsetx);
-          break;
-        }
-      }
-
       update(["overview_tab"]);
+      Future.delayed(const Duration(milliseconds: 50)).then((v) {
+        for (int i = 0; i < teamDetailEntity.gameSchedules.length; i++) {
+          if (teamDetailEntity.gameSchedules[i].status != 2) {
+            double offsetx = (193.5.w + 9.w) * (i > 0 ? i - 1 : 0);
+            scrollController.jumpTo(offsetx);
+            break;
+          }
+        }
+      });
     });
   }
 
