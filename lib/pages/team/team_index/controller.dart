@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-23 19:12:09
+ * @LastEditTime: 2025-01-23 20:35:37
  */
 
 import 'dart:async';
@@ -198,7 +198,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, PlayerCardEntity card) async {
-    // return;
+    return;
     if (isOpen) return;
     isOpen = true;
     awardList = await TeamApi.opneBattleBox(index, card.playerId);
@@ -563,11 +563,7 @@ class TeamIndexController extends GetxController
   }
 
   void back(context) {
-    if (HorizontalDragBackState.of(context) != null) {
-      HorizontalDragBackState.of(context)?.pop();
-    } else {
-      Navigator.pop(context);
-    }
+    Get.back();
   }
 
   //one more，返回到第一步

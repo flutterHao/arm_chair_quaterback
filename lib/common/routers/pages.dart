@@ -118,7 +118,7 @@ class AppPages {
       opaque: false,
       name: RouteNames.openBoxPage,
       page: () => OpenBoxPage(item: Get.arguments as CardPackInfoCard),
-      transition: Transition.fadeIn,
+      // transition: Transition.fadeIn,
     ),
     GetPage(
       opaque: false,
@@ -177,7 +177,7 @@ class AppPages {
       opaque: false,
       name: RouteNames.teamBeautyPage,
       page: () => const BeautyPage(),
-      transition: Transition.fadeIn,
+      // transition: Transition.fadeIn,
     ),
     GetPage(
         opaque: false,
