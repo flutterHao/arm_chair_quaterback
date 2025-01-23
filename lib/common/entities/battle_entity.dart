@@ -10,22 +10,14 @@ export 'package:arm_chair_quaterback/generated/json/battle_entity.g.dart';
 
 @JsonSerializable()
 class BattleEntity {
-  late int awayTeamPower;
   BattleNew? news;
   late List<TeamPlayerInfoEntity> homeTeamPlayerList;
   late TeamInfoEntity awayTeam;
-  late AbilityValue awayAbilityValue;
   late List<TeamPlayerInfoEntity> awayTeamPlayerList;
   late List<TrainingInfoBuff> awayTeamBuff;
-  late int homeTeamPower;
   late List<TrainingInfoBuff> homeTeamBuff;
   late TeamInfoEntity homeTeam;
   late BattleGameData gameData;
-  late AbilityValue homeAbilityValue;
-  late double newsBuffAdd;
-  late int newsBuffPlayerId;
-  late double homeTeamReadiness;
-  late double awayTeamReadiness;
   late CupEntity homeTeamCup;
   late CupEntity awayTeamCup;
 

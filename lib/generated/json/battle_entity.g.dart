@@ -13,10 +13,6 @@ import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 
 BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   final BattleEntity battleEntity = BattleEntity();
-  final int? awayTeamPower = jsonConvert.convert<int>(json['awayTeamPower']);
-  if (awayTeamPower != null) {
-    battleEntity.awayTeamPower = awayTeamPower;
-  }
   final BattleNew? news = jsonConvert.convert<BattleNew>(json['news']);
   if (news != null) {
     battleEntity.news = news;
@@ -36,11 +32,6 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   if (awayTeam != null) {
     battleEntity.awayTeam = awayTeam;
   }
-  final AbilityValue? awayAbilityValue = jsonConvert.convert<AbilityValue>(
-      json['awayAbilityValue']);
-  if (awayAbilityValue != null) {
-    battleEntity.awayAbilityValue = awayAbilityValue;
-  }
   final List<
       TeamPlayerInfoEntity>? awayTeamPlayerList = (json['awayTeamPlayerList'] as List<
       dynamic>?)
@@ -58,10 +49,6 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
       .toList();
   if (awayTeamBuff != null) {
     battleEntity.awayTeamBuff = awayTeamBuff;
-  }
-  final int? homeTeamPower = jsonConvert.convert<int>(json['homeTeamPower']);
-  if (homeTeamPower != null) {
-    battleEntity.homeTeamPower = homeTeamPower;
   }
   final List<TrainingInfoBuff>? homeTeamBuff = (json['homeTeamBuff'] as List<
       dynamic>?)
@@ -81,30 +68,6 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   if (gameData != null) {
     battleEntity.gameData = gameData;
   }
-  final AbilityValue? homeAbilityValue = jsonConvert.convert<AbilityValue>(
-      json['homeAbilityValue']);
-  if (homeAbilityValue != null) {
-    battleEntity.homeAbilityValue = homeAbilityValue;
-  }
-  final double? newsBuffAdd = jsonConvert.convert<double>(json['newsBuffAdd']);
-  if (newsBuffAdd != null) {
-    battleEntity.newsBuffAdd = newsBuffAdd;
-  }
-  final int? newsBuffPlayerId = jsonConvert.convert<int>(
-      json['newsBuffPlayerId']);
-  if (newsBuffPlayerId != null) {
-    battleEntity.newsBuffPlayerId = newsBuffPlayerId;
-  }
-  final double? homeTeamReadiness = jsonConvert.convert<double>(
-      json['homeTeamReadiness']);
-  if (homeTeamReadiness != null) {
-    battleEntity.homeTeamReadiness = homeTeamReadiness;
-  }
-  final double? awayTeamReadiness = jsonConvert.convert<double>(
-      json['awayTeamReadiness']);
-  if (awayTeamReadiness != null) {
-    battleEntity.awayTeamReadiness = awayTeamReadiness;
-  }
   final CupEntity? homeTeamCup = jsonConvert.convert<CupEntity>(
       json['homeTeamCup']);
   if (homeTeamCup != null) {
@@ -120,24 +83,16 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $BattleEntityToJson(BattleEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['awayTeamPower'] = entity.awayTeamPower;
   data['news'] = entity.news?.toJson();
   data['homeTeamPlayerList'] =
       entity.homeTeamPlayerList.map((v) => v.toJson()).toList();
   data['awayTeam'] = entity.awayTeam.toJson();
-  data['awayAbilityValue'] = entity.awayAbilityValue.toJson();
   data['awayTeamPlayerList'] =
       entity.awayTeamPlayerList.map((v) => v.toJson()).toList();
   data['awayTeamBuff'] = entity.awayTeamBuff.map((v) => v.toJson()).toList();
-  data['homeTeamPower'] = entity.homeTeamPower;
   data['homeTeamBuff'] = entity.homeTeamBuff.map((v) => v.toJson()).toList();
   data['homeTeam'] = entity.homeTeam.toJson();
   data['gameData'] = entity.gameData.toJson();
-  data['homeAbilityValue'] = entity.homeAbilityValue.toJson();
-  data['newsBuffAdd'] = entity.newsBuffAdd;
-  data['newsBuffPlayerId'] = entity.newsBuffPlayerId;
-  data['homeTeamReadiness'] = entity.homeTeamReadiness;
-  data['awayTeamReadiness'] = entity.awayTeamReadiness;
   data['homeTeamCup'] = entity.homeTeamCup.toJson();
   data['awayTeamCup'] = entity.awayTeamCup.toJson();
   return data;
@@ -145,42 +100,26 @@ Map<String, dynamic> $BattleEntityToJson(BattleEntity entity) {
 
 extension BattleEntityExtension on BattleEntity {
   BattleEntity copyWith({
-    int? awayTeamPower,
     BattleNew? news,
     List<TeamPlayerInfoEntity>? homeTeamPlayerList,
     TeamInfoEntity? awayTeam,
-    AbilityValue? awayAbilityValue,
     List<TeamPlayerInfoEntity>? awayTeamPlayerList,
     List<TrainingInfoBuff>? awayTeamBuff,
-    int? homeTeamPower,
     List<TrainingInfoBuff>? homeTeamBuff,
     TeamInfoEntity? homeTeam,
     BattleGameData? gameData,
-    AbilityValue? homeAbilityValue,
-    double? newsBuffAdd,
-    int? newsBuffPlayerId,
-    double? homeTeamReadiness,
-    double? awayTeamReadiness,
     CupEntity? homeTeamCup,
     CupEntity? awayTeamCup,
   }) {
     return BattleEntity()
-      ..awayTeamPower = awayTeamPower ?? this.awayTeamPower
       ..news = news ?? this.news
       ..homeTeamPlayerList = homeTeamPlayerList ?? this.homeTeamPlayerList
       ..awayTeam = awayTeam ?? this.awayTeam
-      ..awayAbilityValue = awayAbilityValue ?? this.awayAbilityValue
       ..awayTeamPlayerList = awayTeamPlayerList ?? this.awayTeamPlayerList
       ..awayTeamBuff = awayTeamBuff ?? this.awayTeamBuff
-      ..homeTeamPower = homeTeamPower ?? this.homeTeamPower
       ..homeTeamBuff = homeTeamBuff ?? this.homeTeamBuff
       ..homeTeam = homeTeam ?? this.homeTeam
       ..gameData = gameData ?? this.gameData
-      ..homeAbilityValue = homeAbilityValue ?? this.homeAbilityValue
-      ..newsBuffAdd = newsBuffAdd ?? this.newsBuffAdd
-      ..newsBuffPlayerId = newsBuffPlayerId ?? this.newsBuffPlayerId
-      ..homeTeamReadiness = homeTeamReadiness ?? this.homeTeamReadiness
-      ..awayTeamReadiness = awayTeamReadiness ?? this.awayTeamReadiness
       ..homeTeamCup = homeTeamCup ?? this.homeTeamCup
       ..awayTeamCup = awayTeamCup ?? this.awayTeamCup;
   }
