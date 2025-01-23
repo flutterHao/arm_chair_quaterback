@@ -79,14 +79,14 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     super.initState();
     offsetX = 1000000;
     enterAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
+        vsync: this, duration: const Duration(milliseconds: 200));
     Future.delayed(Duration.zero, () {
       // print('horizontalDragBack----delayed---offsetX: $offsetX');
       enterAnimation = TweenSequence([
+        // TweenSequenceItem(
+        //     tween: Tween(begin: width, end: width / 2), weight: 0.2),
         TweenSequenceItem(
-            tween: Tween(begin: width, end: width / 2), weight: 0.2),
-        TweenSequenceItem(
-            tween: Tween(begin: width / 2, end: 0.0), weight: 0.8),
+            tween: Tween(begin: width, end: 0.0), weight: 1),
       ]).animate(enterAnimationController)
         ..addListener(() {
           offsetX = enterAnimation.value;
