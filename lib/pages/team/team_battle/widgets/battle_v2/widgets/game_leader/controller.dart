@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
@@ -72,7 +72,7 @@ class GameLeaderController extends GetxController
     return concatList;
   }
 
-  BattleTeam getBattleTeam(int teamId) {
+  TeamInfoEntity getBattleTeam(int teamId) {
     TeamBattleV2Controller teamBattleV2Controller = Get.find();
     if (teamId == teamBattleV2Controller.battleEntity.homeTeam.teamId) {
       return teamBattleV2Controller.battleEntity.homeTeam;

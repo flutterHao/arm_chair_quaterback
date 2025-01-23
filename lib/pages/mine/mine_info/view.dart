@@ -1,10 +1,9 @@
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
-import 'widgets/widgets.dart';
 
 class MineInfoPage extends GetView<MineInfoController> {
   const MineInfoPage({super.key});
@@ -21,7 +19,7 @@ class MineInfoPage extends GetView<MineInfoController> {
   Widget build(BuildContext context) {
     return GetBuilder<MineInfoController>(
       builder: (_) {
-        return HorizontalDragBackWidget(
+        return HorizontalDragBackContainer(
             child: BlackAppWidget(
           const AppBarWidget(
             title: "MINE",

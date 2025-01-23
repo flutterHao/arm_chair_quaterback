@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     Get.config(
       // defaultOpaqueRoute: false,// 此全局配置无效，使用GetPageRoute的opaque属性
       defaultPopGesture: false,
-      defaultDurationTransition: const Duration(milliseconds: 100),
+      defaultDurationTransition: Duration.zero,
     );
     return Center(
       child: Container(
@@ -73,9 +73,9 @@ class MyApp extends StatelessWidget {
                   // logWriterCallback: Log.write,
                   // defaultTransition: Transition.rightToLeft,
                   transitionDuration: const Duration(milliseconds: 300),
-                  customTransition:
-                      HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
-                  //  defaultTransition: Transition.noTransition,
+                  // customTransition:
+                  //     HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
+                   defaultTransition: Transition.noTransition,
                 ),
               ),
             ),

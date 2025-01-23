@@ -6,7 +6,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -28,7 +28,7 @@ class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
   Widget build(BuildContext context) {
     Get.put(LeagueDetailV2Controller(Get.arguments["item"],
         gameId: Get.arguments["gameId"]));
-    return HorizontalDragBackWidget(
+    return HorizontalDragBackContainer(
       child: GetBuilder<LeagueDetailV2Controller>(
         builder: (_) {
           return BlackAppWidget(

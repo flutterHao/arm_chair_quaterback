@@ -8,7 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -19,7 +19,6 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/random_reward_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/reward_package_widget.dart';
-import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/success_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/week_price/week_prize_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/wheel_widget.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalDragBackWidget(
+    return HorizontalDragBackContainer(
       child: GetBuilder<DailyTaskController>(
         builder: (_) {
           return BlackAppWidget(

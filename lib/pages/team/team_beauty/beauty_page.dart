@@ -5,16 +5,14 @@
  * @LastEditTime: 2025-01-21 10:24:00
  */
 
-import 'dart:math';
-
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/widget/beauty_list.dart';
@@ -192,7 +190,7 @@ class BeautyPage extends GetView<BeautyController> {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalDragBackWidget(
+    return HorizontalDragBackContainer(
         child: BlackAppWidget(
       // const UserInfoBar(showPop: true),
       Container(

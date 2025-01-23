@@ -9,7 +9,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/widgets/log_tab.dart';
@@ -32,7 +32,7 @@ class TeamDetailPage extends StatelessWidget {
       tag: Get.arguments.toString(),
       id: "team_detail",
       builder: (_) {
-        return HorizontalDragBackWidget(
+        return HorizontalDragBackContainer(
           child: BlackAppWidget(
             const UserInfoBar(showPop: true),
             bodyWidget: Expanded(

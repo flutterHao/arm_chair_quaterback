@@ -1,6 +1,6 @@
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/before_game/before_game.dart';
@@ -31,7 +31,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
         return PopScope(
           canPop:
               controller.isGameOver.value || controller.maybeException.value,
-          child: HorizontalDragBackWidget(
+          child: HorizontalDragBackContainer(
             onWidgetOut: () {
               controller.jumpGame();
             },

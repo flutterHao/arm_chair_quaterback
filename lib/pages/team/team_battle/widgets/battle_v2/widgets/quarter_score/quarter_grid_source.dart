@@ -1,5 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -16,7 +16,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///
 
 class LineOne {
-  final BattleTeam team;
+  final TeamInfoEntity team;
   final Color color;
 
   LineOne(this.team, this.color);

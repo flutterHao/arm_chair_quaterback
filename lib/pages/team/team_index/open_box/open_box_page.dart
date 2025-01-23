@@ -12,7 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -592,7 +592,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
     // controller.showBackground1.value = false;
     // controller.showBackground2.value = false;
     // controller.showBackground3.value = false;
-    return HorizontalDragBackWidget(
+    return HorizontalDragBackContainer(
       child: GetBuilder<TeamIndexController>(
           id: "open_box_page",
           builder: (_) {

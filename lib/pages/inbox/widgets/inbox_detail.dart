@@ -21,7 +21,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/send_comments_view.dart';
@@ -47,7 +47,7 @@ class InboxDetailPage extends GetView<InboxController> {
     return GetBuilder<InboxController>(
         id: "inbox_detail",
         builder: (_) {
-          return HorizontalDragBackWidget(
+          return HorizontalDragBackContainer(
             child: BlackAppWidget(
               backgroundColor: AppColors.cFFFFFF,
               AppBarWidget(

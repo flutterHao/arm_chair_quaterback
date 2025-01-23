@@ -7,7 +7,6 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_before_game.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_game.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_game_over.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

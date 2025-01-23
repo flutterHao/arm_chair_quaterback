@@ -20,8 +20,8 @@ class TeamInfoEntity {
   late int powerReplyTime;
   late int currentGuessWinningStreak;
   late int currentGameWinningStreak;
+  late int playerReadiness;
   late int accountId;
-  late int maxCup;
   late int firstLoginTime;
   late int secretaryId;
   late int teamExp;
@@ -31,6 +31,8 @@ class TeamInfoEntity {
   late int beforeGuessWinningStreak;
   late int totalChargeNum;
   late int cup;
+  late int maxCup;
+  late int cupRankId;
   late int helpStep;
   late String createIp;
   late int totalGames;

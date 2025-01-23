@@ -68,13 +68,14 @@ TeamInfoEntity $TeamInfoEntityFromJson(Map<String, dynamic> json) {
   if (currentGameWinningStreak != null) {
     teamInfoEntity.currentGameWinningStreak = currentGameWinningStreak;
   }
+  final int? playerReadiness = jsonConvert.convert<int>(
+      json['playerReadiness']);
+  if (playerReadiness != null) {
+    teamInfoEntity.playerReadiness = playerReadiness;
+  }
   final int? accountId = jsonConvert.convert<int>(json['accountId']);
   if (accountId != null) {
     teamInfoEntity.accountId = accountId;
-  }
-  final int? maxCup = jsonConvert.convert<int>(json['maxCup']);
-  if (maxCup != null) {
-    teamInfoEntity.maxCup = maxCup;
   }
   final int? firstLoginTime = jsonConvert.convert<int>(json['firstLoginTime']);
   if (firstLoginTime != null) {
@@ -114,6 +115,14 @@ TeamInfoEntity $TeamInfoEntityFromJson(Map<String, dynamic> json) {
   final int? cup = jsonConvert.convert<int>(json['cup']);
   if (cup != null) {
     teamInfoEntity.cup = cup;
+  }
+  final int? maxCup = jsonConvert.convert<int>(json['maxCup']);
+  if (maxCup != null) {
+    teamInfoEntity.maxCup = maxCup;
+  }
+  final int? cupRankId = jsonConvert.convert<int>(json['cupRankId']);
+  if (cupRankId != null) {
+    teamInfoEntity.cupRankId = cupRankId;
   }
   final int? helpStep = jsonConvert.convert<int>(json['helpStep']);
   if (helpStep != null) {
@@ -239,8 +248,8 @@ Map<String, dynamic> $TeamInfoEntityToJson(TeamInfoEntity entity) {
   data['powerReplyTime'] = entity.powerReplyTime;
   data['currentGuessWinningStreak'] = entity.currentGuessWinningStreak;
   data['currentGameWinningStreak'] = entity.currentGameWinningStreak;
+  data['playerReadiness'] = entity.playerReadiness;
   data['accountId'] = entity.accountId;
-  data['maxCup'] = entity.maxCup;
   data['firstLoginTime'] = entity.firstLoginTime;
   data['secretaryId'] = entity.secretaryId;
   data['teamExp'] = entity.teamExp;
@@ -250,6 +259,8 @@ Map<String, dynamic> $TeamInfoEntityToJson(TeamInfoEntity entity) {
   data['beforeGuessWinningStreak'] = entity.beforeGuessWinningStreak;
   data['totalChargeNum'] = entity.totalChargeNum;
   data['cup'] = entity.cup;
+  data['maxCup'] = entity.maxCup;
+  data['cupRankId'] = entity.cupRankId;
   data['helpStep'] = entity.helpStep;
   data['createIp'] = entity.createIp;
   data['totalGames'] = entity.totalGames;
@@ -295,8 +306,8 @@ extension TeamInfoEntityExtension on TeamInfoEntity {
     int? powerReplyTime,
     int? currentGuessWinningStreak,
     int? currentGameWinningStreak,
+    int? playerReadiness,
     int? accountId,
-    int? maxCup,
     int? firstLoginTime,
     int? secretaryId,
     int? teamExp,
@@ -306,6 +317,8 @@ extension TeamInfoEntityExtension on TeamInfoEntity {
     int? beforeGuessWinningStreak,
     int? totalChargeNum,
     int? cup,
+    int? maxCup,
+    int? cupRankId,
     int? helpStep,
     String? createIp,
     int? totalGames,
@@ -352,8 +365,8 @@ extension TeamInfoEntityExtension on TeamInfoEntity {
           this.currentGuessWinningStreak
       ..currentGameWinningStreak = currentGameWinningStreak ??
           this.currentGameWinningStreak
+      ..playerReadiness = playerReadiness ?? this.playerReadiness
       ..accountId = accountId ?? this.accountId
-      ..maxCup = maxCup ?? this.maxCup
       ..firstLoginTime = firstLoginTime ?? this.firstLoginTime
       ..secretaryId = secretaryId ?? this.secretaryId
       ..teamExp = teamExp ?? this.teamExp
@@ -364,6 +377,8 @@ extension TeamInfoEntityExtension on TeamInfoEntity {
           this.beforeGuessWinningStreak
       ..totalChargeNum = totalChargeNum ?? this.totalChargeNum
       ..cup = cup ?? this.cup
+      ..maxCup = maxCup ?? this.maxCup
+      ..cupRankId = cupRankId ?? this.cupRankId
       ..helpStep = helpStep ?? this.helpStep
       ..createIp = createIp ?? this.createIp
       ..totalGames = totalGames ?? this.totalGames

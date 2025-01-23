@@ -1,18 +1,16 @@
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
-import 'widgets/widgets.dart';
 
 class MineSettingPage extends GetView<MineSettingController> {
   const MineSettingPage({super.key});
@@ -21,7 +19,7 @@ class MineSettingPage extends GetView<MineSettingController> {
   Widget build(BuildContext context) {
     return GetBuilder<MineSettingController>(
       builder: (_) {
-        return HorizontalDragBackWidget(
+        return HorizontalDragBackContainer(
             child: BlackAppWidget(
           const AppBarWidget(
             title: "SETTING",

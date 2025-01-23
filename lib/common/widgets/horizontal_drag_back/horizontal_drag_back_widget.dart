@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/widgets/getsure_recognizer/custom_drag_gesture_recognizer.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +41,7 @@ class HorizontalDragBackWidget extends StatefulWidget {
 }
 
 class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   ///手指按下的x位置
   double startX = -1;
 
@@ -67,35 +70,66 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   // 开始滚动时是否在边界
   bool startScrollFlag = false;
 
+  /// 进入动画
+  late AnimationController enterAnimationController;
+  late Animation<double> enterAnimation;
+
   @override
   void initState() {
     super.initState();
+    offsetX = 1000000;
+    enterAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+    Future.delayed(Duration.zero, () {
+      // print('horizontalDragBack----delayed---offsetX: $offsetX');
+      enterAnimation = TweenSequence([
+        TweenSequenceItem(
+            tween: Tween(begin: width, end: width / 2), weight: 0.2),
+        TweenSequenceItem(
+            tween: Tween(begin: width / 2, end: 0.0), weight: 0.8),
+      ]).animate(enterAnimationController)
+        ..addListener(() {
+          offsetX = enterAnimation.value;
+          // print('horizontalDragBack----11111---offsetX: $offsetX');
+          dragBackAnimation();
+          setState(() {});
+        });
+      enterAnimationController.forward();
+    });
+
     duration = Duration(milliseconds: maxMilliseconds);
     tween = Tween(begin: 0, end: 1);
     animationController = AnimationController(vsync: this)
       ..addListener(() {
         if (mounted && !isReset) {
           offsetX = animation.value;
-          // print('addListener---offsetX: $offsetX');
-          if(!widget.noBackAnimation) {
+          if (!widget.noBackAnimation) {
             setState(() {});
+            dragBackAnimation();
           }
         }
         if (animationController.status == AnimationStatus.completed) {
-          if (offsetX > width && !isOut) {
-            if(widget.onWidgetOut != null){
+          if (offsetX >= width && !isOut) {
+            if (widget.onWidgetOut != null) {
               widget.onWidgetOut!.call();
-            }else{
+            } else {
               isOut = true;
               Navigator.of(context).pop();
             }
-            if(widget.noBackAnimation) {
+            if (widget.noBackAnimation) {
               offsetX = 0;
             }
           }
         }
       });
     animation = tween.animate(animationController);
+  }
+
+  void dragBackAnimation() {
+    var horizontalDragBackParentState =
+        HorizontalDragBackParentState.of(context);
+    HorizontalDragBackController().notify(offsetX,
+        hasDragBackParent: horizontalDragBackParentState != null);
   }
 
   bool hasHorizontalScroll(BuildContext context) {
@@ -171,8 +205,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (offsetX < 0) {
         offsetX = 0;
       }
-      if(!widget.noBackAnimation) {
+      if (!widget.noBackAnimation) {
         setState(() {});
+        dragBackAnimation();
       }
     }
 
@@ -242,12 +277,12 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         },
         child: Stack(
           children: [
-            Container(
-              color: Color.lerp(Colors.black.withOpacity(.3),
-                  Colors.black.withOpacity(.0), offsetX / width),
-            ),
+            // Container(
+            //   color: Color.lerp(Colors.black.withOpacity(.3),
+            //       Colors.black.withOpacity(.0), offsetX / width),
+            // ),
             Transform.translate(
-                offset: Offset((widget.noBackAnimation?0:offsetX), 0),
+                offset: Offset((widget.noBackAnimation ? 0 : offsetX), 0),
                 child: widget.child),
           ],
         ),
@@ -273,8 +308,14 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           child: child);
     }
     return PopScope(
-      canPop: widget.canPop,
-      child: child,
+      canPop: false,
+      onPopInvokedWithResult: (pop, _) {
+        print('onPopInvokedWithResult:$pop');
+        if (!pop && widget.canPop) {
+          onTapBackKey();
+        }
+      },
+      child: HorizontalDragBackState(onTapBackKey: onTapBackKey, child: child),
     );
   }
 
@@ -294,7 +335,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       /// 最后距离大于宽度的 1/5 且停止接触屏幕时移动的速度大于 250 则进入退出动画
       /// 最后距离大于宽度的 2/5 进入退出动画
       tween.begin = beforeResetOffsetX;
-      tween.end = width + 100;
+      tween.end = width;
       animationController.duration = Duration(
           milliseconds: velocity > 1000 ? minMilliseconds : maxMilliseconds);
     } else {
@@ -309,6 +350,36 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   @override
   void dispose() {
     animationController.dispose();
+    enterAnimationController.dispose();
     super.dispose();
+  }
+
+  void onTapBackKey() {
+    tween.begin = 0.0;
+    tween.end = width;
+    animationController.duration = Duration(milliseconds: maxMilliseconds);
+    animationController.forward(from: 0);
+  }
+}
+
+class HorizontalDragBackState extends InheritedWidget {
+  final Function? _onTapBackKey;
+
+  const HorizontalDragBackState(
+      {super.key, Function? onTapBackKey, required super.child})
+      : _onTapBackKey = onTapBackKey;
+
+  @override
+  bool updateShouldNotify(covariant HorizontalDragBackState oldWidget) {
+    return oldWidget._onTapBackKey != _onTapBackKey;
+  }
+
+  static HorizontalDragBackState? of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<HorizontalDragBackState>();
+  }
+
+  pop() {
+    _onTapBackKey?.call();
   }
 }

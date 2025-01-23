@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
@@ -10,13 +11,13 @@ class BattleEntity {
   late int awayTeamPower;
   BattleNew? news;
   late List<TeamPlayerInfoEntity> homeTeamPlayerList;
-  late BattleTeam awayTeam;
+  late TeamInfoEntity awayTeam;
   late AbilityValue awayAbilityValue;
   late List<TeamPlayerInfoEntity> awayTeamPlayerList;
   late List<TrainingInfoBuff> awayTeamBuff;
   late int homeTeamPower;
   late List<TrainingInfoBuff> homeTeamBuff;
-  late BattleTeam homeTeam;
+  late TeamInfoEntity homeTeam;
   late BattleGameData gameData;
   late AbilityValue homeAbilityValue;
   late double newsBuffAdd;
@@ -113,76 +114,6 @@ class UpStarBase {
   }
 }
 
-@JsonSerializable()
-class BattleTeam {
-  late int joinLeagueTime;
-  late String teamName;
-  late int leagueRole;
-  late int salary;
-  late String serverId;
-  late int totalOnlineTime;
-  late String leagueName;
-  late int leagueId;
-  late int maxGuessWinningStreak;
-  late int totalLoginDays;
-  late int dailyLeagueContributValue;
-  late int teamLogo;
-  late int powerReplyTime;
-  late int currentGuessWinningStreak;
-  late int currentGameWinningStreak;
-  late int playerReadiness;
-  late int accountId;
-  late int maxCup;
-  late int firstLoginTime;
-  late int secretaryId;
-  late int teamExp;
-  late Preference teamPreference;
-  late int logoBoxId;
-  late int lastOffLineTime;
-  late int beforeGuessWinningStreak;
-  late int totalChargeNum;
-  late int cup;
-  late int helpStep;
-  late String createIp;
-  late int totalGames;
-  late String accountName;
-  late String signature;
-  late int teamGrade;
-  late int businessCardId;
-  late String lastLoginIp;
-  late int vipGrade;
-  late int leagueContributValue;
-  late int maxGameWinningStreak;
-  late int cupRankId;
-  late int serviceId;
-  late int unforBidTime;
-  late int currentWinGames;
-  late int updateTime;
-  late int currentContinuousLoss;
-  late String systemSteps;
-  late int lastLoginTime;
-  late int createTime;
-  late int teamId;
-  late int currTeamStrength;
-  late bool online;
-  late int wearNicknameId;
-  late int lastAreaId;
-  late int gameWinRate;
-  late int benchCount;
-  late int rankProtect;
-
-  BattleTeam();
-
-  factory BattleTeam.fromJson(Map<String, dynamic> json) =>
-      $BattleTeamFromJson(json);
-
-  Map<String, dynamic> toJson() => $BattleTeamToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
 
 @JsonSerializable()
 class Preference {

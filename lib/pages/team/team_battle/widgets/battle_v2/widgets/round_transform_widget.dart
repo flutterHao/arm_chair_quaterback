@@ -49,6 +49,12 @@ class _RoundTransformWidgetState extends State<RoundTransformWidget>
   }
 
   @override
+  dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(covariant RoundTransformWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!animationController.isAnimating) {

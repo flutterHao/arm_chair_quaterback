@@ -1,18 +1,13 @@
-import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/widgets/game_log.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/widgets/season_rank.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/widgets/season_rewards.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/widgets/season_top.dart';
-import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'index.dart';
@@ -23,7 +18,7 @@ class SeaonRankPage extends GetView<SeaonRankController> {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalDragBackWidget(
+    return HorizontalDragBackContainer(
       child: GetBuilder<SeaonRankController>(
         init: SeaonRankController(),
         id: "seaon_rank",

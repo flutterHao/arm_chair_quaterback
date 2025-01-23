@@ -1,6 +1,8 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/keep_alive_wrapper.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
@@ -10,7 +12,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
@@ -39,7 +41,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalDragBackWidget(
+    return HorizontalDragBackContainer(
       responseDepth: const [0, 1, 3],
       child: GetBuilder<PlayerDetailController>(
         init: PlayerDetailController(arguments),
@@ -56,56 +58,57 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   onlyOneScrollInBody: true,
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverPersistentHeader(
-                      delegate: FixedHeightSliverHeaderDelegate(
-                          child: buildHeaderWidget(), height: 138.w)),
-                  SliverPersistentHeader(
-                      pinned: true,
-                      floating: false,
-                      delegate: FixedHeightSliverHeaderDelegate(
-                          child: Container(
-                            width: double.infinity,
-                            color: AppColors.cFFFFFF,
-                            height: 43.w,
-                            child: TabBar(
-                              labelColor: AppColors.c000000,
-                              labelStyle: 16.w5(
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldMedium),
-                              unselectedLabelColor: AppColors.cB3B3B3,
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              indicatorColor: AppColors.cFF7954,
-                              tabs: controller.tabs.map((e) {
-                                return Text(e);
-                              }).toList(),
-                            ),
-                          ),
-                          height: 43.w))
-                ];
-              }, body: Obx(() {
-                if (controller.loadStatus.value != LoadDataStatus.success) {
-                  return Center(
-                    child: LoadStatusWidget(
-                      loadDataStatus: controller.loadStatus.value,
-                    ),
-                  );
-                }
-                return TabBarView(children: [
-                  KeepAliveWrapper(
-                    child: SummaryPage(
-                      playerId: arguments.playerId,
-                      tabStr: arguments.tabStr,
-                    ),
-                  ),
-                  const KeepAliveWrapper(child: StatsPage()),
-                  KeepAliveWrapper(
-                    child: HistoryPage(
-                      playerId: arguments.playerId,
-                    ),
-                  ),
-                ]);
-              })),
+                    return <Widget>[
+                      SliverPersistentHeader(
+                          delegate: FixedHeightSliverHeaderDelegate(
+                              child: buildHeaderWidget(), height: 138.w)),
+                      SliverPersistentHeader(
+                          pinned: true,
+                          floating: false,
+                          delegate: FixedHeightSliverHeaderDelegate(
+                              child: Container(
+                                width: double.infinity,
+                                color: AppColors.cFFFFFF,
+                                height: 43.w,
+                                child: TabBar(
+                                  labelColor: AppColors.c000000,
+                                  labelStyle: 16.w5(
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                  unselectedLabelColor: AppColors.cB3B3B3,
+                                  indicatorSize: TabBarIndicatorSize.tab,
+                                  indicatorColor: AppColors.cFF7954,
+                                  tabs: controller.tabs.map((e) {
+                                    return Text(e);
+                                  }).toList(),
+                                ),
+                              ),
+                              height: 43.w))
+                    ];
+                  },
+                  body: Obx(() {
+                    if (controller.loadStatus.value != LoadDataStatus.success) {
+                      return Center(
+                        child: LoadStatusWidget(
+                          loadDataStatus: controller.loadStatus.value,
+                        ),
+                      );
+                    }
+                    return TabBarView(children: [
+                      KeepAliveWrapper(
+                        child: SummaryPage(
+                          playerId: arguments.playerId,
+                          tabStr: arguments.tabStr,
+                        ),
+                      ),
+                      const KeepAliveWrapper(child: StatsPage()),
+                      KeepAliveWrapper(
+                        child: HistoryPage(
+                          playerId: arguments.playerId,
+                        ),
+                      ),
+                    ]);
+                  })),
             )),
           );
         },
@@ -166,7 +169,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         Container(
                           constraints: BoxConstraints(maxWidth: 169.w),
                           child: Text(
-                            controller.baseInfo?.elname??"",
+                            controller.baseInfo?.elname ?? "",
                             maxLines: 3,
                             style: 21.w5(
                                 color: AppColors.cFFFFFF,
@@ -184,7 +187,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     ),
                     5.vGap,
                     Text(
-                      "#${controller.baseInfo?.number??""}-${controller.baseInfo?.position??""} - ${controller.teamInfo?.longEname??""}",
+                      "#${controller.baseInfo?.number ?? ""}-${controller.baseInfo?.position ?? ""} - ${controller.teamInfo?.longEname ?? ""}",
                       style: 10.w4(
                           color: AppColors.cFFFFFF,
                           height: 1,
@@ -194,7 +197,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     Row(
                       children: [
                         _buildPlayerInfoItem(
-                            "AGE", "${controller.baseInfo?.age??"0"}"),
+                            "AGE", "${controller.baseInfo?.age ?? "0"}"),
                         33.hGap,
 
                         ///todo
