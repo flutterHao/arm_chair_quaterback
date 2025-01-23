@@ -299,93 +299,91 @@ class PickRankPage extends GetView<PickRankController> {
                               });
                             }
                             return SliverList.builder(
-                                itemCount: controller.rankInfo!.ranks.length,
                                 itemBuilder: (context, index) {
-                                  var item = controller.rankInfo!.ranks[index];
-                                  var isMe = Get.find<HomeController>()
-                                          .userEntiry
-                                          .teamLoginInfo
-                                          ?.team
-                                          ?.teamId ==
-                                      item.teamId;
-                                  return Container(
-                                    color: AppColors.cFFFFFF,
-                                    child: Container(
-                                      height: 69.w,
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 16.w),
-                                      padding: EdgeInsets.only(right: 8.w),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: AppColors.cE6E6E6,
-                                            width: 1.w,
-                                          ),
-                                        ),
+                              var item = controller.rankInfo!.ranks[index];
+                              var isMe = Get.find<HomeController>()
+                                      .userEntiry
+                                      .teamLoginInfo
+                                      ?.team
+                                      ?.teamId ==
+                                  item.teamId;
+                              return Container(
+                                color: AppColors.cFFFFFF,
+                                child: Container(
+                                  height: 69.w,
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  padding: EdgeInsets.only(right: 8.w),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: AppColors.cE6E6E6,
+                                        width: 1.w,
                                       ),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                              width: 46.w,
-                                              child: Center(
-                                                  child: Text(
-                                                "${index + 1}",
-                                                style: 19.w5(
-                                                  color: AppColors.c1A1A1A,
-                                                  height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fOswaldMedium,
-                                                ),
-                                              ))),
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20.w),
-                                            child: ImageWidget(
-                                              url: Utils.getAvaterUrl(
-                                                  item.teamLogo),
-                                              width: 40.w,
-                                              height: 40.w,
-                                              imageFailedPath:
-                                                  Assets.iconUiDefault05,
-                                            ),
-                                          ),
-                                          10.hGap,
-                                          Expanded(
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                          width: 46.w,
+                                          child: Center(
                                               child: Text(
-                                            item.teamName,
-                                            style: 14.w5(
-                                              color: isMe
-                                                  ? AppColors.cFF7954
-                                                  : AppColors.c1A1A1A,
+                                            "${index + 1}",
+                                            style: 19.w5(
+                                              color: AppColors.c1A1A1A,
                                               height: 1,
                                               fontFamily:
                                                   FontFamily.fOswaldMedium,
                                             ),
-                                          )),
-                                          Row(
-                                            children: [
-                                              IconWidget(
-                                                iconWidth: 16.w,
-                                                icon: Assets
-                                                    .commonUiCommonIconCurrency02,
-                                              ),
-                                              3.hGap,
-                                              Text(
-                                                "+${item.chip}",
-                                                style: 14.w5(
-                                                  color: AppColors.c1A1A1A,
-                                                  height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fRobotoMedium,
-                                                ),
-                                              )
-                                            ],
+                                          ))),
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(20.w),
+                                        child: ImageWidget(
+                                          url:
+                                              Utils.getAvaterUrl(item.teamLogo),
+                                          width: 40.w,
+                                          height: 40.w,
+                                          imageFailedPath:
+                                              Assets.iconUiDefault05,
+                                        ),
+                                      ),
+                                      10.hGap,
+                                      Expanded(
+                                          child: Text(
+                                        item.teamName,
+                                        style: 14.w5(
+                                          color: isMe
+                                              ? AppColors.cFF7954
+                                              : AppColors.c1A1A1A,
+                                          height: 1,
+                                          fontFamily: FontFamily.fOswaldMedium,
+                                        ),
+                                      )),
+                                      Row(
+                                        children: [
+                                          IconWidget(
+                                            iconWidth: 16.w,
+                                            icon: Assets
+                                                .commonUiCommonIconCurrency02,
+                                          ),
+                                          3.hGap,
+                                          Text(
+                                            "+${item.chip}",
+                                            style: 14.w5(
+                                              color: AppColors.c1A1A1A,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fRobotoMedium,
+                                            ),
                                           )
                                         ],
-                                      ),
-                                    ),
-                                  );
-                                });
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
                           }),
                       GetBuilder<PickRankController>(
                           id: PickRankController.idRankListBottomEmpty,

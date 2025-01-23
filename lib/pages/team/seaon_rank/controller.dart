@@ -49,6 +49,7 @@ class SeaonRankController extends GetxController {
 
   /// 多赛季排名
   RxList<SeasonRankInfoEntity> seasonRankList = RxList();
+  Rx<LoadDataStatus> rankDialogloadingStatus = LoadDataStatus.success.obs;
 
   /// 当前赛季排名
   late Rx<SeasonRankInfoEntity> nowSeasonRankInfoEntity;
@@ -61,6 +62,8 @@ class SeaonRankController extends GetxController {
 
   /// 参与X场后上排行榜
   GameConstantEntity? distanceSeasonGameConstantEntity;
+
+  PageController pageController = PageController();
   @override
   void onInit() {
     super.onInit();
@@ -225,15 +228,19 @@ class SeaonRankController extends GetxController {
       if (seasonRankList.length > pageviewIndex.value + 1) {
         /// 直接下一页
         ++pageviewIndex.value;
+        pageController.jumpToPage(pageviewIndex.value);
       } else {
-        SeasonRankInfoEntity res = await PicksApi.getSeasonRankInfo(
-            seasonRankList[pageviewIndex.value].nextRank!.seasonId,
-            pageSize: showNumGameConstantEntity!.constantValue);
-        seasonRankList.add(res);
+        rankDialogloadingStatus.value = LoadDataStatus.loading;
+        SeasonRankInfoEntity seasonRankInfoEntity =
+            await PicksApi.getSeasonRankInfo(
+                seasonRankList[pageviewIndex.value].nextRank!.seasonId,
+                pageSize: showNumGameConstantEntity!.constantValue);
+        await Future.delayed(const Duration(milliseconds: 500));
+        seasonRankList.add(seasonRankInfoEntity);
+        rankDialogloadingStatus.value = LoadDataStatus.success;
         ++pageviewIndex.value;
+        pageController.jumpToPage(pageviewIndex.value);
       }
-    } else {
-      print('没有下个赛季');
     }
   }
 
@@ -245,10 +252,18 @@ class SeaonRankController extends GetxController {
       if (pageviewIndex.value > 0) {
         /// 直接上一页
         --pageviewIndex.value;
+        pageController.jumpToPage(pageviewIndex.value);
       } else {
-        SeasonRankInfoEntity res = await PicksApi.getSeasonRankInfo(
-            seasonRankList[pageviewIndex.value].lastRank!.seasonId,
-            pageSize: showNumGameConstantEntity!.constantValue);
+        rankDialogloadingStatus.value = LoadDataStatus.loading;
+        SeasonRankInfoEntity seasonRankInfoEntity =
+            await PicksApi.getSeasonRankInfo(
+                seasonRankList[pageviewIndex.value].lastRank!.seasonId,
+                pageSize: showNumGameConstantEntity!.constantValue);
+        await Future.delayed(const Duration(milliseconds: 500));
+        seasonRankList.insert(0, seasonRankInfoEntity);
+        rankDialogloadingStatus.value = LoadDataStatus.success;
+        // ++pageviewIndex.value;
+        pageController.jumpToPage(pageviewIndex.value);
       }
     }
   }
