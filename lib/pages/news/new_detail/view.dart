@@ -196,9 +196,9 @@ class NewsDetailItem extends GetView<NewListController> {
           ),
         ),
         13.hGap,
-        ShareWidget(
-          globalKey: globalKey,
-          type: ShareType.guess,
+        SizedBox(
+          width: 24.w,
+          height: 24.w,
         )
       ],
     );
@@ -264,27 +264,40 @@ class NewsDetailItem extends GetView<NewListController> {
   @override
   Widget build(BuildContext context) {
     int index = controller.state.detailList.indexOf(item);
-    return RepaintBoundary(
-      key: globalKey,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 11.5.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _head(),
-            14.vGap,
-            _buildNewsContent(),
-            20.vGap,
-            NewsBottomButton(
-              item,
+    return Stack(
+      children: [
+        RepaintBoundary(
+          key: globalKey,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 11.5.w),
+            color: AppColors.cFFFFFF,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _head(),
+                14.vGap,
+                _buildNewsContent(),
+                20.vGap,
+                NewsBottomButton(
+                  item,
+                ),
+                16.vGap,
+                const EmojiWidget(),
+                if (showComments) DetailCommentWidget(item: item),
+                if (controller.state.detailList.length == 1) 80.vGap,
+              ],
             ),
-            16.vGap,
-            const EmojiWidget(),
-            if (showComments) DetailCommentWidget(item: item),
-            if (controller.state.detailList.length == 1) 80.vGap,
-          ],
+          ),
         ),
-      ),
+        Positioned(
+          top: 11.5.w,
+          right: 15.w,
+          child: ShareWidget(
+            globalKey: globalKey,
+            type: ShareType.guess,
+          ),
+        )
+      ],
     );
   }
 }

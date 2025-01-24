@@ -353,6 +353,10 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         popping = true;
       }
     } else {
+      if(beforeResetOffsetX == 0){
+        isReset = false;
+        return;
+      }
       tween.begin = beforeResetOffsetX;
       tween.end = 0.0;
       animationController.duration = Duration(milliseconds: maxMilliseconds);

@@ -300,6 +300,7 @@ class PickRankPage extends GetView<PickRankController> {
                               });
                             }
                             return SliverList.builder(
+                              itemCount: controller.rankInfo!.ranks.length,
                                 itemBuilder: (context, index) {
                               var item = controller.rankInfo!.ranks[index];
                               var isMe = Get.find<HomeController>()
