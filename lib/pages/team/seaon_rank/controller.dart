@@ -283,7 +283,10 @@ class SeaonRankController extends GetxController {
   void receiveReward(int cupRankId) async {
     await PicksApi.getSeasonRankAward(cupRankId);
     teamSimpleEntity.value = await PicksApi.getTeamSimple(teamId);
-
+    nowSeasonRankInfoEntity.value = await PicksApi.getSeasonRankInfo(
+        nowSeasonEntity.seasonId,
+        pageSize: showNumGameConstantEntity!.constantValue);
+    update();
     showTopToastDialog(
         needBg: false,
         child: Container(
@@ -291,6 +294,6 @@ class SeaonRankController extends GetxController {
             child: AwardWidget(
                 image: Assets.managerUiManagerGift00,
                 text: "YOU GOT 3  treasure chest".toUpperCase())));
-    Get.back();
+    // Get.back();
   }
 }

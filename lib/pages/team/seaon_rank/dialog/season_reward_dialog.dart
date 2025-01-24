@@ -20,40 +20,42 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
   @override
   Widget build(BuildContext context) {
     return VerticalDragBackWidget(
-      child: Container(
-        height: 650.h,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
-        child: Column(
-          children: [
-            const DialogTopBtn(),
-            10.vGap,
-            Container(
-              padding: EdgeInsets.only(left: 16.w),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Season Rewards',
-                style: 19.w5(fontFamily: FontFamily.fOswaldMedium),
+      child: GetBuilder<SeaonRankController>(builder: (controller) {
+        return Container(
+          height: 650.h,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+          child: Column(
+            children: [
+              const DialogTopBtn(),
+              10.vGap,
+              Container(
+                padding: EdgeInsets.only(left: 16.w),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Season Rewards',
+                  style: 19.w5(fontFamily: FontFamily.fOswaldMedium),
+                ),
               ),
-            ),
-            10.vGap,
-            const Divider(
-              height: 1,
-              color: AppColors.cD4D4D4,
-            ),
-            Expanded(
-                child: Obx(() => ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      itemCount: controller.cupDefineList.length,
-                      itemBuilder: (context, index) {
-                        return _rewardsItemWidget(index);
-                      },
-                      separatorBuilder: (context, index) =>
-                          const Divider(height: 1, color: AppColors.cD4D4D4),
-                    )))
-          ],
-        ),
-      ),
+              10.vGap,
+              const Divider(
+                height: 1,
+                color: AppColors.cD4D4D4,
+              ),
+              Expanded(
+                  child: Obx(() => ListView.separated(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        itemCount: controller.cupDefineList.length,
+                        itemBuilder: (context, index) {
+                          return _rewardsItemWidget(index);
+                        },
+                        separatorBuilder: (context, index) =>
+                            const Divider(height: 1, color: AppColors.cD4D4D4),
+                      )))
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -64,12 +66,14 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
         controller.teamSimpleEntity.value.cupRankId;
 
     /// 判断是否已经领取
-    bool haveReceive = controller.nowSeasonRankInfoEntity.value.myRank != null
-        ? controller.nowSeasonRankInfoEntity.value.myRank!.receivedRewards
-            .split(',')
-            .toList()
-            .contains(controller.cupDefineList[index].cupNumId.toString())
-        : false;
+    RxBool haveReceive = (controller.nowSeasonRankInfoEntity.value.myRank !=
+                null
+            ? controller.nowSeasonRankInfoEntity.value.myRank!.receivedRewards
+                .split(',')
+                .toList()
+                .contains(controller.cupDefineList[index].cupNumId.toString())
+            : false)
+        .obs;
 
     ///赛季奖励数据转list
     List<String> cupRewardList =
@@ -113,9 +117,10 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
         ],
       ),
     );
+
     return Stack(
       children: [
-        if (isShowReceive)
+        if (isShowReceive && haveReceive.value)
           ShaderMask(
               shaderCallback: (bounds) {
                 return LinearGradient(
@@ -130,7 +135,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
               child: cupRewardWidget)
         else
           cupRewardWidget,
-        if (isShowReceive && haveReceive)
+        if (isShowReceive && haveReceive.value)
           Positioned(
               right: 18.w,
               bottom: 32.w,
@@ -151,8 +156,11 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
               right: 18.w,
               bottom: 32.w,
               child: MtInkWell(
-                  onTap: () => controller
-                      .receiveReward(controller.cupDefineList[index].cupNumId),
+                  onTap: () {
+                    haveReceive.value = true;
+                    controller.receiveReward(
+                        controller.cupDefineList[index].cupNumId);
+                  },
                   child: Container(
                     width: 59.w,
                     height: 40.w,
