@@ -4,9 +4,11 @@
  * @Date: 2025-01-09 15:57:09
  * @LastEditTime: 2025-01-18 15:28:39
  */
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -14,11 +16,12 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/detail_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/ilustraction_drag.dart';
@@ -72,9 +75,9 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
             ObjectUtil.isNotEmpty(Utils.getTeamInfo(teamId).teamEname)
                 ? Utils.getTeamInfo(teamId).teamEname
                 : Utils.getTeamInfo(teamId).longEname.split(" ").last;
-        return HorizontalDragBackContainer(
+        return HorizontalDragBackWidget(
           child: BlackAppWidget(
-            const UserInfoBar(showPop: true),
+            UserInfoBar(showPop: true),
             bodyWidget: Expanded(
               child: Stack(
                 children: [

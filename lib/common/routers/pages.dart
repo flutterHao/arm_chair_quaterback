@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-01-24 10:32:18
+ * @LastEditTime: 2025-01-24 19:05:43
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -11,6 +11,7 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_detail.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
@@ -99,7 +100,6 @@ class AppPages {
     ),
     GetPage(
       opaque: false,
-      // customTransition: HalfSlideRightToLeftTransition(),
       page: () => NewsDetailPage2(newsDetail: Get.arguments),
       name: RouteNames.newsDetail2,
       transitionDuration: const Duration(milliseconds: 300),

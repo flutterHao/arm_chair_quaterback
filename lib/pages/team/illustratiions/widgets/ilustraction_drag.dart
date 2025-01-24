@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 17:09:20
- * @LastEditTime: 2025-01-20 12:13:24
+ * @LastEditTime: 2025-01-24 18:36:48
  */
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -78,7 +78,9 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
         }
       });
     animation = tween.animate(CurvedAnimation(
-        parent: animationController, curve: Curves.bounceInOut));
+      parent: animationController,
+      curve: Curves.bounceOut,
+    ));
   }
 
   @override
