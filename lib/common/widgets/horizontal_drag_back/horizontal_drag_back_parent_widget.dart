@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_route_observer.dart';
 import 'package:flutter/material.dart';
 
 /// 要放在HorizontalDragBackWidget上层
@@ -31,7 +32,8 @@ class _HorizontalDragBackParentWidgetState
   @override
   void initState() {
     super.initState();
-    HorizontalDragBackController().addController(controller);
+    HorizontalDragBackController().addController(
+        HorizontalRouteObserver.getInstance().history.length, controller);
     controller.stream.listen((num value) {
       // print('horizontalDragBack----2222---offsetX: $value');
       if (animationController?.isAnimating ?? false) {
@@ -104,42 +106,32 @@ class HorizontalDragBackParentState extends InheritedWidget {
 }
 
 class HorizontalDragBackController {
-  final List<_HorizontalDragBackController> _controllers = [];
+  final Map<int, _HorizontalDragBackController> _controllers = {};
+
 
   static final HorizontalDragBackController _instance =
       HorizontalDragBackController._();
 
   factory HorizontalDragBackController() => _instance;
 
-  void addController(_HorizontalDragBackController controller) {
-    _controllers.add(controller);
+  void addController(int page, _HorizontalDragBackController controller) {
+    _controllers[page] = controller;
   }
 
   void removeController(_HorizontalDragBackController controller) {
     _controllers.remove(controller);
   }
 
-  void notify(num value, {bool hasDragBackParent = false}) {
+  void removeIndex(int page) {
+    _controllers.removeWhere((e, _) => e == page);
+  }
+
+  void notify(num value) {
     if (_controllers.isEmpty) {
       return;
     }
-    int index;
-    if (hasDragBackParent) {
-      var length = _controllers.length;
-      index = length - 2;
-    } else {
-      index = _controllers.length - 1;
-    }
-    if(index<0){
-      index = 0;
-    }
-    _HorizontalDragBackController controller = _controllers[index];
-    if (controller.flag == -1 && value == -1) {
-      var sublist = _controllers.sublist(0, index);
-      controller = sublist.lastWhere((e) => e.flag != -1);
-    }
-    controller.flag = value.toInt();
-    controller.add(value);
+    var index = HorizontalRouteObserver.getInstance().history.length-1;
+    _controllers[index]?.add(value);
   }
 
   HorizontalDragBackController._();

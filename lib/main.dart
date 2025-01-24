@@ -5,6 +5,7 @@
  * @LastEditTime: 2024-11-24 12:19:09
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_route_observer.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
 import 'package:flutter/foundation.dart';
@@ -23,7 +24,7 @@ Future<void> main() async {
   await Global.init();
   runApp(const MyApp());
 }
- 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -66,17 +67,21 @@ class MyApp extends StatelessWidget {
                   builder: EasyLoading.init(),
                   translations: TranslationService(),
                   initialBinding: AllControllerBindings(),
-                  navigatorObservers: [AppPages.observer],
+                  navigatorObservers: [
+                    AppPages.observer,
+                    HorizontalRouteObserver.getInstance(),
+                  ],
                   supportedLocales: ConfigStore.to.languages,
                   locale: ConfigStore.to.locale,
                   fallbackLocale: const Locale('en', 'US'),
                   enableLog: true,
                   // logWriterCallback: Log.write,
                   // defaultTransition: Transition.rightToLeft,
-                  transitionDuration:  Duration(milliseconds: Constant.transitionDuration),
+                  transitionDuration:
+                      Duration(milliseconds: Constant.transitionDuration),
                   customTransition:
                       HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
-                   // defaultTransition: Transition.noTransition,
+                  // defaultTransition: Transition.noTransition,
                 ),
               ),
             ),

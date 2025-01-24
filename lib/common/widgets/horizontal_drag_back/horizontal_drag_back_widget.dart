@@ -327,10 +327,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   }
 
   void dragBackAnimation({num? value}) {
-    var horizontalDragBackParentState =
-    HorizontalDragBackParentState.of(context);
-    HorizontalDragBackController().notify(value ?? offsetX,
-        hasDragBackParent: horizontalDragBackParentState != null);
+    HorizontalDragBackController().notify(value ?? offsetX);
   }
 
   bool checkDepth(ScrollNotification notification) =>
