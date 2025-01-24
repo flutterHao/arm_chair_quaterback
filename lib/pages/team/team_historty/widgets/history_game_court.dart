@@ -22,18 +22,14 @@ class HistoryGameCourtWidget extends GetView<TeamHistortyController> {
       children: [
         /// 背景球场
         _buildBasketballCourt(context),
+
         SizedBox(
           height: 219.w,
           width: double.infinity,
-          child: _buildLeftWinWidget(context),
+          child: controller.isLeftWin()
+              ? _buildLeftWinWidget(context)
+              : _buildRightWinWidget(context),
         ),
-        // SizedBox(
-        //   height: 219.w,
-        //   width: double.infinity,
-        //   child: controller.isLeftWin()
-        //       ? _buildLeftWinWidget(context)
-        //       : _buildRightWinWidget(context),
-        // ),
       ],
     );
   }
@@ -525,5 +521,42 @@ class HistoryGameCourtWidget extends GetView<TeamHistortyController> {
   void _onHeaderAnimationEnd() {
     controller.mvpObs.value = true;
     controller.moneyAnimationEnd.value = true;
+  }
+
+  Stack _buildRightWinWidget(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        ///winner旗帜
+        winnerBg(false, context),
+
+        ///WINNER：文字
+        winnerText(false),
+
+        /// winner奖杯
+        winnerCups(false),
+
+        /// chest
+        giftBox(false),
+
+        /// 奖励箱子
+        gift(false),
+
+        ///loser旗帜
+        loserBg(false),
+
+        /// LOSER
+        loserText(false),
+
+        /// loser 奖杯
+        loserCups(false),
+
+        /// 钞票数量
+        moneyCount(false),
+
+        /// 钞票
+        moneyAnimation(context, false),
+      ],
+    );
   }
 }

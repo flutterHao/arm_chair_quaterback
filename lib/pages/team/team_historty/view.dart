@@ -29,7 +29,7 @@ class TeamHistortyPage extends GetView<TeamHistortyController> {
             child: SingleChildScrollView(
           child: Column(
             children: [
-              // const HistoryGameCourtWidget(),
+              const HistoryGameCourtWidget(),
               const HistoryQuarterWidget(),
               const HistoryStatusWidget(),
               const HistoryGameLeaderWidget(),

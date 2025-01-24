@@ -186,19 +186,17 @@ class TeamHistortyController extends GetxController
   }
 
   void initCup() {
-    var beforeHomeCup = gameResultInfoEntity.homeTeamResult.cup;
+    ///输掉的奖杯数表里读取CupDefine
+    var loseCup = 2;
+    leftCupNum = gameResultInfoEntity.homeTeamResult.cupDiff != 0
+        ? gameResultInfoEntity.homeTeamResult.cupDiff
+        : 2;
+    leftCup.value = leftCupNum > 0 ? 1 : 0;
+    rightCupNum = gameResultInfoEntity.awayTeamResult.cupDiff != 0
+        ? gameResultInfoEntity.awayTeamResult.cupDiff
+        : 2;
+    rightCup.value = rightCupNum > 0 ? 1 : 0;
 
-    if (isLeftWin()) {
-      leftCupNum = gameResultInfoEntity.homeTeamResult.cupDiff;
-      leftCup.value = leftCupNum > 0 ? 1 : 0;
-      rightCupNum = gameResultInfoEntity.awayTeamResult.cupDiff;
-      rightCup.value = rightCupNum > 0 ? 1 : 0;
-    } else {
-      leftCupNum = gameResultInfoEntity.awayTeamResult.cupDiff;
-      leftCup.value = leftCupNum > 0 ? 1 : 0;
-      rightCupNum = gameResultInfoEntity.homeTeamResult.cupDiff;
-      rightCup.value = rightCupNum > 0 ? 1 : 0;
-    }
     Timer.periodic(const Duration(milliseconds: 100), (t) {
       if (leftCup.value == leftCupNum && rightCup.value == rightCupNum) {
         t.cancel();
