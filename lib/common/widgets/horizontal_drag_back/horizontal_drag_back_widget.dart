@@ -309,7 +309,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       canPop: widget.canPop,
       onPopInvokedWithResult: (pop, _) {
         print('onPopInvokedWithResult:$pop,$popping');
-        if (widget.canPop) {
+        if (pop) {
           if (!popping) {
             /// Get.back()/Navigator.pop()进这里
             systemPopping = true;
