@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'index.dart';
 
@@ -41,11 +42,12 @@ class NewListController extends GetxController {
 
   bool loadDataSuccess = false;
   late StreamSubscription<int> subscription;
+
   @override
   void onInit() {
     super.onInit();
-    subscription = WSInstance.netStream.listen((_){
-      if(!loadDataSuccess){
+    subscription = WSInstance.netStream.listen((_) {
+      if (!loadDataSuccess) {
         _initData();
       }
     });
@@ -172,5 +174,14 @@ class NewListController extends GetxController {
       }
     }
     return "";
+  }
+
+  shareNews(NewsListDetail newsDetail) async {
+    // Utils.generateAndShareImage(_globalKey);
+    await Share.share("${newsDetail.title}\n\n${newsDetail.content}",
+        subject: newsDetail.title);
+    NewsApi.shareNews();
+    // Share.shareXFiles([XFile(newsDetail.imgUrl)],
+    //     text: newsDetail.content, subject: newsDetail.title);
   }
 }

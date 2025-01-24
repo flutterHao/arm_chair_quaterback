@@ -178,4 +178,9 @@ class NewsApi {
     });
     return list.map((e) => ReviewEntity.fromJson(e)).toList();
   }
+
+  /// 分享新闻
+  static Future shareNews() async {
+    await httpUtil.post(Api.shareNews);
+  }
 }

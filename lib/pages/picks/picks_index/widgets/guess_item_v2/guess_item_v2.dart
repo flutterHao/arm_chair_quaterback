@@ -332,7 +332,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
         Positioned(
             top: 11.w,
             right: 10.w,
-            child: ShareWidget(globalKey: _repaintBoundaryKey))
+            child: ShareWidget(globalKey: _repaintBoundaryKey,type: ShareType.guess,))
       ],
     );
   }

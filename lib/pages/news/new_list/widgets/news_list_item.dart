@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -24,6 +25,7 @@ import 'package:share_plus/share_plus.dart';
 class NewsListItem extends GetView<NewListController> {
   const NewsListItem(
       {super.key, required this.newsDetail, this.showMoreNew = false});
+
   final NewsListDetail newsDetail;
   final bool showMoreNew;
 
@@ -89,11 +91,7 @@ class NewsListItem extends GetView<NewListController> {
         13.hGap,
         InkWell(
           onTap: () {
-            // Utils.generateAndShareImage(_globalKey);
-            Share.share("${newsDetail.title}\n\n${newsDetail.content}",
-                subject: newsDetail.title);
-            // Share.shareXFiles([XFile(newsDetail.imgUrl)],
-            //     text: newsDetail.content, subject: newsDetail.title);
+            controller.shareNews(newsDetail);
           },
           child: Container(
             width: 24.w,

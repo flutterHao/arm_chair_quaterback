@@ -464,7 +464,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
           ),
         ),
         Positioned(
-            top: 11.w, right: 10.w, child: ShareWidget(globalKey: globalKey))
+            top: 11.w, right: 10.w, child: ShareWidget(globalKey: globalKey,type: ShareType.guess,))
       ],
     );
   }

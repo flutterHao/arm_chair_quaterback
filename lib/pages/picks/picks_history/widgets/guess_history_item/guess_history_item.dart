@@ -164,6 +164,7 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
                   right: 11.w,
                   child: ShareWidget(
                     globalKey: controller.globalKey,
+                    type: ShareType.guess,
                   ),
                 ),
               ],

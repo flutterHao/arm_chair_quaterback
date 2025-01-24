@@ -225,4 +225,9 @@ class PicksApi {
   static Future getSeasonRankAward(int cupRankId) async {
     await httpUtil.post(Api.getSeasonRankAward, data: {"rankId": cupRankId});
   }
+
+  /// 分享竞猜
+  static Future shareGuess() async {
+    await httpUtil.post(Api.shareGuess);
+  }
 }

@@ -235,7 +235,7 @@ class Utils {
     return "${string}th";
   }
 
-  static generateAndShareImage(GlobalKey globalKey) async {
+  static Future generateAndShareImage(GlobalKey globalKey) async {
     try {
       // 使用RepaintBoundary生成widget的图像
       RenderRepaintBoundary boundary =
@@ -252,7 +252,7 @@ class Utils {
       File file = File(filePath)..writeAsBytesSync(uint8List);
 
       // 使用share_plus插件分享文件
-      Share.shareXFiles(
+      return Share.shareXFiles(
         [XFile(filePath)],
         subject: "This is a share link from me",
         // text: 'This is a share link from me',
