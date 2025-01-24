@@ -64,11 +64,12 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
         controller.teamSimpleEntity.value.cupRankId;
 
     /// 判断是否已经领取
-    bool haveReceive = controller
-        .nowSeasonRankInfoEntity.value.myRank!.receivedRewards
-        .split(',')
-        .toList()
-        .contains(controller.cupDefineList[index].cupNumId.toString());
+    bool haveReceive = controller.nowSeasonRankInfoEntity.value.myRank != null
+        ? controller.nowSeasonRankInfoEntity.value.myRank!.receivedRewards
+            .split(',')
+            .toList()
+            .contains(controller.cupDefineList[index].cupNumId.toString())
+        : false;
 
     ///赛季奖励数据转list
     List<String> cupRewardList =

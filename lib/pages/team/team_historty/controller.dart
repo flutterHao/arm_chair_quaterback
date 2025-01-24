@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
@@ -5,6 +6,7 @@ import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dar
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -34,7 +36,28 @@ class TeamHistortyController extends GetxController
   late GameSchedule gameSchedule;
   late List<ScoreBoardDetailList> homePlayers;
   late List<ScoreBoardDetailList> awayPlayers;
-  _initData() async {
+
+  RxBool startObs = false.obs;
+  var leftCup = RxInt(0);
+  var rightCup = RxInt(0);
+  var opacityObs = false.obs;
+  var moneyOpacityObs = false.obs;
+  var giftObs = false.obs;
+  var giftScaleObs = false.obs;
+  var moneyIncomeObs = false.obs;
+  var moneyAnimationEnd = false.obs;
+  var mvpObs = false.obs;
+  var leftCupNum = -1;
+  var rightCupNum = -1;
+  @override
+  void onInit() {
+    super.onInit();
+    gameSchedule = Get.arguments;
+    tabController = TabController(length: tabTitles.length, vsync: this);
+    _initData();
+  }
+
+  Future _initData() async {
     gameResultInfoEntity =
         await PicksApi.getGameResultInfo(gameSchedule.gameId);
     homePlayers = gameResultInfoEntity.gameScoreBoardDetail
@@ -44,14 +67,9 @@ class TeamHistortyController extends GetxController
         .where((element) => element.teamId == gameSchedule.awayTeamId)
         .toList();
     loadingStatus.value = LoadDataStatus.success;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    gameSchedule = Get.arguments;
-    tabController = TabController(length: tabTitles.length, vsync: this);
-    _initData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      startObs.value = true;
+    });
   }
 
   List<PlayerStatus> getPlayerStatusData() {
@@ -153,6 +171,55 @@ class TeamHistortyController extends GetxController
             .format(),
         valueIsPercent: true));
     return list;
+  }
+
+  bool isFull() {
+    return gameResultInfoEntity.homeTeamResult.cardBoxIsFull;
+  }
+
+  int getCardBoxId() => gameResultInfoEntity.homeTeamResult.cardBoxId;
+  int getMoneyCount() {
+    return gameResultInfoEntity.homeTeamResult.dropAwardData
+            .firstWhereOrNull((e) => e.id == 102)
+            ?.num ??
+        0;
+  }
+
+  void initCup() {
+    var beforeHomeCup = gameResultInfoEntity.homeTeamResult.cup;
+
+    if (isLeftWin()) {
+      leftCupNum = gameResultInfoEntity.homeTeamResult.cupDiff;
+      leftCup.value = leftCupNum > 0 ? 1 : 0;
+      rightCupNum = gameResultInfoEntity.awayTeamResult.cupDiff;
+      rightCup.value = rightCupNum > 0 ? 1 : 0;
+    } else {
+      leftCupNum = gameResultInfoEntity.awayTeamResult.cupDiff;
+      leftCup.value = leftCupNum > 0 ? 1 : 0;
+      rightCupNum = gameResultInfoEntity.homeTeamResult.cupDiff;
+      rightCup.value = rightCupNum > 0 ? 1 : 0;
+    }
+    Timer.periodic(const Duration(milliseconds: 100), (t) {
+      if (leftCup.value == leftCupNum && rightCup.value == rightCupNum) {
+        t.cancel();
+        Future.delayed(const Duration(milliseconds: 500), () {
+          giftScaleObs.value = true;
+        });
+        return;
+      }
+      if (leftCup.value != leftCupNum) {
+        leftCup.value = leftCup.value + 1;
+      }
+      if (rightCup.value != rightCupNum) {
+        rightCup.value = rightCup.value + 1;
+      }
+    });
+    print('leftCupNum:$leftCupNum,,,,$rightCupNum');
+  }
+
+  bool isLeftWin() {
+    var win = gameResultInfoEntity.homeTeamResult.win;
+    return win == true;
   }
 }
 

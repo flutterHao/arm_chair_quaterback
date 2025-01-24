@@ -52,8 +52,8 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
         isShowBottom.value = true;
       }
     } else {
-      // print('未上榜');
       isNotSeasonList.value = true;
+      activeIndex = -1;
     }
   }
 
