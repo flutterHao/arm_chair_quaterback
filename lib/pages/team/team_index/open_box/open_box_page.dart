@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-01-23 20:39:40
+ * @LastEditTime: 2025-01-24 15:38:29
  */
 import 'dart:math';
 
@@ -30,9 +30,7 @@ import 'package:get/get.dart';
 class OpenBoxPage extends GetView<TeamIndexController> {
   const OpenBoxPage({
     super.key,
-    required this.item,
   });
-  final CardPackInfoCard item;
 
   Widget _backgroud() {
     if (controller.step == 2) {
@@ -128,46 +126,54 @@ class OpenBoxPage extends GetView<TeamIndexController> {
   }
 
   Widget _boxWidget() {
-    return Positioned(
-      top: 314.h,
-      left: 0,
-      right: 0,
-      child: Visibility(
-        visible: controller.step == 0,
-        child: Column(
-          children: [
-            AnimatedBox(
-              onTap: () {
-                controller.clickkBox(item);
-              },
-              child: Image.asset(
-                Utils.getBoxImageUrl(item.cardId),
-                width: 199.h * 1.2,
-                fit: BoxFit.fitWidth,
+    var item = controller.currentCardPack;
+    return AnimatedBuilder(
+        animation: controller.fallOutAnimation,
+        builder: (context, child) {
+          return Positioned(
+            top: 214.h * controller.fallOutAnimation.value + 100.h,
+            left: 0,
+            right: 0,
+            child: Visibility(
+              visible: controller.step == 0,
+              child: Column(
+                children: [
+                  Opacity(
+                    opacity: 0.5 + controller.fallOutAnimation.value * 0.5,
+                    child: AnimatedBox(
+                      onTap: () {
+                        controller.clickkBox();
+                      },
+                      child: Image.asset(
+                        Utils.getBoxImageUrl(item.cardId),
+                        width: 199.h * 1.2,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+                  25.vGap,
+                  AnimatedArrow(
+                    end: -5.w,
+                    child: IconWidget(
+                      iconWidth: 12.h,
+                      icon: Assets.commonUiCommonIconSystemArrow,
+                      rotateAngle: -90,
+                      iconColor: AppColors.cFF7954,
+                    ),
+                  ),
+                  16.vGap,
+                  Text(
+                    "Click to open".toUpperCase(),
+                    style: 21.w4(
+                        color: AppColors.cFFFFFF,
+                        fontFamily: FontFamily.fOswaldMedium,
+                        height: 0.8),
+                  ),
+                ],
               ),
             ),
-            25.vGap,
-            AnimatedArrow(
-              end: -5.w,
-              child: IconWidget(
-                iconWidth: 12.h,
-                icon: Assets.commonUiCommonIconSystemArrow,
-                rotateAngle: -90,
-                iconColor: AppColors.cFF7954,
-              ),
-            ),
-            16.vGap,
-            Text(
-              "Click to open".toUpperCase(),
-              style: 21.w4(
-                  color: AppColors.cFFFFFF,
-                  fontFamily: FontFamily.fOswaldMedium,
-                  height: 0.8),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 
   Widget _rightBottom() {
@@ -188,6 +194,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
   }
 
   Widget _cardWidget(BuildContext context) {
+    var item = controller.currentCardPack;
     return Positioned(
       top: 0.h,
       left: 0,
@@ -198,7 +205,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
         opacity: (controller.step == 1 || controller.step >= 3) ? 1 : 0,
         onEnd: () {
           if (controller.step == 1) {
-            controller.shuffleCards(context, item);
+            controller.shuffleCards(context);
           }
         },
         child: Stack(
@@ -212,7 +219,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                   isFlipped: e.isOpen.value,
                   player: e,
                   onFlip: () async {
-                    controller.selectCard(item, e);
+                    controller.selectCard(e);
                   },
                 );
 
@@ -224,8 +231,9 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                 return AnimatedPositioned(
                   curve: Curves.decelerate,
                   duration: 150.milliseconds,
+                  onEnd: () => curCard.rotation.value = 0,
                   left: curCard.offset.value.dx +
-                      curCard.rotation.value * 1000.w, // 水平位置
+                      curCard.rotation.value * 2000.w, // 水平位置
                   top: 180.h + curCard.offset.value.dy - dy, // 垂直位置
                   child: SizedBox(
                     width: 196.w,
@@ -310,6 +318,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
   }
 
   Widget _congratulation() {
+    var item = controller.currentCardPack;
     var player = item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
     return Obx(() {
       return AnimatedPositioned(
@@ -367,6 +376,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
   }
 
   Widget _rightBottomImage() {
+    var item = controller.currentCardPack;
     PlayerCardEntity? player =
         item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
     return Obx(() {
@@ -388,6 +398,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
   }
 
   Widget _bigCard() {
+    var item = controller.currentCardPack;
     PlayerCardEntity? player =
         item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
     return Positioned(
@@ -489,7 +500,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
               ),
               9.hGap,
               MtInkWell(
-                onTap: () => controller.gotIt(item),
+                onTap: () => controller.gotIt(),
                 child: Container(
                   width: 146.w,
                   height: 41.w,
@@ -515,6 +526,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
 
 //颜色背景
   Widget _colorBackgroud() {
+    var item = controller.currentCardPack;
     var player = item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
     if (player == null && controller.step != 2) {
       return Container();
@@ -583,7 +595,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
             return Builder(builder: (context) {
               return GestureDetector(
                 onTap: controller.step == 2 || controller.step == 4
-                    ? () => controller.toContinue(context, item)
+                    ? () => controller.toContinue(context)
                     : null,
                 // onTap: () => controller.back(context),
                 child: Container(

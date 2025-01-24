@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -161,6 +163,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       if (item.status == -1) {
                         controller.scroToMatch();
                       } else if (item.status == 2) {
+                        // var a = item.toString();
                         controller.toOpenBoxPage(item);
                       } else {
                         showModalBottomSheet(

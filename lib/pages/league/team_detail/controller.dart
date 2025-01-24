@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-23 21:14:39
+ * @LastEditTime: 2025-01-24 18:02:02
  */
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
@@ -97,7 +97,9 @@ class TeamDetailController extends GetxController
       update(["overview_tab"]);
       Future.delayed(const Duration(milliseconds: 50)).then((v) {
         for (int i = 0; i < teamDetailEntity.gameSchedules.length; i++) {
-          if (teamDetailEntity.gameSchedules[i].status != 2) {
+          var item = teamDetailEntity.gameSchedules[i];
+          if (item.status != 2 &&
+              item.gameStartTime >= DateTime.now().millisecondsSinceEpoch) {
             double offsetx = (193.5.w + 9.w) * (i > 0 ? i - 1 : 0);
             scrollController.jumpTo(offsetx);
             break;
@@ -256,5 +258,14 @@ class TeamDetailController extends GetxController
         update(["logTab"]);
       });
     }
+  }
+
+  num getColumnMaxYValue() {
+    List<Last5AvgEntity> list =
+        List.from(teamDetailEntity.last5GameSchedule.scoreAvg);
+    list.sort((a, b) =>
+        a.getValue(getCurrentType()).compareTo(b.getValue(getCurrentType())));
+    var v = list.last.getValue(getCurrentType());
+    return v;
   }
 }

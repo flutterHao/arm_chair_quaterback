@@ -236,7 +236,9 @@ class _Schedule extends StatelessWidget {
                                   height: 0.9),
                             ),
                             12.5.hGap,
-                            if (item.status == 2)
+                            if (item.status == 2 ||
+                                item.gameStartTime <
+                                    DateTime.now().millisecondsSinceEpoch)
                               Text(
                                 "Final",
                                 style: 12.w4(
@@ -668,7 +670,8 @@ class _RecentMatch extends StatelessWidget {
         labelStyle: 10.w4(color: AppColors.cB3B3B3),
         plotBands: plotBands,
         axisLine: const AxisLine(width: 0),
-        // maximum: controller.getColumnMaxYValue().toDouble(),
+        maximum: controller.getColumnMaxYValue().toDouble() * 1.2,
+        minimum: 0,
         majorTickLines: const MajorTickLines(size: 0),
         majorGridLines: const MajorGridLines(
             width: 1, color: AppColors.cD9D9D9, dashArray: [2, 2]),

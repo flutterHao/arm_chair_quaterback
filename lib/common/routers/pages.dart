@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-01-23 16:46:41
+ * @LastEditTime: 2025-01-24 10:32:18
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -117,7 +117,7 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.openBoxPage,
-      page: () => OpenBoxPage(item: Get.arguments as CardPackInfoCard),
+      page: () => const OpenBoxPage(),
       // transition: Transition.fadeIn,
     ),
     GetPage(

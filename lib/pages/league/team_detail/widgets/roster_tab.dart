@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:05:31
- * @LastEditTime: 2025-01-09 20:20:16
+ * @LastEditTime: 2025-01-24 17:42:15
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -44,6 +44,9 @@ class _RosterTabState extends State<RosterTab>
             avgAge += baseInfo.age;
             // avgHeight += baseInfo.h;
             // avgWeight += baseInfo.weight;
+          }
+          if (controller.statPlayerList.isEmpty) {
+            return const SizedBox();
           }
           avgAge = avgAge ~/ controller.statPlayerList.length;
           return SingleChildScrollView(
