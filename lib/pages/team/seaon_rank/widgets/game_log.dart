@@ -115,7 +115,7 @@ class GameLogWidget extends GetView<SeaonRankController> {
                 15.vGap,
                 MtInkWell(
                   onTap: () {
-                    controller.goTeamHistory();
+                    controller.goTeamHistory(gameSchedule);
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

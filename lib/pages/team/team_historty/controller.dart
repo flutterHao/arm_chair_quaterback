@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -25,16 +26,18 @@ class TeamHistortyController extends GetxController
   List<String> tabTitles = ["POINTS", "REBOUNDS", "ASSISTS"];
   late TabController tabController;
 
-  GameEvent? event;
+  late GameSchedule gameSchedule;
 
   _initData() async {
-    gameResultInfoEntity = await PicksApi.getGameResultInfo(3186);
+    gameResultInfoEntity =
+        await PicksApi.getGameResultInfo(gameSchedule.gameId);
     loadingStatus.value = LoadDataStatus.success;
   }
 
   @override
   void onInit() {
     super.onInit();
+    gameSchedule = Get.arguments;
     tabController = TabController(length: tabTitles.length, vsync: this);
     _initData();
   }

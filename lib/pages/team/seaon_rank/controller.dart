@@ -218,10 +218,10 @@ class SeaonRankController extends GetxController {
     return 'assets/images/manager/${item.cupPicId}.png';
   }
 
-  void goTeamHistory() async {
+  void goTeamHistory(GameSchedule gameSchedule) async {
     // Get.put(TeamBattleController(Get.context!));
     // Get.put(TeamBattleV2Controller(Get.context!));
-    Get.toNamed(RouteNames.teamHistory);
+    Get.toNamed(RouteNames.teamHistory, arguments: gameSchedule);
   }
 
   /// 获取日期格式 July 01
