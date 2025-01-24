@@ -134,13 +134,6 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     animation = tween.animate(animationController);
   }
 
-  void dragBackAnimation({num? value}) {
-    var horizontalDragBackParentState =
-        HorizontalDragBackParentState.of(context);
-    HorizontalDragBackController().notify(value ?? offsetX,
-        hasDragBackParent: horizontalDragBackParentState != null);
-  }
-
   bool hasHorizontalScroll(BuildContext context) {
     final scrollable = Scrollable.of(context);
     return scrollable.axisDirection == AxisDirection.right ||
@@ -330,6 +323,13 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         return content(context);
       }),
     );
+  }
+
+  void dragBackAnimation({num? value}) {
+    var horizontalDragBackParentState =
+    HorizontalDragBackParentState.of(context);
+    HorizontalDragBackController().notify(value ?? offsetX,
+        hasDragBackParent: horizontalDragBackParentState != null);
   }
 
   bool checkDepth(ScrollNotification notification) =>
