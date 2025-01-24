@@ -32,8 +32,6 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
   const HistoryGameLeaderWidget({super.key});
 
-  // final GameLeaderController controller;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -156,7 +154,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                           )
                         else
                           ...List.generate(list.length, (i) {
-                            var item = list[i];
+                            HistoryGameLeader item = list[i];
                             var playBaseInfo =
                                 Utils.getPlayBaseInfo(item.playerInfo.playerId);
                             var teamInfo =
@@ -214,6 +212,9 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                       grade: Utils.getPlayBaseInfo(
                                               item.playerInfo.playerId)
                                           .grade,
+                                      level: controller.getMvpBreakThroughGrade(
+                                          item.teamId,
+                                          item.playerInfo.playerId),
                                     ),
                                     13.hGap,
                                     Expanded(
@@ -278,6 +279,30 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                       width: 30.w,
                                       child: Stack(
                                         children: [
+                                          Positioned(
+                                              top: 23.w,
+                                              child: Container(
+                                                width: 21.w,
+                                                height: 21.w,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.5.w),
+                                                    border: Border.all(
+                                                        width: 1.w,
+                                                        color: item.color)),
+                                                child: ImageWidget(
+                                                    imageFailedPath:
+                                                        Assets.teamUiHead03,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.5.w),
+                                                    url: Utils.getAvaterUrl(
+                                                        controller
+                                                            .getBattleTeam(
+                                                                item.teamId)
+                                                            .teamLogo)),
+                                              )),
                                           IconWidget(
                                             iconWidth: 8.w,
                                             icon: Assets
@@ -376,8 +401,6 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
 class HistoryPlayerDetail extends StatefulWidget {
   const HistoryPlayerDetail({super.key});
 
-  // final GameEvent event;
-
   @override
   State<HistoryPlayerDetail> createState() => _HistoryPlayerDetailState();
 }
@@ -402,76 +425,74 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
 
   @override
   Widget build(BuildContext context) {
-    // var homeInfo = Get.find<TeamBattleV2Controller>().battleEntity.homeTeam;
-    // var awayInfo = Get.find<TeamBattleV2Controller>().battleEntity.awayTeam;
     return Column(
       children: [
-        // SizedBox(
-        //   height: 40.w,
-        //   child: TabBar(
-        //       controller: tabController,
-        //       indicatorColor: AppColors.cFF7954,
-        //       indicatorSize: TabBarIndicatorSize.tab,
-        //       dividerColor: AppColors.cD1D1D1,
-        //       overlayColor: null,
-        //       labelStyle:
-        //           16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
-        //       labelColor: AppColors.c000000,
-        //       unselectedLabelStyle:
-        //           16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
-        //       unselectedLabelColor: AppColors.c000000.withOpacity(0.5),
-        //       tabs: [
-        //         Row(
-        //           children: [
-        //             Container(
-        //               decoration: BoxDecoration(
-        //                   border:
-        //                       Border.all(color: AppColors.c1F8FE5, width: 1.w),
-        //                   borderRadius: BorderRadius.circular(15.w)),
-        //               child: ImageWidget(
-        //                 url: Utils.getAvaterUrl(homeInfo.teamLogo),
-        //                 imageFailedPath: Assets.teamUiHead01,
-        //                 width: 28.w,
-        //                 height: 28.w,
-        //                 borderRadius: BorderRadius.circular(14.w),
-        //               ),
-        //             ),
-        //             7.hGap,
-        //             Text(
-        //               homeInfo.teamName,
-        //             )
-        //           ],
-        //         ),
-        //         Row(
-        //           mainAxisAlignment: MainAxisAlignment.end,
-        //           children: [
-        //             Text(
-        //               awayInfo.teamName,
-        //             ),
-        //             7.hGap,
-        //             Container(
-        //               decoration: BoxDecoration(
-        //                   border:
-        //                       Border.all(color: AppColors.cD60D20, width: 1.w),
-        //                   borderRadius: BorderRadius.circular(15.w)),
-        //               child: ImageWidget(
-        //                 url: Utils.getAvaterUrl(awayInfo.teamLogo),
-        //                 imageFailedPath: Assets.teamUiHead03,
-        //                 width: 28.w,
-        //                 height: 28.w,
-        //                 borderRadius: BorderRadius.circular(14.w),
-        //               ),
-        //             ),
-        //           ],
-        //         )
-        //       ]),
-        // ),
+        SizedBox(
+          height: 40.w,
+          child: TabBar(
+              controller: tabController,
+              indicatorColor: AppColors.cFF7954,
+              indicatorSize: TabBarIndicatorSize.tab,
+              dividerColor: AppColors.cD1D1D1,
+              overlayColor: null,
+              labelStyle:
+                  16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+              labelColor: AppColors.c000000,
+              unselectedLabelStyle:
+                  16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+              unselectedLabelColor: AppColors.c000000.withOpacity(0.5),
+              tabs: [
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: AppColors.c1F8FE5, width: 1.w),
+                          borderRadius: BorderRadius.circular(15.w)),
+                      child: ImageWidget(
+                        url: Utils.getAvaterUrl(
+                            controller.gameSchedule.homeTeamLogo),
+                        imageFailedPath: Assets.teamUiHead01,
+                        width: 28.w,
+                        height: 28.w,
+                        borderRadius: BorderRadius.circular(14.w),
+                      ),
+                    ),
+                    7.hGap,
+                    Text(
+                      controller.gameSchedule.homeTeamName,
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      controller.gameSchedule.awayTeamName,
+                    ),
+                    7.hGap,
+                    Container(
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: AppColors.cD60D20, width: 1.w),
+                          borderRadius: BorderRadius.circular(15.w)),
+                      child: ImageWidget(
+                        url: Utils.getAvaterUrl(
+                            controller.gameSchedule.awayTeamLogo),
+                        imageFailedPath: Assets.teamUiHead03,
+                        width: 28.w,
+                        height: 28.w,
+                        borderRadius: BorderRadius.circular(14.w),
+                      ),
+                    ),
+                  ],
+                )
+              ]),
+        ),
         Expanded(
           child: TabBarView(controller: tabController, children: [
-            _buildTabViewItem(
-                controller.gameResultInfoEntity.gameScoreBoardDetail),
-            _buildTabViewItem(
-                controller.gameResultInfoEntity.gameScoreBoardDetail),
+            _buildTabViewItem(controller.homePlayers),
+            _buildTabViewItem(controller.awayPlayers),
           ]),
         )
       ],

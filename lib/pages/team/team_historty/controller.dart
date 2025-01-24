@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -27,10 +30,17 @@ class TeamHistortyController extends GetxController
   late TabController tabController;
 
   late GameSchedule gameSchedule;
-
+  late List<ScoreBoardDetailList> homePlayers;
+  late List<ScoreBoardDetailList> awayPlayers;
   _initData() async {
     gameResultInfoEntity =
         await PicksApi.getGameResultInfo(gameSchedule.gameId);
+    homePlayers = gameResultInfoEntity.gameScoreBoardDetail
+        .where((element) => element.teamId == gameSchedule.homeTeamId)
+        .toList();
+    awayPlayers = gameResultInfoEntity.gameScoreBoardDetail
+        .where((element) => element.teamId == gameSchedule.awayTeamId)
+        .toList();
     loadingStatus.value = LoadDataStatus.success;
   }
 
@@ -64,18 +74,35 @@ class TeamHistortyController extends GetxController
 
   /// tab取值范围：["pts","reb","ast"]
   List<HistoryGameLeader> getTwoMaxByTab(String tab) {
-    // if (event == null) {
-    //   return [];
-    // }
-    // TeamBattleV2Controller teamBattleV2Controller = Get.find();
+    homePlayers.sort((a, b) => b.toJson()[tab]!.compareTo(a.toJson()[tab]));
+    awayPlayers.sort((a, b) => b.toJson()[tab]!.compareTo(a.toJson()[tab]));
     List<HistoryGameLeader> concatList;
     concatList = [
-      HistoryGameLeader(51006, gameResultInfoEntity.gameScoreBoardDetail[0],
-          AppColors.c1F8FE5),
-      HistoryGameLeader(50124, gameResultInfoEntity.gameScoreBoardDetail[1],
-          AppColors.cD60D20),
+      HistoryGameLeader(
+          gameSchedule.homeTeamId, homePlayers[0], AppColors.c1F8FE5),
+      HistoryGameLeader(
+          gameSchedule.awayTeamId, awayPlayers[0], AppColors.cD60D20),
     ];
     return concatList;
+  }
+
+  GameResultInfoHomeTeamResult getBattleTeam(int teamId) {
+    if (teamId == gameSchedule.homeTeamId) {
+      return gameResultInfoEntity.homeTeamResult;
+    }
+    return gameResultInfoEntity.awayTeamResult;
+  }
+
+  /// 获取球员的星级
+  int getMvpBreakThroughGrade(int teamId, int playerId) {
+    List<GameResultInfoHomeTeamResultTeamPlayers> list = [];
+    if (teamId == gameResultInfoEntity.homeTeamResult.teamId) {
+      list = gameResultInfoEntity.homeTeamResult.teamPlayers;
+    } else {
+      list = gameResultInfoEntity.awayTeamResult.teamPlayers;
+    }
+    var firstWhereOrNull = list.firstWhereOrNull((e) => e.playerId == playerId);
+    return max(1, firstWhereOrNull?.breakThroughGrade ?? 1);
   }
 }
 
