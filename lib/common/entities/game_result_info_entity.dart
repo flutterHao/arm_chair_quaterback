@@ -39,7 +39,7 @@ class GameResultInfoHomeTeamResult {
   late List<dynamic> otherAwardData = [];
   late bool ast = false;
   late List<GameResultInfoHomeTeamResultTeamPlayers> teamPlayers = [];
-  late int strength = 0;
+  late double strength = .0;
   late bool mvp = false;
   late bool cardBoxIsFull = false;
   late List<dynamic> vipAwardData = [];

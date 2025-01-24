@@ -80,9 +80,9 @@ class GameLogWidget extends GetView<SeaonRankController> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: NetworkImage(Utils.getAvaterUrl(
-                                gameSchedule.awayTeamLogo == 0
+                                gameSchedule.homeTeamLogo == 0
                                     ? 2
-                                    : gameSchedule.awayTeamLogo))))),
+                                    : gameSchedule.homeTeamLogo))))),
                 4.vGap,
                 Text(
                   gameSchedule.homeTeamName,

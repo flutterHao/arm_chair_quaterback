@@ -133,7 +133,7 @@ GameResultInfoHomeTeamResult $GameResultInfoHomeTeamResultFromJson(
   if (teamPlayers != null) {
     gameResultInfoHomeTeamResult.teamPlayers = teamPlayers;
   }
-  final int? strength = jsonConvert.convert<int>(json['strength']);
+  final double? strength = jsonConvert.convert<double>(json['strength']);
   if (strength != null) {
     gameResultInfoHomeTeamResult.strength = strength;
   }
@@ -244,7 +244,7 @@ extension GameResultInfoHomeTeamResultExtension on GameResultInfoHomeTeamResult 
     List<dynamic>? otherAwardData,
     bool? ast,
     List<GameResultInfoHomeTeamResultTeamPlayers>? teamPlayers,
-    int? strength,
+    double? strength,
     bool? mvp,
     bool? cardBoxIsFull,
     List<dynamic>? vipAwardData,
