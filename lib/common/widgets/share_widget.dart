@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:share_plus/share_plus.dart';
 
 /// 分享组件
 /// globalKey 组件的key
@@ -31,7 +32,7 @@ class ShareWidget extends StatelessWidget {
         height: 24.w,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.w),
-            border: Border.all(color: AppColors.c666666, width: 1.w)),
+            border: Border.all(color: AppColors.c666666.withOpacity(0.3), width: 1.w)),
         child: MtInkWell(
             vibrate: true,
             onTap: () => shareTap(),
@@ -43,15 +44,18 @@ class ShareWidget extends StatelessWidget {
   }
 
   void shareTap() async {
-    await Utils.generateAndShareImage(globalKey);
-    switch (type) {
-      case ShareType.news:
-        NewsApi.shareNews();
-        break;
-      case ShareType.guess:
-        PicksApi.shareGuess();
-        break;
-      default:
-    }
+    Utils.generateAndShareImage(globalKey).then((shareResult) {
+      if (shareResult.status == ShareResultStatus.success) {
+        switch (type) {
+          case ShareType.news:
+            NewsApi.shareNews();
+            break;
+          case ShareType.guess:
+            PicksApi.shareGuess();
+            break;
+          default:
+        }
+      }
+    });
   }
 }

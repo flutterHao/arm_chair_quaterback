@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class LegendaryManagerWidget extends StatefulWidget {
 class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
   SeaonRankController controller = Get.find();
   final GlobalKey globalKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -184,23 +186,9 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
   }
 
   Widget _shareButton() {
-    return InkWell(
-      onTap: () {
-        Utils.generateAndShareImage(globalKey);
-      },
-      child: Container(
-        width: 24.w,
-        height: 24.w,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.w),
-          border: Border.all(color: AppColors.c666666.withOpacity(0.3)),
-        ),
-        child: IconWidget(
-          iconWidth: 16.w,
-          icon: Assets.commonUiCommonIconSystemShare,
-          iconColor: AppColors.c000000,
-        ),
-      ),
+    return ShareWidget(
+      globalKey: globalKey,
+      type: ShareType.guess,
     );
   }
 

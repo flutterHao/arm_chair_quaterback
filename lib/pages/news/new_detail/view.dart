@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
+import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
@@ -30,6 +31,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewsDetailPage extends StatefulWidget {
   const NewsDetailPage({super.key, required this.newsDetail});
+
   final NewsListDetail newsDetail;
 
   @override
@@ -142,6 +144,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
 class NewsDetailItem extends GetView<NewListController> {
   NewsDetailItem({super.key, required this.item, this.showComments = false});
+
   final NewsListDetail item;
   final bool showComments;
 
@@ -193,24 +196,10 @@ class NewsDetailItem extends GetView<NewListController> {
           ),
         ),
         13.hGap,
-        InkWell(
-          onTap: () {
-            Utils.generateAndShareImage(globalKey);
-          },
-          child: Container(
-            width: 24.w,
-            height: 24.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.w),
-              border: Border.all(color: AppColors.c666666.withOpacity(0.3)),
-            ),
-            child: IconWidget(
-              iconWidth: 16.w,
-              icon: Assets.commonUiCommonIconSystemShare,
-              iconColor: AppColors.c000000,
-            ),
-          ),
-        ),
+        ShareWidget(
+          globalKey: globalKey,
+          type: ShareType.guess,
+        )
       ],
     );
   }

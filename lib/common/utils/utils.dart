@@ -235,7 +235,8 @@ class Utils {
     return "${string}th";
   }
 
-  static Future generateAndShareImage(GlobalKey globalKey) async {
+  static Future<ShareResult> generateAndShareImage(GlobalKey globalKey) async {
+    var completer = Completer<ShareResult>();
     try {
       // 使用RepaintBoundary生成widget的图像
       RenderRepaintBoundary boundary =
@@ -252,14 +253,17 @@ class Utils {
       File file = File(filePath)..writeAsBytesSync(uint8List);
 
       // 使用share_plus插件分享文件
-      return Share.shareXFiles(
+      var shareResult = await Share.shareXFiles(
         [XFile(filePath)],
         subject: "This is a share link from me",
         // text: 'This is a share link from me',
       );
+      completer.complete(shareResult);
     } catch (e) {
       print('Error generating image: $e');
+      completer.completeError(e);
     }
+    return completer.future;
   }
 
   static String timeAgo(int inputTime) {

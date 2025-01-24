@@ -178,9 +178,11 @@ class NewListController extends GetxController {
 
   shareNews(NewsListDetail newsDetail) async {
     // Utils.generateAndShareImage(_globalKey);
-    await Share.share("${newsDetail.title}\n\n${newsDetail.content}",
+    var shareResult = await Share.share("${newsDetail.title}\n\n${newsDetail.content}",
         subject: newsDetail.title);
-    NewsApi.shareNews();
+    if(shareResult.status == ShareResultStatus.success) {
+      NewsApi.shareNews();
+    }
     // Share.shareXFiles([XFile(newsDetail.imgUrl)],
     //     text: newsDetail.content, subject: newsDetail.title);
   }
