@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/stats/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/stats/widget/per_game_datasource.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,9 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///created at 2025/1/7/14:08
 
 class StatsPage extends StatefulWidget {
-  const StatsPage({super.key});
+  const StatsPage({super.key, required this.playerDetailController});
+
+  final PlayerDetailController playerDetailController;
 
   @override
   State<StatsPage> createState() => _StatsPageState();
@@ -34,7 +37,7 @@ class _StatsPageState extends State<StatsPage>
 
   @override
   Widget build(BuildContext context) {
-    controller = Get.put(StatsController());
+    controller = Get.put(StatsController(widget.playerDetailController));
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -186,8 +189,7 @@ class _StatsPageState extends State<StatsPage>
                                               gridLinesVisibility:
                                                   GridLinesVisibility.none,
                                               showHorizontalScrollbar: false,
-                                              source: PerGameDatasource(
-                                                  data),
+                                              source: PerGameDatasource(data),
                                               columns: [
                                                 GridColumn(
                                                     columnName: 'season',
@@ -212,8 +214,10 @@ class _StatsPageState extends State<StatsPage>
                                                       child: Text(
                                                         'SEASON',
                                                         style: 12.w5(
-                                                          color: AppColors.c000000,
-                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          color:
+                                                              AppColors.c000000,
+                                                          fontFamily: FontFamily
+                                                              .fRobotoMedium,
                                                           height: 1,
                                                         ),
                                                       ),
@@ -221,11 +225,12 @@ class _StatsPageState extends State<StatsPage>
                                                 GridColumn(
                                                     columnName: "value",
                                                     columnWidthMode:
-                                                    ColumnWidthMode.fill,
+                                                        ColumnWidthMode.fill,
                                                     label: Container(
                                                       alignment:
                                                           Alignment.center,
-                                                      padding: EdgeInsets.only(left: 16.w),
+                                                      padding: EdgeInsets.only(
+                                                          left: 16.w),
                                                       decoration: const BoxDecoration(
                                                           border: Border(
                                                               bottom: BorderSide(
@@ -235,8 +240,10 @@ class _StatsPageState extends State<StatsPage>
                                                       child: Text(
                                                         statsItem.shortName,
                                                         style: 12.w5(
-                                                          color: AppColors.c000000,
-                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          color:
+                                                              AppColors.c000000,
+                                                          fontFamily: FontFamily
+                                                              .fRobotoMedium,
                                                           height: 1,
                                                         ),
                                                       ),
@@ -247,7 +254,8 @@ class _StatsPageState extends State<StatsPage>
                                                       alignment:
                                                           Alignment.center,
                                                       padding: EdgeInsets.only(
-                                                          right: 45.w,left: 16.w),
+                                                          right: 45.w,
+                                                          left: 16.w),
                                                       decoration: const BoxDecoration(
                                                           border: Border(
                                                               bottom: BorderSide(
@@ -257,8 +265,10 @@ class _StatsPageState extends State<StatsPage>
                                                       child: Text(
                                                         "GP",
                                                         style: 12.w5(
-                                                          color: AppColors.c000000,
-                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          color:
+                                                              AppColors.c000000,
+                                                          fontFamily: FontFamily
+                                                              .fRobotoMedium,
                                                           height: 1,
                                                         ),
                                                       ),
@@ -284,49 +294,50 @@ class _StatsPageState extends State<StatsPage>
                                         return SfDataGridTheme(
                                             data: const SfDataGridThemeData(
                                                 gridLineColor:
-                                                AppColors.cE6E6E6,
+                                                    AppColors.cE6E6E6,
                                                 frozenPaneLineColor:
-                                                Colors.transparent,
+                                                    Colors.transparent,
                                                 rowHoverColor: Colors.blue,
                                                 gridLineStrokeWidth: 0),
                                             child: SfDataGrid(
                                               rowHeight: 34.w,
                                               headerRowHeight: 34.w,
                                               horizontalScrollPhysics:
-                                              const NeverScrollableScrollPhysics(),
+                                                  const NeverScrollableScrollPhysics(),
                                               verticalScrollPhysics:
-                                              const BouncingScrollPhysics(),
+                                                  const BouncingScrollPhysics(),
                                               gridLinesVisibility:
-                                              GridLinesVisibility.none,
+                                                  GridLinesVisibility.none,
                                               showHorizontalScrollbar: false,
-                                              source: PerGameDatasource(
-                                                  data),
+                                              source: PerGameDatasource(data),
                                               columns: [
                                                 GridColumn(
                                                     columnName: 'season',
                                                     width: 124.w,
                                                     label: Container(
                                                       alignment:
-                                                      Alignment.center,
+                                                          Alignment.center,
                                                       padding: EdgeInsets.only(
                                                           left: 16.w),
                                                       decoration:
-                                                      const BoxDecoration(
-                                                          border: Border(
-                                                            bottom: BorderSide(
-                                                                color: AppColors
-                                                                    .cD1D1D1,
-                                                                width: 1),
-                                                            right: BorderSide(
-                                                                color: AppColors
-                                                                    .cE6E6E6,
-                                                                width: 1),
-                                                          )),
+                                                          const BoxDecoration(
+                                                              border: Border(
+                                                        bottom: BorderSide(
+                                                            color: AppColors
+                                                                .cD1D1D1,
+                                                            width: 1),
+                                                        right: BorderSide(
+                                                            color: AppColors
+                                                                .cE6E6E6,
+                                                            width: 1),
+                                                      )),
                                                       child: Text(
                                                         'SEASON',
                                                         style: 12.w5(
-                                                          color: AppColors.c000000,
-                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          color:
+                                                              AppColors.c000000,
+                                                          fontFamily: FontFamily
+                                                              .fRobotoMedium,
                                                           height: 1,
                                                         ),
                                                       ),
@@ -334,11 +345,12 @@ class _StatsPageState extends State<StatsPage>
                                                 GridColumn(
                                                     columnName: "value",
                                                     columnWidthMode:
-                                                    ColumnWidthMode.fill,
+                                                        ColumnWidthMode.fill,
                                                     label: Container(
                                                       alignment:
-                                                      Alignment.center,
-                                                      padding: EdgeInsets.only(left: 16.w),
+                                                          Alignment.center,
+                                                      padding: EdgeInsets.only(
+                                                          left: 16.w),
                                                       decoration: const BoxDecoration(
                                                           border: Border(
                                                               bottom: BorderSide(
@@ -348,8 +360,10 @@ class _StatsPageState extends State<StatsPage>
                                                       child: Text(
                                                         statsItem.shortName,
                                                         style: 12.w5(
-                                                          color: AppColors.c000000,
-                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          color:
+                                                              AppColors.c000000,
+                                                          fontFamily: FontFamily
+                                                              .fRobotoMedium,
                                                           height: 1,
                                                         ),
                                                       ),
@@ -358,9 +372,10 @@ class _StatsPageState extends State<StatsPage>
                                                     columnName: "gp",
                                                     label: Container(
                                                       alignment:
-                                                      Alignment.center,
+                                                          Alignment.center,
                                                       padding: EdgeInsets.only(
-                                                          right: 45.w,left: 16.w),
+                                                          right: 45.w,
+                                                          left: 16.w),
                                                       decoration: const BoxDecoration(
                                                           border: Border(
                                                               bottom: BorderSide(
@@ -370,8 +385,10 @@ class _StatsPageState extends State<StatsPage>
                                                       child: Text(
                                                         "GP",
                                                         style: 12.w5(
-                                                          color: AppColors.c000000,
-                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          color:
+                                                              AppColors.c000000,
+                                                          fontFamily: FontFamily
+                                                              .fRobotoMedium,
                                                           height: 1,
                                                         ),
                                                       ),

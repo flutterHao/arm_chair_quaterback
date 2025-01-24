@@ -3,7 +3,6 @@ import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/season_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
-import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +12,10 @@ import 'package:get/get.dart';
 ///created at 2025/1/7/14:07
 
 class StatsController extends GetxController with GetTickerProviderStateMixin {
+
+  StatsController(this.playerDetailController);
+  final PlayerDetailController playerDetailController;
+
   late NbaPlayerBaseInfoEntity nbaPlayerBaseInfoEntity;
 
   var currentIndex = 0.obs;
@@ -35,7 +38,6 @@ class StatsController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void _initData() {
-    PlayerDetailController playerDetailController = Get.find();
     nbaPlayerBaseInfoEntity = playerDetailController.nbaPlayerBaseInfoEntity!;
   }
 
@@ -208,7 +210,6 @@ class StatsController extends GetxController with GetTickerProviderStateMixin {
       return;
     }
     regularLoadStatus.value = LoadDataStatus.loading;
-    PlayerDetailController playerDetailController = Get.find();
     var arguments = playerDetailController.arguments;
     PicksApi.getNBAPlayerOverAllPerGameData(
             playerId: arguments.playerId, seasonType: SeasonType.regular)
@@ -232,7 +233,6 @@ class StatsController extends GetxController with GetTickerProviderStateMixin {
       return;
     }
     offLoadStatus.value = LoadDataStatus.loading;
-    PlayerDetailController playerDetailController = Get.find();
     var arguments = playerDetailController.arguments;
     PicksApi.getNBAPlayerOverAllPerGameData(
             playerId: arguments.playerId, seasonType: SeasonType.playoffs)

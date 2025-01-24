@@ -34,8 +34,6 @@ class PlayerDetailPageArguments {
 class PlayerDetailPage extends GetView<PlayerDetailController> {
   const PlayerDetailPage({super.key, required this.arguments});
 
-
-
   @override
   String? get tag => getTag();
 
@@ -107,7 +105,10 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                           playerDetailController: controller,
                         ),
                       ),
-                      const KeepAliveWrapper(child: StatsPage()),
+                      KeepAliveWrapper(
+                          child: StatsPage(
+                        playerDetailController: controller,
+                      )),
                       KeepAliveWrapper(
                         child: HistoryPage(
                           playerId: arguments.playerId,
