@@ -6,7 +6,6 @@ export 'package:arm_chair_quaterback/generated/json/rank_award_entity.g.dart';
 @JsonSerializable()
 class RankAwardEntity {
   late String awardData;
-  late String awardPickData;
   late String disc;
   late String id;
   late String maxRank;

@@ -22,8 +22,7 @@ class HorizontalDragBackParentWidget extends StatefulWidget {
 class _HorizontalDragBackParentWidgetState
     extends State<HorizontalDragBackParentWidget>
     with SingleTickerProviderStateMixin {
-  late _HorizontalDragBackController<num> controller =
-      _HorizontalDragBackController();
+  late StreamController<num> controller = StreamController();
   num? offsetX;
   AnimationController? animationController;
 
@@ -32,8 +31,10 @@ class _HorizontalDragBackParentWidgetState
   @override
   void initState() {
     super.initState();
+    // print(
+    //     'HorizontalDragBackParentWidget initState:${HorizontalRouteObserver.getInstance().length}');
     HorizontalDragBackController().addController(
-        HorizontalRouteObserver.getInstance().history.length, controller);
+        HorizontalRouteObserver.getInstance().length, controller);
     controller.stream.listen((num value) {
       // print('horizontalDragBack----2222---offsetX: $value');
       if (animationController?.isAnimating ?? false) {
@@ -67,8 +68,10 @@ class _HorizontalDragBackParentWidgetState
 
   @override
   void dispose() {
+    // print(
+        // 'HorizontalDragBackParentWidget dispose:${HorizontalRouteObserver.getInstance().length}');
     HorizontalDragBackController().removeController(controller);
-    controller.dispose();
+    controller.close();
     animationController?.dispose();
     super.dispose();
   }
@@ -89,7 +92,7 @@ class _HorizontalDragBackParentWidgetState
 }
 
 class HorizontalDragBackParentState extends InheritedWidget {
-  final _HorizontalDragBackController<num> controller;
+  final StreamController<num> controller;
 
   const HorizontalDragBackParentState(
       {super.key, required this.controller, required super.child});
@@ -106,50 +109,30 @@ class HorizontalDragBackParentState extends InheritedWidget {
 }
 
 class HorizontalDragBackController {
-  final Map<int, _HorizontalDragBackController> _controllers = {};
-
+  final Map<int, StreamController> _controllers = {};
 
   static final HorizontalDragBackController _instance =
       HorizontalDragBackController._();
 
   factory HorizontalDragBackController() => _instance;
 
-  void addController(int page, _HorizontalDragBackController controller) {
+  void addController(int page, StreamController controller) {
     _controllers[page] = controller;
+    // print('HorizontalDragBackController addController:${_controllers.length}');
   }
 
-  void removeController(_HorizontalDragBackController controller) {
-    _controllers.remove(controller);
-  }
-
-  void removeIndex(int page) {
-    _controllers.removeWhere((e, _) => e == page);
+  void removeController(StreamController controller) {
+    _controllers.removeWhere((_, value) => value == controller);
+    // print('HorizontalDragBackController removeController:${_controllers.length}');
   }
 
   void notify(num value) {
     if (_controllers.isEmpty) {
       return;
     }
-    var index = HorizontalRouteObserver.getInstance().history.length-1;
+    var index = HorizontalRouteObserver.getInstance().length - 1;
     _controllers[index]?.add(value);
   }
 
   HorizontalDragBackController._();
-}
-
-class _HorizontalDragBackController<T> {
-  final StreamController<T> _controller = StreamController<T>();
-  int flag = 0;
-
-  _HorizontalDragBackController();
-
-  Stream<T> get stream => _controller.stream;
-
-  void add(T event) {
-    _controller.add(event);
-  }
-
-  dispose() {
-    _controller.close();
-  }
 }

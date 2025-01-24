@@ -7,11 +7,6 @@ RankAwardEntity $RankAwardEntityFromJson(Map<String, dynamic> json) {
   if (awardData != null) {
     rankAwardEntity.awardData = awardData;
   }
-  final String? awardPickData = jsonConvert.convert<String>(
-      json['awardPickData']);
-  if (awardPickData != null) {
-    rankAwardEntity.awardPickData = awardPickData;
-  }
   final String? disc = jsonConvert.convert<String>(json['disc']);
   if (disc != null) {
     rankAwardEntity.disc = disc;
@@ -43,7 +38,6 @@ RankAwardEntity $RankAwardEntityFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> $RankAwardEntityToJson(RankAwardEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['awardData'] = entity.awardData;
-  data['awardPickData'] = entity.awardPickData;
   data['disc'] = entity.disc;
   data['id'] = entity.id;
   data['maxRank'] = entity.maxRank;
@@ -56,7 +50,6 @@ Map<String, dynamic> $RankAwardEntityToJson(RankAwardEntity entity) {
 extension RankAwardEntityExtension on RankAwardEntity {
   RankAwardEntity copyWith({
     String? awardData,
-    String? awardPickData,
     String? disc,
     String? id,
     String? maxRank,
@@ -66,7 +59,6 @@ extension RankAwardEntityExtension on RankAwardEntity {
   }) {
     return RankAwardEntity()
       ..awardData = awardData ?? this.awardData
-      ..awardPickData = awardPickData ?? this.awardPickData
       ..disc = disc ?? this.disc
       ..id = id ?? this.id
       ..maxRank = maxRank ?? this.maxRank

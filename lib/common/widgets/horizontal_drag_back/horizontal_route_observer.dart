@@ -9,6 +9,8 @@ class HorizontalRouteObserver<R extends Route<dynamic>> extends RouteObserver<R>
   
   List<String> history = [];
 
+  int get length => history.length;
+
   static HorizontalRouteObserver getInstance() => _instance;
 
   static final HorizontalRouteObserver _instance = HorizontalRouteObserver._();

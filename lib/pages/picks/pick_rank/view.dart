@@ -92,13 +92,14 @@ class PickRankPage extends GetView<PickRankController> {
                         child: MtInkWell(
                           minScale: 0.95,
                           onTap: () {
-                            showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: AppColors.cTransparent,
-                                context: context,
-                                builder: (context) {
-                                  return RankRewardDetail();
-                                });
+                            /// todo 配置表删除awardPickData，待适配
+                            // showModalBottomSheet(
+                            //     isScrollControlled: true,
+                            //     backgroundColor: AppColors.cTransparent,
+                            //     context: context,
+                            //     builder: (context) {
+                            //       return RankRewardDetail();
+                            //     });
                           },
                           child: Container(
                             margin: EdgeInsets.only(top: 9.w),
