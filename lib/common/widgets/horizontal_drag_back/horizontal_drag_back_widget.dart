@@ -306,6 +306,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     }
 
     return PopScope(
+      canPop: widget.canPop,
       onPopInvokedWithResult: (pop, _) {
         print('onPopInvokedWithResult:$pop,$popping');
         if (widget.canPop) {
@@ -351,7 +352,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       tween.end = width;
       animationController.duration = Duration(
           milliseconds: velocity > 1000 ? minMilliseconds : maxMilliseconds);
-      popping = true;
+      if(!widget.noBackAnimation) {
+        popping = true;
+      }
     } else {
       tween.begin = beforeResetOffsetX;
       tween.end = 0.0;
