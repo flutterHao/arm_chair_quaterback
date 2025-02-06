@@ -7,12 +7,9 @@ import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 
 class RankAwardPropEntity {
   final RankAwardEntity rankAwardEntity;
-  final PropDefineEntity awardData;
-  final int awardDataNum;
   final List<PropDefineNumEntity> awardPickData;
 
-  RankAwardPropEntity(this.rankAwardEntity, this.awardData, this.awardDataNum,
-      this.awardPickData);
+  RankAwardPropEntity(this.rankAwardEntity, this.awardPickData);
 }
 
 class PropDefineNumEntity {

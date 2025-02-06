@@ -2,8 +2,10 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/controller.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +24,14 @@ class RankRewardDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller = Get.find<PickRankController>();
+    var scrollController = ScrollController();
     return SizedBox(
       width: double.infinity,
       child: Column(
         children: [
           Expanded(child: InkWell(onTap: () => Get.back(), child: Container())),
           Container(
+            height: 536.h,
             decoration: BoxDecoration(
               color: AppColors.cFFFFFF,
               borderRadius: BorderRadius.vertical(top: Radius.circular(9.w)),
@@ -79,7 +83,8 @@ class RankRewardDetail extends StatelessWidget {
                                       fontFamily: FontFamily.fOswaldBold,
                                     )),
                                 TextSpan(
-                                    text: "/${controller.getBetRewardRank().format()}",
+                                    text:
+                                        "/${controller.getBetRewardRank().format()}",
                                     style: 16.w5(
                                       color: AppColors.c000000,
                                       height: 1,
@@ -147,16 +152,16 @@ class RankRewardDetail extends StatelessWidget {
                                             .awardInfo[
                                                 controller.selfInRankListIndex]
                                             .awardPickData
-                                            .length, (index) {
-                                      var item = controller.awardInfo[index]
-                                          .awardPickData[index];
-                                      //todo 根据配置换图
+                                            .length, (i) {
+                                      var item = controller
+                                          .awardInfo[
+                                              controller.selfInRankListIndex]
+                                          .awardPickData[i];
                                       return _buildGiftItem(
-                                          Assets.managerUiManagerGift02, "1");
+                                          Utils.getPropIconUrl(
+                                              item.propDefineEntity.propId),
+                                          "${item.num}");
                                     }),
-                                  //todo 根据配置换图
-                                  _buildGiftItem(Assets.picksUiPickGift01,
-                                      "${controller.awardInfo[controller.selfInRankListIndex].awardDataNum}"),
                                 ],
                               );
                             })
@@ -196,95 +201,102 @@ class RankRewardDetail extends StatelessWidget {
                   height: 1.w,
                   color: AppColors.cD4D4D4,
                 ),
-                ...List.generate(controller.awardInfo.length, (index) {
-                  bool lastIndex = controller.awardInfo.length - 1 == index;
-                  return Container(
-                    height: 49.w,
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: lastIndex
-                            ? null
-                            : Border(
-                                bottom: BorderSide(
-                                color: AppColors.cE6E6E6,
-                                width: 1.w,
-                              ))),
-                    padding: EdgeInsets.only(left: 16.w, right: 14.w),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                                "Rank ${controller.awardInfo[index].rankAwardEntity.minRank}${controller.awardInfo[index].rankAwardEntity.minRank == controller.awardInfo[index].rankAwardEntity.maxRank ? "" : " - ${controller.awardInfo[index].rankAwardEntity.maxRank}"}",
-                                style: 14.w5(
-                                  color: AppColors.c262626,
-                                  fontFamily: FontFamily.fOswaldMedium,
-                                )),
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    physics: OneBoundaryScrollPhysics(scrollController: scrollController),
+                    child: Column(children: [
+                      ...List.generate(controller.awardInfo.length, (index) {
+                        bool lastIndex =
+                            controller.awardInfo.length - 1 == index;
+                        return Container(
+                          height: 49.w,
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: lastIndex
+                                  ? null
+                                  : Border(
+                                      bottom: BorderSide(
+                                      color: AppColors.cE6E6E6,
+                                      width: 1.w,
+                                    ))),
+                          padding: EdgeInsets.only(left: 16.w, right: 14.w),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                      "Rank ${controller.awardInfo[index].rankAwardEntity.minRank}${controller.awardInfo[index].rankAwardEntity.minRank == controller.awardInfo[index].rankAwardEntity.maxRank ? "" : " - ${controller.awardInfo[index].rankAwardEntity.maxRank}"}",
+                                      style: 14.w5(
+                                        color: AppColors.c262626,
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                      )),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  if (controller.awardInfo[index].awardPickData
+                                      .isNotEmpty)
+                                    ...List.generate(
+                                        controller.awardInfo[index]
+                                            .awardPickData.length, (i) {
+                                      var item = controller
+                                          .awardInfo[index].awardPickData[i];
+                                      return _buildGiftItem(
+                                          Utils.getPropIconUrl(
+                                              item.propDefineEntity.propId),
+                                          "${item.num}");
+                                    }),
+                                ],
+                              )
+                            ],
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            if (controller
-                                .awardInfo[index].awardPickData.isNotEmpty)
-                              ...List.generate(
-                                  controller.awardInfo[index].awardPickData
-                                      .length, (index) {
-                                var item = controller
-                                    .awardInfo[index].awardPickData[index];
-                                //todo 根据配置换图
-                                return _buildGiftItem(
-                                    Assets.managerUiManagerGift02, "1");
-                              }),
-                            //todo 根据配置换图
-                            _buildGiftItem(Assets.picksUiPickGift01,
-                                "${controller.awardInfo[index].awardDataNum}"),
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                }),
-                Divider(
-                  height: 1.w,
-                  color: AppColors.cD4D4D4,
-                ),
-                16.vGap,
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 30.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "TIPS：",
-                        style: 14.w5(
-                          color: AppColors.cB3B3B3,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldMedium,
-                        ),
+                        );
+                      }),
+                      Divider(
+                        height: 1.w,
+                        color: AppColors.cD4D4D4,
                       ),
-                      15.vGap,
-                      Text(
-                        "1.Ranking needs at least 100 jettons.\n2.New season is reset based on the final trophy count.",
-                        style: 12.w5(
-                          color: AppColors.cB3B3B3,
-                          height: 1.5,
-                          fontFamily: FontFamily.fRobotoMedium,
+                      16.vGap,
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "TIPS：",
+                              style: 14.w5(
+                                color: AppColors.cB3B3B3,
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium,
+                              ),
+                            ),
+                            15.vGap,
+                            Text(
+                              "1.Ranking needs at least 100 jettons.\n2.New season is reset based on the final trophy count.",
+                              style: 12.w5(
+                                color: AppColors.cB3B3B3,
+                                height: 1.5,
+                                fontFamily: FontFamily.fRobotoMedium,
+                              ),
+                            ),
+                            9.vGap,
+                          ],
                         ),
                       ),
                       9.vGap,
-                    ],
+                      SizedBox(
+                        height: MediaQuery.of(context).padding.bottom,
+                      )
+                    ]),
                   ),
                 ),
-                9.vGap,
-                SizedBox(
-                  height: MediaQuery.of(context).padding.bottom,
-                )
               ],
             ),
           ),
@@ -293,28 +305,36 @@ class RankRewardDetail extends StatelessWidget {
     );
   }
 
-  Row _buildGiftItem(String image, String value) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        10.hGap,
-        IconWidget(
-          iconWidth: 35.w,
-          icon: image,
-        ),
-        4.hGap,
-        Container(
-          margin: EdgeInsets.only(bottom: 6.w),
-          child: Text(
-            "x$value",
-            style: 12.w4(
-              color: AppColors.cB3B3B3,
-              height: 1,
-              fontFamily: FontFamily.fRobotoRegular,
+  Widget _buildGiftItem(String image, String value) {
+    return SizedBox(
+      width: 75.w,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          10.hGap,
+          IconWidget(
+            iconWidth: 33.w,
+            icon: image,
+          ),
+          4.hGap,
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(bottom: 6.w),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  "x$value",
+                  style: 12.w4(
+                    color: AppColors.cB3B3B3,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular,
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -23,7 +23,6 @@ class PickRankController extends GetxController
 
   GuessRankByCycleEntity? rankInfo;
   List<RankAwardPropEntity> awardInfo = [];
-  int minRak = 1, maxRank = 100;
 
   ///
   var inTheRankList = false.obs;
@@ -69,45 +68,35 @@ class PickRankController extends GetxController
       GuessRankByCycleEntity guessRankByCycleEntity =
           result[2] as GuessRankByCycleEntity;
       awardInfo.clear();
-      /// todo 配置表删除awardPickData，待适配
-      // int index = 0;
-      // for (RankAwardEntity r in rankAwardEntitys) {
-      //   if (int.parse(r.minRank) >= (guessRankByCycleEntity.myRank.rank ?? 0) &&
-      //       int.parse(r.maxRank) <= (guessRankByCycleEntity.myRank.rank ?? 0)) {
-      //     selfInRankListIndex = index;
-      //   }
-      //   index++;
-      //   minRak = min(minRak, int.parse(r.minRank));
-      //   maxRank = max(maxRank, int.parse(r.maxRank));
-      //   var awardkeyData = r.awardData.split("_");
-      //   List<PropDefineNumEntity> awardPickData = [];
-      //   for (var str in r.awardData.split("|")) {
-      //     var split = str.split("_");
-      //     if (split.length > 2) {
-      //       int num = int.parse(split[2]);
-      //       print('split:$split');
-      //       var propDefineEntity = props.firstWhereOrNull((e) =>
-      //           e.propType.toString() == split[0] &&
-      //           e.propId.toString() == split[1]);
-      //       if (propDefineEntity == null) {
-      //         continue;
-      //       }
-      //       PropDefineNumEntity propDefineNumEntity =
-      //           PropDefineNumEntity(num, propDefineEntity);
-      //       awardPickData.add(propDefineNumEntity);
-      //     }
-      //   }
-      //   var awardData = props.firstWhereOrNull((e) =>
-      //       e.propType.toString() == awardkeyData[0] &&
-      //       e.propId.toString() == awardkeyData[1]);
-      //   int awardDataNum = int.parse(awardkeyData[2]);
-      //   if (awardData == null) {
-      //     continue;
-      //   }
-      //   RankAwardPropEntity rankAwardPropEntity =
-      //       RankAwardPropEntity(r, awardData, awardDataNum, awardPickData);
-      //   awardInfo.add(rankAwardPropEntity);
-      // }
+      int index = 0;
+      for (RankAwardEntity r in rankAwardEntitys) {
+        if(r.rankAwardType != "101"){
+          continue;
+        }
+        if (int.parse(r.minRank) >= (guessRankByCycleEntity.myRank.rank ?? 0) &&
+            int.parse(r.maxRank) <= (guessRankByCycleEntity.myRank.rank ?? 0)) {
+          selfInRankListIndex = index;
+        }
+        index++;
+        List<PropDefineNumEntity> awardPickData = [];
+        for (var str in r.awardData.split("|")) {
+          var split = str.split("_");
+          if (split.length > 2) {
+            int num = int.parse(split[2]);
+            var propDefineEntity = props.firstWhereOrNull((e) =>
+                e.propId.toString() == split[1]);
+            if (propDefineEntity == null) {
+              continue;
+            }
+            PropDefineNumEntity propDefineNumEntity =
+                PropDefineNumEntity(num, propDefineEntity);
+            awardPickData.add(propDefineNumEntity);
+          }
+        }
+        RankAwardPropEntity rankAwardPropEntity =
+            RankAwardPropEntity(r, awardPickData.reversed.toList());
+        awardInfo.add(rankAwardPropEntity);
+      }
       rankInfo = result[2] as GuessRankByCycleEntity;
       handlerRankInfoData();
 

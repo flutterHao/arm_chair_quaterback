@@ -48,7 +48,7 @@ class PickRankPage extends GetView<PickRankController> {
                     physics: const BouncingScrollPhysics(),
                     slivers: [
                       SliverPersistentHeader(
-                          pinned: true,
+                          pinned: false,
                           delegate: FixedHeightSliverHeaderDelegate(
                               child: Container(
                                 padding: EdgeInsets.only(left: 16.w),
@@ -92,14 +92,13 @@ class PickRankPage extends GetView<PickRankController> {
                         child: MtInkWell(
                           minScale: 0.95,
                           onTap: () {
-                            /// todo 配置表删除awardPickData，待适配
-                            // showModalBottomSheet(
-                            //     isScrollControlled: true,
-                            //     backgroundColor: AppColors.cTransparent,
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return RankRewardDetail();
-                            //     });
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: AppColors.cTransparent,
+                                context: context,
+                                builder: (context) {
+                                  return RankRewardDetail();
+                                });
                           },
                           child: Container(
                             margin: EdgeInsets.only(top: 9.w),
@@ -132,6 +131,7 @@ class PickRankPage extends GetView<PickRankController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
+                                    // todo 未定义
                                     _buildRewardItem(
                                         Assets.managerUiManagerGift03,
                                         "PLAYER",
