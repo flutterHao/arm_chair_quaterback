@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -80,21 +81,15 @@ class TeamHistortyPage extends GetView<TeamHistortyController> {
 
   Builder _buildMvpWidget() {
     return Builder(builder: (context) {
-      // if (controller.getMvpInfo() == null) {
-      //   return const SizedBox.shrink();
-      // }
-      // PkResultUpdatedPlayerResults pkResultUpdatedPlayer =
-      //     controller.getMvpInfo()!
-      ScoreBoardDetailList pkResultUpdatedPlayer =
-          controller.gameResultInfoEntity.gameScoreBoardDetail[0];
+      GameResultInfoPlayerResults pkResultUpdatedPlayer =
+          controller.getMvpInfo();
       int breakThroughGrade = controller.getMvpBreakThroughGrade(
           pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId);
-      // print('breakThroughGrade:$breakThroughGrade');
       Widget parent({required Widget child}) {
         return InkWell(
           onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
-            "player":
-                controller.gameResultInfoEntity.homeTeamResult.teamPlayers[0]
+            "player": controller.getTeamPlayerInfoEntityByPlayerId(
+                pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId)
           }),
           child: Container(
             height: 165.w,

@@ -222,12 +222,36 @@ class TeamHistortyController extends GetxController
         rightCup.value = rightCup.value + 1;
       }
     });
-    print('leftCupNum:$leftCupNum,,,,$rightCupNum');
   }
 
   bool isLeftWin() {
     var win = gameResultInfoEntity.homeTeamResult.win;
     return win == true;
+  }
+
+  /// 获取mvp信息
+  GameResultInfoPlayerResults getMvpInfo() {
+    GameResultInfoPlayerResults gameResultUpdatedPlayer = gameResultInfoEntity
+        .playerResults
+        .firstWhere((element) => element.type == 1);
+    return gameResultUpdatedPlayer;
+  }
+
+  TeamPlayerInfoEntity getTeamPlayerInfoEntityByPlayerId(
+      int teamId, int playerId) {
+    List<TeamPlayerInfoEntity> list = [];
+    if (teamId == gameResultInfoEntity.homeTeamResult.teamId) {
+      list = gameResultInfoEntity.homeTeamResult.teamPlayers;
+    } else {
+      list = gameResultInfoEntity.awayTeamResult.teamPlayers;
+    }
+    TeamPlayerInfoEntity result =
+        list.firstWhere((e) => e.playerId == playerId);
+    return result;
+    // TeamBattleV2Controller teamBattleV2Controller = Get.find();
+    // var battleEntity = teamBattleV2Controller.battleEntity;
+
+    // return result;
   }
 }
 
