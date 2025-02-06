@@ -219,7 +219,11 @@ class TeamHistortyController extends GetxController
         }
       }
       if (rightCup.value != rightCupNum) {
-        rightCup.value = rightCup.value + 1;
+        if (rightCupNum >= 0) {
+          rightCup.value = rightCup.value + 1;
+        } else {
+          rightCup.value = rightCup.value - 1;
+        }
       }
     });
   }
@@ -248,10 +252,6 @@ class TeamHistortyController extends GetxController
     TeamPlayerInfoEntity result =
         list.firstWhere((e) => e.playerId == playerId);
     return result;
-    // TeamBattleV2Controller teamBattleV2Controller = Get.find();
-    // var battleEntity = teamBattleV2Controller.battleEntity;
-
-    // return result;
   }
 }
 

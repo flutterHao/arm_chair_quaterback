@@ -86,7 +86,7 @@ class _SeasonRankDialogState extends State<SeasonRankDialog> {
       child: Obx(() => Row(
             children: [
               Text(
-                'Season Ranks',
+                'Season Ranks'.tr,
                 style: 19.w5(fontFamily: FontFamily.fOswaldMedium),
               ),
               const Spacer(),
