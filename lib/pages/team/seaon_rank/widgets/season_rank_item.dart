@@ -43,6 +43,8 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
 
     ///我已上榜单
     if (widget.seasonRankEntity.myRank != null) {
+      print(widget.seasonRankEntity.myRank);
+
       ///我在榜单显示范围内
       if (widget.seasonRankEntity.myRank!.rank <=
           int.parse(controller.showNumGameConstantEntity!.constantValue)) {
@@ -52,6 +54,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
         isShowBottom.value = true;
       }
     } else {
+      print('未上榜');
       isNotSeasonList.value = true;
       activeIndex = -1;
     }

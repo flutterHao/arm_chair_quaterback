@@ -123,10 +123,31 @@ class TeamHistortyController extends GetxController
 
   List<TeamStats> getTeamStatsData() {
     List<TeamStats> list = [];
-    ScoreBoardDetailList homeDetail = gameResultInfoEntity.gameScoreBoardDetail
-        .firstWhere((element) => element.teamId == gameSchedule.homeTeamId);
-    ScoreBoardDetailList awayDetail = gameResultInfoEntity.gameScoreBoardDetail
-        .firstWhere((element) => element.teamId == gameSchedule.awayTeamId);
+
+    /// 获取每个队伍的统计数据总数据
+    late ScoreBoardDetailList homeDetail;
+    late ScoreBoardDetailList awayDetail;
+
+    /// 首次遍历赋值
+    bool fisthomeDetail = true;
+    bool fistawayDetail = true;
+    for (var element in gameResultInfoEntity.gameScoreBoardDetail) {
+      if (element.teamId == gameSchedule.homeTeamId) {
+        if (fisthomeDetail) {
+          homeDetail = element;
+          fisthomeDetail = false;
+        }
+        homeDetail.add(element);
+      }
+      if (element.teamId == gameSchedule.awayTeamId) {
+        if (fistawayDetail) {
+          awayDetail = element;
+          fistawayDetail = false;
+        }
+        awayDetail.add(element);
+      }
+    }
+
     list.add(TeamStats("Points", homeDetail.pts, awayDetail.pts));
     list.add(TeamStats("Rebound", homeDetail.reb, awayDetail.reb));
     list.add(TeamStats("Assist", homeDetail.ast, awayDetail.ast));
@@ -182,7 +203,6 @@ class TeamHistortyController extends GetxController
         ? gameResultInfoEntity.awayTeamResult.cupDiff
         : 2;
     rightCup.value = rightCupNum > 0 ? 1 : 0;
-
     Timer.periodic(const Duration(milliseconds: 100), (t) {
       if (leftCup.value == leftCupNum && rightCup.value == rightCupNum) {
         t.cancel();
@@ -192,7 +212,11 @@ class TeamHistortyController extends GetxController
         return;
       }
       if (leftCup.value != leftCupNum) {
-        leftCup.value = leftCup.value + 1;
+        if (leftCupNum >= 0) {
+          leftCup.value = leftCup.value + 1;
+        } else {
+          leftCup.value = leftCup.value - 1;
+        }
       }
       if (rightCup.value != rightCupNum) {
         rightCup.value = rightCup.value + 1;

@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/l
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../controller.dart';
 
@@ -186,9 +187,23 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
   }
 
   Widget _shareButton() {
-    return ShareWidget(
-      globalKey: globalKey,
-      type: ShareType.guess,
+    return InkWell(
+      onTap: () {
+        Utils.generateAndShareImage(globalKey).then((ShareResult onValue) {});
+      },
+      child: Container(
+        width: 24.w,
+        height: 24.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.w),
+          border: Border.all(color: AppColors.c666666.withOpacity(0.3)),
+        ),
+        child: IconWidget(
+          iconWidth: 16.w,
+          icon: Assets.commonUiCommonIconSystemShare,
+          iconColor: AppColors.c000000,
+        ),
+      ),
     );
   }
 
