@@ -14,12 +14,9 @@ class HorizontalDragBackContainer extends StatelessWidget {
     this.hasScrollChild = false,
     this.noBackAnimation = false,
     super.key,
-    this.builder,
-  }) : assert(child != null || builder != null,
-            "child or builder cannot all be null");
+  });
 
   final Widget? child;
-  final Widget Function(BuildContext context)? builder;
 
   ///是否支持右滑返回，实体/虚拟按键返回
   final bool canPop;
