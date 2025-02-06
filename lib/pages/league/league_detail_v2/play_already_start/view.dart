@@ -49,29 +49,30 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
 
   @override
   Widget build(BuildContext context) {
-    controller = Get.put(LeagueDetailPlayController(widget.item));
-    return GetBuilder<LeagueDetailPlayController>(builder: (_) {
-      if (controller.nbaGameDetailEntity == null) {
-        return Obx(() {
-          return Center(
-            child: LoadStatusWidget(
-              loadDataStatus: controller.loadStatus.value,
+    return GetBuilder<LeagueDetailPlayController>(
+        init: controller = LeagueDetailPlayController(widget.item),
+        builder: (_) {
+          if (controller.nbaGameDetailEntity == null) {
+            return Obx(() {
+              return Center(
+                child: LoadStatusWidget(
+                  loadDataStatus: controller.loadStatus.value,
+                ),
+              );
+            });
+          }
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                _buildQuarterTableWidget(),
+                _buildGameLeadersWidget(context),
+                _buildTeamStatsWidget(),
+                9.vGap,
+              ],
             ),
           );
         });
-      }
-      return SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            _buildQuarterTableWidget(),
-            _buildGameLeadersWidget(context),
-            _buildTeamStatsWidget(),
-            9.vGap,
-          ],
-        ),
-      );
-    });
   }
 
   Container _buildTeamStatsWidget() {
@@ -226,7 +227,8 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
   }
 
   Container _teamStatsItemWidget(TeamStats item) {
-    var leftPercent = (item.leftValue+2) / (item.rightValue+item.leftValue+4) *100;
+    var leftPercent =
+        (item.leftValue + 2) / (item.rightValue + item.leftValue + 4) * 100;
     return Container(
       height: 60.w,
       margin: EdgeInsets.symmetric(horizontal: 16.w),

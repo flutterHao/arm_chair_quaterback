@@ -51,13 +51,12 @@ class _SummaryPageState extends State<SummaryPage>
   @override
   Widget build(BuildContext context) {
     playerDetailController = widget.playerDetailController;
-    controller = Get.put(SummaryController(
-      widget.playerId,
-      playerDetailController,
-      initTabStr: widget.tabStr,
-    ));
     return GetBuilder<SummaryController>(
-      init: controller,
+      init: controller = SummaryController(
+        widget.playerId,
+        playerDetailController,
+        initTabStr: widget.tabStr,
+      ),
       id: SummaryController.idSummaryMain,
       builder: (_) {
         if (controller.loadStatus.value != LoadDataStatus.success) {

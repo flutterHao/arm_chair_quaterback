@@ -36,16 +36,11 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
   late final ReciveAwardPicksPageController controller;
 
   @override
-  void initState() {
-    super.initState();
-    controller = Get.put(
-        ReciveAwardPicksPageController(widget.teamId, widget.teamSimpleEntity));
-  }
-
-  @override
   Widget build(BuildContext context) {
     print('ReciveAwardPicksPage-----build----');
     return GetBuilder<ReciveAwardPicksPageController>(
+        init: controller = ReciveAwardPicksPageController(
+            widget.teamId, widget.teamSimpleEntity),
         id: ReciveAwardPicksPageController.idReceivePageMain,
         builder: (_) {
           return SmartRefresher(
@@ -427,7 +422,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                       children: [
                         ReceiveAwardItem(
                           items,
-                          controller. picksDefineEntity!,
+                          controller.picksDefineEntity!,
                           personalCenterPage: true,
                         ),
                         if (index == data.length - 1) 20.vGap,

@@ -44,9 +44,8 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
       initTab = args["initTab"] ?? 0;
       teamId = widget.teamId ?? args["teamId"];
     }
-    controller =
-        Get.put(PersonalCenterController(teamId: teamId, initTab: initTab));
     return GetBuilder<PersonalCenterController>(
+      init: controller = PersonalCenterController(teamId: teamId, initTab: initTab),
         id: PersonalCenterController.idPersonalCenterMain,
         builder: (_) {
           return HorizontalDragBackContainer(

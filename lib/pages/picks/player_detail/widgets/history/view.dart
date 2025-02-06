@@ -26,8 +26,8 @@ class _HistoryPageState extends State<HistoryPage>
 
   @override
   Widget build(BuildContext context) {
-    controller = Get.put(HistoryController(widget.playerId));
     return GetBuilder<HistoryController>(
+      init: controller = HistoryController(widget.playerId),
       builder: (_) {
         return Container(
           margin: EdgeInsets.only(top: 9.w),

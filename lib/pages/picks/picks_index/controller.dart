@@ -115,7 +115,7 @@ class PicksIndexController extends GetxController
     _count(true);
   }
 
-  cleanAll() {
+  clearAll() {
     batchDeleteOpen.value = false;
     for (int i = 0; i < guessGamePlayers.keys.length; i++) {
       var key = guessGamePlayers.keys.toList()[i];
@@ -166,7 +166,7 @@ class PicksIndexController extends GetxController
     params.addAll(list);
     PicksApi.guess(type, params, 0).then((result) {
       Get.back();
-      cleanAll();
+      clearAll();
       _initData();
       Get.find<HomeController>().refreshMoneyCoinWidget();
       leagueController.refreshDataAfterGuessSuccess();

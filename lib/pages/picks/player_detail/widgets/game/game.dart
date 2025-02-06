@@ -23,9 +23,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 ///created at 2024/10/17/11:23
 
 class PlayerDetailGame extends StatefulWidget {
-  const PlayerDetailGame(
-      {super.key,
-      required this.upStarSuccessCallBack});
+  const PlayerDetailGame({super.key, required this.upStarSuccessCallBack});
 
   final Function? upStarSuccessCallBack;
 
@@ -575,8 +573,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
               cost += choiceList[i].getCost();
             }
             return Container(
-              height: MediaQuery.of(context).size.height -
-                  levelWidgetHeight,
+              height: MediaQuery.of(context).size.height - levelWidgetHeight,
               width: double.infinity,
               decoration: BoxDecoration(
                   color: AppColors.cD8D8D8,
@@ -1020,9 +1017,9 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
   Widget build(BuildContext context) {
     print('PlayerDetailGame----build---');
     playerDetailController = Get.find();
-    controller = Get.put(GameController(
-        playerDetailController.arguments, widget.upStarSuccessCallBack));
     return GetBuilder<GameController>(
+        init: controller = GameController(
+            playerDetailController.arguments, widget.upStarSuccessCallBack),
         id: GameController.idPlayerDetailGameMain,
         builder: (logic) {
           return Obx(() {

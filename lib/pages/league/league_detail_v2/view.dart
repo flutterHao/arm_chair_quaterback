@@ -26,10 +26,10 @@ class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(LeagueDetailV2Controller(Get.arguments["item"],
-        gameId: Get.arguments["gameId"]));
     return HorizontalDragBackContainer(
       child: GetBuilder<LeagueDetailV2Controller>(
+        init: LeagueDetailV2Controller(Get.arguments["item"],
+            gameId: Get.arguments["gameId"]),
         builder: (_) {
           return BlackAppWidget(
             const UserInfoBar(

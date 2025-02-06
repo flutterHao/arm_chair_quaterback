@@ -56,12 +56,10 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
   @override
   Widget build(BuildContext context) {
     guessInfo = widget.guessInfo;
-    controller = Get.put(
-      GuessHistoryItemController(guessInfo),
-      tag: "${guessInfo.id}_${guessInfo.createTime}",
-    );
     return GetBuilder<GuessHistoryItemController>(
-        init: controller,
+        init: controller =
+            GuessHistoryItemController(guessInfo),
+        tag: "${guessInfo.id}_${guessInfo.createTime}",
         builder: (logic) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(6.w),

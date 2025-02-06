@@ -285,12 +285,14 @@ class LeagueController extends GetxController
       }
       return p;
     });
+    if(listKeys.isEmpty){
+      return;
+    }
     guessSuccessTabKeys.value = listKeys;
-    cacheGameGuessData.clear();
     choiceSize.value = getAllChoiceData().length;
   }
 
-  void cleanAll() {
+  void clearAll() {
     for (int i = 0; i < cacheGameGuessData.keys.length; i++) {
       var key = cacheGameGuessData.keys.toList()[i];
       var list = cacheGameGuessData[key] ?? [];
