@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+
 import 'package:arm_chair_quaterback/pages/league/team_detail/widgets/log_tab.dart';
 
 
@@ -124,12 +126,12 @@ GameResultInfoHomeTeamResult $GameResultInfoHomeTeamResultFromJson(
   if (ast != null) {
     gameResultInfoHomeTeamResult.ast = ast;
   }
-  final List<
-      GameResultInfoHomeTeamResultTeamPlayers>? teamPlayers = (json['teamPlayers'] as List<
-      dynamic>?)?.map(
+  final List<TeamPlayerInfoEntity>? teamPlayers = (json['teamPlayers'] as List<
+      dynamic>?)
+      ?.map(
           (e) =>
-      jsonConvert.convert<GameResultInfoHomeTeamResultTeamPlayers>(
-          e) as GameResultInfoHomeTeamResultTeamPlayers).toList();
+      jsonConvert.convert<TeamPlayerInfoEntity>(e) as TeamPlayerInfoEntity)
+      .toList();
   if (teamPlayers != null) {
     gameResultInfoHomeTeamResult.teamPlayers = teamPlayers;
   }
@@ -243,7 +245,7 @@ extension GameResultInfoHomeTeamResultExtension on GameResultInfoHomeTeamResult 
     String? teamName,
     List<dynamic>? otherAwardData,
     bool? ast,
-    List<GameResultInfoHomeTeamResultTeamPlayers>? teamPlayers,
+    List<TeamPlayerInfoEntity>? teamPlayers,
     double? strength,
     bool? mvp,
     bool? cardBoxIsFull,

@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/game_result_info_entity.g.dart';
 import 'dart:convert';
@@ -38,7 +39,7 @@ class GameResultInfoHomeTeamResult {
   late String teamName = '';
   late List<dynamic> otherAwardData = [];
   late bool ast = false;
-  late List<GameResultInfoHomeTeamResultTeamPlayers> teamPlayers = [];
+  late List<TeamPlayerInfoEntity> teamPlayers = [];
   late double strength = .0;
   late bool mvp = false;
   late bool cardBoxIsFull = false;

@@ -4,17 +4,13 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_already_start/controller.dart';
-import 'package:arm_chair_quaterback/pages/league/team_detail/widgets/log_tab.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/player_status/controllr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,8 +78,8 @@ class TeamHistortyController extends GetxController
                   (f) => f.playerId == e.playerId && f.teamId == e.teamId)
               ?.score ??
           0;
-      return PlayerStatus(e.playerId, e.power, e.playerStatus, score, e.teamId,
-          Utils.getPlayBaseInfo(e.playerId));
+      return PlayerStatus(e.playerId, e.power.toDouble(), e.playerStatus, score,
+          e.teamId, Utils.getPlayBaseInfo(e.playerId));
     }).toList();
     playerStatusList.sort((a, b) {
       return b.score.compareTo(a.score);
@@ -115,7 +111,7 @@ class TeamHistortyController extends GetxController
 
   /// 获取球员的星级
   int getMvpBreakThroughGrade(int teamId, int playerId) {
-    List<GameResultInfoHomeTeamResultTeamPlayers> list = [];
+    List<TeamPlayerInfoEntity> list = [];
     if (teamId == gameResultInfoEntity.homeTeamResult.teamId) {
       list = gameResultInfoEntity.homeTeamResult.teamPlayers;
     } else {
@@ -131,44 +127,34 @@ class TeamHistortyController extends GetxController
         .firstWhere((element) => element.teamId == gameSchedule.homeTeamId);
     ScoreBoardDetailList awayDetail = gameResultInfoEntity.gameScoreBoardDetail
         .firstWhere((element) => element.teamId == gameSchedule.awayTeamId);
-    list.add(TeamStats("Points", homeDetail.pts ?? 0, awayDetail.pts ?? 0));
-    list.add(TeamStats("Rebound", homeDetail.reb ?? 0, awayDetail.reb ?? 0));
-    list.add(TeamStats("Assist", homeDetail.ast ?? 0, awayDetail.ast ?? 0));
-    list.add(TeamStats("Steals", homeDetail.stl ?? 0, awayDetail.stl ?? 0));
+    list.add(TeamStats("Points", homeDetail.pts, awayDetail.pts));
+    list.add(TeamStats("Rebound", homeDetail.reb, awayDetail.reb));
+    list.add(TeamStats("Assist", homeDetail.ast, awayDetail.ast));
+    list.add(TeamStats("Steals", homeDetail.stl, awayDetail.stl));
+    list.add(TeamStats("Block Shot ", homeDetail.blk, awayDetail.blk));
+    list.add(TeamStats("Free Throw Make", homeDetail.fta, awayDetail.ftm));
     list.add(
-        TeamStats("Block Shot ", homeDetail.blk ?? 0, awayDetail.blk ?? 0));
-    list.add(
-        TeamStats("Free Throw Make", homeDetail.fta ?? 0, awayDetail.ftm ?? 0));
-    list.add(TeamStats(
-        "3 Points Make", homeDetail.threePm ?? 0, awayDetail.threePm ?? 0));
-    list.add(TeamStats("Turn over", homeDetail.to ?? 0, awayDetail.to ?? 0));
-    list.add(TeamStats("Foul", homeDetail.pf ?? 0, awayDetail.pf ?? 0));
+        TeamStats("3 Points Make", homeDetail.threePm, awayDetail.threePm));
+    list.add(TeamStats("Turn over", homeDetail.to, awayDetail.to));
+    list.add(TeamStats("Foul", homeDetail.pf, awayDetail.pf));
     list.add(TeamStats(
         "3 Point %",
-        ((homeDetail.threePm ?? 0) / (homeDetail.threePa ?? 0))
+        ((homeDetail.threePm) / (homeDetail.threePa))
             .handlerNaNInfinity()
             .format(),
-        ((awayDetail.threePm ?? 0) / (awayDetail.threePa ?? 0))
+        ((awayDetail.threePm) / (awayDetail.threePa))
             .handlerNaNInfinity()
             .format(),
         valueIsPercent: true));
     list.add(TeamStats(
         "Field Goal %",
-        ((homeDetail.fgm ?? 0) / (homeDetail.fga ?? 0))
-            .handlerNaNInfinity()
-            .format(),
-        ((awayDetail.fgm ?? 0) / (awayDetail.fga ?? 0))
-            .handlerNaNInfinity()
-            .format(),
+        ((homeDetail.fgm) / (homeDetail.fga)).handlerNaNInfinity().format(),
+        ((awayDetail.fgm) / (awayDetail.fga)).handlerNaNInfinity().format(),
         valueIsPercent: true));
     list.add(TeamStats(
         "Free Throw %",
-        ((homeDetail.ftm ?? 0) / (homeDetail.fta ?? 0))
-            .handlerNaNInfinity()
-            .format(),
-        ((awayDetail.ftm ?? 0) / (awayDetail.fta ?? 0))
-            .handlerNaNInfinity()
-            .format(),
+        ((homeDetail.ftm) / (homeDetail.fta)).handlerNaNInfinity().format(),
+        ((awayDetail.ftm) / (awayDetail.fta)).handlerNaNInfinity().format(),
         valueIsPercent: true));
     return list;
   }

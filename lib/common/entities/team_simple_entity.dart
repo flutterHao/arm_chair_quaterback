@@ -32,6 +32,7 @@ class TeamSimpleEntity {
   late double gameWinRate;
   late int betCoin = 0;
   late int cup = 0;
+  late String receivedRewards = '';
 
   TeamSimpleEntity();
 

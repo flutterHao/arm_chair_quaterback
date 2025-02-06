@@ -50,13 +50,21 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                 child: Row(
                   children: [
                     _secondSeasonWidget(
-                        controller.nowSeasonRankInfoEntity.value.ranks[1]),
+                        controller.nowSeasonRankInfoEntity.value.ranks.length >
+                                1
+                            ? controller.nowSeasonRankInfoEntity.value.ranks[1]
+                            : SeasonRankInfoRanks()),
                     11.hGap,
-                    _firstSeasonWidget(
-                        controller.nowSeasonRankInfoEntity.value.ranks[0]),
+                    _firstSeasonWidget(controller
+                            .nowSeasonRankInfoEntity.value.ranks.isNotEmpty
+                        ? controller.nowSeasonRankInfoEntity.value.ranks[0]
+                        : SeasonRankInfoRanks()),
                     11.hGap,
                     _thirdSeasonWidget(
-                        controller.nowSeasonRankInfoEntity.value.ranks[2])
+                        controller.nowSeasonRankInfoEntity.value.ranks.length >
+                                2
+                            ? controller.nowSeasonRankInfoEntity.value.ranks[2]
+                            : SeasonRankInfoRanks())
                   ],
                 ),
               ),
@@ -149,7 +157,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
   }
 
   Widget _firstSeasonWidget(SeasonRankInfoRanks rank) {
-    return Expanded(
+    return Flexible(
         child: Container(
       child: Column(
         children: [

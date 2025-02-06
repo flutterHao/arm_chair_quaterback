@@ -43,10 +43,13 @@ class SeaonRankController extends GetxController {
   // final PageController seaDialogPageController = PageController();
 
   RxInt pageviewIndex = 0.obs;
+
+  /// 段位奖励
   RxList<CupDefineEntity> cupDefineList = RxList<CupDefineEntity>();
   Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
+
+  /// 队伍信息
   late Rx<TeamSimpleEntity> teamSimpleEntity;
-  RxBool isShow = true.obs;
 
   /// 比赛记录
   RxList<GameSchedule> gameScheduleList = RxList();
@@ -294,6 +297,5 @@ class SeaonRankController extends GetxController {
             child: AwardWidget(
                 image: Assets.managerUiManagerGift00,
                 text: "YOU GOT 3  treasure chest".toUpperCase())));
-    // Get.back();
   }
 }

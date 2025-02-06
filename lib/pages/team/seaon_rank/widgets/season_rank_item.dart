@@ -243,8 +243,8 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                     width: 42.w,
                     // alignment: Alignment.centerRight,
                     child: Text(
-                        controller.formatToW(widget.seasonRankEntity
-                            .ranks[controller.pageviewIndex.value].cup),
+                        controller.formatToW(
+                            widget.seasonRankEntity.ranks[index].cup),
                         style: 14.w5(fontFamily: FontFamily.fOswaldMedium)),
                   )
                 ],

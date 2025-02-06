@@ -118,6 +118,11 @@ TeamSimpleEntity $TeamSimpleEntityFromJson(Map<String, dynamic> json) {
   if (cup != null) {
     teamSimpleEntity.cup = cup;
   }
+  final String? receivedRewards = jsonConvert.convert<String>(
+      json['receivedRewards']);
+  if (receivedRewards != null) {
+    teamSimpleEntity.receivedRewards = receivedRewards;
+  }
   return teamSimpleEntity;
 }
 
@@ -150,6 +155,7 @@ Map<String, dynamic> $TeamSimpleEntityToJson(TeamSimpleEntity entity) {
   data['gameWinRate'] = entity.gameWinRate;
   data['betCoin'] = entity.betCoin;
   data['cup'] = entity.cup;
+  data['receivedRewards'] = entity.receivedRewards;
   return data;
 }
 
@@ -182,6 +188,7 @@ extension TeamSimpleEntityExtension on TeamSimpleEntity {
     double? gameWinRate,
     int? betCoin,
     int? cup,
+    String? receivedRewards,
   }) {
     return TeamSimpleEntity()
       ..teamName = teamName ?? this.teamName
@@ -212,6 +219,7 @@ extension TeamSimpleEntityExtension on TeamSimpleEntity {
       ..wearNicknameId = wearNicknameId ?? this.wearNicknameId
       ..gameWinRate = gameWinRate ?? this.gameWinRate
       ..betCoin = betCoin ?? this.betCoin
-      ..cup = cup ?? this.cup;
+      ..cup = cup ?? this.cup
+      ..receivedRewards = receivedRewards ?? this.receivedRewards;
   }
 }

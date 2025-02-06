@@ -66,13 +66,10 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
         controller.teamSimpleEntity.value.cupRankId;
 
     /// 判断是否已经领取
-    RxBool haveReceive = (controller.nowSeasonRankInfoEntity.value.myRank !=
-                null
-            ? controller.nowSeasonRankInfoEntity.value.myRank!.receivedRewards
-                .split(',')
-                .toList()
-                .contains(controller.cupDefineList[index].cupNumId.toString())
-            : false)
+    RxBool haveReceive = controller.teamSimpleEntity.value.receivedRewards
+        .split(',')
+        .toList()
+        .contains(controller.cupDefineList[index].cupNumId.toString())
         .obs;
 
     ///赛季奖励数据转list
