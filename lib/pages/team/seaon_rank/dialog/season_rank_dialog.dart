@@ -18,8 +18,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class SeasonRankDialog extends GetView<SeaonRankController> {
+class SeasonRankDialog extends StatefulWidget {
   const SeasonRankDialog({super.key});
+
+  @override
+  State<SeasonRankDialog> createState() => _SeasonRankDialogState();
+}
+
+class _SeasonRankDialogState extends State<SeasonRankDialog> {
+  final SeaonRankController controller = Get.find();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      controller.pageController
+          .jumpToPage(controller.seasonRankList.length - 1);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

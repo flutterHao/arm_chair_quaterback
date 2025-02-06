@@ -185,7 +185,8 @@ class SeaonRankController extends GetxController {
         builder: (context) {
           return const SeasonRankDialog();
         });
-    pageviewIndex.value = 0;
+    pageviewIndex.value = seasonRankList.length - 1;
+    Future.microtask(() {});
   }
 
   void goSeasonRewardDialog() {
