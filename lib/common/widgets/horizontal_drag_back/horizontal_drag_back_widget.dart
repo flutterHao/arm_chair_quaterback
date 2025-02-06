@@ -13,18 +13,15 @@ import 'package:flutter/material.dart';
 class HorizontalDragBackWidget extends StatefulWidget {
   const HorizontalDragBackWidget({
     this.child,
-    this.builder,
     this.onWidgetOut,
     this.canPop = true,
     this.responseDepth = const [],
     this.hasScrollChild = false,
     this.noBackAnimation = false,
     super.key,
-  }) : assert(child != null || builder != null,
-            "child or builder cannot all be null");
+  });
 
   final Widget? child;
-  final Widget Function(BuildContext context)? builder;
 
   ///是否支持右滑返回，实体/虚拟按键返回
   final bool canPop;
@@ -47,7 +44,7 @@ class HorizontalDragBackWidget extends StatefulWidget {
 class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     with TickerProviderStateMixin {
   ///手指按下的x位置
-  double startX = -1,endX=-1;
+  double startX = -1, endX = -1;
 
   ///移动的距离
   double offsetX = 0;
@@ -161,7 +158,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         return;
       }
       // print('onHorizontalDragEnd: ${detail.localPosition}');
-      // print('onHorizontalDragEnd: ${detail.velocity}');
+      print('onHorizontalDragEnd: ${detail.velocity}');
       endX = detail.localPosition.dx;
       _recycleAnimation(velocity: detail.velocity.pixelsPerSecond.dx);
     }
@@ -283,7 +280,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           },
           child: Transform.translate(
               offset: Offset((widget.noBackAnimation ? 0 : offsetX), 0),
-              child: widget.child ?? widget.builder!.call(context)),
+              child: widget.child),
         ),
       );
     }
@@ -338,7 +335,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   ///松手执行回收动画
   void _recycleAnimation({double velocity = 0}) {
-    if(endX == startX){
+    if (endX == startX) {
       return;
     }
     double beforeResetOffsetX = offsetX;
@@ -347,24 +344,22 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     if ((beforeResetOffsetX > 0 && velocity > 700) ||
         (beforeResetOffsetX > 50 && velocity > 500) ||
         (beforeResetOffsetX > width / 5 && velocity >= 250) ||
-        beforeResetOffsetX > width * 2 / 5) {
+        beforeResetOffsetX > width * 2 / 5 && velocity >= 0) {
       /// 最后距离大于宽度的 1/5 且停止接触屏幕时移动的速度大于 250 则进入退出动画
       /// 最后距离大于宽度的 2/5 进入退出动画
       tween.begin = beforeResetOffsetX;
       tween.end = width;
       animationController.duration = Duration(
           milliseconds: velocity > 1000 ? minMilliseconds : maxMilliseconds);
-      if(!widget.noBackAnimation) {
+      if (!widget.noBackAnimation) {
         popping = true;
       }
     } else {
-      if(beforeResetOffsetX == 0){
-        isReset = false;
-        return;
-      }
       tween.begin = beforeResetOffsetX;
       tween.end = 0.0;
-      animationController.duration = Duration(milliseconds: maxMilliseconds);
+      animationController.duration = Duration(
+          milliseconds:
+              velocity.abs() > 1000 ? minMilliseconds : maxMilliseconds);
     }
     animationController.forward();
     isReset = false;
@@ -376,5 +371,4 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     enterAnimationController.dispose();
     super.dispose();
   }
-
 }

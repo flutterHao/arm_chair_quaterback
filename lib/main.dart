@@ -63,7 +63,8 @@ class MyApp extends StatelessWidget {
                   theme: AppTheme.light,
                   debugShowCheckedModeBanner: false,
                   initialRoute: AppPages.main,
-                  getPages: AppPages.routes,
+                  onGenerateRoute: AppPages.generateRoute,
+                  // getPages: AppPages.routes,
                   builder: EasyLoading.init(),
                   translations: TranslationService(),
                   initialBinding: AllControllerBindings(),
@@ -77,11 +78,11 @@ class MyApp extends StatelessWidget {
                   enableLog: true,
                   // logWriterCallback: Log.write,
                   // defaultTransition: Transition.rightToLeft,
-                  transitionDuration:
-                      Duration(milliseconds: Constant.transitionDuration),
-                  customTransition:
-                      HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
-                  // defaultTransition: Transition.noTransition,
+                  // transitionDuration:
+                  //     Duration(milliseconds: Constant.transitionDuration),
+                  // customTransition:
+                  //     HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
+                  defaultTransition: Transition.noTransition,
                 ),
               ),
             ),

@@ -10,6 +10,7 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_detail.dart';
@@ -59,152 +60,102 @@ class AppPages {
   static final RouteObserver<Route> observer = RouteObservers();
   static List<String> history = [];
 
-  static final List<GetPage> routes = [
-    GetPage(
-      name: main,
-      page: () => const HomePage(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.teamTeamBattle,
-      page: () => const TeamBattlePage(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.picksPlayerDetail,
-      page: () => PlayerDetailPage(
-        arguments: Get.arguments,
-      ),
-    ),
-    GetPage(
-      name: RouteNames.league,
-      page: () => const LeaguePage(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.picksPersonalCenter,
-      page: () => const PersonalCenterPage(),
-      // binding: PersonalCenterBinding()
-    ),
-    GetPage(
+  static Route generateRoute(RouteSettings settings) {
+    pageRouteBuilder(Widget page) {
+      return PageRouteBuilder(
         opaque: false,
-        name: RouteNames.mineMineInfo,
-        page: () => const MineInfoPage(),
-        binding: MineInfoBinding()),
-    GetPage(
-      opaque: false,
-      // customTransition: HalfSlideRightToLeftTransition(),
-      page: () => NewsDetailPage(newsDetail: Get.arguments),
-      name: RouteNames.newsDetail,
-      transitionDuration: const Duration(milliseconds: 300),
-    ),
-    GetPage(
-      opaque: false,
-      page: () => NewsDetailPage2(newsDetail: Get.arguments),
-      name: RouteNames.newsDetail2,
-      transitionDuration: const Duration(milliseconds: 300),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.teamMemberPage,
-      page: () => const TeamMenberView(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.teamTeamUpgrade,
-      page: () => TeamUpgradePage(player: Get.arguments['player']),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.openBoxPage,
-      page: () => const OpenBoxPage(),
-      // transition: Transition.fadeIn,
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.teamStartUpGrade,
-      page: () => StartUpgradeWidget(player: Get.arguments['player']),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.picksPicksHistory,
-      page: () => const PicksHistoryPage(),
-      binding: PicksHistoryBinding(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.teamDetailPage,
-      page: () {
-        return const TeamDetailPage();
-      },
-    ),
-    GetPage(
-        opaque: false,
-        name: RouteNames.nbaRank,
-        page: () => const NBARankPage(),
-        binding: RankBinding()),
-    GetPage(
-      opaque: false,
-      name: RouteNames.leagueLeagueDetail,
-      page: () => const LeagueDetailV2Page(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.inboxDetail,
-      page: () => const InboxDetailPage(),
-    ),
-    GetPage(
-        opaque: false,
-        name: RouteNames.picksPickRank,
-        page: () => const PickRankPage(),
-        binding: PickRankBinding()),
-    GetPage(
-        opaque: false,
-        name: RouteNames.mineMineSetting,
-        page: () => const MineSettingPage(),
-        binding: MineSettingBinding()),
-    GetPage(
-        opaque: false,
-        name: RouteNames.mineMineAccount,
-        page: () => const MineAccountPage(),
-        binding: MineAccountBinding()),
-    GetPage(
-        opaque: false,
-        name: RouteNames.picksReciveRward,
-        page: () => const ReceiveRewardPage(),
-        binding: ReciveRwardBinding()),
-    GetPage(
-      opaque: false,
-      name: RouteNames.teamBeautyPage,
-      page: () => const BeautyPage(),
-      // transition: Transition.fadeIn,
-    ),
-    GetPage(
-        opaque: false,
-        name: RouteNames.mineDailyTask,
-        page: () => const DailyTaskPage(),
-        binding: DailyTaskBinding()),
-    GetPage(
-      opaque: false,
-      name: RouteNames.illustrationPage,
-      page: () => const IllustratiionsPage(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.illustrationDetail,
-      page: () => const IllustratiionsDetail(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.seaonRankPage,
-      page: () => const SeaonRankPage(),
-      binding: SeaonRankBinding(),
-    ),
-    GetPage(
-      opaque: false,
-      name: RouteNames.teamHistory,
-      page: () => const TeamHistortyPage(),
-      // binding: TeamHistortBinding(),
-    ),
-  ];
+        settings: settings,
+        pageBuilder: (context, animation, secondaryAnimation) => page,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1, 0.0),
+              end: Offset.zero,
+            ).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 300),
+        // 进入动画时间
+        reverseTransitionDuration:
+            Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
+      );
+    }
+
+    Widget widget() {
+      Get.routing.args = settings.arguments;
+      switch (settings.name) {
+        case RouteNames.main:
+          return const HomePage();
+        case RouteNames.teamTeamBattle:
+          return const TeamBattlePage();
+        case RouteNames.picksPlayerDetail:
+          return PlayerDetailPage(
+            arguments: Get.arguments,
+          );
+        case RouteNames.league:
+          return const LeaguePage();
+        case RouteNames.picksPersonalCenter:
+          return const PersonalCenterPage();
+        case RouteNames.mineMineInfo:
+          MineInfoBinding().dependencies();
+          return const MineInfoPage();
+        case RouteNames.newsDetail:
+          return NewsDetailPage(newsDetail: Get.arguments);
+        case RouteNames.newsDetail2:
+          return NewsDetailPage2(newsDetail: Get.arguments);
+        case RouteNames.teamMemberPage:
+          return const TeamMenberView();
+        case RouteNames.teamTeamUpgrade:
+          return TeamUpgradePage(player: Get.arguments['player']);
+        case RouteNames.openBoxPage:
+          return const OpenBoxPage();
+        case RouteNames.teamStartUpGrade:
+          return StartUpgradeWidget(player: Get.arguments['player']);
+        case RouteNames.picksPicksHistory:
+          PicksHistoryBinding().dependencies();
+          return const PicksHistoryPage();
+        case RouteNames.teamDetailPage:
+          return const TeamDetailPage();
+        case RouteNames.nbaRank:
+          RankBinding().dependencies();
+          return const NBARankPage();
+        case RouteNames.leagueLeagueDetail:
+          return const LeagueDetailV2Page();
+        case RouteNames.inboxDetail:
+          return const InboxDetailPage();
+        case RouteNames.picksPickRank:
+          PickRankBinding().dependencies();
+          return const PickRankPage();
+        case RouteNames.mineMineSetting:
+          MineSettingBinding().dependencies();
+          return const MineSettingPage();
+        case RouteNames.mineMineAccount:
+          MineAccountBinding().dependencies();
+          return const MineAccountPage();
+        case RouteNames.picksReciveRward:
+          ReciveRwardBinding().dependencies();
+          return const ReceiveRewardPage();
+        case RouteNames.teamBeautyPage:
+          return const BeautyPage();
+        case RouteNames.mineDailyTask:
+          DailyTaskBinding().dependencies();
+          return const DailyTaskPage();
+        case RouteNames.illustrationPage:
+          return const IllustratiionsPage();
+        case RouteNames.illustrationDetail:
+          return const IllustratiionsDetail();
+        case RouteNames.seaonRankPage:
+          SeaonRankBinding().dependencies();
+          return const SeaonRankPage();
+        case RouteNames.teamHistory:
+          return const TeamHistortyPage();
+        default:
+          return const SizedBox.shrink();
+      }
+    }
+
+    return pageRouteBuilder(widget());
+  }
 }
