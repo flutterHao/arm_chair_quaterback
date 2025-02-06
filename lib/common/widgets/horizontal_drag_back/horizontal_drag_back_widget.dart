@@ -47,7 +47,7 @@ class HorizontalDragBackWidget extends StatefulWidget {
 class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     with TickerProviderStateMixin {
   ///手指按下的x位置
-  double startX = -1;
+  double startX = -1,endX=-1;
 
   ///移动的距离
   double offsetX = 0;
@@ -100,7 +100,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         ..addListener(() {
           // print('horizontalDragBack----11111---offsetX: $offsetX');
           // offsetX = enterAnimation.value;
-          dragBackAnimation(value: enterAnimation.value);
+          pageAnimation(value: enterAnimation.value);
         });
       enterAnimationController.forward();
     });
@@ -114,7 +114,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           if (!widget.noBackAnimation && !systemPopping) {
             setState(() {});
             // print('horizontalDragBack----33333---offsetX: $offsetX');
-            dragBackAnimation();
+            pageAnimation();
           }
         }
         if (animationController.status == AnimationStatus.completed) {
@@ -150,7 +150,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       }
       // print('onHorizontalDragStart: ${detail.localPosition}');
       offsetX = 0;
-      startX = detail.localPosition.dx;
+      startX = endX = detail.localPosition.dx;
     }
 
     onHorizontalDragEnd(DragEndDetails detail) {
@@ -162,6 +162,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       }
       // print('onHorizontalDragEnd: ${detail.localPosition}');
       // print('onHorizontalDragEnd: ${detail.velocity}');
+      endX = detail.localPosition.dx;
       _recycleAnimation(velocity: detail.velocity.pixelsPerSecond.dx);
     }
 
@@ -182,7 +183,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       }
       // print('onHorizontalDragDown: ${detail.localPosition}');
       offsetX = 0;
-      startX = detail.localPosition.dx;
+      startX = endX = detail.localPosition.dx;
     }
 
     onHorizontalDragUpdate(DragUpdateDetails detail) {
@@ -202,6 +203,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         offsetX = 0;
         startX = detail.localPosition.dx;
       }
+      endX = detail.localPosition.dx;
       // offsetX = detail.localPosition.dx - startX;
       offsetX += detail.delta.dx;
       if (offsetX < 0) {
@@ -210,7 +212,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (!widget.noBackAnimation) {
         setState(() {});
         // print('horizontalDragBack----44444---offsetX: $offsetX');
-        dragBackAnimation();
+        pageAnimation();
       }
     }
 
@@ -313,7 +315,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           if (!popping) {
             /// Get.back()/Navigator.pop()进这里
             systemPopping = true;
-            dragBackAnimation(value: -1);
+            pageAnimation(value: -1);
           }
         }
       },
@@ -326,7 +328,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     );
   }
 
-  void dragBackAnimation({num? value}) {
+  void pageAnimation({num? value}) {
     HorizontalDragBackController().notify(value ?? offsetX);
   }
 
@@ -336,6 +338,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   ///松手执行回收动画
   void _recycleAnimation({double velocity = 0}) {
+    if(endX == startX){
+      return;
+    }
     double beforeResetOffsetX = offsetX;
     animationController.reset();
     isReset = true;
