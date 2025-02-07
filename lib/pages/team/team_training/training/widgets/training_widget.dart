@@ -77,14 +77,11 @@ class TrainingWidget extends GetView<TrainingController> {
                             top: 0,
                             left: 0,
                             right: 0,
-                            child: SizedBox(
-                              width: 375 / 245.5,
-                              child: MirrorImageWidget(
-                                imagePath: Assets.managerUiManagerTrainingBg,
-                                fullWidth: 375.w,
-                                imageHeight: 245.5.w,
-                                fit: BoxFit.fitWidth,
-                              ),
+                            child: MirrorImageWidget(
+                              imagePath: Assets.managerUiManagerTrainingBg,
+                              fullWidth: Get.width > 600 ? 600 : Get.width,
+                              imageHeight: 245.5.w,
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
 

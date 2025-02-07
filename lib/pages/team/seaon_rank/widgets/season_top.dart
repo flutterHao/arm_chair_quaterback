@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -38,6 +39,7 @@ class _SeasonTopWidgetState extends State<SeasonTopWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // gameStartTimesCountDown
+                      // Text(LangKey.news.tr),
                       Text(
                         'SEASON 188',
                         style: 30.w5(
