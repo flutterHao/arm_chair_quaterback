@@ -12,38 +12,22 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class HistoryPage extends StatefulWidget {
+class HistoryPage extends GetView<HistoryController> {
   const HistoryPage({super.key, required this.playerId});
 
   final int playerId;
 
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
-}
-
-class _HistoryPageState extends State<HistoryPage>
-    with AutomaticKeepAliveClientMixin {
-  late HistoryController controller;
-
-  @override
-  void initState() {
-    controller = Get.put(HistoryController(widget.playerId), tag: getTag());
-    super.initState();
-  }
+  String? get tag => getTag();
 
   String getTag() {
-    return "_${AppPages.history.length}";
-  }
-
-  @override
-  dispose() {
-    Get.delete<HistoryController>(tag: getTag());
-    super.dispose();
+    return "$playerId";
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HistoryController>(
+      init: HistoryController(playerId),
       tag: getTag(),
       builder: (_) {
         return Container(
@@ -263,6 +247,4 @@ class _HistoryPageState extends State<HistoryPage>
     });
   }
 
-  @override
-  bool get wantKeepAlive => true;
 }

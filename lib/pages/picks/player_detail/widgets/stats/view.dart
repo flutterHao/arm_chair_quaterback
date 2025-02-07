@@ -23,39 +23,23 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///@auther gejiahui
 ///created at 2025/1/7/14:08
 
-class StatsPage extends StatefulWidget {
+class StatsPage extends GetWidget<StatsController> {
   const StatsPage({super.key, required this.playerDetailController});
 
   final PlayerDetailController playerDetailController;
 
   @override
-  State<StatsPage> createState() => _StatsPageState();
-}
-
-class _StatsPageState extends State<StatsPage>
-    with AutomaticKeepAliveClientMixin {
-  late StatsController controller;
-
-  @override
-  void initState() {
-    controller =
-        Get.put(StatsController(widget.playerDetailController), tag: getTag());
-    super.initState();
-  }
+  String? get tag => getTag();
 
   String getTag() {
-    return "_${AppPages.history.length}";
+    return "${playerDetailController.arguments}";
   }
 
-  @override
-  dispose() {
-    Get.delete<StatsController>(tag: getTag());
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StatsController>(
+      init: StatsController(playerDetailController),
       tag: getTag(),
       builder: (logic) {
         return SingleChildScrollView(
@@ -551,6 +535,4 @@ class _StatsPageState extends State<StatsPage>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
 }

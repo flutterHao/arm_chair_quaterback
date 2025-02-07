@@ -212,7 +212,7 @@ class SummaryController extends GetxController {
     return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0);
   }
 
-  _PickInfo? getPickInfo() {
+  PickInfo? getPickInfo() {
     if (nbaPlayerBaseInfoEntity?.guessInfos.isEmpty == true) {
       return null;
     }
@@ -247,7 +247,7 @@ class SummaryController extends GetxController {
       picksPlayerV2.awayTeamInfo = Utils.getTeamInfo(picks.awayTeamId);
       picksPlayerV2.tabStr = currentTabKey;
     }
-    return _PickInfo(
+    return PickInfo(
         month, day, teamInfo, value, currentTabKey, picks, picksPlayerV2);
   }
 
@@ -506,7 +506,7 @@ class StatsData {
   StatsData(this.keys);
 }
 
-class _PickInfo {
+class PickInfo {
   final String month;
   final int day;
   final NbaTeamEntity teamInfo;
@@ -515,6 +515,6 @@ class _PickInfo {
   final GuessGameInfoEntity picks;
   PicksPlayerV2 playerV2;
 
-  _PickInfo(this.month, this.day, this.teamInfo, this.value, this.key,
+  PickInfo(this.month, this.day, this.teamInfo, this.value, this.key,
       this.picks, this.playerV2);
 }

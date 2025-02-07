@@ -56,7 +56,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
   }
 
   String getTag() {
-    return "_${AppPages.history.length}";
+    return "${widget.item.gameId}";
   }
 
   @override

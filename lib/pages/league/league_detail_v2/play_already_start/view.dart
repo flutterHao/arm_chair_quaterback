@@ -55,7 +55,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
   }
 
   String getTag(){
-    return "_${AppPages.history.length}";
+    return "${widget.item.gameId}";
   }
 
   @override

@@ -29,7 +29,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class SummaryPage extends StatefulWidget {
+class SummaryPage extends GetView<SummaryController> {
   const SummaryPage(
       {required this.playerId,
       super.key,
@@ -41,40 +41,20 @@ class SummaryPage extends StatefulWidget {
   final PlayerDetailController playerDetailController;
 
   @override
-  State<SummaryPage> createState() => _SummaryPageState();
-}
-
-class _SummaryPageState extends State<SummaryPage>
-    with AutomaticKeepAliveClientMixin {
-  late PlayerDetailController playerDetailController;
-  late SummaryController controller;
-
-  @override
-  void initState() {
-    playerDetailController = widget.playerDetailController;
-    controller = Get.put(
-        SummaryController(
-          widget.playerId,
-          playerDetailController,
-          initTabStr: widget.tabStr,
-        ),
-        tag: getTag());
-    super.initState();
-  }
+  String? get tag => getTag();
 
   String getTag() {
-    return "_${AppPages.history.length}";
-  }
-
-  @override
-  dispose() {
-    Get.delete<SummaryController>(tag: getTag());
-    super.dispose();
+    return "$playerId";
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SummaryController>(
+      init: SummaryController(
+        playerId,
+        playerDetailController,
+        initTabStr: tabStr,
+      ),
       tag: getTag(),
       id: SummaryController.idSummaryMain,
       builder: (_) {
@@ -1146,7 +1126,7 @@ class _SummaryPageState extends State<SummaryPage>
                         ),
                       );
                     }),
-                    _buildStats(),
+                    _buildStats(context),
                     // _buildNews(),
                     Obx(() {
                       var picksIndexController =
@@ -1363,7 +1343,7 @@ class _SummaryPageState extends State<SummaryPage>
     });
   }
 
-  Widget _buildStats() {
+  Widget _buildStats(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
@@ -1820,6 +1800,4 @@ class _SummaryPageState extends State<SummaryPage>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
 }
