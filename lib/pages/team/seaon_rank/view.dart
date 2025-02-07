@@ -34,15 +34,16 @@ class SeaonRankPage extends GetView<SeaonRankController> {
                         loadDataStatus: controller.loadingStatus.value));
               }
               return const SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Column(
-                children: [
-                  SeasonTopWidget(),
-                  SeasonRewardsWidget(),
-                  LegendaryManagerWidget(),
-                  SeasonRankWidget(),
-                  GameLogWidget(),
-                ],
-              ));
+                    children: [
+                      SeasonTopWidget(),
+                      SeasonRewardsWidget(),
+                      LegendaryManagerWidget(),
+                      SeasonRankWidget(),
+                      GameLogWidget(),
+                    ],
+                  ));
             })),
           );
         },

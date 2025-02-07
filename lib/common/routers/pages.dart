@@ -44,6 +44,7 @@ import 'package:arm_chair_quaterback/pages/team/seaon_rank/binding.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
+import 'package:arm_chair_quaterback/pages/team/team_historty/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
@@ -150,6 +151,7 @@ class AppPages {
           SeaonRankBinding().dependencies();
           return const SeaonRankPage();
         case RouteNames.teamHistory:
+          TeamHistortyBinding().dependencies();
           return const TeamHistortyPage();
         default:
           return const SizedBox.shrink();

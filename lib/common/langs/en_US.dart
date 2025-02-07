@@ -1,4 +1,8 @@
 const Map<String, String> en_US = {
+  'news': 'NEWS',
+  'picks': 'PICKS',
+  'team': 'TEAM',
+  'leagues': 'LEAGUES',
   "gameNameFgm": "FGM",
   "gameNameFga": "FGA",
   "gameNameTgm": "3PM",
