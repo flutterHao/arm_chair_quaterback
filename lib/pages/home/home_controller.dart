@@ -14,6 +14,7 @@ import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
@@ -68,31 +69,31 @@ class HomeController extends GetxController {
 
   List<TabItemInfo> tabItems = [
     TabItemInfo(
-      "Home",
+      LangKey.gameTabNews.tr,
       Assets.commonUiCommonTabBottom01Off,
       Assets.commonUiCommonTabBottom01On,
       const NewsPage(),
     ),
     TabItemInfo(
-      "Scores",
+      LangKey.gametabScores.tr,
       Assets.commonUiCommonTabBottom02Off,
       Assets.commonUiCommonTabBottom02On,
       const LeaguePage(),
     ),
     TabItemInfo(
-      "Manager",
+      LangKey.gameTabManager.tr,
       Assets.commonUiCommonTabBottom03,
       Assets.commonUiCommonTabBottom03,
       const TeamIndexPage(),
     ),
     TabItemInfo(
-      "Picks",
+      LangKey.gametabPicks.tr,
       Assets.commonUiCommonTabBottom04Off,
       Assets.commonUiCommonTabBottom04On,
       const PicksIndex(),
     ),
     TabItemInfo(
-      "Inbox",
+      LangKey.gameTabInbox.tr,
       Assets.commonUiCommonTabBottom05Off,
       Assets.commonUiCommonTabBottom05On,
       const InboxPage(),

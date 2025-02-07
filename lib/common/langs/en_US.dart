@@ -14,11 +14,11 @@ Map<String, String> en_US = {
   LangKey.gameNameFoul: "FOUL",
   LangKey.gameNameTo: "TO",
   LangKey.gameNamePts: "PTS",
-  LangKey.gameTabNews: "News",
-  LangKey.gametabPicks: "PICKS",
+  LangKey.gameTabNews: "Home",
+  LangKey.gametabPicks: "Picks",
   LangKey.gametabStocks: "Stocks",
   LangKey.gametabTeam: "MY TEAM",
-  LangKey.gametabScores: "SCORES",
+  LangKey.gametabScores: "Scores",
   LangKey.newsTabTickers: "NEWS TICKERS",
   LangKey.newsTabNews: "NEWS",
   LangKey.newsTabMore: "More News",
@@ -284,6 +284,7 @@ Map<String, String> en_US = {
   LangKey.gameNameAvg: "AVG",
   LangKey.gameName: "HT",
   LangKey.gameNameWt: "WT",
+  LangKey.gameTabInbox: 'Inbox'
 };
 
 // const Map<String, String> en_US = {
