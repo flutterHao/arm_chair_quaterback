@@ -346,9 +346,9 @@ class PicksIndexController extends GetxController
   static String get idGuessConfirmDialog => "id_guess_confirm_dialog";
 
   @override
-  void dispose() {
+  void onClose() {
     subscription.cancel();
     tabSubscription.cancel();
-    super.dispose();
+    super.onClose();
   }
 }

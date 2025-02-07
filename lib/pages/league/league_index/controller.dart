@@ -225,12 +225,12 @@ class LeagueController extends GetxController
   }
 
   @override
-  void dispose() {
+  void onClose() {
     pageController.dispose();
     _subscription?.cancel();
     tabSubscription.cancel();
     _appLifecycleListener?.dispose();
-    super.dispose();
+    super.onClose();
   }
 
   int getStartTime() {

@@ -504,39 +504,9 @@ class DailyTaskController extends GetxController
   void getTeamMissionAward(int missionId) {
     MineApi.getTeamMissionAward(missionId).then((result) {
       getDailyMissions();
-      var hasBall = result.where((e) => e.id == 306).isNotEmpty;
       var hasLuckyCoin = result.where((e) => e.id == 201).isNotEmpty;
-      var hasMoneyOrBetCoin =
-          result.where((e) => e.id == 102 || e.id == 103).isNotEmpty;
-      if (hasBall) {
-        try {
-          Get.find<TrainingController>().getData();
-        } catch(e){
-          print('TrainingController not init');
-        }
-      }
-      if (hasMoneyOrBetCoin) {
-        Get.find<HomeController>().refreshMoneyCoinWidget();
-      }
       if (hasLuckyCoin) {
         getTeamProp();
-      }
-      Get.find<HomeController>().getOngoingDailyTaskList();
-      if (hasMoneyOrBetCoin || hasLuckyCoin || hasBall) {
-        showTopToastDialog(
-            needBg: false,
-            child: Container(
-                margin: EdgeInsets.only(top: 44.w),
-                child: Column(
-                    children: List.generate(result.length, (index) {
-                  AwardItem awardItem =
-                      AwardItem.fromJson(result[index].toJson());
-                  var propItem = CacheApi.propDefineList!
-                      .firstWhere((e) => e.propId == awardItem.id);
-                  String text = "YOU GOT ${awardItem.num} ${propItem.propName}";
-                  return AwardWidget(
-                      image: getImageByAward(awardItem), text: text);
-                }))));
       }
     }, onError: (e) {
       ErrorUtils.toast(e);

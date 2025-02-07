@@ -324,18 +324,13 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     _initAnimations();
   }
 
-  /// 在 [onDelete] 方法之前调用。
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   /// dispose 释放内存
   @override
-  void dispose() {
+  void onClose() {
     _animationController.dispose();
     _rateAnimationController?.dispose();
-    super.dispose();
+    super.onClose();
   }
 
   BarTouchData get barTouchData => BarTouchData(

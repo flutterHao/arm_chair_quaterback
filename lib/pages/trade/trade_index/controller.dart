@@ -166,19 +166,14 @@ class TradeIndexController extends GetxController
     super.onReady();
   }
 
-  /// 在 [onDelete] 方法之前调用。
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   /// dispose 释放内存
   @override
-  void dispose() {
+  void onClose() {
     tabController.dispose();
     buyRefreshController.dispose();
     sellRefreshController.dispose();
     timer?.cancel();
-    super.dispose();
+    super.onClose();
   }
 }

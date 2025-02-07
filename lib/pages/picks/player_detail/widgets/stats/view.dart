@@ -23,7 +23,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///@auther gejiahui
 ///created at 2025/1/7/14:08
 
-class StatsPage extends GetWidget<StatsController> {
+class StatsPage extends GetView<StatsController> {
   const StatsPage({super.key, required this.playerDetailController});
 
   final PlayerDetailController playerDetailController;

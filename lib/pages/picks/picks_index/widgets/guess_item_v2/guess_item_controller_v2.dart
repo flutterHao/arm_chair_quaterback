@@ -65,8 +65,8 @@ class GuessItemControllerV2 extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     timer?.cancel();
-    super.dispose();
+    super.onClose();
   }
 }

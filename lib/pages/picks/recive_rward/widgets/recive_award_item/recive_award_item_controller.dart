@@ -33,9 +33,9 @@ class ReceiveAwardItemController extends GetxController {
   }
 
   @override
-  dispose() {
+  void onClose() {
     timer?.cancel();
-    super.dispose();
+    super.onClose();
   }
 
   void startCountDown() {

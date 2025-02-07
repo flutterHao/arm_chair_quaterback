@@ -186,13 +186,8 @@ class TeamBattleController extends GetxController
   @override
   void onClose() {
     subscription?.cancel();
-    super.onClose();
-  }
-
-  @override
-  void dispose() {
-    Get.delete<TeamBattleV2Controller>();
     _timer?.cancel();
-    super.dispose();
+    Get.delete<TeamBattleV2Controller>();
+    super.onClose();
   }
 }
