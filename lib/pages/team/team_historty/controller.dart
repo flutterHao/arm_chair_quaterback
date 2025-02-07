@@ -194,7 +194,6 @@ class TeamHistortyController extends GetxController
 
   void initCup() {
     ///输掉的奖杯数表里读取CupDefine
-    var loseCup = 2;
     leftCupNum = gameResultInfoEntity.homeTeamResult.cupDiff != 0
         ? gameResultInfoEntity.homeTeamResult.cupDiff
         : 2;

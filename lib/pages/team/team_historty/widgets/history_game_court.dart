@@ -322,16 +322,7 @@ class HistoryGameCourtWidget extends GetView<TeamHistortyController> {
             controller.opacityObs.value = !controller.opacityObs.value;
           },
           child: InkWell(
-            onTap: () {
-              // controller.startObs.value = false;
-              // controller.giftObs.value = false;
-              // controller.opacityObs.value = false;
-              // controller.mvpObs.value = false;
-              // controller.onMvpAnimationEndObs.value = false;
-              // Future.delayed(const Duration(milliseconds: 500), () {
-              //   controller.startObs.value = true;
-              // });
-            },
+            onTap: () {},
             child: AnimatedScale(
               scale: controller.giftObs.value
                   ? 1

@@ -77,11 +77,14 @@ class TrainingWidget extends GetView<TrainingController> {
                             top: 0,
                             left: 0,
                             right: 0,
-                            child: MirrorImageWidget(
-                              imagePath: Assets.managerUiManagerTrainingBg,
-                              fullWidth: 375.w,
-                              imageHeight: 245.5.w,
-                              fit: BoxFit.fitWidth,
+                            child: SizedBox(
+                              width: 375 / 245.5,
+                              child: MirrorImageWidget(
+                                imagePath: Assets.managerUiManagerTrainingBg,
+                                fullWidth: 375.w,
+                                imageHeight: 245.5.w,
+                                fit: BoxFit.fitWidth,
+                              ),
                             ),
                           ),
 
@@ -133,7 +136,7 @@ class TrainingWidget extends GetView<TrainingController> {
                             child: Column(
                               children: [
                                 controller.ballNum.value > 0
-                                    ? Container(
+                                    ? SizedBox(
                                         // height: 72.5.w,
                                         width: 75.w,
                                         height: 24.w,
@@ -586,7 +589,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                 child: AnimatedOpacity(
                                   duration: const Duration(milliseconds: 300),
                                   opacity: controller.showPlayer.value ? 1 : 0,
-                                  child: PlayerSrollerView(),
+                                  child: const PlayerSrollerView(),
                                 ),
                               );
                             }),
@@ -597,9 +600,9 @@ class TrainingWidget extends GetView<TrainingController> {
                               top: 74.w,
                               left: -40.w,
                               right: -40.w,
-                              child: PlayerSelectBox()),
+                              child: const PlayerSelectBox()),
 
-                          Positioned(top: 60.w, child: PlayerArrow()),
+                          Positioned(top: 60.w, child: const PlayerArrow()),
 
                           ///金钱奖励
                           Positioned(
