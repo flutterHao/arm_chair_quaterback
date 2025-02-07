@@ -132,7 +132,7 @@ class ResponseMessage {
   late String statusMsg;
 
   /// 参数
-  late Map<String, dynamic> payload;
+  late dynamic payload;
 
   @override
   String toString() {
@@ -192,7 +192,7 @@ class WebSocketDataHandler {
     if (decode.isEmpty) {
       respons.payload = {};
     } else {
-      // log('${respons.serviceId}---decode:$decode');
+      log('${respons.serviceId}---decode:$decode');
       respons.payload = jsonDecode(decode);
     }
 

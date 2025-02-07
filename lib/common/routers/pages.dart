@@ -123,7 +123,8 @@ class AppPages {
           RankBinding().dependencies();
           return const NBARankPage();
         case RouteNames.leagueLeagueDetail:
-          return const LeagueDetailV2Page();
+          return  LeagueDetailV2Page(Get.arguments["item"],
+              gameId: Get.arguments["gameId"]);
         case RouteNames.inboxDetail:
           return const InboxDetailPage();
         case RouteNames.picksPickRank:

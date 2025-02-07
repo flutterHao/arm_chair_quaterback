@@ -10,9 +10,13 @@
  * @Date: 2024-09-12 16:53:47
  * @LastEditTime: 2024-09-24 10:57:13
  */
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
+import 'package:arm_chair_quaterback/common/net/index.dart';
 import 'package:arm_chair_quaterback/common/utils/platform_file_manager.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
@@ -129,11 +133,18 @@ class HomeController extends GetxController {
 
   RxBool isHide = false.obs;
 
+  StreamSubscription<ResponseMessage>? subscription;
+
   @override
   void onInit() {
     super.onInit();
     // auth();
     pageController = PageController(initialPage: 2);
+    subscription = WSInstance.stream.listen((value){
+      if(value.serviceId == Api.wsTeamPropUpdated){
+        print('wsTeamPropUpdated-----------');
+      }
+    });
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
     //   tabIndex.value = tabController.index;
@@ -153,6 +164,7 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     pageController.dispose();
+    subscription?.cancel();
     super.onClose();
   }
 
