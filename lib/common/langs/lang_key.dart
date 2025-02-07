@@ -19,7 +19,6 @@ class LangKey {
   static const String gametabScores = 'gametabScores';
   static const String newsTabTickers = 'newsTabTickers';
   static const String newsTabHighlights = 'newsTabHighlights';
-  static const String newsTabRumor = 'newsTabRumor';
   static const String newsTabReport = 'newsTabReport';
   static const String newsTabInterview = 'newsTabInterview';
   static const String newsTabRanking = 'newsTabRanking';
@@ -218,8 +217,7 @@ class LangKey {
   static const String userButtonReport = 'userButtonReport';
   static const String userButtonBlock = 'userButtonBlock';
   static const String userButtonRelease = 'userButtonRelease';
-  static const String userButtonShare =
-      'userButtonRelease'; // 注意：这里有重复的键名，原文件中可能是拼写错误。
+  static const String userButtonShare = 'userButtonShare';
   static const String userTabNewFeatures = 'userTabNewFeatures';
   static const String userButtonLanguages = 'userButtonLanguages';
   static const String userButtonMusic = 'userButtonMusic';
@@ -342,19 +340,13 @@ class LangKey {
   static const String tranMeanTask = 'tranMeanTask';
   static const String newsTabGame = 'newsTabGame';
   static const String newsTabSchedule = 'newsTabSchedule';
-  static const String newsTabInjuries =
-      'newsTabGame'; // 注意：原始数据中这个键值与"赛事"相同，可能是错误。
-  static const String newsTabDraft =
-      'newsTabGame'; // 注意：原始数据中这个键值与"赛事"相同，可能是错误。
-  static const String newsTabTodayStreakPicks =
-      'newsTabGame'; // 注意：原始数据中这个键值与"赛事"相同，可能是错误。
+  static const String newsTabInjuries = 'newsTabInjuries';
+  static const String newsTabDraft = 'newsTabDraft';
+  static const String newsTabStreakPick = 'newsTabStreakPick';
   static const String newsTabTrade = 'newsTabTrade';
-  static const String newsTabTopRumor =
-      'newsTabGame'; // 注意：原始数据中这个键值与"赛事"相同，可能是错误。
-  static const String newsTabPopularPlayer =
-      'newsTabGame'; // 注意：原始数据中这个键值与"赛事"相同，可能是错误。
-  static const String newsTabLastest =
-      'newsTabGame'; // 注意：原始数据中这个键值与"赛事"相同，可能是错误。
+  static const String newsTabRumor = 'newsTabRumor';
+  static const String newsTabPopular = 'newsTabPopular';
+  static const String newsTabLastest = 'newsTabLastest';
   static const String newsNameTp = 'newsNameTp';
   static const String pickTabTask = 'pickTabTask';
   static const String pickTipsTask = 'pickTipsTask';
@@ -391,4 +383,6 @@ class LangKey {
   static const String pickTapRank = 'pickTapRank';
   static const String pickTipsSelect = 'pickTipsSelect';
   static const String gameMeanPoseason = 'gameMeanPoseason';
+  static const String gameName = 'gameName';
+  static const String gameNameWt = 'gameNameWt';
 }

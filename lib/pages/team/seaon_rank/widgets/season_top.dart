@@ -38,8 +38,6 @@ class _SeasonTopWidgetState extends State<SeasonTopWidget> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // gameStartTimesCountDown
-                      // Text(LangKey.news.tr),
                       Text(
                         'SEASON 188',
                         style: 30.w5(

@@ -53,6 +53,7 @@ class HomeController extends GetxController {
   };
 
   UserEntity userEntiry = UserEntity();
+
   /// 未完成任务列表(进行中的任务)
   List<TeamMissionEntity> ongoingTaskList = [];
 
@@ -140,8 +141,8 @@ class HomeController extends GetxController {
     super.onInit();
     // auth();
     pageController = PageController(initialPage: 2);
-    subscription = WSInstance.stream.listen((value){
-      if(value.serviceId == Api.wsTeamPropUpdated){
+    subscription = WSInstance.stream.listen((value) {
+      if (value.serviceId == Api.wsTeamPropUpdated) {
         print('wsTeamPropUpdated-----------');
       }
     });
@@ -271,7 +272,7 @@ class HomeController extends GetxController {
       MineApi.getTeamMissionList(3),
     ]);
     List<TeamMissionEntity> list = [...result[0], ...result[1]];
-    ongoingTaskList = list.where((e)=> e.status != 3).toList();
+    ongoingTaskList = list.where((e) => e.status != 3).toList();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 }
