@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-23 16:59:43
- * @LastEditTime: 2025-01-15 18:47:40
+ * @LastEditTime: 2025-02-06 17:25:09
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/card_pack_define_entity.g.dart';
@@ -24,6 +24,7 @@ class CardPackDefineEntity {
   late String cardPackIcon = "";
   late String cardPackName = "";
   late String cardPackDesc = "";
+  late int cardPackOpenMore = 0;
 
   CardPackDefineEntity();
 

@@ -2,14 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-01-24 17:28:57
+ * @LastEditTime: 2025-02-06 15:32:54
  */
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -105,9 +103,9 @@ class _AnimatedBoxState extends State<AnimatedBox>
       parent: _lightController,
       curve: Curves.easeInOut,
     ));
-
-    Future.delayed(300.milliseconds).then((v) {
-      ctrl.fallOutAnimatedCtrl.reset();
+    // ctrl.fallOutAnimatedCtrl.reset();
+    Future.delayed(200.milliseconds).then((v) {
+      // ctrl.fallOutAnimatedCtrl.reset();
       ctrl.fallOutAnimatedCtrl.forward().then((v) {
         Future.delayed(const Duration(milliseconds: 500), () {
           showLight = true;
@@ -135,7 +133,6 @@ class _AnimatedBoxState extends State<AnimatedBox>
 
   @override
   Widget build(BuildContext context) {
-    double startx = (MediaQuery.of(context).size.width - 190.h) / 2;
     return InkWell(
       onTap: () {
         Log.d("打开宝箱");

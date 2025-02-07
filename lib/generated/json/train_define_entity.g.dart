@@ -90,6 +90,13 @@ TrainDefineEntity $TrainDefineEntityFromJson(Map<String, dynamic> json) {
   if (trainRewardBall != null) {
     trainDefineEntity.trainRewardBall = trainRewardBall;
   }
+  final List<int>? giveUpTactics = (json['giveUpTatics'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<int>(e) as int)
+      .toList();
+  if (giveUpTactics != null) {
+    trainDefineEntity.giveUpTactics = giveUpTactics;
+  }
   return trainDefineEntity;
 }
 
@@ -112,6 +119,7 @@ Map<String, dynamic> $TrainDefineEntityToJson(TrainDefineEntity entity) {
   data['trainNormalMoney'] = entity.trainNormalMoney;
   data['trainRecoverStats'] = entity.trainRecoverStats;
   data['trainRewardBall'] = entity.trainRewardBall;
+  data['giveUpTatics'] = entity.giveUpTactics;
   return data;
 }
 
@@ -134,6 +142,7 @@ extension TrainDefineEntityExtension on TrainDefineEntity {
     List<int>? trainNormalMoney,
     List<int>? trainRecoverStats,
     List<int>? trainRewardBall,
+    List<int>? giveUpTactics,
   }) {
     return TrainDefineEntity()
       ..ballMaxNum = ballMaxNum ?? this.ballMaxNum
@@ -152,6 +161,7 @@ extension TrainDefineEntityExtension on TrainDefineEntity {
       ..trainCoinNum = trainCoinNum ?? this.trainCoinNum
       ..trainNormalMoney = trainNormalMoney ?? this.trainNormalMoney
       ..trainRecoverStats = trainRecoverStats ?? this.trainRecoverStats
-      ..trainRewardBall = trainRewardBall ?? this.trainRewardBall;
+      ..trainRewardBall = trainRewardBall ?? this.trainRewardBall
+      ..giveUpTactics = giveUpTactics ?? this.giveUpTactics;
   }
 }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-12 15:43:49
- * @LastEditTime: 2024-12-02 14:44:42
+ * @LastEditTime: 2025-02-06 15:19:26
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -178,7 +178,7 @@ class AwardDialog extends GetView<TrainingController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                Utils.getSlotIconUrl(award[2]),
+                Utils.getPropIconUrl(award[2]),
                 width: 32.w,
                 fit: BoxFit.fitWidth,
                 errorBuilder: (context, error, stackTrace) => IconWidget(

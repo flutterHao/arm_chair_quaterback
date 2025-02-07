@@ -35,6 +35,17 @@ class _OverviewTabState extends State<OverviewTab>
   @override
   bool get wantKeepAlive => true;
 
+  bool cantPick(ScoresEntity item) {
+    var nowDateTime = MyDateUtils.getNowDateTime();
+    var nextDay = MyDateUtils.nextDay(nowDateTime);
+    var dayStartTimeMS =
+        MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
+    return item.gameStartTime >= dayStartTimeMS ||
+        (item.gameStartTime < MyDateUtils.getNowDateMs() &&
+            item.isGuess == 0 &&
+            item.status != 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -66,7 +77,8 @@ class _OverviewTabState extends State<OverviewTab>
                       _RecentMatch(controller
                           .teamDetailEntity.last5GameSchedule.schedule),
                       // 9.vGap,
-                      _RecentPick(controller.teamDetailEntity.recentPick),
+                      if (!cantPick(controller.teamDetailEntity.recentPick))
+                        _RecentPick(controller.teamDetailEntity.recentPick),
                       _OutCome(controller.teamDetailEntity.outcome),
                       9.vGap,
                       _Stats(),

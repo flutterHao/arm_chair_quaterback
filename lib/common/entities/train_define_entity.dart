@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:47:53
- * @LastEditTime: 2024-12-24 10:56:45
+ * @LastEditTime: 2025-02-06 14:43:12
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/train_define_entity.g.dart';
@@ -28,6 +28,8 @@ class TrainDefineEntity {
   late List<int> trainNormalMoney = [];
   late List<int> trainRecoverStats = [];
   late List<int> trainRewardBall = [];
+  @JSONField(name: 'giveUpTatics')
+  late List<int> giveUpTactics = [];
 
   TrainDefineEntity();
 

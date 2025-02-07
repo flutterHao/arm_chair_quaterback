@@ -238,7 +238,7 @@ class TrainingController extends GetxController
         }
       })
       ..addStatusListener((status) {
-        Log.d("status:$status");
+        // Log.d("status:$status");
         if (status == AnimationStatus.forward ||
             status == AnimationStatus.reverse) {
           // 每次动画完成或结束时，增加持续时间
@@ -733,7 +733,7 @@ class TrainingController extends GetxController
         cashs = item.propNum;
         await showCashAward(cashs);
         currentLevel = trainingInfo.training.currentTaskId;
-        HomeController.to.updateMoney();
+        // HomeController.to.updateMoney();
       }
     }
 
@@ -926,7 +926,7 @@ class TrainingController extends GetxController
         for (int i = 0; i < statusScollerList.length; i++) {
           statusScroll(i, oldList[i]);
         }
-
+        updateScroller();
         await Future.delayed(
             Duration(milliseconds: 500 + statusScollerList.length * 250), () {
           showPlayerBox.value = false;
@@ -1008,8 +1008,12 @@ class TrainingController extends GetxController
   }
 
   void cancelTactic() {
-    TeamApi.cancelTactic().then((v) {
-      HomeController.to.updateTeamProp();
+    TeamApi.cancelTactic().then((v) async {
+      int cashNum = 0;
+      if (trainDefine.giveUpTactics.length > awardLength - 1) {
+        cashNum = trainDefine.giveUpTactics[awardLength - 1];
+      }
+      await showCashAward(cashNum);
     });
   }
 }

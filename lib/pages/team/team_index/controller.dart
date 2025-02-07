@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-24 19:52:37
+ * @LastEditTime: 2025-02-07 11:11:02
  */
 
 import 'dart:async';
@@ -76,7 +76,7 @@ class TeamIndexController extends GetxController
   RxBool showBackground3 = false.obs;
   Duration showBgDuration = const Duration(milliseconds: 200);
   RxBool showChangeText = false.obs;
-  bool isOpen = false; //防止重复点击
+  // bool isOpen = false; //防止重复点击
   bool loadDataSuccess = false;
   bool isStartting = false;
   bool canOneMore = true;
@@ -207,13 +207,10 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, PlayerCardEntity card) async {
-    if (isOpen) return;
-    isOpen = true;
+    if (card.isOpen.value) return;
     awardList = await TeamApi.opneBattleBox(index, card.playerId);
     showBigCard(card);
-    getBattleBox();
-    IllustratiionsController ctrl = Get.find();
-    ctrl.getPlayerCollectInfo();
+
     // showBoxDialog();
   }
 
@@ -232,21 +229,16 @@ class TeamIndexController extends GetxController
   Future toOpenBoxPage(CardPackInfoCard item) async {
     canOneMore = true;
     isStartting = false;
-    isOpen = false;
     step = 0;
     for (var e in item.playerCards) {
       e.isOpen.value = true;
       e.isSelect.value = false;
     }
     setCardPosition(Get.context!, 0);
-    // await Get.to(
-    //     opaque: false,
-    //     () => OpenBoxPage(item: item),
-    //     duration: 300.milliseconds,
-    //     transition: Transition.fadeIn);
     currentCardPack = item;
-
+    fallOutAnimatedCtrl.reset();
     await Get.toNamed(RouteNames.openBoxPage);
+    closeCard();
   }
 
   ///开启免费宝箱
@@ -517,6 +509,7 @@ class TeamIndexController extends GetxController
       for (var element in currentCardPack.playerCards) {
         if (player.playerId == element.playerId) {
           player.isSelect.value = true;
+          selectIndex = currentCardPack.playerCards.indexOf(element);
         } else {
           if (!element.isOpen.value) element.isSelect.value = false;
         }
@@ -574,7 +567,27 @@ class TeamIndexController extends GetxController
   }
 
   void back(context) {
+    // TeamApi.closeCard(currentCardPack.index).then((v) {
+    //   getBattleBox();
+    //   IllustratiionsController ctrl = Get.find();
+    //   ctrl.getPlayerCollectInfo();
+    //   HomeController.to.updateMoney();
+    // });
+
     Get.back();
+  }
+
+  void closeCard() {
+    if (currentCardPack.playerCards
+        .where((e) => e.isSelect.value && e.isOpen.value)
+        .isNotEmpty) {
+      TeamApi.closeCard(currentCardPack.index).then((v) {
+        getBattleBox();
+        IllustratiionsController ctrl = Get.find();
+        ctrl.getPlayerCollectInfo();
+        HomeController.to.updateMoney();
+      });
+    }
   }
 
   //one more，返回到第一步

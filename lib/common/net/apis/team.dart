@@ -113,6 +113,12 @@ class TeamApi {
     return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
   }
 
+  //关闭宝箱结束
+  static Future closeCard(int index) async {
+    var json = await HttpUtil().post(Api.closeCard, data: {"index": index});
+    return json;
+  }
+
   ///加速开启宝箱
   static Future speedOpneBattleBox(int index) async {
     await HttpUtil().post(Api.speedOpenCardPack, data: {"index": index});

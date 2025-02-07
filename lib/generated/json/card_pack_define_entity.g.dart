@@ -72,6 +72,11 @@ CardPackDefineEntity $CardPackDefineEntityFromJson(Map<String, dynamic> json) {
   if (cardPackDesc != null) {
     cardPackDefineEntity.cardPackDesc = cardPackDesc;
   }
+  final int? cardPackOpenMore = jsonConvert.convert<int>(
+      json['cardPackOpenMore']);
+  if (cardPackOpenMore != null) {
+    cardPackDefineEntity.cardPackOpenMore = cardPackOpenMore;
+  }
   return cardPackDefineEntity;
 }
 
@@ -90,6 +95,7 @@ Map<String, dynamic> $CardPackDefineEntityToJson(CardPackDefineEntity entity) {
   data['cardPackIcon'] = entity.cardPackIcon;
   data['cardPackName'] = entity.cardPackName;
   data['cardPackDesc'] = entity.cardPackDesc;
+  data['cardPackOpenMore'] = entity.cardPackOpenMore;
   return data;
 }
 
@@ -108,6 +114,7 @@ extension CardPackDefineEntityExtension on CardPackDefineEntity {
     String? cardPackIcon,
     String? cardPackName,
     String? cardPackDesc,
+    int? cardPackOpenMore,
   }) {
     return CardPackDefineEntity()
       ..cardMoneyRange = cardMoneyRange ?? this.cardMoneyRange
@@ -122,6 +129,7 @@ extension CardPackDefineEntityExtension on CardPackDefineEntity {
       ..hideOpenNow = hideOpenNow ?? this.hideOpenNow
       ..cardPackIcon = cardPackIcon ?? this.cardPackIcon
       ..cardPackName = cardPackName ?? this.cardPackName
-      ..cardPackDesc = cardPackDesc ?? this.cardPackDesc;
+      ..cardPackDesc = cardPackDesc ?? this.cardPackDesc
+      ..cardPackOpenMore = cardPackOpenMore ?? this.cardPackOpenMore;
   }
 }

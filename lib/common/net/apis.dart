@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-01-17 17:37:01
+ * @LastEditTime: 2025-02-06 16:50:53
  */
 class Api {
   /// base
@@ -190,6 +190,7 @@ class Api {
   static const String getGameResultInfo =
       "$API_BASE_PATH/match/getGameResultInfo";
   static const String getNowSeason = "$API_BASE_PATH/match/getSeason";
+  static const String closeCard = "$API_BASE_PATH/match/closeCard";
 
   ///league
   static const String getNBAGameSchedules =

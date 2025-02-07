@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-01-24 15:38:29
+ * @LastEditTime: 2025-02-07 11:13:15
  */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -152,23 +153,25 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                     ),
                   ),
                   25.vGap,
-                  AnimatedArrow(
-                    end: -5.w,
-                    child: IconWidget(
-                      iconWidth: 12.h,
-                      icon: Assets.commonUiCommonIconSystemArrow,
-                      rotateAngle: -90,
-                      iconColor: AppColors.cFF7954,
+                  if (controller.fallOutAnimation.value == 1)
+                    AnimatedArrow(
+                      end: -5.w,
+                      child: IconWidget(
+                        iconWidth: 12.h,
+                        icon: Assets.commonUiCommonIconSystemArrow,
+                        rotateAngle: -90,
+                        iconColor: AppColors.cFF7954,
+                      ),
                     ),
-                  ),
                   16.vGap,
-                  Text(
-                    "Click to open".toUpperCase(),
-                    style: 21.w4(
-                        color: AppColors.cFFFFFF,
-                        fontFamily: FontFamily.fOswaldMedium,
-                        height: 0.8),
-                  ),
+                  if (controller.fallOutAnimation.value == 1)
+                    Text(
+                      "Click to open".toUpperCase(),
+                      style: 21.w4(
+                          color: AppColors.cFFFFFF,
+                          fontFamily: FontFamily.fOswaldMedium,
+                          height: 0.8),
+                    ),
                 ],
               ),
             ),
@@ -399,8 +402,8 @@ class OpenBoxPage extends GetView<TeamIndexController> {
 
   Widget _bigCard() {
     var item = controller.currentCardPack;
-    PlayerCardEntity? player =
-        item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
+    PlayerCardEntity? player = item.playerCards.firstWhereOrNull(
+        (e) => item.playerCards.indexOf(e) == controller.selectIndex);
     return Positioned(
         top: 250.h,
         child: player != null && controller.step == 2
@@ -467,7 +470,8 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                       icon: Assets.commonUiCommonIconCurrency02,
                     ),
                     4.hGap,
-                    Text("25",
+                    Text(
+                        "${CacheApi.cardPackDefineMap[controller.currentCardPack.cardId]?.cardPackOpenMore ?? 0}",
                         style: 16.w4(
                             fontFamily: FontFamily.fOswaldMedium,
                             color: AppColors.cFFFFFF)),
