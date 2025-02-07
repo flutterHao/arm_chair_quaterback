@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -49,9 +50,25 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
   late PlayNotStartController controller;
 
   @override
+  void initState() {
+    super.initState();
+    controller = Get.put(PlayNotStartController(widget.item), tag: getTag());
+  }
+
+  String getTag() {
+    return "_${AppPages.history.length}";
+  }
+
+  @override
+  dispose() {
+    Get.delete<PlayNotStartController>(tag: getTag());
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<PlayNotStartController>(
-        init: controller = PlayNotStartController(widget.item),
+        tag: getTag(),
         builder: (_) {
           if (controller.scoresNotStartGameEntity == null) {
             return Obx(() {

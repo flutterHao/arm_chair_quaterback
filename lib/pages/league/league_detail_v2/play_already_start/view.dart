@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -48,9 +49,25 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
   late LeagueDetailPlayController controller;
 
   @override
+  void initState() {
+    super.initState();
+    controller = Get.put(LeagueDetailPlayController(widget.item),tag: getTag());
+  }
+
+  String getTag(){
+    return "_${AppPages.history.length}";
+  }
+
+  @override
+  dispose() {
+    Get.delete<LeagueDetailPlayController>(tag: getTag());
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<LeagueDetailPlayController>(
-        init: controller = LeagueDetailPlayController(widget.item),
+        tag: getTag(),
         builder: (_) {
           if (controller.nbaGameDetailEntity == null) {
             return Obx(() {

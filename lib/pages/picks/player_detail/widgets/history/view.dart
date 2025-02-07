@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -25,9 +26,25 @@ class _HistoryPageState extends State<HistoryPage>
   late HistoryController controller;
 
   @override
+  void initState() {
+    controller = Get.put(HistoryController(widget.playerId), tag: getTag());
+    super.initState();
+  }
+
+  String getTag() {
+    return "_${AppPages.history.length}";
+  }
+
+  @override
+  dispose() {
+    Get.delete<HistoryController>(tag: getTag());
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<HistoryController>(
-      init: controller = HistoryController(widget.playerId),
+      tag: getTag(),
       builder: (_) {
         return Container(
           margin: EdgeInsets.only(top: 9.w),
@@ -84,6 +101,7 @@ class _HistoryPageState extends State<HistoryPage>
                       children: [
                         GetBuilder<HistoryController>(
                             id: year,
+                            tag: getTag(),
                             builder: (_) {
                               List<SeasonHistoryItems> itemData =
                                   controller.data[year]!.seasonHistoryItems;

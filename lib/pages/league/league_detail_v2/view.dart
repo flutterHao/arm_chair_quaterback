@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -22,14 +23,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
-  const LeagueDetailV2Page({super.key});
+  LeagueDetailV2Page(this.item, {this.gameId, super.key});
+
+  ScoresEntity? item;
+  final int? gameId;
+
+  @override
+  String? get tag => (item?.gameId ?? gameId).toString();
 
   @override
   Widget build(BuildContext context) {
     return HorizontalDragBackContainer(
       child: GetBuilder<LeagueDetailV2Controller>(
-        init: LeagueDetailV2Controller(Get.arguments["item"],
-            gameId: Get.arguments["gameId"]),
+        init: LeagueDetailV2Controller(item, gameId: gameId),
+        tag: (item?.gameId ?? gameId).toString(),
         builder: (_) {
           return BlackAppWidget(
             const UserInfoBar(

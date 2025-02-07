@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -49,14 +50,32 @@ class _SummaryPageState extends State<SummaryPage>
   late SummaryController controller;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     playerDetailController = widget.playerDetailController;
+    controller = Get.put(
+        SummaryController(
+          widget.playerId,
+          playerDetailController,
+          initTabStr: widget.tabStr,
+        ),
+        tag: getTag());
+    super.initState();
+  }
+
+  String getTag() {
+    return "_${AppPages.history.length}";
+  }
+
+  @override
+  dispose() {
+    Get.delete<SummaryController>(tag: getTag());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GetBuilder<SummaryController>(
-      init: controller = SummaryController(
-        widget.playerId,
-        playerDetailController,
-        initTabStr: widget.tabStr,
-      ),
+      tag: getTag(),
       id: SummaryController.idSummaryMain,
       builder: (_) {
         if (controller.loadStatus.value != LoadDataStatus.success) {
@@ -203,6 +222,7 @@ class _SummaryPageState extends State<SummaryPage>
                           25.vGap,
                           GetBuilder<SummaryController>(
                               id: SummaryController.idTabContent,
+                              tag: getTag(),
                               builder: (c) {
                                 return Column(
                                   children: [
@@ -442,6 +462,7 @@ class _SummaryPageState extends State<SummaryPage>
                     ),
                     GetBuilder<SummaryController>(
                         id: SummaryController.idRecentPickTabContent,
+                        tag: getTag(),
                         builder: (_) {
                           if (controller.getPickInfo() == null) {
                             return const SizedBox.shrink();

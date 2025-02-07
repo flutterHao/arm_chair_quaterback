@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -36,9 +37,26 @@ class _StatsPageState extends State<StatsPage>
   late StatsController controller;
 
   @override
+  void initState() {
+    controller =
+        Get.put(StatsController(widget.playerDetailController), tag: getTag());
+    super.initState();
+  }
+
+  String getTag() {
+    return "_${AppPages.history.length}";
+  }
+
+  @override
+  dispose() {
+    Get.delete<StatsController>(tag: getTag());
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<StatsController>(
-      init: controller = StatsController(widget.playerDetailController),
+      tag: getTag(),
       builder: (logic) {
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
