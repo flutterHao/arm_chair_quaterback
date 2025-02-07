@@ -258,8 +258,8 @@ class _WheelWidgetState extends State<WheelWidget>
                           if (index == value &&
                               isAnimateEnd.value &&
                               (widget.controller?._active ?? false) &&
-                              !Get.find<DailyTaskController>()
-                                  .showRandomReward
+                              Get.find<DailyTaskController>()
+                                  .isSpinBtnEnable
                                   .value) {
                             scale = temp;
                           }

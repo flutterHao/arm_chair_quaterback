@@ -79,7 +79,8 @@ class DailyTaskController extends GetxController
   Future getDailyMissions() {
     return MineApi.getTeamMissionList(2).then((result) {
       var temp = result;
-      temp.sort((a, b) => a.missionDefineId.compareTo(b.missionDefineId));
+      final order = [2, 1, 3];
+      temp.sort((a, b) =>order.indexOf(a.status).compareTo(order.indexOf(b.status)));
       dailyMissionList = temp.map((e) {
         var missionDefineEntity = CacheApi.missionDefineList
             .firstWhere((f) => e.missionDefineId == f.missionDefineId);
@@ -346,13 +347,10 @@ class DailyTaskController extends GetxController
       showReLifeDialog();
       return;
     }
-    if (showRandomReward.value) {
-      return;
-    }
-
     if (!isSpinBtnEnable.value) {
       return;
     }
+    showRandomReward.value = false;
     isSpinBtnEnable.value = false;
     MineApi.turntable().then((result) {
       var beforeTurnTableEntity =
@@ -440,6 +438,7 @@ class DailyTaskController extends GetxController
             curve: Curves.easeInOut);
       }
     }, onError: (e) {
+      isSpinBtnEnable.value = true;
       ErrorUtils.toast(e);
     });
   }
@@ -757,10 +756,7 @@ class DailyTaskController extends GetxController
 
   /// 随机奖励抽奖结束
   onRandomAwardEnd() {
-    Future.delayed(const Duration(seconds: 2), () {
-      showRandomReward.value = false;
-      isSpinBtnEnable.value = true;
-    });
+    isSpinBtnEnable.value = true;
   }
 
   TurnRewardItem? getGirlReward() {

@@ -2,9 +2,6 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/config/wheel_random_reward_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +26,7 @@ class RandomRewardWidget extends StatefulWidget {
 class _RandomRewardWidgetState extends State<RandomRewardWidget>
     with SingleTickerProviderStateMixin {
   late DailyTaskController controller;
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   List<WheelRandomRewardEntity> list = [];
 
   @override

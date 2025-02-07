@@ -702,73 +702,71 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
         ),
       );
     }
-    if (item.status == 0) {
-      return Column(
-        children: [
-          Row(
-            children: [
-              29.hGap,
-              Text(
-                homeTeamInfo.shortEname,
-                style: 10.w4(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fRobotoRegular),
-              ),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    "WHO WILL WIN",
-                    style: 10.w4(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
-                  ),
+
+    return Column(
+      children: [
+        Row(
+          children: [
+            29.hGap,
+            Text(
+              homeTeamInfo.shortEname,
+              style: 10.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular),
+            ),
+            Expanded(
+              child: Center(
+                child: Text(
+                  "WHO WILL WIN",
+                  style: 10.w4(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
                 ),
               ),
-              Text(
-                awayTeamInfo.shortEname,
-                style: 10.w4(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fRobotoRegular),
-              ),
-              29.hGap,
-            ],
-          ),
-          3.vGap,
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              29.hGap,
-              Text(
-                "$homePercent%",
-                style: 14.w5(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium),
-              ),
-              3.hGap,
-              Expanded(
-                  child: SupportPercentProgressWidget(
-                      leftPercent: homePercent,
-                      rightPercent: 100 - homePercent)),
-              3.hGap,
-              Text(
-                "${100 - homePercent}%",
-                style: 14.w5(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium),
-              ),
-              29.hGap,
-            ],
-          ),
-          21.vGap,
-        ],
-      );
-    }
-    return const SizedBox.shrink();
+            ),
+            Text(
+              awayTeamInfo.shortEname,
+              style: 10.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular),
+            ),
+            29.hGap,
+          ],
+        ),
+        3.vGap,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            29.hGap,
+            Text(
+              "$homePercent%",
+              style: 14.w5(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium),
+            ),
+            3.hGap,
+            Expanded(
+                child: SupportPercentProgressWidget(
+                    leftPercent: homePercent,
+                    rightPercent: 100 - homePercent)),
+            3.hGap,
+            Text(
+              "${100 - homePercent}%",
+              style: 14.w5(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium),
+            ),
+            29.hGap,
+          ],
+        ),
+        21.vGap,
+      ],
+    );
   }
 
   Expanded _buildBtn(bool isChoice, int teamId,
