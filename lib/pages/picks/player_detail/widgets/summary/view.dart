@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -88,7 +89,7 @@ class SummaryPage extends GetView<SummaryController> {
                             margin: EdgeInsets.only(left: 16.w),
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "${controller.formatSeasonDate()} STATS",
+                              "${controller.formatSeasonDate()} ${LangKey.nbaTeamTabAvg.tr}",
                               style: 24.w7(
                                   height: 1,
                                   fontFamily: FontFamily.fOswaldBold),
@@ -193,7 +194,7 @@ class SummaryPage extends GetView<SummaryController> {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Text(
-                              "RECENT",
+                              LangKey.nbaTeamTabOppg.tr,
                               style: 24.w7(
                                   height: 1,
                                   fontFamily: FontFamily.fOswaldBold),
@@ -291,7 +292,7 @@ class SummaryPage extends GetView<SummaryController> {
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  "Season Avg",
+                                                  LangKey.gameTabSeasonAvg.tr,
                                                   style: 12.w4(
                                                       color: AppColors.c000000,
                                                       height: 1,
@@ -327,7 +328,7 @@ class SummaryPage extends GetView<SummaryController> {
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  "Last 5 Avg",
+                                                  LangKey.gameTabL5Avg.tr,
                                                   style: 14.w4(
                                                       color: AppColors.c000000,
                                                       height: 1,
@@ -1355,7 +1356,7 @@ class SummaryPage extends GetView<SummaryController> {
             left: 16.w,
           ),
           child: Text(
-            "STATS",
+            LangKey.nbaTeamMeanStats.tr,
             style: 19.w7(color: AppColors.c262626, height: 1),
           ),
         ),
@@ -1380,7 +1381,7 @@ class SummaryPage extends GetView<SummaryController> {
                               BorderSide(color: AppColors.cE6E6E6, width: 1.w),
                         )),
                         alignment: Alignment.center,
-                        child: Text("TYPE",
+                        child: Text(LangKey.nbaTeamMeanStats.tr,
                             style: 12.w4(
                                 color: AppColors.c000000,
                                 fontFamily: FontFamily.fRobotoMedium)),
@@ -1402,7 +1403,7 @@ class SummaryPage extends GetView<SummaryController> {
                                 color: AppColors.cE6E6E6, width: 1.w),
                           )),
                           alignment: Alignment.center,
-                          child: Text("REG",
+                          child: Text(LangKey.gameMeanRegular.tr,
                               style: 12.w4(
                                   color: AppColors.c000000,
                                   fontFamily: FontFamily.fRobotoRegular)),
@@ -1424,7 +1425,7 @@ class SummaryPage extends GetView<SummaryController> {
                                 color: AppColors.cE6E6E6, width: 1.w),
                           )),
                           alignment: Alignment.center,
-                          child: Text("POS",
+                          child: Text(LangKey.gameMeanPost.tr,
                               style: 12.w4(
                                   color: AppColors.c000000,
                                   fontFamily: FontFamily.fRobotoRegular))),
@@ -1799,5 +1800,4 @@ class SummaryPage extends GetView<SummaryController> {
       // tooltipBehavior: _tooltipBehavior,
     );
   }
-
 }

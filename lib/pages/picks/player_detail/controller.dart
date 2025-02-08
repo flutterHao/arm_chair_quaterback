@@ -2,12 +2,12 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:get/get.dart';
-
 
 class PlayerDetailController extends GetxController
     with GetTickerProviderStateMixin {
@@ -17,8 +17,11 @@ class PlayerDetailController extends GetxController
 
   NbaTeamEntity? teamInfo;
   NbaPlayerInfosPlayerBaseInfoList? baseInfo;
-  List<String> tabs = ["SUMMARY", "STATS", "LOG"];
-
+  List<String> tabs = [
+    LangKey.nbaTeamMeanOverview,
+    LangKey.nbaTeamMeanStats,
+    LangKey.nbaTeamMeanLog
+  ];
 
   NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
 
@@ -52,9 +55,9 @@ class PlayerDetailController extends GetxController
         return a.updateTime.compareTo(b.updateTime);
       });
       Map<String, NbaPlayerBaseInfoGuessInfosProperty> guessInfos =
-      (CacheApi.pickType ?? []).fold({}, (p, e) {
+          (CacheApi.pickType ?? []).fold({}, (p, e) {
         var contains =
-        result2.guessInfos.keys.toList().contains(e.pickTypeName);
+            result2.guessInfos.keys.toList().contains(e.pickTypeName);
         if (contains) {
           p[e.pickTypeName] = result2.guessInfos[e.pickTypeName]!;
         }
@@ -64,12 +67,11 @@ class PlayerDetailController extends GetxController
       nbaPlayerBaseInfoEntity = result2;
       loadStatus.value = LoadDataStatus.success;
       update([idMain]);
-    },onError: (e){
+    }, onError: (e) {
       ErrorUtils.toast(e);
       loadStatus.value = LoadDataStatus.error;
     });
   }
 
   static get idMain => "player_detail_main";
-
 }

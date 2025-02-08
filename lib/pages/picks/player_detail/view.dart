@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
@@ -82,7 +83,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   indicatorSize: TabBarIndicatorSize.tab,
                                   indicatorColor: AppColors.cFF7954,
                                   tabs: controller.tabs.map((e) {
-                                    return Text(e);
+                                    return Text(e.tr);
                                   }).toList(),
                                 ),
                               ),
@@ -203,16 +204,16 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     15.vGap,
                     Row(
                       children: [
-                        _buildPlayerInfoItem(
-                            "AGE", "${controller.baseInfo?.age ?? "0"}"),
+                        _buildPlayerInfoItem(LangKey.gameName.tr,
+                            "${controller.baseInfo?.age ?? "0"}"),
                         33.hGap,
 
                         ///todo
-                        _buildPlayerInfoItem("RPG", '0.8'),
+                        _buildPlayerInfoItem(LangKey.gameNameWt.tr, '0.8'),
                         33.hGap,
 
                         ///todo
-                        _buildPlayerInfoItem("APG", "0.6"),
+                        _buildPlayerInfoItem(LangKey.gameNameAge.tr, "0.6"),
                       ],
                     ),
                     9.vGap,
