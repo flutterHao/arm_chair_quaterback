@@ -17,7 +17,7 @@ class MineSettingController extends GetxController {
 
   var languages = [
     Language("English", "UK", "English", const Locale('en', 'US')),
-    Language("Chinese", "ZH", "中文", const Locale('zh', 'CN'))
+    // Language("Chinese", "ZH", "中文", const Locale('zh', 'CN'))
   ];
 
   // tap
@@ -40,7 +40,7 @@ class MineSettingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getCurrentLanguage();
+    // getCurrentLanguage();
   }
 
   /// dispose 释放内存
