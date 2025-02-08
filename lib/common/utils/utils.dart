@@ -62,13 +62,13 @@ class Utils {
 
   ///道具
   static String getSlotIconUrl(id) {
-    return "assets/images/Common/ui_common_prop_0$id.png";
+    return "assets/images/Common/ui_common_prop_0$id${Constant.imageSuffix}";
   }
 
   static String getPropIconUrl(id) {
     if (CacheApi.propDefineMap[id] != null) {
       String cardName = CacheApi.propDefineMap[id]!.propIcon;
-      return "assets/images/$cardName.png";
+      return "assets/images/$cardName${Constant.imageSuffix}";
     }
     return Assets.managerUiManagerGift00;
   }

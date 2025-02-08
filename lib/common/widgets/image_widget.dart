@@ -4,6 +4,7 @@
  * @Date: 2024-09-09 17:29:19
  * @LastEditTime: 2025-01-08 20:50:59
  */
+import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:common_utils/common_utils.dart';
@@ -98,6 +99,8 @@ class ImageWidget extends StatelessWidget {
     //   errorWidget: (context, url, error) => Icon(Icons.error),
     // );
 
+    String sUrl = ConfigStore.to.getServiceUrl();
+
     return ExtendedImage.network(
       // "https://seaball-1324211645.cos.ap-guangzhou.myqcloud.com/20241125_37e311267a11f9aacbcd0ea3ad63816b.png",
       url,
@@ -109,6 +112,8 @@ class ImageWidget extends StatelessWidget {
       alignment: alignment ?? Alignment.center,
       borderRadius: borderRadius,
       shape: BoxShape.rectangle,
+      //非服务器的图片资源缓存4天过期
+      cacheMaxAge: url.contains(sUrl) ? null : const Duration(days: 4),
 
       clearMemoryCacheWhenDispose: false,
       loadStateChanged: (ExtendedImageState state) {

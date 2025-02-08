@@ -5,6 +5,7 @@
  * @LastEditTime: 2025-02-08 19:01:02
  */
 import 'package:arm_chair_quaterback/common/constant/firebase_options.dart';
+import 'package:arm_chair_quaterback/common/utils/remove_cache_image_manager.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
 import 'package:arm_chair_quaterback/common/utils/loading.dart';
@@ -57,6 +58,7 @@ class Global {
 
     // service
     Get.put(WebsocketServices());
+    // RemoveCacheImageManager.check();
   }
 
   static Future<void> initFirebaseCrashlytics() async {
