@@ -77,10 +77,10 @@ class AppPages {
             child: child,
           );
         },
-        transitionDuration: const Duration(milliseconds: 300),
+        transitionDuration: Duration(milliseconds: Constant.transitionDuration),
         // 进入动画时间
         reverseTransitionDuration:
-            Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
+            const Duration(milliseconds: 100), // 退出动画时间
       );
     }
 
