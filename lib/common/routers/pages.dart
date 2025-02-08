@@ -72,15 +72,14 @@ class AppPages {
             position: Tween<Offset>(
               begin: const Offset(1, 0.0),
               end: Offset.zero,
-            ).animate(
-                CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
+            ).animate(CurvedAnimation(parent: animation, curve: Curves.linear)),
             child: child,
           );
         },
-        transitionDuration: Duration(milliseconds: Constant.transitionDuration),
+        transitionDuration: const Duration(milliseconds: 300),
         // 进入动画时间
         reverseTransitionDuration:
-            const Duration(milliseconds: 100), // 退出动画时间
+            Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
       );
     }
 
@@ -123,7 +122,7 @@ class AppPages {
           RankBinding().dependencies();
           return const NBARankPage();
         case RouteNames.leagueLeagueDetail:
-          return  LeagueDetailV2Page(Get.arguments["item"],
+          return LeagueDetailV2Page(Get.arguments["item"],
               gameId: Get.arguments["gameId"]);
         case RouteNames.inboxDetail:
           return const InboxDetailPage();

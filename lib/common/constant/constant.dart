@@ -112,5 +112,5 @@ class Constant {
 
   static String imageSuffix = ".png";
 
-  static int transitionDuration = 200;
+  static int transitionDuration = 100;
 }
