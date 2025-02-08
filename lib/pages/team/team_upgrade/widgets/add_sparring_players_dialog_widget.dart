@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -448,7 +449,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
       return;
     }
     Get.back();
-    var result = await showModalBottomSheet(
+    var result = await BottomTipDialog.showWithSound(
         isScrollControlled: true,
         enableDrag: false,
         backgroundColor: AppColors.cTransparent,

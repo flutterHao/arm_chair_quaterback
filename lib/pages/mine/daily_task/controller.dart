@@ -80,7 +80,8 @@ class DailyTaskController extends GetxController
     return MineApi.getTeamMissionList(2).then((result) {
       var temp = result;
       final order = [2, 1, 3];
-      temp.sort((a, b) =>order.indexOf(a.status).compareTo(order.indexOf(b.status)));
+      temp.sort(
+          (a, b) => order.indexOf(a.status).compareTo(order.indexOf(b.status)));
       dailyMissionList = temp.map((e) {
         var missionDefineEntity = CacheApi.missionDefineList
             .firstWhere((f) => e.missionDefineId == f.missionDefineId);
@@ -475,7 +476,7 @@ class DailyTaskController extends GetxController
       if (hasBall) {
         try {
           Get.find<TrainingController>().getData();
-        } catch(e){
+        } catch (e) {
           print('TrainingController not init');
         }
       }
@@ -487,7 +488,7 @@ class DailyTaskController extends GetxController
       }
       Get.find<HomeController>().getOngoingDailyTaskList();
 
-      await showModalBottomSheet(
+      await BottomTipDialog.showWithSound(
           isScrollControlled: true,
           isDismissible: false,
           backgroundColor: AppColors.cTransparent,
@@ -495,7 +496,6 @@ class DailyTaskController extends GetxController
           builder: (context) {
             return const SuccessWidget();
           });
-
     }, onError: (e) {
       ErrorUtils.toast(e);
     });

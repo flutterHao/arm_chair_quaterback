@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/power_change_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/controller.dart';
@@ -211,7 +213,7 @@ class SlotDialogController extends GetxController
     if (upStarTeamPlayerV2Entity.successRate <= 0) {
       /// 模拟第一次就抽到受伤结束游戏
       selectIndexList = [9];
-    }else {
+    } else {
       slotCount.value += 1;
       startUpItem = upStarTeamPlayerV2Entity.starUpList.last;
       upStarTeamPlayerV2Entity.starUpList.removeAt(0);
@@ -220,11 +222,7 @@ class SlotDialogController extends GetxController
       } else if (startUpItem?.type == 3) {
         selectIndexList = [10];
       } else {
-        selectIndexList = startUpItem!
-            .attrCount
-            .toJson()
-            .keys
-            .fold([], (p, e) {
+        selectIndexList = startUpItem!.attrCount.toJson().keys.fold([], (p, e) {
           var value = startUpItem!.attrCount.toJson()[e];
           if (value > 0) {
             var key = e;
@@ -350,6 +348,8 @@ class SlotDialogController extends GetxController
   void gameOver(bool success) {
     isGameOver.value = true;
     isSuccess = success;
+    SoundServices.to
+        .playSound(success ? Assets.soundStarupSuc : Assets.soundStarupFail);
     Future.delayed(const Duration(milliseconds: 300), () {
       btnPageController.animateToPage(1,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);

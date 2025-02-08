@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -166,7 +167,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                         // var a = item.toString();
                         controller.toOpenBoxPage(item);
                       } else {
-                        showModalBottomSheet(
+                        BottomTipDialog.showWithSound(
                             isScrollControlled: true,
                             context: Get.context!,
                             builder: (context) {

@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -33,7 +34,7 @@ class MineAccountPage extends GetView<MineAccountController> {
                 _buildItem(
                     Assets.iconUiIconGoogle, "Google", "dasj98@dwhoi.com"),
                 _buildItem(Assets.iconUiIconFactbook, "Facebook", "not bound"),
-                _buildItem(Assets.iconUiIconApple , "Apple", "not bound"),
+                _buildItem(Assets.iconUiIconApple, "Apple", "not bound"),
               ],
             ),
           ),
@@ -91,7 +92,7 @@ class MineAccountPage extends GetView<MineAccountController> {
   }
 
   void _showDialog() {
-    showModalBottomSheet(
+    BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         builder: (context) {

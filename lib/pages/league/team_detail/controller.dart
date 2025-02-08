@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-24 18:02:02
+ * @LastEditTime: 2025-02-07 16:13:22
  */
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,6 +74,12 @@ class TeamDetailController extends GetxController
   void onReady() {
     super.onReady();
     _initData();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    Log.e("onClose");
   }
 
   _initData() {

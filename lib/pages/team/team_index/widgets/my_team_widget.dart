@@ -387,7 +387,7 @@ class MyTeamWidget extends StatelessWidget {
               onTap: () {
                 // Get.toNamed(RouteNames.teamMemberPage,
                 //     id: GlobalNestedKey.TEAM);
-                // showModalBottomSheet(
+                // BottomTipDialog.showWithSound(
                 //     barrierColor: Colors.transparent,
                 //     backgroundColor: Colors.transparent,
                 //     isScrollControlled: true,

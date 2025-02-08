@@ -7,11 +7,13 @@ import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
@@ -630,6 +632,7 @@ class TrainingController extends GetxController
       slotsAnimlList[i].reset();
     }
     offsetList.clear();
+    SoundServices.to.playSound(Assets.soundWaitingAward, loop: true);
     for (int i = 0; i < scrollerCtrlList.length; i++) {
       Future.delayed(Duration(milliseconds: i * 200), () {
         _scrollColumn(i);
@@ -694,6 +697,8 @@ class TrainingController extends GetxController
 
     ///2:状态
     if (awads.contains(2)) {
+      SoundServices.to.playSound(
+          awardLength > 4 ? Assets.soundStatusBig : Assets.soundStatusSmall);
       await startPlayerScroll(0);
       //更新球员状态
       Get.find<TeamController>().updateTeamInfo();
@@ -825,6 +830,8 @@ class TrainingController extends GetxController
     cash.value = cashs;
     caShScale.value = true;
     updateScroller();
+    SoundServices.to.playSound(
+        awardLength > 4 ? Assets.soundMoneyBig : Assets.soundMoneySmall);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       caShScale.value = false;
     });
@@ -925,6 +932,9 @@ class TrainingController extends GetxController
         // update(["playerList"]);
         for (int i = 0; i < statusScollerList.length; i++) {
           statusScroll(i, oldList[i]);
+          SoundServices.to.playSound(awardLength > 4
+              ? Assets.soundStatsRecoverAll
+              : Assets.soundStatsRecoverOne);
         }
         updateScroller();
         await Future.delayed(

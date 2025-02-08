@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/success_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -173,7 +174,7 @@ class _Item extends StatelessWidget {
               ),
               MtInkWell(
                 onTap: () {
-                  showModalBottomSheet(
+                  BottomTipDialog.showWithSound(
                       isScrollControlled: true,
                       context: Get.context!,
                       builder: (context) {

@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -105,7 +106,7 @@ class LevelWidget extends StatelessWidget {
                     child: MtInkWell(
                       splashColor: Colors.transparent,
                       onTap: () {
-                        showModalBottomSheet(
+                        BottomTipDialog.showWithSound(
                             isScrollControlled: true,
                             context: Get.context!,
                             backgroundColor: Colors.transparent,

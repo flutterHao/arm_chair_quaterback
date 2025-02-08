@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
@@ -276,7 +277,7 @@ class NewsListItem extends GetView<NewListController> {
                 CommentController ctrl =
                     Get.find(tag: newsDetail.id.toString());
                 ctrl.getReviews(newsDetail.id, isRefresh: true);
-                await showModalBottomSheet(
+                await BottomTipDialog.showWithSound(
                   isScrollControlled: true,
                   context: Get.context!,
                   barrierColor: Colors.transparent,

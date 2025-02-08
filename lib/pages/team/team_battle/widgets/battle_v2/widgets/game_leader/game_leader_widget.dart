@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/WidgetUtils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -223,13 +224,16 @@ class GameLeaderWidget extends StatelessWidget {
                                         height: 93.w,
                                         playerId: item.playerInfo.playerId,
                                         player: item.teamId ==
-                                            Get.find<TeamBattleV2Controller>()
-                                                .battleEntity
-                                                .homeTeam
-                                                .teamId?controller
-                                            .getTeamPlayerInfoEntityByPlayerId(
-                                                item.teamId,
-                                                item.playerInfo.playerId):null,
+                                                Get.find<
+                                                        TeamBattleV2Controller>()
+                                                    .battleEntity
+                                                    .homeTeam
+                                                    .teamId
+                                            ? controller
+                                                .getTeamPlayerInfoEntityByPlayerId(
+                                                    item.teamId,
+                                                    item.playerInfo.playerId)
+                                            : null,
                                         grade: Utils.getPlayBaseInfo(
                                                 item.playerInfo.playerId)
                                             .grade,
@@ -316,7 +320,8 @@ class GameLeaderWidget extends StatelessWidget {
                                                           width: 1.w,
                                                           color: item.color)),
                                                   child: ImageWidget(
-                                                      imageFailedPath: Assets.teamUiHead03,
+                                                      imageFailedPath:
+                                                          Assets.teamUiHead03,
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10.5.w),
@@ -346,7 +351,7 @@ class GameLeaderWidget extends StatelessWidget {
                                 if (controller.event == null) {
                                   return;
                                 }
-                                showModalBottomSheet(
+                                BottomTipDialog.showWithSound(
                                     isScrollControlled: true,
                                     context: context,
                                     backgroundColor: AppColors.cTransparent,

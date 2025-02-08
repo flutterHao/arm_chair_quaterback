@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
@@ -266,7 +267,7 @@ class PlayerItem extends GetView<TeamController> {
                           ? MtInkWell(
                               onTap: () {
                                 //解雇
-                                showModalBottomSheet(
+                                BottomTipDialog.showWithSound(
                                     context: context,
                                     isScrollControlled: true,
                                     builder: (context) {

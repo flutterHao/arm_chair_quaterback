@@ -7,8 +7,10 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,8 +25,7 @@ class GameGuess {
   GameGuess(this.scoresEntity);
 }
 
-class LeagueController extends GetxController
-    with GetTickerProviderStateMixin {
+class LeagueController extends GetxController with GetTickerProviderStateMixin {
   LeagueController();
 
   RefreshController refreshController = RefreshController();
@@ -77,7 +78,7 @@ class LeagueController extends GetxController
   /// 预加载今明两天的数据,因为只可以竞猜这两天的赛程
   preLoadData() {
     currentPageIndex.value = 6;
-    getDataFromNet(getDataTimes()[currentPageIndex.value-1]);
+    getDataFromNet(getDataTimes()[currentPageIndex.value - 1]);
     getDataFromNet(getDataTimes()[currentPageIndex.value]);
     getDataFromNet(getDataTimes()[currentPageIndex.value + 1]);
   }
@@ -195,7 +196,7 @@ class LeagueController extends GetxController
         if (needShowLoading) {
           loadStatus.value = LoadDataStatus.success;
         }
-        if(tabController != null){
+        if (tabController != null) {
           tabController!.dispose();
         }
         tabController = TabController(
@@ -256,6 +257,9 @@ class LeagueController extends GetxController
     print('LeagueController---choiceSize.value000:${choiceSize.value}');
     choiceSize.value = getAllChoiceData().length;
     print('LeagueController---choiceSize.value111:${choiceSize.value}');
+    if (gameGuess.choiceTeamId.value != 0) {
+      SoundServices.to.playSound(Assets.soundUseCoin);
+    }
   }
 
   static String get idGameGuessConfirmDialog => "id_game_guess_confirm_dialog";
@@ -285,7 +289,7 @@ class LeagueController extends GetxController
       }
       return p;
     });
-    if(listKeys.isEmpty){
+    if (listKeys.isEmpty) {
       return;
     }
     guessSuccessTabKeys.value = listKeys;

@@ -1,8 +1,16 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-11-21 21:07:12
+ * @LastEditTime: 2025-02-08 10:30:00
+ */
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +35,7 @@ class GuessItemControllerV2 extends GetxController {
       currentIndex.value = playerV2.status = -1;
     } else {
       currentIndex.value = playerV2.status = i;
+      SoundServices.to.playSound(Assets.soundUseCoin);
     }
     Get.find<PicksIndexController>().choiceOne(player: playerV2);
   }
@@ -50,15 +59,15 @@ class GuessItemControllerV2 extends GetxController {
         if (lastTimeMs == 0) {
           t.cancel();
           gameStartTimeStr.value =
-          "In the game: ${MyDateUtils.formatHM_AM(gameStart)}";
+              "In the game: ${MyDateUtils.formatHM_AM(gameStart)}";
         }
         gameStartTimeStr.value = MyDateUtils.formatDate(
             MyDateUtils.getDateTimeByMs(lastTimeMs),
             format: DateFormats.M_S);
       });
-    } else if(MyDateUtils.isTomorrow(playerV2.guessInfo.gameStartTime)){
+    } else if (MyDateUtils.isTomorrow(playerV2.guessInfo.gameStartTime)) {
       gameStartTimeStr.value = "Tomorrow ${MyDateUtils.formatHM_AM(gameStart)}";
-    }else {
+    } else {
       gameStartTimeStr.value =
           "${MyDateUtils.formatDate(gameStart, format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(gameStart)}";
     }

@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
@@ -32,6 +33,7 @@ class _SuccessDialogState extends State<SuccessDialog>
   @override
   void initState() {
     super.initState();
+    SoundServices.to.playSound(Assets.soundOpenwindow);
     animationController = EasyAnimationController(
         vsync: this,
         begin: 0.0,
@@ -54,6 +56,8 @@ class _SuccessDialogState extends State<SuccessDialog>
 
   @override
   void dispose() {
+    // SoundServices.to.playSound(Assets.soundWindowClose);
+    SoundServices.to.playSound(Assets.soundDelete);
     animationController.dispose();
     super.dispose();
   }
@@ -114,7 +118,10 @@ class _SuccessDialogState extends State<SuccessDialog>
           Expanded(child: widget.content),
           widget.comfirmBtn ??
               MtInkWell(
-                onTap: () => Get.back(),
+                onTap: () {
+                  // SoundServices.to.playSound(Assets.soundClick);
+                  Get.back();
+                },
                 child: Container(
                   height: 51.w,
                   margin: EdgeInsets.symmetric(horizontal: 16.w),

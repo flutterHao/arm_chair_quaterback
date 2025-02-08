@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/stats_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/rank_card.dart';
@@ -117,7 +118,7 @@ class _StatsTabState extends State<StatsTab>
                                     Utils.getTeamInfo(player.teamId).shortEname,
                                 rankValue: getRankValue(rankType, first),
                                 onTap: () {
-                                  showModalBottomSheet(
+                                  BottomTipDialog.showWithSound(
                                       context: Get.context!,
                                       backgroundColor: Colors.transparent,
                                       builder: (context) {
@@ -199,7 +200,7 @@ class _StatsTabState extends State<StatsTab>
                                   rankValue: getRankValue(rankType, team),
                                   rank: rank,
                                   onTap: () {
-                                    showModalBottomSheet(
+                                    BottomTipDialog.showWithSound(
                                         context: Get.context!,
                                         backgroundColor: Colors.transparent,
                                         builder: (context) {

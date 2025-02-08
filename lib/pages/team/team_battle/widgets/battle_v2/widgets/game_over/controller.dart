@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.da
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
@@ -47,6 +48,8 @@ class GameOverController extends GetxController {
   void onReady() {
     super.onReady();
     startObs.value = true;
+    SoundServices.to
+        .playSound(isLeftWin() ? Assets.soundGamewin : Assets.soundGameFail);
     print('=========onReady');
   }
 

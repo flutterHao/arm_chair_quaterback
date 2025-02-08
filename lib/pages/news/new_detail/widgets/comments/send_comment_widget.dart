@@ -8,6 +8,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -172,7 +173,7 @@ Future showCommentBottomSheet(BuildContext context,
     required ReviewEntity reviewsItem,
     // int targetId = 0,
     String hintText = "Say something..."}) async {
-  await showModalBottomSheet(
+  await BottomTipDialog.showWithSound(
     context: Get.context!,
     isScrollControlled: true, // 设置为 true，允许内容随着键盘升起而调整
     backgroundColor: Colors.transparent,

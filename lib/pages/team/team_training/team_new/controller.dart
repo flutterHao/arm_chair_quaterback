@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dar
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
@@ -500,7 +501,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     //   // Loading.toast("Your team's morale is full.");
     //   return;
     // }
-    showModalBottomSheet(
+    BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         // barrierColor: Colors.transparent,

@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -54,7 +55,7 @@ class BottomGuessTipWidget extends StatelessWidget {
               scaleX: true,
               minScale: 0.95,
               onTap: () async {
-                await showModalBottomSheet(
+                await BottomTipDialog.showWithSound(
                     isScrollControlled: true,
                     backgroundColor: AppColors.cTransparent,
                     context: Get.context!,

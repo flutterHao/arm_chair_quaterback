@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog_v2.dart';
@@ -48,7 +49,7 @@ class RankStartButton extends StatelessWidget {
         if (minLimit()) {
           return;
         }
-        await showModalBottomSheet(
+        await BottomTipDialog.showWithSound(
             isScrollControlled: true,
             backgroundColor: AppColors.cTransparent,
             context: Get.context!,

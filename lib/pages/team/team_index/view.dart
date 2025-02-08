@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-08 15:38:09
+ * @LastEditTime: 2025-02-07 16:25:06
  */
 
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
@@ -90,9 +90,9 @@ class _TeamView extends GetView<TeamIndexController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(BeautyController());
-    Get.put(TeamController());
-    Get.put(TrainingController());
+    Get.lazyPut(() => BeautyController());
+    Get.lazyPut(() => TeamController());
+    Get.lazyPut(() => TrainingController());
     return GetBuilder<TeamIndexController>(
       init: TeamIndexController(),
       id: "team_index",

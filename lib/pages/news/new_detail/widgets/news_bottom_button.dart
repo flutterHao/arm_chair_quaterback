@@ -2,11 +2,13 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-12-28 18:53:26
+ * @LastEditTime: 2025-02-07 17:26:33
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -128,8 +130,8 @@ class NewsBottomButton extends GetView<NewListController> {
               final ctrl =
                   Get.put(CommentController(), tag: detail.id.toString());
               ctrl.getReviews(detail.id, isRefresh: true);
-
-              await showModalBottomSheet(
+              // SoundServices.to.playSound(Assets.soundWindowOpen);
+              await BottomTipDialog.showWithSound(
                 isScrollControlled: true,
                 context: Get.context!,
                 // barrierColor: Colors.transparent,

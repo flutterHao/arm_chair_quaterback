@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
@@ -30,7 +31,7 @@ class BottomTipDialog {
     double? height,
     Color? cancelBgColor,
   }) {
-    return showModalBottomSheet(
+    return BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: context,
         builder: (context) {
@@ -50,9 +51,32 @@ class BottomTipDialog {
           );
         });
   }
+
+  static Future showWithSound({
+    required BuildContext context,
+    required WidgetBuilder builder,
+    Color? backgroundColor,
+    Color? barrierColor,
+    bool isDismissible = true,
+    bool enableDrag = true,
+    bool isScrollControlled = false,
+  }) {
+    SoundServices.to.playSound(Assets.soundWindowOpen);
+    return showModalBottomSheet(
+            isScrollControlled: isScrollControlled,
+            backgroundColor: AppColors.cTransparent,
+            barrierColor: barrierColor,
+            isDismissible: isDismissible,
+            enableDrag: enableDrag,
+            context: context,
+            builder: builder)
+        .then((v) {
+      SoundServices.to.playSound(Assets.soundDelete);
+    });
+  }
 }
 
-class _BottomTipDialog extends StatelessWidget {
+class _BottomTipDialog extends StatefulWidget {
   const _BottomTipDialog({
     required this.onTap,
     this.icon,
@@ -82,17 +106,37 @@ class _BottomTipDialog extends StatelessWidget {
   final Color? cancelBgColor;
 
   @override
+  _BottomTipDialogState createState() => _BottomTipDialogState();
+}
+
+class _BottomTipDialogState extends State<_BottomTipDialog> {
+  @override
+  void initState() {
+    super.initState();
+    // 播放打开音效
+    SoundServices.to.playSound(Assets.soundWindowOpen);
+  }
+
+  @override
+  void dispose() {
+    // 播放关闭音效
+    // SoundServices.to.playSound(Assets.soundWindowClose);
+    // SoundServices.to.playSound(Assets.soundDelete);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: height ?? 419.w,
+      height: widget.height ?? 419.w,
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         children: [
           const DialogTopBtn(),
           38.vGap,
-          icon ??
+          widget.icon ??
               IconWidget(
                 iconWidth: 62.w,
                 icon: Assets.commonUiCommonIconSystemDanger,
@@ -100,19 +144,19 @@ class _BottomTipDialog extends StatelessWidget {
               ),
           25.vGap,
           Text(
-            title ?? "ARE YOU SURE",
+            widget.title ?? "ARE YOU SURE",
             style: 27.w5(
                 color: AppColors.c000000,
                 height: 1,
                 fontFamily: FontFamily.fOswaldMedium),
           ),
-          if (desc != null)
+          if (widget.desc != null)
             Container(
               margin: EdgeInsets.only(top: 10.w),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.w),
                 child: Text(
-                  desc!,
+                  widget.desc!,
                   textAlign: TextAlign.center,
                   style: 14.w4(
                       color: AppColors.c000000,
@@ -121,8 +165,8 @@ class _BottomTipDialog extends StatelessWidget {
                 ),
               ),
             ),
-          centerWidget ?? const Expanded(child: SizedBox.shrink()),
-          if (btnDirection == Axis.vertical)
+          widget.centerWidget ?? const Expanded(child: SizedBox.shrink()),
+          if (widget.btnDirection == Axis.vertical)
             verticalBtnWidget()
           else
             horizontalBtnWidget(),
@@ -140,13 +184,16 @@ class _BottomTipDialog extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           constraints: BoxConstraints(maxWidth: 343.w),
           decoration: BoxDecoration(
-              color: confirmBtnColor ?? AppColors.c000000,
+              color: widget.confirmBtnColor ?? AppColors.c000000,
               borderRadius: BorderRadius.circular(9.w)),
           child: MtInkWell(
-            onTap: () => onTap.call(),
+            onTap: () {
+              SoundServices.to.playSound(Assets.soundClick);
+              widget.onTap.call();
+            },
             child: Center(
               child: Text(
-                confirmStr ?? "CONFIRM",
+                widget.confirmStr ?? "CONFIRM",
                 style: 23.w5(
                     color: AppColors.cF2F2F2,
                     height: 1,
@@ -161,20 +208,23 @@ class _BottomTipDialog extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           constraints: BoxConstraints(maxWidth: 343.w),
           decoration: BoxDecoration(
-              color: cancelBgColor,
+              color: widget.cancelBgColor,
               borderRadius: BorderRadius.circular(9.w),
               border: Border.all(
-                  color: cancelBgColor != null
+                  color: widget.cancelBgColor != null
                       ? AppColors.cTransparent
                       : AppColors.c666666,
                   width: 1.w)),
           child: MtInkWell(
-            onTap: () => cancelTap != null ? cancelTap!.call() : Get.back(),
+            onTap: () {
+              SoundServices.to.playSound(Assets.soundClick);
+              widget.cancelTap != null ? widget.cancelTap!.call() : Get.back();
+            },
             child: Center(
               child: Text(
-                cancelStr ?? "CANCEL",
+                widget.cancelStr ?? "CANCEL",
                 style: 23.w5(
-                    color: cancelBgColor != null
+                    color: widget.cancelBgColor != null
                         ? AppColors.cFFFFFF
                         : AppColors.c000000,
                     height: 1,
@@ -196,20 +246,23 @@ class _BottomTipDialog extends StatelessWidget {
           width: 167.w,
           height: 51.w,
           decoration: BoxDecoration(
-              color: cancelBgColor,
+              color: widget.cancelBgColor,
               borderRadius: BorderRadius.circular(9.w),
               border: Border.all(
-                  color: cancelBgColor != null
+                  color: widget.cancelBgColor != null
                       ? AppColors.cTransparent
                       : AppColors.c666666,
                   width: 1.w)),
           child: MtInkWell(
-            onTap: () => cancelTap != null ? cancelTap!.call() : Get.back(),
+            onTap: () {
+              SoundServices.to.playSound(Assets.soundClick);
+              widget.cancelTap != null ? widget.cancelTap!.call() : Get.back();
+            },
             child: Center(
               child: Text(
-                cancelStr ?? "CANCEL",
+                widget.cancelStr ?? "CANCEL",
                 style: 23.w5(
-                    color: cancelBgColor != null
+                    color: widget.cancelBgColor != null
                         ? AppColors.cFFFFFF
                         : AppColors.c000000,
                     height: 1,
@@ -223,13 +276,16 @@ class _BottomTipDialog extends StatelessWidget {
           width: 167.w,
           height: 51.w,
           decoration: BoxDecoration(
-              color: confirmBtnColor ?? AppColors.c000000,
+              color: widget.confirmBtnColor ?? AppColors.c000000,
               borderRadius: BorderRadius.circular(9.w)),
           child: MtInkWell(
-            onTap: () => onTap.call(),
+            onTap: () {
+              SoundServices.to.playSound(Assets.soundClick);
+              widget.onTap.call();
+            },
             child: Center(
               child: Text(
-                confirmStr ?? "CONFIRM",
+                widget.confirmStr ?? "CONFIRM",
                 style: 23.w5(
                     color: AppColors.cF2F2F2,
                     height: 1,

@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-12-19 22:04:25
+ * @LastEditTime: 2025-02-07 18:34:19
+ */
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/match_success.dart';
@@ -5,10 +11,8 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class TeamBattlePage extends GetView<TeamBattleController> {
   const TeamBattlePage({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,6 @@ class TeamBattlePage extends GetView<TeamBattleController> {
               else
                 // const BattleMain()
                 TeamBattleV2Page()
-
             ],
           );
         });

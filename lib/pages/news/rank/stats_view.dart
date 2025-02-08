@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/stats_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/rank_card.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -147,7 +148,7 @@ class StatsPlayerRankCard extends GetView<RankController> {
         shortTeamName: Utils.getTeamInfo(player.teamId).shortEname,
         rankValue: controller.getRankValue(rankType, first),
         onTap: () {
-          showModalBottomSheet(
+          BottomTipDialog.showWithSound(
               context: Get.context!,
               backgroundColor: Colors.transparent,
               builder: (context) {
@@ -184,7 +185,7 @@ class StatsTeamRankCard extends GetView<RankController> {
       name: first.teamName,
       rankValue: controller.getRankValue(rankType, first),
       onTap: () {
-        showModalBottomSheet(
+        BottomTipDialog.showWithSound(
             context: Get.context!,
             backgroundColor: Colors.transparent,
             builder: (context) {

@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-16 21:17:39
- * @LastEditTime: 2024-12-20 15:49:07
+ * @LastEditTime: 2025-02-07 15:38:37
  */
 import 'package:arm_chair_quaterback/common/constant/firebase_options.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -48,6 +49,7 @@ class Global {
     await initFirebaseCrashlytics();
 
     await Get.putAsync<StorageService>(() => StorageService().init());
+    Get.put<SoundServices>(SoundServices());
 
     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());

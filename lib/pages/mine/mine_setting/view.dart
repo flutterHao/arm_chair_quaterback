@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -10,7 +11,6 @@ import 'package:arm_chair_quaterback/pages/mine/mine_setting/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 
 class MineSettingPage extends GetView<MineSettingController> {
   const MineSettingPage({super.key});
@@ -84,7 +84,7 @@ class MineSettingPage extends GetView<MineSettingController> {
   }
 
   void _showDialog() {
-    showModalBottomSheet(
+    BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         builder: (context) {

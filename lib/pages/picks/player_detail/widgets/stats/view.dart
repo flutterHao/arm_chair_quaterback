@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -58,7 +59,7 @@ class StatsPage extends GetView<StatsController> {
                       controller.tabController.animateTo(0);
                       controller.getRegularData();
                       controller.getOffData();
-                      showModalBottomSheet(
+                      BottomTipDialog.showWithSound(
                           context: context,
                           builder: (context) {
                             return Container(

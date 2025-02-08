@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -177,7 +178,7 @@ class SeaonRankController extends GetxController {
   }
 
   void goSeasonRankDialog() async {
-    await showModalBottomSheet(
+    await BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         // barrierColor: Colors.transparent,
@@ -190,7 +191,7 @@ class SeaonRankController extends GetxController {
   }
 
   void goSeasonRewardDialog() {
-    showModalBottomSheet(
+    BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         // barrierColor: Colors.transparent,
@@ -201,7 +202,7 @@ class SeaonRankController extends GetxController {
   }
 
   void goMatchLevelDialog() {
-    showModalBottomSheet(
+    BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         // barrierColor: Colors.transparent,

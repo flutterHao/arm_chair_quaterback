@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/WidgetUtils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -320,7 +321,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                         Expanded(
                           child: MtInkWell(
                             onTap: () {
-                              showModalBottomSheet(
+                              BottomTipDialog.showWithSound(
                                   isScrollControlled: true,
                                   context: context,
                                   backgroundColor: AppColors.cTransparent,

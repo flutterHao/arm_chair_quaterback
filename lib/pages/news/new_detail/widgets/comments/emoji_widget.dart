@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2025-01-10 15:31:28
+ * @LastEditTime: 2025-02-07 20:18:37
  */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -38,6 +39,7 @@ class EmojiWidget extends StatelessWidget {
           return Obx(() {
             return GestureDetector(
               onTap: () {
+                SoundServices.to.playSound(Assets.soundEmojiSend);
                 current.value = index;
                 // EasyLoading.showToast("Not Open",
                 //     duration: const Duration(milliseconds: 200));

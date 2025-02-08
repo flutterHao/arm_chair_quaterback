@@ -236,6 +236,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
               ],
             ),
           ),
+
           /// 高光时刻气泡
           Positioned(
             top: 0.w,
@@ -257,6 +258,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
               ],
             ),
           ),
+
           /// 篮球轨迹线
           Obx(() {
             controller.shootOffset.value;
@@ -297,8 +299,6 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
           //     child: Container(),
           //   ),
           // ),
-
-
         ],
       ),
     );

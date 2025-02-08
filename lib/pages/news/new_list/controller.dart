@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-12-28 18:23:32
+ * @LastEditTime: 2025-02-07 20:16:53
  */
 import 'dart:async';
 
@@ -14,8 +14,10 @@ import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -131,6 +133,7 @@ class NewListController extends GetxController {
         /// 未点赞状态
         item.likes = item.likes + 1;
         item.isLike.value = 1;
+        SoundServices.to.playSound(Assets.soundSayYes);
       } else if (item.isLike.value == 1) {
         /// 已点赞状态
         item.likes = item.likes - 1;
@@ -140,6 +143,7 @@ class NewListController extends GetxController {
         item.unLikes = item.unLikes - 1;
         item.likes = item.likes + 1;
         item.isLike.value = 1;
+        SoundServices.to.playSound(Assets.soundSayYes);
       }
 
       update(["newsList"]);
@@ -154,12 +158,14 @@ class NewListController extends GetxController {
         item.likes = item.likes - 1;
         item.unLikes = (item.unLikes) + 1;
         item.isLike.value = -1;
+        SoundServices.to.playSound(Assets.soundSayNo);
       } else if (item.isLike.value == -1) {
         item.unLikes = (item.unLikes) - 1;
         item.isLike.value = 0;
       } else {
         item.unLikes = (item.unLikes) + 1;
         item.isLike.value = -1;
+        SoundServices.to.playSound(Assets.soundSayNo);
       }
 
       // update();
@@ -178,9 +184,10 @@ class NewListController extends GetxController {
 
   shareNews(NewsListDetail newsDetail) async {
     // Utils.generateAndShareImage(_globalKey);
-    var shareResult = await Share.share("${newsDetail.title}\n\n${newsDetail.content}",
+    var shareResult = await Share.share(
+        "${newsDetail.title}\n\n${newsDetail.content}",
         subject: newsDetail.title);
-    if(shareResult.status == ShareResultStatus.success) {
+    if (shareResult.status == ShareResultStatus.success) {
       NewsApi.shareNews();
     }
     // Share.shareXFiles([XFile(newsDetail.imgUrl)],

@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -129,7 +130,7 @@ class NBARankPage extends GetView<RankController> {
                                   child: Obx(() {
                                     return InkWell(
                                       onTap: () {
-                                        showModalBottomSheet(
+                                        BottomTipDialog.showWithSound(
                                             context: Get.context!,
                                             isScrollControlled: true,
                                             builder: (context) {

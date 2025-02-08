@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -45,7 +46,8 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
       teamId = widget.teamId ?? args["teamId"];
     }
     return GetBuilder<PersonalCenterController>(
-      init: controller = PersonalCenterController(teamId: teamId, initTab: initTab),
+        init: controller =
+            PersonalCenterController(teamId: teamId, initTab: initTab),
         id: PersonalCenterController.idPersonalCenterMain,
         builder: (_) {
           return HorizontalDragBackContainer(
@@ -411,7 +413,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
             ],
           )),
     );
-    showModalBottomSheet(
+    BottomTipDialog.showWithSound(
         context: Get.context!,
         builder: (context) {
           return sizedBox;

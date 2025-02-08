@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
@@ -288,7 +289,7 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
         .length;
     var status = controller.getStatus();
     var success = controller.data[0].reciveAwardInfo.success;
-    showModalBottomSheet(
+    BottomTipDialog.showWithSound(
         context: context,
         isScrollControlled: true,
         builder: (context) {

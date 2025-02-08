@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -424,7 +425,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                   duration: const Duration(milliseconds: 300),
                   child: Center(
                     child: MtInkWell(
-                      onTap: () => showModalBottomSheet(
+                      onTap: () => BottomTipDialog.showWithSound(
                         context: context,
                         builder: (BuildContext context) {
                           return AddSparringPlayersDialogWidget(

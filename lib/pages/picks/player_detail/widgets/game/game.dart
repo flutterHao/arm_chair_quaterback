@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -554,7 +555,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
 
   Future<void> _upgradeDialog(BuildContext context) async {
     controller.upgradeTap();
-    await showModalBottomSheet(
+    await BottomTipDialog.showWithSound(
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
         context: Get.context!,

@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -833,7 +834,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                                   right: 9.w,
                                   child: MtInkWell(
                                     onTap: () {
-                                      showModalBottomSheet(
+                                      BottomTipDialog.showWithSound(
                                           context: context,
                                           isScrollControlled: true,
                                           backgroundColor:

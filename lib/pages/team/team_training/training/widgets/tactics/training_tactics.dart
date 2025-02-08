@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
@@ -178,7 +179,7 @@ class TacticList extends StatelessWidget {
         builder: (ctrl) {
           return GestureDetector(
             onTap: () {
-              showModalBottomSheet(
+              BottomTipDialog.showWithSound(
                   isScrollControlled: true,
                   // barrierColor: Colors.transparent,
                   backgroundColor: Colors.transparent,

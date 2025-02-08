@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-07 11:11:02
+ * @LastEditTime: 2025-02-07 20:32:51
  */
 
 import 'dart:async';
@@ -17,8 +17,11 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
@@ -182,6 +185,7 @@ class TeamIndexController extends GetxController
   // }
 
   void matchBattle() async {
+    SoundServices.to.playSound(Assets.soundRadaMatch);
     await Get.toNamed(RouteNames.teamTeamBattle);
     getBattleBox();
     getTeamInfoCup();
@@ -257,7 +261,7 @@ class TeamIndexController extends GetxController
   ///宝箱奖励弹窗
   void showBoxDialog() async {
     update(["boxDialog"]);
-    await showModalBottomSheet(
+    await BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         builder: (context) {
@@ -321,6 +325,7 @@ class TeamIndexController extends GetxController
         final secs = (diff % 60).toString().padLeft(2, '0');
 
         item.remainTime.value = "$hours:$minutes:$secs";
+        item.progress = (item.totalTimeValue - diff) / item.totalTimeValue;
         _startTimer(
           time: item.openTime,
           onTick: (v) {

@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -32,28 +33,30 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
   @override
   void initState() {
     super.initState();
+    SoundServices.to.playSound(Assets.soundOpenwindow);
     animationController = EasyAnimationController(
         vsync: this,
         begin: 0.0,
         end: 1.0,
         duration: const Duration(milliseconds: 500),
         curve: Curves.elasticOut);
-    animationController.controller.addStatusListener((status){
-      if(status == AnimationStatus.completed){
-        Future.delayed(const Duration(seconds: 3),(){
-          if(mounted) {
+    animationController.controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(seconds: 3), () {
+          if (mounted) {
             animationController.forward(from: 0.0);
           }
         });
       }
     });
-    Future.delayed(const Duration(milliseconds: 350),(){
+    Future.delayed(const Duration(milliseconds: 350), () {
       animationController.forward();
     });
   }
 
   @override
   void dispose() {
+    SoundServices.to.playSound(Assets.soundDelete);
     animationController.dispose();
     super.dispose();
   }
@@ -66,9 +69,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
         WidgetUtils.getDialogTransWidget(context),
         Container(
           width: double.infinity,
-          constraints: BoxConstraints(
-            maxHeight: dialogHeight
-          ),
+          constraints: BoxConstraints(maxHeight: dialogHeight),
           decoration: BoxDecoration(
               color: AppColors.cFFFFFF,
               borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
@@ -131,9 +132,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
               ),
               12.vGap,
               Text(
-                "${MyDateUtils.formatDate(MyDateUtils.startOfNextDay(DateTime.now()),
-                    format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(
-                    MyDateUtils.startOfNextDay(DateTime.now()))}",
+                "${MyDateUtils.formatDate(MyDateUtils.startOfNextDay(DateTime.now()), format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.startOfNextDay(DateTime.now()))}",
                 style: 14.w4(
                   color: AppColors.c000000,
                   height: 1,
@@ -142,7 +141,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
               ),
               63.vGap,
               MtInkWell(
-                onTap: ()=> Navigator.pop(context),
+                onTap: () => Navigator.pop(context),
                 child: Container(
                   height: 51.w,
                   width: 343.w,

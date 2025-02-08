@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/slide_transition_x.dart';
@@ -262,7 +263,7 @@ class PlayerItem extends GetView<TeamController> {
               ? MtInkWell(
                   onTap: () {
                     //解雇
-                    showModalBottomSheet(
+                    BottomTipDialog.showWithSound(
                         context: context,
                         isScrollControlled: true,
                         builder: (context) {
@@ -485,7 +486,7 @@ class PlayerCard extends StatelessWidget {
             child: OutlinedText(
               text: Utils.formatGrade(grade ?? 'S'),
               textStyle:
-              26.w4(height: 0.75, fontFamily: FontFamily.fRobotoBlack),
+                  26.w4(height: 0.75, fontFamily: FontFamily.fRobotoBlack),
             ),
           ),
 
@@ -547,21 +548,21 @@ class PlayerCard extends StatelessWidget {
               ),
               child: RichText(
                   text: TextSpan(children: [
-                    TextSpan(
-                      text: "OVR",
-                      style: 9.w4(
-                          color: AppColors.cFFFFFF,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular),
-                    ),
-                    TextSpan(
-                      text: " ${Utils.getPlayBaseInfo(playerId).playerScore}",
-                      style: 12.w4(
-                          color: AppColors.cFFFFFF,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldBold),
-                    )
-                  ])),
+                TextSpan(
+                  text: "OVR",
+                  style: 9.w4(
+                      color: AppColors.cFFFFFF,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
+                ),
+                TextSpan(
+                  text: " ${Utils.getPlayBaseInfo(playerId).playerScore}",
+                  style: 12.w4(
+                      color: AppColors.cFFFFFF,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldBold),
+                )
+              ])),
 
               // child: Row(
               //   mainAxisAlignment: MainAxisAlignment.center,

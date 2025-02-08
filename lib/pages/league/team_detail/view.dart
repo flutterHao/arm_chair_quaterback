@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-08 16:38:59
+ * @LastEditTime: 2025-02-07 16:22:35
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -26,12 +26,13 @@ class TeamDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller =
-        Get.put(TeamDetailController(), tag: Get.arguments.toString());
+    // var controller = Get.lazyPut(() => TeamDetailController(),
+    //     tag: Get.arguments.toString());
     return GetBuilder<TeamDetailController>(
       tag: Get.arguments.toString(),
       id: "team_detail",
-      builder: (_) {
+      init: TeamDetailController(),
+      builder: (controller) {
         return HorizontalDragBackContainer(
           child: BlackAppWidget(
             const UserInfoBar(showPop: true),

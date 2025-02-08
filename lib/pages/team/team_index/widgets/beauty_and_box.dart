@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -163,7 +164,7 @@ class BeautyAndBoxView extends StatelessWidget {
               right: 0,
               child: InkWell(
                 onTap: () {
-                  showModalBottomSheet(
+                  BottomTipDialog.showWithSound(
                       context: Get.context!,
                       builder: (context) {
                         return LovePlanDialog();
@@ -221,7 +222,7 @@ class BeautyAndBoxView extends StatelessWidget {
                       MtInkWell(
                         splashColor: Colors.transparent,
                         onTap: () {
-                          showModalBottomSheet(
+                          BottomTipDialog.showWithSound(
                               context: Get.context!,
                               isScrollControlled: true,
                               builder: (context) {

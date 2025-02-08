@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -561,7 +562,7 @@ class _GameState extends State<Game>
     Future.delayed(const Duration(milliseconds: 200), () {
       easyAnimationController?.forward(from: 0);
     });
-    showModalBottomSheet(
+    BottomTipDialog.showWithSound(
         context: Get.context!,
         isScrollControlled: true,
         builder: (context) {

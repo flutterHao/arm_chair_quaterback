@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -633,7 +635,9 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
               }
               return MtInkWell(
                 onTap: () => picksIndexController
-                    .guess(modelCurrentIndex.value == 0 ? 1 : 2, () {
+                    .guess(modelCurrentIndex.value == 0 ? 1 : 2, () async {
+                  await SoundServices.to.stopAllSounds();
+                  await SoundServices.to.playSound(Assets.soundPickConfirm);
                   showModalBottomSheet(
                       isScrollControlled: true,
                       backgroundColor: AppColors.cTransparent,
