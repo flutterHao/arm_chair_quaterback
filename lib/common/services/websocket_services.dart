@@ -105,6 +105,7 @@ class WebsocketServices extends GetxService {
     for (int i = 0; i < result.length; i++) {
       TeamPropList teamProp = result[i];
       var isBall = teamProp.propId == 306;
+      //todo 后端需要给是不是增加的逻辑判断
       var isLuckyCoin = teamProp.propId == 201;
       var isMoney = teamProp.propId == 102;
       var isBetCoin = teamProp.propId == 103;
@@ -112,7 +113,7 @@ class WebsocketServices extends GetxService {
         try {
           var ballNum = Get.find<TrainingController>().ballNum.value;
           if (ballNum < teamProp.num!) {
-            addProp(teamProp,"${teamProp.num!-ballNum}k");
+            addProp(teamProp,"${teamProp.num!-ballNum}",EventType.ball);
           }
         } catch (e) {
           print('TrainingController not init');
@@ -121,15 +122,16 @@ class WebsocketServices extends GetxService {
       if (isMoney) {
         var money =
             Get.find<HomeController>().userEntiry.teamLoginInfo!.getMoney();
+        print('teamProp:${teamProp.toJson()},$money');
         if (money < teamProp.num!) {
-          addProp(teamProp,"${teamProp.num!-money}");
+          addProp(teamProp,"${teamProp.num!-money}k",EventType.moneyTick);
         }
       }
       if (isBetCoin) {
         var betCoin =
             Get.find<HomeController>().userEntiry.teamLoginInfo!.getCoin();
         if (betCoin < teamProp.num!) {
-          addProp(teamProp,"${teamProp.num!-betCoin}");
+          addProp(teamProp,"${teamProp.num!-betCoin}",EventType.betCoin);
         }
       }
     }
@@ -150,7 +152,7 @@ class WebsocketServices extends GetxService {
     }
   }
 
-  void addProp(TeamPropList teamProp, String n) {
+  void addProp(TeamPropList teamProp, String n,EventType type) {
     var propItem =
         CacheApi.propDefineList!.firstWhere((e) => e.propId == teamProp.propId);
     String text = "YOU GOT $n ${propItem.propName}";
@@ -170,10 +172,12 @@ class WebsocketServices extends GetxService {
           )
         ],
       ),
+      type: type
     ));
   }
 
   onEnd() {
+    // print('websocket-services--onEnd-----');
     _showing = null;
     next();
   }
@@ -181,6 +185,7 @@ class WebsocketServices extends GetxService {
   void next() {
     if (_queue.isNotEmpty && _showing == null) {
       _showing = _queue.removeAt(0);
+      // print('websocket-services--show-----');
       show(_showing!);
     }
   }

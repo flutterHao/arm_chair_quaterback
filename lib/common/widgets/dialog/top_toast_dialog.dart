@@ -17,7 +17,6 @@ Future showTopToastDialog({
         duration: duration,
         needBg: needBg ?? true,
         height: height,
-        onEnd: onEnd,
         child: child,
       );
     },
@@ -27,6 +26,7 @@ Future showTopToastDialog({
 
   // 自动关闭弹窗
   await Future.delayed(duration + 600.milliseconds);
+  onEnd?.call();
   overlayEntry.remove();
 }
 
@@ -38,14 +38,12 @@ class TopToastDialog extends StatefulWidget {
     this.height,
     required this.duration,
     this.needBg = true,
-    this.onEnd,
   });
 
   final Widget child;
   final double? height;
   final Duration duration;
   final bool needBg;
-  final Function? onEnd;
 
   @override
   State<TopToastDialog> createState() => _TopDialogState();
@@ -69,9 +67,7 @@ class _TopDialogState extends State<TopToastDialog>
 
     _controller.forward().then((v) async {
       await Future.delayed(widget.duration);
-      _controller.reverse().then((_) {
-        widget.onEnd?.call();
-      });
+      _controller.reverse();
     });
   }
 
