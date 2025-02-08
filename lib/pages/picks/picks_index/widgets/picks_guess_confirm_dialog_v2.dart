@@ -637,8 +637,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
               return MtInkWell(
                 onTap: () => picksIndexController
                     .guess(modelCurrentIndex.value == 0 ? 1 : 2, () async {
-                  await SoundServices.to.stopAllSounds();
-                  await SoundServices.to.playSound(Assets.soundPickConfirm);
+                  // await SoundServices.to.stopAllSounds();
+                  // await SoundServices.to.playSound(Assets.soundPickConfirm);
                   showModalBottomSheet(
                       isScrollControlled: true,
                       backgroundColor: AppColors.cTransparent,

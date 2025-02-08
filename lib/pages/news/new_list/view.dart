@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 21:01:04
- * @LastEditTime: 2024-12-11 16:24:22
+ * @LastEditTime: 2025-02-08 17:16:06
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -46,64 +46,6 @@ class _NewsPageState extends State<NewsPage>
   Widget build(BuildContext context) {
     super.build(context);
     return const NewsListPage();
-    return Navigator(
-      key: GlobalNestedKey.NewsTabGlobalKey,
-      initialRoute: RouteNames.newList,
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case RouteNames.newList:
-            return GetPageRoute(
-              settings: settings,
-              customTransition: HalfSlideRightToLeftTransition(),
-              page: () => const NewsListPage(),
-            );
-          case RouteNames.newsDetail:
-            final item = settings.arguments as NewsListDetail;
-            return GetPageRoute(
-              opaque: false,
-              settings: settings,
-              customTransition: HalfSlideRightToLeftTransition(),
-              page: () => NewsDetailPage(newsDetail: item),
-              // binding: NewDetailBinding(), /*  */
-            );
-          case RouteNames.nbaRank:
-            return GetPageRoute(
-                opaque: false,
-                settings: settings,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const StatsRankPage(),
-                binding: RankBinding());
-          case RouteNames.teamRank:
-            return GetPageRoute(
-                opaque: false,
-                settings: settings,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const TeamRankPage(),
-                binding: RankBinding());
-          case RouteNames.mineMineInfo:
-            return GetPageRoute(
-                opaque: false,
-                settings: settings,
-                page: () => const MineInfoPage(),
-                binding: MineInfoBinding());
-          case RouteNames.mineMineSetting:
-            return GetPageRoute(
-                opaque: false,
-                settings: settings,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineSettingPage(),
-                binding: MineSettingBinding());
-          case RouteNames.mineMineAccount:
-            return GetPageRoute(
-                opaque: false,
-                settings: settings,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineAccountPage(),
-                binding: MineAccountBinding());
-        }
-        return null;
-      },
-    );
   }
 }
 
@@ -125,31 +67,30 @@ class NewsListPage extends GetView<NewListController> {
           physics: const BouncingScrollPhysics(),
           child: hasData
               ? ListView.separated(
-              controller: controller.scrollController,
-              padding: EdgeInsets.symmetric(vertical: 9.w),
-              itemCount: controller.state.newsFlowList.length,
-              separatorBuilder: (context, index) {
-                return 9.vGap;
-              },
-              itemBuilder: (context, index) {
-                NewsListDetail item =
-                controller.state.newsFlowList[index];
-                return InkWell(
-                  onTap: () {
-                    controller.pageToDetail(item);
+                  controller: controller.scrollController,
+                  padding: EdgeInsets.symmetric(vertical: 9.w),
+                  itemCount: controller.state.newsFlowList.length,
+                  separatorBuilder: (context, index) {
+                    return 9.vGap;
                   },
-                  child: NewsListItem(
-                    newsDetail: item,
-                    // key: Key(item.id.toString()),
-                  ),
-                  // child: Text("sdsa"),
-                );
-              })
+                  itemBuilder: (context, index) {
+                    NewsListDetail item = controller.state.newsFlowList[index];
+                    return InkWell(
+                      onTap: () {
+                        controller.pageToDetail(item);
+                      },
+                      child: NewsListItem(
+                        newsDetail: item,
+                        // key: Key(item.id.toString()),
+                      ),
+                      // child: Text("sdsa"),
+                    );
+                  })
               : Center(child: Obx(() {
-            return LoadStatusWidget(
-              loadDataStatus: controller.loadingStatus.value,
-            );
-          })),
+                  return LoadStatusWidget(
+                    loadDataStatus: controller.loadingStatus.value,
+                  );
+                })),
         );
       },
     );

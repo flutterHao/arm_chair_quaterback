@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/video_player_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
@@ -158,6 +159,7 @@ class NewsListItem extends GetView<NewListController> {
                 fontFamily: FontFamily.fOswaldMedium,
               ),
             ),
+          // if (newsDetail.imgUrl.isImageFileName)
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.w),
             child: ImageWidget(
@@ -167,6 +169,10 @@ class NewsListItem extends GetView<NewListController> {
                 // fit: BoxFit.fitWidth,
                 borderRadius: BorderRadius.circular(12.w)),
           ),
+          // if (newsDetail.imgUrl.isVideoFileName)
+          // VideoPlayerWidget(
+          //     videoUrl:
+          //         "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4"),
           Text(
             newsDetail.content,
             maxLines: 4,
@@ -242,7 +248,7 @@ class NewsListItem extends GetView<NewListController> {
                   width: newsDetail.imamgeWidth,
                   fit: BoxFit.fitHeight,
                   borderRadius: BorderRadius.circular(12.w),
-                )
+                ),
               ],
             ),
           ),

@@ -2,7 +2,7 @@
  * @Description: 音效控制
  * @Author: lihonghao
  * @Date: 2025-02-07 14:44:38
- * @LastEditTime: 2025-02-07 20:36:55
+ * @LastEditTime: 2025-02-08 11:42:49
  */
 // sound_manager.dart
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -18,7 +18,7 @@ class SoundServices extends GetxService {
   // 预加载常用音效（可选，但推荐减少延迟）
   @override
   Future<void> onInit() async {
-    await preloadSounds();
+    // await preloadSounds();
     super.onInit();
   }
 

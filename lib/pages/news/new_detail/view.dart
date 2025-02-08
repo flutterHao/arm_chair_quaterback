@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-28 18:21:40
+ * @LastEditTime: 2025-02-08 11:02:32
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -103,11 +103,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                           isRefresh: true);
                                       Get.toNamed(RouteNames.newsDetail2,
                                           arguments: item);
-                                      CommentController commentController =
-                                          Get.find(tag: item.id.toString());
-                                      item.reviewsList =
-                                          commentController.mainList.value;
-                                      controller.update(["newsDetail"]);
+                                      // CommentController commentController =
+                                      //     Get.find(tag: item.id.toString());
+                                      // item.reviewsList =
+                                      //     commentController.mainList.value;
+                                      // controller.update(["newsDetail"]);
                                     },
                                     child: NewsListItem(
                                         newsDetail:

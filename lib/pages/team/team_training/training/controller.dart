@@ -652,9 +652,11 @@ class TrainingController extends GetxController
     await scrollerCtrlList[index].animateTo(offset,
         duration: const Duration(milliseconds: 600),
         curve: const Cubic(0.27, 0.59, 0.19, 1.1));
+
     if (index == 5) {
       ///最后一个旋转结束
       showAward();
+      SoundServices.to.stopAllSounds();
     }
   }
 

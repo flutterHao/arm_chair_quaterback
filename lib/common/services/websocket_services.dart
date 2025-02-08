@@ -101,7 +101,8 @@ class WebsocketServices extends GetxService {
 
   propUpdated(List<TeamPropList> result) async {
     await CacheApi.getPropDefine();
-
+    TrainingController trainingCtrl = Get.find<TrainingController>();
+    if (trainingCtrl.isPlaying.value) return;
     for (int i = 0; i < result.length; i++) {
       TeamPropList teamProp = result[i];
       var isBall = teamProp.propId == 306;
@@ -113,7 +114,7 @@ class WebsocketServices extends GetxService {
         try {
           var ballNum = Get.find<TrainingController>().ballNum.value;
           if (ballNum < teamProp.num!) {
-            addProp(teamProp,"${teamProp.num!-ballNum}",EventType.ball);
+            addProp(teamProp, "${teamProp.num! - ballNum}", EventType.ball);
           }
         } catch (e) {
           print('TrainingController not init');
@@ -124,14 +125,14 @@ class WebsocketServices extends GetxService {
             Get.find<HomeController>().userEntiry.teamLoginInfo!.getMoney();
         print('teamProp:${teamProp.toJson()},$money');
         if (money < teamProp.num!) {
-          addProp(teamProp,"${teamProp.num!-money}k",EventType.moneyTick);
+          addProp(teamProp, "${teamProp.num! - money}k", EventType.moneyTick);
         }
       }
       if (isBetCoin) {
         var betCoin =
             Get.find<HomeController>().userEntiry.teamLoginInfo!.getCoin();
         if (betCoin < teamProp.num!) {
-          addProp(teamProp,"${teamProp.num!-betCoin}",EventType.betCoin);
+          addProp(teamProp, "${teamProp.num! - betCoin}", EventType.betCoin);
         }
       }
     }
@@ -141,7 +142,9 @@ class WebsocketServices extends GetxService {
     var hasBetCoin = result.where((e) => e.propId == 103).isNotEmpty;
     if (hasBall) {
       try {
-        Get.find<TrainingController>().getData();
+        int ballNum = result.where((e) => e.propId == 306).first.num!;
+        Get.find<TrainingController>().ballNum.value = ballNum;
+        Get.find<TrainingController>().trainingInfo.prop.num = ballNum;
       } catch (e) {
         print('TrainingController not init');
       }
@@ -152,28 +155,27 @@ class WebsocketServices extends GetxService {
     }
   }
 
-  void addProp(TeamPropList teamProp, String n,EventType type) {
+  void addProp(TeamPropList teamProp, String n, EventType type) {
     var propItem =
         CacheApi.propDefineList!.firstWhere((e) => e.propId == teamProp.propId);
     String text = "YOU GOT $n ${propItem.propName}";
     add(ToastItem(
-      widget: Row(
-        children: [
-          IconWidget(
-              iconWidth: 34.w, icon: Utils.getImageByPropId(propItem.propId)),
-          16.hGap,
-          Text(
-            text,
-            style: 18.w5(
-              color: AppColors.c000000,
-              height: 1,
-              fontFamily: FontFamily.fOswaldMedium,
-            ),
-          )
-        ],
-      ),
-      type: type
-    ));
+        widget: Row(
+          children: [
+            IconWidget(
+                iconWidth: 34.w, icon: Utils.getImageByPropId(propItem.propId)),
+            16.hGap,
+            Text(
+              text,
+              style: 18.w5(
+                color: AppColors.c000000,
+                height: 1,
+                fontFamily: FontFamily.fOswaldMedium,
+              ),
+            )
+          ],
+        ),
+        type: type));
   }
 
   onEnd() {
