@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/constant/firebase_options.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
+import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
 import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -53,6 +54,9 @@ class Global {
 
     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
+
+    // service
+    Get.put(WebsocketServices());
   }
 
   static Future<void> initFirebaseCrashlytics() async {
@@ -72,7 +76,8 @@ class Global {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.light, // 状态栏图标为白色
+      statusBarIconBrightness: Brightness.light,
+      // 状态栏图标为白色
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,

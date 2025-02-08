@@ -1,7 +1,7 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -44,7 +44,7 @@ class AwardWidget extends StatelessWidget {
               style: 18.w5(
                 color: AppColors.c000000,
                 height: 1,
-                fontFamily: Assets.fontsOswaldMedium,
+                fontFamily: FontFamily.fOswaldMedium,
               ),
             )
           ],

@@ -9,13 +9,15 @@ Future showTopToastDialog({
   bool? needBg,
   Duration duration = const Duration(milliseconds: 1000), //停留时间
   double? height,
+  Function? onEnd,
 }) async {
   final overlayEntry = OverlayEntry(
     builder: (context) {
       return TopToastDialog(
         duration: duration,
-        needBg: needBg??true,
+        needBg: needBg ?? true,
         height: height,
+        onEnd: onEnd,
         child: child,
       );
     },
@@ -30,17 +32,20 @@ Future showTopToastDialog({
 
 ///顶部弹窗
 class TopToastDialog extends StatefulWidget {
-  const TopToastDialog(
-      {super.key,
-      required this.child,
-      this.height,
-      required this.duration,
-      this.needBg = true});
+  const TopToastDialog({
+    super.key,
+    required this.child,
+    this.height,
+    required this.duration,
+    this.needBg = true,
+    this.onEnd,
+  });
 
   final Widget child;
   final double? height;
   final Duration duration;
   final bool needBg;
+  final Function? onEnd;
 
   @override
   State<TopToastDialog> createState() => _TopDialogState();
@@ -64,7 +69,9 @@ class _TopDialogState extends State<TopToastDialog>
 
     _controller.forward().then((v) async {
       await Future.delayed(widget.duration);
-      _controller.reverse();
+      _controller.reverse().then((_) {
+        widget.onEnd?.call();
+      });
     });
   }
 
@@ -82,15 +89,15 @@ class _TopDialogState extends State<TopToastDialog>
         animation: _animation,
         builder: (context, child) {
           return Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      top: height * (1 - _animation.value),
-                      child: !widget.needBg
-                          ? widget.child
-                          : Container(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                top: height * (1 - _animation.value),
+                child: !widget.needBg
+                    ? widget.child
+                    : Container(
                         width: double.infinity,
                         height: 130.w,
                         alignment: Alignment.center,
@@ -140,9 +147,9 @@ class _TopDialogState extends State<TopToastDialog>
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                );
+              ),
+            ],
+          );
         });
   }
 }

@@ -182,7 +182,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 color: AppColors.cFFFFFF,
                                 height: 1,
                                 overflow: TextOverflow.ellipsis,
-                                fontFamily: Assets.fontsOswaldMedium),
+                                fontFamily: FontFamily.fOswaldMedium),
                           ),
                         ),
                         11.hGap,
@@ -198,7 +198,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       style: 10.w4(
                           color: AppColors.cFFFFFF,
                           height: 1,
-                          fontFamily: Assets.fontsRobotoRegular),
+                          fontFamily: FontFamily.fRobotoRegular),
                     ),
                     15.vGap,
                     Row(

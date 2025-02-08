@@ -215,12 +215,15 @@ class Api {
   static const String wsHeartBeat = "TeamService.heartBeat";
   static const String wsAuthAccount = "TeamService.authAccount";
 
-  static const String wsPkStartUpdated = "PushService.pkStartUpdated";
-  static const String wsPkEventUpdated = "PushService.pkEventUpdated";
-  static const String wsPkResultUpdated = "PushService.pkResultUpdated";
-  static const String wsPkStopUpdated = "PushService.pkStopUpdated";
-  static const String wsPkPlayerUpdated = "PushService.pkPlayerUpdated"; //换人
+  static const String wsPkStartUpdated = "PushService.pkStartUpdated";//战斗开始
+  static const String wsPkEventUpdated = "PushService.pkEventUpdated";//战中事件
+  static const String wsPkResultUpdated = "PushService.pkResultUpdated";//战斗结果
+  static const String wsPkStopUpdated = "PushService.pkStopUpdated";//战斗结束
+  static const String wsPkPlayerUpdated = "PushService.pkPlayerUpdated"; //战斗换人
   static const String wsTeamPropUpdated = "PushService.teamPropUpdated"; //物品更新事件
+  static const String wsTeamPlayerUpdated = "PushService.teamPlayerUpdated"; //球员更新
+  static const String wsTeamPlayerBatchUpdated = "PushService.teamPlayerBatchUpdated"; //球员批量更新
+  static const String wsMissionUpdate = "PushService.missionUpdate"; //任务更新
 
   static const String wsTeamMatch = "PKService.teamMatch";
 }

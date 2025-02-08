@@ -455,8 +455,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                 style: 12.w4(
                                                     color: AppColors.c000000,
                                                     height: 1,
-                                                    fontFamily: Assets
-                                                        .fontsRobotoRegular),
+                                                    fontFamily: FontFamily.fRobotoRegular),
                                               ),
                                             7.vGap,
                                             MtInkWell(

@@ -86,8 +86,7 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
                                                     color: AppColors.cFFFFFF
                                                         .withOpacity(0.3),
                                                     height: 1,
-                                                    fontFamily: Assets
-                                                        .fontsRobotoRegular),
+                                                    fontFamily: FontFamily.fRobotoRegular),
                                               )
                                             ],
                                           ),
@@ -97,7 +96,7 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
                                             style: 45.w7(
                                                 color: AppColors.cFFFFFF,
                                                 fontFamily:
-                                                    Assets.fontsOswaldBold,
+                                                FontFamily.fOswaldBold,
                                                 height: 1),
                                           ),
                                           24.vGap,

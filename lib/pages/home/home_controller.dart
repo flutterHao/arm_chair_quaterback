@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
+import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
 import 'package:arm_chair_quaterback/common/utils/platform_file_manager.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
@@ -135,18 +136,11 @@ class HomeController extends GetxController {
 
   RxBool isHide = false.obs;
 
-  StreamSubscription<ResponseMessage>? subscription;
-
   @override
   void onInit() {
     super.onInit();
     // auth();
     pageController = PageController(initialPage: 2);
-    subscription = WSInstance.stream.listen((value) {
-      if (value.serviceId == Api.wsTeamPropUpdated) {
-        print('wsTeamPropUpdated-----------');
-      }
-    });
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
     //   tabIndex.value = tabController.index;
@@ -166,7 +160,6 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     pageController.dispose();
-    subscription?.cancel();
     super.onClose();
   }
 
