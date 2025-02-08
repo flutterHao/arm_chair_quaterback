@@ -4,6 +4,7 @@
  * @Date: 2024-11-13 21:12:10
  * @LastEditTime: 2025-02-07 18:31:23
  */
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
@@ -37,7 +38,7 @@ class MatchCard extends GetView<TeamIndexController> {
             top: 25.w,
             left: 16.w,
             child: Text(
-              "MATCH GAME",
+              LangKey.teamTabMatch.tr,
               style: 30.w7(fontFamily: FontFamily.fOswaldBold, height: 0.75),
             ),
           ),
@@ -69,7 +70,7 @@ class MatchCard extends GetView<TeamIndexController> {
                     onTap: () {
                       Get.toNamed(RouteNames.seaonRankPage);
                     },
-                    child: Container(
+                    child: SizedBox(
                       // color: Colors.red,
                       width: 81.w,
                       child: Row(
@@ -122,7 +123,7 @@ class MatchCard extends GetView<TeamIndexController> {
                             borderRadius: BorderRadius.circular(9.w)),
                         alignment: Alignment.center,
                         child: Text(
-                          "MATCH",
+                          LangKey.teamButtonMatch.tr,
                           style: 19.w4(
                               color: AppColors.cFFFFFF,
                               fontFamily: FontFamily.fOswaldMedium),

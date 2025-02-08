@@ -7,6 +7,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -51,7 +52,7 @@ class MyTeamWidget extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "MY TEAM",
+                    LangKey.gametabTeam.tr,
                     style: 30.w7(
                       fontFamily: FontFamily.fOswaldBold,
                       height: 0.75,
@@ -97,7 +98,7 @@ class MyTeamWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "TOTAL POWER",
+                    LangKey.teamTabTeamPower.tr,
                     style: 16.w4(
                       fontFamily: FontFamily.fOswaldMedium,
                       height: 0.75,
@@ -137,7 +138,7 @@ class MyTeamWidget extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  "SALARY CAP",
+                                  LangKey.gameMeanSalaryCap.tr,
                                   style: 12.w4(
                                       color: AppColors.c000000,
                                       fontFamily: FontFamily.fRobotoRegular,
@@ -294,7 +295,7 @@ class MyTeamWidget extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "ARCHIVE",
+                                        LangKey.gameMeanPlayerDate.tr,
                                         style: 12.w4(
                                             fontFamily:
                                                 FontFamily.fRobotoRegular,
@@ -410,7 +411,7 @@ class MyTeamWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(9.w)),
                       alignment: Alignment.center,
                       child: Text(
-                        "LINE-UP",
+                        LangKey.teamTabLineUp.tr,
                         style: 23.w4(
                             color: AppColors.cFFFFFF,
                             fontFamily: FontFamily.fOswaldMedium),

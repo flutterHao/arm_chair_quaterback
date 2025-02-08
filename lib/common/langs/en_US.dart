@@ -97,7 +97,7 @@ Map<String, String> en_US = {
   LangKey.teamTabLineUp: "LineUp",
   LangKey.teamTabPlayerBag: "Player Bag",
   LangKey.gameNameOvr: "OVR",
-  LangKey.gameMeanSalaryCap: "Salary Cap",
+  LangKey.gameMeanSalaryCap: "SALARY CAP",
   LangKey.gameMeanTeamStamina: "Team Stamina Avg",
   LangKey.teamTipsRest: "rest once",
   LangKey.teamMeanMain: "Main",
@@ -284,7 +284,9 @@ Map<String, String> en_US = {
   LangKey.gameNameAvg: "AVG",
   LangKey.gameName: "HT",
   LangKey.gameNameWt: "WT",
-  LangKey.gameTabInbox: 'Inbox'
+  LangKey.gameTabInbox: 'Inbox',
+  LangKey.gameTabWaiting: 'Waiting',
+  LangKey.gameMeanPlayerDate: 'PlAYER DATE'
 };
 
 // const Map<String, String> en_US = {

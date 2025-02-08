@@ -19,6 +19,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   await Global.init();
@@ -66,12 +67,12 @@ class MyApp extends StatelessWidget {
                   onGenerateRoute: AppPages.generateRoute,
                   // getPages: AppPages.routes,
                   builder: EasyLoading.init(),
-                  translations: TranslationService(),
                   initialBinding: AllControllerBindings(),
                   navigatorObservers: [
                     AppPages.observer,
                     HorizontalRouteObserver.getInstance(),
                   ],
+                  translations: TranslationService(),
                   supportedLocales: ConfigStore.to.languages,
                   locale: ConfigStore.to.locale,
                   fallbackLocale: const Locale('en', 'US'),
@@ -83,6 +84,7 @@ class MyApp extends StatelessWidget {
                   // customTransition:
                   //     HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
                   defaultTransition: Transition.noTransition,
+                  localizationsDelegates: GlobalMaterialLocalizations.delegates,
                 ),
               ),
             ),

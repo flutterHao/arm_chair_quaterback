@@ -386,4 +386,6 @@ class LangKey {
   static const String gameName = 'gameName';
   static const String gameNameWt = 'gameNameWt';
   static const String gameTabInbox = 'gameTabInbox';
+  static const String gameTabWaiting = 'gameTabWaiting';
+  static const String gameMeanPlayerDate = 'gameMeanPlayerDate';
 }

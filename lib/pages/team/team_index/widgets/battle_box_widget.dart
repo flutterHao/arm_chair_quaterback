@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -64,7 +65,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                                     ),
                                     3.vGap,
                                     Text(
-                                      "UNLOCK",
+                                      LangKey.teamButtonUnlocked.tr,
                                       style: 16.w4(
                                         color: AppColors.c000000,
                                         height: 1,
@@ -77,7 +78,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                             : Positioned(
                                 bottom: 10.w,
                                 child: Text(
-                                  "WAITING",
+                                  LangKey.gameTabWaiting.tr,
                                   style: 12.w4(
                                     color: AppColors.c262626,
                                     height: 1,
@@ -125,7 +126,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                               ),
                               3.vGap,
                               Text(
-                                "OPEN",
+                                LangKey.cardpackButtonOpen.tr,
                                 style: 16.w4(
                                   color: AppColors.cFF7954,
                                   height: 1,
@@ -148,7 +149,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                         ),
                         14.vGap,
                         Text(
-                          "GO MATCH",
+                          LangKey.teamButtonGoMatch.tr,
                           style: 10.w4(color: AppColors.cB2B2B2, height: 1),
                         )
                       ],

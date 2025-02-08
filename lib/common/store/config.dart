@@ -28,6 +28,7 @@ class ConfigStore extends GetxController {
   void onInit() {
     super.onInit();
     isFirstOpen = StorageService.to.getBool(Constant.firstOpen);
+    onInitLocale();
   }
 
   // Future<void> getPlatform() async {

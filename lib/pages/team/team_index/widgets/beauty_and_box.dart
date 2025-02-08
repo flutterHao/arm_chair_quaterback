@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -167,7 +168,7 @@ class BeautyAndBoxView extends StatelessWidget {
                   BottomTipDialog.showWithSound(
                       context: Get.context!,
                       builder: (context) {
-                        return LovePlanDialog();
+                        return const LovePlanDialog();
                       });
                 },
                 child: Container(
@@ -226,7 +227,7 @@ class BeautyAndBoxView extends StatelessWidget {
                               context: Get.context!,
                               isScrollControlled: true,
                               builder: (context) {
-                                return LovePlanDialog();
+                                return const LovePlanDialog();
                               });
                         },
                         child: Container(
@@ -319,7 +320,7 @@ class BeautyAndBoxView extends StatelessWidget {
                                           children: [
                                             Expanded(
                                                 child: Text(
-                                              "Battle Pass",
+                                              LangKey.teamButtonBattlePass.tr,
                                               style: 14.w4(
                                                   color: AppColors.cFFFFFF,
                                                   fontFamily:
@@ -380,7 +381,7 @@ class BeautyAndBoxView extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Free Gift",
+                                                  LangKey.teamTabGift.tr,
                                                   style: 14.w4(
                                                       color: AppColors.c262626,
                                                       fontFamily: FontFamily
@@ -392,7 +393,9 @@ class BeautyAndBoxView extends StatelessWidget {
                                                     ? Row(
                                                         children: [
                                                           Text(
-                                                            "Click to get",
+                                                            LangKey
+                                                                .teamButtonGift
+                                                                .tr,
                                                             style: 10.w4(
                                                                 color: AppColors
                                                                     .cFF7954,

@@ -5,6 +5,7 @@
  * @LastEditTime: 2025-01-20 14:44:35
  */
 
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
@@ -285,9 +286,10 @@ class TrainingWidget extends GetView<TrainingController> {
                                           borderRadius:
                                               BorderRadius.circular(9.w)),
                                       child: Text(
-                                        controller.isPlaying.value
-                                            ? "TRAINING"
-                                            : "START",
+                                        LangKey.teamButtonStart.tr,
+                                        // controller.isPlaying.value
+                                        //     ? "TRAINING"
+                                        //     : "START",
                                         style: 19.w4(
                                           color: controller.isPlaying.value
                                               ? AppColors.ccccccc
