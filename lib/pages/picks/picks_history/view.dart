@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -81,12 +82,13 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
                                                       .commonUiCommonIconCurrency02),
                                               4.hGap,
                                               Text(
-                                                "AMOUNT WIN",
+                                                LangKey.pickTapBenefits.tr,
                                                 style: 12.w4(
                                                     color: AppColors.cFFFFFF
                                                         .withOpacity(0.3),
                                                     height: 1,
-                                                    fontFamily: FontFamily.fRobotoRegular),
+                                                    fontFamily: FontFamily
+                                                        .fRobotoRegular),
                                               )
                                             ],
                                           ),
@@ -96,14 +98,14 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
                                             style: 45.w7(
                                                 color: AppColors.cFFFFFF,
                                                 fontFamily:
-                                                FontFamily.fOswaldBold,
+                                                    FontFamily.fOswaldBold,
                                                 height: 1),
                                           ),
                                           24.vGap,
                                           Row(
                                             children: [
                                               Text(
-                                                "CONTESTS WON: ",
+                                                "${LangKey.userNameStreakPick.tr}: ",
                                                 style: 12.w5(
                                                     color: AppColors.cFFFFFF,
                                                     height: 1,
@@ -161,7 +163,7 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorWeight: 3.w,
           tabs: List.generate(controller.tabs.length, (index) {
-            return Text(controller.tabs[index]);
+            return Text(controller.tabs[index].tr);
           })),
     );
   }

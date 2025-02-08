@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -13,7 +14,7 @@ class PicksHistoryController extends GetxController {
   PicksHistoryController();
 
   var loadStatus = LoadDataStatus.loading.obs;
-  List<String> tabs = ["OPEN", "CLOSED"];
+  List<String> tabs = [LangKey.userNamePickHistory, LangKey.uesrNameNewsPick];
 
   late TeamSimpleEntity teamSimpleEntity;
 
@@ -84,5 +85,4 @@ class PicksHistoryController extends GetxController {
     });
     return map;
   }
-
 }

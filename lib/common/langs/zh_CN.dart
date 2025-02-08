@@ -314,4 +314,6 @@ Map<String, String> zh_CN = {
   LangKey.gameTabInbox: "消息",
   LangKey.gameTabWaiting: "等待中...",
   LangKey.gameMeanPlayerDate: "图鉴",
+
+  LangKey.pickTapBenefits: '盈利'
 };

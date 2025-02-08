@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -100,7 +101,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Picks",
+                                            LangKey.pickTabLineUp.tr,
                                             style: 19.w5(
                                                 color: AppColors.c000000,
                                                 height: 1,
@@ -185,7 +186,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                     padding: EdgeInsets.only(
                                                         left: 8.w),
                                                     child: Text(
-                                                      "Edit",
+                                                      LangKey.pickButtonEdit.tr,
                                                       style: TextStyle(
                                                         decoration:
                                                             TextDecoration
@@ -323,7 +324,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       ),
                       14.hGap,
                       Text(
-                        "Add stake to Combo",
+                        LangKey.pickButtonEdit.tr,
                         style: 14.w5(
                             color: AppColors.cB3B3B3,
                             height: 1,
@@ -371,7 +372,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Flex play",
+                                      LangKey.pickMeanFlex.tr,
                                       style: 14.w7(
                                           color: flexBet.isEmpty
                                               ? AppColors.cB3B3B3
@@ -454,7 +455,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Power play",
+                                      LangKey.pickMeanPower.tr,
                                       style: 14.w7(
                                           color: AppColors.c262626, height: 1),
                                     ),
@@ -505,7 +506,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Correct",
+                        LangKey.pickNameSelected.tr,
                         style: 10.w4(
                             color: AppColors.c000000,
                             height: 1,
@@ -543,7 +544,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Amount",
+                        LangKey.pickNameCost.tr,
                         style: 10.w4(
                             color: AppColors.c000000,
                             height: 1,
@@ -582,7 +583,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Payout",
+                        LangKey.pickNameSelected.tr,
                         style: 10.w4(
                             color: AppColors.c000000,
                             height: 1,
@@ -654,7 +655,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       borderRadius: BorderRadius.circular(9.w),
                       color: AppColors.c000000),
                   child: Text(
-                    "CONFIRM",
+                    LangKey.pickButtonConfirm.tr,
                     style: 23.w5(
                         color: AppColors.cF2F2F2,
                         fontFamily: FontFamily.fOswaldMedium),

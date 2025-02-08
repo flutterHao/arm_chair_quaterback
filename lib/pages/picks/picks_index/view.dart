@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -128,7 +129,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                               Assets.picksUiPicksStatusBarRank),
                                       16.hGap,
                                       Text(
-                                        "RANK",
+                                        LangKey.pickTabRank.tr,
                                         style: 19.w5(
                                             color: AppColors.cFFFFFF,
                                             height: 1,
@@ -137,10 +138,10 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                       )
                                     ],
                                   ),
-                                  Column(
+                                  Expanded(
+                                      child: Column(
                                     mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
                                         "${(picksIndexController.rankInfo.myRank.rank ?? 0) > 0 ? picksIndexController.rankInfo.myRank.rank : "--"}",
@@ -150,7 +151,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                       ),
                                       7.vGap,
                                       Text(
-                                        "ME",
+                                        LangKey.gameTabMe.tr,
+                                        maxLines: 1,
                                         style: 10.w4(
                                             color: AppColors.cFF7954,
                                             height: 1,
@@ -158,7 +160,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                                 FontFamily.fRobotoRegular),
                                       )
                                     ],
-                                  )
+                                  ))
                                 ],
                               ),
                             ),
@@ -206,7 +208,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                         Expanded(
                                             child: Center(
                                                 child: Text(
-                                          "PICKS",
+                                          LangKey.pickTabHistory.tr,
                                           style: 19.w4(
                                               color: AppColors.cFFFFFF,
                                               height: 1,

@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -123,7 +124,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
               ),
               17.vGap,
               Text(
-                "PICK SUCCESS",
+                LangKey.pickTipsSuccess.tr,
                 style: 27.w5(
                   color: AppColors.c000000,
                   height: 1,
@@ -150,7 +151,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
                       color: AppColors.c000000,
                       borderRadius: BorderRadius.circular(9.w)),
                   child: Text(
-                    "CONFIRM",
+                    LangKey.pickTipsSuccess.tr,
                     style: 23.w5(
                         color: AppColors.cFFFFFF,
                         height: 1,
@@ -165,7 +166,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
                   await Get.toNamed(RouteNames.picksPicksHistory);
                 },
                 child: Text(
-                  "VIEW DETAILS",
+                  LangKey.pickButtonCheck.tr,
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: AppColors.c000000,
