@@ -155,7 +155,7 @@ Map<String, String> en_US = {
   LangKey.gameNameSelected: "Selected",
   LangKey.gameTabSuccess: "Succeeded",
   LangKey.gameTabFail: "Failed",
-  LangKey.pickTabLineUp: "Pick Line Up",
+  LangKey.pickTabLineUp: "PICK LINE UP",
   LangKey.pickMeanFlex: "Flex Play",
   LangKey.pickMeanPower: "Power Play",
   LangKey.pickNameCorrect: "correct",

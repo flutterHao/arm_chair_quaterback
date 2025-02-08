@@ -51,7 +51,10 @@ class MineSettingPage extends GetView<MineSettingController> {
                       Row(
                         children: [
                           Text(
-                            "UK",
+                            controller
+                                .languages[
+                                    controller.currentLanguageIndex.value]
+                                .shortEName,
                             style: 16.w4(color: AppColors.c666666, height: 1),
                           ),
                           18.hGap,
@@ -88,7 +91,7 @@ class MineSettingPage extends GetView<MineSettingController> {
         isScrollControlled: true,
         context: Get.context!,
         builder: (context) {
-          return Container(
+          return SizedBox(
             height: 666.h,
             child: DialogBackground(
                 frontColor: AppColors.cE6E6E6,

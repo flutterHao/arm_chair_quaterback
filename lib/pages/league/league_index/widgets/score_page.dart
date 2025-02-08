@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
@@ -296,8 +297,8 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                           item.status == 0
                               ? ""
                               : item.status == 1
-                                  ? "In the game"
-                                  : "FINAL",
+                                  ? LangKey.scoreTipsGaming
+                                  : LangKey.scoreTipsFinal.tr,
                           style: 12.w4(
                               color: item.status == 2
                                   ? AppColors.c000000
@@ -464,7 +465,12 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
           ),
         ),
         Positioned(
-            top: 11.w, right: 10.w, child: ShareWidget(globalKey: globalKey,type: ShareType.guess,))
+            top: 11.w,
+            right: 10.w,
+            child: ShareWidget(
+              globalKey: globalKey,
+              type: ShareType.guess,
+            ))
       ],
     );
   }
@@ -718,7 +724,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
             Expanded(
               child: Center(
                 child: Text(
-                  "WHO WILL WIN",
+                  LangKey.scoreTipsRate.tr,
                   style: 10.w4(
                       color: AppColors.c000000,
                       height: 1,
@@ -751,8 +757,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
             3.hGap,
             Expanded(
                 child: SupportPercentProgressWidget(
-                    leftPercent: homePercent,
-                    rightPercent: 100 - homePercent)),
+                    leftPercent: homePercent, rightPercent: 100 - homePercent)),
             3.hGap,
             Text(
               "${100 - homePercent}%",
@@ -796,7 +801,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
             alignment: Alignment.center,
             children: [
               Text(
-                "${Utils.getTeamInfo(teamId).shortEname} WIN",
+                "${Utils.getTeamInfo(teamId).shortEname} ${LangKey.scoreButtonWin.tr}",
                 style: TextStyle(
                     fontSize: widget.isInScoreDetail ? 16.sp : 19.sp,
                     fontWeight: FontWeight.w500,

@@ -70,31 +70,31 @@ class HomeController extends GetxController {
 
   List<TabItemInfo> tabItems = [
     TabItemInfo(
-      LangKey.gameTabNews.tr,
+      LangKey.gameTabNews,
       Assets.commonUiCommonTabBottom01Off,
       Assets.commonUiCommonTabBottom01On,
       const NewsPage(),
     ),
     TabItemInfo(
-      LangKey.gametabScores.tr,
+      LangKey.gametabScores,
       Assets.commonUiCommonTabBottom02Off,
       Assets.commonUiCommonTabBottom02On,
       const LeaguePage(),
     ),
     TabItemInfo(
-      LangKey.gameTabManager.tr,
+      LangKey.gameTabManager,
       Assets.commonUiCommonTabBottom03,
       Assets.commonUiCommonTabBottom03,
       const TeamIndexPage(),
     ),
     TabItemInfo(
-      LangKey.gametabPicks.tr,
+      LangKey.gametabPicks,
       Assets.commonUiCommonTabBottom04Off,
       Assets.commonUiCommonTabBottom04On,
       const PicksIndex(),
     ),
     TabItemInfo(
-      LangKey.gameTabInbox.tr,
+      LangKey.gameTabInbox,
       Assets.commonUiCommonTabBottom05Off,
       Assets.commonUiCommonTabBottom05On,
       const InboxPage(),

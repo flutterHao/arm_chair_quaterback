@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage>
               ),
               5.vGap,
               Text(
-                e.label,
+                e.label.tr,
                 style: select
                     ? 12.w5(
                         color: AppColors.c000000,
