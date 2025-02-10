@@ -298,7 +298,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10.5.w),
-                                                    url: Utils.getAvaterUrl(
+                                                    url: Utils.getAvatarUrl(
                                                         controller
                                                             .getBattleTeam(
                                                                 item.teamId)
@@ -451,7 +451,7 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
                               Border.all(color: AppColors.c1F8FE5, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
-                        url: Utils.getAvaterUrl(
+                        url: Utils.getAvatarUrl(
                             controller.gameSchedule.homeTeamLogo),
                         imageFailedPath: Assets.teamUiHead01,
                         width: 28.w,
@@ -478,7 +478,7 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
                               Border.all(color: AppColors.cD60D20, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
-                        url: Utils.getAvaterUrl(
+                        url: Utils.getAvatarUrl(
                             controller.gameSchedule.awayTeamLogo),
                         imageFailedPath: Assets.teamUiHead03,
                         width: 28.w,

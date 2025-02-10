@@ -179,7 +179,7 @@ class MeesageItems extends StatelessWidget {
                   ),
                   12.hGap,
                   ImageWidget(
-                    url: Utils.getAvaterUrl(teamLogo),
+                    url: Utils.getAvatarUrl(teamLogo),
                     width: 36.w,
                     height: 36.w,
                     borderRadius: BorderRadius.circular(18.w),

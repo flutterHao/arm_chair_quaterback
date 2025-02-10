@@ -120,16 +120,16 @@ class DailyTaskController extends GetxController
       if (turnTableEntity.currentLife == 0) {
         showReLifeDialog();
       }
-      if (turnTableEntity.circle == 1) {
-        outerWheelController.active(true);
-      } else if (turnTableEntity.circle == 2) {
-        innerTopWheelController.active(true);
-      } else if (turnTableEntity.circle == 3) {
-        innerBottomWheelController.active(true);
-      }
       int initialPage = 0;
       if (turnTableEntity.isStart != 0 && btnPageController == null) {
         initialPage = 1;
+        if (turnTableEntity.circle == 1) {
+          outerWheelController.active(true);
+        } else if (turnTableEntity.circle == 2) {
+          innerTopWheelController.active(true);
+        } else if (turnTableEntity.circle == 3) {
+          innerBottomWheelController.active(true);
+        }
       }
       centerPageController = PageController(initialPage: initialPage);
       btnPageController = PageController(initialPage: initialPage);
@@ -149,6 +149,13 @@ class DailyTaskController extends GetxController
       print('error:$e');
       loadStatus.value = LoadDataStatus.error;
     });
+  }
+
+  num getMaxLuckyCoinNum() {
+    return int.parse(CacheApi.gameConstantList
+            .firstWhereOrNull((e) => e.constantId == Constant.luckyCoinMaxValueId)
+            ?.constantValue ??
+        "0");
   }
 
   Future reLife() {
@@ -353,6 +360,9 @@ class DailyTaskController extends GetxController
     }
     showRandomReward.value = false;
     isSpinBtnEnable.value = false;
+    if (turnTableEntity.isStart == 0) {
+      outerWheelController.active(true);
+    }
     MineApi.turntable().then((result) {
       var beforeTurnTableEntity =
           TurnTableEntity.fromJson(turnTableEntity.toJson());

@@ -206,7 +206,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
               child: ImageWidget(
                   width: 36.w,
                   height: 36.w,
-                  url: Utils.getAvaterUrl(
+                  url: Utils.getAvatarUrl(
                       widget.seasonRankEntity.ranks[index].teamLogo)),
             ),
             6.hGap,
@@ -278,7 +278,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
                 ClipOval(
                   child: ImageWidget(
                       width: 36.w,
-                      url: Utils.getAvaterUrl(
+                      url: Utils.getAvatarUrl(
                           widget.seasonRankEntity.myRank!.teamLogo)),
                 ),
                 6.hGap,

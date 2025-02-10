@@ -95,7 +95,7 @@ class HistoryMvpWidget extends GetView<TeamHistortyController> {
                                   ),
                                   borderRadius: BorderRadius.circular(12.w)),
                               child: ImageWidget(
-                                url: Utils.getAvaterUrl(controller
+                                url: Utils.getAvatarUrl(controller
                                     .gameResultInfoEntity
                                     .homeTeamResult
                                     .teamLogo),
@@ -226,7 +226,7 @@ class HistoryMvpWidget extends GetView<TeamHistortyController> {
                                 ),
                                 borderRadius: BorderRadius.circular(12.w)),
                             child: ImageWidget(
-                              url: Utils.getAvaterUrl(controller
+                              url: Utils.getAvatarUrl(controller
                                   .gameResultInfoEntity
                                   .awayTeamResult
                                   .teamLogo),

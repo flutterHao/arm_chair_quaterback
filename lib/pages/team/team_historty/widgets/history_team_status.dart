@@ -78,7 +78,7 @@ class HistoryTeamStatsWidget extends StatelessWidget {
                               Border.all(color: AppColors.c1F8FE5, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
-                        url: Utils.getAvaterUrl(
+                        url: Utils.getAvatarUrl(
                             controller.gameSchedule.homeTeamLogo),
                         imageFailedPath: Assets.teamUiHead01,
                         width: 23.w,
@@ -112,7 +112,7 @@ class HistoryTeamStatsWidget extends StatelessWidget {
                               Border.all(color: AppColors.cD60D20, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
-                        url: Utils.getAvaterUrl(
+                        url: Utils.getAvatarUrl(
                             controller.gameSchedule.awayTeamLogo),
                         imageFailedPath: Assets.teamUiHead03,
                         width: 23.w,

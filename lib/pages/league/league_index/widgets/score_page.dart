@@ -424,7 +424,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                     child: Row(
                       children: [
                         UserAvaterWidget(
-                          url: Utils.getAvaterUrl(
+                          url: Utils.getAvatarUrl(
                               item.guessTopReviews?.teamLogo),
                           width: 26.w,
                           height: 26.w,

@@ -328,7 +328,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                   id: DailyTaskController.idLuckyCoin,
                   builder: (logic) {
                     return Text(
-                      "1/${controller.teamProp.num}",
+                      "${controller.teamProp.num}/${controller.getMaxLuckyCoinNum()}",
                       style: 16.w5(
                         height: 1,
                         fontFamily: FontFamily.fOswaldMedium,
@@ -1021,7 +1021,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                   children: [
                     ImageWidget(
                       url:
-                          Utils.getAvaterUrl(controller.turnTableEntity.teamId),
+                          Utils.getAvatarUrl(controller.turnTableEntity.teamId),
                       width: 40.w,
                       imageFailedPath: Assets.teamUiHead03,
                       borderRadius: BorderRadius.circular(20.w),

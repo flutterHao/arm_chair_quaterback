@@ -402,7 +402,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                     child: Row(
                                       children: [
                                         UserAvaterWidget(
-                                          url: Utils.getAvaterUrl(""),
+                                          url: Utils.getAvatarUrl(""),
                                           width: 26.w,
                                           height: 26.w,
                                           radius: 13.w,

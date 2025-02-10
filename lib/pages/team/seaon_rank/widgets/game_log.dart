@@ -79,7 +79,7 @@ class GameLogWidget extends GetView<SeaonRankController> {
                         color: Colors.white,
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: NetworkImage(Utils.getAvaterUrl(
+                            image: NetworkImage(Utils.getAvatarUrl(
                                 gameSchedule.homeTeamLogo == 0
                                     ? 2
                                     : gameSchedule.homeTeamLogo))))),
@@ -165,7 +165,7 @@ class GameLogWidget extends GetView<SeaonRankController> {
                         border:
                             Border.all(color: AppColors.cD60D20, width: 1.5.w),
                         image: DecorationImage(
-                          image: NetworkImage(Utils.getAvaterUrl(
+                          image: NetworkImage(Utils.getAvatarUrl(
                               gameSchedule.awayTeamLogo == 0
                                   ? 1
                                   : gameSchedule.awayTeamLogo)),

@@ -293,7 +293,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                           child: Row(
                             children: [
                               UserAvaterWidget(
-                                url: Utils.getAvaterUrl(
+                                url: Utils.getAvatarUrl(
                                     player.guessTopReviews?.teamLogo),
                                 width: 26.w,
                                 height: 26.w,

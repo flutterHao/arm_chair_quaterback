@@ -174,7 +174,7 @@ class HistoryQuarterGridSource extends DataGridSource {
                     borderRadius: BorderRadius.circular(11.w),
                     border: Border.all(color: teamInfo.color, width: 1.w)),
                 child: ImageWidget(
-                  url: Utils.getAvaterUrl(teamInfo.team.teamLogo),
+                  url: Utils.getAvatarUrl(teamInfo.team.teamLogo),
                   borderRadius: BorderRadius.circular(10.w),
                   imageFailedPath: Assets.teamUiHead03,
                   width: 20.w,

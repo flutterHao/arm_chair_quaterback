@@ -6,7 +6,7 @@ export 'package:arm_chair_quaterback/generated/json/rank_info_entity.g.dart';
 @JsonSerializable()
 class RankInfoEntity {
   late double guessCount;
-  late double teamLogo;
+  late int teamLogo;
   late String teamName;
   late double chip;
   late double createTime;

@@ -128,7 +128,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                           shape: BoxShape.circle),
                       child: ClipOval(
                           child: ImageWidget(
-                        url: Utils.getAvaterUrl(rank.teamLogo),
+                        url: Utils.getAvatarUrl(rank.teamLogo),
                       )),
                     ),
                   ],
@@ -193,7 +193,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                           shape: BoxShape.circle),
                       child: ClipOval(
                           child: ImageWidget(
-                        url: Utils.getAvaterUrl(rank.teamLogo),
+                        url: Utils.getAvatarUrl(rank.teamLogo),
                       )),
                     ),
                   ],
@@ -260,7 +260,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                           shape: BoxShape.circle),
                       child: ClipOval(
                           child: ImageWidget(
-                        url: Utils.getAvaterUrl(rank.teamLogo),
+                        url: Utils.getAvatarUrl(rank.teamLogo),
                       )),
                     ),
                   ],

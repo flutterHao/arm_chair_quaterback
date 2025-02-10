@@ -343,7 +343,7 @@ class PickRankPage extends GetView<PickRankController> {
                                             borderRadius:
                                                 BorderRadius.circular(20.w),
                                             child: ImageWidget(
-                                              url: Utils.getAvaterUrl(
+                                              url: Utils.getAvatarUrl(
                                                   item.teamLogo),
                                               width: 40.w,
                                               height: 40.w,
@@ -523,7 +523,7 @@ class PickRankPage extends GetView<PickRankController> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(20.w),
                                       child: ImageWidget(
-                                        url: Utils.getAvaterUrl(item.teamLogo),
+                                        url: Utils.getAvatarUrl(item.teamLogo),
                                         width: 40.w,
                                         height: 40.w,
                                         imageFailedPath: Assets.iconUiDefault05,

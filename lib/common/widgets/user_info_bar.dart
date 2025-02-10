@@ -154,7 +154,7 @@ class UserInfoBar extends StatelessWidget {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(18.w),
                                   child: UserAvaterWidget(
-                                    url: Utils.getAvaterUrl(
+                                    url: Utils.getAvatarUrl(
                                         info.team?.teamLogo ?? 0),
                                     width: 36.w,
                                     height: 36.w,

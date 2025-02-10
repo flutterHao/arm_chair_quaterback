@@ -7,7 +7,7 @@ RankInfoEntity $RankInfoEntityFromJson(Map<String, dynamic> json) {
   if (guessCount != null) {
     rankInfoEntity.guessCount = guessCount;
   }
-  final double? teamLogo = jsonConvert.convert<double>(json['teamLogo']);
+  final int? teamLogo = jsonConvert.convert<int>(json['teamLogo']);
   if (teamLogo != null) {
     rankInfoEntity.teamLogo = teamLogo;
   }
@@ -59,7 +59,7 @@ Map<String, dynamic> $RankInfoEntityToJson(RankInfoEntity entity) {
 extension RankInfoEntityExtension on RankInfoEntity {
   RankInfoEntity copyWith({
     double? guessCount,
-    double? teamLogo,
+    int? teamLogo,
     String? teamName,
     double? chip,
     double? createTime,

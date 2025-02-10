@@ -31,7 +31,7 @@ import 'dart:ui' show ImmutableBuffer, ImageDescriptor;
 import 'package:flutter/widgets.dart';
 
 class Utils {
-  static String getAvaterUrl(avatarId) {
+  static String getAvatarUrl(avatarId) {
     String url = ConfigStore.to.getServiceUrl();
     return "$url/image/user_avatar/$avatarId.png";
   }

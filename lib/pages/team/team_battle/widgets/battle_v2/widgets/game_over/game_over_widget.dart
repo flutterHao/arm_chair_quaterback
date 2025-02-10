@@ -225,7 +225,7 @@ class GameOverWidget extends GetView<GameOverController> {
                                   ),
                                   borderRadius: BorderRadius.circular(12.w)),
                               child: ImageWidget(
-                                url: Utils.getAvaterUrl(
+                                url: Utils.getAvatarUrl(
                                     controller.getWinnerInfo()?.teamLogo),
                                 width: 21.w,
                                 height: 21.w,
@@ -354,7 +354,7 @@ class GameOverWidget extends GetView<GameOverController> {
                                 ),
                                 borderRadius: BorderRadius.circular(12.w)),
                             child: ImageWidget(
-                              url: Utils.getAvaterUrl(
+                              url: Utils.getAvatarUrl(
                                   controller.getWinnerInfo()?.teamLogo),
                               width: 21.w,
                               height: 21.w,

@@ -113,4 +113,14 @@ class Constant {
   static String imageSuffix = ".png";
 
   static int transitionDuration = 100;
+
+  static int luckyCoinMaxValueId = 10020;
+
+  static int propMoneyTickId = 102;
+
+  static int propBetCoinId = 103;
+
+  static int propLuckyCoinId = 201;
+
+  static int propBallId = 306;
 }

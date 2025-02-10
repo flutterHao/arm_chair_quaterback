@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
@@ -105,11 +106,11 @@ class WebsocketServices extends GetxService {
     if (trainingCtrl.isPlaying.value) return;
     for (int i = 0; i < result.length; i++) {
       TeamPropList teamProp = result[i];
-      var isBall = teamProp.propId == 306;
+      var isBall = teamProp.propId == Constant.propBallId;
       //todo 后端需要给是不是增加的逻辑判断
-      var isLuckyCoin = teamProp.propId == 201;
-      var isMoney = teamProp.propId == 102;
-      var isBetCoin = teamProp.propId == 103;
+      var isLuckyCoin = teamProp.propId == Constant.propLuckyCoinId;
+      var isMoney = teamProp.propId == Constant.propMoneyTickId;
+      var isBetCoin = teamProp.propId == Constant.propBetCoinId;
       if (isBall) {
         try {
           var ballNum = Get.find<TrainingController>().ballNum.value;
@@ -136,13 +137,13 @@ class WebsocketServices extends GetxService {
         }
       }
     }
-    var hasBall = result.where((e) => e.propId == 306).isNotEmpty;
-    var hasLuckyCoin = result.where((e) => e.propId == 201).isNotEmpty;
-    var hasMoney = result.where((e) => e.propId == 102).isNotEmpty;
-    var hasBetCoin = result.where((e) => e.propId == 103).isNotEmpty;
+    var hasBall = result.where((e) => e.propId == Constant.propBallId).isNotEmpty;
+    var hasLuckyCoin = result.where((e) => e.propId == Constant.propLuckyCoinId).isNotEmpty;
+    var hasMoney = result.where((e) => e.propId == Constant.propMoneyTickId).isNotEmpty;
+    var hasBetCoin = result.where((e) => e.propId == Constant.propBetCoinId).isNotEmpty;
     if (hasBall) {
       try {
-        int ballNum = result.where((e) => e.propId == 306).first.num!;
+        int ballNum = result.where((e) => e.propId == Constant.propBallId).first.num!;
         Get.find<TrainingController>().ballNum.value = ballNum;
         Get.find<TrainingController>().trainingInfo.prop.num = ballNum;
       } catch (e) {

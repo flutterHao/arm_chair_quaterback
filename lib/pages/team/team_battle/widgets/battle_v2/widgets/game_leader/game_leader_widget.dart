@@ -325,7 +325,7 @@ class GameLeaderWidget extends StatelessWidget {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10.5.w),
-                                                      url: Utils.getAvaterUrl(
+                                                      url: Utils.getAvatarUrl(
                                                           controller
                                                               .getBattleTeam(
                                                                   item.teamId)

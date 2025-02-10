@@ -71,7 +71,7 @@ class _PlayerDetailState extends State<PlayerDetail>
                               Border.all(color: AppColors.c1F8FE5, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
-                        url: Utils.getAvaterUrl(homeInfo.teamLogo),
+                        url: Utils.getAvatarUrl(homeInfo.teamLogo),
                         imageFailedPath: Assets.teamUiHead01,
                         width: 28.w,
                         height: 28.w,
@@ -97,7 +97,7 @@ class _PlayerDetailState extends State<PlayerDetail>
                               Border.all(color: AppColors.cD60D20, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
-                        url: Utils.getAvaterUrl(awayInfo.teamLogo),
+                        url: Utils.getAvatarUrl(awayInfo.teamLogo),
                         imageFailedPath: Assets.teamUiHead03,
                         width: 28.w,
                         height: 28.w,

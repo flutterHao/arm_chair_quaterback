@@ -78,7 +78,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                               borderRadius: BorderRadius.circular(8.w),
                               child: ImageWidget(
                                 imageFailedPath: Assets.teamUiHead01,
-                                url: Utils.getAvaterUrl(
+                                url: Utils.getAvatarUrl(
                                     controller.teamSimpleEntity?.teamLogo),
                                 width: 48.w,
                                 height: 48.w,

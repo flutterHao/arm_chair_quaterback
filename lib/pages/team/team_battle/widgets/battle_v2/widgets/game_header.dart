@@ -136,7 +136,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       borderRadius: BorderRadius.circular(19.w),
                       border: Border.all(color: AppColors.c1F8FE5, width: 1.w)),
                   child: ImageWidget(
-                    url: Utils.getAvaterUrl(
+                    url: Utils.getAvatarUrl(
                         teamBattleController.battleEntity.homeTeam.teamLogo),
                     imageFailedPath: Assets.teamUiHead01,
                     width: 36.w,
@@ -231,7 +231,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       borderRadius: BorderRadius.circular(19.w),
                       border: Border.all(color: AppColors.cD60D20, width: 1.w)),
                   child: ImageWidget(
-                    url: Utils.getAvaterUrl(
+                    url: Utils.getAvatarUrl(
                         teamBattleController.battleEntity.awayTeam.teamLogo),
                     imageFailedPath: Assets.teamUiHead03,
                     width: 36.w,

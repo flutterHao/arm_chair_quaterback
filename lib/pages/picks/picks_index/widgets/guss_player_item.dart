@@ -70,7 +70,7 @@ class GussPlayerItem extends StatelessWidget {
                       imageFailedPath: Assets.teamUiHead01,
                       borderRadius: BorderRadius.circular(8.w),
                       url:
-                          Utils.getAvaterUrl(rankInfoEntity.teamLogo.toInt()))),
+                          Utils.getAvatarUrl(rankInfoEntity.teamLogo.toInt()))),
             ],
           ),
         ),
