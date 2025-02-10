@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
@@ -155,7 +156,9 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                                   .center,
                                                           children: [
                                                             Text(
-                                                              "Star up success",
+                                                              LangKey
+                                                                  .gameMeanStarUpSuccess
+                                                                  .tr,
                                                               style: 10.w4(
                                                                   color: AppColors
                                                                       .cFFFFFF,
@@ -451,13 +454,14 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                             if (!controller.isGameOver.value &&
                                                 controller.slotCount < 8)
                                               Text(
-                                                "TIMES:${max(0, 8 - controller.slotCount.value)}",
+                                                "${LangKey.gameTipsTimes.tr}:${max(0, 8 - controller.slotCount.value)}",
                                                 style: 12.w4(
                                                     color: AppColors.c000000,
                                                     height: 1,
-                                                    fontFamily: FontFamily.fRobotoRegular),
+                                                    fontFamily: FontFamily
+                                                        .fRobotoRegular),
                                               ),
-                                            7.vGap,
+                                            const Spacer(),
                                             MtInkWell(
                                               onTap: () {
                                                 if (controller
@@ -498,7 +502,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                             9.w)),
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  "DONE",
+                                                  LangKey.gameButtonFinish.tr,
                                                   style: 25.w5(
                                                       color: controller
                                                                   .slotCount
@@ -531,7 +535,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                             9.w)),
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  "CONTINUE",
+                                                  LangKey.pickButtonContinue.tr,
                                                   style: 25.w5(
                                                       color: AppColors.cF2F2F2,
                                                       fontFamily: FontFamily
@@ -565,7 +569,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                     BorderRadius.circular(9.w)),
                                             alignment: Alignment.center,
                                             child: Text(
-                                              "GO BACK",
+                                              LangKey.gameButtonback.tr,
                                               style: 23.w5(
                                                   fontFamily:
                                                       FontFamily.fOswaldMedium,
@@ -683,22 +687,29 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                       ],
                     ),
                     10.vGap,
-                    Text.rich(
-                      const TextSpan(children: [
-                        TextSpan(
-                            text: "U",
-                            style: TextStyle(color: AppColors.cFF7954)),
-                        TextSpan(text: "PDATE"),
-                        TextSpan(
-                            text: " S",
-                            style: TextStyle(color: AppColors.cFF7954)),
-                        TextSpan(text: "UCCESSFUL"),
-                      ]),
+                    Text(
+                      LangKey.gameTipsStarSuccess.tr,
                       style: 21.w7(
                           color: AppColors.cFFFFFF,
                           height: 1,
                           fontFamily: FontFamily.fOswaldBold),
                     )
+                    // Text.rich(
+                    //   const TextSpan(children: [
+                    //     TextSpan(
+                    //         text: "U",
+                    //         style: TextStyle(color: AppColors.cFF7954)),
+                    //     TextSpan(text: "PDATE"),
+                    //     TextSpan(
+                    //         text: " S",
+                    //         style: TextStyle(color: AppColors.cFF7954)),
+                    //     TextSpan(text: "UCCESSFUL"),
+                    //   ]),
+                    //   style: 21.w7(
+                    //       color: AppColors.cFFFFFF,
+                    //       height: 1,
+                    //       fontFamily: FontFamily.fOswaldBold),
+                    // )
                   ],
                 );
               }
@@ -712,7 +723,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                       icon: Assets.managerUiManagerPlayerinfoFailure),
                   8.vGap,
                   Text(
-                    "UPDATE FAILURE",
+                    LangKey.gameTipsStarFailed.tr,
                     style: 21.w7(
                         color: AppColors.cFFFFFF,
                         height: 1,

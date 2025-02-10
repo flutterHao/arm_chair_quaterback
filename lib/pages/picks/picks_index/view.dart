@@ -129,7 +129,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                               Assets.picksUiPicksStatusBarRank),
                                       16.hGap,
                                       Text(
-                                        LangKey.pickTabRank.tr,
+                                        LangKey.newsTabRank.tr,
                                         style: 19.w5(
                                             color: AppColors.cFFFFFF,
                                             height: 1,

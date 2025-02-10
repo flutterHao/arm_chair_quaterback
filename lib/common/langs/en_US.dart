@@ -149,7 +149,7 @@ Map<String, String> en_US = {
   LangKey.gameButtonStarUp: "StarUp",
   LangKey.gameNameAbility: "Ability",
   LangKey.gameNamePotential: "Potential",
-  LangKey.gameNameSuccess: "Success Rate",
+  LangKey.gameNameSuccess: "Success",
   LangKey.gameNameGrade: "Grade",
   LangKey.gameNameStar: "Star",
   LangKey.gameNameSelected: "Selected",
@@ -288,7 +288,7 @@ Map<String, String> en_US = {
   LangKey.gameTabWaiting: 'Waiting',
   LangKey.gameMeanPlayerDate: 'PlAYER DATE',
 
-  ///286-308
+  ///286
   LangKey.gameMeanPower: "POWER",
   LangKey.gameMeanSalary: "SALARY",
   LangKey.gameMeanPass: "PASS",
@@ -312,6 +312,27 @@ Map<String, String> en_US = {
   LangKey.gameTipsTimes: "TIMES",
   LangKey.gameTipsStarSuccess: "STAR UP SUCCEEDED",
   LangKey.gameTipsStarFailed: "STAR UP FAILED",
+
+  ///309
+  LangKey.gameTabFreeAgency: "FREE AGENCY",
+  LangKey.gameTabPlayerOvr: "Player OVR",
+  LangKey.gameTabPosition: "Position",
+  LangKey.gameTabNbaTeam: "Teams",
+  LangKey.gameButtonReset: "RESET",
+  LangKey.gameButtonDelete: "FIRE",
+  LangKey.gameButtonCancel: "CANCEL",
+  LangKey.gameTabFire: "FIRE THE PLAYER",
+  LangKey.gameTipsFire: "Are you sure fire {0}",
+  LangKey.gameTipsReward: "You can get",
+  LangKey.pickTabMyRank: "MY RANK",
+  LangKey.pickTipsNoReward: "NO REWARD",
+  LangKey.pickTipsRank: "Win {0} coins can earn a ranking",
+  LangKey.pickTipsRankRule:
+      "the profits earned during the open and close period",
+  LangKey.pickTabTips: "TIPS",
+  LangKey.pickTabsAddPick: "Add a pick combo",
+  LangKey.gameTipsConsumed: "The selected player will be consumed",
+  LangKey.gameTabAddBility: 'ADD ABILITY'
 };
 
 // const Map<String, String> en_US = {

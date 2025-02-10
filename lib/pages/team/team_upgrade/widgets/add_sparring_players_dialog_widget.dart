@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -52,7 +53,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                     Container(
                       margin: EdgeInsets.only(left: 15.w),
                       child: Text(
-                        "Add sparring players",
+                        LangKey.gameMeanScriPlayer.tr,
                         style: 19.w5(
                             color: AppColors.c000000,
                             height: 1,
@@ -164,6 +165,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                                     ),
                                                     Text(
                                                       "OVR",
+                                                      // LangKey.gameNameOvr.tr,
                                                       style: 9.w5(
                                                         color:
                                                             AppColors.c000000,
@@ -182,19 +184,20 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                         Row(
                                           children: [
                                             PlayerPropertyWidget(
-                                              title: "POW",
+                                              title: LangKey.gameNamePow.tr,
                                               value: item.teamPlayer.power
                                                   .formatToString(),
                                             ),
                                             if (item.starUpDefine.starUpRange !=
                                                 0)
                                               PlayerPropertyWidget(
-                                                title: "ATTRIB",
+                                                title:
+                                                    LangKey.gameNameAbility.tr,
                                                 value:
                                                     "+${item.starUpDefine.starUpRange}",
                                               ),
                                             PlayerPropertyWidget(
-                                              title: "SUCCESS",
+                                              title: LangKey.gameNameSuccess.tr,
                                               value:
                                                   "+${item.teamPlayer.probability.formatToString()}%",
                                             ),
@@ -287,7 +290,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Correct",
+                                LangKey.gameNamePlayerNumber.tr,
                                 style: 12.w4(
                                     color: AppColors.c000000,
                                     fontFamily: FontFamily.fRobotoRegular,
@@ -319,7 +322,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Amount",
+                                LangKey.teamMeanCost.tr,
                                 style: 12.w4(
                                     color: AppColors.c000000,
                                     fontFamily: FontFamily.fRobotoRegular,
@@ -350,7 +353,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Attribute",
+                                LangKey.gameNameAbility.tr,
                                 style: 12.w4(
                                     color: AppColors.c000000,
                                     fontFamily: FontFamily.fRobotoRegular,
@@ -373,7 +376,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Status",
+                                LangKey.gameNameSuccess.tr,
                                 style: 12.w4(
                                     color: AppColors.c000000,
                                     fontFamily: FontFamily.fRobotoRegular,
@@ -405,7 +408,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                     ),
                     child: Center(
                       child: Text(
-                        "START",
+                        LangKey.gameButtonStarUp.tr,
                         style: 23.w5(
                             color: AppColors.cF2F2F2,
                             height: 1,
@@ -416,7 +419,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                 ),
                 5.vGap,
                 Text(
-                  "Sparring players will be consumed",
+                  LangKey.gameTipsConsumed.tr,
                   style: 12.w4(
                       color: AppColors.c000000,
                       height: 1,

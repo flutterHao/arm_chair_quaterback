@@ -389,7 +389,7 @@ class LangKey {
   static const String gameTabWaiting = 'gameTabWaiting';
   static const String gameMeanPlayerDate = 'gameMeanPlayerDate';
 
-  ///286-308
+  ///286
   static const String gameMeanPower = 'gameMeanPower';
   static const String gameMeanSalary = 'gameMeanSalary';
   static const String gameMeanPass = 'gameMeanPass';
@@ -413,4 +413,24 @@ class LangKey {
   static const String gameTipsTimes = 'gameTipsTimes';
   static const String gameTipsStarSuccess = 'gameTipsStarSuccess';
   static const String gameTipsStarFailed = 'gameTipsStarFailed';
+
+  ///309
+  static const String gameTabFreeAgency = 'gameTabFreeAgency';
+  static const String gameTabPlayerOvr = 'gameTabPlayerOvr';
+  static const String gameTabPosition = 'gameTabPosition';
+  static const String gameTabNbaTeam = 'gameTabNbaTeam';
+  static const String gameButtonReset = 'gameButtonReset';
+  static const String gameButtonDelete = 'gameButtonDelete';
+  static const String gameButtonCancel = 'gameButtonCancel';
+  static const String gameTabFire = 'gameTabFire';
+  static const String gameTipsFire = 'gameTipsFire';
+  static const String gameTipsReward = 'gameTipsReward';
+  static const String pickTabMyRank = 'pickTabMyRank';
+  static const String pickTipsNoReward = 'pickTipsNoReward';
+  static const String pickTipsRank = 'pickTipsRank';
+  static const String pickTipsRankRule = 'pickTipsRankRule';
+  static const String pickTabTips = 'pickTabTips';
+  static const String pickTabsAddPick = 'pickTabsAddPick';
+  static const String gameTipsConsumed = 'gameTipsConsumed';
+  static const String gameTabAddBility = 'gameTabAddBility';
 }
