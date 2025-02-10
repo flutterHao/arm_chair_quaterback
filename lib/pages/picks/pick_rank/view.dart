@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/style.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -64,7 +65,7 @@ class PickRankPage extends GetView<PickRankController> {
                                   children: [
                                     20.vGap,
                                     Text(
-                                      "PICK RANKS",
+                                      LangKey.pickTabRank.tr,
                                       style: 30.w7(
                                         color: AppColors.cFFE8A0,
                                         height: 0.8,
@@ -113,7 +114,7 @@ class PickRankPage extends GetView<PickRankController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "REWARD",
+                                      LangKey.pickTapRankRaward.tr,
                                       style: 30.w7(
                                         color: AppColors.c000000,
                                         height: 1,
@@ -174,7 +175,7 @@ class PickRankPage extends GetView<PickRankController> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "RANKS",
+                                        LangKey.newsTabRank.tr,
                                         style: 30.w7(
                                           color: AppColors.c000000,
                                           fontFamily: FontFamily.fOswaldBold,
@@ -465,7 +466,9 @@ class PickRankPage extends GetView<PickRankController> {
                                               ])),
                                               6.vGap,
                                               Text(
-                                                "WIN ${controller.getBetRewardRank().format()} JETTON RANK",
+                                                LangKey.pickTipsRank.tr.replaceAll(
+                                                    '{0}',
+                                                    '${controller.getBetRewardRank().format()}'),
                                                 style: 10.w4(
                                                   color: AppColors.c000000,
                                                   height: 1,

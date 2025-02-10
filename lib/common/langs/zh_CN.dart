@@ -76,7 +76,7 @@ Map<String, String> zh_CN = {
   LangKey.pickTapRankRaward: "排行榜奖励",
   LangKey.pickButtonGet: "领取奖励",
   LangKey.pickButtonReceiveAll: "一键领取",
-
+  LangKey.pickTapRank: "排名",
   // 个人信息
   LangKey.userButtonProfile: "个人信息",
   LangKey.userButtonMessage: "消息",

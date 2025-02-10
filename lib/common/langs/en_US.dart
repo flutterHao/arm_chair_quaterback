@@ -328,7 +328,7 @@ Map<String, String> en_US = {
   LangKey.pickTipsNoReward: "NO REWARD",
   LangKey.pickTipsRank: "Win {0} coins can earn a ranking",
   LangKey.pickTipsRankRule:
-      "the profits earned during the open and close period",
+      "The ranking is determined by the profits earned during the open and close periods of each leaderboard cycle",
   LangKey.pickTabTips: "TIPS",
   LangKey.pickTabsAddPick: "Add a pick combo",
   LangKey.gameTipsConsumed: "The selected player will be consumed",

@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -44,7 +45,7 @@ class RankRewardDetail extends StatelessWidget {
                   children: [
                     22.hGap,
                     Text(
-                      "Reward",
+                      LangKey.pickTabRank.tr,
                       style: 19.w5(
                         color: AppColors.c000000,
                         height: 1,
@@ -93,7 +94,9 @@ class RankRewardDetail extends StatelessWidget {
                               ])),
                               6.vGap,
                               Text(
-                                "WIN ${controller.getBetRewardRank().format()} JETTON RANK",
+                                // "WIN ${controller.getBetRewardRank().format()} JETTON RANK",
+                                LangKey.pickTipsRank.tr.replaceAll('{0}',
+                                    '${controller.getBetRewardRank().format()}'),
                                 style: 10.w4(
                                   color: AppColors.c000000,
                                   height: 1,
@@ -110,7 +113,7 @@ class RankRewardDetail extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "MY REWARD",
+                          LangKey.pickTabMyRank.tr,
                           style: 12.w4(
                             color: AppColors.c000000,
                             height: 1,
@@ -132,7 +135,7 @@ class RankRewardDetail extends StatelessWidget {
                             Builder(builder: (context) {
                               if (controller.selfInRankListIndex == -1) {
                                 return Text(
-                                  "NO REWARD",
+                                  LangKey.pickTipsNoReward.tr,
                                   style: 24.w5(
                                     color: AppColors.cB3B3B3,
                                     height: 1,
@@ -178,7 +181,7 @@ class RankRewardDetail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "RANKING",
+                        LangKey.pickTapRank.tr,
                         style: 12.w5(
                           color: AppColors.c1A1A1A,
                           height: 1,
@@ -186,7 +189,7 @@ class RankRewardDetail extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "REWARD",
+                        LangKey.pickTapRankRaward.tr,
                         style: 12.w5(
                           color: AppColors.c1A1A1A,
                           height: 1,
@@ -204,7 +207,8 @@ class RankRewardDetail extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     controller: scrollController,
-                    physics: OneBoundaryScrollPhysics(scrollController: scrollController),
+                    physics: OneBoundaryScrollPhysics(
+                        scrollController: scrollController),
                     child: Column(children: [
                       ...List.generate(controller.awardInfo.length, (index) {
                         bool lastIndex =
@@ -270,7 +274,7 @@ class RankRewardDetail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "TIPS：",
+                              "${LangKey.pickTabTips.tr}：",
                               style: 14.w5(
                                 color: AppColors.cB3B3B3,
                                 height: 1,
@@ -279,7 +283,8 @@ class RankRewardDetail extends StatelessWidget {
                             ),
                             15.vGap,
                             Text(
-                              "1.Ranking needs at least 100 jettons.\n2.New season is reset based on the final trophy count.",
+                              LangKey.pickTipsRankRule.tr,
+                              // "1.Ranking needs at least 100 jettons.\n2.New season is reset based on the final trophy count.",
                               style: 12.w5(
                                 color: AppColors.cB3B3B3,
                                 height: 1.5,
