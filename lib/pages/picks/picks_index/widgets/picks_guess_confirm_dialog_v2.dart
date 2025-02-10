@@ -130,7 +130,9 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                             EdgeInsets.only(
                                                                 left: 8.w),
                                                         child: Text(
-                                                          "Clear all",
+                                                          LangKey
+                                                              .pickButtonClear
+                                                              .tr,
                                                           style: TextStyle(
                                                             decoration:
                                                                 TextDecoration
@@ -158,7 +160,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                             EdgeInsets.only(
                                                                 left: 8.w),
                                                         child: Text(
-                                                          "Done",
+                                                          LangKey.pickButtonDone
+                                                              .tr,
                                                           style: TextStyle(
                                                             decoration:
                                                                 TextDecoration
@@ -324,7 +327,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       ),
                       14.hGap,
                       Text(
-                        LangKey.pickButtonEdit.tr,
+                        LangKey.pickTipsAdd.tr,
                         style: 14.w5(
                             color: AppColors.cB3B3B3,
                             height: 1,
@@ -974,7 +977,9 @@ class _PlayerItemWidgetState extends State<_PlayerItemWidget>
             ),
           ),
           ConfirmChangeBtn(
-            widget.choice == 0 ? "MORE" : "LESS",
+            widget.choice == 0
+                ? LangKey.pickButtonMore.tr
+                : LangKey.pickButtonLess.tr,
             () {
               player.status = player.status == 0 ? 1 : 0;
               picksIndexController.choiceOne(needRefreshList: true);

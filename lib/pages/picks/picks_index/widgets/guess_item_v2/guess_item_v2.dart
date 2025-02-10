@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -155,7 +156,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                           fit: BoxFit.scaleDown,
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            Utils.getLongName(player.tabStr),
+                                            // Utils.getLongName(player.tabStr),
+                                            LangKey.pickNameTotalPoints.tr,
                                             style: 19.w7(
                                               color: AppColors.c262626,
                                               fontFamily:
@@ -227,21 +229,21 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "MORE",
+                                  LangKey.pickButtonMore.tr,
                                   style: 10.w4(
                                       color: AppColors.c000000,
                                       height: 1,
                                       fontFamily: FontFamily.fRobotoRegular),
                                 ),
                                 Text(
-                                  "APPROVAL RATING",
+                                  LangKey.scoreTipsRate.tr,
                                   style: 10.w4(
                                       color: AppColors.c000000,
                                       height: 1,
                                       fontFamily: FontFamily.fRobotoRegular),
                                 ),
                                 Text(
-                                  "LESS",
+                                  LangKey.pickButtonLess.tr,
                                   style: 10.w4(
                                       color: AppColors.c000000,
                                       height: 1,
@@ -584,9 +586,11 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            getBtn(player.guessInfo.guessData[0].guessChoice == 1, "MORE"),
+            getBtn(player.guessInfo.guessData[0].guessChoice == 1,
+                LangKey.pickButtonMore.tr),
             9.hGap,
-            getBtn(player.guessInfo.guessData[0].guessChoice != 1, "LESS"),
+            getBtn(player.guessInfo.guessData[0].guessChoice != 1,
+                LangKey.pickButtonLess.tr),
           ],
         ),
       );
@@ -617,7 +621,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     borderRadius: BorderRadius.circular(9.w),
                   ),
                   child: Text(
-                    "MORE",
+                    LangKey.pickButtonMore.tr,
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: widget.isInScoreDetail ? 16.sp : 19.sp,
@@ -652,7 +656,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "LESS",
+                        LangKey.pickButtonLess.tr,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: widget.isInScoreDetail ? 16.sp : 19.sp,
