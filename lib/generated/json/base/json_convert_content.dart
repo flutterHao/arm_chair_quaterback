@@ -7,6 +7,7 @@ import 'package:flutter/material.dart' show debugPrint;
 import 'package:arm_chair_quaterback/common/entities/ColorString.dart';
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/app_image_version_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
@@ -259,6 +260,10 @@ class JsonConvert {
     if (<ApiErrorCodeEntity>[] is M) {
       return data.map<ApiErrorCodeEntity>((Map<String, dynamic> e) =>
           ApiErrorCodeEntity.fromJson(e)).toList() as M;
+    }
+    if (<AppImageVersionEntity>[] is M) {
+      return data.map<AppImageVersionEntity>((Map<String, dynamic> e) =>
+          AppImageVersionEntity.fromJson(e)).toList() as M;
     }
     if (<BattleEntity>[] is M) {
       return data.map<BattleEntity>((Map<String, dynamic> e) =>
@@ -1221,6 +1226,7 @@ class JsonConvertClassCollection {
     (AllTeamPlayersByUpStarUpStarBase)
         .toString(): AllTeamPlayersByUpStarUpStarBase.fromJson,
     (ApiErrorCodeEntity).toString(): ApiErrorCodeEntity.fromJson,
+    (AppImageVersionEntity).toString(): AppImageVersionEntity.fromJson,
     (BattleEntity).toString(): BattleEntity.fromJson,
     (BattleNew).toString(): BattleNew.fromJson,
     (Potential).toString(): Potential.fromJson,

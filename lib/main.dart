@@ -4,6 +4,7 @@
  * @Date: 2024-09-09 16:17:35
  * @LastEditTime: 2025-01-24 19:22:38
  */
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_route_observer.dart';
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
 import 'package:flutter/foundation.dart';
@@ -27,11 +28,9 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const double MAXWEBWIDTH = 600;
-
   @override
   Widget build(BuildContext context) {
-    bool isMax = MediaQuery.of(context).size.width > MAXWEBWIDTH && kIsWeb;
+    bool isMax = MediaQuery.of(context).size.width > Constant.maxWebWidth && kIsWeb;
     Get.config(
       // defaultOpaqueRoute: false,// 此全局配置无效，使用GetPageRoute的opaque属性
       defaultPopGesture: false,
@@ -39,14 +38,14 @@ class MyApp extends StatelessWidget {
     );
     return Center(
       child: Container(
-        constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),
+        constraints: const BoxConstraints(maxWidth: Constant.maxWebWidth),
         child: LayoutBuilder(builder: (context, constraints) {
           return ScreenUtilInit(
             minTextAdapt: true,
             enableScaleWH: (() => isMax ? false : true),
             enableScaleText: (() => isMax ? false : true),
             designSize:
-                isMax ? const Size(MAXWEBWIDTH, 812) : const Size(375, 812),
+                isMax ? const Size(Constant.maxWebWidth, 812) : const Size(375, 812),
             // designSize: const Size(375, 812),
             builder: (context, widget) => RefreshConfiguration(
               headerBuilder: () => const WaterDropHeader(),

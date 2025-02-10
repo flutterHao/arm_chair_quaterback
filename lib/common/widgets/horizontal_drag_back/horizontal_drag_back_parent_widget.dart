@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_route_observer.dart';
 import 'package:flutter/material.dart';
 
@@ -78,7 +79,7 @@ class _HorizontalDragBackParentWidgetState
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    var width = Utils.getMaxWidth(context);
     return HorizontalDragBackParentState(
       controller: controller,
       child: Transform.translate(

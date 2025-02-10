@@ -6,6 +6,7 @@
  */
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -18,7 +19,6 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/services/storage.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +26,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'dart:async' show Completer;
-import 'dart:ui' show ImmutableBuffer, ImageDescriptor;
 import 'package:flutter/widgets.dart';
 
 class Utils {
@@ -446,6 +444,11 @@ class Utils {
 
   static String getImageByPath(String image) {
     return "assets/images/$image${Constant.imageSuffix}";
+  }
+
+  ///获取屏幕的最大宽度
+  static double getMaxWidth(BuildContext context){
+    return min(Constant.maxWebWidth,MediaQuery.of(context).size.width);
   }
 
   /// 获取手机时间时区和服务器时间的时差 (ms)

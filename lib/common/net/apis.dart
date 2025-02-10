@@ -132,6 +132,7 @@ class Api {
   static const String cMissionDefine = "$CONFIG_BASE_PATH/MissionDefine.json";
   static const String cWheelRandomReward =
       "$CONFIG_BASE_PATH/WheelRandomReward.json";
+  static const String cAppImageVersion = "$CONFIG_BASE_PATH/AppImageVersion.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

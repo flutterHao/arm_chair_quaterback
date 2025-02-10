@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/app_image_version_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
@@ -13,14 +14,12 @@ import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity
 import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_book_exp_rule_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/player_book_rule_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_power_rate_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
@@ -393,5 +392,11 @@ class CacheApi {
     List list = await HttpUtil().post(Api.cWheelRandomReward);
     return wheelRandomRewardList =
         list.map((item) => WheelRandomRewardEntity.fromJson(item)).toList();
+  }
+
+  ///获取图片版本
+  static Future<List<AppImageVersionEntity>> getAppImageVersion() async {
+    List list = await HttpUtil().post(Api.cAppImageVersion);
+    return list.map((item) => AppImageVersionEntity.fromJson(item)).toList();
   }
 }

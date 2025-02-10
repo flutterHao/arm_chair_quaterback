@@ -58,7 +58,7 @@ class Global {
 
     // service
     Get.put(WebsocketServices());
-    // RemoveCacheImageManager.check();
+    RemoveCacheImageManager.check();
   }
 
   static Future<void> initFirebaseCrashlytics() async {

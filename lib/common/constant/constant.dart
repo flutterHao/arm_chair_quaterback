@@ -108,19 +108,23 @@ class Constant {
     "S",
     "S+",
   ];
-  static String seasonId = "2024-25";
+  static const seasonId = "2024-25";
 
-  static String imageSuffix = ".png";
+  static const imageSuffix = ".png";
 
-  static int transitionDuration = 100;
+  static const int transitionDuration = 100;
 
-  static int luckyCoinMaxValueId = 10020;
+  static const int luckyCoinMaxValueId = 10020;
 
-  static int propMoneyTickId = 102;
+  static const int propMoneyTickId = 102;
 
-  static int propBetCoinId = 103;
+  static const int propBetCoinId = 103;
 
-  static int propLuckyCoinId = 201;
+  static const int propLuckyCoinId = 201;
 
-  static int propBallId = 306;
+  static const int propBallId = 306;
+
+  static const double maxWebWidth = 600;
+
+  static const appImageVersionKey = "app_image_version";
 }
