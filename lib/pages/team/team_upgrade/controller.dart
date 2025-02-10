@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
@@ -89,9 +90,11 @@ class TeamUpgradeController extends GetxController {
   List<UpgradeOffensive> getOffensive() {
     var playBaseInfo = Utils.getPlayBaseInfo(player.playerId);
     List<UpgradeOffensive> data = [
-      UpgradeOffensive("LAYUP", playBaseInfo.layupWeight),
-      UpgradeOffensive("MID-RANGE", playBaseInfo.perimeterShotWeight),
-      UpgradeOffensive("3-POINT", playBaseInfo.threePointWeight),
+      UpgradeOffensive(LangKey.gameMeanLayUp, playBaseInfo.layupWeight),
+      UpgradeOffensive(
+          LangKey.gameMeanMidRange, playBaseInfo.perimeterShotWeight),
+      UpgradeOffensive(
+          LangKey.gameMeanThreePoint, playBaseInfo.threePointWeight),
     ];
     return data;
   }
@@ -99,28 +102,32 @@ class TeamUpgradeController extends GetxController {
   List<UpgradeAdditional> getAdditional() {
     if (starUpDoneEntity != null) {
       return [
-        UpgradeAdditional("Layup", starUpDoneEntity!.teamPlayerVO.layup),
         UpgradeAdditional(
-            "Three shot", starUpDoneEntity!.teamPlayerVO.threeShot),
+            LangKey.gameMeanLayUp, starUpDoneEntity!.teamPlayerVO.layup),
+        UpgradeAdditional(LangKey.gameMeanThreePoint,
+            starUpDoneEntity!.teamPlayerVO.threeShot),
+        UpgradeAdditional(LangKey.gameMeanMidRange,
+            starUpDoneEntity!.teamPlayerVO.midlineDefense),
         UpgradeAdditional(
-            "Midline defense", starUpDoneEntity!.teamPlayerVO.midlineDefense),
-        UpgradeAdditional("Jump shot", starUpDoneEntity!.teamPlayerVO.jumpShot),
-        UpgradeAdditional(
-            "Inside defense", starUpDoneEntity!.teamPlayerVO.insideDefense),
-        UpgradeAdditional(
-            "Outside defense", starUpDoneEntity!.teamPlayerVO.outsideDefense),
+            LangKey.gameMeanJumpShot, starUpDoneEntity!.teamPlayerVO.jumpShot),
+        UpgradeAdditional(LangKey.gameMeanPaintDefence,
+            starUpDoneEntity!.teamPlayerVO.insideDefense),
+        UpgradeAdditional(LangKey.gameMeanOutsideDefence,
+            starUpDoneEntity!.teamPlayerVO.outsideDefense),
       ];
     }
     List<UpgradeAdditional> data = [
-      UpgradeAdditional("Layup", teamPlayerUpStarVoEntity.layup),
-      UpgradeAdditional("Three shot", teamPlayerUpStarVoEntity.threeShot),
+      UpgradeAdditional(LangKey.gameMeanLayUp, teamPlayerUpStarVoEntity.layup),
       UpgradeAdditional(
-          "Midline defense", teamPlayerUpStarVoEntity.midlineDefense),
-      UpgradeAdditional("Jump shot", teamPlayerUpStarVoEntity.jumpShot),
+          LangKey.gameMeanThreePoint, teamPlayerUpStarVoEntity.threeShot),
       UpgradeAdditional(
-          "Inside defense", teamPlayerUpStarVoEntity.insideDefense),
+          LangKey.gameMeanMidRange, teamPlayerUpStarVoEntity.midlineDefense),
       UpgradeAdditional(
-          "Outside defense", teamPlayerUpStarVoEntity.outsideDefense),
+          LangKey.gameMeanJumpShot, teamPlayerUpStarVoEntity.jumpShot),
+      UpgradeAdditional(
+          LangKey.gameMeanPaintDefence, teamPlayerUpStarVoEntity.insideDefense),
+      UpgradeAdditional(LangKey.gameMeanOutsideDefence,
+          teamPlayerUpStarVoEntity.outsideDefense),
     ];
     return data;
   }

@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -235,7 +236,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                         children: [
                           20.vGap,
                           Text(
-                            "SPARRING PLAYERS",
+                            LangKey.gameMeanSelectPlayer.tr,
                             style: 19.w5(
                                 color: AppColors.c000000,
                                 height: 1,
@@ -268,7 +269,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                       alignment: Alignment.center,
                                       children: [
                                         Text(
-                                          "Star",
+                                          LangKey.gameLittleNameStar.tr,
                                           style: 16.w4(
                                               color: AppColors.c000000,
                                               height: 1,
@@ -332,7 +333,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                       alignment: Alignment.center,
                                       children: [
                                         Text(
-                                          "Grade",
+                                          LangKey.gameLittleNameGrade.tr,
                                           style: 16.w4(
                                               color: AppColors.c000000,
                                               height: 1,
@@ -453,7 +454,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "ADD SPARRING PLAYERS",
+                                  LangKey.gameMeanScriPlayer.tr,
                                   style: 16.w5(
                                       color: AppColors.cFFFFFF,
                                       height: 1,
@@ -685,17 +686,17 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                       Row(
                         children: [
                           PlayerPropertyWidget(
-                            title: "POW",
+                            title: LangKey.gameNamePow.tr,
                             value: item.power.formatToString(),
                           ),
                           if (upgradePlayer.getPropertyAddValue() != 0)
                             PlayerPropertyWidget(
-                              title: "ATTRIB",
+                              title: LangKey.gameNameAbility.tr,
                               value:
                                   "+${upgradePlayer.getPropertyAddValue().toStringAsFixed(3)}",
                             ),
                           PlayerPropertyWidget(
-                            title: "SUCCESS",
+                            title: LangKey.gameNameSuccess.tr,
                             value: "+${item.probability.formatToString()}%",
                           ),
                         ],

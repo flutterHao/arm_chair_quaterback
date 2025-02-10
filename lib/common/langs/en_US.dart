@@ -286,7 +286,32 @@ Map<String, String> en_US = {
   LangKey.gameNameWt: "WT",
   LangKey.gameTabInbox: 'Inbox',
   LangKey.gameTabWaiting: 'Waiting',
-  LangKey.gameMeanPlayerDate: 'PlAYER DATE'
+  LangKey.gameMeanPlayerDate: 'PlAYER DATE',
+
+  ///286-308
+  LangKey.gameMeanPower: "POWER",
+  LangKey.gameMeanSalary: "SALARY",
+  LangKey.gameMeanPass: "PASS",
+  LangKey.gameMeanSkill: "SKILL",
+  LangKey.gameMeanOffensive: "OFFENSIVE",
+  LangKey.gameMeanAdditional: "ADDITIONAL",
+  LangKey.gameMeanLayUp: "LAYUP",
+  LangKey.gameMeanMidRange: "MID-RANGE",
+  LangKey.gameMeanThreePoint: "3-POINT",
+  LangKey.gameMeanJumpShot: "JUMP SHOT",
+  LangKey.gameMeanPaintDefence: "PAINT DEFENCE",
+  LangKey.gameMeanOutsideDefence: "OUTSIDE DEFENCE",
+  LangKey.gameMeanSelectPlayer: "SELECT PLAYER",
+  LangKey.gameLittleNameStar: "star",
+  LangKey.gameLittleNameGrade: "grade",
+  LangKey.gameMeanScriPlayer: "Add Scrimmage Player",
+  LangKey.gameMeanStarUpSuccess: "Star Up Success",
+  LangKey.gameNamePow: "POW",
+  LangKey.gameNamePlayerNumber: "Number",
+  LangKey.gameButtonFinish: "Finish",
+  LangKey.gameTipsTimes: "TIMES",
+  LangKey.gameTipsStarSuccess: "STAR UP SUCCEEDED",
+  LangKey.gameTipsStarFailed: "STAR UP FAILED",
 };
 
 // const Map<String, String> en_US = {

@@ -388,4 +388,29 @@ class LangKey {
   static const String gameTabInbox = 'gameTabInbox';
   static const String gameTabWaiting = 'gameTabWaiting';
   static const String gameMeanPlayerDate = 'gameMeanPlayerDate';
+
+  ///286-308
+  static const String gameMeanPower = 'gameMeanPower';
+  static const String gameMeanSalary = 'gameMeanSalary';
+  static const String gameMeanPass = 'gameMeanPass';
+  static const String gameMeanSkill = 'gameMeanSkill';
+  static const String gameMeanOffensive = 'gameMeanOffensive';
+  static const String gameMeanAdditional = 'gameMeanAdditional';
+  static const String gameMeanLayUp = 'gameMeanLayUp';
+  static const String gameMeanMidRange = 'gameMeanMidRange';
+  static const String gameMeanThreePoint = 'gameMeanThreePoint';
+  static const String gameMeanJumpShot = 'gameMeanJumpShot';
+  static const String gameMeanPaintDefence = 'gameMeanPaintDefence';
+  static const String gameMeanOutsideDefence = 'gameMeanOutsideDefence';
+  static const String gameMeanSelectPlayer = 'gameMeanSelectPlayer';
+  static const String gameLittleNameStar = 'gameLittleNameStar';
+  static const String gameLittleNameGrade = 'gameLittleNameGrade';
+  static const String gameMeanScriPlayer = 'gameMeanScriPlayer';
+  static const String gameMeanStarUpSuccess = 'gameMeanStarUpSuccess';
+  static const String gameNamePow = 'gameNamePow';
+  static const String gameNamePlayerNumber = 'gameNamePlayerNumber';
+  static const String gameButtonFinish = 'gameButtonFinish';
+  static const String gameTipsTimes = 'gameTipsTimes';
+  static const String gameTipsStarSuccess = 'gameTipsStarSuccess';
+  static const String gameTipsStarFailed = 'gameTipsStarFailed';
 }

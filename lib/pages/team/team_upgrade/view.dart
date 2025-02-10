@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -116,7 +117,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                     Container(
                       margin: EdgeInsets.only(left: 16.w),
                       child: Text(
-                        "OFFENSIVE",
+                        LangKey.gameMeanOffensive.tr,
                         style: 24.w7(
                             color: AppColors.c000000,
                             height: 1,
@@ -173,7 +174,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                     ),
                                     7.vGap,
                                     Text(
-                                      offensive.name,
+                                      offensive.name.tr,
                                       style: 10.w4(
                                           color: AppColors.c000000,
                                           height: 1,
@@ -196,7 +197,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                     Container(
                       margin: EdgeInsets.only(left: 16.w),
                       child: Text(
-                        "ADDITIONAL",
+                        LangKey.gameMeanAdditional.tr,
                         style: 24.w7(
                             color: AppColors.c000000,
                             height: 1,
@@ -228,7 +229,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    additional.name,
+                                    additional.name.tr,
                                     style: 12.w4(
                                         color: AppColors.c000000,
                                         height: 1,
@@ -264,7 +265,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    additional.name,
+                                    additional.name.tr,
                                     style: 12.w4(
                                         color: AppColors.c000000,
                                         height: 1,
@@ -318,7 +319,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
               Container(
                 margin: EdgeInsets.only(left: 16.w),
                 child: Text(
-                  "ABILITY",
+                  LangKey.gameNameAbility.tr,
                   style: 30.w7(
                       color: AppColors.c000000,
                       height: 1,
@@ -500,7 +501,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                 alignment: Alignment.center,
                 children: [
                   Text(
-                    "Star up",
+                    LangKey.gameButtonStarUp.tr,
                     style: 23.w5(
                         color: AppColors.cFFFFFF,
                         height: 1,

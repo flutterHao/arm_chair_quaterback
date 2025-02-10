@@ -23,7 +23,8 @@ class PlayerPropertyWidget extends StatelessWidget {
   Container _buildProperty(String title, String value) {
     return Container(
       height: 29.w,
-      width: 55.w,
+      // width: 55.w,
+      constraints: BoxConstraints(minWidth: 55.w),
       margin: EdgeInsets.only(right: 4.w),
       padding: EdgeInsets.only(left: 6.w),
       decoration: BoxDecoration(

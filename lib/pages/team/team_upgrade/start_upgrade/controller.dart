@@ -77,7 +77,8 @@ class StartUpgradeController extends GetxController {
       playerBaseInfo = Utils.getPlayBaseInfo(player.playerId);
       var gradeInStarDefineEntity = CacheApi.gradeInStars!
           .firstWhere((e) => e.playerGrade == playerBaseInfo.grade);
-      double starUpBase = gradeInStarDefineEntity.starUpBase[player.breakThroughGrade];
+      double starUpBase =
+          gradeInStarDefineEntity.starUpBase[player.breakThroughGrade];
       ppUpValue.value =
           starUpBase * (1 + starUpDefineEntity.getPotantialMax() / 100);
       var selfBaseInfo = Utils.getPlayBaseInfo(player.playerId);
@@ -92,7 +93,7 @@ class StartUpgradeController extends GetxController {
           /// 筛选非自己，未上阵，等于自己品阶或低自己一阶的球员
           var firstWhere = CacheApi.starUpDefines!
               .firstWhere((f) => f.starUp == (e.breakThroughGrade));
-          p.add(UpgradePlayer(e, firstWhere,starUpBase,ppUpValue.value));
+          p.add(UpgradePlayer(e, firstWhere, starUpBase, ppUpValue.value));
         }
         return p;
       });
@@ -155,11 +156,13 @@ class StartUpgradeController extends GetxController {
       return p + e.getPropertyAddValue();
     });
     var starUpDefineEntity = starUpDefineList
-        .firstWhere((f) => f.starUp == (player.breakThroughGrade+1));
+        .firstWhere((f) => f.starUp == (player.breakThroughGrade + 1));
     var gradeInStarDefineEntity = CacheApi.gradeInStars!
         .firstWhere((e) => e.playerGrade == playerBaseInfo.grade);
-    double starUpBase =  gradeInStarDefineEntity.starUpBase[player.breakThroughGrade];
-    propertyUp = starUpBase * (1 + starUpDefineEntity.getPotantialMax() / 100) + propertyUp;
+    double starUpBase =
+        gradeInStarDefineEntity.starUpBase[player.breakThroughGrade];
+    propertyUp = starUpBase * (1 + starUpDefineEntity.getPotantialMax() / 100) +
+        propertyUp;
     var upSR = selectedPlayers.fold(0.0, (p, e) {
       return p + e.teamPlayer.probability;
     });
@@ -195,15 +198,18 @@ class UpgradePlayer {
   final double playerBaseValue;
   var select = false.obs;
 
-  UpgradePlayer(this.teamPlayer, this.starUpDefine,this.starUpBase,this.playerBaseValue);
+  UpgradePlayer(this.teamPlayer, this.starUpDefine, this.starUpBase,
+      this.playerBaseValue);
 
   double getPropertyAddValue() {
     if (starUpDefine.starUp == 0) {
       return 0;
     }
-    double value = starUpBase*(1 +
-        starUpDefine.getPotantialMax() / 100 +
-        starUpDefine.starUpRange * 1) - playerBaseValue;
+    double value = starUpBase *
+            (1 +
+                starUpDefine.getPotantialMax() / 100 +
+                starUpDefine.starUpRange * 1) -
+        playerBaseValue;
     return value;
   }
 }

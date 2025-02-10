@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -189,7 +190,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                               fontFamily: FontFamily.fOswaldBold),
                         ),
                         Text(
-                          "OVR",
+                          LangKey.gameNameOvr.tr,
                           style: 10.w4(
                               color: AppColors.cFFFFFF,
                               fontFamily: FontFamily.fRobotoRegular,
@@ -224,7 +225,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "POWER",
+                      LangKey.gameMeanPower.tr,
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,
@@ -261,7 +262,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "SALARY",
+                      LangKey.gameMeanSalary.tr,
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,
