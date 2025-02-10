@@ -927,6 +927,7 @@ class TeamBattleV2Controller extends GetxController
   @override
   void onClose() {
     release();
+    WidgetsBinding.instance.removeObserver(this);
     super.onClose();
   }
 
@@ -947,18 +948,11 @@ class TeamBattleV2Controller extends GetxController
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     /// app退到后台则直接返回
-    if (!kIsWeb) {
+    if (!kIsWeb && state == AppLifecycleState.paused && !isGameOver.value) {
       isGameOver.value = true;
       Get.back();
     }
     super.didChangeAppLifecycleState(state);
-  }
-
-  @override
-  void dispose() {
-    release();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   gameOver() {

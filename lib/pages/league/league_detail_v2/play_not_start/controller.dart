@@ -86,7 +86,7 @@ class PlayNotStartController extends GetxController
   }
 
   @override
-  void dispose() {
+  void onClose() {
     WidgetsBinding.instance.addObserver(this);
     teamL5GameTabController.dispose();
     teamPlayersTabController.dispose();
@@ -94,7 +94,7 @@ class PlayNotStartController extends GetxController
     scrollController.dispose();
     _timer?.cancel();
     subscription.cancel();
-    super.dispose();
+    super.onClose();
   }
 
   timeCountDown() {
