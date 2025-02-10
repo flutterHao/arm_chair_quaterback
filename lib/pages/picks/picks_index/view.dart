@@ -71,7 +71,7 @@ class PicksIndexPageV2 extends StatefulWidget {
 
 class _PicksIndexPageV2State extends State<PicksIndexPageV2>
     with AutomaticKeepAliveClientMixin {
-  late PicksIndexController picksIndexController;
+  late PicksIndexController controller;
 
   double lastScrollPixels = 0;
   var top = 0.0.obs;
@@ -79,20 +79,21 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
   var floatTitleBarHeight = 75.w;
 
   Widget _buildView(BuildContext context) {
-    if (picksIndexController.guessGamePlayers.isEmpty &&
-        picksIndexController.rankInfo.ranks.isEmpty) {
+    if (controller.guessGamePlayers.isEmpty &&
+        controller.rankInfo.ranks.isEmpty) {
       return SmartRefresher(
-        controller: picksIndexController.refreshController,
-        onRefresh: picksIndexController.loading,
+        controller: controller.refreshController,
+        onRefresh: controller.loading,
         child: Obx(() {
           return Center(
               child: LoadStatusWidget(
-            loadDataStatus: picksIndexController.loadStatusRx.value,
+            loadDataStatus: controller.loadStatusRx.value,
           ));
         }),
       );
     }
     return NestedScrollView(
+      controller: controller.scrollController,
         floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -144,7 +145,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        "${(picksIndexController.rankInfo.myRank.rank ?? 0) > 0 ? picksIndexController.rankInfo.myRank.rank : "--"}",
+                                        "${(controller.rankInfo.myRank.rank ?? 0) > 0 ? controller.rankInfo.myRank.rank : "--"}",
                                         style: 19.w4(
                                             color: AppColors.cFFFFFF,
                                             height: 1),
@@ -223,7 +224,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                     right: 0,
                                     child: Obx(() {
                                       var value =
-                                          picksIndexController.choiceSize.value;
+                                          controller.choiceSize.value;
                                       if (value <= 0) {
                                         return const SizedBox.shrink();
                                       }
@@ -276,8 +277,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                               borderSide: BorderSide(
                                   color: AppColors.cFF7954, width: 3.w)),
                           indicatorWeight: 4,
-                          controller: picksIndexController.tabController,
-                          tabs: picksIndexController.guessGamePlayers.keys
+                          controller: controller.tabController,
+                          tabs: controller.guessGamePlayers.keys
                               .map((e) {
                             return Text(e.replaceAll(",", "+"));
                           }).toList()),
@@ -286,17 +287,17 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
           ];
         },
         body: ExtendedTabBarView(
-            cacheExtent: picksIndexController.guessGamePlayers.keys.length - 1,
-            controller: picksIndexController.tabController,
-            children: picksIndexController.guessGamePlayers.keys.map((e) {
-              var list = picksIndexController.guessGamePlayers[e]!;
+            cacheExtent: controller.guessGamePlayers.keys.length - 1,
+            controller: controller.tabController,
+            children: controller.guessGamePlayers.keys.map((e) {
+              var list = controller.guessGamePlayers[e]!;
               return _TabViewItemPage(list: list, keyStr: e);
             }).toList()));
   }
 
   @override
   Widget build(BuildContext context) {
-    picksIndexController = Get.find();
+    controller = Get.find();
     return GetBuilder<PicksIndexController>(
         id: PicksIndexController.idMain,
         builder: (logic) {

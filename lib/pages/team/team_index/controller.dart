@@ -60,6 +60,7 @@ class TeamIndexController extends GetxController
   RefreshController refreshController = RefreshController();
   bool recieved = false;
   RxInt cup = 0.obs;
+
   //step:0 开宝箱 1选卡 2 展示选中的卡牌 3 展示所有,
   int step = 0;
   int selectIndex = -1;
@@ -79,6 +80,7 @@ class TeamIndexController extends GetxController
   RxBool showBackground3 = false.obs;
   Duration showBgDuration = const Duration(milliseconds: 200);
   RxBool showChangeText = false.obs;
+
   // bool isOpen = false; //防止重复点击
   bool loadDataSuccess = false;
   bool isStartting = false;
@@ -652,6 +654,18 @@ class TeamIndexController extends GetxController
     String grade = Utils.getPlayBaseInfo(playerId).grade;
     int rank = _gradeMap[grade] ?? 0;
     return rank;
+  }
+
+  void scrollToTop() {
+    try {
+      scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } catch (e) {
+      print('TeamIndexController--scrollToTop--error--: $e');
+    }
   }
 }
 

@@ -68,7 +68,7 @@ class _ScorePageState extends State<ScorePage>
                     }),
                   )
                 : ListView.separated(
-                    controller: ScrollController(),
+                    controller: controller.scrollController,
                     itemCount: controller.scoreList.length,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
@@ -98,6 +98,13 @@ class _ScorePageState extends State<ScorePage>
                   ),
           );
         });
+  }
+
+  @override
+  void dispose() {
+    Get.delete<ScorePageController>(
+        tag: widget.time.millisecondsSinceEpoch.toString());
+    super.dispose();
   }
 
   @override

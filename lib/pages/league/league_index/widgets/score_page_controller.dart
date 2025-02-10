@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -17,7 +18,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 ///created at 2024/11/19/11:54
 
 class ScorePageController extends GetxController {
-  late RefreshController refreshController = RefreshController();
+  RefreshController refreshController = RefreshController();
+  ScrollController scrollController = ScrollController();
 
   ScorePageController(this.time);
 
@@ -55,10 +57,12 @@ class ScorePageController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     subscription.cancel();
     tabSubscription.cancel();
-    super.dispose();
+    refreshController.dispose();
+    scrollController.dispose();
+    super.onClose();
   }
 
   void initData() {

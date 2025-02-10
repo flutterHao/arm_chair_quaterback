@@ -49,6 +49,7 @@ class InboxList extends GetView<InboxController> {
               ),
               Expanded(
                 child: ListView.separated(
+                    controller: controller.scrollController,
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {

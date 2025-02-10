@@ -193,4 +193,16 @@ class NewListController extends GetxController {
     // Share.shareXFiles([XFile(newsDetail.imgUrl)],
     //     text: newsDetail.content, subject: newsDetail.title);
   }
+
+  void scrollToTop(){
+    try {
+      scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }catch(e){
+      print('NewListController--scrollToTop--error--: $e');
+    }
+  }
 }

@@ -34,9 +34,12 @@ import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/inbox/index.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -101,39 +104,6 @@ class HomeController extends GetxController {
     ),
   ];
 
-  /*List<TabItemInfo> tabItems = [
-    TabItemInfo(
-      "Picks",
-      Assets.commonUiCommonTabBottom01Off,
-      Assets.commonUiCommonTabBottom01On,
-      const PicksIndex(),
-    ),
-    TabItemInfo(
-      "Scores",
-      Assets.commonUiCommonTabBottom02Off,
-      Assets.commonUiCommonTabBottom02On,
-      const LeaguePage(),
-    ),
-    TabItemInfo(
-      "NBA",
-      Assets.commonUiCommonTabBottom03,
-      Assets.commonUiCommonTabBottom03,
-      const NewsPage(),
-    ),
-    TabItemInfo(
-      "Manager",
-      Assets.commonUiCommonTabBottom04Off,
-      Assets.commonUiCommonTabBottom04On,
-      const TeamIndexPage(),
-    ),
-    TabItemInfo(
-      "Portfolio",
-      Assets.commonUiCommonTabBottom05Off,
-      Assets.commonUiCommonTabBottom05On,
-      const TradeIndex(),
-    ),
-  ];*/
-
   RxBool isHide = false.obs;
 
   @override
@@ -164,9 +134,27 @@ class HomeController extends GetxController {
   }
 
   void onTap(v) {
+    if (v == tabIndex.value) {
+      sameItemTap();
+      return;
+    }
     tabIndex.value = v;
     pageController.jumpToPage(v);
     update();
+  }
+
+  void sameItemTap() {
+    if (tabIndex.value == 0) {
+      Get.find<NewListController>().scrollToTop();
+    } else if (tabIndex.value == 1) {
+      Get.find<LeagueController>().scrollToTop();
+    } else if (tabIndex.value == 2) {
+      Get.find<TeamIndexController>().scrollToTop();
+    } else if (tabIndex.value == 3) {
+      Get.find<PicksIndexController>().scrollToTop();
+    } else {
+      Get.find<InboxController>().scrollToTop();
+    }
   }
 
   Future<UserEntity> refreshUserEntity() async {

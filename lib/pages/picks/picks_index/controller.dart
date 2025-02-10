@@ -10,7 +10,6 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
-import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -177,36 +176,6 @@ class PicksIndexController extends GetxController
     });
   }
 
-  // 滚动监听器
-  void _scrollListener() {
-    // 获取目标 widget 的 RenderObject
-    final targetContext = targetKey.currentContext;
-    if (targetContext != null &&
-        scrollController.position.pixels > 0 &&
-        rankInfo.ranks.isNotEmpty) {
-      final box = targetContext.findRenderObject() as RenderBox;
-      final position = box.localToGlobal(Offset.zero); // 获取目标在屏幕中的位置
-      final targetOffset = position.dy;
-
-      final screenHeight = Get.height;
-
-      // 比较目标的相对位置和滚动位置，确保检测到精确的进入和离开时机
-      if (targetOffset <= screenHeight) {
-        if (!isSelfInfoFloatShow.value) {
-          isSelfInfoFloatShow.value = true;
-          update();
-          print('已经到达目标 Widget');
-        }
-      } else {
-        if (isSelfInfoFloatShow.value) {
-          isSelfInfoFloatShow.value = false;
-          update();
-          print('离开目标 Widget');
-        }
-      }
-    }
-  }
-
   /// 预加载数据
   preLoadData() {
     _initData();
@@ -326,17 +295,22 @@ class PicksIndexController extends GetxController
       refreshController.refreshCompleted();
 
       update([idMain]);
-      UserEntity userEntiry = Get.find<HomeController>().userEntiry;
-      var indexWhere = rankInfo.ranks.indexWhere(
-          (e) => e.teamId == userEntiry.teamLoginInfo?.team?.teamId);
-      if (indexWhere == -1) {
-        scrollController.removeListener(_scrollListener);
-        scrollController.addListener(_scrollListener);
-      }
     }, onError: (e) {
       refreshController.refreshCompleted();
       loadStatusRx.value = LoadDataStatus.error;
     });
+  }
+
+  void scrollToTop() {
+    try {
+      scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } catch (e) {
+      print('PickIndexController--scrollToTop--error--: $e');
+    }
   }
 
   static String get idMain => "id_main";
@@ -349,6 +323,10 @@ class PicksIndexController extends GetxController
   void onClose() {
     subscription.cancel();
     tabSubscription.cancel();
+    refreshController.dispose();
+    scrollController.dispose();
     super.onClose();
   }
+
+
 }

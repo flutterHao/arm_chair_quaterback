@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InboxController extends GetxController {
@@ -13,6 +14,8 @@ class InboxController extends GetxController {
   bool loadDataSuccess = false;
 
   late StreamSubscription<int> subscription;
+
+  ScrollController scrollController = ScrollController();
 
   _initData() {
     getMessageList();
@@ -33,6 +36,24 @@ class InboxController extends GetxController {
   void onReady() {
     super.onReady();
     _initData();
+  }
+
+  void scrollToTop() {
+    try {
+      scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } catch (e) {
+      print('InboxController--scrollToTop--error--: $e');
+    }
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 
   @override

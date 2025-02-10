@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -330,5 +331,22 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
       }
     });
     return gameGuess;
+  }
+
+  void scrollToTop() {
+    try {
+      Get.find<ScorePageController>(
+              tag: getDataTimes()[currentPageIndex.value]
+                  .millisecondsSinceEpoch
+                  .toString())
+          .scrollController
+          .animateTo(
+            0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+    } catch (e) {
+      print('LeagueController--scrollToTop--error--: $e');
+    }
   }
 }
