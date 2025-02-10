@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -333,7 +334,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "SEE ALL",
+                    LangKey.gameButtonSeeAll.tr,
                     style: 16.w7(
                         color: AppColors.c262626,
                         height: 1,

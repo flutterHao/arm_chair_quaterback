@@ -35,7 +35,7 @@ class TeamMenberView extends GetView<TeamController> {
             builder: (_) {
               return Column(
                 children: [
-                  TeamTabbar(),
+                  const TeamTabbar(),
                   Expanded(
                     child: TabBarView(
                       // physics: const NeverScrollableScrollPhysics(),

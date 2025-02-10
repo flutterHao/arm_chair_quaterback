@@ -359,5 +359,15 @@ Map<String, String> zh_CN = {
   LangKey.pickTabTips: "提示",
   LangKey.pickTabsAddPick: "增加一个竞猜选择作为组合",
   LangKey.gameTipsConsumed: "选中的球员升星结束后会被消耗掉",
+  LangKey.gameButtonSkip: "跳过比赛",
+  LangKey.gameButtonSeeAll: "查看全部",
+  LangKey.gameButtonWinRate: "胜率趋势",
+  LangKey.gameTabTotal: "汇总",
+  LangKey.gameTabGameLeader: "本场优秀球员",
+  LangKey.gameTabPoints: "得分",
+  LangKey.gameTabRebounds: "篮板",
+  LangKey.gameTabAssists: "助攻",
+  LangKey.gameTabStarter: "首发",
+  LangKey.gameTabBench: "板凳",
   LangKey.gameTabAddBility: '升星增加的能力'
 };

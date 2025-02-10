@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -40,7 +41,7 @@ class WinRateWidget extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: 16.w),
             child: Text(
-              "WIN POSSIBILITY",
+              LangKey.gameButtonWinRate.tr,
               style: 30.w7(
                   height: 1,
                   fontFamily: FontFamily.fOswaldBold,
@@ -77,9 +78,8 @@ class WinRateWidget extends StatelessWidget {
                                           color: AppColors.c1F8FE5,
                                           width: 1.w)),
                                   child: ImageWidget(
-                                    url: Utils.getTeamUrl(
-                                        teamBattleV2Controller
-                                            .battleEntity.homeTeam.teamLogo),
+                                    url: Utils.getTeamUrl(teamBattleV2Controller
+                                        .battleEntity.homeTeam.teamLogo),
                                     imageFailedPath: Assets.teamUiHead01,
                                     width: 21.w,
                                     height: 21.w,

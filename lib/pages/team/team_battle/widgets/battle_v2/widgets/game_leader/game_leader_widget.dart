@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -49,7 +50,7 @@ class GameLeaderWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    title ?? "GAME LEADERS",
+                    title ?? LangKey.gameTabGameLeader.tr,
                     style: 30.w7(
                         color: AppColors.c000000,
                         fontFamily: FontFamily.fOswaldBold),
@@ -103,7 +104,7 @@ class GameLeaderWidget extends StatelessWidget {
                                         ? Color.lerp(AppColors.cFFFFFF,
                                             AppColors.c000000, progress)
                                         : AppColors.cFFFFFF),
-                            child: Text(e,
+                            child: Text(e.tr,
                                 style: 16.w4(
                                   color: index == current
                                       ? Color.lerp(AppColors.cFFFFFF,
@@ -404,7 +405,7 @@ class GameLeaderWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "SEE ALL",
+                                    LangKey.gameButtonSeeAll.tr,
                                     style: 16.w7(
                                         color: AppColors.c262626,
                                         height: 1,

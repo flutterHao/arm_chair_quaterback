@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -15,8 +16,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///created at 2024/12/6/11:28
 
 class QuarterScoreWidget extends StatelessWidget {
-
-  final bool hasTopMargin ;
+  final bool hasTopMargin;
   late TeamBattleV2Controller teamBattleV2Controller;
 
   QuarterScoreWidget({super.key, this.hasTopMargin = true});
@@ -35,7 +35,7 @@ class QuarterScoreWidget extends StatelessWidget {
     }
     return Container(
       height: 122.w,
-      margin: EdgeInsets.only(top: hasTopMargin?9.w:0),
+      margin: EdgeInsets.only(top: hasTopMargin ? 9.w : 0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
@@ -95,7 +95,7 @@ class QuarterScoreWidget extends StatelessWidget {
                             bottom: BorderSide(
                                 color: AppColors.cD1D1D1, width: 1))),
                     child: Text(
-                      'Total',
+                      LangKey.gameTabTotal.tr,
                       style: 12.w5(
                           color: AppColors.c000000,
                           height: 1,

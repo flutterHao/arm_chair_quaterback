@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -169,7 +170,7 @@ class _PlayerDetailState extends State<PlayerDetail>
                               bottom: BorderSide(
                                   color: AppColors.cD1D1D1, width: 1))),
                       child: Text(
-                        'Player',
+                        LangKey.gameTabStarter.tr,
                       ),
                     )),
                 ...keys.map((e) {

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -52,7 +53,7 @@ class TeamStatsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "TEAM STATS",
+                  LangKey.nbaTeamMeanTeamStats.tr,
                   style: 30.w7(
                       color: AppColors.c000000,
                       fontFamily: FontFamily.fOswaldBold),
@@ -215,7 +216,8 @@ class TeamStatsWidget extends StatelessWidget {
   }
 
   Widget _teamStatsItemWidget(TeamStats item) {
-    var leftPercent = (item.leftValue+2) / (item.rightValue+item.leftValue+4) *100;
+    var leftPercent =
+        (item.leftValue + 2) / (item.rightValue + item.leftValue + 4) * 100;
     return Container(
       height: 60.w,
       margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -245,7 +247,7 @@ class TeamStatsWidget extends StatelessWidget {
                     fontFamily: FontFamily.fRobotoRegular),
               ),
               Text(
-              "${item.rightValue}",
+                "${item.rightValue}",
                 style: 16.w4(
                     color: AppColors.c000000,
                     height: 1,

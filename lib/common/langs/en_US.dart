@@ -332,6 +332,16 @@ Map<String, String> en_US = {
   LangKey.pickTabTips: "TIPS",
   LangKey.pickTabsAddPick: "Add a pick combo",
   LangKey.gameTipsConsumed: "The selected player will be consumed",
+  LangKey.gameButtonSkip: "SKIP",
+  LangKey.gameButtonSeeAll: "SEE ALL",
+  LangKey.gameButtonWinRate: "WIN RATE TREND",
+  LangKey.gameTabTotal: "Total",
+  LangKey.gameTabGameLeader: "GAME LEADER",
+  LangKey.gameTabPoints: "POINTS",
+  LangKey.gameTabRebounds: "REBOUNDS",
+  LangKey.gameTabAssists: "ASSISTS",
+  LangKey.gameTabStarter: "STARTER",
+  LangKey.gameTabBench: "BENCH",
   LangKey.gameTabAddBility: 'ADD ABILITY'
 };
 

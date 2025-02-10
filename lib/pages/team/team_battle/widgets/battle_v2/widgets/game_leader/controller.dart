@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dar
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,11 @@ import 'package:get/get.dart';
 
 class GameLeaderController extends GetxController
     with GetTickerProviderStateMixin {
-  List<String> tabTitles = ["POINTS", "REBOUNDS", "ASSISTS"];
+  List<String> tabTitles = [
+    LangKey.gameTabPoints,
+    LangKey.gameTabRebounds,
+    LangKey.gameTabAssists
+  ];
   late TabController tabController;
 
   GameEvent? event;

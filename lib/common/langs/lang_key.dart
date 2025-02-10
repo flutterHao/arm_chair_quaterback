@@ -432,5 +432,15 @@ class LangKey {
   static const String pickTabTips = 'pickTabTips';
   static const String pickTabsAddPick = 'pickTabsAddPick';
   static const String gameTipsConsumed = 'gameTipsConsumed';
+  static const String gameButtonSkip = 'gameButtonSkip';
+  static const String gameButtonSeeAll = 'gameButtonSeeAll';
+  static const String gameButtonWinRate = 'gameButtonWinRate';
+  static const String gameTabTotal = 'gameTabTotal';
+  static const String gameTabGameLeader = 'gameTabGameLeader';
+  static const String gameTabPoints = 'gameTabPoints';
+  static const String gameTabRebounds = 'gameTabRebounds';
+  static const String gameTabAssists = 'gameTabAssists';
+  static const String gameTabStarter = 'gameTabStarter';
+  static const String gameTabBench = 'gameTabBench';
   static const String gameTabAddBility = 'gameTabAddBility';
 }
