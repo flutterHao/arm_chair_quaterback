@@ -196,6 +196,9 @@ class NewListController extends GetxController {
 
   void scrollToTop(){
     try {
+      if(scrollController.offset == 0){
+        return;
+      }
       scrollController.animateTo(
         0,
         duration: const Duration(milliseconds: 300),

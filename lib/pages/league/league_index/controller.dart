@@ -335,11 +335,15 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
 
   void scrollToTop() {
     try {
-      Get.find<ScorePageController>(
+      var scrollController = Get.find<ScorePageController>(
               tag: getDataTimes()[currentPageIndex.value]
                   .millisecondsSinceEpoch
                   .toString())
-          .scrollController
+          .scrollController;
+      if(scrollController.offset == 0){
+        return;
+      }
+      scrollController
           .animateTo(
             0,
             duration: const Duration(milliseconds: 300),

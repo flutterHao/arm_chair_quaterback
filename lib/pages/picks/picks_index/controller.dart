@@ -46,10 +46,7 @@ class PicksIndexController extends GetxController
 
   var currentIndex = 0.obs;
 
-  var betCount = 0.0.obs; // 总赔率
-  var costCount = 0.0.obs; // 总花费
   var choiceSize = 0.obs; //选中个数
-  var maxBet = 0.0.obs; //赔率
 
   var batchDeleteOpen = false.obs;
 
@@ -303,6 +300,9 @@ class PicksIndexController extends GetxController
 
   void scrollToTop() {
     try {
+      if(scrollController.offset == 0){
+        return;
+      }
       scrollController.animateTo(
         0,
         duration: const Duration(milliseconds: 300),

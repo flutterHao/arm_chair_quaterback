@@ -53,7 +53,7 @@ class _HorizontalDragBackParentWidgetState
   backAnimation() {
     animationController ??= AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: Constant.transitionDuration));
+        duration: const Duration(milliseconds: Constant.transitionDuration));
     var begin = MediaQuery.of(context).size.width;
     animation = Tween(begin: 0.0, end: begin).animate(animationController!)
       ..addListener(() {

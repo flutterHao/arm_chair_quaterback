@@ -27,6 +27,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class Utils {
   static String getAvatarUrl(avatarId) {
@@ -421,7 +422,7 @@ class Utils {
   static String getImageByPropId(int propId,
       {String defaultImage = Assets.managerUiManagerGift00}) {
     var firstWhere = CacheApi.propDefineList
-        ?.firstWhere((element) => element.propId == propId);
+        ?.firstWhereOrNull((element) => element.propId == propId);
     if (firstWhere != null) {
       return getImageByPath(firstWhere.propIcon);
     }
@@ -431,7 +432,7 @@ class Utils {
   static String getImageByWheelRewardId(int propId,
       {String defaultImage = Assets.managerUiManagerGift00}) {
     var firstWhere = CacheApi.wheelRewardTypeList
-        ?.firstWhere((element) => element.wheelRewardId == propId);
+        .firstWhereOrNull((element) => element.wheelRewardId == propId);
     if (firstWhere != null) {
       return getImageByPath(firstWhere.wheelRewardIcon);
     }
@@ -439,7 +440,8 @@ class Utils {
   }
 
   static GameConstantEntity? getGameConstant(int constantId) {
-      return CacheApi.gameConstantList.firstWhere((element) => element.constantId == constantId);
+    return CacheApi.gameConstantList
+        .firstWhere((element) => element.constantId == constantId);
   }
 
   static String getImageByPath(String image) {
@@ -447,8 +449,8 @@ class Utils {
   }
 
   ///获取屏幕的最大宽度
-  static double getMaxWidth(BuildContext context){
-    return min(Constant.maxWebWidth,MediaQuery.of(context).size.width);
+  static double getMaxWidth(BuildContext context) {
+    return min(Constant.maxWebWidth, MediaQuery.of(context).size.width);
   }
 
   /// 获取手机时间时区和服务器时间的时差 (ms)

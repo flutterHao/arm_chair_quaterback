@@ -21,12 +21,11 @@ class InboxController extends GetxController {
     getMessageList();
   }
 
-
   @override
   void onInit() {
     super.onInit();
-    subscription = WSInstance.netStream.listen((_){
-      if(!loadDataSuccess){
+    subscription = WSInstance.netStream.listen((_) {
+      if (!loadDataSuccess) {
         _initData();
       }
     });
@@ -40,6 +39,9 @@ class InboxController extends GetxController {
 
   void scrollToTop() {
     try {
+      if (scrollController.offset == 0) {
+        return;
+      }
       scrollController.animateTo(
         0,
         duration: const Duration(milliseconds: 300),
