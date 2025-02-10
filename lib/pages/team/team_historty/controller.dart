@@ -125,23 +125,24 @@ class TeamHistortyController extends GetxController
     List<TeamStats> list = [];
 
     /// 获取每个队伍的统计数据总数据
-    late ScoreBoardDetailList homeDetail;
-    late ScoreBoardDetailList awayDetail;
+    ScoreBoardDetailList homeDetail = ScoreBoardDetailList();
+    ScoreBoardDetailList awayDetail = ScoreBoardDetailList();
 
     /// 首次遍历赋值
     bool fisthomeDetail = true;
     bool fistawayDetail = true;
+
     for (var element in gameResultInfoEntity.gameScoreBoardDetail) {
       if (element.teamId == gameSchedule.homeTeamId) {
         if (fisthomeDetail) {
-          homeDetail = element;
+          homeDetail = ScoreBoardDetailList.fromJson(element.toJson());
           fisthomeDetail = false;
         }
         homeDetail.add(element);
       }
       if (element.teamId == gameSchedule.awayTeamId) {
         if (fistawayDetail) {
-          awayDetail = element;
+          awayDetail = ScoreBoardDetailList.fromJson(element.toJson());
           fistawayDetail = false;
         }
         awayDetail.add(element);

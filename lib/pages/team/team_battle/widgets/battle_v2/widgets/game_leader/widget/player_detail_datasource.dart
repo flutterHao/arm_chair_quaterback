@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -51,7 +52,8 @@ class PlayerDetailDatasource extends DataGridSource {
   DataGridRowAdapter? buildRow(DataGridRow row) {
     List<Widget> cells = row.getCells().map((e) {
       if (e.columnName == "id") {
-        var baseInfo = Utils.getPlayBaseInfo(e.value);
+        NbaPlayerInfosPlayerBaseInfoList baseInfo =
+            Utils.getPlayBaseInfo(e.value);
         return Container(
             alignment: Alignment.centerLeft,
             decoration: const BoxDecoration(

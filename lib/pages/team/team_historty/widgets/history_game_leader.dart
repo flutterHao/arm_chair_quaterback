@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -160,7 +161,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                 Utils.getPlayBaseInfo(item.playerInfo.playerId);
                             var teamInfo =
                                 Utils.getTeamInfo(playBaseInfo.teamId);
-                            List<Widget> child;
+
                             List<Map<String, String>> values = [];
                             if (index == 0) {
                               values.addAll([
@@ -544,8 +545,8 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
                           border: Border(
                               bottom: BorderSide(
                                   color: AppColors.cD1D1D1, width: 1))),
-                      child: const Text(
-                        'Player',
+                      child: Text(
+                        LangKey.gameTabStarter.tr,
                       ),
                     )),
                 ...keys.map((e) {
