@@ -5,6 +5,7 @@
  * @LastEditTime: 2025-01-24 17:42:15
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -69,7 +70,7 @@ class _RosterTabState extends State<RosterTab>
                           Padding(
                             padding: EdgeInsets.only(left: 16.w),
                             child: Text(
-                              e,
+                              e.tr,
                               style: 24.w4(
                                   fontFamily: FontFamily.fOswaldBold,
                                   height: 0.9),
@@ -177,7 +178,7 @@ class _RosterTabState extends State<RosterTab>
                         margin: EdgeInsets.only(
                             left: 16.5.w, top: 25.w, bottom: 25.w),
                         child: Text(
-                          "player count".toUpperCase(),
+                          LangKey.nbaTeamMeanPlayerCount.tr,
                           style: 24.w4(
                             fontFamily: FontFamily.fOswaldBold,
                             height: 0.9,

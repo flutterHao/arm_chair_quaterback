@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -44,7 +45,7 @@ class HistoryTeamStatsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "TEAM STATS",
+                  LangKey.nbaTeamMeanTeamStats.tr,
                   style: 30.w7(
                       color: AppColors.c000000,
                       fontFamily: FontFamily.fOswaldBold),

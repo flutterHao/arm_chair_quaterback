@@ -74,7 +74,7 @@ class TeamDetailPage extends StatelessWidget {
                                           width: 3.w)),
                                   indicatorWeight: 3.w,
                                   tabs: controller.tabs
-                                      .map((e) => Tab(text: e))
+                                      .map((e) => Tab(text: e.tr))
                                       .toList()),
                             ),
                             height: 43.w,

@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -86,7 +87,7 @@ class _StatsTabState extends State<StatsTab>
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Text(
-                              "TEAM LEADERS".toUpperCase(),
+                              LangKey.nbaTeamMeanLeader.tr,
                               style: 24.w4(
                                   fontFamily: FontFamily.fOswaldBold,
                                   height: 0.8),
@@ -165,7 +166,7 @@ class _StatsTabState extends State<StatsTab>
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Text(
-                              "TEAM STATS".toUpperCase(),
+                              LangKey.nbaTeamMeanTeamStats.tr,
                               style: 24.w4(
                                   fontFamily: FontFamily.fOswaldBold,
                                   height: 0.8),

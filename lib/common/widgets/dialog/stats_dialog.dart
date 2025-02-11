@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -128,7 +129,6 @@ class _PlayerStatsDialogState extends State<PlayerStatsDialog>
                                             ))),
                                   ))),
                         );
-                        ;
                       }),
                 ),
                 10.vGap,
@@ -364,7 +364,7 @@ class TeamStatsDialog extends StatelessWidget {
                       width: 219.w,
                       padding: EdgeInsets.only(left: 40.w),
                       child: Text(
-                        "TEAM",
+                        LangKey.newsButtonTeam.tr,
                         style: 12.w4(
                           fontFamily: FontFamily.fOswaldMedium,
                           height: 0.8,

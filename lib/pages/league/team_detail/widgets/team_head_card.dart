@@ -7,6 +7,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -79,7 +80,9 @@ class TeamHeadCard extends StatelessWidget {
                 Positioned(
                     top: 114.5.w,
                     child: Text(
-                      "${teamStats.wINS}-${teamStats.lOSSES}  ${Utils.getRankText(rank)} IN ${teamStats.force == 1 ? "WESTERN" : "EASTERN"} CONFERENCE"
+                      // "${teamStats.wINS}-${teamStats.lOSSES}  ${Utils.getRankText(rank)} IN ${teamStats.force == 1 ? "WESTERN" : "EASTERN"} CONFERENCE"
+                      //     .toUpperCase(),
+                      "${teamStats.wINS}-${teamStats.lOSSES}  ${Utils.getRankText(rank)}  ${teamStats.force == 1 ? LangKey.nbaTeamMeanWestern.tr : LangKey.nbaTeamMeanEastern.tr}"
                           .toUpperCase(),
                       style: 10.w4(
                         color: AppColors.cFFFFFF,

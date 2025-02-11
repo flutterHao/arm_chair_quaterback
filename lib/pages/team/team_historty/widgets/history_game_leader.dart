@@ -90,7 +90,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                       ? Color.lerp(AppColors.cFFFFFF,
                                           AppColors.c000000, progress)
                                       : AppColors.cFFFFFF),
-                          child: Text(e,
+                          child: Text(e.tr,
                               style: 16.w4(
                                 color: index == current
                                     ? Color.lerp(AppColors.cFFFFFF,
@@ -373,7 +373,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "SEE ALL",
+                                  LangKey.gameButtonSeeAll.tr,
                                   style: 16.w7(
                                       color: AppColors.c262626,
                                       height: 1,

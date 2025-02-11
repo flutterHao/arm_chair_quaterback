@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -81,7 +82,7 @@ class _OverviewTabState extends State<OverviewTab>
                         _RecentPick(controller.teamDetailEntity.recentPick),
                       _OutCome(controller.teamDetailEntity.outcome),
                       9.vGap,
-                      _Stats(),
+                      const _Stats(),
                     ],
                   ),
                 ),
@@ -119,7 +120,7 @@ class _SeasonStats extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 16.w),
             child: Text(
-              "${Constant.seasonId} stats".toUpperCase(),
+              "${Constant.seasonId} ${LangKey.nbaTeamTabAvg.tr}".toUpperCase(),
               style: 24.w4(fontFamily: FontFamily.fOswaldBold, height: 0.9),
             ),
           ),
@@ -138,7 +139,7 @@ class _SeasonStats extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Container(
+                  return SizedBox(
                       width: 93.w,
                       child: Column(children: [
                         Text(
@@ -207,7 +208,7 @@ class _Schedule extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 16.w),
             child: Text(
-              "SCHEDULE",
+              LangKey.gametabScores.tr,
               style: 24.w4(
                 fontFamily: FontFamily.fOswaldBold,
                 height: 0.9,
@@ -363,7 +364,9 @@ class _RecentMatch extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      isHome ? "HOME" : "AWAY",
+                      isHome
+                          ? LangKey.nbaTeamMeanHome.tr
+                          : LangKey.nbaTeamMeanAway.tr,
                       style: 10.w4(
                           color: AppColors.c4D4D4D,
                           fontFamily: FontFamily.fRobotoRegular,
@@ -405,7 +408,9 @@ class _RecentMatch extends StatelessWidget {
                     ),
                     Text(
                       textAlign: TextAlign.end,
-                      isHome ? "AWAY" : "HOME",
+                      isHome
+                          ? LangKey.nbaTeamMeanAway.tr
+                          : LangKey.nbaTeamMeanHome.tr,
                       style: 10.w4(
                         color: AppColors.c4D4D4D,
                         fontFamily: FontFamily.fRobotoRegular,
@@ -431,7 +436,7 @@ class _RecentMatch extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 16.w),
             child: Text(
-              "RECENT",
+              LangKey.gametabScores.tr,
               style: 30.w7(
                   color: AppColors.c262626,
                   height: 1,
@@ -761,7 +766,7 @@ class _RecentPick extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "recent Pick".toUpperCase(),
+            LangKey.gametabPicks.tr.toUpperCase(),
             style: 24.w4(fontFamily: FontFamily.fOswaldBold, height: 0.9),
           ),
           16.5.vGap,
@@ -968,7 +973,7 @@ class _Stats extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: 15.5.w),
             child: Text(
-              "STATS",
+              LangKey.nbaTeamMeanStats.tr,
               style: 24.w4(
                 fontFamily: FontFamily.fOswaldBold,
               ),

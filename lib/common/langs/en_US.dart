@@ -164,7 +164,7 @@ Map<String, String> en_US = {
   LangKey.pickNameStreak: "Streak",
   LangKey.pickNameStreakBonus: "Streak Bonus",
   LangKey.pickTipsFlex: "Hit {0} out of {0} in the line up",
-  LangKey.pickButtonClear: "Clear All",
+  LangKey.pickButtonClear: "pickButtonClearAll",
   LangKey.pickTipsLackMoney: "short of money",
   LangKey.pickNameResult: "Result",
   LangKey.pickNameProcess: "In Process",
@@ -236,7 +236,7 @@ Map<String, String> en_US = {
   LangKey.pickNameTotalRebounds: "Total Rebounds",
   LangKey.pickNameTotalAssists: "Total Assits", // 校正拼写错误："Assits" 应为 "Assists"
   LangKey.pickNameTotalPNA: "Total Points+Assists",
-  LangKey.pickButtonEdit: "Edit",
+  LangKey.pickButtonEdit: "pickButtonClear",
   LangKey.pickTipsAdd: "Add player pick",
   LangKey.pickNameCost: "Wager",
   LangKey.pickButtonDone: "Done",

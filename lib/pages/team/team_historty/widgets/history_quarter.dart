@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -85,7 +86,7 @@ class HistoryQuarterWidget extends StatelessWidget {
                             bottom: BorderSide(
                                 color: AppColors.cD1D1D1, width: 1))),
                     child: Text(
-                      'Total',
+                      LangKey.gameTabTotal.tr,
                       style: 12.w5(
                           color: AppColors.c000000,
                           height: 1,

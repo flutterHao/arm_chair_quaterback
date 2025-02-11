@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dar
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -26,7 +27,11 @@ class TeamHistortyController extends GetxController
   var isExpanded = false.obs;
   var expandedTurns = 0.0.obs;
 
-  List<String> tabTitles = ["POINTS", "REBOUNDS", "ASSISTS"];
+  List<String> tabTitles = [
+    LangKey.gameTabPoints,
+    LangKey.gameTabRebounds,
+    LangKey.gameTabAssists
+  ];
   late TabController tabController;
 
   late GameSchedule gameSchedule;

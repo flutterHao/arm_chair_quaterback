@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
@@ -24,13 +25,22 @@ class TeamDetailController extends GetxController
     with GetSingleTickerProviderStateMixin {
   TeamDetailController();
   int teamId = 100;
-  List<String> tabs = ["OVERVIEW", "ROSTER", "STATS", "LOG"];
+  List<String> tabs = [
+    LangKey.nbaTeamMeanOverview.tr,
+    LangKey.nbaTeamMeanRoster.tr,
+    LangKey.nbaTeamMeanStats.tr,
+    LangKey.nbaTeamMeanLog.tr
+  ];
   List<String> types = ["PTS", "REB", "AST", "BLK", "STL", "TO", "FOUL"];
   var currentTypeIndex = 0.obs;
 
   // int typeIndex = 0;
 
-  List<String> positionList = ["CENTER", "GUARD", "FORWARD"];
+  List<String> positionList = [
+    LangKey.nbaTeamMeanCenter,
+    LangKey.nbaTeamMeanGuard,
+    LangKey.nbaTeamMeanForward
+  ];
 
   List<String> yearList = [];
   Map<String, List<Last5AvgEntity>> logMap = {};
