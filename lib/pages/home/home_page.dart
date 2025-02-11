@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
@@ -11,6 +13,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -39,6 +42,15 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return PopScope(
       canPop: false,
+      onPopInvokedWithResult: (pop, result) async {
+        if (!kIsWeb && GetPlatform.isAndroid) {
+          const AndroidIntent(
+            action: "android.intent.action.MAIN",
+            category: 'android.intent.category.HOME',
+            flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+          ).launch();
+        }
+      },
       child: HorizontalDragBackParentWidget(
         child: GetBuilder<HomeController>(
           assignId: true,
