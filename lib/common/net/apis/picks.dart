@@ -33,6 +33,8 @@ import 'package:arm_chair_quaterback/common/enums/season_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 
+import '../../entities/inbox_email_entity.dart';
+
 ///
 ///@auther gejiahui
 ///created at 2024/9/20/10:42
@@ -229,5 +231,11 @@ class PicksApi {
   /// 分享竞猜
   static Future shareGuess() async {
     await httpUtil.post(Api.shareGuess);
+  }
+
+  /// 查询邮件列表
+  static Future<List<InboxEmailEntity>> getInBoxEmailList() async {
+    List json = await httpUtil.post(Api.getInboxEmail);
+    return json.map((e) => InboxEmailEntity.fromJson(e)).toList();
   }
 }

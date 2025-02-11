@@ -35,6 +35,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.
 import 'package:arm_chair_quaterback/common/entities/guess_reference_value.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/inbox_email_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
@@ -505,6 +506,14 @@ class JsonConvert {
     if (<HelpEntity>[] is M) {
       return data.map<HelpEntity>((Map<String, dynamic> e) =>
           HelpEntity.fromJson(e)).toList() as M;
+    }
+    if (<InboxEmailEntity>[] is M) {
+      return data.map<InboxEmailEntity>((Map<String, dynamic> e) =>
+          InboxEmailEntity.fromJson(e)).toList() as M;
+    }
+    if (<InboxEmailAwardData>[] is M) {
+      return data.map<InboxEmailAwardData>((Map<String, dynamic> e) =>
+          InboxEmailAwardData.fromJson(e)).toList() as M;
     }
     if (<InboxMessageEntity>[] is M) {
       return data.map<InboxMessageEntity>((Map<String, dynamic> e) =>
@@ -1299,6 +1308,8 @@ class JsonConvertClassCollection {
     (GuessReferenceValue).toString(): GuessReferenceValue.fromJson,
     (GuessTopReviewsEntity).toString(): GuessTopReviewsEntity.fromJson,
     (HelpEntity).toString(): HelpEntity.fromJson,
+    (InboxEmailEntity).toString(): InboxEmailEntity.fromJson,
+    (InboxEmailAwardData).toString(): InboxEmailAwardData.fromJson,
     (InboxMessageEntity).toString(): InboxMessageEntity.fromJson,
     (Last5AvgEntity).toString(): Last5AvgEntity.fromJson,
     (MissionDefineEntity).toString(): MissionDefineEntity.fromJson,

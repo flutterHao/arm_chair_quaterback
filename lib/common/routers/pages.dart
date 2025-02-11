@@ -13,6 +13,7 @@
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
+import 'package:arm_chair_quaterback/pages/inbox/binding.dart';
 import 'package:arm_chair_quaterback/pages/inbox/inbox_email/view.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_detail.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/view.dart';
@@ -155,7 +156,7 @@ class AppPages {
           TeamHistortyBinding().dependencies();
           return const TeamHistortyPage();
         case RouteNames.inboxEmail:
-          // TeamHistortyBinding().dependencies();
+          InBoxEmailBinding().dependencies();
           return const InboxEmailPage();
         default:
           return const SizedBox.shrink();
