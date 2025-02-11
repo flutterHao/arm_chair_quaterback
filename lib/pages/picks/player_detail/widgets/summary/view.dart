@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
-import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -1002,18 +1001,29 @@ class SummaryPage extends GetView<SummaryController> {
                                                 ],
                                               ),
                                               if (outCome.guessData != null)
-                                                Text(
-                                                  "Result: ${outCome.guessData!.guessGameAttrValue}",
-                                                  style: 14.w5(
-                                                    color: outCome
-                                                            .guessData!.success
-                                                        ? AppColors.cE71629
-                                                        : AppColors.c0FA76C,
-                                                    height: 1,
-                                                    fontFamily: FontFamily
-                                                        .fOswaldMedium,
-                                                  ),
-                                                )
+                                                Builder(builder: (context) {
+                                                  var text = "";
+                                                  if (outCome.guessData!
+                                                          .guessGameAttrValue ==
+                                                      -1) {
+                                                    text = "DNP";
+                                                  } else {
+                                                    text =
+                                                        "Result: ${outCome.guessData!.guessGameAttrValue}";
+                                                  }
+                                                  return Text(
+                                                    text,
+                                                    style: 14.w5(
+                                                      color: outCome.guessData!
+                                                              .success
+                                                          ? AppColors.cE71629
+                                                          : AppColors.c0FA76C,
+                                                      height: 1,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                    ),
+                                                  );
+                                                })
                                               else
                                                 Text(
                                                   "Result: ${outCome.gameAttrValue ?? 0}",
@@ -1516,7 +1526,7 @@ class SummaryPage extends GetView<SummaryController> {
                                       alignment: Alignment.center,
                                       child: Text(
                                         (value == null
-                                            ? "/"
+                                            ? "-"
                                             : (value as num).formatToString()),
                                         style: 14.w4(
                                             color: AppColors.c4D4D4D,
@@ -1536,7 +1546,7 @@ class SummaryPage extends GetView<SummaryController> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     (value == null
-                                        ? "/"
+                                        ? "-"
                                         : (value as num).formatToString()),
                                     style: 14.w4(
                                         color: AppColors.c4D4D4D,
@@ -1561,7 +1571,7 @@ class SummaryPage extends GetView<SummaryController> {
                           //             alignment: Alignment.center,
                           //             child: Text(
                           //               (value == null
-                          //                   ? "/"
+                          //                   ? "-"
                           //                   : (value as num).formatToString()),
                           //               style: 14.w4(
                           //                   color: AppColors.c4D4D4D,
@@ -1581,7 +1591,7 @@ class SummaryPage extends GetView<SummaryController> {
                           //         alignment: Alignment.center,
                           //         child: Text(
                           //           (value == null
-                          //               ? "/"
+                          //               ? "-"
                           //               : (value as num).formatToString()),
                           //           style: 14.w4(
                           //               color: AppColors.c4D4D4D,

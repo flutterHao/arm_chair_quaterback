@@ -374,7 +374,7 @@ class PickRankPage extends GetView<PickRankController> {
                                               ),
                                               3.hGap,
                                               Text(
-                                                "+${item.chip}",
+                                                "+${Utils.formatChip(item.chip)}",
                                                 style: 14.w5(
                                                   color: AppColors.c1A1A1A,
                                                   height: 1,

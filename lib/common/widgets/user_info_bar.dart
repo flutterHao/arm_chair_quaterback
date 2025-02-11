@@ -114,6 +114,7 @@ class UserInfoBar extends StatelessWidget {
                               ];
                               final List<String> wsServers = [
                                 Address.wsPersonalDevUrl,
+                                Address.wsPersonalDevUrl2,
                                 Address.wsPrivateDevUrl,
                                 Address.wsPublicDevUrl,
                                 Address.wsPubDevUrl,
