@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -17,15 +15,8 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:arm_chair_quaterback/pages/trade/trade_index/controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -41,43 +32,7 @@ class TradeIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: GlobalNestedKey.TRADETabGlobalKey,
-      initialRoute: RouteNames.tradeTradeIndex,
-      onGenerateRoute: (setting) {
-        switch (setting.name) {
-          case RouteNames.tradeTradeIndex:
-            return GetPageRoute(
-              opaque: false,
-              settings: setting,
-              customTransition: HalfSlideRightToLeftTransition(),
-              page: () => const TradeIndexPage(),
-              // binding: TradeIndexBinding(),
-            );
-          case RouteNames.mineMineInfo:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineInfoPage(),
-                binding: MineInfoBinding());
-          case RouteNames.mineMineSetting:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineSettingPage(),
-                binding: MineSettingBinding());
-          case RouteNames.mineMineAccount:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineAccountPage(),
-                binding: MineAccountBinding());
-        }
-      },
-    );
+    return const TradeIndexPage();
   }
 }
 
@@ -104,7 +59,6 @@ class _TradeIndexPageState extends State<TradeIndexPage>
         return BlackAppWidget(
           const UserInfoBar(
             title: "TRADE",
-            routeId: GlobalNestedKey.TRADE,
           ),
           bodyWidget: Obx(() {
             var emptyWidget = Center(

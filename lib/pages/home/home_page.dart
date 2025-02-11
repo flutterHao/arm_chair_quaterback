@@ -39,12 +39,6 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop) {
-          return;
-        }
-        controller.getCurrentTabGlobalKey()?.currentState?.maybePop();
-      },
       child: HorizontalDragBackParentWidget(
         child: GetBuilder<HomeController>(
           assignId: true,

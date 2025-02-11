@@ -13,7 +13,6 @@ import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -37,28 +36,6 @@ class PicksIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const PicksIndexPageV2();
-    return Navigator(
-      key: GlobalNestedKey.PicksTabGlobalKey,
-      initialRoute: RouteNames.picksPicksIndex,
-      onGenerateRoute: (setting) {
-        switch (setting.name) {
-          case RouteNames.picksPicksIndex:
-            return GetPageRoute(
-              opaque: false,
-              settings: setting,
-              customTransition: HalfSlideRightToLeftTransition(),
-              page: () => const PicksIndexPageV2(),
-            );
-          case RouteNames.picksReciveRward:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const ReceiveRewardPage(),
-                binding: ReciveRwardBinding());
-        }
-      },
-    );
   }
 }
 

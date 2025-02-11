@@ -27,4 +27,10 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+
+  test("parse url", (){
+    var parse = Uri.parse("/home?page=2&scroll=1");
+    parse.scheme;
+    expect(parse.path, "/home");
+  });
 }

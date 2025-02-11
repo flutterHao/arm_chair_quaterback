@@ -13,16 +13,12 @@
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
-import 'package:arm_chair_quaterback/common/net/index.dart';
-import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
 import 'package:arm_chair_quaterback/common/utils/platform_file_manager.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
@@ -49,13 +45,6 @@ class HomeController extends GetxController {
   static HomeController get to => Get.find();
   late PageController pageController;
   RxInt tabIndex = 2.obs;
-  Map<int, GlobalKey<NavigatorState>?> navigatorKeys = {
-    0: GlobalNestedKey.PicksTabGlobalKey,
-    1: GlobalNestedKey.LEAGUESTabGlobalKey,
-    2: GlobalNestedKey.NewsTabGlobalKey,
-    3: GlobalNestedKey.TeamTabGlobalKey,
-    4: GlobalNestedKey.TRADETabGlobalKey,
-  };
 
   UserEntity userEntiry = UserEntity();
 
@@ -65,10 +54,6 @@ class HomeController extends GetxController {
   refreshMoneyCoinWidget() async {
     await refreshUserEntity();
     update([GetXBuilderIds.idMoneyAndCoinWidget]);
-  }
-
-  GlobalKey<NavigatorState>? getCurrentTabGlobalKey() {
-    return navigatorKeys[tabIndex.value];
   }
 
   List<TabItemInfo> tabItems = [

@@ -3,7 +3,6 @@ import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -31,49 +30,6 @@ class LeaguePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const LeagueIndexPage();
-    return Navigator(
-      key: GlobalNestedKey.LEAGUESTabGlobalKey,
-      initialRoute: RouteNames.league,
-      onGenerateRoute: (setting) {
-        switch (setting.name) {
-          case RouteNames.league:
-            return GetPageRoute(
-              opaque: false,
-              settings: setting,
-              customTransition: HalfSlideRightToLeftTransition(),
-              page: () => const LeagueIndexPage(),
-            );
-          case RouteNames.mineMineInfo:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineInfoPage(),
-                binding: MineInfoBinding());
-          case RouteNames.mineMineSetting:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineSettingPage(),
-                binding: MineSettingBinding());
-          case RouteNames.mineMineAccount:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineAccountPage(),
-                binding: MineAccountBinding());
-          // case RouteNames.nbaRank:
-          //   return GetPageRoute(
-          //       opaque: false,
-          //       settings: setting,
-          //       customTransition: HalfSlideRightToLeftTransition(),
-          //       page: () => const NBARankPage(),
-          //       binding: RankBinding());
-        }
-      },
-    );
   }
 }
 
