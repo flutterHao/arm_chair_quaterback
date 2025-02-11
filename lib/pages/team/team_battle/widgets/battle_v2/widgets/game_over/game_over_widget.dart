@@ -5,7 +5,6 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/money_income_animation.dart';
@@ -59,7 +58,8 @@ class GameOverWidget extends GetView<GameOverController> {
                           const GameCourtWidget(
                             needCountDown: false,
                           ),
-                          SizedBox(
+                          Container(
+                            color: AppColors.c000000.withOpacity(0.7),
                             height: 219.w,
                             width: double.infinity,
                             child: controller.isLeftWin()
@@ -91,6 +91,7 @@ class GameOverWidget extends GetView<GameOverController> {
                                           controller.mvpObs.value ? 9.w : 0),
                                   duration: const Duration(milliseconds: 300));
                             }),
+                            PlayerStatusWidget(teamBattleV2Controller),
                             GetBuilder<TeamBattleV2Controller>(
                                 id: TeamBattleV2Controller.idQuarterScore,
                                 builder: (_) {
@@ -98,7 +99,6 @@ class GameOverWidget extends GetView<GameOverController> {
                                     hasTopMargin: false,
                                   );
                                 }),
-                            PlayerStatusWidget(teamBattleV2Controller),
                             GameLeaderWidget(
                               controller:
                                   teamBattleV2Controller.gameLeaderController,

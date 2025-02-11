@@ -93,244 +93,327 @@ class WeekPrizeWidget extends GetView<WeekPrizeController> {
                     Expanded(
                         child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 46.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            15.vGap,
-                            SizedBox(
-                              width: 29.w,
-                              height: 29.w,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconWidget(
-                                      iconWidth: 24.w,
-                                      icon: Assets.commonUiCommonIconTask),
-                                ],
-                              ),
-                            ),
-                            3.vGap,
-                            ...List.generate(
-                                dailyTaskController.weekMissionList.length,
-                                (index) {
-                              bool isFirst = index == 0;
-                              bool isLast = index ==
-                                  dailyTaskController.weekMissionList.length -
-                                      1;
-                              int level = dailyTaskController
-                                      .getWeekFinishMission()
-                                      .length -
-                                  1;
-                              var item =
-                                  dailyTaskController.weekMissionList[index];
-                              return Stack(
-                                children: [
-                                  Positioned(
-                                    top: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      width: 29.w,
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                        width: 9.w,
-                                        decoration: BoxDecoration(
-                                          color: index > level
-                                              ? AppColors.cFFFFFF
-                                              : AppColors.c000000,
-                                          borderRadius: isFirst
-                                              ? BorderRadius.vertical(
-                                                  top: Radius.circular(4.5.w))
-                                              : isLast
-                                                  ? BorderRadius.vertical(
-                                                      bottom: Radius.circular(
-                                                          4.5.w))
-                                                  : null,
-                                          border: Border(
-                                              left: BorderSide(
-                                                color: AppColors.cD1D1D1,
-                                                width: 1.w,
-                                              ),
-                                              right: BorderSide(
-                                                color: AppColors.cD1D1D1,
-                                                width: 1.w,
-                                              )),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                      child: Column(
+                        children: [
+                          20.vGap,
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.w),
+                                border: Border.all(
+                                  color: AppColors.c000000,
+                                  width: 1.w,
+                                )),
+                            height: 92.w,
+                            width: 343.w,
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 55.w,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.c000000,
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(9.w))),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        height: 64.w,
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Container(
-                                              width: 29.w,
-                                              height: 29.w,
-                                              decoration: BoxDecoration(
-                                                color: index > level
-                                                    ? AppColors.cTransparent
-                                                    : AppColors.cFFFFFF,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        14.5.w),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 23.w,
-                                              height: 23.w,
-                                              decoration: BoxDecoration(
-                                                color: index > level
-                                                    ? AppColors.cFFFFFF
-                                                    : AppColors.c000000,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        11.5.w),
-                                                border: index > level
-                                                    ? Border.all(
-                                                        color:
-                                                            AppColors.cD1D1D1,
-                                                        width: 1.w,
-                                                      )
-                                                    : null,
-                                              ),
-                                              child: Center(
-                                                  child: Text(
-                                                "${index + 1}",
-                                                style: 14.w5(
-                                                  color: index > level
-                                                      ? AppColors.c000000
-                                                      : AppColors.cFFFFFF,
-                                                  height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fOswaldMedium,
-                                                ),
-                                              )),
-                                            ),
-                                          ],
-                                        ),
+                                      IconWidget(
+                                        iconWidth: 23.w,
+                                        icon: Assets.inboxUiInboxIconAward,
                                       ),
-                                      Container(
-                                        width: 236.w,
-                                        height: 64.w,
-                                        margin: EdgeInsets.only(
-                                            top: isFirst ? 5.w : 19.w),
-                                        padding: EdgeInsets.only(
-                                            left: 23.w, right: 18.w),
-                                        decoration: BoxDecoration(
+                                      10.vGap,
+                                      Text(
+                                        "AWARD",
+                                        style: 12.w4(
                                           color: AppColors.cFFFFFF,
-                                          borderRadius:
-                                              BorderRadius.circular(9.w),
-                                          border: Border.all(
-                                            color: AppColors.c10A86A,
-                                            width: 1.w,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Builder(builder: (context) {
-                                              var list = dailyTaskController
-                                                  .getAwardList(item
-                                                      .missionDefineEntity
-                                                      .awardData);
-                                              return Row(
-                                                children: List.generate(
-                                                    list.length, (index) {
-                                                  var awardItem = list[index];
-                                                  return Row(
-                                                    children: [
-                                                      IconWidget(
-                                                          iconWidth: 43.w,
-                                                          icon: dailyTaskController
-                                                              .getImageByAward(
-                                                                  awardItem)),
-                                                      14.hGap,
-                                                      Text(
-                                                        dailyTaskController
-                                                            .getPropNum(
-                                                                awardItem),
-                                                        style: 14.w4(
-                                                          color:
-                                                              AppColors.c000000,
-                                                          height: 1,
-                                                          fontFamily: FontFamily
-                                                              .fRobotoRegular,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  );
-                                                }),
-                                              );
-                                            }),
-                                            Builder(builder: (context) {
-                                              if (item.teamMissionEntity
-                                                      .status ==
-                                                  1) {
-                                                return const SizedBox.shrink();
-                                              }
-                                              if (item.teamMissionEntity
-                                                      .status ==
-                                                  2) {
-                                                return MtInkWell(
-                                                  onTap: () {
-                                                    dailyTaskController
-                                                        .getTeamMissionAward(item
-                                                            .teamMissionEntity
-                                                            .missionDefineId);
-                                                  },
-                                                  child: Container(
-                                                    width: 55.w,
-                                                    height: 29.w,
-                                                    decoration: BoxDecoration(
-                                                      color: AppColors.c000000,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              7.w),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "GET",
-                                                        style: 14.w5(
-                                                          color:
-                                                              AppColors.cFFFFFF,
-                                                          height: 1,
-                                                          fontFamily: FontFamily
-                                                              .fOswaldMedium,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              return IconWidget(
-                                                iconWidth: 21.w,
-                                                icon: Assets
-                                                    .commonUiCommonStatusBarMission02,
-                                                iconColor: AppColors.c10A86A,
-                                              );
-                                            })
-                                          ],
+                                          height: 1,
+                                          fontFamily: FontFamily.fOswaldRegular,
                                         ),
                                       )
                                     ],
                                   ),
-                                ],
-                              );
-                            }),
-                            9.vGap,
-                            SizedBox(
-                              height: MediaQuery.of(context).padding.bottom,
+                                ),
+                                Expanded(child: Builder(builder: (context) {
+                                  var list = dailyTaskController
+                                      .getAwardList(dailyTaskController.weekMissionList.last.missionDefineEntity.awardData);
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: List.generate(
+                                        list.length, (index) {
+                                      var awardItem =
+                                      list[index];
+                                      return Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          IconWidget(
+                                              iconWidth: 43.w,
+                                              icon: dailyTaskController
+                                                  .getImageByAward(
+                                                  awardItem)),
+                                          12.vGap,
+                                          Text(
+                                            dailyTaskController
+                                                .getPropNum(
+                                                awardItem),
+                                            style: 14.w4(
+                                              color: AppColors
+                                                  .c000000,
+                                              height: 1,
+                                              fontFamily: FontFamily
+                                                  .fRobotoRegular,
+                                            ),
+                                          )
+                                        ],
+                                      );
+                                    }),
+                                  );
+                                }))
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          15.vGap,
+                          Divider(
+                            color: AppColors.cD1D1D1,
+                            height: 1.w,
+                          ),
+                          19.vGap,
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 46.w),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ...List.generate(
+                                    dailyTaskController.weekMissionList.length -
+                                        1, (i) {
+                                  int index = dailyTaskController
+                                          .weekMissionList.length -
+                                      2 -
+                                      i;
+                                  bool isFirst = index == dailyTaskController.weekMissionList.length -
+                                      2;
+                                  bool isLast = index == 0;
+                                  var item = dailyTaskController
+                                      .weekMissionList[index];
+                                  bool isActive = dailyTaskController
+                                          .getCostLuckyCoinNum() <
+                                      item.missionDefineEntity.targetNum;
+                                  return Stack(
+                                    children: [
+                                      Positioned(
+                                        top: 0,
+                                        bottom: 0,
+                                        child: Container(
+                                          width: 29.w,
+                                          alignment: Alignment.center,
+                                          child: Container(
+                                            width: 9.w,
+                                            decoration: BoxDecoration(
+                                              color: isActive
+                                                  ? AppColors.cFFFFFF
+                                                  : AppColors.c000000,
+                                              borderRadius: isFirst
+                                                  ? BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                          4.5.w))
+                                                  : isLast
+                                                      ? BorderRadius.vertical(
+                                                          bottom: Radius.circular(
+                                                              4.5.w))
+                                                      : null,
+                                              border: Border(
+                                                  left: BorderSide(
+                                                    color: AppColors.cD1D1D1,
+                                                    width: 1.w,
+                                                  ),
+                                                  right: BorderSide(
+                                                    color: AppColors.cD1D1D1,
+                                                    width: 1.w,
+                                                  )),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          SizedBox(
+                                            height: 64.w,
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 29.w,
+                                                  height: 29.w,
+                                                  decoration: BoxDecoration(
+                                                    color: isActive
+                                                        ? AppColors.cTransparent
+                                                        : AppColors.cFFFFFF,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14.5.w),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: 23.w,
+                                                  height: 23.w,
+                                                  decoration: BoxDecoration(
+                                                    color: isActive
+                                                        ? AppColors.cFFFFFF
+                                                        : AppColors.c000000,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            11.5.w),
+                                                    border: isActive
+                                                        ? Border.all(
+                                                            color: AppColors
+                                                                .cD1D1D1,
+                                                            width: 1.w,
+                                                          )
+                                                        : null,
+                                                  ),
+                                                  child: Center(
+                                                      child: Text(
+                                                    "${item.missionDefineEntity.targetNum}",
+                                                    style: 14.w5(
+                                                      color: isActive
+                                                          ? AppColors.c000000
+                                                          : AppColors.cFFFFFF,
+                                                      height: 1,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                    ),
+                                                  )),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 236.w,
+                                            height: 64.w,
+                                            margin: EdgeInsets.only(top: isFirst?0:10.w,bottom: isLast?0:10.w),
+                                            padding: EdgeInsets.only(
+                                                left: 23.w, right: 18.w),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.cFFFFFF,
+                                              borderRadius:
+                                                  BorderRadius.circular(9.w),
+                                              border: Border.all(
+                                                color: AppColors.c10A86A,
+                                                width: 1.w,
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Builder(builder: (context) {
+                                                  var list = dailyTaskController
+                                                      .getAwardList(item
+                                                          .missionDefineEntity
+                                                          .awardData);
+                                                  return Row(
+                                                    children: List.generate(
+                                                        list.length, (index) {
+                                                      var awardItem =
+                                                          list[index];
+                                                      return Row(
+                                                        children: [
+                                                          IconWidget(
+                                                              iconWidth: 43.w,
+                                                              icon: dailyTaskController
+                                                                  .getImageByAward(
+                                                                      awardItem)),
+                                                          14.hGap,
+                                                          Text(
+                                                            dailyTaskController
+                                                                .getPropNum(
+                                                                    awardItem),
+                                                            style: 14.w4(
+                                                              color: AppColors
+                                                                  .c000000,
+                                                              height: 1,
+                                                              fontFamily: FontFamily
+                                                                  .fRobotoRegular,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      );
+                                                    }),
+                                                  );
+                                                }),
+                                                Builder(builder: (context) {
+                                                  if (item.teamMissionEntity
+                                                          .status ==
+                                                      1) {
+                                                    return const SizedBox
+                                                        .shrink();
+                                                  }
+                                                  if (item.teamMissionEntity
+                                                          .status ==
+                                                      2) {
+                                                    return MtInkWell(
+                                                      onTap: () {
+                                                        dailyTaskController
+                                                            .getTeamMissionAward(item
+                                                                .teamMissionEntity
+                                                                .missionDefineId);
+                                                      },
+                                                      child: Container(
+                                                        width: 55.w,
+                                                        height: 29.w,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              AppColors.c000000,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      7.w),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            "GET",
+                                                            style: 14.w5(
+                                                              color: AppColors
+                                                                  .cFFFFFF,
+                                                              height: 1,
+                                                              fontFamily: FontFamily
+                                                                  .fOswaldMedium,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  return IconWidget(
+                                                    iconWidth: 21.w,
+                                                    icon: Assets
+                                                        .commonUiCommonStatusBarMission02,
+                                                    iconColor:
+                                                        AppColors.c10A86A,
+                                                  );
+                                                })
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }),
+                                9.vGap,
+                                SizedBox(
+                                  height: MediaQuery.of(context).padding.bottom,
+                                ),
+                              ],
+                            ),
+                          ),
+                          20.vGap,
+                        ],
                       ),
                     ))
                   ],

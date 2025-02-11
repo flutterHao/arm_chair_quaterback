@@ -17,9 +17,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -59,6 +57,9 @@ class DailyTaskController extends GetxController
 
   /// spin按钮是否可点击
   var isSpinBtnEnable = true.obs;
+
+  /// 游戏开始
+  var isStart = false.obs;
 
   @override
   void onInit() {
@@ -123,6 +124,7 @@ class DailyTaskController extends GetxController
       int initialPage = 0;
       if (turnTableEntity.isStart != 0 && btnPageController == null) {
         initialPage = 1;
+        isStart.value = true;
         if (turnTableEntity.circle == 1) {
           outerWheelController.active(true);
         } else if (turnTableEntity.circle == 2) {
@@ -153,7 +155,8 @@ class DailyTaskController extends GetxController
 
   num getMaxLuckyCoinNum() {
     return int.parse(CacheApi.gameConstantList
-            .firstWhereOrNull((e) => e.constantId == Constant.luckyCoinMaxValueId)
+            .firstWhereOrNull(
+                (e) => e.constantId == Constant.luckyCoinMaxValueId)
             ?.constantValue ??
         "0");
   }
@@ -364,6 +367,7 @@ class DailyTaskController extends GetxController
       outerWheelController.active(true);
     }
     MineApi.turntable().then((result) {
+      isStart.value = true;
       var beforeTurnTableEntity =
           TurnTableEntity.fromJson(turnTableEntity.toJson());
       var awardItem = getAwardList(result.currentAward!)[0];
@@ -542,20 +546,19 @@ class DailyTaskController extends GetxController
         .toList();
   }
 
-  /// 周已完成任务
-  List<WeekMissionItem> getWeekFinishMission() {
-    return weekMissionList
-        .where((e) => e.teamMissionEntity.status == 2)
-        .toList();
-  }
-
   /// 当前进行的周任务
   MissionDefineEntity getCurrentWeekMission() {
-    var lastWhere =
-        weekMissionList.firstWhere((e) => e.teamMissionEntity.status == 1);
-    var firstWhere = CacheApi.missionDefineList.firstWhere((e) =>
-        lastWhere.teamMissionEntity.missionDefineId == e.missionDefineId);
-    return firstWhere;
+    var firstWhere = weekMissionList.firstWhereOrNull(
+        (e) => e.missionDefineEntity.targetNum > getCostLuckyCoinNum());
+    if(firstWhere == null){
+      return weekMissionList.last.missionDefineEntity;
+    }
+    return firstWhere.missionDefineEntity;
+  }
+
+  int getCostLuckyCoinNum() {
+    // todo 后台未完成
+    return 0;
   }
 
   /// 获取当前电池数量

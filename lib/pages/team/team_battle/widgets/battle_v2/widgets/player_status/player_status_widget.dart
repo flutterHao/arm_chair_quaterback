@@ -41,7 +41,7 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                   .of(context)
                   .size
                   .width,
-              margin: EdgeInsets.only(top: 9.w),
+              margin: EdgeInsets.only(bottom: 9.w),
               decoration: BoxDecoration(
                   color: AppColors.cFFFFFF,
                   borderRadius: BorderRadius.circular(9.w)),
@@ -84,35 +84,35 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                                         fontFamily: FontFamily.fRobotoMedium),
                                   ),
                                 )),
-                            GridColumn(
-                                columnName: 'morale',
-                                width: 102.w,
-                                label: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: AppColors.cD1D1D1,
-                                              width: 1.w))),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      IconWidget(
-                                          iconWidth: 8.w,
-                                          icon:
-                                          Assets.managerUiManagerIconRecover),
-                                      8.hGap,
-                                      Text(
-                                        'Morale',
-                                        style: 12.w5(
-                                            color: AppColors.c000000,
-                                            height: 1,
-                                            fontFamily: FontFamily
-                                                .fRobotoMedium),
-                                      ),
-                                    ],
-                                  ),
-                                )),
+                            // GridColumn(
+                            //     columnName: 'morale',
+                            //     width: 102.w,
+                            //     label: Container(
+                            //       alignment: Alignment.center,
+                            //       decoration: BoxDecoration(
+                            //           border: Border(
+                            //               bottom: BorderSide(
+                            //                   color: AppColors.cD1D1D1,
+                            //                   width: 1.w))),
+                            //       child: Row(
+                            //         mainAxisAlignment: MainAxisAlignment.center,
+                            //         children: [
+                            //           IconWidget(
+                            //               iconWidth: 8.w,
+                            //               icon:
+                            //               Assets.managerUiManagerIconRecover),
+                            //           8.hGap,
+                            //           Text(
+                            //             'Morale',
+                            //             style: 12.w5(
+                            //                 color: AppColors.c000000,
+                            //                 height: 1,
+                            //                 fontFamily: FontFamily
+                            //                     .fRobotoMedium),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     )),
                             GridColumn(
                                 columnName: 'status',
                                 label: Container(

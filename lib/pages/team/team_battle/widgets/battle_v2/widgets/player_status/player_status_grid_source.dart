@@ -24,7 +24,7 @@ class PlayerStatusGridSource extends DataGridSource {
     var list = data.map((e) {
       List<DataGridCell<dynamic>> data = [];
       data.add(DataGridCell<dynamic>(columnName: 'player', value: e));
-      data.add(DataGridCell<dynamic>(columnName: 'morale', value: e.morale));
+      // data.add(DataGridCell<dynamic>(columnName: 'morale', value: e.morale));
       data.add(DataGridCell<dynamic>(columnName: 'status', value: e.status));
       data.add(DataGridCell<dynamic>(columnName: 'score', value: e));
       return DataGridRow(cells: data);
@@ -106,38 +106,38 @@ class PlayerStatusGridSource extends DataGridSource {
             ],
           ),
         );
-      } else if (e.columnName == "morale") {
-        return Container(
-          decoration: BoxDecoration(
-              border: Border(
-            bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
-          )),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "${(e.value as double).formatToString()}%",
-                style: 12.w4(
-                    color: AppColors.c4D4D4D,
-                    height: 1,
-                    fontFamily: FontFamily.fRobotoRegular),
-              ),
-              4.hGap,
-              Container(
-                width: 34.w,
-                height: 6.w,
-                decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.cD1D1D1, width: 1.w),
-                    borderRadius: BorderRadius.circular(3.w)),
-                child: LinearProgressIndicator(
-                  value: e.value / 100,
-                  backgroundColor: AppColors.cFFFFFF,
-                  color: Utils.getChartColor(e.value),
-                ),
-              )
-            ],
-          ),
-        );
+      // } else if (e.columnName == "morale") {
+      //   return Container(
+      //     decoration: BoxDecoration(
+      //         border: Border(
+      //       bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+      //     )),
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: [
+      //         Text(
+      //           "${(e.value as double).formatToString()}%",
+      //           style: 12.w4(
+      //               color: AppColors.c4D4D4D,
+      //               height: 1,
+      //               fontFamily: FontFamily.fRobotoRegular),
+      //         ),
+      //         4.hGap,
+      //         Container(
+      //           width: 34.w,
+      //           height: 6.w,
+      //           decoration: BoxDecoration(
+      //               border: Border.all(color: AppColors.cD1D1D1, width: 1.w),
+      //               borderRadius: BorderRadius.circular(3.w)),
+      //           child: LinearProgressIndicator(
+      //             value: e.value / 100,
+      //             backgroundColor: AppColors.cFFFFFF,
+      //             color: Utils.getChartColor(e.value),
+      //           ),
+      //         )
+      //       ],
+      //     ),
+      //   );
       } else if (e.columnName == "status") {
         return Container(
             decoration: BoxDecoration(

@@ -637,15 +637,20 @@ class DailyTaskPage extends GetView<DailyTaskController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(3, (index) {
-                bool isActive =
-                    controller.turnTableEntity.currentLife >= index + 1;
-                return Container(
-                    margin: EdgeInsets.only(right: 5.w),
-                    child: IconWidget(
-                      iconWidth: 20.w,
-                      icon: Assets.managerUiManagerTactics01,
-                      iconColor: isActive ? null : AppColors.c4D4D4D,
-                    ));
+                return Obx(() {
+                  bool isActive = controller.isStart.value &&
+                      controller.turnTableEntity.currentLife >= index + 1;
+                  return Opacity(
+                    opacity: 1,
+                    child: Container(
+                        margin: EdgeInsets.only(right: 5.w),
+                        child: IconWidget(
+                          iconWidth: 20.w,
+                          icon: Assets.managerUiManagerTactics01,
+                          iconColor: isActive ? null : AppColors.c4D4D4D,
+                        )),
+                  );
+                });
               }),
             )
           ],
@@ -766,6 +771,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         controller: controller.centerPageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
+          /// 消耗LuckyCoin数量
           Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -775,138 +781,139 @@ class DailyTaskPage extends GetView<DailyTaskController> {
               borderRadius: BorderRadius.circular(12.w),
             ),
             padding: EdgeInsets.all(4.w),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.w),
-                gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.c404040,
-                      AppColors.c666666,
-                    ]),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.cFFFFFF.withOpacity(0.6),
-                    offset: Offset(0.w, 0.w),
-                    blurRadius: 3.w,
-                    spreadRadius: 1.w,
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(9.w),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: 37.w,
-                          width: 181.w,
-                          margin: EdgeInsets.symmetric(
-                              vertical: 8.w, horizontal: 7.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.w),
-                            border: Border.all(
-                              color: AppColors.c666666,
-                              width: 1.w,
-                            ),
-                          ),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Positioned(
-                                height: 12.w,
-                                left: 26.w,
-                                right: 33.w,
-                                child: const LinearProgressIndicator(
-                                  value: 0.2,
-                                  color: AppColors.cFF7954,
-                                  backgroundColor: AppColors.c000000,
-                                ),
+            child: MtInkWell(
+              onTap: () {
+                BottomTipDialog.showWithSound(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: AppColors.cTransparent,
+                    builder: (context) {
+                      return WeekPrizeWidget();
+                    });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(9.w),
+                  gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppColors.c404040,
+                        AppColors.c666666,
+                      ]),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.cFFFFFF.withOpacity(0.6),
+                      offset: Offset(0.w, 0.w),
+                      blurRadius: 3.w,
+                      spreadRadius: 1.w,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(9.w),
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            height: 37.w,
+                            width: 181.w,
+                            margin: EdgeInsets.symmetric(
+                                vertical: 8.w, horizontal: 7.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.w),
+                              border: Border.all(
+                                color: AppColors.c666666,
+                                width: 1.w,
                               ),
-                              Positioned(
-                                  left: 9.w,
-                                  child: IconWidget(
-                                      iconWidth: 24.w,
-                                      icon: Assets.commonUiCommonIconTask)),
-                              Positioned(
-                                  right: 9.w,
-                                  child: MtInkWell(
-                                    onTap: () {
-                                      BottomTipDialog.showWithSound(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          backgroundColor:
-                                              AppColors.cTransparent,
-                                          builder: (context) {
-                                            return WeekPrizeWidget();
-                                          });
-                                    },
-                                    child: IconWidget(
-                                        iconWidth: 24.w,
-                                        icon: Assets.commonUiCommonProp05),
-                                  )),
-                              Text(
-                                "${controller.getWeekFinishMission().length}/${controller.getCurrentWeekMission().targetNum}",
-                                style: 12.w5(
-                                  color: AppColors.cFFFFFF,
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldMedium,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        if (controller.getNotGetMission().isNotEmpty)
-                          Positioned(
-                              top: 7.w,
-                              right: 6.w,
-                              child: Container(
-                                height: 16.w,
-                                constraints: BoxConstraints(
-                                  minWidth: 16.w,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.cFF7954,
-                                  borderRadius: BorderRadius.circular(8.w),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "${controller.getNotGetMission().length}",
-                                    style: 10.w5(
-                                      color: AppColors.cFFFFFF,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldMedium,
-                                    ),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Positioned(
+                                  height: 12.w,
+                                  left: 26.w,
+                                  right: 33.w,
+                                  child: const LinearProgressIndicator(
+                                    value: 0.2,
+                                    color: AppColors.cFF7954,
+                                    backgroundColor: AppColors.c000000,
                                   ),
                                 ),
-                              ))
-                      ],
-                    ),
-                    7.vGap,
-                    Expanded(
-                        child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Text(
-                          "COINS IN",
-                          style: 52.w7(
-                            height: 0.1,
-                            color: AppColors.c000000.withOpacity(0.2),
-                            fontFamily: FontFamily.fOswaldBold,
+                                Positioned(
+                                    left: 9.w,
+                                    child: IconWidget(
+                                        iconWidth: 24.w,
+                                        icon: Assets.commonUiCommonIconTask)),
+                                Positioned(
+                                    right: 9.w,
+                                    child: IconWidget(
+                                        iconWidth: 24.w,
+                                        icon: Assets.commonUiCommonProp05)),
+                                Text(
+                                  "${controller.getCostLuckyCoinNum()}/${controller.getCurrentWeekMission().targetNum}",
+                                  style: 12.w5(
+                                    color: AppColors.cFFFFFF,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        IconWidget(
-                            iconWidth: 80.w,
-                            icon: Assets.managerUiManagerDailymissionSlot)
-                      ],
-                    ))
-                  ],
+                          if (controller.getNotGetMission().isNotEmpty)
+                            Positioned(
+                                top: 7.w,
+                                right: 6.w,
+                                child: Container(
+                                  height: 16.w,
+                                  constraints: BoxConstraints(
+                                    minWidth: 16.w,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.cFF7954,
+                                    borderRadius: BorderRadius.circular(8.w),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "${controller.getNotGetMission().length}",
+                                      style: 10.w5(
+                                        color: AppColors.cFFFFFF,
+                                        height: 1,
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                      ),
+                                    ),
+                                  ),
+                                ))
+                        ],
+                      ),
+                      7.vGap,
+                      Expanded(
+                          child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Text(
+                            "COINS IN",
+                            style: 52.w7(
+                              height: 0.1,
+                              color: AppColors.c000000.withOpacity(0.2),
+                              fontFamily: FontFamily.fOswaldBold,
+                            ),
+                          ),
+                          IconWidget(
+                              iconWidth: 80.w,
+                              icon: Assets.managerUiManagerDailymissionSlot)
+                        ],
+                      ))
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
+
+          /// 箱子转盘
           Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -1008,61 +1015,105 @@ class DailyTaskPage extends GetView<DailyTaskController> {
               ),
             ),
           ),
+
+          /// 比赛
           Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(Assets.managerUiManagerWheelBg01))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ImageWidget(
-                      url:
-                          Utils.getAvatarUrl(controller.turnTableEntity.teamId),
-                      width: 40.w,
-                      imageFailedPath: Assets.teamUiHead03,
-                      borderRadius: BorderRadius.circular(20.w),
-                    ),
-                    20.vGap,
-                    Obx(() {
-                      return AnimatedNum(
-                        number: controller.leftScore.value,
-                        fromZero: true,
-                        textStyle: 14.w5(
-                          color: AppColors.cFFFFFF,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ImageWidget(
+                          url: Utils.getAvatarUrl(
+                              controller.turnTableEntity.teamId),
+                          width: 40.w,
+                          imageFailedPath: Assets.teamUiHead03,
+                          borderRadius: BorderRadius.circular(20.w),
                         ),
-                      );
-                    })
+                        10.vGap,
+                        Obx(() {
+                          return AnimatedNum(
+                            number: controller.leftScore.value,
+                            fromZero: true,
+                            textStyle: 14.w5(
+                              color: AppColors.cFFFFFF,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular,
+                            ),
+                          );
+                        })
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ImageWidget(
+                          url: "",
+                          imageFailedPath: Assets.testTestTeamLogo,
+                          width: 40.w,
+                          borderRadius: BorderRadius.circular(20.w),
+                        ),
+                        10.vGap,
+                        Obx(() {
+                          return AnimatedNum(
+                            number: controller.rightScore.value,
+                            fromZero: true,
+                            textStyle: 14.w5(
+                              color: AppColors.cFFFFFF,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular,
+                            ),
+                          );
+                        })
+                      ],
+                    )
                   ],
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImageWidget(
-                      url: "",
-                      imageFailedPath: Assets.testTestTeamLogo,
-                      width: 40.w,
-                      borderRadius: BorderRadius.circular(20.w),
-                    ),
-                    20.vGap,
-                    Obx(() {
-                      return AnimatedNum(
-                        number: controller.rightScore.value,
-                        fromZero: true,
-                        textStyle: 14.w5(
-                          color: AppColors.cFFFFFF,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular,
-                        ),
-                      );
-                    })
-                  ],
-                )
+                5.vGap,
+                Obx(() {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        controller.leftScore.value > controller.rightScore.value
+                            ? "WIN"
+                            : "LOST",
+                        style: 20.w7(
+                            color: AppColors.cFFFFFF,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldBold),
+                      ),
+                      if (controller.leftScore.value >
+                          controller.rightScore.value)
+                        Row(
+                          children: [
+                            10.hGap,
+                            IconWidget(
+                                iconWidth: 20.w,
+                                icon: controller.getImageByAward(
+                                    controller.getAwardList(controller
+                                        .turnTableEntity.currentAward!)[0])),
+                            3.hGap,
+                            Text(
+                              "+${controller.getAwardList(controller.turnTableEntity.currentAward!)[0].num}",
+                              style: 20.w7(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldBold),
+                            ),
+                          ],
+                        )
+                    ],
+                  );
+                })
               ],
             ),
           )

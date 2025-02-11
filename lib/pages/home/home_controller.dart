@@ -118,6 +118,12 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
+  void goto(int value){
+    tabIndex.value = value;
+    pageController.jumpToPage(value);
+    update();
+  }
+
   void onTap(v) {
     if (v == tabIndex.value) {
       sameItemTap();

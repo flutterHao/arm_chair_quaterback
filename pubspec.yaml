@@ -118,7 +118,7 @@ flutter:
     - assets/images/Common/
     - assets/images/scores/
     - assets/spine/
-    - assets/images/Inbox/
+    - assets/images/inbox/
     - assets/images/cheerleaders/
     - assets/sound/
     # - assets/lottie/
