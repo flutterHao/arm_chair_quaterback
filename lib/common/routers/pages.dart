@@ -13,6 +13,7 @@
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
+import 'package:arm_chair_quaterback/pages/inbox/inbox_email/view.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_detail.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
@@ -79,7 +80,7 @@ class AppPages {
         transitionDuration: const Duration(milliseconds: 300),
         // 进入动画时间
         reverseTransitionDuration:
-            Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
+            const Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
       );
     }
 
@@ -153,6 +154,9 @@ class AppPages {
         case RouteNames.teamHistory:
           TeamHistortyBinding().dependencies();
           return const TeamHistortyPage();
+        case RouteNames.inboxEmail:
+          // TeamHistortyBinding().dependencies();
+          return const InboxEmailPage();
         default:
           return const SizedBox.shrink();
       }

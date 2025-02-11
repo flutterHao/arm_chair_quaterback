@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -52,10 +53,11 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
   @override
   void initState() {
     super.initState();
-    controller = Get.put(LeagueDetailPlayController(widget.item),tag: getTag());
+    controller =
+        Get.put(LeagueDetailPlayController(widget.item), tag: getTag());
   }
 
-  String getTag(){
+  String getTag() {
     return "${widget.item.gameId}";
   }
 
@@ -97,7 +99,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
     var teamStatsData = controller.getTeamStatsData();
     var expansionList =
         teamStatsData.length > 4 ? teamStatsData.sublist(4) : [];
-    print('tttt:${teamStatsData}');
+    print('tttt:$teamStatsData');
     return Container(
       margin: EdgeInsets.only(top: 9.w),
       decoration: BoxDecoration(
@@ -111,7 +113,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "TEAM STATS",
+                  LangKey.nbaTeamMeanTeamStats.tr,
                   style: 30.w7(
                       color: AppColors.c000000,
                       fontFamily: FontFamily.fOswaldBold),
@@ -311,7 +313,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "GAME LEADERS",
+                  LangKey.gameTabGameLeader.tr,
                   style: 30.w7(
                       color: AppColors.c000000,
                       fontFamily: FontFamily.fOswaldBold),
@@ -364,7 +366,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                                       ? Color.lerp(AppColors.cFFFFFF,
                                           AppColors.c000000, progress)
                                       : AppColors.cFFFFFF),
-                          child: Text(e,
+                          child: Text(e.tr,
                               style: 16.w4(
                                 color: index == current
                                     ? Color.lerp(AppColors.cFFFFFF,
@@ -634,7 +636,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "SEE ALL",
+                                  LangKey.gameButtonSeeAll.tr,
                                   style: 16.w7(
                                       color: AppColors.c262626,
                                       height: 1,

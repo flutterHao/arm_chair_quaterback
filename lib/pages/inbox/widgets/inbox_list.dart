@@ -20,6 +20,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
+import '../inbox_email/view.dart';
+
 class InboxList extends GetView<InboxController> {
   const InboxList({super.key});
 
@@ -89,6 +91,9 @@ class InboxList extends GetView<InboxController> {
     }
     return InkWell(
       onTap: () async {
+        if (index == 0) {
+          return Get.toNamed(RouteNames.inboxEmail);
+        }
         item.isRead = true;
         Get.toNamed(RouteNames.inboxDetail, arguments: item);
         controller.update(["inboxList"]);
@@ -167,7 +172,7 @@ class InboxList extends GetView<InboxController> {
                       children: [
                         Expanded(
                           child: Text(
-                            title,
+                            index != 0 ? title : 'System',
                             style: 16.w4(
                                 fontFamily: FontFamily.fOswaldMedium,
                                 height: 0.9),

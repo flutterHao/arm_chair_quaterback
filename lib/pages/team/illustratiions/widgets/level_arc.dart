@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -81,7 +82,7 @@ class LevelWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "SALARY CAP",
+                        LangKey.gameMeanSalaryCap.tr,
                         style: 19.w4(
                           fontFamily: FontFamily.fOswaldMedium,
                           color: AppColors.cFFFFFF,

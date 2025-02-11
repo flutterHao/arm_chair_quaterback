@@ -8,6 +8,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -77,7 +78,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                 : Utils.getTeamInfo(teamId).longEname.split(" ").last;
         return HorizontalDragBackWidget(
           child: BlackAppWidget(
-            UserInfoBar(showPop: true),
+            const UserInfoBar(showPop: true),
             bodyWidget: Expanded(
               child: Stack(
                 children: [
@@ -275,12 +276,12 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                     child: Row(
                                       children: [
                                         _borderCard(
-                                          "ROWER",
+                                          LangKey.gameMeanPower.tr,
                                           player.playerStrength.toString(),
                                         ),
                                         9.hGap,
                                         _borderCard(
-                                          "SALARY",
+                                          LangKey.gameMeanSalary.tr,
                                           Utils.formatMoney(player.salary),
                                         ),
                                       ],

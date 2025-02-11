@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -25,7 +26,11 @@ class LeagueDetailPlayController extends GetxController
 
   NbaGameDetailEntity? nbaGameDetailEntity;
 
-  List<String> tabTitles = ["POINTS", "REBOUNDS", "ASSISTS"];
+  List<String> tabTitles = [
+    LangKey.gameTabPoints,
+    LangKey.gameTabRebounds,
+    LangKey.gameTabAssists
+  ];
   late TabController tabController;
 
   @override
@@ -167,12 +172,12 @@ class TeamStats {
   TeamStats(this.name, this.leftV, this.rightV, {this.valueIsPercent = false});
 
   num get getLeftPercent => (leftV == 0 && leftV == rightValue)
-          ? 50
-          : (leftV / (leftV + rightV)).handlerNaNInfinity();
+      ? 50
+      : (leftV / (leftV + rightV)).handlerNaNInfinity();
 
   num get getRightPercent => (leftV == 0 && leftV == rightValue)
-          ? 50
-          : (rightV / (leftV + rightV)).handlerNaNInfinity();
+      ? 50
+      : (rightV / (leftV + rightV)).handlerNaNInfinity();
 
   Color get getLeftColor =>
       leftV > rightV ? AppColors.c000000 : AppColors.cD1D1D1;

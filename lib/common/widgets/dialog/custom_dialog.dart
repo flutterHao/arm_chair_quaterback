@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/comfirm_button.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
@@ -9,6 +10,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 /*
  * @Description: 自定义弹窗
@@ -202,7 +204,7 @@ class _SimpleBottomDialogState extends State<SimpleBottomDialog> {
                             border: Border.all(
                                 width: 1.w, color: AppColors.c000000)),
                         child: Text(
-                          "RESET",
+                          LangKey.gameButtonReset.tr,
                           style: 23.w4(
                               fontFamily: FontFamily.fOswaldMedium,
                               color: AppColors.c000000),
@@ -227,7 +229,7 @@ class _SimpleBottomDialogState extends State<SimpleBottomDialog> {
                           color: AppColors.c000000,
                         ),
                         child: Text(
-                          "CONFIRM",
+                          LangKey.pickButtonConfirm.tr,
                           style: 23.w4(
                               fontFamily: FontFamily.fOswaldMedium,
                               color: AppColors.cFFFFFF),

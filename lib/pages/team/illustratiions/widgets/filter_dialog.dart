@@ -5,6 +5,7 @@
  * @LastEditTime: 2025-01-17 10:38:50
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -48,7 +49,7 @@ class FilterDialog extends GetView<IllustratiionsController> {
               children: [
                 18.vGap,
                 Text(
-                  "Player OVR",
+                  LangKey.gameTabPlayerOvr.tr,
                   style: 19.w4(
                     fontFamily: FontFamily.fOswaldMedium,
                     height: 0.85,
@@ -115,9 +116,9 @@ class FilterDialog extends GetView<IllustratiionsController> {
                   );
                 }),
 
-                _Position(),
-                _Grade(),
-                _Teams()
+                const _Position(),
+                const _Grade(),
+                const _Teams()
               ],
             ),
           ),
@@ -137,7 +138,7 @@ class _Position extends GetView<IllustratiionsController> {
       children: [
         30.vGap,
         Text(
-          "Position",
+          LangKey.gameTabPosition.tr,
           style: 19.w4(
             fontFamily: FontFamily.fOswaldMedium,
             height: 0.85,
@@ -234,7 +235,7 @@ class _Grade extends GetView<IllustratiionsController> {
       children: [
         30.vGap,
         Text(
-          "Grade",
+          LangKey.gameNameGrade.tr,
           style: 19.w4(
             fontFamily: FontFamily.fOswaldMedium,
             height: 0.85,
@@ -332,7 +333,7 @@ class _Teams extends GetView<IllustratiionsController> {
       children: [
         30.vGap,
         Text(
-          "Teams",
+          LangKey.gameTabNbaTeam.tr,
           style: 19.w4(
             fontFamily: FontFamily.fOswaldMedium,
             height: 0.85,

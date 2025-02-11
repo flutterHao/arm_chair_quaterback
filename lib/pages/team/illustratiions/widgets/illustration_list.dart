@@ -7,6 +7,7 @@
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -68,7 +69,7 @@ class IllustrationList extends StatelessWidget {
                         context: Get.context!,
                         backgroundColor: Colors.transparent,
                         builder: (context) {
-                          return FilterDialog();
+                          return const FilterDialog();
                         },
                       );
                     },
@@ -111,7 +112,7 @@ class IllustrationList extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text(
-                        "free agency".toUpperCase(),
+                        LangKey.gameTabFreeAgency.tr,
                         style: 24.w4(
                           fontFamily: FontFamily.fOswaldBold,
                           height: 0.9,
