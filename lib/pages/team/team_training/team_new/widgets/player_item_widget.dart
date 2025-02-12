@@ -366,6 +366,7 @@ class PlayerItem extends GetView<TeamController> {
               SizedBox(
                 width: 16.w,
               ),
+
               Expanded(
                 // child: _centerInfo(context),
                 child: item.position < 0

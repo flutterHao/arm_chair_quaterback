@@ -351,7 +351,7 @@ Map<String, String> zh_CN = {
   LangKey.gameButtonCancel: "取消",
   LangKey.gameTabFire: "解雇球员确认",
   LangKey.gameTipsFire: "你确认解雇 {0}",
-  LangKey.gameTipsReward: "你将获得",
+  LangKey.gameTipsFireReward: "你将获得",
   LangKey.pickTabMyRank: "我的排名",
   LangKey.pickTipsNoReward: "未获得奖励",
   LangKey.pickTipsRank: "赢得 {0} 筹码可以上榜",

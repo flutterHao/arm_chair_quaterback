@@ -424,7 +424,7 @@ class LangKey {
   static const String gameButtonCancel = 'gameButtonCancel';
   static const String gameTabFire = 'gameTabFire';
   static const String gameTipsFire = 'gameTipsFire';
-  static const String gameTipsReward = 'gameTipsReward';
+  static const String gameTipsFireReward = 'gameTipsFireReward';
   static const String pickTabMyRank = 'pickTabMyRank';
   static const String pickTipsNoReward = 'pickTipsNoReward';
   static const String pickTipsRank = 'pickTipsRank';

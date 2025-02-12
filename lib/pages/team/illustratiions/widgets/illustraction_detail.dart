@@ -165,15 +165,16 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                     context: context,
                                     height: 469.w,
                                     btnDirection: Axis.horizontal,
-                                    cancelStr: "DELETE",
-                                    confirmStr: "CANCEL",
+                                    cancelStr: LangKey.gameButtonDelete.tr,
+                                    confirmStr: LangKey.gameButtonCancel.tr,
                                     cancelBgColor: AppColors.cD60D20,
-                                    desc: "Do you want to destroy this player?",
+                                    title: LangKey.gameTabFire.tr,
+                                    desc: LangKey.gameTipsFire.tr,
                                     centerWidget: Column(
                                       children: [
                                         45.vGap,
                                         Text(
-                                          "YOU CAN GET",
+                                          LangKey.gameTipsFireReward.tr,
                                           style: 19.w4(
                                               fontFamily:
                                                   FontFamily.fOswaldMedium,

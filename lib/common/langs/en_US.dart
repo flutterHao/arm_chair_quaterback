@@ -323,7 +323,7 @@ Map<String, String> en_US = {
   LangKey.gameButtonCancel: "CANCEL",
   LangKey.gameTabFire: "FIRE THE PLAYER",
   LangKey.gameTipsFire: "Are you sure fire {0}",
-  LangKey.gameTipsReward: "You can get",
+  LangKey.gameTipsFireReward: "You can get",
   LangKey.pickTabMyRank: "MY RANK",
   LangKey.pickTipsNoReward: "NO REWARD",
   LangKey.pickTipsRank: "Win {0} coins can earn a ranking",
