@@ -56,7 +56,7 @@ class InboxEmailPage extends GetView<InboxEmailController> {
             child: BlackAppWidget(
           backgroundColor: AppColors.cFFFFFF,
           AppBarWidget(
-            title: 'System Notifications',
+            title: controller.titleList[controller.type],
             right: IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore),
           ),
           bodyWidget: Expanded(child: _buildView()),

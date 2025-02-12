@@ -110,7 +110,7 @@ class EmailRankAwardWidget extends GetView<InboxEmailController> {
                               Expanded(
                                   child: MtInkWell(
                                       onTap: () {
-                                        Get.toNamed(RouteNames.picksPickRank);
+                                        controller.goView();
                                       },
                                       child: Container(
                                           alignment: Alignment.center,
