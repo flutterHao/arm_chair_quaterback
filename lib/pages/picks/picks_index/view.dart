@@ -18,17 +18,15 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
-import 'package:arm_chair_quaterback/pages/picks/recive_rward/index.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'index.dart';
 
 class PicksIndex extends StatelessWidget {
   const PicksIndex({super.key});
@@ -71,7 +69,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
     }
     return NestedScrollView(
       controller: controller.scrollController,
-        floatHeaderSlivers: true,
+        // floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverPersistentHeader(
