@@ -444,4 +444,23 @@ class LangKey {
   static const String gameTabBench = 'gameTabBench';
   static const String gameTabAddBility = 'gameTabAddBility';
   static const String teamTipsAddPlayer = 'teamTipsAddPlayer';
+
+  ///338
+  static const String dailyTaksTab = 'dailyTaksTab';
+  static const String dailyTaksButtonSpin = 'dailyTaksButtonSpin';
+  static const String dailyTaksTabMyReward = 'dailyTaksTabMyReward';
+  static const String dailyTaksButtonCAE = 'dailyTaksButtonCAE';
+  static const String dailyTaksTipsCAE = 'dailyTaksTipsCAE';
+  static const String dailyTaksTipsExit = 'dailyTaksTipsExit';
+  static const String dailyTaksButtonPlayOn = 'dailyTaksButtonPlayOn';
+  static const String dailyTaksMeanWeekReward = 'dailyTaksMeanWeekReward';
+  static const String dailyTaksButtonGet = 'dailyTaksButtonGet';
+  static const String dailyTaksTabGet = 'dailyTaksTabGet';
+  static const String dailyTaksTipsGet = 'dailyTaksTipsGet';
+  static const String dailyTaksButtonGiveUp = 'dailyTaksButtonGiveUp';
+  static const String dailyTaksTabGiveUp = 'dailyTaksTabGiveUp';
+  static const String dailyTaksTipsGiveUp = 'dailyTaksTipsGiveUp';
+  static const String dailyTaksTabClaim = 'dailyTaksTabClaim';
+  static const String dailyTaksTabBigPrize = 'dailyTaksTabBigPrize';
+  static const String dailyTaksTabPrizePool = 'dailyTaksTabPrizePool';
 }

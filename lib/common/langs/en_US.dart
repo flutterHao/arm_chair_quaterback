@@ -343,7 +343,29 @@ Map<String, String> en_US = {
   LangKey.gameTabStarter: "STARTER",
   LangKey.gameTabBench: "BENCH",
   LangKey.gameTabAddBility: 'ADD ABILITY',
-  LangKey.teamTipsAddPlayer: 'Add a player'
+  LangKey.teamTipsAddPlayer: 'Add a player',
+
+  //338
+  LangKey.dailyTaksTab: "DAILY TASK",
+  LangKey.dailyTaksButtonSpin: "SPIN",
+  LangKey.dailyTaksTabMyReward: "My Reward",
+  LangKey.dailyTaksButtonCAE: "CLAIM AND EXIT",
+  LangKey.dailyTaksTipsCAE: "Claim the earned rewards and exit the wheel",
+  LangKey.dailyTaksTipsExit:
+      "There are still many generous rewards to come. Are you sure to exit",
+  LangKey.dailyTaksButtonPlayOn: "PLAY ON",
+  LangKey.dailyTaksMeanWeekReward: "Week Prize",
+  LangKey.dailyTaksButtonGet: "GET",
+  LangKey.dailyTaksTabGet: "YOU'RE OUT",
+  LangKey.dailyTaksTipsGet:
+      "If you exit now, you will lose all the rewards. It is recommended that you use {0} to continue the wheel",
+  LangKey.dailyTaksButtonGiveUp: "QUIT",
+  LangKey.dailyTaksTabGiveUp: "YOU'LL LOSE THESE REWARDS",
+  LangKey.dailyTaksTipsGiveUp:
+      "These are the rewards you have accumulated so far",
+  LangKey.dailyTaksTabClaim: "ALL REWARDS CLEARED",
+  LangKey.dailyTaksTabBigPrize: "Big Prize",
+  LangKey.dailyTaksTabPrizePool: "Prize Pool",
 };
 
 // const Map<String, String> en_US = {
