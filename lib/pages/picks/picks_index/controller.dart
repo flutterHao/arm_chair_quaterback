@@ -87,7 +87,7 @@ class PicksIndexController extends GetxController
       /// 现有的列表不包含此球员,刷新数据之后再加一次
       if (!hasPlayer) {
         await _initData();
-        choiceOne(player: player,needRefreshList: needRefreshList);
+        choiceOne(player: player, needRefreshList: needRefreshList);
       }
     }
     _count(needRefreshList);
@@ -173,11 +173,6 @@ class PicksIndexController extends GetxController
     });
   }
 
-  /// 预加载数据
-  preLoadData() {
-    _initData();
-  }
-
   loading() {
     if (loadStatusRx.value == LoadDataStatus.loading) {
       refreshController.refreshCompleted();
@@ -192,6 +187,7 @@ class PicksIndexController extends GetxController
     super.onInit();
     tabSubscription = Get.find<HomeController>().tabIndex.listen((value) {
       if (value == 3) {
+        sort();
         update([idMain]);
       }
     });
@@ -251,25 +247,6 @@ class PicksIndexController extends GetxController
               (e) => e.playerId == guessGameInfoEntity.playerId);
           item.add(playerV2);
         }
-
-        //排序
-        item.sort((a, b) {
-          // 比赛时间
-          var compareTo =
-              a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
-          if (compareTo != 0) {
-            return compareTo;
-          }
-          //都使用PTS的竞猜分排序
-          return (b.guessInfo.guessReferenceValue["PTS"] ?? 0)
-              .compareTo(a.guessInfo.guessReferenceValue["PTS"] ?? 0);
-        });
-        //排序：选过的放后面
-        // item.sort((a, b) {
-        //   if (a.guessInfo.guessData.isNotEmpty) return 1;
-        //   if (b.guessInfo.guessData.isNotEmpty) return -1;
-        //   return 0;
-        // });
         temp[key] = item;
       }
       for (var item in _pickTypeEntity) {
@@ -278,6 +255,7 @@ class PicksIndexController extends GetxController
           guessGamePlayers[key] = temp[key]!;
         }
       }
+      sort();
 
       ///rank 排行榜
       rankInfo = results[4] as GuessRankByCycleEntity;
@@ -298,9 +276,51 @@ class PicksIndexController extends GetxController
     });
   }
 
+  /// 排序
+  void sort() {
+    guessGamePlayers = guessGamePlayers.keys.fold({}, (p,key){
+      var guessGamePlayer = guessGamePlayers[key]!;
+      var nowMilliseconds = DateTime.now().millisecondsSinceEpoch;
+      var gameNotStartPlayers = guessGamePlayer.fold([], (p, e) {
+        if (e.guessInfo.gameStartTime > nowMilliseconds) {
+          p.add(e);
+        }
+        return p;
+      });
+      gameNotStartPlayers.sort((a, b) {
+        var compareTo =
+        a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        //都使用PTS的竞猜分排序
+        return (b.guessInfo.guessReferenceValue["PTS"] ?? 0)
+            .compareTo(a.guessInfo.guessReferenceValue["PTS"] ?? 0);
+      });
+      var gameAlreadyStartPlayers = guessGamePlayer.fold([], (p, e) {
+        if (e.guessInfo.gameStartTime <= nowMilliseconds) {
+          p.add(e);
+        }
+        return p;
+      });
+      gameAlreadyStartPlayers.sort((a, b) {
+        var compareTo =
+        a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
+        if (compareTo != 0) {
+          return compareTo;
+        }
+        //都使用PTS的竞猜分排序
+        return (b.guessInfo.guessReferenceValue["PTS"] ?? 0)
+            .compareTo(a.guessInfo.guessReferenceValue["PTS"] ?? 0);
+      });
+      p[key] = [...gameNotStartPlayers, ...gameAlreadyStartPlayers];
+      return p;
+    });
+  }
+
   void scrollToTop() {
     try {
-      if(scrollController.offset == 0){
+      if (scrollController.offset == 0) {
         return;
       }
       scrollController.animateTo(
@@ -327,6 +347,4 @@ class PicksIndexController extends GetxController
     scrollController.dispose();
     super.onClose();
   }
-
-
 }
