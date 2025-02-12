@@ -511,9 +511,13 @@ class JsonConvert {
       return data.map<InboxEmailEntity>((Map<String, dynamic> e) =>
           InboxEmailEntity.fromJson(e)).toList() as M;
     }
-    if (<InboxEmailAwardData>[] is M) {
-      return data.map<InboxEmailAwardData>((Map<String, dynamic> e) =>
-          InboxEmailAwardData.fromJson(e)).toList() as M;
+    if (<InboxEmailMailList>[] is M) {
+      return data.map<InboxEmailMailList>((Map<String, dynamic> e) =>
+          InboxEmailMailList.fromJson(e)).toList() as M;
+    }
+    if (<InboxEmailMailListAwardData>[] is M) {
+      return data.map<InboxEmailMailListAwardData>((Map<String, dynamic> e) =>
+          InboxEmailMailListAwardData.fromJson(e)).toList() as M;
     }
     if (<InboxMessageEntity>[] is M) {
       return data.map<InboxMessageEntity>((Map<String, dynamic> e) =>
@@ -1309,7 +1313,9 @@ class JsonConvertClassCollection {
     (GuessTopReviewsEntity).toString(): GuessTopReviewsEntity.fromJson,
     (HelpEntity).toString(): HelpEntity.fromJson,
     (InboxEmailEntity).toString(): InboxEmailEntity.fromJson,
-    (InboxEmailAwardData).toString(): InboxEmailAwardData.fromJson,
+    (InboxEmailMailList).toString(): InboxEmailMailList.fromJson,
+    (InboxEmailMailListAwardData).toString(): InboxEmailMailListAwardData
+        .fromJson,
     (InboxMessageEntity).toString(): InboxMessageEntity.fromJson,
     (Last5AvgEntity).toString(): Last5AvgEntity.fromJson,
     (MissionDefineEntity).toString(): MissionDefineEntity.fromJson,

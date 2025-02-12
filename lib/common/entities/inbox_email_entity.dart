@@ -5,15 +5,8 @@ export 'package:arm_chair_quaterback/generated/json/inbox_email_entity.g.dart';
 
 @JsonSerializable()
 class InboxEmailEntity {
-	late bool receive = false;
 	late int mailType = 0;
-	late int createTime = 0;
-	late List<InboxEmailAwardData> awardData = [];
-	late int teamId = 0;
-	late int mailId = 0;
-	late int updateTime = 0;
-	late int state = 0;
-	late String content = '';
+	late List<InboxEmailMailList> mailList = [];
 
 	InboxEmailEntity();
 
@@ -28,16 +21,42 @@ class InboxEmailEntity {
 }
 
 @JsonSerializable()
-class InboxEmailAwardData {
+class InboxEmailMailList {
+	late bool receive = false;
+	late int mailType = 0;
+	late int createTime = 0;
+	late int inboxMessageId = 0;
+	late List<InboxEmailMailListAwardData> awardData = [];
+	late int teamId = 0;
+	late int mailId = 0;
+	late int updateTime = 0;
+	late int state = 0;
+	late String title = '';
+	late String content = '';
+
+	InboxEmailMailList();
+
+	factory InboxEmailMailList.fromJson(Map<String, dynamic> json) => $InboxEmailMailListFromJson(json);
+
+	Map<String, dynamic> toJson() => $InboxEmailMailListToJson(this);
+
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
+}
+
+@JsonSerializable()
+class InboxEmailMailListAwardData {
 	late int num = 0;
 	late int id = 0;
 	late int type = 0;
 
-	InboxEmailAwardData();
+	InboxEmailMailListAwardData();
 
-	factory InboxEmailAwardData.fromJson(Map<String, dynamic> json) => $InboxEmailAwardDataFromJson(json);
+	factory InboxEmailMailListAwardData.fromJson(Map<String, dynamic> json) => $InboxEmailMailListAwardDataFromJson(json);
 
-	Map<String, dynamic> toJson() => $InboxEmailAwardDataToJson(this);
+	Map<String, dynamic> toJson() => $InboxEmailMailListAwardDataToJson(this);
 
 	@override
 	String toString() {

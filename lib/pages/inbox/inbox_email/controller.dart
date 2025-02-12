@@ -16,23 +16,31 @@ import '../../../common/entities/inbox_email_entity.dart';
 class InboxEmailController extends GetxController {
   InboxEmailController();
   Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
-  RxList<InboxEmailEntity> emailList = <InboxEmailEntity>[].obs;
+  RxList<InboxEmailMailList> emailList = <InboxEmailMailList>[].obs;
 
-  List titleList = ['Pick Ranks', 'Community', 'Manager Ranks', 'System Mail'];
-  int type = 0;
+  List titleList = ['System Mail', 'Pick Ranks', 'Manager Ranks', 'Community'];
+
+  /// 1:系统邮件，2：竞猜发奖邮件，3：赛季结算邮件，4：公告邮件
+  int type = 1;
+  String title = '';
   // @override
   @override
   void onInit() {
     super.onInit();
-    type = Random().nextInt(2);
+    type = Random().nextInt(4) + 1;
+    title = titleList[type - 1];
     initData();
   }
 
   initData() async {
-    emailList.value = (await PicksApi.getInBoxEmailList())
-        .where((element) => element.mailType == type)
-        .toList();
-    loadingStatus.value = LoadDataStatus.success;
+    try {
+      InboxEmailEntity res = (await PicksApi.getMailVOList())
+          .firstWhere((element) => element.mailType == type);
+      emailList.value = res.mailList;
+      loadingStatus.value = LoadDataStatus.success;
+    } catch (e) {
+      loadingStatus.value = LoadDataStatus.noData;
+    }
   }
 
   ///领取奖励
@@ -45,12 +53,16 @@ class InboxEmailController extends GetxController {
                 image: Assets.managerUiManagerGift00,
                 text: "YOU GOT 3  treasure chest".toUpperCase())));
     await PicksApi.receiveMailAward(mailIds);
-    emailList.value = (await PicksApi.getInBoxEmailList())
-        .where((element) => element.mailType == type)
-        .toList();
+    InboxEmailEntity res = (await PicksApi.getMailVOList())
+        .firstWhere((element) => element.mailType == type);
+    emailList.value = res.mailList;
   }
 
   void goView() {
-    Get.toNamed(RouteNames.picksPickRank);
+    if (type == 2) {
+      Get.toNamed(RouteNames.picksPickRank);
+    } else if (type == 3) {
+      Get.toNamed(RouteNames.seaonRankPage);
+    }
   }
 }

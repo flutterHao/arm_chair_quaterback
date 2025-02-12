@@ -234,8 +234,8 @@ class PicksApi {
   }
 
   /// 查询邮件列表
-  static Future<List<InboxEmailEntity>> getInBoxEmailList() async {
-    List json = await httpUtil.post(Api.getInboxEmail);
+  static Future<List<InboxEmailEntity>> getMailVOList() async {
+    List json = await httpUtil.post(Api.getMailVOList);
     return json.map((e) => InboxEmailEntity.fromJson(e)).toList();
   }
 

@@ -3,107 +3,159 @@ import 'package:arm_chair_quaterback/common/entities/inbox_email_entity.dart';
 
 InboxEmailEntity $InboxEmailEntityFromJson(Map<String, dynamic> json) {
   final InboxEmailEntity inboxEmailEntity = InboxEmailEntity();
-  final bool? receive = jsonConvert.convert<bool>(json['receive']);
-  if (receive != null) {
-    inboxEmailEntity.receive = receive;
-  }
   final int? mailType = jsonConvert.convert<int>(json['mailType']);
   if (mailType != null) {
     inboxEmailEntity.mailType = mailType;
   }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    inboxEmailEntity.createTime = createTime;
-  }
-  final List<InboxEmailAwardData>? awardData = (json['awardData'] as List<
+  final List<InboxEmailMailList>? mailList = (json['mailList'] as List<
       dynamic>?)
       ?.map(
           (e) =>
-      jsonConvert.convert<InboxEmailAwardData>(e) as InboxEmailAwardData)
+      jsonConvert.convert<InboxEmailMailList>(e) as InboxEmailMailList)
       .toList();
-  if (awardData != null) {
-    inboxEmailEntity.awardData = awardData;
-  }
-  final int? teamId = jsonConvert.convert<int>(json['teamId']);
-  if (teamId != null) {
-    inboxEmailEntity.teamId = teamId;
-  }
-  final int? mailId = jsonConvert.convert<int>(json['mailId']);
-  if (mailId != null) {
-    inboxEmailEntity.mailId = mailId;
-  }
-  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
-  if (updateTime != null) {
-    inboxEmailEntity.updateTime = updateTime;
-  }
-  final int? state = jsonConvert.convert<int>(json['state']);
-  if (state != null) {
-    inboxEmailEntity.state = state;
-  }
-  final String? content = jsonConvert.convert<String>(json['content']);
-  if (content != null) {
-    inboxEmailEntity.content = content;
+  if (mailList != null) {
+    inboxEmailEntity.mailList = mailList;
   }
   return inboxEmailEntity;
 }
 
 Map<String, dynamic> $InboxEmailEntityToJson(InboxEmailEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['receive'] = entity.receive;
   data['mailType'] = entity.mailType;
-  data['createTime'] = entity.createTime;
-  data['awardData'] = entity.awardData.map((v) => v.toJson()).toList();
-  data['teamId'] = entity.teamId;
-  data['mailId'] = entity.mailId;
-  data['updateTime'] = entity.updateTime;
-  data['state'] = entity.state;
-  data['content'] = entity.content;
+  data['mailList'] = entity.mailList.map((v) => v.toJson()).toList();
   return data;
 }
 
 extension InboxEmailEntityExtension on InboxEmailEntity {
   InboxEmailEntity copyWith({
+    int? mailType,
+    List<InboxEmailMailList>? mailList,
+  }) {
+    return InboxEmailEntity()
+      ..mailType = mailType ?? this.mailType
+      ..mailList = mailList ?? this.mailList;
+  }
+}
+
+InboxEmailMailList $InboxEmailMailListFromJson(Map<String, dynamic> json) {
+  final InboxEmailMailList inboxEmailMailList = InboxEmailMailList();
+  final bool? receive = jsonConvert.convert<bool>(json['receive']);
+  if (receive != null) {
+    inboxEmailMailList.receive = receive;
+  }
+  final int? mailType = jsonConvert.convert<int>(json['mailType']);
+  if (mailType != null) {
+    inboxEmailMailList.mailType = mailType;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    inboxEmailMailList.createTime = createTime;
+  }
+  final int? inboxMessageId = jsonConvert.convert<int>(json['inboxMessageId']);
+  if (inboxMessageId != null) {
+    inboxEmailMailList.inboxMessageId = inboxMessageId;
+  }
+  final List<
+      InboxEmailMailListAwardData>? awardData = (json['awardData'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<InboxEmailMailListAwardData>(
+          e) as InboxEmailMailListAwardData).toList();
+  if (awardData != null) {
+    inboxEmailMailList.awardData = awardData;
+  }
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
+  if (teamId != null) {
+    inboxEmailMailList.teamId = teamId;
+  }
+  final int? mailId = jsonConvert.convert<int>(json['mailId']);
+  if (mailId != null) {
+    inboxEmailMailList.mailId = mailId;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    inboxEmailMailList.updateTime = updateTime;
+  }
+  final int? state = jsonConvert.convert<int>(json['state']);
+  if (state != null) {
+    inboxEmailMailList.state = state;
+  }
+  final String? title = jsonConvert.convert<String>(json['title']);
+  if (title != null) {
+    inboxEmailMailList.title = title;
+  }
+  final String? content = jsonConvert.convert<String>(json['content']);
+  if (content != null) {
+    inboxEmailMailList.content = content;
+  }
+  return inboxEmailMailList;
+}
+
+Map<String, dynamic> $InboxEmailMailListToJson(InboxEmailMailList entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['receive'] = entity.receive;
+  data['mailType'] = entity.mailType;
+  data['createTime'] = entity.createTime;
+  data['inboxMessageId'] = entity.inboxMessageId;
+  data['awardData'] = entity.awardData.map((v) => v.toJson()).toList();
+  data['teamId'] = entity.teamId;
+  data['mailId'] = entity.mailId;
+  data['updateTime'] = entity.updateTime;
+  data['state'] = entity.state;
+  data['title'] = entity.title;
+  data['content'] = entity.content;
+  return data;
+}
+
+extension InboxEmailMailListExtension on InboxEmailMailList {
+  InboxEmailMailList copyWith({
     bool? receive,
     int? mailType,
     int? createTime,
-    List<InboxEmailAwardData>? awardData,
+    int? inboxMessageId,
+    List<InboxEmailMailListAwardData>? awardData,
     int? teamId,
     int? mailId,
     int? updateTime,
     int? state,
+    String? title,
     String? content,
   }) {
-    return InboxEmailEntity()
+    return InboxEmailMailList()
       ..receive = receive ?? this.receive
       ..mailType = mailType ?? this.mailType
       ..createTime = createTime ?? this.createTime
+      ..inboxMessageId = inboxMessageId ?? this.inboxMessageId
       ..awardData = awardData ?? this.awardData
       ..teamId = teamId ?? this.teamId
       ..mailId = mailId ?? this.mailId
       ..updateTime = updateTime ?? this.updateTime
       ..state = state ?? this.state
+      ..title = title ?? this.title
       ..content = content ?? this.content;
   }
 }
 
-InboxEmailAwardData $InboxEmailAwardDataFromJson(Map<String, dynamic> json) {
-  final InboxEmailAwardData inboxEmailAwardData = InboxEmailAwardData();
+InboxEmailMailListAwardData $InboxEmailMailListAwardDataFromJson(
+    Map<String, dynamic> json) {
+  final InboxEmailMailListAwardData inboxEmailMailListAwardData = InboxEmailMailListAwardData();
   final int? num = jsonConvert.convert<int>(json['num']);
   if (num != null) {
-    inboxEmailAwardData.num = num;
+    inboxEmailMailListAwardData.num = num;
   }
   final int? id = jsonConvert.convert<int>(json['id']);
   if (id != null) {
-    inboxEmailAwardData.id = id;
+    inboxEmailMailListAwardData.id = id;
   }
   final int? type = jsonConvert.convert<int>(json['type']);
   if (type != null) {
-    inboxEmailAwardData.type = type;
+    inboxEmailMailListAwardData.type = type;
   }
-  return inboxEmailAwardData;
+  return inboxEmailMailListAwardData;
 }
 
-Map<String, dynamic> $InboxEmailAwardDataToJson(InboxEmailAwardData entity) {
+Map<String, dynamic> $InboxEmailMailListAwardDataToJson(
+    InboxEmailMailListAwardData entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['num'] = entity.num;
   data['id'] = entity.id;
@@ -111,13 +163,13 @@ Map<String, dynamic> $InboxEmailAwardDataToJson(InboxEmailAwardData entity) {
   return data;
 }
 
-extension InboxEmailAwardDataExtension on InboxEmailAwardData {
-  InboxEmailAwardData copyWith({
+extension InboxEmailMailListAwardDataExtension on InboxEmailMailListAwardData {
+  InboxEmailMailListAwardData copyWith({
     int? num,
     int? id,
     int? type,
   }) {
-    return InboxEmailAwardData()
+    return InboxEmailMailListAwardData()
       ..num = num ?? this.num
       ..id = id ?? this.id
       ..type = type ?? this.type;

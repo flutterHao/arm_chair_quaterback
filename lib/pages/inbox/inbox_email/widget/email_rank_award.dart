@@ -84,7 +84,7 @@ class EmailRankAwardWidget extends GetView<InboxEmailController> {
                         Wrap(
                             spacing: 10.w,
                             children: controller.emailList[index].awardData
-                                .map((InboxEmailAwardData element) {
+                                .map((InboxEmailMailListAwardData element) {
                               return Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
