@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
@@ -53,7 +54,7 @@ class WeekPrizeWidget extends GetView<WeekPrizeController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Week Prize",
+                            LangKey.dailyTaksMeanWeekReward.tr,
                             style: 19.w5(
                               color: AppColors.c000000,
                               height: 1,
@@ -133,33 +134,32 @@ class WeekPrizeWidget extends GetView<WeekPrizeController> {
                                   ),
                                 ),
                                 Expanded(child: Builder(builder: (context) {
-                                  var list = dailyTaskController
-                                      .getAwardList(dailyTaskController.weekMissionList.last.missionDefineEntity.awardData);
+                                  var list = dailyTaskController.getAwardList(
+                                      dailyTaskController.weekMissionList.last
+                                          .missionDefineEntity.awardData);
                                   return Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: List.generate(
-                                        list.length, (index) {
-                                      var awardItem =
-                                      list[index];
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children:
+                                        List.generate(list.length, (index) {
+                                      var awardItem = list[index];
                                       return Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           IconWidget(
                                               iconWidth: 43.w,
                                               icon: dailyTaskController
-                                                  .getImageByAward(
-                                                  awardItem)),
+                                                  .getImageByAward(awardItem)),
                                           12.vGap,
                                           Text(
                                             dailyTaskController
-                                                .getPropNum(
-                                                awardItem),
+                                                .getPropNum(awardItem),
                                             style: 14.w4(
-                                              color: AppColors
-                                                  .c000000,
+                                              color: AppColors.c000000,
                                               height: 1,
-                                              fontFamily: FontFamily
-                                                  .fRobotoRegular,
+                                              fontFamily:
+                                                  FontFamily.fRobotoRegular,
                                             ),
                                           )
                                         ],
@@ -189,8 +189,10 @@ class WeekPrizeWidget extends GetView<WeekPrizeController> {
                                           .weekMissionList.length -
                                       2 -
                                       i;
-                                  bool isFirst = index == dailyTaskController.weekMissionList.length -
-                                      2;
+                                  bool isFirst = index ==
+                                      dailyTaskController
+                                              .weekMissionList.length -
+                                          2;
                                   bool isLast = index == 0;
                                   var item = dailyTaskController
                                       .weekMissionList[index];
@@ -217,8 +219,9 @@ class WeekPrizeWidget extends GetView<WeekPrizeController> {
                                                           4.5.w))
                                                   : isLast
                                                       ? BorderRadius.vertical(
-                                                          bottom: Radius.circular(
-                                                              4.5.w))
+                                                          bottom:
+                                                              Radius.circular(
+                                                                  4.5.w))
                                                       : null,
                                               border: Border(
                                                   left: BorderSide(
@@ -293,7 +296,9 @@ class WeekPrizeWidget extends GetView<WeekPrizeController> {
                                           Container(
                                             width: 236.w,
                                             height: 64.w,
-                                            margin: EdgeInsets.only(top: isFirst?0:10.w,bottom: isLast?0:10.w),
+                                            margin: EdgeInsets.only(
+                                                top: isFirst ? 0 : 10.w,
+                                                bottom: isLast ? 0 : 10.w),
                                             padding: EdgeInsets.only(
                                                 left: 23.w, right: 18.w),
                                             decoration: BoxDecoration(
@@ -376,7 +381,9 @@ class WeekPrizeWidget extends GetView<WeekPrizeController> {
                                                         ),
                                                         child: Center(
                                                           child: Text(
-                                                            "GET",
+                                                            LangKey
+                                                                .dailyTaksButtonGet
+                                                                .tr,
                                                             style: 14.w5(
                                                               color: AppColors
                                                                   .cFFFFFF,

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -151,7 +152,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "DAILY MISSION",
+                        LangKey.dailyTaksTab.tr,
                         style: 24.w5(
                           color: AppColors.c000000,
                           height: 1,
@@ -293,7 +294,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                       duration: const Duration(milliseconds: 200),
                       child: Center(
                         child: Text(
-                          "SPIN",
+                          LangKey.dailyTaksButtonSpin.tr,
                           style: 23.w5(
                             color: AppColors.cFFFFFF,
                             height: 1,
@@ -455,7 +456,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                       ),
                       child: Center(
                         child: Text(
-                          "GO TO",
+                          LangKey.pickButtonGo.tr,
                           style: 16.w5(
                             color: AppColors.c000000,
                             height: 1,
@@ -495,7 +496,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                     ),
                     child: Center(
                       child: Text(
-                        "CLAIM",
+                        LangKey.pickButtonGet.tr,
                         style: 16.w5(
                           color: AppColors.cFFFFFF,
                           height: 1,

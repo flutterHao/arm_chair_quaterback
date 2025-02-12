@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/turn_table_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_prop_list.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
@@ -207,9 +208,8 @@ class DailyTaskController extends GetxController
                 iconWidth: 41.w, icon: Assets.managerUiManagerIconWheelHurt),
           ],
         ),
-        title: "YOU’RE OUT",
-        desc:
-            "If you give up now,you’ll lose everything!Continue playing to keep your rewards and win some mor.",
+        title: LangKey.dailyTaksTabGet.tr,
+        desc: LangKey.dailyTaksTipsGet.tr,
         centerWidget: SizedBox(
           height: 97.w,
           child: Stack(
@@ -220,7 +220,7 @@ class DailyTaskController extends GetxController
                   child: Row(
                     children: [
                       Text(
-                        "COST:",
+                        "${LangKey.teamMeanCost.tr}:",
                         style: 16.w5(
                           height: 1,
                           fontFamily: FontFamily.fOswaldMedium,
@@ -243,8 +243,8 @@ class DailyTaskController extends GetxController
             ],
           ),
         ),
-        confirmStr: "PLAY ON",
-        cancelStr: "GIVE UP",
+        confirmStr: LangKey.dailyTaksButtonPlayOn.tr,
+        cancelStr: LangKey.dailyTaksButtonGiveUp.tr,
         cancelBgColor: AppColors.cD60D20,
         onTap: () async {
           await reLife();
@@ -266,12 +266,11 @@ class DailyTaskController extends GetxController
         context: Get.context!,
         height: 534.w,
         btnDirection: Axis.horizontal,
-        cancelStr: "GIVE UP",
-        confirmStr: "STAY",
+        cancelStr: LangKey.dailyTaksButtonGiveUp.tr,
+        confirmStr: LangKey.dailyTaksButtonPlayOn.tr,
         cancelBgColor: AppColors.cD60D20,
-        title: "YOU’LL LOSE THESE REWARDS",
-        desc:
-            "If you give up now, you will lose all the rewards gathered so far!",
+        title: LangKey.dailyTaksTabGiveUp.tr,
+        desc: LangKey.dailyTaksTipsGiveUp.tr,
         centerWidget: Column(
           children: [
             27.vGap,
@@ -550,7 +549,7 @@ class DailyTaskController extends GetxController
   MissionDefineEntity getCurrentWeekMission() {
     var firstWhere = weekMissionList.firstWhereOrNull(
         (e) => e.missionDefineEntity.targetNum > getCostLuckyCoinNum());
-    if(firstWhere == null){
+    if (firstWhere == null) {
       return weekMissionList.last.missionDefineEntity;
     }
     return firstWhere.missionDefineEntity;

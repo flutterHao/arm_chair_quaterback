@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
@@ -137,7 +138,7 @@ class _SuccessWidgetState extends State<SuccessWidget>
                 ),
                 17.vGap,
                 Text(
-                  "ALL REWARDS CLEARED",
+                  LangKey.dailyTaksTabClaim.tr,
                   style: 27.w5(
                     color: AppColors.c000000,
                     height: 1,
@@ -247,7 +248,7 @@ class _SuccessWidgetState extends State<SuccessWidget>
                                                 iconWidth: 47.w,
                                                 icon:
                                                     controller.getImageByAward(
-                                                        girlReward!.awardItem)),
+                                                        girlReward.awardItem)),
                                           )),
                                     ],
                                   ),
@@ -310,7 +311,7 @@ class _SuccessWidgetState extends State<SuccessWidget>
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      "DONE",
+                      LangKey.pickButtonDone.tr,
                       style: 23.w5(
                         color: AppColors.c000000,
                         height: 1,

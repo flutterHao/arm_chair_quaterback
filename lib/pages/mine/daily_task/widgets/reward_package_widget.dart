@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'dart:io';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -97,13 +98,17 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: kIsWeb?0:Platform.isIOS?MediaQuery.of(context).padding.top:0,
+                            height: kIsWeb
+                                ? 0
+                                : Platform.isIOS
+                                    ? MediaQuery.of(context).padding.top
+                                    : 0,
                           ),
                           31.vGap,
                           Container(
                             margin: EdgeInsets.only(left: 16.w),
                             child: Text(
-                              "Your Reward",
+                              LangKey.dailyTaksTabMyReward.tr,
                               style: 19.w5(
                                 color: AppColors.c000000,
                                 height: 1,
@@ -206,11 +211,12 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                           height: 384.w,
                                           btnDirection: Axis.horizontal,
                                           centerWidget: 102.vGap,
-                                          title: "EXIT AND CLAIM REWARDS",
-                                          desc:
-                                              "You still have the chance to win  amazing rewards.",
-                                          confirmStr: "PLAY ON",
-                                          cancelStr: "CLAIM AND EXIT",
+                                          title: LangKey.dailyTaksTipsCAE.tr,
+                                          desc: LangKey.dailyTaksTipsExit.tr,
+                                          confirmStr:
+                                              LangKey.dailyTaksButtonPlayOn.tr,
+                                          cancelStr:
+                                              LangKey.dailyTaksButtonCAE.tr,
                                           onTap: () {
                                             print('PLAY ON');
                                             Get.back();
@@ -233,7 +239,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                     ),
                                     child: Center(
                                       child: Text(
-                                        "CLAIM AND EXIT",
+                                        LangKey.dailyTaksButtonCAE.tr,
                                         style: 23.w5(
                                           color: AppColors.c000000,
                                           height: 1,
@@ -247,7 +253,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                 SizedBox(
                                   width: 193.w,
                                   child: Text(
-                                    "Claim and exit to collect the rewards gathered so far",
+                                    LangKey.dailyTaksTipsCAE.tr,
                                     textAlign: TextAlign.center,
                                     style: 12.w4(
                                       color: AppColors.c4D4D4D,
