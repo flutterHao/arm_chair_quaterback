@@ -555,9 +555,9 @@ class DailyTaskController extends GetxController
     return firstWhere.missionDefineEntity;
   }
 
+  /// 周消耗
   int getCostLuckyCoinNum() {
-    // todo 后台未完成
-    return 0;
+    return turnTableEntity.weekLuckyCount.value1;
   }
 
   /// 获取当前电池数量

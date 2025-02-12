@@ -5,17 +5,18 @@ export 'package:arm_chair_quaterback/generated/json/app_image_version_entity.g.d
 
 @JsonSerializable()
 class AppImageVersionEntity {
-	late int imageVersion = 1;
-	late String path = '';
+  int imageVersion = 1;
+  String path = '';
 
-	AppImageVersionEntity();
+  AppImageVersionEntity();
 
-	factory AppImageVersionEntity.fromJson(Map<String, dynamic> json) => $AppImageVersionEntityFromJson(json);
+  factory AppImageVersionEntity.fromJson(Map<String, dynamic> json) =>
+      $AppImageVersionEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $AppImageVersionEntityToJson(this);
+  Map<String, dynamic> toJson() => $AppImageVersionEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

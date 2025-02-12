@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/turn_table_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/week_lucky_count_entity.dart';
+
 
 TurnTableEntity $TurnTableEntityFromJson(Map<String, dynamic> json) {
   final TurnTableEntity turnTableEntity = TurnTableEntity();
@@ -65,6 +67,11 @@ TurnTableEntity $TurnTableEntityFromJson(Map<String, dynamic> json) {
   if (unKnowRewardId != null) {
     turnTableEntity.unKnowRewardId = unKnowRewardId;
   }
+  final WeekLuckyCountEntity? weekLuckyCount = jsonConvert.convert<
+      WeekLuckyCountEntity>(json['weekLuckyCount']);
+  if (weekLuckyCount != null) {
+    turnTableEntity.weekLuckyCount = weekLuckyCount;
+  }
   return turnTableEntity;
 }
 
@@ -85,6 +92,7 @@ Map<String, dynamic> $TurnTableEntityToJson(TurnTableEntity entity) {
   data['isStart'] = entity.isStart;
   data['matchScore'] = entity.matchScore;
   data['unKnowRewardId'] = entity.unKnowRewardId;
+  data['weekLuckyCount'] = entity.weekLuckyCount.toJson();
   return data;
 }
 
@@ -105,6 +113,7 @@ extension TurnTableEntityExtension on TurnTableEntity {
     int? isStart,
     String? matchScore,
     int? unKnowRewardId,
+    WeekLuckyCountEntity? weekLuckyCount,
   }) {
     return TurnTableEntity()
       ..currentAward = currentAward ?? this.currentAward
@@ -121,6 +130,7 @@ extension TurnTableEntityExtension on TurnTableEntity {
       ..awardPool = awardPool ?? this.awardPool
       ..isStart = isStart ?? this.isStart
       ..matchScore = matchScore ?? this.matchScore
-      ..unKnowRewardId = unKnowRewardId ?? this.unKnowRewardId;
+      ..unKnowRewardId = unKnowRewardId ?? this.unKnowRewardId
+      ..weekLuckyCount = weekLuckyCount ?? this.weekLuckyCount;
   }
 }

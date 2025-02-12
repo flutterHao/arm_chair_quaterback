@@ -102,6 +102,7 @@ import 'package:arm_chair_quaterback/common/entities/training_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/turn_table_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_start_team_player_response_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/week_lucky_count_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/wheel_reward_type_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
@@ -1206,6 +1207,10 @@ class JsonConvert {
           UpStartTeamPlayerResponseDataAfterUpStarBase.fromJson(e))
           .toList() as M;
     }
+    if (<WeekLuckyCountEntity>[] is M) {
+      return data.map<WeekLuckyCountEntity>((Map<String, dynamic> e) =>
+          WeekLuckyCountEntity.fromJson(e)).toList() as M;
+    }
     if (<WheelRewardTypeEntity>[] is M) {
       return data.map<WheelRewardTypeEntity>((Map<String, dynamic> e) =>
           WheelRewardTypeEntity.fromJson(e)).toList() as M;
@@ -1534,6 +1539,7 @@ class JsonConvertClassCollection {
         .toString(): UpStartTeamPlayerResponseDataAfterPotential.fromJson,
     (UpStartTeamPlayerResponseDataAfterUpStarBase)
         .toString(): UpStartTeamPlayerResponseDataAfterUpStarBase.fromJson,
+    (WeekLuckyCountEntity).toString(): WeekLuckyCountEntity.fromJson,
     (WheelRewardTypeEntity).toString(): WheelRewardTypeEntity.fromJson,
   };
 

@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/week_lucky_count_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/turn_table_entity.g.dart';
 import 'dart:convert';
@@ -16,6 +17,7 @@ class TurnTableEntity {
   int vgCount = 0;
   int updateTime = 0;
   int circle = 0;
+
   /// 类型_id_数量 ，用 ｜ 分割；
   String awardPool = '';
 
@@ -23,10 +25,12 @@ class TurnTableEntity {
   int isStart = 0;
 
   /// 比赛比分
-  String? matchScore ;
+  String? matchScore;
 
   /// 随机奖励中奖id（抽中问号后要展示的中奖id）
   int unKnowRewardId = 0;
+
+  WeekLuckyCountEntity weekLuckyCount = WeekLuckyCountEntity();
 
   TurnTableEntity();
 

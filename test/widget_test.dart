@@ -5,6 +5,8 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:arm_chair_quaterback/common/entities/app_image_version_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/remove_cache_image_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -28,9 +30,22 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 
-  test("parse url", (){
+  test("parse url", () {
     var parse = Uri.parse("/home?page=2&scroll=1");
     parse.scheme;
     expect(parse.path, "/home");
+  });
+
+  test("delete Cache Image", () {
+    List data = [
+      {"path": "/image/player/1203.png", "imageVersion": 2},
+      {"path": "/image/player/3005.png", "imageVersion": 2},
+      {"path": "/image/player/1147.png", "imageVersion": 2},
+      {"path": "/image/player/2603.png", "imageVersion": 2},
+      {"path": "/image/player/3011.png", "imageVersion": 2},
+      {"path": "/image/player/1233.png", "imageVersion": 2},
+    ];
+    var list = data.map((e) => AppImageVersionEntity.fromJson(e)).toList();
+    RemoveCacheImageManager.delete(list);
   });
 }
