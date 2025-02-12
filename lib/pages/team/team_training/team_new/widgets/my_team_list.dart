@@ -12,6 +12,7 @@
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -80,7 +81,7 @@ class SubPlayerList extends GetView<TeamController> {
                       width: double.infinity,
                     )
                   : (index < controller.myTeamEntity.benchCount
-                      ? EmptyPlayer()
+                      ? const EmptyPlayer()
                       : lock());
             },
             separatorBuilder: (context, index) => Container(
@@ -184,7 +185,7 @@ Widget _subPosition() {
     child: RotatedBox(
       quarterTurns: -1,
       child: Text(
-        "SUB",
+        LangKey.teamNameSubstitiute.tr,
         style: 14.w4(
             color: AppColors.c000000,
             height: 1,
@@ -233,7 +234,7 @@ class EmptyPlayer extends StatelessWidget {
             11.hGap,
             Expanded(
               child: Text(
-                "EMPTY",
+                LangKey.teamTipsAddPlayer.tr,
                 style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
               ),
             ),

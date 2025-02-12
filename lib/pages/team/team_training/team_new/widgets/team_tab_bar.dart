@@ -5,6 +5,7 @@
  * @LastEditTime: 2024-12-30 16:56:21
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -61,7 +62,7 @@ class TeamTabbar extends GetView<TeamController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "TOTAL POWER",
+                    LangKey.teamTabTeamPower.tr,
                     style: 12.w4(
                         color: AppColors.cFFFFFF,
                         fontFamily: FontFamily.fRobotoRegular,
@@ -104,7 +105,7 @@ class TeamTabbar extends GetView<TeamController> {
                               Row(
                                 children: [
                                   Text(
-                                    "SALARY CAP",
+                                    LangKey.gameMeanSalaryCap.tr,
                                     style: 12.w4(
                                         color: AppColors.cFFFFFF,
                                         fontFamily: FontFamily.fRobotoRegular,
@@ -189,7 +190,7 @@ class TeamTabbar extends GetView<TeamController> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      "STASH PLAYERS",
+                                      LangKey.teamTabPlayerBag.tr,
                                       style: 12.w4(
                                           color: AppColors.cFFFFFF,
                                           fontFamily: FontFamily.fRobotoRegular,
@@ -288,7 +289,7 @@ class TeamTabbar extends GetView<TeamController> {
                     indicatorSize: TabBarIndicatorSize.tab,
                     tabs: controller.tabs
                         .map((e) => Text(
-                              e,
+                              e.tr,
                             ))
                         .toList()),
               ))

@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -53,7 +54,7 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                       height: 63.w,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          border: Border(
+                          border: const Border(
                               bottom: BorderSide(color: AppColors.cD1D1D1)),
                           boxShadow: [
                             BoxShadow(
@@ -81,7 +82,9 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                               width: 53.w,
                               alignment: Alignment.center,
                               child: Text(
-                                controller.isFire ? "Done" : "Fire",
+                                controller.isFire
+                                    ? "Done"
+                                    : LangKey.gameButtonDelete.tr,
                                 style: TextStyle(
                                     fontSize: 16.h,
                                     decorationColor: controller.isFire
@@ -198,7 +201,7 @@ class StarSort extends GetView<TeamController> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const SizedBox.shrink(),
-            Text("Star",
+            Text(LangKey.gameLittleNameStar.tr,
                 style: 16.w4(
                     fontFamily: controller.sortType.abs() == 1
                         ? FontFamily.fOswaldMedium
@@ -257,7 +260,7 @@ class GradeSort extends GetView<TeamController> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const SizedBox.shrink(),
-            Text("Grade",
+            Text(LangKey.gameLittleNameGrade.tr,
                 style: 16.w4(
                     fontFamily: controller.sortType.abs() == 2
                         ? FontFamily.fOswaldMedium

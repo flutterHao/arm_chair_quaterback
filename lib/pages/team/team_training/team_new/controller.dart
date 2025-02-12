@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -31,7 +32,10 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   late TabController tabController;
   RxInt current = 0.obs;
   // double turns = 0;
-  final List<String> tabs = ["LINE-UP", "STASH"];
+  final List<String> tabs = [
+    LangKey.teamButtonLineUp,
+    LangKey.teamTabPlayerBag
+  ];
   final List<Widget> pages = [
     const LineUpTab(),
     const PlayerBagTab(),

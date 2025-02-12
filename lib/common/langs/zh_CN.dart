@@ -369,5 +369,6 @@ Map<String, String> zh_CN = {
   LangKey.gameTabAssists: "助攻",
   LangKey.gameTabStarter: "首发",
   LangKey.gameTabBench: "板凳",
-  LangKey.gameTabAddBility: '升星增加的能力'
+  LangKey.gameTabAddBility: '升星增加的能力',
+  LangKey.teamTipsAddPlayer: '可以上阵一个球员'
 };

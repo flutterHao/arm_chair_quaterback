@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/entities/ColorString.dart';
 import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/services/storage.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
@@ -100,7 +101,7 @@ class Utils {
       case 5:
         return "PG";
       case 0:
-        return "SUB";
+        return LangKey.teamNameSubstitiute;
       default:
         return "";
     }

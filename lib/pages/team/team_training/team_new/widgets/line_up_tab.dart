@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
@@ -44,7 +45,7 @@ class _LineUpTabState extends State<LineUpTab>
                       margin: EdgeInsets.only(left: 29.5.w),
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Main",
+                        LangKey.gameTabStarter.tr,
                         style: 24.w4(
                             color: AppColors.c262626,
                             height: 1,
@@ -57,7 +58,7 @@ class _LineUpTabState extends State<LineUpTab>
                       height: 1.w,
                       color: AppColors.cD1D1D1,
                     ),
-                    MainPlayerList(),
+                    const MainPlayerList(),
                   ],
                 ),
               ),
@@ -77,7 +78,7 @@ class _LineUpTabState extends State<LineUpTab>
                         children: [
                           Expanded(
                             child: Text(
-                              "Substitute",
+                              LangKey.teamMeanSubstitiute.tr,
                               style: 24.w4(
                                   color: AppColors.c262626,
                                   height: 1,
@@ -100,7 +101,7 @@ class _LineUpTabState extends State<LineUpTab>
                       height: 1.w,
                       color: AppColors.cD1D1D1,
                     ),
-                    SubPlayerList(),
+                    const SubPlayerList(),
                   ],
                 ),
               )

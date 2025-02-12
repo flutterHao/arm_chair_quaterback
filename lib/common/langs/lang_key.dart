@@ -443,4 +443,5 @@ class LangKey {
   static const String gameTabStarter = 'gameTabStarter';
   static const String gameTabBench = 'gameTabBench';
   static const String gameTabAddBility = 'gameTabAddBility';
+  static const String teamTipsAddPlayer = 'teamTipsAddPlayer';
 }

@@ -8,6 +8,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -66,7 +67,7 @@ class PlayerItem extends GetView<TeamController> {
       child: RotatedBox(
         quarterTurns: -1,
         child: Text(
-          Utils.getPosition(item.position),
+          Utils.getPosition(item.position).tr,
           style: 14.w4(
               color: item.position > 0 ? AppColors.cFFFFFF : AppColors.c000000,
               height: 1,
@@ -142,7 +143,7 @@ class PlayerItem extends GetView<TeamController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "POW",
+                      LangKey.gameNamePow.tr,
                       style: 8.w4(
                           height: 0.8, fontFamily: FontFamily.fRobotoRegular),
                     ),
@@ -169,7 +170,7 @@ class PlayerItem extends GetView<TeamController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "SAL",
+                      LangKey.playerNameSalary.tr,
                       style: 8.w4(
                           height: 0.8, fontFamily: FontFamily.fRobotoRegular),
                     ),

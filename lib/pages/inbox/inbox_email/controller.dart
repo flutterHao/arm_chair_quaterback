@@ -27,8 +27,8 @@ class InboxEmailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    type = Random().nextInt(4) + 1;
-    title = titleList[type - 1];
+    type = 0;
+    title = titleList[0];
     initData();
   }
 

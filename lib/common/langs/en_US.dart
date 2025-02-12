@@ -342,7 +342,8 @@ Map<String, String> en_US = {
   LangKey.gameTabAssists: "ASSISTS",
   LangKey.gameTabStarter: "STARTER",
   LangKey.gameTabBench: "BENCH",
-  LangKey.gameTabAddBility: 'ADD ABILITY'
+  LangKey.gameTabAddBility: 'ADD ABILITY',
+  LangKey.teamTipsAddPlayer: 'Add a player'
 };
 
 // const Map<String, String> en_US = {
