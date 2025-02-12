@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -8,6 +9,7 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/inbox/inbox_email/widget/email_rank_award.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,14 @@ class InboxEmailPage extends GetView<InboxEmailController> {
   // 主视图
   Widget _buildView() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Obx(() => ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Obx(() {
+          if (controller.loadingStatus.value != LoadDataStatus.success) {
+            return Center(
+                child: LoadStatusWidget(
+                    loadDataStatus: controller.loadingStatus.value));
+          }
+          return ListView.separated(
             itemCount: controller.emailList.length,
             padding: EdgeInsets.symmetric(vertical: 16.w),
             itemBuilder: (context, index) {
@@ -34,8 +42,8 @@ class InboxEmailPage extends GetView<InboxEmailController> {
               return EmailRankAwardWidget(index);
             },
             separatorBuilder: (context, index) => 15.vGap,
-          )),
-    );
+          );
+        }));
   }
 
   @override
@@ -48,7 +56,7 @@ class InboxEmailPage extends GetView<InboxEmailController> {
             child: BlackAppWidget(
           backgroundColor: AppColors.cFFFFFF,
           AppBarWidget(
-            title: 'email',
+            title: 'System Notifications',
             right: IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore),
           ),
           bodyWidget: Expanded(child: _buildView()),

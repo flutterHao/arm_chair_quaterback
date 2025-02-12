@@ -238,4 +238,9 @@ class PicksApi {
     List json = await httpUtil.post(Api.getInboxEmail);
     return json.map((e) => InboxEmailEntity.fromJson(e)).toList();
   }
+
+  ///提取附件奖励
+  static Future receiveMailAward(String mailIds) async {
+    await httpUtil.post(Api.receiveMailAward, data: {"mailIds": mailIds});
+  }
 }

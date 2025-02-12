@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -108,6 +109,9 @@ class EmailRankAwardWidget extends GetView<InboxEmailController> {
                             children: [
                               Expanded(
                                   child: MtInkWell(
+                                      onTap: () {
+                                        Get.toNamed(RouteNames.picksPickRank);
+                                      },
                                       child: Container(
                                           alignment: Alignment.center,
                                           padding: EdgeInsets.symmetric(
@@ -125,22 +129,44 @@ class EmailRankAwardWidget extends GetView<InboxEmailController> {
                                               ))))),
                               9.hGap,
                               Expanded(
-                                  child: MtInkWell(
-                                      child: Container(
+                                  child: controller.emailList[index].receive
+                                      ? Container(
                                           alignment: Alignment.center,
                                           padding: EdgeInsets.symmetric(
                                               vertical: 5.w),
                                           decoration: BoxDecoration(
-                                            color: Colors.black,
+                                            color: AppColors.cEEEEEE,
+                                            border: Border.all(
+                                                color: AppColors.cD9D9D9),
                                             borderRadius:
                                                 BorderRadius.circular(6.w),
                                           ),
-                                          child: Text('Get',
+                                          child: Text('Received',
                                               style: 14.w4(
-                                                color: AppColors.cFFFFFF,
+                                                color: AppColors.ccccccc,
                                                 fontFamily:
                                                     FontFamily.fOswaldRegular,
-                                              ))))),
+                                              )))
+                                      : MtInkWell(
+                                          onTap: () {
+                                            controller.receiveMailAward(
+                                                '${controller.emailList[index].mailId}');
+                                          },
+                                          child: Container(
+                                              alignment: Alignment.center,
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 5.w),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black,
+                                                borderRadius:
+                                                    BorderRadius.circular(6.w),
+                                              ),
+                                              child: Text('Get',
+                                                  style: 14.w4(
+                                                    color: AppColors.cFFFFFF,
+                                                    fontFamily: FontFamily
+                                                        .fOswaldRegular,
+                                                  ))))),
                             ],
                           ),
                         )

@@ -232,5 +232,7 @@ class Api {
 
   static const String wsTeamMatch = "PKService.teamMatch";
 
+  ///InboxMail
   static const String getInboxEmail = "$API_BASE_PATH/Mail/getMailList";
+  static const String receiveMailAward = "$API_BASE_PATH/Mail/receiveMailAward";
 }
