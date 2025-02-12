@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/small_player_card.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,22 @@ class HistoryMvpWidget extends GetView<TeamHistortyController> {
           pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId);
       Widget parent({required Widget child}) {
         return InkWell(
-          onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
-            "player": controller.getTeamPlayerInfoEntityByPlayerId(
-                pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId)
-          }),
+          onTap: () {
+            if (pkResultUpdatedPlayer.teamId ==
+                Get.find<HomeController>()
+                    .userEntiry
+                    .teamLoginInfo
+                    ?.team
+                    ?.teamId) {
+              Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
+                "playerUuid": controller
+                    .getTeamPlayerInfoEntityByPlayerId(
+                        pkResultUpdatedPlayer.teamId,
+                        pkResultUpdatedPlayer.playerId)
+                    .uuid
+              });
+            }
+          },
           child: Container(
             height: 165.w,
             margin: EdgeInsets.only(bottom: 9.w),

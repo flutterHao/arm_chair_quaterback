@@ -287,7 +287,7 @@ class SlotDialogController extends GetxController
 
   continueStarUp() {
     TeamUpgradeController teamUpgradeController = Get.find();
-    PicksApi.continueStarUp(teamUpgradeController.player.uuid).then((result) {
+    PicksApi.continueStarUp(teamUpgradeController.teamPlayerUpStarVoEntity.uuid).then((result) {
       onResult(result);
       openDoor();
     }, onError: (e) {
@@ -328,7 +328,7 @@ class SlotDialogController extends GetxController
 
   done() {
     TeamUpgradeController teamUpgradeController = Get.find();
-    PicksApi.starUpDone(teamUpgradeController.player.uuid).then((result) {
+    PicksApi.starUpDone(teamUpgradeController.teamPlayerUpStarVoEntity.uuid).then((result) {
       TeamUpgradeController teamUpgradeController = Get.find();
       teamUpgradeController.setUpgradeResult(result);
       var success = result.success;

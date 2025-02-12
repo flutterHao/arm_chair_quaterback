@@ -155,10 +155,21 @@ class GameOverWidget extends GetView<GameOverController> {
       print('breakThroughGrade:$breakThroughGrade');
       Widget parent({required Widget child}) {
         return InkWell(
-          onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
-            "player": controller.getTeamPlayerInfoEntityByPlayerId(
-                pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId)
-          }),
+          onTap: () {
+            if (pkResultUpdatedPlayer.teamId ==
+                Get.find<TeamBattleV2Controller>()
+                    .battleEntity
+                    .homeTeam
+                    .teamId) {
+              Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
+                "playerUuid": controller
+                    .getTeamPlayerInfoEntityByPlayerId(
+                        pkResultUpdatedPlayer.teamId,
+                        pkResultUpdatedPlayer.playerId)
+                    .uuid
+              });
+            }
+          },
           child: Container(
             height: 165.w,
             margin: EdgeInsets.only(bottom: 9.w),

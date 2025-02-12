@@ -25,15 +25,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TeamUpgradePage extends GetView<TeamUpgradeController> {
-  const TeamUpgradePage({required this.player, super.key});
+  const TeamUpgradePage({required this.playerUuid, super.key});
 
-  final TeamPlayerInfoEntity player;
+  final String playerUuid;
 
   @override
   Widget build(BuildContext context) {
     return HorizontalDragBackContainer(
       child: GetBuilder<TeamUpgradeController>(
-        init: TeamUpgradeController(player),
+        init: TeamUpgradeController(playerUuid),
         builder: (_) {
           return BlackAppWidget(
             const UserInfoBar(

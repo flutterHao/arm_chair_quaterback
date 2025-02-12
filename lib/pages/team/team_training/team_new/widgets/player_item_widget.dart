@@ -603,7 +603,7 @@ class PlayerCard extends StatelessWidget {
         onTap: () {
           if (canTap && player != null) {
             Get.toNamed(RouteNames.teamTeamUpgrade,
-                arguments: {"player": player});
+                arguments: {"playerUuid": player?.uuid});
           }
         },
         child: child,

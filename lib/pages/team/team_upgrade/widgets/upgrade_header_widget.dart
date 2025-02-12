@@ -47,7 +47,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                       height: 116.w,
                       width: 144.w,
                       child: ImageWidget(
-                        url: Utils.getPlayUrl(controller.player.playerId),
+                        url: Utils.getPlayUrl(controller.teamPlayerUpStarVoEntity.playerId),
                         imageFailedPath: Assets.iconUiDefault04,
                         fit: BoxFit.fitHeight,
                         alignment: Alignment.bottomCenter,

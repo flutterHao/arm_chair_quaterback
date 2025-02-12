@@ -17,9 +17,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class TeamUpgradeController extends GetxController {
-  TeamUpgradeController(this.player);
+  TeamUpgradeController(this.playerUuid);
 
-  final TeamPlayerInfoEntity player;
+  final String playerUuid;
 
   final GlobalKey globalKey = GlobalKey();
   late NbaPlayerInfosPlayerBaseInfoList playerBaseInfo;
@@ -31,8 +31,6 @@ class TeamUpgradeController extends GetxController {
   StarUpDoneEntity? starUpDoneEntity;
 
   var isInit = false;
-
-  late StarUpDefineEntity selfStarUpDefine;
 
   @override
   void onInit() {
@@ -46,16 +44,14 @@ class TeamUpgradeController extends GetxController {
       loadStatus.value = LoadDataStatus.loading;
     }
     Future.wait([
-      TeamApi.getTeamPlayerUpStarVO(player.uuid),
+      TeamApi.getTeamPlayerUpStarVO(playerUuid),
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getStarUpDefine(),
       CacheApi.getGradeInStarDefine(),
     ]).then((result) {
       isInit = true;
       teamPlayerUpStarVoEntity = result[0] as TeamPlayerUpStarVoEntity;
-      playerBaseInfo = Utils.getPlayBaseInfo(player.playerId);
-      selfStarUpDefine = CacheApi.starUpDefines!
-          .firstWhere((f) => f.starUp == (player.breakThroughGrade));
+      playerBaseInfo = Utils.getPlayBaseInfo(teamPlayerUpStarVoEntity.playerId);
       setBeforePlayerAbility();
       loadStatus.value = LoadDataStatus.success;
     }, onError: (e) {
@@ -88,7 +84,7 @@ class TeamUpgradeController extends GetxController {
   }
 
   List<UpgradeOffensive> getOffensive() {
-    var playBaseInfo = Utils.getPlayBaseInfo(player.playerId);
+    var playBaseInfo = Utils.getPlayBaseInfo(teamPlayerUpStarVoEntity.playerId);
     List<UpgradeOffensive> data = [
       UpgradeOffensive(LangKey.gameMeanLayUp, playBaseInfo.layupWeight),
       UpgradeOffensive(
@@ -168,7 +164,7 @@ class TeamUpgradeController extends GetxController {
 
   /// 获取满星属性最大值
   double getLevel10Ability(String key) {
-    var playerCapData = Utils.getPlayerCapData(player.playerId);
+    var playerCapData = Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
     if (key == "FGM") {
       key = "PTS";
     }
@@ -192,7 +188,7 @@ class TeamUpgradeController extends GetxController {
   }
 
   void setBeforePlayerAbility() {
-    var playerCapData = Utils.getPlayerCapData(player.playerId);
+    var playerCapData = Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
     for (int i = 0; i < upgradePlayerAbilityList.length; i++) {
       var upgradePlayerAbility = upgradePlayerAbilityList[i];
       var key = upgradePlayerAbility.name;
@@ -227,7 +223,7 @@ class TeamUpgradeController extends GetxController {
   }
 
   void setAfterPlayerAbility() {
-    var playerCapData = Utils.getPlayerCapData(player.playerId);
+    var playerCapData = Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
     for (int i = 0; i < upgradePlayerAbilityList.length; i++) {
       var upgradePlayerAbility = upgradePlayerAbilityList[i];
       var key = upgradePlayerAbility.name;

@@ -372,7 +372,7 @@ class SummaryPage extends GetView<SummaryController> {
                                       );
                                     }),
                                     Builder(builder: (context) {
-                                      if (controller.getPickInfo() == null) {
+                                      if (controller.getVsTeams().isEmpty) {
                                         return const SizedBox.shrink();
                                       }
                                       return Column(
@@ -1658,6 +1658,9 @@ class SummaryPage extends GetView<SummaryController> {
   /// 对战记录
   List<Widget> getVsAwayWidget() {
     var vsTeams = controller.getVsTeams();
+    if(vsTeams.isEmpty){
+      return [];
+    }
     List<Widget> list = vsTeams.fold([], (p, e) {
       var key = controller.getCurrentTabKey();
       num value = 0.0;

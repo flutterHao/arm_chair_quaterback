@@ -452,7 +452,7 @@ class PlayerCardWidget extends GetView<TeamController> {
           isMyPlayer: true,
           status: player.playerStatus,
           onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade,
-              arguments: {"player": player}),
+              arguments: {"playerUuid": player.uuid}),
         ),
         3.5.vGap,
         Text(

@@ -110,7 +110,7 @@ class AppPages {
         case RouteNames.teamMemberPage:
           return const TeamMenberView();
         case RouteNames.teamTeamUpgrade:
-          return TeamUpgradePage(player: Get.arguments['player']);
+          return TeamUpgradePage(playerUuid: Get.arguments['playerUuid']);
         case RouteNames.openBoxPage:
           return const OpenBoxPage();
         case RouteNames.teamStartUpGrade:
