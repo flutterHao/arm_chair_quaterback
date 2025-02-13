@@ -49,7 +49,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Key players".toUpperCase(),
+                  LangKey.gameTabGameLeader.tr,
                   style: 30.w7(
                       color: AppColors.c000000,
                       fontFamily: FontFamily.fOswaldBold),

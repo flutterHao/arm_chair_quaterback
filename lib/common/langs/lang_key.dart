@@ -468,4 +468,9 @@ class LangKey {
   static const String gameNameSF = 'gameNameSF';
   static const String gameNamePF = 'gameNamePF';
   static const String gameNameC = 'gameNameC';
+  static const String gameTabSkip = 'gameTabSkip';
+  static const String gameTipsSkip = 'gameTipsSkip';
+  static const String gameMeanSkip = 'gameMeanSkip';
+  static const String gameMeanRating = 'gameMeanRating';
+  static const String gameButtonUnfold = 'gameButtonUnfold';
 }

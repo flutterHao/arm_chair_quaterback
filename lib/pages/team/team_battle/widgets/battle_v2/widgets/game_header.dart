@@ -185,7 +185,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     }
                     if (controller.isGameOver.value) {
                       return Text(
-                        "FINAL",
+                        LangKey.scoreTipsFinal.tr,
                         style: 12.w4(
                             color: AppColors.c000000,
                             height: 1,

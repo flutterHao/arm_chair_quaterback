@@ -371,6 +371,11 @@ Map<String, String> en_US = {
   LangKey.gameNameSF: "SF",
   LangKey.gameNamePF: "PF",
   LangKey.gameNameC: "C",
+  LangKey.gameTabSkip: "SKIP THE GAME",
+  LangKey.gameTipsSkip: "Are you sure you want to skip the play-by-play?",
+  LangKey.gameMeanSkip: "STATUS",
+  LangKey.gameMeanRating: "RATING",
+  LangKey.gameButtonUnfold: "UNFOLD",
 };
 
 // const Map<String, String> en_US = {

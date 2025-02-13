@@ -394,4 +394,9 @@ Map<String, String> zh_CN = {
   LangKey.gameNameSF: "小前锋",
   LangKey.gameNamePF: "大前锋",
   LangKey.gameNameC: "中锋",
+  LangKey.gameTabSkip: "跳过比赛",
+  LangKey.gameTipsSkip: "你确定要直接跳过文字转播吗？",
+  LangKey.gameMeanSkip: "球员状态",
+  LangKey.gameMeanRating: "球员评分",
+  LangKey.gameButtonUnfold: "展开",
 };

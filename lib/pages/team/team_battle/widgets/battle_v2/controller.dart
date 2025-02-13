@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dar
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
@@ -991,7 +992,7 @@ class TeamBattleV2Controller extends GetxController
         .toList();
     if (list.isEmpty) {
       print(
-          'competitionVenue---null--------------------:${gameEventType},${info.position}');
+          'competitionVenue---null--------------------:$gameEventType,${info.position}');
       return null;
     }
     var nextInt = Random().nextInt(list.length);
@@ -1187,7 +1188,7 @@ class TeamBattleV2Controller extends GetxController
     BottomTipDialog.show(
         context: context,
         onTap: confirmJumpGame,
-        desc: "Do you want to skip the game?");
+        desc: LangKey.gameTipsSkip.tr);
   }
 
   confirmJumpGame() {

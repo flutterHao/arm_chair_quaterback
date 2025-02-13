@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -144,7 +145,7 @@ class _BottomTipDialogState extends State<_BottomTipDialog> {
               ),
           25.vGap,
           Text(
-            widget.title ?? "ARE YOU SURE",
+            widget.title ?? LangKey.gameTabSkip.tr,
             style: 27.w5(
                 color: AppColors.c000000,
                 height: 1,
@@ -193,7 +194,7 @@ class _BottomTipDialogState extends State<_BottomTipDialog> {
             },
             child: Center(
               child: Text(
-                widget.confirmStr ?? "CONFIRM",
+                widget.confirmStr ?? LangKey.pickButtonConfirm.tr,
                 style: 23.w5(
                     color: AppColors.cF2F2F2,
                     height: 1,
@@ -222,7 +223,7 @@ class _BottomTipDialogState extends State<_BottomTipDialog> {
             },
             child: Center(
               child: Text(
-                widget.cancelStr ?? "CANCEL",
+                widget.cancelStr ?? LangKey.gameButtonCancel.tr,
                 style: 23.w5(
                     color: widget.cancelBgColor != null
                         ? AppColors.cFFFFFF

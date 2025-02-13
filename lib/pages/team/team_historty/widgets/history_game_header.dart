@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/controller.dart';
@@ -64,7 +64,7 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
                 Expanded(
                     child: Center(
                         child: Text(
-                  "FINAL",
+                  LangKey.scoreTipsFinal.tr,
                   style: 12.w4(
                       color: AppColors.c000000,
                       height: 1,

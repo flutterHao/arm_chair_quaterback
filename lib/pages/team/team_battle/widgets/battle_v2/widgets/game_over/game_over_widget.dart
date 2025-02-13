@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -102,7 +103,7 @@ class GameOverWidget extends GetView<GameOverController> {
                             GameLeaderWidget(
                               controller:
                                   teamBattleV2Controller.gameLeaderController,
-                              title: "KEY PLAYERS",
+                              title: LangKey.gameTabGameLeader.tr,
                             ),
                             WinRateWidget(
                                 teamBattleV2Controller.winRateController),

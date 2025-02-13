@@ -163,7 +163,7 @@ Widget lock() {
                     icon: Assets.managerUiManagerIconCurrency04),
                 4.hGap,
                 Text(
-                  "${controller.getLockCup()}  Unlocked",
+                  "${controller.getLockCup()}  ${LangKey.teamButtonUnlocked.tr}",
                   style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
                 )
               ],

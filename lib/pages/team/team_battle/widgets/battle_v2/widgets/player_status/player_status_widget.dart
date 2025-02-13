@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -33,14 +34,9 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
             return AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               height: controller.isExpanded.value
-                  ? (255.w + max(0, controller
-                  .getData()
-                  .length-5) * 34.w)
+                  ? (255.w + max(0, controller.getData().length - 5) * 34.w)
                   : 255.w,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(bottom: 9.w),
               decoration: BoxDecoration(
                   color: AppColors.cFFFFFF,
@@ -60,10 +56,11 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                           columnWidthMode: ColumnWidthMode.fill,
                           gridLinesVisibility: GridLinesVisibility.none,
                           horizontalScrollPhysics:
-                          const NeverScrollableScrollPhysics(),
+                              const NeverScrollableScrollPhysics(),
                           verticalScrollPhysics:
-                          const NeverScrollableScrollPhysics(),
-                          source: PlayerStatusGridSource(controller.getData(),context),
+                              const NeverScrollableScrollPhysics(),
+                          source: PlayerStatusGridSource(
+                              controller.getData(), context),
                           columns: [
                             GridColumn(
                                 columnName: 'player',
@@ -77,7 +74,7 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                                               color: AppColors.cD1D1D1,
                                               width: 1.w))),
                                   child: Text(
-                                    'STARTERS',
+                                    LangKey.gameTabStarter.tr,
                                     style: 12.w5(
                                         color: AppColors.c000000,
                                         height: 1,
@@ -123,7 +120,7 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                                               color: AppColors.cD1D1D1,
                                               width: 1.w))),
                                   child: Text(
-                                    'Status',
+                                    LangKey.gameMeanSkip.tr,
                                     style: 12.w5(
                                         color: AppColors.c000000,
                                         height: 1,
@@ -140,7 +137,7 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                                               color: AppColors.cD1D1D1,
                                               width: 1.w))),
                                   child: Text(
-                                    'Score',
+                                    LangKey.gameMeanRating.tr,
                                     style: 12.w5(
                                         color: AppColors.c000000,
                                         height: 1,
@@ -157,7 +154,7 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                   InkWell(
                     onTap: () {
                       controller.isExpanded.value =
-                      !controller.isExpanded.value;
+                          !controller.isExpanded.value;
                       if (controller.isExpanded.value) {
                         controller.expandedTurns.value += 0.5;
                       } else {
@@ -170,7 +167,7 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "UNFOLD",
+                            LangKey.gameButtonUnfold.tr,
                             style: 16.w7(
                                 color: AppColors.c262626,
                                 height: 1,
