@@ -463,4 +463,9 @@ class LangKey {
   static const String dailyTaksTabClaim = 'dailyTaksTabClaim';
   static const String dailyTaksTabBigPrize = 'dailyTaksTabBigPrize';
   static const String dailyTaksTabPrizePool = 'dailyTaksTabPrizePool';
+  static const String gameNamePG = 'gameNamePG';
+  static const String gameNameSG = 'gameNameSG';
+  static const String gameNameSF = 'gameNameSF';
+  static const String gameNamePF = 'gameNamePF';
+  static const String gameNameC = 'gameNameC';
 }

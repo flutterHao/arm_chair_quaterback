@@ -389,4 +389,9 @@ Map<String, String> zh_CN = {
   LangKey.dailyTaksTabClaim: "所有奖励已领取",
   LangKey.dailyTaksTabBigPrize: "大奖励",
   LangKey.dailyTaksTabPrizePool: "奖池奖励",
+  LangKey.gameNamePG: "控卫",
+  LangKey.gameNameSG: "得分后卫",
+  LangKey.gameNameSF: "小前锋",
+  LangKey.gameNamePF: "大前锋",
+  LangKey.gameNameC: "中锋",
 };

@@ -366,6 +366,11 @@ Map<String, String> en_US = {
   LangKey.dailyTaksTabClaim: "ALL REWARDS CLEARED",
   LangKey.dailyTaksTabBigPrize: "Big Prize",
   LangKey.dailyTaksTabPrizePool: "Prize Pool",
+  LangKey.gameNamePG: "PG",
+  LangKey.gameNameSG: "SG",
+  LangKey.gameNameSF: "SF",
+  LangKey.gameNamePF: "PF",
+  LangKey.gameNameC: "C",
 };
 
 // const Map<String, String> en_US = {

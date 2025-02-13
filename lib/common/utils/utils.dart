@@ -91,15 +91,15 @@ class Utils {
   static String getPosition(int position) {
     switch (position) {
       case 1:
-        return "C";
+        return LangKey.gameNameC;
       case 2:
-        return "PF";
+        return LangKey.gameNamePF;
       case 3:
-        return "SF";
+        return LangKey.gameNameSF;
       case 4:
-        return "SG";
+        return LangKey.gameNameSG;
       case 5:
-        return "PG";
+        return LangKey.gameNamePG;
       case 0:
         return LangKey.teamNameSubstitiute;
       default:

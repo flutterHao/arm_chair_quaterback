@@ -83,7 +83,7 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                               alignment: Alignment.center,
                               child: Text(
                                 controller.isFire
-                                    ? "Done"
+                                    ? LangKey.pickButtonDone.tr
                                     : LangKey.gameButtonDelete.tr,
                                 style: TextStyle(
                                     fontSize: 16.h,
