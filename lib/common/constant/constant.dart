@@ -112,7 +112,7 @@ class Constant {
 
   static const imageSuffix = ".png";
 
-  static const int transitionDuration = 100;
+  static const int transitionDuration = 200;
 
   static const int luckyCoinMaxValueId = 10020;
 
