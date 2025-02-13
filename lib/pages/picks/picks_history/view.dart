@@ -3,7 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
@@ -18,7 +18,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class PicksHistoryPage extends GetView<PicksHistoryController> {
-  const PicksHistoryPage({super.key});
+  const PicksHistoryPage({super.key, this.tab = 0});
+
+  final int tab;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
                 );
               }
               return DefaultTabController(
+                initialIndex: tab,
                 length: 2,
                 child: NestedScrollView(
                     headerSliverBuilder:

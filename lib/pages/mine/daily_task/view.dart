@@ -5,7 +5,8 @@ import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart'
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/jump_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -445,7 +446,15 @@ class DailyTaskPage extends GetView<DailyTaskController> {
               Builder(builder: (context) {
                 if (status == 1) {
                   return MtInkWell(
-                    onTap: () => Get.back(),
+                    onTap: () {
+                      var jumpDefine =
+                          Utils.getJumpDefine(int.parse(missionDefine.linkId));
+                      if (jumpDefine != null) {
+                        JumpUtils.goto(jumpDefine.jumpUiLine);
+                      } else {
+                        Get.back();
+                      }
+                    },
                     child: Container(
                       width: 59.w,
                       height: 40.w,

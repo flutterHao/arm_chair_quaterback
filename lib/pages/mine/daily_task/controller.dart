@@ -16,7 +16,7 @@ import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -117,6 +117,7 @@ class DailyTaskController extends GetxController
       CacheApi.getMissionDefine(),
       CacheApi.getGameConstant(),
       CacheApi.getWheelRandomReward(),
+      CacheApi.getJumpDefine(),
     ]).then((result) {
       turnTableEntity = result[3] as TurnTableEntity;
       if (turnTableEntity.currentLife == 0) {
@@ -557,7 +558,7 @@ class DailyTaskController extends GetxController
 
   /// 周消耗
   int getCostLuckyCoinNum() {
-    return turnTableEntity.weekLuckyCount.value1;
+    return turnTableEntity.turntableRecord.value1;
   }
 
   /// 获取当前电池数量

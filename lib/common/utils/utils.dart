@@ -13,6 +13,7 @@ import 'dart:ui';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/ColorString.dart';
 import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/jump_defined_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
@@ -442,7 +443,12 @@ class Utils {
 
   static GameConstantEntity? getGameConstant(int constantId) {
     return CacheApi.gameConstantList
-        .firstWhere((element) => element.constantId == constantId);
+        .firstWhereOrNull((element) => element.constantId == constantId);
+  }
+
+  static JumpDefinedEntity? getJumpDefine(int jumpId) {
+    return CacheApi.jumpDefinedList
+        .firstWhereOrNull((element) => element.jumpId == jumpId);
   }
 
   static String getImageByPath(String image) {

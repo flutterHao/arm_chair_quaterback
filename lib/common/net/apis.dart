@@ -134,6 +134,7 @@ class Api {
       "$CONFIG_BASE_PATH/WheelRandomReward.json";
   static const String cAppImageVersion =
       "$CONFIG_BASE_PATH/AppImageVersion.json";
+  static const String cJumpDefine = "$CONFIG_BASE_PATH/JumpDefine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

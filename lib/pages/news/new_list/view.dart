@@ -5,7 +5,7 @@
  * @LastEditTime: 2025-02-08 17:16:06
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
 import 'package:flutter/material.dart';

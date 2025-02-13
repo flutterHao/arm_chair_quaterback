@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dar
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/jump_defined_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -76,6 +77,7 @@ class CacheApi {
   static List<MissionDefineEntity> missionDefineList = [];
   static List<GameConstantEntity> gameConstantList = [];
   static List<WheelRandomRewardEntity> wheelRandomRewardList = [];
+  static List<JumpDefinedEntity> jumpDefinedList = [];
 
   static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
   static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
@@ -398,5 +400,15 @@ class CacheApi {
   static Future<List<AppImageVersionEntity>> getAppImageVersion() async {
     List list = await HttpUtil().post(Api.cAppImageVersion);
     return list.map((item) => AppImageVersionEntity.fromJson(item)).toList();
+  }
+
+  /// 跳转表
+  static Future<List<JumpDefinedEntity>> getJumpDefine() async {
+    if (jumpDefinedList.isNotEmpty) {
+      return jumpDefinedList;
+    }
+    List list = await HttpUtil().post(Api.cJumpDefine);
+    return jumpDefinedList =
+        list.map((item) => JumpDefinedEntity.fromJson(item)).toList();
   }
 }

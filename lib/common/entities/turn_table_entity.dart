@@ -30,7 +30,7 @@ class TurnTableEntity {
   /// 随机奖励中奖id（抽中问号后要展示的中奖id）
   int unKnowRewardId = 0;
 
-  WeekLuckyCountEntity weekLuckyCount = WeekLuckyCountEntity();
+  WeekLuckyCountEntity turntableRecord = WeekLuckyCountEntity();
 
   TurnTableEntity();
 

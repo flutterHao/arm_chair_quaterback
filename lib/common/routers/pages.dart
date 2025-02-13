@@ -117,7 +117,10 @@ class AppPages {
           return StartUpgradeWidget(player: Get.arguments['player']);
         case RouteNames.picksPicksHistory:
           PicksHistoryBinding().dependencies();
-          return const PicksHistoryPage();
+          return PicksHistoryPage(
+              tab: Get.arguments == null
+                  ? 0
+                  : int.parse("${Get.arguments['tab']}"));
         case RouteNames.teamDetailPage:
           return const TeamDetailPage();
         case RouteNames.nbaRank:

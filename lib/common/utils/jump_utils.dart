@@ -13,7 +13,8 @@ class JumpUtils {
   static void goto(String url) {
     Uri uri = Uri.parse(url);
     if (uri.path == RouteNames.main) {
-      Map queryParameters = uri.queryParameters;
+      /// 注意：queryParameters 的value都是字符串类型，注意类型转换
+      Map<String, dynamic> queryParameters = uri.queryParameters;
       Navigator.popUntil(
           Get.context!, (route) => route.settings.name == RouteNames.main);
       if (queryParameters["tab"] != null) {
@@ -26,6 +27,8 @@ class JumpUtils {
           Get.find<TeamIndexController>().scroToSlot();
         }
       }
+    } else {
+      Get.toNamed(uri.path, arguments: uri.queryParameters);
     }
   }
 }

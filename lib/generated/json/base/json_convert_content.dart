@@ -37,6 +37,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.da
 import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_email_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/jump_defined_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
@@ -523,6 +524,10 @@ class JsonConvert {
     if (<InboxMessageEntity>[] is M) {
       return data.map<InboxMessageEntity>((Map<String, dynamic> e) =>
           InboxMessageEntity.fromJson(e)).toList() as M;
+    }
+    if (<JumpDefinedEntity>[] is M) {
+      return data.map<JumpDefinedEntity>((Map<String, dynamic> e) =>
+          JumpDefinedEntity.fromJson(e)).toList() as M;
     }
     if (<Last5AvgEntity>[] is M) {
       return data.map<Last5AvgEntity>((Map<String, dynamic> e) =>
@@ -1322,6 +1327,7 @@ class JsonConvertClassCollection {
     (InboxEmailMailListAwardData).toString(): InboxEmailMailListAwardData
         .fromJson,
     (InboxMessageEntity).toString(): InboxMessageEntity.fromJson,
+    (JumpDefinedEntity).toString(): JumpDefinedEntity.fromJson,
     (Last5AvgEntity).toString(): Last5AvgEntity.fromJson,
     (MissionDefineEntity).toString(): MissionDefineEntity.fromJson,
     (MyTeamEntity).toString(): MyTeamEntity.fromJson,

@@ -10,7 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/clipper/title_bar_clipper.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
