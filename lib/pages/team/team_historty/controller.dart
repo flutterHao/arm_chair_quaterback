@@ -74,7 +74,8 @@ class TeamHistortyController extends GetxController
   }
 
   List<PlayerStatus> getPlayerStatusData() {
-    var list = gameResultInfoEntity.homeTeamResult.teamPlayers;
+    List<TeamPlayerInfoEntity> list =
+        gameResultInfoEntity.homeTeamResult.teamPlayers;
     List<ScoreBoardDetailList> scoreList =
         gameResultInfoEntity.gameScoreBoardDetail;
     List<PlayerStatus> playerStatusList = list.map((e) {

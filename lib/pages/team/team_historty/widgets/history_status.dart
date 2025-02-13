@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -61,38 +62,11 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
                                           color: AppColors.cD1D1D1,
                                           width: 1.w))),
                               child: Text(
-                                'STARTERS',
+                                LangKey.gameTabStarter.tr,
                                 style: 12.w5(
                                     color: AppColors.c000000,
                                     height: 1,
                                     fontFamily: FontFamily.fRobotoMedium),
-                              ),
-                            )),
-                        GridColumn(
-                            columnName: 'morale',
-                            width: 102.w,
-                            label: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: AppColors.cD1D1D1,
-                                          width: 1.w))),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconWidget(
-                                      iconWidth: 8.w,
-                                      icon: Assets.managerUiManagerIconRecover),
-                                  8.hGap,
-                                  Text(
-                                    'Morale',
-                                    style: 12.w5(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoMedium),
-                                  ),
-                                ],
                               ),
                             )),
                         GridColumn(
@@ -105,7 +79,7 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
                                           color: AppColors.cD1D1D1,
                                           width: 1.w))),
                               child: Text(
-                                'Status',
+                                LangKey.gameMeanSkip.tr,
                                 style: 12.w5(
                                     color: AppColors.c000000,
                                     height: 1,
@@ -122,7 +96,7 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
                                           color: AppColors.cD1D1D1,
                                           width: 1.w))),
                               child: Text(
-                                'Score',
+                                LangKey.gameMeanRating.tr,
                                 style: 12.w5(
                                     color: AppColors.c000000,
                                     height: 1,
