@@ -473,4 +473,6 @@ class LangKey {
   static const String gameMeanSkip = 'gameMeanSkip';
   static const String gameMeanRating = 'gameMeanRating';
   static const String gameButtonUnfold = 'gameButtonUnfold';
+  static const String gameTipsTrophiesRisen = 'gameTipsTrophiesRisen';
+  static const String gameTipsTrophiesDropped = 'gameTipsTrophiesDropped';
 }

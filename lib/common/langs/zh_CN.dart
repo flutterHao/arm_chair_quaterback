@@ -399,4 +399,6 @@ Map<String, String> zh_CN = {
   LangKey.gameMeanSkip: "球员状态",
   LangKey.gameMeanRating: "球员评分",
   LangKey.gameButtonUnfold: "展开",
+  LangKey.gameTipsTrophiesRisen: "奖杯数量增加了",
+  LangKey.gameTipsTrophiesDropped: "奖杯数量减少了",
 };

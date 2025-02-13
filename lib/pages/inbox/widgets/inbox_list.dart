@@ -55,7 +55,7 @@ class InboxList extends GetView<InboxController> {
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
-                      return _buildItem(index);
+                      return _buildItem(index, context);
                     },
                     separatorBuilder: (context, index) => Container(
                           width: double.infinity,
@@ -70,7 +70,7 @@ class InboxList extends GetView<InboxController> {
         });
   }
 
-  Widget _buildItem(index) {
+  Widget _buildItem(index, context) {
     var item = controller.messageList[index];
     Random random = Random();
     var duration = Duration(minutes: random.nextInt(100));
@@ -82,6 +82,7 @@ class InboxList extends GetView<InboxController> {
     String content = item.userText;
     String time = Utils.timeAgo(item.time.millisecondsSinceEpoch);
     int noReadNum = 1;
+
     if (content.contains("|")) {
       item.messageList = content.split("|");
       noReadNum = content.split("|").length;
@@ -99,6 +100,24 @@ class InboxList extends GetView<InboxController> {
         controller.update(["inboxList"]);
       },
       child: Slidable(
+        // 滑动方向
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            const IconSlidableAction(
+                backgroundColor: AppColors.cFEB942,
+                // onPressed: (BuildContext context) {},
+                icon: Assets.inboxUiInboxIconBlacklist),
+            IconSlidableAction(
+                backgroundColor: AppColors.c000000,
+                onPressed: (BuildContext context) {},
+                icon: Assets.inboxUiInboxIconInform),
+            IconSlidableAction(
+                backgroundColor: AppColors.cD60D20,
+                onPressed: (BuildContext context) {},
+                icon: Assets.iconUiIconDelete02),
+          ],
+        ),
         child: Container(
           width: double.infinity,
           height: 99.w,
@@ -224,5 +243,40 @@ class InboxList extends GetView<InboxController> {
         ),
       ),
     );
+  }
+}
+
+class IconSlidableAction extends StatelessWidget {
+  const IconSlidableAction({
+    super.key,
+    required this.backgroundColor,
+    this.onPressed,
+    required this.icon,
+    this.iconWidth = 25.0,
+  });
+
+  final Color backgroundColor;
+  final SlidableActionCallback? onPressed;
+  final String icon;
+  final double iconWidth;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: SizedBox.expand(
+        child: InkWell(
+          onTap: () => _handleTap(context),
+          child: Container(
+            color: backgroundColor,
+            child: IconWidget(iconWidth: iconWidth.w, icon: icon),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handleTap(BuildContext context) {
+    onPressed?.call(context);
+    Slidable.of(context)?.close();
   }
 }

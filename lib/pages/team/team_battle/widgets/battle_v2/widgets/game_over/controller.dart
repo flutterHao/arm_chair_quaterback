@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/cup_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -174,7 +175,10 @@ class GameOverController extends GetxController {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("TROPHY COUNT INCREASE",
+              Text(
+                  currentHomeCup > beforeHomeCup
+                      ? LangKey.gameTipsTrophiesRisen.tr
+                      : LangKey.gameTipsTrophiesDropped.tr,
                   style: 19.w5(
                       color: AppColors.c000000,
                       height: 1,

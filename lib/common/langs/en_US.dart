@@ -376,6 +376,8 @@ Map<String, String> en_US = {
   LangKey.gameMeanSkip: "STATUS",
   LangKey.gameMeanRating: "RATING",
   LangKey.gameButtonUnfold: "UNFOLD",
+  LangKey.gameTipsTrophiesRisen: "The number of trophies has risen",
+  LangKey.gameTipsTrophiesDropped: "The number of trophies has dropped",
 };
 
 // const Map<String, String> en_US = {
