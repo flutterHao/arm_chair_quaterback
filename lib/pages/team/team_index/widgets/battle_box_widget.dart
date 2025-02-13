@@ -166,7 +166,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                         controller.scroToMatch();
                       } else if (item.status == 2) {
                         // var a = item.toString();
-                        controller.toOpenBoxPage(item);
+                        controller.toOpenBoxPage(context, item);
                       } else {
                         BottomTipDialog.showWithSound(
                             isScrollControlled: true,

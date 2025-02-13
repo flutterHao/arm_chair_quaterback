@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-02-06 15:32:54
+ * @LastEditTime: 2025-02-11 10:50:21
  */
 import 'dart:math';
 
@@ -37,6 +37,7 @@ class _AnimatedBoxState extends State<AnimatedBox>
   late AnimationController _lightController;
   late Animation<double> lightAnimation;
   late bool showLight = false;
+  bool isOpen = false;
 
   @override
   void initState() {
@@ -135,8 +136,10 @@ class _AnimatedBoxState extends State<AnimatedBox>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        if (isOpen) return;
         Log.d("打开宝箱");
         showLight = false;
+        isOpen = true;
         setState(() {});
         _controller.reset();
         _controller.forward().then((v) {
@@ -147,16 +150,17 @@ class _AnimatedBoxState extends State<AnimatedBox>
         animation: _controller,
         builder: (context, child) {
           double fallOutScale = 0;
-          if (ctrl.fallOutAnimatedCtrl.value > 0.8) {
-            fallOutScale = ctrl.fallOutAnimatedCtrl.value - 1;
+          if (ctrl.fallOutAnimation.value > 0.9) {
+            fallOutScale = ctrl.fallOutAnimation.value - 1;
           }
           return Opacity(
             opacity: _opacity.value,
             child: Transform.translate(
               offset: Offset(0, -_jumpHeight.value),
               child: Transform.scale(
+                alignment: Alignment.center,
                 scaleX: _compressScaleX.value,
-                scaleY: _compressScaleY.value + fallOutScale,
+                scaleY: _compressScaleY.value + fallOutScale * 1.5,
                 child: RotationTransition(
                     alignment: Alignment.center,
                     turns: shakeAnimation,
@@ -176,8 +180,8 @@ class _AnimatedBoxState extends State<AnimatedBox>
                                     transform: Matrix4.identity()
                                       ..scale(0.4 + lightAnimation.value * 0.8)
                                       ..setEntry(3, 2, 0.001)
-                                      ..rotateX(pi / 2.25)
-                                      ..rotateZ(pi / 4),
+                                      ..rotateX(pi / 2.4)
+                                      ..rotateZ(pi / 4.5),
                                     child: Opacity(
                                       opacity: 1 -
                                           lightAnimation.value *

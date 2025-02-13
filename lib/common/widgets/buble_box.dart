@@ -1,5 +1,7 @@
 // 箭头方向的枚举
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum ArrowDirection { up, down, left, right }
 
@@ -80,7 +82,7 @@ class BubblePainter extends CustomPainter {
 
     var path = Path();
 
-    double radius = 10.0; // 气泡框的圆角半径
+    double radius = 6.0.w; // 气泡框的圆角半径
 
     // 调整箭头绘制的形状和位置
     switch (arrowDirection) {

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-02-07 09:46:25
+ * @LastEditTime: 2025-02-10 17:11:14
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -111,8 +111,8 @@ class AppPages {
           return const TeamMenberView();
         case RouteNames.teamTeamUpgrade:
           return TeamUpgradePage(playerUuid: Get.arguments['playerUuid']);
-        case RouteNames.openBoxPage:
-          return const OpenBoxPage();
+        // case RouteNames.openBoxPage:
+        //   return const OpenBoxPage();
         case RouteNames.teamStartUpGrade:
           return StartUpgradeWidget(player: Get.arguments['player']);
         case RouteNames.picksPicksHistory:

@@ -2,21 +2,17 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-02-07 11:13:15
+ * @LastEditTime: 2025-02-10 19:46:54
  */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
@@ -591,51 +587,49 @@ class OpenBoxPage extends GetView<TeamIndexController> {
     // controller.showBackground1.value = false;
     // controller.showBackground2.value = false;
     // controller.showBackground3.value = false;
-    return HorizontalDragBackContainer(
-      child: GetBuilder<TeamIndexController>(
-          id: "open_box_page",
-          builder: (_) {
-            // item.playerCards.shuffle();
-            return Builder(builder: (context) {
-              return GestureDetector(
-                onTap: controller.step == 2 || controller.step == 4
-                    ? () => controller.toContinue(context)
-                    : null,
-                // onTap: () => controller.back(context),
-                child: Container(
-                  width: 375.w,
-                  height: 812.h,
-                  decoration: const BoxDecoration(color: AppColors.c1A1A1A),
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      _backgroud(),
+    return GetBuilder<TeamIndexController>(
+        id: "open_box_page",
+        builder: (_) {
+          // item.playerCards.shuffle();
+          return Builder(builder: (context) {
+            return GestureDetector(
+              onTap: controller.step == 2 || controller.step == 4
+                  ? () => controller.toContinue(context)
+                  : null,
+              // onTap: () => controller.back(context),
+              child: Container(
+                width: 375.w,
+                height: 812.h,
+                decoration: const BoxDecoration(color: AppColors.c1A1A1A),
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    _backgroud(),
 
-                      ///返回
-                      _goBackButton(),
+                    ///返回
+                    _goBackButton(),
 
-                      ///获得展示
-                      _colorBackgroud(),
-                      _continueText(context),
-                      _congratulation(),
-                      _bigCard(),
+                    ///获得展示
+                    _colorBackgroud(),
+                    _continueText(context),
+                    _congratulation(),
+                    _bigCard(),
 
-                      ///抽卡
-                      _cardWidget(context),
-                      _rightBottomImage(),
+                    ///抽卡
+                    _cardWidget(context),
+                    _rightBottomImage(),
 
-                      /// 开宝箱
-                      _openTitle(),
-                      _changeTitle(),
-                      _rightBottom(),
-                      _boxWidget(),
-                    ],
-                  ),
+                    /// 开宝箱
+                    _openTitle(),
+                    _changeTitle(),
+                    _rightBottom(),
+                    _boxWidget(),
+                  ],
                 ),
-              );
-            });
-          }),
-    );
+              ),
+            );
+          });
+        });
   }
 }
 

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-01-17 10:48:45
+ * @LastEditTime: 2025-02-11 20:22:31
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,9 @@ class MyTeamWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<int> statusList = [106, 105, 104, 103, 102, 101];
-    return GetBuilder<TeamController>(builder: (ctrl) {
+    return GetBuilder<TeamController>(
+        // init: TeamController(),
+        builder: (ctrl) {
       return Container(
         width: double.infinity,
         margin: EdgeInsets.symmetric(vertical: 9.w),
@@ -53,36 +56,6 @@ class MyTeamWidget extends StatelessWidget {
                       height: 0.75,
                     ),
                   ),
-                  30.hGap,
-                  SizedBox(
-                    height: 60.w,
-                    child: ListView.separated(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          int count = ctrl.myTeamEntity.teamPlayers
-                              .where((e) => e.playerStatus == statusList[index])
-                              .length;
-                          return Column(
-                            children: [
-                              13.vGap,
-                              IconWidget(
-                                  iconWidth: 27.w,
-                                  icon: Utils.getStatusUrl(statusList[index])),
-                              2.5.vGap,
-                              Text(
-                                "$count",
-                                style: 12.w4(
-                                  height: 1,
-                                  fontFamily: FontFamily.fRobotoMedium,
-                                ),
-                              )
-                            ],
-                          );
-                        },
-                        separatorBuilder: (context, index) => 8.hGap,
-                        itemCount: statusList.length),
-                  )
                 ],
               ),
             ),
@@ -242,6 +215,8 @@ class MyTeamWidget extends StatelessWidget {
                               .length;
                           return InkWell(
                             onTap: () {
+                              TeamIndexController ctrl = Get.find();
+                              ctrl.goToIllustraction();
                               Get.toNamed(RouteNames.illustrationPage);
                               iCtrl.reset();
                             },
@@ -351,27 +326,37 @@ class MyTeamWidget extends StatelessWidget {
                 children: [
                   Positioned(
                     top: 16.w,
-                    child: PlayerCardWidget(position: 1),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 1),
                   ),
                   Positioned(
                     top: 61.w,
                     left: 27.w,
-                    child: PlayerCardWidget(position: 2),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 2),
                   ),
                   Positioned(
                     top: 61.w,
                     right: 27.w,
-                    child: PlayerCardWidget(position: 3),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 3),
                   ),
                   Positioned(
                     top: 198.w,
                     left: 87.w,
-                    child: PlayerCardWidget(position: 4),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 4),
                   ),
                   Positioned(
                     top: 198.w,
                     right: 87.w,
-                    child: PlayerCardWidget(position: 5),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 5),
                   )
                 ],
               ),
@@ -434,16 +419,18 @@ class MyTeamWidget extends StatelessWidget {
 
 class PlayerCardWidget extends GetView<TeamController> {
   // ignore: prefer_const_constructors_in_immutables
-  PlayerCardWidget({super.key, required this.position});
+  PlayerCardWidget(
+      {super.key, required this.teamPlayers, required this.position});
 
+  final List<TeamPlayerInfoEntity> teamPlayers;
   final int position;
 
   @override
   Widget build(BuildContext context) {
-    if (controller.myTeamEntity.teamPlayers.isEmpty) return const SizedBox();
-    TeamPlayerInfoEntity player = controller.myTeamEntity.teamPlayers
-        .firstWhere((e) => e.position == position,
-            orElse: () => TeamPlayerInfoEntity());
+    if (teamPlayers.isEmpty) return const SizedBox();
+    TeamPlayerInfoEntity player = teamPlayers.firstWhere(
+        (e) => e.position == position,
+        orElse: () => TeamPlayerInfoEntity());
     return Column(
       children: [
         PlayerCard(

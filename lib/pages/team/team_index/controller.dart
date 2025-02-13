@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-07 20:32:51
+ * @LastEditTime: 2025-02-13 16:31:12
  */
 
 import 'dart:async';
@@ -25,6 +25,9 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/card_fly_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
@@ -89,6 +92,15 @@ class TeamIndexController extends GetxController
   late StreamSubscription<int> subscription;
   late AnimationController fallOutAnimatedCtrl;
   late Animation<double> fallOutAnimation;
+  //获取球员
+  // var getPlayerCount = 0.obs;
+  List<PlayerCardEntity> getPlayerCards = [];
+  var showGetPlayerTip = false.obs;
+  final overlayEntry = OverlayEntry(
+    builder: (context) {
+      return CardFlyWidget(duration: 800.milliseconds);
+    },
+  );
 
   @override
   void onInit() {
@@ -168,6 +180,7 @@ class TeamIndexController extends GetxController
     ]).then((v) {
       loadDataSuccess = true;
       getTeamInfoCup();
+      update(["team_index"]);
     });
   }
 
@@ -187,6 +200,21 @@ class TeamIndexController extends GetxController
   // }
 
   void matchBattle() async {
+    await scroToMatch();
+    final teamCtrl = Get.find<TeamController>();
+    if (teamCtrl.myTeamEntity.salary >= teamCtrl.myTeamEntity.salaryCap) {
+      BottomTipDialog.show(
+          context: Get.context!,
+          onTap: () {
+            Get.back();
+            Get.toNamed(RouteNames.teamMemberPage);
+          },
+          confirmStr: "LINE UP",
+          title: "SALARY CAP EXCEED",
+          desc:
+              "Salary cap over limit，please adjust the lineup  before the game can begin.");
+      return;
+    }
     SoundServices.to.playSound(Assets.soundRadaMatch);
     await Get.toNamed(RouteNames.teamTeamBattle);
     getBattleBox();
@@ -194,7 +222,6 @@ class TeamIndexController extends GetxController
     final ctrl = Get.find<TrainingController>();
     ctrl.trainingInfo = await TeamApi.getTrainingInfo();
     ctrl.update(["training_page"]);
-    TeamController teamCtrl = Get.find();
     teamCtrl.updateTeamInfo();
   }
 
@@ -213,6 +240,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, PlayerCardEntity card) async {
+    return;
     if (card.isOpen.value) return;
     awardList = await TeamApi.opneBattleBox(index, card.playerId);
     showBigCard(card);
@@ -221,18 +249,18 @@ class TeamIndexController extends GetxController
   }
 
   ///快速开启
-  void speedOpneBattleBox(int index, int cost) async {
+  void speedOpneBattleBox(BuildContext ctx, int index, int cost) async {
     // bool result = HomeController.to.updateChips(-cost);
     // if (!result) return;
     await TeamApi.speedOpneBattleBox(index).then((v) async {
       HomeController.to.updateTeamProp();
-      await toOpenBoxPage(cardPackInfo.card[index]);
+      await toOpenBoxPage(ctx, cardPackInfo.card[index]);
     });
     // showBoxDialog();
     getBattleBox();
   }
 
-  Future toOpenBoxPage(CardPackInfoCard item) async {
+  Future toOpenBoxPage(BuildContext ctx, CardPackInfoCard item) async {
     canOneMore = true;
     isStartting = false;
     step = 0;
@@ -243,8 +271,29 @@ class TeamIndexController extends GetxController
     setCardPosition(Get.context!, 0);
     currentCardPack = item;
     fallOutAnimatedCtrl.reset();
-    await Get.toNamed(RouteNames.openBoxPage);
+    // await Get.toNamed(RouteNames.openBoxPage);
+    await Get.to(() => const OpenBoxPage(),
+        opaque: false, transition: Transition.fadeIn);
+    getPlayerCards = currentCardPack.playerCards
+        .where((e) => e.isSelect.value && e.isOpen.value)
+        .toList();
     closeCard();
+    cardFly(ctx);
+  }
+
+  void cardFly(BuildContext ctx) async {
+    if (getPlayerCards.isEmpty) return;
+    Overlay.of(ctx).insert(overlayEntry);
+  }
+
+  void goToIllustraction() {
+    if (overlayEntry.mounted) {
+      overlayEntry.remove();
+      // Get.to(() => const IllustratiionsPage(),
+      //     opaque: false, transition: Transition.fadeIn);
+    }
+    showGetPlayerTip.value = false;
+    Get.toNamed(RouteNames.illustrationPage);
   }
 
   ///开启免费宝箱
@@ -373,7 +422,7 @@ class TeamIndexController extends GetxController
   void scroToSlot() {
     if (scrollController.offset != 890.w) {
       scrollController.animateTo(
-        890.w,
+        0.w,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
@@ -381,9 +430,9 @@ class TeamIndexController extends GetxController
   }
 
   ///滚动到战斗
-  void scroToMatch() {
+  Future scroToMatch() async {
     if (scrollController.offset != (479.w)) {
-      scrollController.animateTo(
+      await scrollController.animateTo(
         479.w,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
@@ -585,6 +634,7 @@ class TeamIndexController extends GetxController
   }
 
   void closeCard() {
+    return;
     if (currentCardPack.playerCards
         .where((e) => e.isSelect.value && e.isOpen.value)
         .isNotEmpty) {
@@ -658,7 +708,7 @@ class TeamIndexController extends GetxController
 
   void scrollToTop() {
     try {
-      if(scrollController.offset == 0){
+      if (scrollController.offset == 0) {
         return;
       }
       scrollController.animateTo(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2025-01-20 11:23:42
+ * @LastEditTime: 2025-02-11 10:07:33
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -226,6 +226,7 @@ class BattleBoxDialog extends StatelessWidget {
                     controller.activeBattleBox(item.index);
                   } else if (item.status == 1) {
                     controller.speedOpneBattleBox(
+                        context,
                         item.index,
                         CacheApi.cardPackDefineMap[item.cardId]
                                 ?.cardPackOpenNow ??

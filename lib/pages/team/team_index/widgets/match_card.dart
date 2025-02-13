@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2025-02-07 18:31:23
+ * @LastEditTime: 2025-02-13 16:30:16
  */
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -95,21 +95,6 @@ class MatchCard extends GetView<TeamIndexController> {
                   vibrate: true,
                   minScale: 0.9,
                   onTap: () {
-                    final teamCtrl = Get.find<TeamController>();
-                    if (teamCtrl.myTeamEntity.salary >=
-                        teamCtrl.myTeamEntity.salaryCap) {
-                      BottomTipDialog.show(
-                          context: context,
-                          onTap: () {
-                            Get.back();
-                            Get.toNamed(RouteNames.teamMemberPage);
-                          },
-                          confirmStr: "LINE UP",
-                          title: "SALARY CAP EXCEED",
-                          desc:
-                              "Salary cap over limit，please adjust the lineup  before the game can begin.");
-                      return;
-                    }
                     controller.matchBattle();
                   },
                   child: Stack(

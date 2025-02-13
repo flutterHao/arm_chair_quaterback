@@ -138,9 +138,11 @@ class TrainingInfoBuff {
   late RxBool isSelect = false.obs;
   @JSONField(deserialize: false, serialize: false)
   late Rx<Offset> offset = Offset(0, 0).obs;
+  late Rx<double> rotate = 0.0.obs;
   late bool showBuff = false;
   late bool isMatch = false;
   late RxBool show = false.obs;
+  late double scale = 1.0;
 
   TrainingInfoBuff();
 

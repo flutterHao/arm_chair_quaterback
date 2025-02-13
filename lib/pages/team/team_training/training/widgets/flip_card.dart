@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2024-11-26 17:18:11
+ * @LastEditTime: 2025-02-13 18:06:17
  */
 
 import 'dart:math';
@@ -93,9 +93,8 @@ class _FlipCardState extends State<FlipCard>
                     alignment: Alignment.center,
                     transform: Matrix4.identity()..scale(-1.0, 1.0),
                     child: widget.useSmallTacticCard
-                        ? SmallTacticCard(
-                            num: widget.buff.face,
-                            color: widget.buff.color,
+                        ? SmallTacticCardNew(
+                            buff: widget.buff,
                             width: widget.width ?? 74.w,
                           )
                         : TacticCard(

@@ -2,37 +2,32 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-01-20 10:36:27
+ * @LastEditTime: 2025-02-13 18:59:00
  */
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/animated_arrow.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/training_tactics.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TrainingAwardDialog extends GetView<TrainingController> {
-  const TrainingAwardDialog(this.buff, {super.key});
-  final TrainingInfoBuff buff;
+  const TrainingAwardDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double smallTop = (47 + 96.5).w;
-    // double top = (75 + 9 + 115 + 47 + 10).w;
-    double bigTop = (177.w + 9 + 47 + 78.5).w;
-    Rx<Offset> offset = Offset((375 - 74).w / 2, bigTop).obs;
-    // RxBool isFly = false.obs;
-    Duration duration = 300.milliseconds;
+    double top = 47.w;
     return GetBuilder<TrainingController>(
         id: "training_page",
-        builder: (_) {
+        builder: (ctrl) {
           return Align(
             child: Container(
               // color: Colors.white,
@@ -43,123 +38,172 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                 fit: StackFit.expand,
                 alignment: Alignment.topCenter,
                 children: [
-                  for (int index = 0;
-                      index < controller.trainingInfo.buff.length;
-                      index++)
-                    Positioned(
-                        top: smallTop,
-                        left: 10.w + 143.5.w + index * 43.w,
-                        // right: 195.5.w - index * 43.w,
-                        child: MtInkWell(
-                          splashColor: Colors.transparent,
-                          onTap: () async {
-                            offset.value = Offset(
-                                10.w + 143.5.w + index * 43.w, smallTop + 4.w);
-                            controller.changeTacticId =
-                                controller.trainingInfo.buff[index].id;
-                            controller.chooseTactic(context);
-                          },
-                          child: Obx(() {
-                            var buff = controller.trainingInfo.buff[index];
-                            return AnimatedScale(
-                              duration: 150.milliseconds,
-                              scale: buff.show.value ? 1.5 : 1,
-                              child: TacticItem(
-                                buff: controller.trainingInfo.buff[index],
-                              ),
-                            );
-                          }),
-                        )),
-                  Obx(() {
-                    return Visibility(
-                      visible: controller.showBuff.value,
-                      child: AnimatedPositioned(
-                        left: offset.value.dx,
-                        top: offset.value.dy,
-                        duration: duration,
-                        curve: BezierCurve(0.25, 0.1, 0.25, 1.0),
-                        child: AnimatedScale(
-                          curve: Curves.easeInOut,
-                          alignment: Alignment.topLeft,
-                          duration: duration,
-                          scale: !controller.tacticFly.value ? 1 : 0.5,
-                          child: MtInkWell(
-                              onTap: () {
-                                buff.isSelect.value = true;
-                                controller.selectTacticId = buff.id;
-                                controller.changeTacticId = 0;
-                                controller.chooseTactic(context);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    border: !controller.tacticFly.value
-                                        ? Border.all(
-                                            width: 2.w,
-                                            color: AppColors.cFF7954)
-                                        : null,
-                                    borderRadius: BorderRadius.circular(8.w)),
-                                child: !controller.tacticFly.value
-                                    ? TacticCard(
-                                        num: buff.face,
-                                        color: buff.color,
-                                        width: 74.w,
-                                        buff: buff,
-                                      )
-                                    : SmallTacticCard(
-                                        num: buff.face,
-                                        color: buff.color,
-                                        width: 74.w,
-                                      ),
-                              )),
+                  Positioned(
+                    top: 80.w + 100.w + top,
+                    left: 0,
+                    right: 0,
+                    child: Obx(() {
+                      return Visibility(
+                        visible: ctrl.showPlayer.value,
+                        child: Container(
+                          width: double.infinity,
+                          height: 94.w,
+                          color: AppColors.c000000,
                         ),
-                      ),
-                    );
-                  }),
-                  Obx(() {
-                    return Visibility(
-                      visible: controller.showBuff.value &&
-                          !controller.tacticFly.value,
-                      child: Positioned(
-                        top: bigTop + 97.w + 28.w,
-                        child: MtInkWell(
-                          onTap: () async {
-                            if (Utils.getNoTip("tactics")) {
-                              controller.chooseFinish();
-                              controller.cancelTactic();
-                              Get.back();
-                              // return;
-                            } else {
-                              await BottomTipDialog.show(
-                                  context: context,
-                                  title: "Tip",
-                                  desc:
-                                      "Are you confirm to qiut the tactics pick?",
-                                  onTap: () {
-                                    Utils.saveNotTip("tactics");
-                                    controller.chooseFinish();
-                                    controller.cancelTactic();
-                                    Navigator.pop(context);
-                                    Get.back();
-                                  });
-                            }
-                            // controller.cancelTactic();
-                          },
-                          child: Container(
-                            width: 30.w,
-                            height: 30.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: AppColors.cEB0000,
-                                borderRadius: BorderRadius.circular(6.w)),
-                            child: Image.asset(
-                              Assets.iconUiIconDelete02,
-                              width: 16.w,
+                      );
+                    }),
+                  ),
+
+                  ///球员列表
+                  // if (controller.showPlayer.value)
+                  Positioned(
+                    top: 49.w + 100.w + top,
+                    left: -40.w,
+                    right: -40.w,
+                    child: Obx(() {
+                      return GestureDetector(
+                        onTap: () {
+                          ctrl.colosePlayerAwards();
+                        },
+                        child: AnimatedOpacity(
+                          duration: const Duration(milliseconds: 300),
+                          opacity: ctrl.showPlayer.value ? 1 : 0,
+                          child: const PlayerSrollerView(),
+                        ),
+                      );
+                    }),
+                    // child: PlayerSrollerView(),
+                  ),
+
+                  Positioned(
+                      top: 74.w + 100.w + top,
+                      left: -40.w,
+                      right: -40.w,
+                      child: const PlayerSelectBox()),
+
+                  Positioned(
+                    top: 60.w + 100.w + top,
+                    child: const PlayerArrow(),
+                  ),
+
+                  ///金钱奖励
+                  Positioned(
+                    top: 66.w + 150.w + top,
+                    child: Obx(() {
+                      return AnimatedOpacity(
+                        opacity: ctrl.showCash.value ? 1 : 0,
+                        duration: const Duration(milliseconds: 300),
+                        child: Container(
+                          width: 126.w,
+                          height: 51.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.circular(9.w),
+                            border: Border.all(
+                              width: 2.w,
+                              color: AppColors.cFF7954,
+                            ),
+                          ),
+                          child: AnimatedScale(
+                            scale: ctrl.caShScale.value ? 1.3 : 1,
+                            duration: const Duration(milliseconds: 300),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconWidget(
+                                  iconWidth: 32.w,
+                                  icon: Assets.teamUiMoney02,
+                                ),
+                                4.hGap,
+                                Text(
+                                  "+",
+                                  style: 16.w4(
+                                      color: AppColors.cFFFFFF,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                                Obx(() {
+                                  return AnimatedNum(
+                                    fromZero: true,
+                                    number: ctrl.cash.value,
+                                    milliseconds: 800,
+                                    isMoney: true,
+                                    textStyle: 16.w4(
+                                        color: AppColors.cFFFFFF,
+                                        fontFamily: FontFamily.fOswaldMedium),
+                                  );
+                                  // return Text(
+                                  //   Utils.formatMoney(controller.cash.value),
+                                  //   style: 16.w4(color: AppColors.cFFFFFF),
+                                  // );
+                                })
+                              ],
                             ),
                           ),
                         ),
+                      );
+                    }),
+                  ),
+
+                  if (ctrl.showBuff.value)
+                    Positioned(
+                      top: 230.w,
+                      child: Text(
+                        "Choose a Tactic".toUpperCase(),
+                        style: 18.w4(
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fOswaldMedium),
                       ),
-                    );
-                  }),
+                    ),
+
+                  if (ctrl.showBuff.value)
+                    for (int index = 0;
+                        index < ctrl.tacticChooseList.length;
+                        index++)
+                      Obx(() {
+                        var e = ctrl.tacticChooseList[index];
+                        return Positioned(
+                            left: e.offset.value.dx,
+                            top: e.offset.value.dy + 30.w,
+                            child: Container(
+                              width: 74.w,
+                              alignment: Alignment.center,
+                              child: AnimatedArrow(
+                                end: -5,
+                                child: Image.asset(
+                                  Assets.commonUiCommonArrow,
+                                  width: 10.w,
+                                  // height: 12.w,
+                                ),
+                              ),
+                            ));
+                      }),
+
+                  ///卡牌选择
+                  if (ctrl.showBuff.value)
+                    for (int index = 0;
+                        index < ctrl.tacticChooseList.length;
+                        index++)
+                      Obx(() {
+                        var e = ctrl.tacticChooseList[index];
+                        return AnimatedPositioned(
+                          left: e.offset.value.dx,
+                          top: e.offset.value.dy + 47.w,
+                          duration: 300.milliseconds,
+                          child: FlipCard(
+                            useSmallTacticCard: true,
+                            isFlipped: e.isOpen.value,
+                            onFlip: () async {
+                              if (!ctrl.canChoose) return;
+                              Get.back();
+                              e.isSelect.value = true;
+                              ctrl.selectTacticId = e.id;
+                              ctrl.changeTacticId = 0;
+                              ctrl.chooseTactic(context);
+                            },
+                            buff: e,
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),

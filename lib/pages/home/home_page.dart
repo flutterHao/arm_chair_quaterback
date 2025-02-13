@@ -4,6 +4,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -13,6 +14,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -118,7 +120,16 @@ class _HomePageState extends State<HomePage>
                                             borderRadius: BorderRadius.vertical(
                                                 top: Radius.circular(9.w))),
                                         child: MtInkWell(
-                                          onTap: () => controller.onTap(2),
+                                          onTap: () {
+                                            TeamIndexController ctrl =
+                                                Get.find();
+                                            if (index == 2 &&
+                                                ctrl.overlayEntry.mounted) {
+                                              ctrl.goToIllustraction();
+                                            } else {
+                                              controller.onTap(2);
+                                            }
+                                          },
                                           child: Container(
                                               height: 66.w,
                                               padding: EdgeInsets.all(4.w),
@@ -176,7 +187,48 @@ class _HomePageState extends State<HomePage>
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      Positioned(
+                        bottom: 70.w,
+                        left: 160.w,
+                        child: Obx(() {
+                          TeamIndexController teamCtrl = Get.find();
+                          return AnimatedScale(
+                            duration: 300.milliseconds,
+                            scale: teamCtrl.showGetPlayerTip.value ? 1 : 0,
+                            child: BubbleBox(
+                              arrowOffset: 120.w,
+                              color: AppColors.c000000,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.w, vertical: 9.w),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "get new player:  ",
+                                      style: TextStyle(
+                                          fontSize: 16.sp,
+                                          color: AppColors.cFFFFFF,
+                                          fontFamily: FontFamily.fOswaldMedium),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 1.5.w),
+                                      child: Text(
+                                        "${teamCtrl.getPlayerCards.length}",
+                                        style: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: AppColors.cFFFFFF,
+                                            fontFamily:
+                                                FontFamily.fRobotoMedium),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
                     ],
                   ),
                 ),

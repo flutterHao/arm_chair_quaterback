@@ -49,6 +49,86 @@ class SmallTacticCard extends StatelessWidget {
   }
 }
 
+class SmallTacticCardNew extends StatelessWidget {
+  const SmallTacticCardNew(
+      {super.key, required this.width, required this.buff});
+
+  final TrainingInfoBuff buff;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    double scale = width / 50.w;
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300), // 动画持续时间
+      curve: Curves.easeInOut, // 动画曲线
+      width: 50.w * scale,
+      height: 68.w * scale,
+      decoration: BoxDecoration(
+          color: AppColors.cFFFFFF,
+          borderRadius: BorderRadius.circular(6.w),
+          boxShadow: [
+            BoxShadow(
+                color: AppColors.c000000.withOpacity(0.2),
+                offset: const Offset(-2, 2),
+                blurRadius: 1.5.w)
+          ]),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 6.w * scale,
+            left: 5.w * scale,
+            child: Text(
+              geCardtName(buff.face),
+              style: (16 * scale).w5(
+                  color: getCardColor(buff.color),
+                  height: 0.9,
+                  fontFamily: FontFamily.fRobotoMedium),
+            ),
+          ),
+          Positioned(
+              top: 22.w * scale,
+              left: 5.w * scale,
+              child:
+                  Image.asset(getCardImage(buff.color), width: 8.5.w * scale)),
+          Positioned(
+              right: 6.5.w * scale,
+              bottom: 4.5.w * scale,
+              child:
+                  Image.asset(getCardImage(buff.color), width: 26.w * scale)),
+        ],
+      ),
+    );
+  }
+}
+
+class CardBackWidget extends StatelessWidget {
+  const CardBackWidget({super.key, required this.width});
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    double scale = width / 50.w;
+    return Container(
+      width: 50.w * scale,
+      height: 68.w * scale,
+      decoration: BoxDecoration(
+        color: AppColors.c262626,
+        borderRadius: BorderRadius.circular(6.w),
+        border: Border.all(width: 2.w, color: Colors.black),
+      ),
+      child: Center(
+        child: Image.asset(
+          Assets.commonUiCommonIconSystemEmpty,
+          width: 24.w * scale,
+          color: AppColors.c666666,
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
+}
+
 class TacticCard extends StatelessWidget {
   const TacticCard(
       {super.key,
