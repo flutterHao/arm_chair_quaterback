@@ -295,7 +295,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                       Container(
                                         margin: EdgeInsets.only(left: 16.w),
                                         child: Text(
-                                          "ABILITY",
+                                          LangKey.gameNameAbility.tr,
                                           style: 24.w7(
                                               color: AppColors.c000000,
                                               height: 0.8,
@@ -435,7 +435,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                               margin:
                                                   EdgeInsets.only(left: 16.w),
                                               child: Text(
-                                                "OFFENSIVE",
+                                                LangKey.gameMeanOffensive.tr,
                                                 style: 24.w7(
                                                     color: AppColors.c000000,
                                                     height: 1,
@@ -510,7 +510,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                                             ),
                                                             7.vGap,
                                                             Text(
-                                                              offensive.name,
+                                                              offensive.name.tr,
                                                               style: 10.w4(
                                                                   color: AppColors
                                                                       .c000000,
@@ -537,7 +537,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                               margin:
                                                   EdgeInsets.only(left: 16.w),
                                               child: Text(
-                                                "ADDITIONAL",
+                                                LangKey.gameMeanAdditional.tr,
                                                 style: 24.w7(
                                                     color: AppColors.c000000,
                                                     height: 1,
@@ -578,7 +578,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                                       children: [
                                                         Expanded(
                                                           child: Text(
-                                                            additional.name,
+                                                            additional.name.tr,
                                                             style: 12.w4(
                                                                 color: AppColors
                                                                     .c000000,
@@ -630,7 +630,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                                       children: [
                                                         Expanded(
                                                           child: Text(
-                                                            additional.name,
+                                                            additional.name.tr,
                                                             style: 12.w4(
                                                                 color: AppColors
                                                                     .c000000,
@@ -756,7 +756,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                           : AppColors.c000000,
                                     ),
                                     child: Text(
-                                      "CLAIM",
+                                      LangKey.pickButtonGet.tr,
                                       style: 16.w4(
                                           // height: 1,
                                           fontFamily: FontFamily.fOswaldMedium,

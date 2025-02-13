@@ -13,6 +13,7 @@
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -66,12 +67,12 @@ class _FireDialogState extends State<FireDialog>
           ),
           29.5.vGap,
           Text(
-            "ARE YOU SURE",
+            LangKey.gameTabFire.tr,
             style: 27.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.75),
           ),
           11.5.vGap,
           Text(
-            "Do you want to fire this player?",
+            LangKey.gameTipsFire.tr,
             style: 14.w4(
                 fontFamily: FontFamily.fRobotoRegular,
                 color: AppColors.c000000),
@@ -81,7 +82,7 @@ class _FireDialogState extends State<FireDialog>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "COST:",
+                "${LangKey.teamMeanCost.tr}:",
                 style: 16.w4(fontFamily: FontFamily.fOswaldBold),
               ),
               10.hGap,
@@ -123,7 +124,7 @@ class _FireDialogState extends State<FireDialog>
                   color: AppColors.cD60D20,
                   borderRadius: BorderRadius.circular(9.w)),
               child: Text(
-                "FIRE",
+                LangKey.gameButtonDelete.tr,
                 style: 23.w5(
                     color: AppColors.cFFFFFF,
                     height: 1,
@@ -142,7 +143,7 @@ class _FireDialogState extends State<FireDialog>
                   border: Border.all(width: 1.w, color: AppColors.c666666),
                   borderRadius: BorderRadius.circular(9.w)),
               child: Text(
-                "CANCEL",
+                LangKey.gameButtonCancel.tr,
                 style: 23.w5(
                     color: AppColors.c000000,
                     height: 1,

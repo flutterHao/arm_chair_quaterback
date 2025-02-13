@@ -56,7 +56,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
       if (controller.loadStatus.value != LoadDataStatus.success) {
         return SmartRefresher(
           controller: controller.refreshController,
-          onRefresh: ()=> controller.getScoreDateTime(),
+          onRefresh: () => controller.getScoreDateTime(),
           child: Center(
             child: LoadStatusWidget(
               loadDataStatus: controller.loadStatus.value,
@@ -83,8 +83,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
         bucket: PageStorageBucket(),
         child: NestedScrollView(
           floatHeaderSlivers: true,
-          headerSliverBuilder:
-              (BuildContext context, bool innerBoxIsScrolled) {
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               buildHeader(),
             ];

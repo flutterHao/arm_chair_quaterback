@@ -460,7 +460,7 @@ class SummaryPage extends GetView<SummaryController> {
                                   margin:
                                       EdgeInsets.symmetric(horizontal: 16.w),
                                   child: Text(
-                                    "RECENT PICK",
+                                    LangKey.nbaTeamTabOppg.tr,
                                     style: 24.w7(
                                         height: 1,
                                         fontFamily: FontFamily.fOswaldBold),
@@ -924,7 +924,7 @@ class SummaryPage extends GetView<SummaryController> {
                                 left: 16.w,
                               ),
                               child: Text(
-                                "OUTCOME",
+                                LangKey.nbaTeamTabOutcome.tr,
                                 style:
                                     19.w7(color: AppColors.c262626, height: 1),
                               ),
@@ -1634,7 +1634,7 @@ class SummaryPage extends GetView<SummaryController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "SEE ALL",
+                  LangKey.gameButtonSeeAll.tr,
                   style: 16.w7(
                       color: AppColors.c262626,
                       height: 1,
@@ -1658,7 +1658,7 @@ class SummaryPage extends GetView<SummaryController> {
   /// 对战记录
   List<Widget> getVsAwayWidget() {
     var vsTeams = controller.getVsTeams();
-    if(vsTeams.isEmpty){
+    if (vsTeams.isEmpty) {
       return [];
     }
     List<Widget> list = vsTeams.fold([], (p, e) {

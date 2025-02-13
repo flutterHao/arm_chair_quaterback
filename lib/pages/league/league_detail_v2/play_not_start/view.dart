@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
@@ -1261,7 +1262,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "UNFOLD",
+                  LangKey.gameButtonUnfold.tr,
                   style: 16.w7(
                       color: AppColors.c262626,
                       height: 1,

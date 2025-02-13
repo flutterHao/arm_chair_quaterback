@@ -253,7 +253,7 @@ class _Schedule extends StatelessWidget {
                                 item.gameStartTime <
                                     DateTime.now().millisecondsSinceEpoch)
                               Text(
-                                "Final",
+                                LangKey.scoreTipsFinal.tr,
                                 style: 12.w4(
                                     color: AppColors.c000000,
                                     fontFamily: FontFamily.fRobotoRegular,

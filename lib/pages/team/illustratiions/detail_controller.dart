@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -104,23 +105,28 @@ class IlluSctrationDtlCtrl extends GetxController {
   List<UpgradeOffensive> getOffensive() {
     var playBaseInfo = Utils.getPlayBaseInfo(player.playerId);
     List<UpgradeOffensive> data = [
-      UpgradeOffensive("LAYUP", playBaseInfo.layupWeight),
-      UpgradeOffensive("MID-RANGE", playBaseInfo.perimeterShotWeight),
-      UpgradeOffensive("3-POINT", playBaseInfo.threePointWeight),
+      UpgradeOffensive(LangKey.gameMeanLayUp, playBaseInfo.layupWeight),
+      UpgradeOffensive(
+          LangKey.gameMeanMidRange, playBaseInfo.perimeterShotWeight),
+      UpgradeOffensive(
+          LangKey.gameMeanThreePoint, playBaseInfo.threePointWeight),
     ];
     return data;
   }
 
   List<UpgradeAdditional> getAdditional() {
     return [
-      UpgradeAdditional("Layup", getAdditionalAbility(layup)),
-      UpgradeAdditional("Three shot", getAdditionalAbility(threeShot)),
+      UpgradeAdditional(LangKey.gameMeanLayUp, getAdditionalAbility(layup)),
       UpgradeAdditional(
-          "Midline defense", getAdditionalAbility(midlineDefense)),
-      UpgradeAdditional("Jump shot", getAdditionalAbility(jumpShot)),
-      UpgradeAdditional("Inside defense", getAdditionalAbility(insideDefense)),
+          LangKey.gameMeanThreePoint, getAdditionalAbility(threeShot)),
       UpgradeAdditional(
-          "Outside defense", getAdditionalAbility(outsideDefense)),
+          LangKey.gameMeanMidRange, getAdditionalAbility(midlineDefense)),
+      UpgradeAdditional(
+          LangKey.gameMeanJumpShot, getAdditionalAbility(jumpShot)),
+      UpgradeAdditional(
+          LangKey.gameMeanPaintDefence, getAdditionalAbility(insideDefense)),
+      UpgradeAdditional(
+          LangKey.gameMeanOutsideDefence, getAdditionalAbility(outsideDefense)),
     ];
   }
 

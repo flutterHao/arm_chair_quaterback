@@ -159,7 +159,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Star Up success",
+                                            LangKey.gameMeanStarUpSuccess.tr,
                                             style: 10.w4(
                                                 color: AppColors.cFFFFFF,
                                                 height: 1,

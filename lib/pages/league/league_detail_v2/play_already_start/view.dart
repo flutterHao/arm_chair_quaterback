@@ -220,7 +220,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "UNFOLD",
+                          LangKey.gameButtonUnfold.tr,
                           style: 16.w7(
                               color: AppColors.c262626,
                               height: 1,
