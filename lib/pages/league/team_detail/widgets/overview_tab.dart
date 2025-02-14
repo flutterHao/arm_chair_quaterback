@@ -155,7 +155,7 @@ class _SeasonStats extends StatelessWidget {
                         ),
                         5.5.vGap,
                         Text(
-                          types[index],
+                          Utils.getTeamTypeKey(types[index]).tr,
                           style: 10.w4(
                               fontFamily: FontFamily.fRobotoRegular,
                               height: 0.9,
@@ -483,7 +483,9 @@ class _RecentMatch extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(14.w)),
                                     child: Text(
-                                      type.replaceAll(",", "+"),
+                                      Utils.getRecentMatchTypeKey(
+                                              type.replaceAll(",", "+"))
+                                          .tr,
                                       style: 13.w5(
                                           color: isSelected
                                               ? AppColors.cF2F2F2
@@ -1010,7 +1012,7 @@ class _Stats extends StatelessWidget {
                     ...controller.types.map(
                       (e) => Expanded(
                         child: Text(
-                          e,
+                          Utils.getRecentMatchTypeKey(e).tr,
                           textAlign: TextAlign.center,
                           style: 12.w4(
                             fontFamily: FontFamily.fRobotoMedium,

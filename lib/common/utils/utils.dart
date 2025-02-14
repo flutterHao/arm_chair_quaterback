@@ -488,4 +488,54 @@ class Utils {
     var difference = dateTime.difference(dateTime.toUtc());
     return difference;
   }
+
+  static String getTeamTypeKey(String type) {
+    if (type == "PPG") {
+      return LangKey.nbaTeamNamePpg;
+    } else if (type == "RPG") {
+      return LangKey.nbaTeamNameRpg;
+    } else if (type == "APG") {
+      return LangKey.nbaTeamNameApg;
+    } else if (type == "OPPG") {
+      return LangKey.nbaTeamNameOppg;
+    } else {
+      return type;
+    }
+  }
+
+  static String getRecentMatchTypeKey(String type) {
+    if (type == "PTS") {
+      return LangKey.gameNamePts;
+    } else if (type == "REB") {
+      return LangKey.gameNameReb;
+    } else if (type == "AST") {
+      return LangKey.gameNameAst;
+    } else if (type == "BLK") {
+      return LangKey.gameNameBlk;
+    } else if (type == "STL") {
+      return LangKey.gameNameStl;
+    } else if (type == "TO") {
+      return LangKey.gameNameTo;
+    } else if (type == "FOUL") {
+      return LangKey.gameNameFoul;
+    } else {
+      return type;
+    }
+  }
+
+  static String getPicksTabKey(String type) {
+    if (type == "PTS") {
+      return LangKey.gameNamePts;
+    } else if (type == "PTS+AST") {
+      return LangKey.gameNameReb;
+    } else if (type == "AST") {
+      return LangKey.gameNameAst;
+    } else if (type == "REB") {
+      return LangKey.gametabScores;
+    } else if (type == "PTS+REB") {
+      return LangKey.newsNameTp;
+    } else {
+      return type;
+    }
+  }
 }

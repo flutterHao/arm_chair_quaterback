@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -226,7 +227,14 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                           indicatorWeight: 4,
                           controller: controller.tabController,
                           tabs: controller.guessGamePlayers.keys.map((e) {
-                            return Text(e.replaceAll(",", "+"));
+                            if (e == "REB") {
+                              return Text(
+                                  ' ${LangKey.gameNamePts.tr} + ${LangKey.gameNameAst.tr}');
+                            }
+                            return Text(
+                                Utils.getPicksTabKey(e.replaceAll(",", "+"))
+                                    .tr);
+                            // return Text(e.replaceAll(",", "+"));
                           }).toList()),
                     ),
                     height: 34.w)),
