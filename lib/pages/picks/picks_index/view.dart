@@ -53,19 +53,6 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
   var floatTitleBarHeight = 75.w;
 
   Widget _buildView(BuildContext context) {
-    if (controller.guessGamePlayers.isEmpty &&
-        controller.rankInfo.ranks.isEmpty) {
-      return SmartRefresher(
-        controller: controller.refreshController,
-        onRefresh: controller.loading,
-        child: Obx(() {
-          return Center(
-              child: LoadStatusWidget(
-            loadDataStatus: controller.loadStatusRx.value,
-          ));
-        }),
-      );
-    }
     return NestedScrollView(
         controller: controller.scrollController,
         // floatHeaderSlivers: true,
@@ -119,7 +106,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        "${(controller.rankInfo.myRank.rank ?? 0) > 0 ? controller.rankInfo.myRank.rank : "--"}",
+                                        "${(controller.rankInfo?.myRank.rank ?? 0) > 0 ? controller.rankInfo?.myRank.rank : "--"}",
                                         style: 19.w4(
                                             color: AppColors.cFFFFFF,
                                             height: 1),
@@ -150,20 +137,6 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                   onTap: () => Get.toNamed(
                                     RouteNames.picksPicksHistory,
                                   ),
-                                  // Get.toNamed(
-                                  //     RouteNames
-                                  //         .picksPersonalCenter,
-                                  //     arguments: {
-                                  //       "teamId": Get
-                                  //           .find<
-                                  //           HomeController>()
-                                  //           .userEntiry
-                                  //           .teamLoginInfo
-                                  //           ?.team
-                                  //           ?.teamId ??
-                                  //           0,
-                                  //       "initTab": 0
-                                  //     }),
                                   child: Container(
                                     height: 51.w,
                                     margin:
@@ -227,6 +200,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                   ),
                   height: floatTitleBarHeight),
             ),
+            if(controller.guessGamePlayers.isNotEmpty)
             SliverPersistentHeader(
                 pinned: true,
                 delegate: FixedHeightSliverHeaderDelegate(
@@ -258,13 +232,25 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                     height: 34.w)),
           ];
         },
-        body: ExtendedTabBarView(
-            cacheExtent: controller.guessGamePlayers.keys.length - 1,
-            controller: controller.tabController,
-            children: controller.guessGamePlayers.keys.map((e) {
-              var list = controller.guessGamePlayers[e]!;
-              return _TabViewItemPage(list: list, keyStr: e);
-            }).toList()));
+        body: Builder(
+          builder: (context) {
+            if(controller.guessGamePlayers.isEmpty){
+              return Obx(() {
+                return Center(
+                    child: LoadStatusWidget(
+                      loadDataStatus: controller.loadStatusRx.value,
+                    ));
+              });
+            }
+            return ExtendedTabBarView(
+                cacheExtent: controller.guessGamePlayers.keys.length - 1,
+                controller: controller.tabController,
+                children: controller.guessGamePlayers.keys.map((e) {
+                  var list = controller.guessGamePlayers[e]!;
+                  return _TabViewItemPage(list: list, keyStr: e);
+                }).toList());
+          }
+        ));
   }
 
   @override

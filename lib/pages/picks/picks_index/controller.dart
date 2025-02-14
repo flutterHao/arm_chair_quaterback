@@ -34,7 +34,7 @@ class PicksIndexController extends GetxController
 
   var loadStatusRx = LoadDataStatus.noData.obs;
 
-  GuessRankByCycleEntity rankInfo = GuessRankByCycleEntity();
+  GuessRankByCycleEntity? rankInfo;
 
   Map<String, List<PicksPlayerV2>> guessGamePlayers = {};
   double streakReward = 0;
@@ -262,7 +262,7 @@ class PicksIndexController extends GetxController
       tabController ??=
           TabController(length: guessGamePlayers.keys.length, vsync: this);
 
-      if (guessGamePlayers.isEmpty && rankInfo.ranks.isEmpty) {
+      if (guessGamePlayers.isEmpty) {
         loadStatusRx.value = LoadDataStatus.noData;
       } else {
         loadStatusRx.value = LoadDataStatus.success;
