@@ -593,7 +593,9 @@ class TeamBattleV2Controller extends GetxController
     shootPathColor = isAway ? AppColors.cD60D20 : AppColors.c1F8FE5;
     addToShootHistory(mainOffset = ShootHistory(isAway, start, isSuccess));
     update([idPlayersLocation]);
-    end = isAway ? Offset(22.w, 49.w) : Offset(375.w - 22.w - 18.w - 6.w, 49.w);
+    end = isAway
+        ? Offset(22.w, 49.w)
+        : Offset(Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w, 49.w);
     // 随机生成最高点
     // peak = Offset(
     //     (start.dx + end.dx) / 2, Random().nextDouble() * min(start.dy, end.dy));
@@ -657,7 +659,7 @@ class TeamBattleV2Controller extends GetxController
       //左边投篮
       // end =
       //     Offset(end.dx - Random().nextDouble() * 50 - 10, end.dy + end.dy / 2);
-      end = Offset(375.w - 22.w - 18.w - 6.w + 12.w, 35.w);
+      end = Offset(Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w + 12.w, 35.w);
     }
     // 随机生成最高点
     peak = Offset((start.dx + end.dx) / 2, peak.dy - 5);

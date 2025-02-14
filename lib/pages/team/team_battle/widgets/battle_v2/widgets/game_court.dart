@@ -38,8 +38,8 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
 
   Widget buildBasketballCourt(BuildContext context) {
     return SizedBox(
-      height: 156.w,
-      width: MediaQuery.of(context).size.width,
+      height: Utils.getMaxWidth(context)*156.w/375.w,
+      width: Utils.getMaxWidth(context),
       child: Stack(
         children: [
           //球场整行的宽高
