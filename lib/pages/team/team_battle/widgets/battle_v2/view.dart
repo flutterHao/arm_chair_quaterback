@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
@@ -15,6 +16,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/wi
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/team_stats_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/win_rate_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
@@ -69,9 +71,11 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                                 SingleChildScrollView(
                                   child: Column(
                                     children: [
-                                      const ClipRRect(
+                                       ClipRRect(
                                           borderRadius: BorderRadius.zero,
-                                          child: GameCourtWidget()),
+                                          child: GameCourtWidget(
+                                            height: Utils.getMaxWidth(context)*156.w/375.w,
+                                          )),
                                       const GamePlayersWidget(),
                                       const LiveTextWidget(),
                                       WinRateWidget(

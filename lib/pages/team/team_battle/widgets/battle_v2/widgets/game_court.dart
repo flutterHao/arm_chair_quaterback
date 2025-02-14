@@ -25,9 +25,10 @@ import 'mark_animation_widget.dart';
 ///created at 2024/12/12/17:28
 
 class GameCourtWidget extends GetView<TeamBattleV2Controller> {
-  const GameCourtWidget({this.needCountDown = false, super.key});
+  const GameCourtWidget({required this.height,this.needCountDown = false, super.key});
 
   final bool needCountDown;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
 
   Widget buildBasketballCourt(BuildContext context) {
     return SizedBox(
-      height: Utils.getMaxWidth(context)*156.w/375.w,
+      height: height,
       width: Utils.getMaxWidth(context),
       child: Stack(
         children: [

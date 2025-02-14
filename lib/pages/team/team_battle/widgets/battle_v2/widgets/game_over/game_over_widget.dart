@@ -56,7 +56,8 @@ class GameOverWidget extends GetView<GameOverController> {
                       Stack(
                         children: [
                           /// 背景球场
-                          const GameCourtWidget(
+                          GameCourtWidget(
+                            height: Utils.getMaxWidth(context) * 156.w / 375.w,
                             needCountDown: false,
                           ),
                           Container(

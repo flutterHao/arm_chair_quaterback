@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -43,8 +44,9 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
 
   @override
   Widget build(BuildContext context) {
+    var rate = Utils.getMaxWidth(context) / 375.w;
     return GetBuilder<BeforeGameController>(
-        init: BeforeGameController(context),
+        init: BeforeGameController(context, rate),
         builder: (_) {
           return SizedBox(
             width: double.infinity,
@@ -71,13 +73,14 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                           borderRadius: BorderRadius.zero,
                           child: GameCourtWidget(
                             /// 修改为true显示倒计时
+                            height: 156.w * rate,
                             needCountDown: controller.startCountDown.value,
                           )));
                 }),
 
                 /// 卡牌比较输赢结果
                 Positioned(
-                    top: 101.w + 53.w,
+                    top: 101.w + 53.w * rate,
                     left: 0,
                     right: 0,
                     child: Obx(() {
@@ -138,7 +141,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                       );
                     })),
                 Positioned(
-                    top: 101.w + 139.w,
+                    top: 101.w + 139.w * rate,
                     left: 16.w,
                     right: 16.w,
                     child: Obx(() {
@@ -162,7 +165,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                       return const SizedBox.shrink();
                     }
                     return Positioned(
-                        top: 101.w + 162.w,
+                        top: 101.w + 162.w * rate,
                         left: 13.w + (index * (28.w + 3.w)),
                         child: Container(
                           width: 28.w,
@@ -184,7 +187,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                       return const SizedBox.shrink();
                     }
                     return Positioned(
-                        top: 101.w + 162.w,
+                        top: 101.w + 162.w * rate,
                         right: 13.w + (index * (28.w + 3.w)),
                         child: Container(
                           width: 28.w,
@@ -219,7 +222,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                       Offset offset =
                           controller.awayAnimationList[index].value.value;
                       return Positioned(
-                          top: offset.dy,
+                          top: offset.dy * rate,
                           right: offset.dx,
                           child: AnimatedOpacity(
                             opacity: offset.dy == 75.w ? 0 : 1,
@@ -251,7 +254,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
 
                 /// 球员
                 Positioned(
-                  top: 101.w + 156.w,
+                  top: 101.w + 156.w * rate,
                   left: 0,
                   right: 0,
                   child: Obx(() {
@@ -266,7 +269,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
 
                 /// MY TACTICS 和整块白色背景
                 Positioned(
-                    top: 101.w + 156.w + 44.w + 10.w,
+                    top: 101.w + 156.w * rate + 44.w + 10.w,
                     left: 0,
                     right: 0,
                     child: Obx(() {
@@ -314,9 +317,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                       child: Stack(
                                         children: [
                                           ...List.generate(5, (index) {
-                                            var d = MediaQuery.of(context)
-                                                    .size
-                                                    .width -
+                                            var d = Utils.getMaxWidth(context) -
                                                 (43.w * 5 + 12.w * 4);
                                             var left = d / 2;
                                             var list =
@@ -394,9 +395,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                       child: Stack(
                                         children: [
                                           ...List.generate(5, (index) {
-                                            var d = MediaQuery.of(context)
-                                                    .size
-                                                    .width -
+                                            var d = Utils.getMaxWidth(context) -
                                                 (43.w * 5 + 12.w * 4);
                                             var left = d / 2;
                                             var list =
@@ -416,7 +415,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                                     .value;
                                                 // dy:269.w -95.w
                                                 double startY = 101.w +
-                                                    156.w +
+                                                    156.w * rate +
                                                     44.w +
                                                     9.w +
                                                     63.w;
@@ -434,7 +433,9 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                                       Alignment.bottomCenter,
                                                   children: [
                                                     Text(
-                                                      count>0?"x$count":"",
+                                                      count > 0
+                                                          ? "x$count"
+                                                          : "",
                                                       style: 10.w5(
                                                           color:
                                                               AppColors.c000000,
@@ -478,7 +479,9 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                   ],
                                 ),
                               ),
-                              const LiveTextWidget(needTopMargin: false,),
+                              const LiveTextWidget(
+                                needTopMargin: false,
+                              ),
                               WinRateWidget(
                                   teamBattleV2Controller.winRateController),
                             ],
@@ -504,8 +507,8 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                           .pkStartUpdatedEntity?.homeTeamWinPokers
                           .where((e) => e.id == item.id);
                       bool contain = where?.isNotEmpty == true;
-                      double startY = 101.w + 156.w + 44.w + 9.w + 63.w;
-                      double endY = 101.w + 162.w;
+                      double startY = 101.w + 156.w * rate + 44.w + 9.w + 63.w;
+                      double endY = 101.w + 162.w*rate;
                       double progress = controller.showBorder.value
                           ? 0
                           : ((offset.dy - endY) / (startY - endY));
@@ -560,8 +563,8 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                   return AnimatedPositioned(
                     top: controller.onTheEnd.value
                         ? ((329.w + 335.h - 163.w) +
-                            (101.w + 156.w + 44.w + 163.w + 9.w))
-                        : (101.w + 156.w + 44.w + 163.w + 9.w),
+                            (101.w + 156.w * rate + 44.w + 163.w + 9.w))
+                        : (101.w + 156.w * rate + 44.w + 163.w + 9.w),
                     left: 0,
                     right: 0,
                     duration: const Duration(milliseconds: 300),

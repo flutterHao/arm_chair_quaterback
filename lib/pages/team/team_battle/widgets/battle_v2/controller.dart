@@ -44,9 +44,7 @@ class ShootHistory {
 
 class TeamBattleV2Controller extends GetxController
     with GetTickerProviderStateMixin, WidgetsBindingObserver {
-  TeamBattleV2Controller(this.context) {
-    size = MediaQuery.of(context).size;
-  }
+  TeamBattleV2Controller(this.context);
 
   final BuildContext context;
   late BarrageWallController normalBarrageWallController =
@@ -102,8 +100,6 @@ class TeamBattleV2Controller extends GetxController
   late WinRateController winRateController;
   late GameLeaderController gameLeaderController;
   late TeamStatsController teamStatsController;
-
-  late Size size;
 
   ///是否收到结算事件，代表比赛是否结束
   bool isPkResultUpdated = false;
@@ -1063,7 +1059,7 @@ class TeamBattleV2Controller extends GetxController
     Offset o = event.mainOffset!;
     double x = o.dx;
     double y = o.dy;
-    double regionWidth = size.width - 18.w;
+    double regionWidth = Utils.getMaxWidth(Get.context!) - 18.w;
     double regionHeight = regionWidth / 716 * 184;
     var offset = Offset(
         (regionWidth / 600) * x +
@@ -1075,7 +1071,7 @@ class TeamBattleV2Controller extends GetxController
 
   // 十字坐标系 -> 右上顶点坐标系
   Offset toTopRight(Offset crossCoordinate) {
-    double screenWidth = size.width - 18.w;
+    double screenWidth = Utils.getMaxWidth(Get.context!) - 18.w;
     double regionHeight = screenWidth / 716 / 184;
     double x = screenWidth / 2 - crossCoordinate.dx;
     double y = regionHeight / 2 - crossCoordinate.dy;

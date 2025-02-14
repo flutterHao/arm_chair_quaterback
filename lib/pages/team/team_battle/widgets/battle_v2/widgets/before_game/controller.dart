@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
@@ -17,9 +18,10 @@ import 'package:get/get.dart';
 
 class BeforeGameController extends GetxController
     with GetTickerProviderStateMixin {
-  BeforeGameController(this.context);
+  BeforeGameController(this.context,this.rate);
 
   final BuildContext context;
+  final double rate;
 
   List<EasyAnimationController> homeAnimationList = [];
   List<EasyAnimationController> awayAnimationList = [];
@@ -38,14 +40,12 @@ class BeforeGameController extends GetxController
   var startCountDown = false.obs;
 
   var onTheEnd = false.obs;
-  double width = 0;
 
   var scrollController = ScrollController();
 
   @override
   void onInit() {
     super.onInit();
-    width = MediaQuery.of(context).size.width;
     _init();
   }
 
@@ -53,19 +53,19 @@ class BeforeGameController extends GetxController
     battleEntity = Get.find<TeamBattleController>().battleEntity;
     awayTeamBuffList = _getAwayTeamBuff();
     var homeTeamBuff = battleEntity.homeTeamBuff;
-    var d = width - (16.w * 2) - (43.w * 5 + 12.w * 4);
+    var d = Utils.getMaxWidth(context) - (43.w * 5 + 12.w * 4);
     var left = d / 2;
     print('left:$left');
 
     /// home 动画列表初始化
     for (int index = 0; index < homeTeamBuff.length; index++) {
       var item = homeTeamBuff[index];
-      var top = 101.w + 156.w + 44.w + 9.w + 63.w;
+      var top = 101.w + 156.w*rate + 44.w + 9.w + 63.w;
       var startY = item.takeEffectGameCount == 1 ? (top + 3.w) : top;
       var easyAnimationController = EasyAnimationController(
           vsync: this,
           begin: Offset(left + (43.w + 12.w) * index, startY),
-          end: Offset(13.w + (index * (28.w + 3.w)), 101.w + 162.w),
+          end: Offset(13.w + (index * (28.w + 3.w)), 101.w + 162.w*rate),
           duration: const Duration(milliseconds: 300));
       if (index == homeTeamBuff.length - 1) {
         easyAnimationController.controller
@@ -78,7 +78,7 @@ class BeforeGameController extends GetxController
     for (int index = 0; index < awayTeamBuffList.length; index++) {
       var easyAnimationController = EasyAnimationController(
           vsync: this,
-          begin: Offset(13.w + (index * (28.w + 3.w)), 101.w + 162.w),
+          begin: Offset(13.w + (index * (28.w + 3.w)), 101.w + 162.w*rate),
           end: Offset(71.w, 75.w),
           duration: const Duration(milliseconds: 300));
       if (index == awayTeamBuffList.length - 1) {
@@ -152,7 +152,7 @@ class BeforeGameController extends GetxController
           for (int index = 0; index < homeTeamBuff.length; index++) {
             var easyAnimationController = EasyAnimationController(
                 vsync: this,
-                begin: Offset(13.w + (index * (28.w + 3.w)), 101.w + 162.w),
+                begin: Offset(13.w + (index * (28.w + 3.w)), 101.w + 162.w*rate),
                 end: Offset(71.w, 75.w),
                 duration: const Duration(milliseconds: 300));
             if (index == homeTeamBuff.length - 1 && awayAnimationList.isEmpty) {
