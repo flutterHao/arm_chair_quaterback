@@ -19,7 +19,8 @@ class WSInstance {
   static int _msgCounter = 1;
   static bool _init = false;
   static bool _isClosed = false; // 标记手动关闭
-  static Timer? _reconnectTimer; // 重连定时器
+  static Timer? _readyCheckTimer;
+  static bool _ready = false;
 
   static Timer? _pingTimer; // 心跳定时器
   static DateTime _lastPongTime = DateTime.now(); // 记录最后一次收到 pong 的时间
@@ -41,25 +42,47 @@ class WSInstance {
     _init = true;
     final wsUrl = Uri.parse(_getUrl);
     _channel = WebSocketChannel.connect(wsUrl);
-
-    _startPingTimer();
-
+    _readyCheckTimer = Timer(const Duration(seconds: 2), _readyCheck);
     await _channel?.ready;
-    print('WebSocket--ready--');
+    _ready = true;
     _auth();
-    _reconnectTimer?.cancel();
+    _startPingTimer();
     _lastPongTime = DateTime.now();
 
     _channel?.stream
         .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
   }
 
+  static void _readyCheck() {
+    print('WebSocket--_readyCheck--:$_ready');
+    if (_ready) {
+      _readyCheckTimer?.cancel();
+    } else {
+      close();
+      init();
+    }
+  }
+
   static void _auth() async {
     if (Get.find<HomeController>().userEntiry.teamLoginInfo == null) {
-      await Get.find<HomeController>().login();
+      try {
+        await Get.find<HomeController>().login();
+      } finally {
+        if (Get.find<HomeController>().userEntiry.teamLoginInfo == null) {
+          await Future.delayed(const Duration(seconds: 2));
+          _auth();
+        } else {
+          authAccount(Get.find<HomeController>()
+              .userEntiry
+              .teamLoginInfo!
+              .team!
+              .teamId!);
+        }
+      }
+    } else {
+      authAccount(
+          Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId!);
     }
-    auth(
-        Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId ?? 0);
   }
 
   // 启动心跳定时器
@@ -118,8 +141,9 @@ class WSInstance {
   // 手动关闭连接
   static void close() {
     _isClosed = true;
+    _ready = false;
     _pingTimer?.cancel();
-    _reconnectTimer?.cancel(); // 停止重连
+    _readyCheckTimer?.cancel();
     _channel?.sink.close();
     _channel = null;
   }
@@ -127,8 +151,7 @@ class WSInstance {
   // 重连逻辑
   static void _reconnect() {
     print('尝试重新连接...');
-    _reconnectTimer?.cancel();
-    _reconnectTimer = Timer(const Duration(seconds: 5), init); // 每 5 秒尝试重连
+    init();
   }
 
   static void setUrl(String url) {
@@ -137,9 +160,10 @@ class WSInstance {
 
   static String get _getUrl {
     String url = ConfigStore.to.getWsServiceUrl();
+
     /// 把美服的都转到国服
-    if(url == Address.wsPubDevUrl){
-      url =  Address.wsPublicDevUrl;
+    if (url == Address.wsPubDevUrl) {
+      url = Address.wsPublicDevUrl;
     }
     // print('ws url ------ : $url');
     return url;
@@ -152,9 +176,6 @@ class WSInstance {
   static void _sendMessage(dynamic message, {String path = ""}) {
     if (!_init) {
       throw ('WSInstance not init');
-    }
-    if (_reconnectTimer?.isActive == true) {
-      print('reconnecting...');
     }
     if (_channel == null) {
       print('channel null...');
@@ -178,7 +199,7 @@ class WSInstance {
     return responseMessage;
   }
 
-  static void auth(int teamId) {
+  static void authAccount(int teamId) {
     WSInstance._sendMessage(teamId, path: Api.wsAuthAccount);
   }
 

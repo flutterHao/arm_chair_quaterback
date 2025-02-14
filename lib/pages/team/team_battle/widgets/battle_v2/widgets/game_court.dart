@@ -55,8 +55,8 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                     builder: (_) {
                       return Container(
                         margin: EdgeInsets.only(top: 38.w),
-                        width: 357.w,
-                        height: 89.w,
+                        width: Utils.getMaxWidth(context)-18.w,
+                        height: ((Utils.getMaxWidth(context)-18.w)*89.w)/357.w,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
@@ -110,8 +110,8 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                       }
                       return Container(
                           margin: EdgeInsets.only(top: 38.w),
-                          width: 357.w,
-                          height: 89.w,
+                          width: Utils.getMaxWidth(context)-18.w,
+                          height: ((Utils.getMaxWidth(context)-18.w)*89.w)/357.w,
                           child: RoundTransformWidget(
                             isLeftToRight: !controller.leftRound!,
                           ));
@@ -182,8 +182,8 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                     builder: (_) {
                       return Container(
                         margin: EdgeInsets.only(top: 38.w),
-                        width: 357.w,
-                        height: 89.w,
+                        width: Utils.getMaxWidth(context)-18.w,
+                        height: ((Utils.getMaxWidth(context)-18.w)*89.w)/357.w,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [

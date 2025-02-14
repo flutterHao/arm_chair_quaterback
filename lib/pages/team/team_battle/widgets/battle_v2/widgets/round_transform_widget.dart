@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class _RoundTransformWidgetState extends State<RoundTransformWidget>
             child: Opacity(
               opacity: 1 - animationController.value,
               child: SizedBox(
-                width: (MediaQuery.of(context).size.width - 70.w) *
+                width: (Utils.getMaxWidth(context) - 70.w) *
                     animationController.value,
                 child: Image.asset(
                   Assets.managerUiManagerCourt02,

@@ -109,8 +109,9 @@ class HomeController extends GetxController {
   void onReady() {
     super.onReady();
     // UserStore.to.setToken("");
-    login();
+    // login();
     CacheApi.init();
+    WSInstance.init();
   }
 
   @override
@@ -171,7 +172,6 @@ class HomeController extends GetxController {
     await UserStore.to.setToken(v);
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
-    WSInstance.init();
     getOngoingDailyTaskList();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
