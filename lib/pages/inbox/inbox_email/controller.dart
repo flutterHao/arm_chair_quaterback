@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
@@ -18,17 +19,24 @@ class InboxEmailController extends GetxController {
   Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
   RxList<InboxEmailMailList> emailList = <InboxEmailMailList>[].obs;
 
-  List titleList = ['System Mail', 'Pick Ranks', 'Manager Ranks', 'Community'];
-
-  /// 1:系统邮件，2：竞猜发奖邮件，3：赛季结算邮件，4：公告邮件
+  /// 1:系统补发邮件，2：竞猜发奖邮件，3：赛季结算邮件，4：公告邮件
   int type = 1;
-  String title = '';
+  late InboxMessageEntity inboxMessageEntity;
   // @override
   @override
   void onInit() {
     super.onInit();
-    type = 0;
-    title = titleList[0];
+    inboxMessageEntity = Get.arguments;
+    switch (inboxMessageEntity.id) {
+      case 5001:
+        type = 3;
+      case 4001:
+        type = 2;
+      case 1005:
+        type = 1;
+      default:
+        type = 4;
+    }
     initData();
   }
 
@@ -59,9 +67,9 @@ class InboxEmailController extends GetxController {
   }
 
   void goView() {
-    if (type == 2) {
+    if (inboxMessageEntity.id == 4001) {
       Get.toNamed(RouteNames.picksPickRank);
-    } else if (type == 3) {
+    } else if (inboxMessageEntity.id == 5001) {
       Get.toNamed(RouteNames.seaonRankPage);
     }
   }

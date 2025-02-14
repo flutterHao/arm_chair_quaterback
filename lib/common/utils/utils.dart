@@ -89,35 +89,35 @@ class Utils {
     return Assets.commonUiCommonPlayerState05;
   }
 
-  static String getPosition(int position,{bool getKey = true}) {
+  static String getPosition(int position, {bool getKey = true}) {
     switch (position) {
       case 1:
-        if(getKey){
+        if (getKey) {
           return "C";
         }
         return LangKey.gameNameC;
       case 2:
-        if(getKey){
+        if (getKey) {
           return "PF";
         }
         return LangKey.gameNamePF;
       case 3:
-        if(getKey){
+        if (getKey) {
           return "SF";
         }
         return LangKey.gameNameSF;
       case 4:
-        if(getKey){
+        if (getKey) {
           return "SG";
         }
         return LangKey.gameNameSG;
       case 5:
-        if(getKey){
+        if (getKey) {
           return "PG";
         }
         return LangKey.gameNamePG;
       case 0:
-        if(getKey){
+        if (getKey) {
           return "SUB";
         }
         return LangKey.teamNameSubstitiute;

@@ -107,27 +107,28 @@ class EmailRankAwardWidget extends GetView<InboxEmailController> {
                         SizedBox(
                           child: Row(
                             children: [
-                              Expanded(
-                                  child: MtInkWell(
-                                      onTap: () {
-                                        controller.goView();
-                                      },
-                                      child: Container(
-                                          alignment: Alignment.center,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 5.w),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(6.w),
-                                              border: Border.all(
-                                                  color: AppColors.cD9D9D9)),
-                                          child: Text('View',
-                                              style: 14.w4(
-                                                fontFamily:
-                                                    FontFamily.fOswaldRegular,
-                                              ))))),
-                              9.hGap,
+                              if (controller.inboxMessageEntity.id != 1005)
+                                Expanded(
+                                    child: MtInkWell(
+                                        onTap: () {
+                                          controller.goView();
+                                        },
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 5.w),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(6.w),
+                                                border: Border.all(
+                                                    color: AppColors.cD9D9D9)),
+                                            child: Text('View',
+                                                style: 14.w4(
+                                                  fontFamily:
+                                                      FontFamily.fOswaldRegular,
+                                                ))))),
+                              if (controller.type != 1) 9.hGap,
                               Expanded(
                                   child: controller.emailList[index].receive
                                       ? Container(

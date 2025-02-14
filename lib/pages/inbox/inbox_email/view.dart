@@ -36,9 +36,10 @@ class InboxEmailPage extends GetView<InboxEmailController> {
             itemCount: controller.emailList.length,
             padding: EdgeInsets.symmetric(vertical: 16.w),
             itemBuilder: (context, index) {
-              if (controller.emailList[index].mailType != 0) {
-                return EmailRankChangeWidget(index);
-              }
+              // if (controller.type == 4) {
+              //   return EmailRankChangeWidget(index);
+              // }
+
               return EmailRankAwardWidget(index);
             },
             separatorBuilder: (context, index) => 15.vGap,
@@ -56,7 +57,7 @@ class InboxEmailPage extends GetView<InboxEmailController> {
             child: BlackAppWidget(
           backgroundColor: AppColors.cFFFFFF,
           AppBarWidget(
-            title: controller.title,
+            title: controller.inboxMessageEntity.userName,
             right: IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore),
           ),
           bodyWidget: Expanded(child: _buildView()),

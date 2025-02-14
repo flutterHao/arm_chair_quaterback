@@ -278,7 +278,7 @@ class PicksIndexController extends GetxController
 
   /// 排序
   void sort() {
-    guessGamePlayers = guessGamePlayers.keys.fold({}, (p,key){
+    guessGamePlayers = guessGamePlayers.keys.fold({}, (p, key) {
       var guessGamePlayer = guessGamePlayers[key]!;
       var nowMilliseconds = DateTime.now().millisecondsSinceEpoch;
       var gameNotStartPlayers = guessGamePlayer.fold([], (p, e) {
@@ -289,7 +289,7 @@ class PicksIndexController extends GetxController
       });
       gameNotStartPlayers.sort((a, b) {
         var compareTo =
-        a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
+            a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
         if (compareTo != 0) {
           return compareTo;
         }
@@ -305,7 +305,7 @@ class PicksIndexController extends GetxController
       });
       gameAlreadyStartPlayers.sort((a, b) {
         var compareTo =
-        a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
+            a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
         if (compareTo != 0) {
           return compareTo;
         }

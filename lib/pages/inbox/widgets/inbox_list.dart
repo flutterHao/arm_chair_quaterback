@@ -92,32 +92,31 @@ class InboxList extends GetView<InboxController> {
     }
     return InkWell(
       onTap: () async {
-        if (index == 0) {
-          return Get.toNamed(RouteNames.inboxEmail);
+        if (item.id == 1005 || item.id == 4001 || item.id == 5001) {
+          return Get.toNamed(RouteNames.inboxEmail, arguments: item);
         }
         item.isRead = true;
         Get.toNamed(RouteNames.inboxDetail, arguments: item);
         controller.update(["inboxList"]);
       },
       child: Slidable(
-        // 滑动方向
-        endActionPane: ActionPane(
-          motion: const ScrollMotion(),
-          children: [
-            const IconSlidableAction(
-                backgroundColor: AppColors.cFEB942,
-                // onPressed: (BuildContext context) {},
-                icon: Assets.inboxUiInboxIconBlacklist),
-            IconSlidableAction(
-                backgroundColor: AppColors.c000000,
-                onPressed: (BuildContext context) {},
-                icon: Assets.inboxUiInboxIconInform),
-            IconSlidableAction(
-                backgroundColor: AppColors.cD60D20,
-                onPressed: (BuildContext context) {},
-                icon: Assets.iconUiIconDelete02),
-          ],
-        ),
+        // endActionPane: ActionPane(
+        //   motion: const ScrollMotion(),
+        //   children: [
+        //     const IconSlidableAction(
+        //         backgroundColor: AppColors.cFEB942,
+        //         // onPressed: (BuildContext context) {},
+        //         icon: Assets.inboxUiInboxIconBlacklist),
+        //     IconSlidableAction(
+        //         backgroundColor: AppColors.c000000,
+        //         onPressed: (BuildContext context) {},
+        //         icon: Assets.inboxUiInboxIconInform),
+        //     IconSlidableAction(
+        //         backgroundColor: AppColors.cD60D20,
+        //         onPressed: (BuildContext context) {},
+        //         icon: Assets.iconUiIconDelete02),
+        //   ],
+        // ),
         child: Container(
           width: double.infinity,
           height: 99.w,
@@ -191,7 +190,7 @@ class InboxList extends GetView<InboxController> {
                       children: [
                         Expanded(
                           child: Text(
-                            index != 0 ? title : 'System',
+                            title,
                             style: 16.w4(
                                 fontFamily: FontFamily.fOswaldMedium,
                                 height: 0.9),

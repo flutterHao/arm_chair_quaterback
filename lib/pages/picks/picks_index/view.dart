@@ -27,7 +27,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-
 class PicksIndex extends StatelessWidget {
   const PicksIndex({super.key});
 
@@ -68,7 +67,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
       );
     }
     return NestedScrollView(
-      controller: controller.scrollController,
+        controller: controller.scrollController,
         // floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -198,8 +197,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                 Positioned(
                                     right: 0,
                                     child: Obx(() {
-                                      var value =
-                                          controller.choiceSize.value;
+                                      var value = controller.choiceSize.value;
                                       if (value <= 0) {
                                         return const SizedBox.shrink();
                                       }
@@ -253,8 +251,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                   color: AppColors.cFF7954, width: 3.w)),
                           indicatorWeight: 4,
                           controller: controller.tabController,
-                          tabs: controller.guessGamePlayers.keys
-                              .map((e) {
+                          tabs: controller.guessGamePlayers.keys.map((e) {
                             return Text(e.replaceAll(",", "+"));
                           }).toList()),
                     ),

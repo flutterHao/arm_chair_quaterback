@@ -54,7 +54,8 @@ class InboxDetailPage extends GetView<InboxController> {
                 title: title,
                 right: IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore),
               ),
-              bodyWidget: SingleChildScrollView(
+              bodyWidget: Expanded(
+                  child: SingleChildScrollView(
                 child: Column(
                   children: [
                     MeesageItems(
@@ -63,7 +64,7 @@ class InboxDetailPage extends GetView<InboxController> {
                     ),
                   ],
                 ),
-              ),
+              )),
               floatWidgets: [
                 Positioned(
                     bottom: 0,
@@ -90,7 +91,7 @@ class MeesageItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int teamLogo =
-        HomeController.to.userEntiry?.teamLoginInfo?.team?.teamLogo ?? 0;
+        HomeController.to.userEntiry.teamLoginInfo?.team?.teamLogo ?? 0;
     return Container(
       margin: EdgeInsets.only(top: 20.w, left: 16.w, right: 16.w),
       child: Column(
