@@ -1,12 +1,14 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -28,9 +30,9 @@ class GuessHistoryItem extends StatefulWidget {
   State<GuessHistoryItem> createState() => _GuessHistoryItemState();
 }
 
-class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBindingObserver {
-
-  late  ReciveAwardV2GuessInfo guessInfo;
+class _GuessHistoryItemState extends State<GuessHistoryItem>
+    with WidgetsBindingObserver {
+  late ReciveAwardV2GuessInfo guessInfo;
   late GuessHistoryItemController controller;
 
   @override
@@ -42,7 +44,7 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if(state == AppLifecycleState.resumed){
+    if (state == AppLifecycleState.resumed) {
       controller.startCountDown();
     }
   }
@@ -57,8 +59,7 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
   Widget build(BuildContext context) {
     guessInfo = widget.guessInfo;
     return GetBuilder<GuessHistoryItemController>(
-        init: controller =
-            GuessHistoryItemController(guessInfo),
+        init: controller = GuessHistoryItemController(guessInfo),
         tag: "${guessInfo.id}_${guessInfo.createTime}",
         builder: (logic) {
           return ClipRRect(
@@ -224,33 +225,38 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
     var bottom = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              controller.formatGameStartTime(item.gameStartTime),
-              style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.c000000,
-                  fontFamily: FontFamily.fRobotoRegular,
-                  height: 1),
-              // style: 10.w4(
-              //   color: AppColors
-              //       .c000000,
-              //   fontFamily: FontFamily
-              //       .fRobotoRegular,
-              //   height: 1,
-              // ),
-            ),
-            6.hGap,
-            IconWidget(
-              iconWidth: 5.w,
-              icon: Assets.commonUiCommonIconSystemJumpto,
-              iconColor: AppColors.c000000,
-            )
-          ],
+        MtInkWell(
+          onTap: ()=>Get.toNamed(RouteNames.leagueLeagueDetail,arguments: {
+            "gameId":item.gameId
+          }),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                controller.formatGameStartTime(item.gameStartTime),
+                style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.c000000,
+                    fontFamily: FontFamily.fRobotoRegular,
+                    height: 1),
+                // style: 10.w4(
+                //   color: AppColors
+                //       .c000000,
+                //   fontFamily: FontFamily
+                //       .fRobotoRegular,
+                //   height: 1,
+                // ),
+              ),
+              6.hGap,
+              IconWidget(
+                iconWidth: 5.w,
+                icon: Assets.commonUiCommonIconSystemJumpto,
+                iconColor: AppColors.c000000,
+              )
+            ],
+          ),
         ),
         Row(
           children: [
@@ -273,13 +279,13 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
     );
 
     if (item.type == 2) {
-      NbaTeamEntity homeTeamInfo;
+      NbaTeamEntity guessTeamInfo;
       NbaTeamEntity awayTeamInfo;
       if (item.guessChoice == item.homeTeamId) {
-        homeTeamInfo = Utils.getTeamInfo(item.homeTeamId);
+        guessTeamInfo = Utils.getTeamInfo(item.homeTeamId);
         awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
       } else {
-        homeTeamInfo = Utils.getTeamInfo(item.awayTeamId);
+        guessTeamInfo = Utils.getTeamInfo(item.awayTeamId);
         awayTeamInfo = Utils.getTeamInfo(item.homeTeamId);
       }
       return SizedBox(
@@ -288,10 +294,14 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
         child: Row(
           children: [
             13.hGap,
-            ImageWidget(
-              url: Utils.getTeamUrl(item.guessChoice),
-              width: 50.w,
-              height: 50.w,
+            MtInkWell(
+              onTap: () => Get.toNamed(RouteNames.teamDetailPage,
+                  arguments: guessTeamInfo.id),
+              child: ImageWidget(
+                url: Utils.getTeamUrl(item.guessChoice),
+                width: 50.w,
+                height: 50.w,
+              ),
             ),
             15.hGap,
             Expanded(
@@ -303,7 +313,7 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${homeTeamInfo.shortEname} WIN",
+                        "${guessTeamInfo.shortEname} WIN",
                         style: 14.w5(
                             color: AppColors.c000000,
                             height: 1,
@@ -314,7 +324,7 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
                   ),
                   6.vGap,
                   Text(
-                    "${homeTeamInfo.shortEname}${item.homeTeamScore == 0 ? "" : " ${item.homeTeamScore} "} @ ${item.awayTeamScore == 0 ? "" : " ${item.awayTeamScore}"} ${awayTeamInfo.shortEname}",
+                    "${guessTeamInfo.shortEname}${item.homeTeamScore == 0 ? "" : " ${item.homeTeamScore} "} @ ${item.awayTeamScore == 0 ? "" : " ${item.awayTeamScore}"} ${awayTeamInfo.shortEname}",
                     style: 10.w5(
                         color: AppColors.c000000,
                         height: 1,
@@ -452,14 +462,11 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
       );
     } else {
       if (item.type == 2) {
-        NbaTeamEntity teamInfo;
-        if (item.guessGameAttrValue == item.guessChoice) {
-          teamInfo = Utils.getTeamInfo(item.guessChoice);
-        } else {
-          teamInfo = Utils.getTeamInfo(item.awayTeamId);
-        }
+        NbaTeamEntity winTeamInfo = item.homeTeamScore > item.awayTeamScore
+            ? Utils.getTeamInfo(item.homeTeamId)
+            : Utils.getTeamInfo(item.awayTeamId);
         return Text(
-          "Result: ${teamInfo.shortEname} Win",
+          "Result: ${winTeamInfo.shortEname} Win",
           style: 14
               .w5(color: item.success ? AppColors.c0FA76C : AppColors.cE71629),
         );

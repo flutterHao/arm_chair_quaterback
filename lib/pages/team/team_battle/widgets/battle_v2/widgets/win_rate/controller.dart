@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';

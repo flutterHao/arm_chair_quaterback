@@ -118,9 +118,7 @@ class AppPages {
         case RouteNames.picksPicksHistory:
           PicksHistoryBinding().dependencies();
           return PicksHistoryPage(
-              tab: Get.arguments == null
-                  ? 0
-                  : int.parse("${Get.arguments['tab']}"));
+              tab: (Get.arguments??{})['tab']);
         case RouteNames.teamDetailPage:
           return const TeamDetailPage();
         case RouteNames.nbaRank:

@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
@@ -99,26 +100,24 @@ class PlayNotStartController extends GetxController
 
   timeCountDown() {
     _timer?.cancel();
-    var gameStartTimeMs = item.gameStartTime;
-    var nowMs = DateTime.now().millisecondsSinceEpoch;
-    var diff = gameStartTimeMs - nowMs;
-    if (diff <= 0) {
+    var duration = MyDateUtils.getDateTimeByMs(item.gameStartTime).difference(DateTime.now());
+    if (duration <= Duration.zero) {
       return;
     }
-    gameStartTimesCountDown.value = diff;
-    day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400000;
-    hh = gameStartTimesCountDown.value ~/ 1000 % 86400 ~/ 3600;
-    minute = gameStartTimesCountDown.value ~/ 1000 % 3600 ~/ 60;
-    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      var temp = gameStartTimesCountDown.value - 1000;
-      if (temp <= 0) {
+    day = duration.inDays;
+    hh = duration.inHours%60;
+    minute = duration.inMinutes%60;
+    gameStartTimesCountDown.value = duration.inMilliseconds;
+    _timer = Timer.periodic(const Duration(minutes: 1), (t) {
+      var duration = MyDateUtils.getDateTimeByMs(item.gameStartTime).difference(DateTime.now());
+      if (duration <= Duration.zero) {
         t.cancel();
-      } else {
-        gameStartTimesCountDown.value = temp;
-        day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400000;
-        hh = gameStartTimesCountDown.value ~/ 1000 % 86400 ~/ 3600;
-        minute = gameStartTimesCountDown.value ~/ 1000 % 3600 ~/ 60;
+        return;
       }
+      gameStartTimesCountDown.value = duration.inMilliseconds;
+      day = duration.inDays;
+      hh = duration.inHours%60;
+      minute = duration.inMinutes%60;
     });
   }
 

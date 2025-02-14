@@ -18,9 +18,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class PicksHistoryPage extends GetView<PicksHistoryController> {
-  const PicksHistoryPage({super.key, this.tab = 0});
+  const PicksHistoryPage({super.key, this.tab});
 
-  final int tab;
+  final int? tab;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
                 );
               }
               return DefaultTabController(
-                initialIndex: tab,
+                initialIndex: int.parse("${tab??0}"),
                 length: 2,
                 child: NestedScrollView(
                     headerSliverBuilder:
