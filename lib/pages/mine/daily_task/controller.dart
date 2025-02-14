@@ -399,7 +399,6 @@ class DailyTaskController extends GetxController
       } else {
         _startSpin(beforeTurnTableEntity, onEnd: () {
           /// 转盘转完之后再更新界面
-          update([idSlotPan]);
           onEnd?.call();
           turnTableEntity = result;
           outerWheelController.active(false);
@@ -426,6 +425,7 @@ class DailyTaskController extends GetxController
               rightScore.value = getRightScore();
             });
             Future.delayed(const Duration(seconds: 3), () {
+              update([idSlotPan]);
               centerPageController
                   ?.animateToPage(1,
                       duration: const Duration(milliseconds: 300),
@@ -441,6 +441,7 @@ class DailyTaskController extends GetxController
             showRandomReward.value = true;
           } else {
             isSpinBtnEnable.value = true;
+            update([idSlotPan]);
           }
         }, index: index);
       }
@@ -739,6 +740,7 @@ class DailyTaskController extends GetxController
 
   /// 随机奖励抽奖结束
   onRandomAwardEnd() {
+    update([idSlotPan]);
     isSpinBtnEnable.value = true;
   }
 

@@ -132,7 +132,8 @@ class _BottomTipDialogState extends State<_BottomTipDialog> {
       width: double.infinity,
       height: widget.height ?? 419.w,
       decoration: BoxDecoration(
-          color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
+          color: AppColors.cFFFFFF,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
       child: Column(
         children: [
           const DialogTopBtn(),
@@ -146,6 +147,7 @@ class _BottomTipDialogState extends State<_BottomTipDialog> {
           25.vGap,
           Text(
             widget.title ?? LangKey.gameTabSkip.tr,
+            textAlign: TextAlign.center,
             style: 27.w5(
                 color: AppColors.c000000,
                 height: 1,
@@ -240,62 +242,65 @@ class _BottomTipDialogState extends State<_BottomTipDialog> {
   }
 
   Widget horizontalBtnWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 167.w,
-          height: 51.w,
-          decoration: BoxDecoration(
-              color: widget.cancelBgColor,
-              borderRadius: BorderRadius.circular(9.w),
-              border: Border.all(
-                  color: widget.cancelBgColor != null
-                      ? AppColors.cTransparent
-                      : AppColors.c666666,
-                  width: 1.w)),
-          child: MtInkWell(
-            onTap: () {
-              SoundServices.to.playSound(Assets.soundClick);
-              widget.cancelTap != null ? widget.cancelTap!.call() : Get.back();
-            },
-            child: Center(
-              child: Text(
-                widget.cancelStr ?? "CANCEL",
-                style: 23.w5(
+    return Container(
+      margin: EdgeInsets.only(bottom: 9.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 167.w,
+            height: 51.w,
+            decoration: BoxDecoration(
+                color: widget.cancelBgColor,
+                borderRadius: BorderRadius.circular(9.w),
+                border: Border.all(
                     color: widget.cancelBgColor != null
-                        ? AppColors.cFFFFFF
-                        : AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium),
+                        ? AppColors.cTransparent
+                        : AppColors.c666666,
+                    width: 1.w)),
+            child: MtInkWell(
+              onTap: () {
+                SoundServices.to.playSound(Assets.soundClick);
+                widget.cancelTap != null ? widget.cancelTap!.call() : Get.back();
+              },
+              child: Center(
+                child: Text(
+                  widget.cancelStr ?? "CANCEL",
+                  style: 23.w5(
+                      color: widget.cancelBgColor != null
+                          ? AppColors.cFFFFFF
+                          : AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
               ),
             ),
           ),
-        ),
-        9.hGap,
-        Container(
-          width: 167.w,
-          height: 51.w,
-          decoration: BoxDecoration(
-              color: widget.confirmBtnColor ?? AppColors.c000000,
-              borderRadius: BorderRadius.circular(9.w)),
-          child: MtInkWell(
-            onTap: () {
-              SoundServices.to.playSound(Assets.soundClick);
-              widget.onTap.call();
-            },
-            child: Center(
-              child: Text(
-                widget.confirmStr ?? "CONFIRM",
-                style: 23.w5(
-                    color: AppColors.cF2F2F2,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium),
+          9.hGap,
+          Container(
+            width: 167.w,
+            height: 51.w,
+            decoration: BoxDecoration(
+                color: widget.confirmBtnColor ?? AppColors.c000000,
+                borderRadius: BorderRadius.circular(9.w)),
+            child: MtInkWell(
+              onTap: () {
+                SoundServices.to.playSound(Assets.soundClick);
+                widget.onTap.call();
+              },
+              child: Center(
+                child: Text(
+                  widget.confirmStr ?? "CONFIRM",
+                  style: 23.w5(
+                      color: AppColors.cF2F2F2,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

@@ -210,7 +210,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                           context: context,
                                           height: 384.w,
                                           btnDirection: Axis.horizontal,
-                                          centerWidget: 102.vGap,
+                                          centerWidget: const Expanded(child: SizedBox()),
                                           title: LangKey.dailyTaksTipsCAE.tr,
                                           desc: LangKey.dailyTaksTipsExit.tr,
                                           confirmStr:
