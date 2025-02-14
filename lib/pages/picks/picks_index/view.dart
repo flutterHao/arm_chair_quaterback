@@ -235,12 +235,16 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
         body: Builder(
           builder: (context) {
             if(controller.guessGamePlayers.isEmpty){
-              return Obx(() {
-                return Center(
-                    child: LoadStatusWidget(
-                      loadDataStatus: controller.loadStatusRx.value,
-                    ));
-              });
+              return SmartRefresher(
+                controller: controller.refreshController,
+                onRefresh: controller.loading,
+                child: Obx(() {
+                  return Center(
+                      child: LoadStatusWidget(
+                        loadDataStatus: controller.loadStatusRx.value,
+                      ));
+                }),
+              );
             }
             return ExtendedTabBarView(
                 cacheExtent: controller.guessGamePlayers.keys.length - 1,
