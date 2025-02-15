@@ -111,7 +111,8 @@ class _StatsTabState extends State<StatsTab>
                               var player =
                                   Utils.getPlayBaseInfo(first.playerId);
                               return RankCard(
-                                title: item.key,
+                                // title: item.key,
+                                title: Utils.getTeamStatsKey(item.key).tr,
                                 rankType: rankType,
                                 imageUrl: Utils.getPlayUrl(player.playerId),
                                 name: first.playerName,
@@ -124,7 +125,8 @@ class _StatsTabState extends State<StatsTab>
                                       backgroundColor: Colors.transparent,
                                       builder: (context) {
                                         return PlayerStatsDialog(
-                                          title: item.key,
+                                          title: Utils.getTeamStatsKey(item.key)
+                                              .tr,
                                           currentIdex: item.value["current"],
                                           types: item.value["list"],
                                           originList: controller.statPlayerList,

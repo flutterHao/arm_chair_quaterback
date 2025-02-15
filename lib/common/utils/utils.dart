@@ -523,6 +523,18 @@ class Utils {
     }
   }
 
+  static String getTeamStatsKey(String type) {
+    if (type == "POINTS") {
+      return LangKey.gameTabPoints;
+    } else if (type == "REBOUNDS") {
+      return LangKey.gameTabRebounds;
+    } else if (type == "ASSISTS") {
+      return LangKey.gameTabAssists;
+    } else {
+      return type;
+    }
+  }
+
   static String getPicksTabKey(String type) {
     if (type == "PTS") {
       return LangKey.gameNamePts;

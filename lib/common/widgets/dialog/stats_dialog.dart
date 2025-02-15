@@ -155,7 +155,7 @@ class _PlayerStatsDialogState extends State<PlayerStatsDialog>
                                         width: 219.w,
                                         padding: EdgeInsets.only(left: 40.w),
                                         child: Text(
-                                          "PLAYER",
+                                          LangKey.newsButtonTeam.tr,
                                           style: 12.w4(
                                             fontFamily:
                                                 FontFamily.fOswaldMedium,

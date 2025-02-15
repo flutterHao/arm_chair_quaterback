@@ -2,8 +2,10 @@ import 'package:get/get.dart';
 
 class NbaPlayerController extends GetxController {
   NbaPlayerController();
+  RxList nbaPlayerList = RxList();
 
-  _initData() {
+  initData() async {
+    nbaPlayerList.addAll([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     update(["nba_player"]);
   }
 
@@ -17,7 +19,7 @@ class NbaPlayerController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    _initData();
+    initData();
   }
 
   // @override

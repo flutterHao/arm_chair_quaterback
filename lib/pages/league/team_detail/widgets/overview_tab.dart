@@ -999,7 +999,7 @@ class _Stats extends StatelessWidget {
                       alignment: Alignment.center,
                       width: 71.w,
                       child: Text(
-                        "TYPE",
+                        LangKey.nbaTeamMeanStats.tr,
                         style: 12.w4(fontFamily: FontFamily.fRobotoMedium),
                       ),
                     ),
