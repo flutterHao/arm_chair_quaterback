@@ -434,7 +434,7 @@ class TeamIndexController extends GetxController
   Future scroToMatch() async {
     if (scrollController.offset != (479.w)) {
       await scrollController.animateTo(
-        479.w,
+        765.w,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );

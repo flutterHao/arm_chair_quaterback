@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-14 15:51:49
+ * @LastEditTime: 2025-02-15 16:15:37
  */
 import 'dart:math';
 
@@ -141,7 +141,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                     top: 72.w,
                     right: 5.w,
                     child: Image.asset(
-                      Assets.managerUiManagerIcon002,
+                      Assets.managerUiManagerIcon001,
                       width: 41.w,
                       fit: BoxFit.fitWidth,
                     ),

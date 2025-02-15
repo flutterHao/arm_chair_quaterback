@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-02-15 11:43:22
+ * @LastEditTime: 2025-02-15 15:54:03
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
@@ -42,7 +43,7 @@ class MyTeamWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            24.vGap,
+            24.5.vGap,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 16.w),
               alignment: Alignment.centerLeft,
@@ -58,342 +59,365 @@ class MyTeamWidget extends StatelessWidget {
                 ],
               ),
             ),
-            34.vGap,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 124.w,
-                  height: 108.w,
-                  padding:
-                      EdgeInsets.only(top: 14.5.w, left: 15.w, bottom: 18.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      border: Border.all(
-                        width: 1,
-                        color: AppColors.c666666,
-                      )),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        // LangKey.teamTabTeamPower.tr,
-                        "Total power",
-                        style: 14.w4(
-                          fontFamily: FontFamily.fRobotoRegular,
-                          height: 0.8,
-                        ),
-                      ),
-                      Expanded(child: Container()),
-                      Text(
-                        "${ctrl.myTeamEntity.oVR}",
-                        style: 30.w4(
-                          fontFamily: FontFamily.fOswaldMedium,
-                          height: 0.8,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                9.hGap,
-                Container(
-                  width: 210.w,
-                  height: 108.w,
-                  padding:
-                      EdgeInsets.only(top: 14.5.w, left: 15.w, right: 14.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      border: Border.all(
-                        width: 1,
-                        color: AppColors.c666666,
-                      )),
-                  child: GetBuilder<IllustratiionsController>(
-                      init: IllustratiionsController(),
-                      id: "list",
-                      builder: (iCtrl) {
-                        int count = iCtrl.playerCollectEntity.collects
-                            .where((e) => e.isLight == 1)
-                            .length;
-                        int compCount = iCtrl.playerCollectEntity.collects
-                            .where((e) => e.fragmentNum >= e.needNum)
-                            .length;
-                        return InkWell(
-                          onTap: () {
-                            TeamIndexController ctrl = Get.find();
-                            ctrl.goToIllustraction();
-                            Get.toNamed(RouteNames.illustrationPage);
-                            iCtrl.reset();
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(top: 2.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            34.5.vGap,
+            SizedBox(
+              width: double.infinity,
+              height: 185.5.w,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  ///工资帽背景
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      width: double.infinity,
+                      height: 109.5.w,
+                      color: AppColors.c333333,
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned(
+                            bottom: 0,
+                            child: Stack(
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Archive",
-                                      style: 14.w4(
-                                        fontFamily: FontFamily.fRobotoRegular,
-                                        height: 0.8,
-                                      ),
-                                    ),
-                                    5.5.vGap,
-                                    if (compCount > 0)
-                                      Container(
-                                        height: 16.w,
-                                        // width: 24.w,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 6.w, vertical: 3),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8.w),
-                                          color: AppColors.cE34D4D,
-                                        ),
-                                        child: Text(
-                                          "+${compCount > 99 ? 99 : compCount}",
-                                          style: 10.w4(
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium,
-                                              height: 0.75,
-                                              color: AppColors.cFFFFFF),
-                                        ),
-                                      ),
-                                    Expanded(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          AnimatedNum(
-                                            number: count,
-                                            milliseconds: 1000,
-                                            textStyle: 24.w4(
-                                                height: 1,
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium),
-                                          ),
-                                          SizedBox(height: 4.h),
-                                          Text(
-                                            "/${CacheApi.playerBookRuleList.length}",
-                                            style: 16.w4(
-                                                height: 1,
-                                                fontFamily:
-                                                    FontFamily.fOswaldRegular),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    19.vGap,
-                                  ],
-                                ),
-                                const Expanded(child: SizedBox.shrink()),
-                                Container(
-                                  margin: EdgeInsets.only(top: 3.w),
-                                  child: Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: [
-                                      Image.asset(
-                                        width: 56.w,
-                                        height: 75.5.w,
-                                        Assets.managerUiManagerIconArchive,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      Positioned(
-                                          top: 51.5.w,
-                                          child: Text(
-                                            "NBA",
-                                            style: 19.w4(
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium,
-                                              height: 0.8,
-                                              color: AppColors.cE34D4D,
-                                            ),
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                                9.5.hGap,
-                                Image.asset(
-                                  width: 14.w,
-                                  Assets.iconUiIconRead,
-                                  color: AppColors.c000000,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-              ],
-            ),
-            14.vGap,
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.w),
-              color: AppColors.c666666.withOpacity(0.3),
-              height: 1.w,
-            ),
-            9.vGap,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                28.5.hGap,
-                Expanded(
-                  flex: 194,
-                  child: Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 4.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
+                                // 描边
                                 Text(
                                   LangKey.gameMeanSalaryCap.tr,
-                                  style: 12.w4(
-                                      color: AppColors.c000000,
-                                      fontFamily: FontFamily.fRobotoRegular,
-                                      height: 0.9),
-                                ),
-                              ],
-                            ),
-                            6.5.vGap,
-                            // const Expanded(child: SizedBox.shrink()),
-                            Row(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    AnimatedNum(
-                                      number: ctrl.myTeamEntity.salary,
-                                      isMoney: true,
-                                      milliseconds: 1000,
-                                      textStyle: 19.w4(
-                                          height: 0.75,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                    SizedBox(height: 4.h),
-                                    Text(
-                                      "/${Utils.formatMoney(ctrl.myTeamEntity.salaryCap)}",
-                                      style: 14.w4(
-                                          height: 0.9,
-                                          fontFamily:
-                                              FontFamily.fOswaldRegular),
-                                    ),
-                                  ],
-                                ),
-                                9.5.hGap,
-                                SizedBox(
-                                  width: 71.w,
-                                  child: Stack(
-                                    children: [
-                                      CustomLinearProgressBar(
-                                          width: 71.w,
-                                          height: 6.w,
-                                          progressColor: ctrl
-                                                      .myTeamEntity.salary >
-                                                  ctrl.myTeamEntity.salaryCap
-                                              ? AppColors.cD60D20
-                                              : AppColors.c000000,
-                                          backgroundColor: AppColors.cFFFFFF,
-                                          progress: ctrl.myTeamEntity.salary /
-                                              ctrl.myTeamEntity.salaryCap),
-                                      Container(
-                                        width: 71.w,
-                                        height: 6.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(3.w),
-                                            border: Border.all(
-                                                width: 0.5,
-                                                color: AppColors.c666666)),
+                                  style: 80
+                                      .w4(
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                        color: Colors.transparent,
                                       )
-                                    ],
-                                  ),
+                                      .copyWith(
+                                          foreground: Paint()
+                                            ..style = PaintingStyle.stroke
+                                            ..strokeWidth = 1
+                                            ..color = AppColors.c474747,
+                                          height: 1),
                                 ),
+                                // 填充文字
+                                Text(LangKey.gameMeanSalaryCap.tr,
+                                    style: 80.w4(
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                        color: Colors.transparent,
+                                        height: 1)),
                               ],
-                            ),
-
-                            10.vGap,
-                          ],
-                        ),
-                      ),
-                      if (ctrl.myTeamEntity.salary >
-                              ctrl.myTeamEntity.salaryCap &&
-                          ctrl.current.value == 0)
-                        Positioned(
-                          top: 0.w,
-                          left: 90.w,
-                          child: Container(
-                            width: 32.w,
-                            // height: 16.5.w,
-                            padding: EdgeInsets.symmetric(vertical: 2.w),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: AppColors.cD60D20,
-                                borderRadius: BorderRadius.circular(4.w)),
-                            child: Text(
-                              "MAX",
-                              style: 12.w4(
-                                  color: AppColors.cFFFFFF,
-                                  fontFamily: FontFamily.fOswaldMedium,
-                                  height: 1),
                             ),
                           ),
-                        )
-                    ],
+
+                          ///工资帽数字
+                          Positioned(
+                            top: 53.w,
+                            left: 28.5.w,
+                            right: 38.w,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    LangKey.gameMeanSalaryCap.tr,
+                                    style: 14.w4(
+                                        color: AppColors.cFFFFFF,
+                                        fontFamily: FontFamily.fRobotoRegular,
+                                        height: 0.8),
+                                  ),
+                                ),
+                                AnimatedNum(
+                                  number: ctrl.myTeamEntity.salary,
+                                  isMoney: true,
+                                  milliseconds: 1000,
+                                  textStyle: 21.w4(
+                                      height: 0.8,
+                                      color: AppColors.cFFFFFF,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  " /${Utils.formatMoney(ctrl.myTeamEntity.salaryCap)}",
+                                  style: 16.w4(
+                                      height: 0.8,
+                                      color: AppColors.cFFFFFF,
+                                      fontFamily: FontFamily.fOswaldRegular),
+                                ),
+                              ],
+                            ),
+                          ),
+                          6.5.vGap,
+                          // const Expanded(child: SizedBox.shrink()),
+                          ///工资帽进度
+
+                          Positioned(
+                            top: 79.w,
+                            left: 27.w,
+                            right: 27.w,
+                            child: Stack(
+                              alignment: Alignment.centerLeft,
+                              children: [
+                                Container(
+                                  width: 321.w,
+                                  height: 9.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.w),
+                                    color: AppColors.c666666,
+                                    border: Border.all(
+                                        width: 0.5, color: AppColors.cB3B3B3),
+                                  ),
+                                ),
+                                CustomLinearProgressBar(
+                                    width: 321.w,
+                                    height: 9.w,
+                                    progressColor: (ctrl.myTeamEntity.salary /
+                                                ctrl.myTeamEntity.salaryCap) >
+                                            0.01
+                                        ? AppColors.cE34D4D
+                                        : AppColors.cFFFFFF,
+                                    // border: AppColors.cFFFFFF,
+                                    backgroundColor: AppColors.cTransparent,
+                                    progress: ctrl.myTeamEntity.salary /
+                                        ctrl.myTeamEntity.salaryCap),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                Container(width: 1, height: 42.w, color: AppColors.cD1D1D1),
-                23.5.hGap,
-              ],
+
+                  ///战力值+图鉴
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 124.w,
+                          height: 108.w,
+                          padding: EdgeInsets.only(
+                              top: 14.5.w, left: 15.w, bottom: 18.w),
+                          decoration: BoxDecoration(
+                              color: AppColors.cFFFFFF,
+                              borderRadius: BorderRadius.circular(9.w),
+                              border: Border.all(
+                                width: 1,
+                                color: AppColors.c666666,
+                              )),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                // LangKey.teamTabTeamPower.tr,
+                                "Total power",
+                                style: 14.w4(
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                  height: 0.8,
+                                ),
+                              ),
+                              Expanded(child: Container()),
+                              Text(
+                                "${ctrl.myTeamEntity.oVR}",
+                                style: 30.w4(
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                  height: 0.8,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        9.hGap,
+                        Container(
+                          width: 210.w,
+                          height: 108.w,
+                          padding: EdgeInsets.only(
+                              top: 14.5.w, left: 15.w, right: 14.w),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(9.w),
+                              color: AppColors.cFFFFFF,
+                              border: Border.all(
+                                width: 1,
+                                color: AppColors.c666666,
+                              )),
+                          child: GetBuilder<IllustratiionsController>(
+                              init: IllustratiionsController(),
+                              id: "list",
+                              builder: (iCtrl) {
+                                int count = iCtrl.playerCollectEntity.collects
+                                    .where((e) => e.isLight == 1)
+                                    .length;
+                                int compCount = iCtrl
+                                    .playerCollectEntity.collects
+                                    .where((e) => e.fragmentNum >= e.needNum)
+                                    .length;
+                                return InkWell(
+                                  onTap: () {
+                                    TeamIndexController ctrl = Get.find();
+                                    ctrl.goToIllustraction();
+                                    Get.toNamed(RouteNames.illustrationPage);
+                                    iCtrl.reset();
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 2.w),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Archive",
+                                              style: 14.w4(
+                                                fontFamily:
+                                                    FontFamily.fRobotoRegular,
+                                                height: 0.8,
+                                              ),
+                                            ),
+                                            5.5.vGap,
+                                            if (compCount > 0)
+                                              Container(
+                                                height: 16.w,
+                                                // width: 24.w,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 6.w,
+                                                    vertical: 3),
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.w),
+                                                  color: AppColors.cE34D4D,
+                                                ),
+                                                child: Text(
+                                                  "+${compCount > 99 ? 99 : compCount}",
+                                                  style: 10.w4(
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                      height: 0.75,
+                                                      color: AppColors.cFFFFFF),
+                                                ),
+                                              ),
+                                            Expanded(
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  AnimatedNum(
+                                                    number: count,
+                                                    milliseconds: 1000,
+                                                    textStyle: 24.w4(
+                                                        height: 1,
+                                                        fontFamily: FontFamily
+                                                            .fOswaldMedium),
+                                                  ),
+                                                  SizedBox(height: 4.h),
+                                                  Text(
+                                                    "/${CacheApi.playerBookRuleList.length}",
+                                                    style: 16.w4(
+                                                        height: 1,
+                                                        fontFamily: FontFamily
+                                                            .fOswaldRegular),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            19.vGap,
+                                          ],
+                                        ),
+                                        const Expanded(
+                                            child: SizedBox.shrink()),
+                                        Container(
+                                          margin: EdgeInsets.only(top: 3.w),
+                                          child: Stack(
+                                            alignment: Alignment.topCenter,
+                                            children: [
+                                              Image.asset(
+                                                width: 56.w,
+                                                height: 75.5.w,
+                                                Assets
+                                                    .managerUiManagerIconArchive,
+                                                fit: BoxFit.fill,
+                                              ),
+                                              Positioned(
+                                                  top: 51.5.w,
+                                                  child: Text(
+                                                    "NBA",
+                                                    style: 19.w4(
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                      height: 0.8,
+                                                      color: AppColors.cE34D4D,
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        9.5.hGap,
+                                        Image.asset(
+                                          width: 14.w,
+                                          Assets.iconUiIconRead,
+                                          color: AppColors.c000000,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             Container(
               width: 367.w,
-              height: 330.w,
-              margin: EdgeInsets.only(top: 18.w),
+              height: 369.w,
+              margin: EdgeInsets.only(top: 4.w),
               decoration: const BoxDecoration(
                 image: DecorationImage(
+                  alignment: Alignment.topCenter,
                   image: AssetImage(Assets.managerUiManagerMyteamBg),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
                   Positioned(
-                    top: 16.w,
+                    top: 35.5.w,
                     child: PlayerCardWidget(
                         teamPlayers: ctrl.myTeamEntity.teamPlayers,
                         position: 1),
                   ),
                   Positioned(
-                    top: 61.w,
+                    top: 80.5.w,
                     left: 27.w,
                     child: PlayerCardWidget(
                         teamPlayers: ctrl.myTeamEntity.teamPlayers,
                         position: 2),
                   ),
                   Positioned(
-                    top: 61.w,
+                    top: 80.5.w,
                     right: 27.w,
                     child: PlayerCardWidget(
                         teamPlayers: ctrl.myTeamEntity.teamPlayers,
                         position: 3),
                   ),
                   Positioned(
-                    top: 198.w,
+                    top: 213.w,
                     left: 87.w,
                     child: PlayerCardWidget(
                         teamPlayers: ctrl.myTeamEntity.teamPlayers,
                         position: 4),
                   ),
                   Positioned(
-                    top: 198.w,
+                    top: 213.w,
                     right: 87.w,
                     child: PlayerCardWidget(
                         teamPlayers: ctrl.myTeamEntity.teamPlayers,
@@ -402,21 +426,11 @@ class MyTeamWidget extends StatelessWidget {
                 ],
               ),
             ),
-            20.vGap,
+            // 20.vGap,
             MtInkWell(
               vibrate: true,
               minScale: 0.8,
               onTap: () {
-                // Get.toNamed(RouteNames.teamMemberPage,
-                //     id: GlobalNestedKey.TEAM);
-                // BottomTipDialog.showWithSound(
-                //     barrierColor: Colors.transparent,
-                //     backgroundColor: Colors.transparent,
-                //     isScrollControlled: true,
-                //     context: context,
-                //     builder: (context) {
-                //       return VerticalDragBackWidget(child: TeamMenberView());
-                //     });
                 Get.toNamed(RouteNames.teamMemberPage);
               },
               child: Container(
@@ -487,19 +501,52 @@ class PlayerCardWidget extends GetView<TeamController> {
           Utils.getPlayBaseInfo(player.playerId).ename,
           style: 12.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.75),
         ),
+        2.5.vGap,
+        PlayerStartWidget(grade: player.breakThroughGrade + 5),
         4.5.vGap,
-        OutLineProgressWidget(
-          width: 68.w,
-          height: 6.w,
-          progress: player.power / 100,
-          progressColor: Utils.getProgressColor(player.power),
-        ),
-        3.5.vGap,
         Text(
           Utils.getPlayBaseInfo(player.playerId).position,
           style: 10.w4(fontFamily: FontFamily.fRobotoRegular, height: 0.75),
         ),
       ],
+    );
+  }
+}
+
+class PlayerStartWidget extends StatelessWidget {
+  const PlayerStartWidget({super.key, required this.grade});
+  final int grade;
+
+  @override
+  Widget build(BuildContext context) {
+    int count = grade ~/ 2;
+    int half = grade % 2;
+    return SizedBox(
+      width: 55.w,
+      height: 18.5.w,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          for (int i = 0; i < count; i++)
+            Positioned(
+              left: 8.w * i,
+              child: Image.asset(
+                Assets.managerUiManagerIconStar,
+                height: 18.5.w,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+          if (half == 1)
+            Positioned(
+              left: 8.w * count,
+              child: Image.asset(
+                Assets.managerUiManagerIconStar01,
+                height: 18.5.w,
+                fit: BoxFit.fitHeight,
+              ),
+            )
+        ],
+      ),
     );
   }
 }

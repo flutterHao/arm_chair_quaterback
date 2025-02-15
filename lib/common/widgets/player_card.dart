@@ -2,7 +2,7 @@
  * @Description: 球员头像卡片
  * @Author: lihonghao
  * @Date: 2024-11-18 12:23:44
- * @LastEditTime: 2025-01-08 19:20:30
+ * @LastEditTime: 2025-02-15 15:32:16
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -79,27 +79,27 @@ class PlayerCard extends StatelessWidget {
                   ),
                 ),
               ),
-            Positioned(
-              top: 4.w,
-              right: 4.w,
-              child: Container(
-                width: 16.w,
-                height: 16.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4.w),
-                    color: AppColors.cF2F2F2),
-                child: IconWidget(
-                  iconWidth: 10.w,
-                  icon: Assets.iconUiIconRead,
-                  iconColor: AppColors.c262626,
-                ),
-              ),
-            ),
+            // Positioned(
+            //   top: 4.w,
+            //   right: 4.w,
+            //   child: Container(
+            //     width: 16.w,
+            //     height: 16.w,
+            //     alignment: Alignment.center,
+            //     decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4.w),
+            //         color: AppColors.cF2F2F2),
+            //     child: IconWidget(
+            //       iconWidth: 10.w,
+            //       icon: Assets.iconUiIconRead,
+            //       iconColor: AppColors.c262626,
+            //     ),
+            //   ),
+            // ),
             if (!ObjectUtil.isEmpty(status))
               Positioned(
-                  top: 23.5.w,
-                  left: 2.5.w,
+                  top: 2.5.w,
+                  right: 2.5.w,
                   child: Column(
                     children: [
                       IconWidget(

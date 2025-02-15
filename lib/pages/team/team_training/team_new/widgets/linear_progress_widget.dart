@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2025-02-14 18:56:21
+ * @LastEditTime: 2025-02-15 14:32:30
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -112,6 +112,7 @@ class OutLineProgressWidget extends StatelessWidget {
     this.progressColor1,
     required this.progressColor,
     this.border,
+    this.backgroundColor,
   });
   final double width;
   final double height;
@@ -119,6 +120,7 @@ class OutLineProgressWidget extends StatelessWidget {
   final Color? progressColor1;
   final Color progressColor;
   final Border? border;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +137,7 @@ class OutLineProgressWidget extends StatelessWidget {
               width: width,
               height: height,
               decoration: BoxDecoration(
+                color: backgroundColor ?? Colors.transparent,
                 border: border ?? Border.all(color: AppColors.cD1D1D1),
                 borderRadius: BorderRadius.circular(height / 2),
               ),
