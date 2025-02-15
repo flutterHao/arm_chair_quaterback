@@ -550,4 +550,65 @@ class Utils {
       return type;
     }
   }
+
+  static String getStatsPlayerRankKey(String type) {
+    Map<String, Map<String, dynamic>> statsPlayerRankMap = {
+      "POINTS": {
+        "current": 1,
+        "list": ["GP_MIN", "PPG_PTS", "FG%_FGM", "3P%_3PM", "FT_FTM"]
+      },
+      "REBOUNDS": {
+        "current": 1,
+        "list": ["GP_MIN", "RPG_REB", "DREB_OREB"]
+      },
+      "ASSISTS": {
+        "current": 1,
+        "list": ["GP_MIN", "APG_AST", "TPG_TO", "FPG_FOUL"]
+      },
+    };
+    switch (type) {
+      // case "GP":
+      //   return LangKey.gameNamePts;
+      // case "MIN":
+      //   return LangKey.gameNamePts;
+      case "PPG":
+        return LangKey.nbaTeamNamePpg;
+      case "PTS":
+        return LangKey.gameNamePts;
+      case "FG%":
+        return LangKey.gameMeanFgp;
+      case "FGM":
+        return LangKey.gameNameFgm;
+      // case "3P%":
+      //   return LangKey.gameNamePts;
+      case "3PM":
+        return LangKey.gameNameTgm;
+      // case "FT":
+      //   return LangKey.gameNamePts;
+      case "FTM":
+        return LangKey.gameNameFtm;
+      case "RPG":
+        return LangKey.nbaTeamNameRpg;
+      case "REB":
+        return LangKey.gameNameReb;
+      // case "DREB":
+      //   return LangKey.gameNamePts;
+      // case "OREB":
+      //   return LangKey.gameNamePts;
+      case "APG":
+        return LangKey.nbaTeamNameApg;
+      // case "AST":
+      //   return LangKey.gameNamePts;
+      // case "TPG":
+      //   return LangKey.gameNamePts;
+      // case "TO":
+      //   return LangKey.gameNamePts;
+      // case "FPG":
+      //   return LangKey.gameNamePts;
+      case "FOUL":
+        return LangKey.gameNameFoul;
+      default:
+        return type;
+    }
+  }
 }

@@ -535,7 +535,7 @@ class _SlotButton extends StatelessWidget {
                         Border.all(width: 12.5.w, color: AppColors.cF2F2F2)),
                 child: Opacity(
                   opacity: controller.isPlaying.value ? 0.5 : 1,
-                  child: Container(
+                  child: SizedBox(
                     width: 104.5.w,
                     height: 104.5.w,
                     child: Stack(

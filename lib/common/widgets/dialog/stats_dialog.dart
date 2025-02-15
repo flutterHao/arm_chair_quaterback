@@ -108,9 +108,11 @@ class _PlayerStatsDialogState extends State<PlayerStatsDialog>
                                             BorderRadius.circular(14.w)),
                                     child: Center(
                                         child: Text(
-                                            widget.types[index]
-                                                .split("_")
-                                                .first,
+                                            Utils.getStatsPlayerRankKey(widget
+                                                    .types[index]
+                                                    .split("_")
+                                                    .first)
+                                                .tr,
                                             style: 13.w4(
                                               fontFamily: current == index
                                                   ? FontFamily.fOswaldMedium
