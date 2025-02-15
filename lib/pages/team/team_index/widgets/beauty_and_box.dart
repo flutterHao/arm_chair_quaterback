@@ -35,49 +35,49 @@ class BeautyAndBoxView extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Positioned(
-              top: -15.w,
-              left: -25.w,
-              child: ShaderMask(
-                shaderCallback: (Rect bounds) {
-                  return LinearGradient(
-                    begin: Alignment.center,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.white.withOpacity(1),
-                      Colors.white.withOpacity(0.1),
-                    ],
-                  ).createShader(bounds);
-                },
-                child: Text(
-                  "cheerleaders".toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 121.sp,
-                      letterSpacing: 0,
-                      // color: AppColors.c262626,
-                      color: Color(beautyCtrl.currentGirl.bgColor),
-                      height: 0.95,
-                      fontFamily: FontFamily.fOswaldBold),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 32.h,
-              left: 0,
-              right: 0,
-              child: Container(
-                color: AppColors.cF2F2F2,
-                height: 30.w,
-                alignment: Alignment.center,
-                child: Text(
-                  "cheerleaders".toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 21.sp,
-                      letterSpacing: 18,
-                      fontFamily: FontFamily.fOswaldBold),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   top: -15.w,
+            //   left: -25.w,
+            //   child: ShaderMask(
+            //     shaderCallback: (Rect bounds) {
+            //       return LinearGradient(
+            //         begin: Alignment.center,
+            //         end: Alignment.bottomCenter,
+            //         colors: [
+            //           Colors.white.withOpacity(1),
+            //           Colors.white.withOpacity(0.1),
+            //         ],
+            //       ).createShader(bounds);
+            //     },
+            //     child: Text(
+            //       "cheerleaders".toUpperCase(),
+            //       style: TextStyle(
+            //           fontSize: 121.sp,
+            //           letterSpacing: 0,
+            //           // color: AppColors.c262626,
+            //           color: Color(beautyCtrl.currentGirl.bgColor),
+            //           height: 0.95,
+            //           fontFamily: FontFamily.fOswaldBold),
+            //     ),
+            //   ),
+            // ),
+            // Positioned(
+            //   top: 32.h,
+            //   left: 0,
+            //   right: 0,
+            //   child: Container(
+            //     color: AppColors.cF2F2F2,
+            //     height: 30.w,
+            //     alignment: Alignment.center,
+            //     child: Text(
+            //       "cheerleaders".toUpperCase(),
+            //       style: TextStyle(
+            //           fontSize: 21.sp,
+            //           letterSpacing: 18,
+            //           fontFamily: FontFamily.fOswaldBold),
+            //     ),
+            //   ),
+            // ),
 
             ///妹子
             Positioned(

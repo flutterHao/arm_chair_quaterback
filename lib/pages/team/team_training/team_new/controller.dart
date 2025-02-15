@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -513,6 +514,15 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         builder: (context) {
           return const RecoverDialog();
         });
+  }
+
+  CupDefineEntity getCurrentCup() {
+    for (int i = 0; i < CacheApi.cupDefineList.length; i++) {
+      if (CacheApi.cupDefineList[i].substituteSum > myTeamEntity.benchCount) {
+        return CacheApi.cupDefineList[i];
+      }
+    }
+    return CupDefineEntity();
   }
 
   int getLockCup() {

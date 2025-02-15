@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-02-11 20:22:31
+ * @LastEditTime: 2025-02-15 11:43:22
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -30,7 +30,6 @@ class MyTeamWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<int> statusList = [106, 105, 104, 103, 102, 101];
     return GetBuilder<TeamController>(
         // init: TeamController(),
         builder: (ctrl) {
@@ -43,7 +42,7 @@ class MyTeamWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            19.vGap,
+            24.vGap,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 16.w),
               alignment: Alignment.centerLeft,
@@ -59,28 +58,176 @@ class MyTeamWidget extends StatelessWidget {
                 ],
               ),
             ),
-            19.vGap,
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 29.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    LangKey.teamTabTeamPower.tr,
-                    style: 16.w4(
-                      fontFamily: FontFamily.fOswaldMedium,
-                      height: 0.75,
-                    ),
+            34.vGap,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 124.w,
+                  height: 108.w,
+                  padding:
+                      EdgeInsets.only(top: 14.5.w, left: 15.w, bottom: 18.w),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      border: Border.all(
+                        width: 1,
+                        color: AppColors.c666666,
+                      )),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        // LangKey.teamTabTeamPower.tr,
+                        "Total power",
+                        style: 14.w4(
+                          fontFamily: FontFamily.fRobotoRegular,
+                          height: 0.8,
+                        ),
+                      ),
+                      Expanded(child: Container()),
+                      Text(
+                        "${ctrl.myTeamEntity.oVR}",
+                        style: 30.w4(
+                          fontFamily: FontFamily.fOswaldMedium,
+                          height: 0.8,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "${ctrl.myTeamEntity.oVR}",
-                    style: 16.w4(
-                      fontFamily: FontFamily.fOswaldMedium,
-                      height: 0.75,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                9.hGap,
+                Container(
+                  width: 210.w,
+                  height: 108.w,
+                  padding:
+                      EdgeInsets.only(top: 14.5.w, left: 15.w, right: 14.w),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      border: Border.all(
+                        width: 1,
+                        color: AppColors.c666666,
+                      )),
+                  child: GetBuilder<IllustratiionsController>(
+                      init: IllustratiionsController(),
+                      id: "list",
+                      builder: (iCtrl) {
+                        int count = iCtrl.playerCollectEntity.collects
+                            .where((e) => e.isLight == 1)
+                            .length;
+                        int compCount = iCtrl.playerCollectEntity.collects
+                            .where((e) => e.fragmentNum >= e.needNum)
+                            .length;
+                        return InkWell(
+                          onTap: () {
+                            TeamIndexController ctrl = Get.find();
+                            ctrl.goToIllustraction();
+                            Get.toNamed(RouteNames.illustrationPage);
+                            iCtrl.reset();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: 2.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Archive",
+                                      style: 14.w4(
+                                        fontFamily: FontFamily.fRobotoRegular,
+                                        height: 0.8,
+                                      ),
+                                    ),
+                                    5.5.vGap,
+                                    if (compCount > 0)
+                                      Container(
+                                        height: 16.w,
+                                        // width: 24.w,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 6.w, vertical: 3),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.w),
+                                          color: AppColors.cE34D4D,
+                                        ),
+                                        child: Text(
+                                          "+${compCount > 99 ? 99 : compCount}",
+                                          style: 10.w4(
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium,
+                                              height: 0.75,
+                                              color: AppColors.cFFFFFF),
+                                        ),
+                                      ),
+                                    Expanded(
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          AnimatedNum(
+                                            number: count,
+                                            milliseconds: 1000,
+                                            textStyle: 24.w4(
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium),
+                                          ),
+                                          SizedBox(height: 4.h),
+                                          Text(
+                                            "/${CacheApi.playerBookRuleList.length}",
+                                            style: 16.w4(
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fOswaldRegular),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    19.vGap,
+                                  ],
+                                ),
+                                const Expanded(child: SizedBox.shrink()),
+                                Container(
+                                  margin: EdgeInsets.only(top: 3.w),
+                                  child: Stack(
+                                    alignment: Alignment.topCenter,
+                                    children: [
+                                      Image.asset(
+                                        width: 56.w,
+                                        height: 75.5.w,
+                                        Assets.managerUiManagerIconArchive,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      Positioned(
+                                          top: 51.5.w,
+                                          child: Text(
+                                            "NBA",
+                                            style: 19.w4(
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium,
+                                              height: 0.8,
+                                              color: AppColors.cE34D4D,
+                                            ),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                                9.5.hGap,
+                                Image.asset(
+                                  width: 14.w,
+                                  Assets.iconUiIconRead,
+                                  color: AppColors.c000000,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
             ),
             14.vGap,
             Container(
@@ -170,6 +317,7 @@ class MyTeamWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
+
                             10.vGap,
                           ],
                         ),
@@ -201,113 +349,6 @@ class MyTeamWidget extends StatelessWidget {
                   ),
                 ),
                 Container(width: 1, height: 42.w, color: AppColors.cD1D1D1),
-                Expanded(
-                    flex: 148,
-                    child: GetBuilder<IllustratiionsController>(
-                        init: IllustratiionsController(),
-                        id: "list",
-                        builder: (iCtrl) {
-                          int count = iCtrl.playerCollectEntity.collects
-                              .where((e) => e.isLight == 1)
-                              .length;
-                          int compCount = iCtrl.playerCollectEntity.collects
-                              .where((e) => e.fragmentNum >= e.needNum)
-                              .length;
-                          return InkWell(
-                            onTap: () {
-                              TeamIndexController ctrl = Get.find();
-                              ctrl.goToIllustraction();
-                              Get.toNamed(RouteNames.illustrationPage);
-                              iCtrl.reset();
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 2.w),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  5.5.hGap,
-                                  SizedBox(
-                                    width: 40.w,
-                                    height: 40,
-                                    child: Stack(
-                                      children: [
-                                        IconWidget(
-                                            iconWidth: 31.5.w,
-                                            icon: Assets
-                                                .managerUiManagerIconArchive),
-                                        Positioned(
-                                            left: 0,
-                                            top: 0,
-                                            child: Container(
-                                              width: 16.w,
-                                              height: 16.w,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.w),
-                                                  color: AppColors.cFF7954),
-                                              child: Text(
-                                                "${compCount > 99 ? 99 : compCount}",
-                                                style: 10.w4(
-                                                    fontFamily: FontFamily
-                                                        .fOswaldMedium,
-                                                    height: 1,
-                                                    color: AppColors.cFFFFFF),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  7.hGap,
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        LangKey.gameMeanPlayerDate.tr,
-                                        style: 12.w4(
-                                            fontFamily:
-                                                FontFamily.fRobotoRegular,
-                                            height: 0.9),
-                                      ),
-                                      6.5.vGap,
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          AnimatedNum(
-                                            number: count,
-                                            milliseconds: 1000,
-                                            textStyle: 19.w4(
-                                                height: 0.75,
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium),
-                                          ),
-                                          SizedBox(height: 4.h),
-                                          Text(
-                                            "/${CacheApi.playerBookRuleList.length}",
-                                            style: 14.w4(
-                                                height: 0.9,
-                                                fontFamily:
-                                                    FontFamily.fOswaldRegular),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const Expanded(child: SizedBox.shrink()),
-                                  IconWidget(
-                                    iconWidth: 14.w,
-                                    icon: Assets.iconUiIconArrows04,
-                                    iconColor: AppColors.c000000,
-                                    rotateAngle: -90,
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        })),
                 23.5.hGap,
               ],
             ),

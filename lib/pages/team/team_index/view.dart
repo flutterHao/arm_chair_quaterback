@@ -2,12 +2,14 @@
  * @Description: TrainingNewWidget
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-12 11:46:00
+ * @LastEditTime: 2025-02-15 11:53:41
  */
 
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/beauty_and_box.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/match_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
@@ -119,9 +121,10 @@ class _TeamView extends GetView<TeamIndexController> {
             child: const Column(
               children: [
                 TrainingNewWidget(),
-                BeautyAndBoxView(),
+                BattleBoxWidget(),
                 MatchCard(),
                 // TrainingPage(),
+                NbaPlayerPage(),
                 MyTeamWidget(),
               ],
             ),

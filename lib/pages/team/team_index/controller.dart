@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-13 16:31:12
+ * @LastEditTime: 2025-02-14 19:07:28
  */
 
 import 'dart:async';
@@ -240,7 +240,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, PlayerCardEntity card) async {
-    return;
+    // return;
     if (card.isOpen.value) return;
     awardList = await TeamApi.opneBattleBox(index, card.playerId);
     showBigCard(card);
@@ -249,12 +249,13 @@ class TeamIndexController extends GetxController
   }
 
   ///快速开启
-  void speedOpneBattleBox(BuildContext ctx, int index, int cost) async {
+  void speedOpneBattleBox(
+      BuildContext ctx, CardPackInfoCard item, int cost) async {
     // bool result = HomeController.to.updateChips(-cost);
     // if (!result) return;
-    await TeamApi.speedOpneBattleBox(index).then((v) async {
+    await TeamApi.speedOpneBattleBox(item.index).then((v) async {
       HomeController.to.updateTeamProp();
-      await toOpenBoxPage(ctx, cardPackInfo.card[index]);
+      await toOpenBoxPage(ctx, item);
     });
     // showBoxDialog();
     getBattleBox();
@@ -552,7 +553,6 @@ class TeamIndexController extends GetxController
         currentCardPack.playerCards
             .sort((a, b) => a.rotation.value.compareTo(b.rotation.value));
         update(["open_box_page"]);
-        Log.i("index:$index");
       });
     }
   }
@@ -634,7 +634,7 @@ class TeamIndexController extends GetxController
   }
 
   void closeCard() {
-    return;
+    // return;
     if (currentCardPack.playerCards
         .where((e) => e.isSelect.value && e.isOpen.value)
         .isNotEmpty) {

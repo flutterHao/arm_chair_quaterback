@@ -227,7 +227,7 @@ class BattleBoxDialog extends StatelessWidget {
                   } else if (item.status == 1) {
                     controller.speedOpneBattleBox(
                         context,
-                        item.index,
+                        item,
                         CacheApi.cardPackDefineMap[item.cardId]
                                 ?.cardPackOpenNow ??
                             0);

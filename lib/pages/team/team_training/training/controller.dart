@@ -447,67 +447,14 @@ class TrainingController extends GetxController
     });
   }
 
-  void chooseTactic(BuildContext context) async {
+  void chooseTactic(BuildContext context, TrainingInfoBuff e) async {
+    e.isSelect.value = true;
+    selectTacticId = e.id;
     canChoose = false;
     if (selectTacticId == 0) return;
-    // if (trainingInfo.buff.length == 5) {
-    //   ///如果卡槽有这个直接添加
-    //   TrainingInfoBuff buff =
-    //       tacticChooseList.where((e) => e.id == selectTacticId).first;
-    //   if (trainingInfo.buff
-    //       .where((e) => e.color == buff.color && e.face == buff.face)
-    //       .isNotEmpty) {
-    //     var myBuff = trainingInfo.buff
-    //         .where((e) => e.color == buff.color && e.face == buff.face)
-    //         .first;
-    //     changeTacticId = myBuff.id;
-    //   } else if (changeTacticId == 0) {
-    //     if (!isChange.value) {
-    //       // shakeController.forward();
-    //       isChange.value = true;
-    //       showDialog(
-    //           barrierDismissible: false,
-    //           context: context,
-    //           builder: (context) {
-    //             return TrainingAwardDialog();
-    //           }).then((v) {
-    //         chooseFinish();
-    //       });
-    //     }
-
-    //     return;
-    //   }
-    // }
-    int type = 1; //1替换,0直接添加
-    // if (changeTacticId != 0) {
-    //   //替换
-    //   for (int i = 0; i < trainingInfo.buff.length; i++) {
-    //     ///遍历我对buff找到待交换的卡牌
-    //     if (trainingInfo.buff[i].id == changeTacticId) {
-    //       ///遍历可以选择的buff找到当前选中的buff
-    //       for (int j = 0; j < tacticChooseList.length; j++) {
-    //         if (selectTacticId == tacticChooseList[j].id) {
-    //           trainingInfo.buff[i] = tacticChooseList[j];
-    //           tacticChooseList[j].offset.value = offsets[i];
-    //           type = 0;
-    //           Future.delayed(const Duration(milliseconds: 300), () async {
-    //             trainingInfo.buff[i].show.value = true;
-    //             await Future.delayed(const Duration(milliseconds: 300));
-    //             trainingInfo.buff[i].show.value = false;
-    //           });
-    //         }
-    //       }
-    //     }
-    //   }
-    // } else {
-    //   ///直接添加
-    //   for (int i = 0; i < tacticChooseList.length; i++) {
-    //     if (selectTacticId == tacticChooseList[i].id) {
-    //       int length = min(trainingInfo.buff.length, 4);
-    //       tacticChooseList[i].offset.value = offsets[length];
-    //     }
-    //   }
-    // }
+    Get.back();
+    tacticFly.value = true;
+    showBuff.value = true;
     for (int i = 0; i < tacticChooseList.length; i++) {
       if (selectTacticId == tacticChooseList[i].id) {
         int length = min(trainingInfo.buff.length, 4);
@@ -516,14 +463,16 @@ class TrainingController extends GetxController
         tacticChooseList[i].rotate.value = angles[length] / 360;
       }
     }
-    tacticFly.value = true;
-    showBuff.value = true;
+
     // update(["training_page"]);
     TeamApi.chooseTactic(selectTacticId, replaceTacticId: changeTacticId)
         .then((v) async {
+      changeTacticId = 0;
+
+      await Future.delayed(const Duration(milliseconds: 200));
       trainingInfo = await TeamApi.getTrainingInfo();
 
-      await chooseEnd(context, type);
+      await chooseEnd(context);
       trainingInfo.buff = v;
       update(["training_page"]);
 
@@ -550,11 +499,11 @@ class TrainingController extends GetxController
       }
     }).catchError((e) {
       Log.e("网络错误");
-      chooseEnd(context, type);
+      // chooseEnd(context, type);
     });
   }
 
-  Future chooseEnd(BuildContext context, int type) async {
+  Future chooseEnd(BuildContext context) async {
     selectTacticId = 0;
     changeTacticId = 0;
 
@@ -562,6 +511,7 @@ class TrainingController extends GetxController
     showBuff.value = false;
     tacticFly.value = false;
     isPlaying.value = false;
+    canChoose = true;
     // isChange.value = false;
 
     // for (var element in tacticChooseList) {
@@ -691,23 +641,14 @@ class TrainingController extends GetxController
       awads.add(e.id);
     }
 
-    if (!awads.contains(3) && !awads.contains(4)) {
-      showDialog(
-          barrierDismissible: false,
-          context: Get.context!,
-          barrierColor: Colors.black.withOpacity(0.6),
-          builder: (context) {
-            return const TrainingAwardDialog();
-          });
-    }
-
     await Future.delayed(const Duration(milliseconds: 300));
-    for (var element in scrollerCtrlList) {
-      Log.d("slot 当前位置 ${element.offset}");
-    }
+    // for (var element in scrollerCtrlList) {
+    //   Log.d("slot 当前位置 ${element.offset}");
+    // }
 
     ///2:状态
     if (awads.contains(2)) {
+      showAwardDialog();
       SoundServices.to.playSound(
           awardLength > 4 ? Assets.soundStatusBig : Assets.soundStatusSmall);
       await startPlayerScroll(0);
@@ -749,6 +690,7 @@ class TrainingController extends GetxController
         cashs = item.propNum;
         await showCashAward(cashs);
         currentLevel = trainingInfo.training.currentTaskId;
+        Get.back();
         // HomeController.to.updateMoney();
       }
     }
@@ -771,6 +713,7 @@ class TrainingController extends GetxController
 
     ///战术 buff
     if (awads.contains(1)) {
+      showAwardDialog();
       tacticChooseList.clear();
       tacticChooseList = List.from(trainingInfo.chooseBuffs);
       //初始化卡牌的位置和朝向
@@ -792,9 +735,9 @@ class TrainingController extends GetxController
     if (!awads.contains(1)) {
       isPlaying.value = false;
     }
-    for (var element in scrollerCtrlList) {
-      Log.d("slot 当前位置 ${element.offset}");
-    }
+    // for (var element in scrollerCtrlList) {
+    //   Log.d("slot 当前位置 ${element.offset}");
+    // }
 
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
     updateScroller();
@@ -808,9 +751,19 @@ class TrainingController extends GetxController
     // }
     // getPlayerList();
     // update(["training_page"]);
-    if (!awads.contains(1) && !awads.contains(3) && !awads.contains(4)) {
+    if (awads.contains(2) || awads.contains(5)) {
       Get.back();
     }
+  }
+
+  void showAwardDialog() {
+    showDialog(
+        barrierDismissible: false,
+        context: Get.context!,
+        barrierColor: Colors.black.withOpacity(0.6),
+        builder: (context) {
+          return const TrainingAwardDialog();
+        });
   }
 
   void updateScroller() {
@@ -842,6 +795,8 @@ class TrainingController extends GetxController
 
   Future showCashAward(int cashs) async {
     ///5:钞票
+    showAwardDialog();
+    await Future.delayed(const Duration(milliseconds: 300));
     showCash.value = true;
     cash.value = cashs;
     caShScale.value = true;

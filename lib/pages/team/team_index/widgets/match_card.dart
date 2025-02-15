@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2025-02-13 16:30:16
+ * @LastEditTime: 2025-02-14 20:12:11
  */
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -16,6 +17,8 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -25,9 +28,10 @@ class MatchCard extends GetView<TeamIndexController> {
 
   @override
   Widget build(BuildContext context) {
+    TeamController myTeamCtrl = Get.find();
     return Container(
       width: double.infinity,
-      height: 266.5.w,
+      height: 404.5.w,
       margin: EdgeInsets.only(top: 9.w),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.w), color: AppColors.cFFFFFF),
@@ -35,130 +39,262 @@ class MatchCard extends GetView<TeamIndexController> {
         alignment: Alignment.topCenter,
         children: [
           Positioned(
-            top: 25.w,
-            left: 16.w,
+            top: 22.5.w,
+            left: 16.5.w,
             child: Text(
-              LangKey.teamTabMatch.tr,
+              "GAME SEASON",
               style: 30.w7(fontFamily: FontFamily.fOswaldBold, height: 0.75),
             ),
           ),
           Positioned(
-            top: 72.w,
-            right: 16.w,
-            left: 16,
-            bottom: 13.w,
-            child: Image.asset(
-              Assets.managerUiManagerMatchgameBg,
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.topCenter,
-            ),
-          ),
-          Positioned(
-            top: 60.w,
-            child: Image.asset(
-              width: 146.w,
-              height: 135.w,
-              Assets.managerUiManagerMatchgameImage,
-              fit: BoxFit.fill,
-            ),
-          ),
-          Positioned(
-            bottom: 21.w,
-            child: Row(
-              children: [
-                MtInkWell(
-                    onTap: () {
-                      Get.toNamed(RouteNames.seaonRankPage);
-                    },
-                    child: SizedBox(
-                      // color: Colors.red,
-                      width: 81.w,
+            top: 81.5.w,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Swiper(
+              itemCount: 1,
+              itemBuilder: (BuildContext context, int index) {
+                return Stack(
+                  children: [
+                    Positioned(
+                        top: 15.w,
+                        left: 17.w,
+                        child: Container(
+                          width: 341.w,
+                          height: 253.5.w,
+                          alignment: Alignment.bottomCenter,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(9.w),
+                              border: Border.all(
+                                width: 1.w,
+                                color: AppColors.cD9D9D9,
+                              )),
+                        )),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Image.asset(
+                        Assets.managerUiManagerIconBg,
+                        width: 339.w,
+                        height: 168.5.w,
+                      ),
+                    ),
+                    Positioned(
+                      top: 11.w,
+                      left: 16.w,
+                      child: Container(
+                        width: 100.w,
+                        height: 24.w,
+                        decoration: BoxDecoration(
+                          color: AppColors.c000000,
+                          borderRadius: BorderRadius.circular(12.w),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconWidget(
+                                iconWidth: 14.w,
+                                icon: Assets.commonUiCommonCountdown02),
+                            3.5.hGap,
+                            Text(
+                              "6d 23:59:59",
+                              style: 12.w4(
+                                fontFamily: FontFamily.fOswaldRegular,
+                                color: AppColors.cFFFFFF,
+                                height: 1,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        top: 45.w,
+                        left: 7.w,
+                        child: const MatchRankIcon(
+                          rank: 3,
+                        )),
+                    Positioned(
+                      top: 17.5.w,
+                      left: 307.5.w,
+                      child: Image.asset(
+                        Assets.iconUiIconRead,
+                        width: 14.w,
+                        height: 12.w,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Positioned(
+                        top: 58.w,
+                        left: 145.w,
+                        child: Text(
+                          "professional manager 3".toUpperCase(),
+                          style: 16.w4(
+                              fontFamily: FontFamily.fOswaldRegular,
+                              color: AppColors.cFFFFFF,
+                              height: 0.8),
+                        )),
+                    Positioned(
+                      top: 86.w,
+                      left: 140.w,
+                      height: 9.w,
+                      child: OutLineProgressWidget(
+                        // width: 68.w,
+                        // height: 6.w,
+                        width: 179.w,
+                        height: 9.w,
+                        progress: 0.5,
+                        progressColor: AppColors.cFFFFFF,
+                        border:
+                            Border.all(color: AppColors.c999999, width: 0.5),
+                      ),
+                    ),
+                    Positioned(
+                      top: 101.5.w,
+                      left: 141.5.w,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          12.hGap,
                           IconWidget(
-                              iconWidth: 18.w,
+                              iconWidth: 20.5.w,
                               icon: Assets.managerUiManagerIconCurrency04),
-                          4.hGap,
+                          5.hGap,
                           Obx(() {
-                            return Text("${controller.cup.value}",
-                                style: 14.w7(color: AppColors.c000000));
+                            return AnimatedNum(
+                                number: controller.cup.value,
+                                textStyle: 14.w7(color: AppColors.cFFFFFF));
                           }),
-                          13.hGap,
+                          Text(
+                            "/${myTeamCtrl.getCurrentCup().cupNum.last}",
+                            style: 14.w7(color: AppColors.cFFFFFF),
+                          )
                         ],
                       ),
-                    )),
-
-                ///比赛按钮
-                MtInkWell(
-                  vibrate: true,
-                  minScale: 0.9,
-                  onTap: () {
-                    controller.matchBattle();
-                  },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        width: 181,
-                        height: 41.w,
-                        decoration: BoxDecoration(
-                            color: AppColors.c000000,
-                            borderRadius: BorderRadius.circular(9.w)),
-                        alignment: Alignment.center,
-                        child: Text(
-                          LangKey.teamButtonMatch.tr,
-                          style: 19.w4(
-                              color: AppColors.cFFFFFF,
-                              fontFamily: FontFamily.fOswaldMedium),
-                        ),
+                    ),
+                    Positioned(
+                      top: 168.5.w + 24.w,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                "Contests Won",
+                                style: 12.w4(
+                                    fontFamily: FontFamily.fRobotoMedium,
+                                    height: 0.8),
+                              ),
+                              11.vGap,
+                              Text(
+                                "172",
+                                style: 35.w4(
+                                    fontFamily: FontFamily.fOswaldBold,
+                                    height: 0.8),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: 1,
+                            height: 55.w,
+                            color: AppColors.cD1D1D1,
+                            margin: EdgeInsets.symmetric(horizontal: 45.w),
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                "Win Rate",
+                                style: 12.w4(
+                                    fontFamily: FontFamily.fRobotoMedium,
+                                    height: 0.8),
+                              ),
+                              11.vGap,
+                              Text(
+                                "17%",
+                                style: 35.w4(
+                                    fontFamily: FontFamily.fOswaldBold,
+                                    height: 0.8),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Positioned(
-                          right: 10.w,
-                          child: IconWidget(
-                            iconWidth: 15.w,
-                            icon: Assets.playerUiIconTriangle03,
-                            iconColor: AppColors.cFFFFFF,
-                            rotateAngle: 90,
-                          ))
-                    ],
-                  ),
-                ),
-
-                Container(
-                  width: 81.w,
-                  alignment: Alignment.centerLeft,
-                  // child: MtInkwell(
-                  //   minScale: 0.9,
-                  //   onTap: () {
-                  //     showDialog(
-                  //         context: Get.context!,
-                  //         builder: (context) {
-                  //           return const RecoverDialog();
-                  //         });
-                  //   },
-                  //   child: Container(
-                  //     width: 60.w,
-                  //     height: 41.w,
-                  //     alignment: Alignment.center,
-                  //     margin: EdgeInsets.only(left: 8.w),
-                  //     decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(9.w),
-                  //       border: Border.all(color: AppColors.c666666),
-                  //     ),
-                  //     child: Image.asset(
-                  //       Assets.managerUiManagerIconRecover,
-                  //       width: 30.w,
-                  //     ),
-                  //   ),
-                  // ),
-                ),
-              ],
+                    )
+                  ],
+                );
+              },
+              autoplay: false, // 启用自动播放
+              // autoplayDelay: 3000,
+              // autoplayDisableOnInteraction: true,
+              pagination: SwiperPagination(
+                alignment: Alignment.bottomCenter,
+                margin: const EdgeInsets.only(bottom: 10), // 指示器的下边距
+                builder: CustomPaginationBuilder(), // 使用自定义的长条形分页指示器
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class MatchRankIcon extends StatelessWidget {
+  const MatchRankIcon({super.key, required this.rank, this.width});
+  final int rank;
+  final double? width;
+
+  @override
+  Widget build(BuildContext context) {
+    double scale = width ?? 117.w / 117.w;
+    return SizedBox(
+      width: 117.w * scale,
+      height: 95.5.w * scale,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          IconWidget(
+              iconWidth: 117.w * scale,
+              iconHeight: 95.5.w * scale,
+              icon: Assets.managerUiManagerGameGrade01),
+          Positioned(
+            top: 21.w,
+            child: Image.asset(
+              Assets.managerUiManagerGameGradeSan,
+              height: 41.5.w,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomPaginationBuilder extends SwiperPlugin {
+  @override
+  Widget build(BuildContext context, SwiperPluginConfig config) {
+    final int activeIndex = config.activeIndex;
+    final int itemCount = config.itemCount;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(itemCount, (index) {
+        // 当前索引为白色，其他为灰色
+        final bool isActive = index == activeIndex;
+
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          margin: const EdgeInsets.symmetric(horizontal: 4), // 长条之间的间距
+          width: isActive ? 23.w : 20.w, // 当前索引长条宽度比非选中状态更长
+          height: 3, // 设置高度为8
+          decoration: BoxDecoration(
+            color: isActive ? Colors.white : Colors.black, // 选中为白色，未选中为灰色
+            borderRadius: BorderRadius.circular(4), // 设置圆角
+          ),
+        );
+      }),
     );
   }
 }

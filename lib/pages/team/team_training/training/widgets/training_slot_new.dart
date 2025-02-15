@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -161,7 +164,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                           left: 11.5.w,
                                           right: 44.w,
                                           child: Stack(
-                                            alignment: Alignment.center,
+                                            alignment: Alignment.centerLeft,
                                             children: [
                                               Container(
                                                 width: 150.w,
@@ -219,6 +222,21 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                             icon: Assets.commonUiCommonProp03,
                                           ),
                                         ),
+                                        Positioned(
+                                          left: 69.5.w,
+                                          top: 8.w,
+                                          child: OutlinedText(
+                                              strokeColor: Colors.black,
+                                              strokeWidth: 1,
+                                              text:
+                                                  "${controller.taskValue.value}/${controller.currentTaskNeed}",
+                                              textStyle: TextStyle(
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
+                                                  fontSize: 10,
+                                                  height: 1,
+                                                  color: Colors.white)),
+                                        )
                                       ]),
                                 ),
                               ),
@@ -272,7 +290,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
               Container(
                 width: 356.w,
                 height: 82.w,
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 7.w),
                 decoration: BoxDecoration(
                     color: AppColors.c000000,
                     border: Border.all(width: 0),
@@ -367,7 +385,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                                               .colorAnimation
                                                               .value,
                                                       child: Container(
-                                                        width: 50.w,
+                                                        width: 54.5.w,
                                                         height: 68.w,
                                                         decoration:
                                                             BoxDecoration(
@@ -393,7 +411,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                             visible: controller
                                                 .showBoxList[index].value,
                                             child: Container(
-                                              width: 50.w + 3.w,
+                                              width: 54.5.w + 3.w,
                                               height: 68.w + 3.w,
                                               decoration: BoxDecoration(
                                                 border: Border.all(
@@ -412,7 +430,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                             visible: !controller
                                                 .slotCard[index].value,
                                             child: Container(
-                                              width: 50.w,
+                                              width: 54.5.w,
                                               height: 68.w,
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-02-13 18:59:00
+ * @LastEditTime: 2025-02-14 16:50:53
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -194,11 +194,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                             isFlipped: e.isOpen.value,
                             onFlip: () async {
                               if (!ctrl.canChoose) return;
-                              Get.back();
-                              e.isSelect.value = true;
-                              ctrl.selectTacticId = e.id;
-                              ctrl.changeTacticId = 0;
-                              ctrl.chooseTactic(context);
+                              ctrl.chooseTactic(context, e);
                             },
                             buff: e,
                           ),

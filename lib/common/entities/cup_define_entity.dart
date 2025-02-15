@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2025-01-18 17:21:25
+ * @LastEditTime: 2025-02-15 11:04:52
+ */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/cup_define_entity.g.dart';
 import 'dart:convert';
@@ -7,7 +13,7 @@ export 'package:arm_chair_quaterback/generated/json/cup_define_entity.g.dart';
 class CupDefineEntity {
   late String backUp = '';
   late int cupDailyReward = 0;
-  late List<int> cupNum = [];
+  late List<int> cupNum = [0, 0];
   late int cupNumId = 0;
   late String cupPicId = '';
   late String cupReward = '';

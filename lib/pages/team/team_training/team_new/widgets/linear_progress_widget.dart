@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2025-01-21 12:16:08
+ * @LastEditTime: 2025-02-14 18:56:21
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -109,17 +109,21 @@ class OutLineProgressWidget extends StatelessWidget {
     required this.width,
     required this.height,
     required this.progress,
+    this.progressColor1,
     required this.progressColor,
+    this.border,
   });
   final double width;
   final double height;
   final double progress;
+  final Color? progressColor1;
   final Color progressColor;
+  final Border? border;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(7.w),
+      borderRadius: BorderRadius.circular(height / 2),
       child: SizedBox(
         width: width,
         height: height,
@@ -131,8 +135,8 @@ class OutLineProgressWidget extends StatelessWidget {
               width: width,
               height: height,
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.cD1D1D1),
-                borderRadius: BorderRadius.circular(7.w),
+                border: border ?? Border.all(color: AppColors.cD1D1D1),
+                borderRadius: BorderRadius.circular(height / 2),
               ),
             ),
             AnimatedContainer(
@@ -142,10 +146,12 @@ class OutLineProgressWidget extends StatelessWidget {
               height: height,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.horizontal(left: Radius.circular(7.w)),
-                  gradient: LinearGradient(
-                      colors: [AppColors.c000000, progressColor])),
+                  borderRadius: BorderRadius.horizontal(
+                      left: Radius.circular(height / 2)),
+                  gradient: LinearGradient(colors: [
+                    progressColor1 ?? progressColor,
+                    progressColor
+                  ])),
             ),
           ],
         ),

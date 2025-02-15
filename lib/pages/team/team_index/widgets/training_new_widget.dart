@@ -2,13 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-13 18:59:43
+ * @LastEditTime: 2025-02-14 15:51:49
  */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -20,16 +19,15 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/free_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:spine_flutter/spine_widget.dart';
 
 class TrainingNewWidget extends GetView<TrainingController> {
   const TrainingNewWidget({super.key});
@@ -42,7 +40,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
         builder: (ctrl) {
           return SizedBox(
               width: double.infinity,
-              height: 637.w,
+              height: 607.w,
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
@@ -75,34 +73,88 @@ class TrainingNewWidget extends GetView<TrainingController> {
                     ),
                   ),
 
-                  ///美女
+                  ///美女图片
                   Positioned(
-                    top: 0,
+                    top: -15.w,
                     child: GetBuilder<BeautyController>(
                         // init: BeautyController(),
                         builder: (beautyCtrl) {
                       return InkWell(
                         onTap: () => Get.toNamed(RouteNames.teamBeautyPage),
                         child: Container(
-                          margin: EdgeInsets.only(left: 130.w),
-                          child: Image.asset(
-                            alignment: Alignment.topLeft,
-                            beautyCtrl
-                                .girlList[beautyCtrl.beautyIndex.value].girlImg,
-                            height: 468.5.w,
-                            fit: BoxFit.fitHeight,
+                          margin: EdgeInsets.only(
+                            left: 130.w,
+                          ),
+                          height: 498.w,
+                          child: Visibility(
+                            visible: beautyCtrl.beautyIndex.value != 0,
+                            child: Image.asset(
+                              alignment: Alignment.topLeft,
+                              beautyCtrl.girlList[beautyCtrl.beautyIndex.value]
+                                  .girlImg,
+                              height: 498.w,
+                              fit: BoxFit.fitHeight,
+                            ),
                           ),
                         ),
                       );
                     }),
                   ),
+
+                  ///美女动画
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: GetBuilder<BeautyController>(
+                        // init: BeautyController(),
+                        builder: (beautyCtrl) {
+                      return InkWell(
+                        onTap: () => Get.toNamed(RouteNames.teamBeautyPage),
+                        child: Container(
+                            margin: EdgeInsets.only(left: 130.w, top: 20.w),
+                            height: 468.5.w,
+                            child: Opacity(
+                              opacity:
+                                  beautyCtrl.beautyIndex.value == 0 ? 1 : 0,
+                              child: SpineWidget.fromAsset(
+                                Assets.assetsSpineNv1,
+                                "assets/spine/nv_1.json",
+                                beautyCtrl.spineWidgetController,
+                                fit: BoxFit.fitHeight,
+                                alignment: Alignment.topCenter,
+                              ),
+                            )),
+                      );
+                    }),
+                  ),
+
                   Positioned(
                       top: 70.w,
                       right: -10.w,
                       child: Image.asset(
-                        Assets.managerUiManagerIconLovebubble,
+                        Assets.managerUiManagerIconBubble01,
                         height: 64.w,
                         fit: BoxFit.fitHeight,
+                      )),
+                  Positioned(
+                    top: 72.w,
+                    right: 5.w,
+                    child: Image.asset(
+                      Assets.managerUiManagerIcon002,
+                      width: 41.w,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                  Positioned(
+                      top: 105.w,
+                      right: 5.w,
+                      child: Text(
+                        "02:30:30",
+                        style: 10.w4(
+                          fontFamily: FontFamily.fRobotoMedium,
+                          height: 0.8,
+                        ),
                       )),
 
                   ///战术牌
@@ -159,9 +211,9 @@ class TrainingNewWidget extends GetView<TrainingController> {
                         ),
                       )),
 
-                  ///准备程度
+                  ///准备程度进度条
                   Positioned(
-                    top: 139.w,
+                    top: 139.5.w,
                     left: 26.w,
                     child: Stack(
                       alignment: Alignment.centerLeft,
@@ -170,6 +222,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                           Assets.managerUiManagerIconPrepareprogressbar02,
                           width: 106.w,
                           fit: BoxFit.fitWidth,
+                          color: AppColors.c4c4c4c,
                         ),
                         ClipRect(
                           child: Align(
@@ -192,8 +245,9 @@ class TrainingNewWidget extends GetView<TrainingController> {
                     ),
                   ),
 
+                  ///准备程度文字
                   Positioned(
-                      top: 158.w,
+                      top: 161.5.w,
                       left: 27.w,
                       child: Row(
                         children: [
@@ -201,6 +255,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                           Text(
                             "Preparation",
                             style: 12.w4(
+                                height: 1,
                                 fontFamily: FontFamily.fOswaldRegular,
                                 color: AppColors.cFFFFFF),
                           ),
@@ -225,7 +280,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
 
                   // ///状态
                   Positioned(
-                    top: 180.w,
+                    top: 188.w,
                     left: 25.w,
                     child: SizedBox(
                       height: 60.w,
@@ -235,7 +290,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
 
                   ///渐变背景
                   Positioned(
-                      top: 293.w,
+                      top: 268.w,
                       left: 0,
                       right: 0,
                       child: Container(
@@ -264,7 +319,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                       )),
 
                   Positioned(
-                    top: 498.w,
+                    top: 473.w,
                     left: 0,
                     right: 0,
                     child: Container(
@@ -277,7 +332,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
 
                   ///训练slot
                   Positioned(
-                    top: 352.w,
+                    top: 327.w,
                     left: 0,
                     right: 0,
                     child: const TrainingSlotNew(),
@@ -285,20 +340,20 @@ class TrainingNewWidget extends GetView<TrainingController> {
 
                   //开始按钮
                   Positioned(
-                    top: 476.5.w,
-                    child: const SlotButton(),
+                    top: 453.w,
+                    child: const _SlotButton(),
                   ),
 
                   //免费宝箱
                   Positioned(
-                    top: 537.w,
+                    top: 515.w,
                     left: 22.5.w,
                     child: const FreeGiftBox(),
                   ),
 
                   //防御盾
                   Positioned(
-                    top: 537.w,
+                    top: 515.w,
                     right: 26.5.w,
                     child: Image.asset(
                       Assets.managerUiManagerIconDefenseshield,
@@ -310,7 +365,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   if (ctrl.trainingInfo.prop.num < ctrl.trainDefine.ballMaxNum)
                     Positioned(
                       // bottom: 12.w,
-                      top: 609.5.w,
+                      top: 585.w,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -394,9 +449,8 @@ class PlayerStatusWidget extends StatelessWidget {
                 .length;
             return Column(
               children: [
-                13.vGap,
                 IconWidget(
-                    iconWidth: 16.5.w,
+                    iconWidth: 19.5.w,
                     icon: Utils.getStatusUrl(statusList[index])),
                 2.vGap,
                 Text(
@@ -409,14 +463,14 @@ class PlayerStatusWidget extends StatelessWidget {
               ],
             );
           },
-          separatorBuilder: (context, index) => 5.hGap,
+          separatorBuilder: (context, index) => 2.hGap,
           itemCount: statusList.length);
     });
   }
 }
 
-class SlotButton extends StatelessWidget {
-  const SlotButton({super.key});
+class _SlotButton extends StatelessWidget {
+  const _SlotButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -465,8 +519,8 @@ class SlotButton extends StatelessWidget {
                       }
                     },
               child: Container(
-                width: 112.5.w + 18.w,
-                height: 112.5.w + 18.w,
+                width: 129.w,
+                height: 129.w,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     boxShadow: [
@@ -477,27 +531,29 @@ class SlotButton extends StatelessWidget {
                       )
                     ],
                     borderRadius: BorderRadius.circular(66.w),
-                    color: AppColors.cD9D9D9,
-                    border: Border.all(width: 9.w, color: AppColors.cF2F2F2)),
+                    border:
+                        Border.all(width: 12.5.w, color: AppColors.cF2F2F2)),
                 child: Opacity(
                   opacity: controller.isPlaying.value ? 0.5 : 1,
                   child: Container(
                     width: 104.5.w,
                     height: 104.5.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(58.w),
-                      color: AppColors.c000000,
-                    ),
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
+                        Image.asset(
+                          Assets.managerUiManagerIconButton,
+                          width: 104.5.w,
+                          height: 104.5.w,
+                          fit: BoxFit.fill,
+                        ),
                         Positioned(
-                          top: 8.w,
-                          child: ArcWidget(
-                            46.w,
+                          top: 12.5.w,
+                          child: AnimationArcWidget(
+                            43.w,
                             progressWidth: 5.w,
-                            progressColor: AppColors.cFF7954,
-                            borderColor: AppColors.c262626,
+                            progressColor: AppColors.cFFFFFF,
+                            borderColor: Colors.black.withOpacity(0.3),
                             progressSweepAngle: 180 *
                                 (controller.ballNum.value /
                                     controller.trainDefine.ballMaxNum),
@@ -505,37 +561,23 @@ class SlotButton extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top: 37.5.w,
-                          child: Text(
-                            "GO",
-                            style: 27.w4(
-                                color: Colors.white,
-                                fontFamily: FontFamily.fOswaldMedium,
-                                height: 0.8.w),
-                          ),
-                        ),
-                        Positioned(
                           // bottom: 16.w,
-                          top: 70.w,
-                          left: 20.w,
+                          top: 74.w,
                           child: Container(
                             // height: 72.5.w,
                             width: 75.w,
-                            height: 24.w,
-                            // color: Colors.red,
                             alignment: Alignment.bottomCenter,
                             child: Obx(() {
                               return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   AnimatedScale(
                                     duration: 150.milliseconds,
                                     scale: controller.showBall.value ? 1.5 : 1,
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        IconWidget(
-                                            iconWidth: 17.w,
-                                            icon: Assets.commonUiCommonProp04),
-                                        4.hGap,
                                         Obx(() {
                                           int v = controller.ballNum.value;
                                           return AnimatedNum(
