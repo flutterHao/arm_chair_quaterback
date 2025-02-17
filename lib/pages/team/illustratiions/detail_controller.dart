@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -260,6 +261,8 @@ class IlluSctrationDtlCtrl extends GetxController {
       item.isLight = 1;
       item.fragmentNum -= item.needNum;
       update(["detail"]);
+      IllustratiionsController ctrl = Get.find();
+      ctrl.hasChange.value = true;
     });
   }
 

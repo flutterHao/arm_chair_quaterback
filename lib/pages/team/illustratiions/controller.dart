@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-01-17 11:09:33
+ * @LastEditTime: 2025-02-17 10:02:35
  */
 /*
  * @Description: 
@@ -12,13 +12,17 @@
  */
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class IllustratiionsController extends GetxController
@@ -61,7 +65,9 @@ class IllustratiionsController extends GetxController
   //搜索条件
   var rangeValues = const RangeValues(1, 100).obs;
 
-  void onTap() {}
+  ScrollController scrollController = ScrollController();
+  var hasChange = false.obs;
+  List<PlayerCardEntity> getPlayerCards = [];
 
   @override
   void onInit() {
@@ -104,13 +110,63 @@ class IllustratiionsController extends GetxController
     super.onClose();
   }
 
-  void getPlayerCollectInfo() async {
+  Future getPlayerCollectInfo() async {
     Future.wait([
       TeamApi.getPlayerCollect(),
       CacheApi.getPlayerBookRuleList(),
       CacheApi.getPlayerBookExpRuleList(),
-    ]).then((v) {
+    ]).then((v) async {
       playerCollectEntity = v[0] as PlayerCollectEntity;
+      double dy = 0;
+      double height =
+          (MediaQuery.of(Get.context!).size.width - 33.w - 42.w) / 3 * 1.6;
+      var list = onfilter();
+      var activeList = list.where((e) => e.isActive == 0).toList();
+      var notActiveList = list.where((e) => e.isActive == 0).toList();
+
+      // for (var item in activeList) {
+      //   PlayerCollectCollects? myPlayer = playerCollectEntity.collects
+      //       .firstWhereOrNull((e) => e.playerId == item.playerId);
+      //   if (myPlayer != null) {
+      //     //如果是新获取的，添加获得动画
+      //     if (!hasChange.value) {
+      //       int index = activeList.indexOf(item);
+      //       if (index > 0) {
+      //         double offset = ((index + 1) ~/ 3) * (height + 10.w) + 25.w;
+      //         int t = (offset - dy).ceil();
+      //         await scrollController.animateTo(offset,
+      //             duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+      //         await Future.delayed(const Duration(milliseconds: 300));
+      //         dy = offset;
+      //       }
+      //     }
+      //     item.fragmentNum = myPlayer.fragmentNum;
+      //     item.isLight = myPlayer.isLight;
+      //   }
+      // }
+      double beginY = ((activeList.length + 1) ~/ 3) * (height + 10.w) + 25.w;
+      for (var item in notActiveList) {
+        PlayerCollectCollects? myPlayer = playerCollectEntity.collects
+            .firstWhereOrNull((e) => e.playerId == item.playerId);
+        if (myPlayer != null) {
+          if (!hasChange.value) {
+            int index = notActiveList.indexOf(item);
+            if (index > 0) {
+              double offset =
+                  beginY + ((index + 1) ~/ 3) * (height + 10.w) + 25.w;
+              int t = (offset - dy).ceil();
+              await scrollController.animateTo(offset,
+                  duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+              await Future.delayed(const Duration(milliseconds: 300));
+              dy = offset;
+            }
+          }
+          item.fragmentNum = myPlayer.fragmentNum;
+          item.isLight = myPlayer.isLight;
+        }
+      }
+
+      //设置工资帽和升级经验
       var info = playerCollectEntity.teamBookPlayerCollect;
       for (var e in CacheApi.playerBookExpRuleList) {
         if (info.grade == e.grade) {
@@ -121,14 +177,6 @@ class IllustratiionsController extends GetxController
           // info.totalExp = e.totalExp;
           // info.needExp = e.currExp;
           info.addSalaryCap = e.addSalaryCap;
-        }
-      }
-      for (var item in CacheApi.playerBookRuleList) {
-        PlayerCollectCollects? myPlayer = playerCollectEntity.collects
-            .firstWhereOrNull((e) => e.playerId == item.playerId);
-        if (myPlayer != null) {
-          item.fragmentNum = myPlayer.fragmentNum;
-          item.isLight = myPlayer.isLight;
         }
       }
 
@@ -273,5 +321,12 @@ class IllustratiionsController extends GetxController
     for (int i = 0; i < teamStatuList.length; i++) {
       teamStatuList[i].value = i == 0 ? true : false;
     }
+  }
+
+  void updateCollect() async {
+    Future.delayed(300.milliseconds).then((v) async {
+      await getPlayerCollectInfo();
+      hasChange.value = false;
+    });
   }
 }

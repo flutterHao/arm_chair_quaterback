@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -191,43 +192,45 @@ class _HomePageState extends State<HomePage>
                       Positioned(
                         bottom: 70.w,
                         left: 160.w,
-                        child: Obx(() {
-                          TeamIndexController teamCtrl = Get.find();
-                          return AnimatedScale(
-                            duration: 300.milliseconds,
-                            scale: teamCtrl.showGetPlayerTip.value ? 1 : 0,
-                            child: BubbleBox(
-                              arrowOffset: 120.w,
-                              color: AppColors.c000000,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20.w, vertical: 9.w),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "get new player:  ",
-                                      style: TextStyle(
-                                          fontSize: 16.sp,
-                                          color: AppColors.cFFFFFF,
-                                          fontFamily: FontFamily.fOswaldMedium),
+                        child: GetBuilder<IllustratiionsController>(
+                            init: IllustratiionsController(),
+                            builder: (ctrl) {
+                              return AnimatedScale(
+                                duration: 300.milliseconds,
+                                scale: ctrl.hasChange.value ? 1 : 0,
+                                child: BubbleBox(
+                                  arrowOffset: 120.w,
+                                  color: AppColors.c000000,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20.w, vertical: 9.w),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "get new player:  ",
+                                          style: TextStyle(
+                                              fontSize: 16.sp,
+                                              color: AppColors.cFFFFFF,
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(top: 1.5.w),
+                                          child: Text(
+                                            "${ctrl.getPlayerCards.length}",
+                                            style: TextStyle(
+                                                fontSize: 16.sp,
+                                                color: AppColors.cFFFFFF,
+                                                fontFamily:
+                                                    FontFamily.fRobotoMedium),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 1.5.w),
-                                      child: Text(
-                                        "${teamCtrl.getPlayerCards.length}",
-                                        style: TextStyle(
-                                            fontSize: 16.sp,
-                                            color: AppColors.cFFFFFF,
-                                            fontFamily:
-                                                FontFamily.fRobotoMedium),
-                                      ),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        }),
+                              );
+                            }),
                       ),
                     ],
                   ),

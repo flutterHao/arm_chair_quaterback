@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-14 19:07:28
+ * @LastEditTime: 2025-02-15 18:11:59
  */
 
 import 'dart:async';
@@ -62,7 +62,8 @@ class TeamIndexController extends GetxController
   ScrollController scrollController = ScrollController();
   RefreshController refreshController = RefreshController();
   bool recieved = false;
-  RxInt cup = 0.obs;
+  // RxInt cup = 0.obs;
+  TeamSimpleEntity teamSimpleEntity = TeamSimpleEntity();
 
   //step:0 开宝箱 1选卡 2 展示选中的卡牌 3 展示所有,
   int step = 0;
@@ -94,8 +95,7 @@ class TeamIndexController extends GetxController
   late Animation<double> fallOutAnimation;
   //获取球员
   // var getPlayerCount = 0.obs;
-  List<PlayerCardEntity> getPlayerCards = [];
-  var showGetPlayerTip = false.obs;
+  // var showGetPlayerTip = false.obs;
   final overlayEntry = OverlayEntry(
     builder: (context) {
       return CardFlyWidget(duration: 800.milliseconds);
@@ -275,15 +275,12 @@ class TeamIndexController extends GetxController
     // await Get.toNamed(RouteNames.openBoxPage);
     await Get.to(() => const OpenBoxPage(),
         opaque: false, transition: Transition.fadeIn);
-    getPlayerCards = currentCardPack.playerCards
+    IllustratiionsController ctrl = Get.find();
+    ctrl.getPlayerCards = currentCardPack.playerCards
         .where((e) => e.isSelect.value && e.isOpen.value)
         .toList();
     closeCard();
-    cardFly(ctx);
-  }
-
-  void cardFly(BuildContext ctx) async {
-    if (getPlayerCards.isEmpty) return;
+    if (ctrl.getPlayerCards.isEmpty) return;
     Overlay.of(ctx).insert(overlayEntry);
   }
 
@@ -293,7 +290,6 @@ class TeamIndexController extends GetxController
       // Get.to(() => const IllustratiionsPage(),
       //     opaque: false, transition: Transition.fadeIn);
     }
-    showGetPlayerTip.value = false;
     Get.toNamed(RouteNames.illustrationPage);
   }
 
@@ -306,8 +302,8 @@ class TeamIndexController extends GetxController
   ///获取队伍信息Cup
   Future getTeamInfoCup() async {
     int teamId = HomeController.to.getTeamId();
-    TeamSimpleEntity team = await PicksApi.getTeamSimple(teamId);
-    cup.value = team.cup;
+    teamSimpleEntity = await PicksApi.getTeamSimple(teamId);
+    update(["season_info"]);
   }
 
   ///宝箱奖励弹窗
@@ -640,8 +636,6 @@ class TeamIndexController extends GetxController
         .isNotEmpty) {
       TeamApi.closeCard(currentCardPack.index).then((v) {
         getBattleBox();
-        IllustratiionsController ctrl = Get.find();
-        ctrl.getPlayerCollectInfo();
         HomeController.to.updateMoney();
       });
     }

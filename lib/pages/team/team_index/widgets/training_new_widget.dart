@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-15 16:15:37
+ * @LastEditTime: 2025-02-15 17:18:47
  */
 import 'dart:math';
 
@@ -161,7 +161,12 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   Positioned(
                     top: 0,
                     left: 0,
-                    child: ClipRect(
+                    child: MtInkWell(
+                      minScale: 0.9,
+                      splashColor: Colors.transparent,
+                      onTap: () {
+                        ctrl.showRuleDilaog();
+                      },
                       child: Container(
                         width: 140.w,
                         height: 157.w,
@@ -190,22 +195,26 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   ),
 
                   Positioned(
-                      left: 139.5.w,
-                      top: 142.5.w,
-                      child: InkWell(
+                      left: 129.5.w,
+                      top: 132.5.w,
+                      child: MtInkWell(
+                        splashColor: Colors.transparent,
                         onTap: () {
                           ctrl.showRuleDilaog();
                         },
-                        child: Container(
-                          width: 13.w,
-                          height: 13.w,
-                          color: Colors.transparent,
-                          alignment: Alignment.bottomRight,
-                          child: Align(
+                        child: Padding(
+                          padding: EdgeInsets.all(10.w),
+                          child: Container(
+                            width: 13.w,
+                            height: 13.w,
+                            color: Colors.transparent,
                             alignment: Alignment.bottomRight,
-                            child: IconWidget(
-                              iconWidth: 13.w,
-                              icon: Assets.managerUiManagerIconDescribe,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: IconWidget(
+                                iconWidth: 13.w,
+                                icon: Assets.managerUiManagerIconDescribe,
+                              ),
                             ),
                           ),
                         ),
@@ -550,13 +559,11 @@ class _SlotButton extends StatelessWidget {
                         Positioned(
                           top: 12.5.w,
                           child: AnimationArcWidget(
-                            43.w,
+                            42.w,
                             progressWidth: 5.w,
                             progressColor: AppColors.cFFFFFF,
                             borderColor: Colors.black.withOpacity(0.3),
-                            progressSweepAngle: 180 *
-                                (controller.ballNum.value /
-                                    controller.trainDefine.ballMaxNum),
+                            progressSweepAngle: 180 * 0.5,
                             borderWidth: 5.w,
                           ),
                         ),

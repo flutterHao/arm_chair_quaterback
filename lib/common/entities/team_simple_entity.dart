@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2025-02-07 09:38:47
+ * @LastEditTime: 2025-02-15 17:04:00
+ */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/team_simple_entity.g.dart';
 import 'dart:convert';
@@ -29,7 +35,7 @@ class TeamSimpleEntity {
   late int lastOffLineTime = 0;
   late bool online = false;
   late int wearNicknameId = 0;
-  late double gameWinRate;
+  late double gameWinRate = 0.0;
   late int betCoin = 0;
   late int cup = 0;
   late String receivedRewards = '';

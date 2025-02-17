@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-01-20 15:00:37
+ * @LastEditTime: 2025-02-15 17:45:51
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -24,11 +24,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class IllustrationList extends StatelessWidget {
+class IllustrationList extends GetView<IllustratiionsController> {
   const IllustrationList({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.updateCollect();
     return GetBuilder<IllustratiionsController>(
       id: "list",
       builder: (ctrl) {
@@ -89,6 +90,7 @@ class IllustrationList extends StatelessWidget {
             ),
             Expanded(
               child: CustomScrollView(
+                controller: ctrl.scrollController,
                 slivers: [
                   SliverPadding(
                     padding:
@@ -170,8 +172,7 @@ class _Item extends GetView<IllustratiionsController> {
           RouteNames.illustrationDetail,
           arguments: item,
         );
-        // if (result == true)
-        controller.getPlayerCollectInfo();
+        if (controller.hasChange == true) controller.updateCollect();
       },
       child: Center(
         child: Column(
