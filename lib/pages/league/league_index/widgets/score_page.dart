@@ -74,23 +74,29 @@ class _ScorePageState extends State<ScorePage>
                     itemBuilder: (context, index) {
                       bool lastIndex = index == controller.scoreList.length - 1;
                       var item = controller.scoreList[index];
-                      return Obx(() {
-                        var picksIndexController =
-                            Get.find<PicksIndexController>();
-                        var leagueController = Get.find<LeagueController>();
-                        var value = picksIndexController.choiceSize.value;
-                        value += leagueController.choiceSize.value;
-                        return AnimatedContainer(
-                            margin: EdgeInsets.only(
-                                top: index == 0 ? 9.w : 0,
-                                bottom: lastIndex
-                                    ? value > 0
-                                        ? 94.w
-                                        : 15.w
-                                    : 0),
-                            duration: const Duration(milliseconds: 300),
-                            child: ScoreItemWidget(gameGuess: item));
-                      });
+                      return Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(
+                                  top: index == 0 ? 9.w : 0,
+                                  bottom: lastIndex ? 15.w : 0),
+                              child: ScoreItemWidget(gameGuess: item)),
+                          if (lastIndex)
+                            Obx(() {
+                              var picksIndexController =
+                                  Get.find<PicksIndexController>();
+                              var leagueController =
+                                  Get.find<LeagueController>();
+                              var value = picksIndexController.choiceSize.value;
+                              value += leagueController.choiceSize.value;
+                              return AnimatedContainer(
+                                margin: EdgeInsets.only(
+                                    bottom: value > 0 ? 94.w : 0),
+                                duration: const Duration(milliseconds: 300),
+                              );
+                            })
+                        ],
+                      );
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return 9.vGap;

@@ -201,68 +201,66 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                   ),
                   height: floatTitleBarHeight),
             ),
-            if(controller.guessGamePlayers.isNotEmpty)
-            SliverPersistentHeader(
-                pinned: true,
-                delegate: FixedHeightSliverHeaderDelegate(
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      color: AppColors.c262626,
-                      child: TabBar(
-                          isScrollable: true,
-                          tabAlignment: TabAlignment.start,
-                          labelColor: AppColors.cFFFFFF,
-                          labelPadding: EdgeInsets.symmetric(
-                              vertical: 5.w, horizontal: 20.w),
-                          // indicatorPadding: EdgeInsets.only(top: 5.w),
-                          labelStyle: 16.w5(
-                              color: AppColors.cFFFFFF,
-                              fontFamily: FontFamily.fOswaldMedium),
-                          unselectedLabelColor: AppColors.c666666,
-                          dividerHeight: 0,
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          indicator: UnderlineTabIndicator(
-                              borderSide: BorderSide(
-                                  color: AppColors.cFF7954, width: 3.w)),
-                          indicatorWeight: 4,
-                          controller: controller.tabController,
-                          tabs: controller.guessGamePlayers.keys.map((e) {
-                            if (e == "REB") {
+            if (controller.guessGamePlayers.isNotEmpty)
+              SliverPersistentHeader(
+                  pinned: true,
+                  delegate: FixedHeightSliverHeaderDelegate(
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        color: AppColors.c262626,
+                        child: TabBar(
+                            isScrollable: true,
+                            tabAlignment: TabAlignment.start,
+                            labelColor: AppColors.cFFFFFF,
+                            labelPadding: EdgeInsets.symmetric(
+                                vertical: 5.w, horizontal: 20.w),
+                            // indicatorPadding: EdgeInsets.only(top: 5.w),
+                            labelStyle: 16.w5(
+                                color: AppColors.cFFFFFF,
+                                fontFamily: FontFamily.fOswaldMedium),
+                            unselectedLabelColor: AppColors.c666666,
+                            dividerHeight: 0,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            indicator: UnderlineTabIndicator(
+                                borderSide: BorderSide(
+                                    color: AppColors.cFF7954, width: 3.w)),
+                            indicatorWeight: 4,
+                            controller: controller.tabController,
+                            tabs: controller.guessGamePlayers.keys.map((e) {
+                              if (e == "REB") {
+                                return Text(
+                                    ' ${LangKey.gameNamePts.tr} + ${LangKey.gameNameAst.tr}');
+                              }
                               return Text(
-                                  ' ${LangKey.gameNamePts.tr} + ${LangKey.gameNameAst.tr}');
-                            }
-                            return Text(
-                                Utils.getPicksTabKey(e.replaceAll(",", "+"))
-                                    .tr);
-                            // return Text(e.replaceAll(",", "+"));
-                          }).toList()),
-                    ),
-                    height: 34.w)),
+                                  Utils.getPicksTabKey(e.replaceAll(",", "+"))
+                                      .tr);
+                              // return Text(e.replaceAll(",", "+"));
+                            }).toList()),
+                      ),
+                      height: 34.w)),
           ];
         },
-        body: Builder(
-          builder: (context) {
-            if(controller.guessGamePlayers.isEmpty){
-              return SmartRefresher(
-                controller: controller.refreshController,
-                onRefresh: controller.loading,
-                child: Obx(() {
-                  return Center(
-                      child: LoadStatusWidget(
-                        loadDataStatus: controller.loadStatusRx.value,
-                      ));
-                }),
-              );
-            }
-            return ExtendedTabBarView(
-                cacheExtent: controller.guessGamePlayers.keys.length - 1,
-                controller: controller.tabController,
-                children: controller.guessGamePlayers.keys.map((e) {
-                  var list = controller.guessGamePlayers[e]!;
-                  return _TabViewItemPage(list: list, keyStr: e);
-                }).toList());
+        body: Builder(builder: (context) {
+          if (controller.guessGamePlayers.isEmpty) {
+            return SmartRefresher(
+              controller: controller.refreshController,
+              onRefresh: controller.loading,
+              child: Obx(() {
+                return Center(
+                    child: LoadStatusWidget(
+                  loadDataStatus: controller.loadStatusRx.value,
+                ));
+              }),
+            );
           }
-        ));
+          return ExtendedTabBarView(
+              cacheExtent: controller.guessGamePlayers.keys.length - 1,
+              controller: controller.tabController,
+              children: controller.guessGamePlayers.keys.map((e) {
+                var list = controller.guessGamePlayers[e]!;
+                return _TabViewItemPage(list: list, keyStr: e);
+              }).toList());
+        }));
   }
 
   @override
@@ -305,26 +303,28 @@ class _TabViewItemPageState extends State<_TabViewItemPage>
         itemBuilder: (context, index) {
           var item = list[index];
           bool lastIndex = list.length - 1 == index;
-          return Obx(() {
-            var picksIndexController = Get.find<PicksIndexController>();
-            var leagueController = Get.find<LeagueController>();
-            var value = picksIndexController.choiceSize.value;
-            value += leagueController.choiceSize.value;
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              margin: EdgeInsets.only(
-                  top: index == 0 ? 9.w : 0,
-                  bottom: lastIndex
-                      ? value > 0
-                          ? 94.w
-                          : 15.w
-                      : 0),
-              child: GuessItemV2(
-                index: index,
-                playerV2: item,
-              ),
-            );
-          });
+          return Column(
+            children: [
+              Container(
+                  margin: EdgeInsets.only(
+                      top: index == 0 ? 9.w : 0, bottom: lastIndex ? 15.w : 0),
+                  child: GuessItemV2(
+                    index: index,
+                    playerV2: item,
+                  )),
+              if (lastIndex)
+                Obx(() {
+                  var picksIndexController = Get.find<PicksIndexController>();
+                  var leagueController = Get.find<LeagueController>();
+                  var value = picksIndexController.choiceSize.value;
+                  value += leagueController.choiceSize.value;
+                  return AnimatedContainer(
+                    margin: EdgeInsets.only(bottom: value > 0 ? 94.w : 0),
+                    duration: const Duration(milliseconds: 300),
+                  );
+                })
+            ],
+          );
         },
         separatorBuilder: (BuildContext context, int index) {
           return 9.vGap;

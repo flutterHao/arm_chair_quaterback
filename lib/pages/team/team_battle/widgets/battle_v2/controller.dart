@@ -450,7 +450,7 @@ class TeamBattleV2Controller extends GetxController
     double winRate = getWinRate(event);
     // print('winRate: $winRate');
     var offset =
-        Offset(eventCount.toDouble() + getBeforeQuarterEventCount(), winRate);
+        Offset((eventCount + getBeforeQuarterEventCount()) * 1.0, winRate);
     var offsetEvent = OffsetEvent(event, offset);
     winRateController.addPoint(offsetEvent);
 
@@ -498,6 +498,7 @@ class TeamBattleV2Controller extends GetxController
     eventCount++;
   }
 
+  /// 检查回合动画
   void checkRoundTransformEvent(GameEvent event) {
     var roundEventIds = [502, 202, 22, 23];
     var gameEvent = getGameEvent(event.pkEventUpdatedEntity.eventId);
@@ -655,7 +656,8 @@ class TeamBattleV2Controller extends GetxController
       //左边投篮
       // end =
       //     Offset(end.dx - Random().nextDouble() * 50 - 10, end.dy + end.dy / 2);
-      end = Offset(Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w + 12.w, 35.w);
+      end = Offset(
+          Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w + 12.w, 35.w);
     }
     // 随机生成最高点
     peak = Offset((start.dx + end.dx) / 2, peak.dy - 5);
