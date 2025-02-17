@@ -119,6 +119,9 @@ class TeamBattleV2Controller extends GetxController
 
   Timer? normalDanMaKuTimer;
 
+  ///上个时间比分占比(比分随时间占比)
+  double lastHomeScoreRate = 0, lastAwayScoreRate = 0;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
@@ -525,37 +528,56 @@ class TeamBattleV2Controller extends GetxController
     var t = time ??
         ((40 - quarterTimeCountDownAnimationController.value.value) +
             (quarter.value - 1) * 40);
-    var scoreDiff = (event.homeScore - event.awayScore);
-    var prepareDiff = (event.pkEventUpdatedEntity.homeCurrentStrength -
-            event.pkEventUpdatedEntity.awayCurrentStrength)
-        .abs();
-    var random = (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
-    // print('prepareDiff--------:$prepareDiff');
-    // print('random--------:$random');
-    var other = t * 0.7 / (4 * 40) * (scoreDiff / max(scoreDiff.abs(), 1));
-    // print('other--------:$other');
-
-    double winRate = 0.5 + prepareDiff + other - random;
-
-    // print('winRate-------:$winRate');
-    if (t == 0) {
-      winRate = prepareDiff;
-    }
-    winRate = min(1, max(0, winRate));
-    return winRate;
+    // var scoreDiff = (event.homeScore - event.awayScore);
+    // var prepareDiff = (event.pkEventUpdatedEntity.homeCurrentStrength -
+    //         event.pkEventUpdatedEntity.awayCurrentStrength)
+    //     .abs();
+    // var random = (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
+    // // print('prepareDiff--------:$prepareDiff');
+    // // print('random--------:$random');
+    // var other = t * 0.7 / (4 * 40) * (scoreDiff / max(scoreDiff.abs(), 1));
+    // // print('other--------:$other');
+    //
+    // double winRate = 0.5 + prepareDiff + other - random;
+    //
+    // // print('winRate-------:$winRate');
+    // if (t == 0) {
+    //   winRate = prepareDiff;
+    // }
+    // winRate = min(1, max(0, winRate));
+    // return winRate;
     var pow2 = pow(e, (-log(10) / 24 * t));
     print('pow2---:$pow2');
 
-    var d = (event.pkEventUpdatedEntity.homeCurrentStrength /
+    var home = (event.pkEventUpdatedEntity.homeCurrentStrength /
         (event.pkEventUpdatedEntity.homeCurrentStrength +
             event.pkEventUpdatedEntity.awayCurrentStrength));
-    print('d---:$d');
+    var away = (event.pkEventUpdatedEntity.awayCurrentStrength /
+        (event.pkEventUpdatedEntity.homeCurrentStrength +
+            event.pkEventUpdatedEntity.awayCurrentStrength));
+    print('d---:$home');
 
-    var other2 = d * 0.1 * pow2;
-    print('other2---:$other2');
-    var result =
-        (t * 1.2 / (4 * 40) * scoreDiff / max(scoreDiff, 1)) * 0.6 + other2;
-    return result;
+    var homeCurrentStrengthRate = home * 0.4 * pow2;
+    var awayCurrentStrengthRate = away * 0.4 * pow2;
+    print('other2---:$homeCurrentStrengthRate');
+    var homeScoreRateTemp = (t *
+                1.8 /
+                (4 * 40) *
+                (event.homeScore / (event.homeScore + event.awayScore + 1))) *
+            0.8 +
+        (lastHomeScoreRate * 0.2);
+    var awayScoreRateTemp = (t *
+                1.8 /
+                (4 * 40) *
+                (event.awayScore / (event.homeScore + event.awayScore + 1))) *
+            0.8 +
+        (lastAwayScoreRate * 0.2);
+    var homeResult = homeScoreRateTemp + homeCurrentStrengthRate;
+    var awayResult = awayScoreRateTemp + awayCurrentStrengthRate;
+
+    lastHomeScoreRate = homeScoreRateTemp;
+    lastAwayScoreRate = awayScoreRateTemp;
+    return homeResult > awayResult ? homeResult : awayResult;
   }
 
   double generateRandomValue(double t) {

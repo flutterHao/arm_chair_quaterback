@@ -84,11 +84,14 @@ class DailyTaskController extends GetxController
       final order = [2, 1, 3];
       temp.sort(
           (a, b) => order.indexOf(a.status).compareTo(order.indexOf(b.status)));
-      dailyMissionList = temp.map((e) {
+      dailyMissionList = temp.fold([], (p, e) {
         var missionDefineEntity = CacheApi.missionDefineList
-            .firstWhere((f) => e.missionDefineId == f.missionDefineId);
-        return DailyMissionItem(e, missionDefineEntity);
-      }).toList();
+            .firstWhereOrNull((f) => e.missionDefineId == f.missionDefineId);
+        if (missionDefineEntity != null) {
+          p.add(DailyMissionItem(e, missionDefineEntity));
+        }
+        return p;
+      });
       startDailyTaskCountDown();
       update([idDailyMission]);
     }, onError: (e) {
