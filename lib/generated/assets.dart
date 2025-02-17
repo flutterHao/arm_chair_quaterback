@@ -43,6 +43,7 @@ class Assets {
   static const String commonUiCommonIconInjury = 'assets/images/Common/ui_common_icon_injury.png';
   static const String commonUiCommonIconLayoff = 'assets/images/Common/ui_common_icon_layoff.png';
   static const String commonUiCommonIconLoveletter = 'assets/images/Common/ui_common_icon_loveletter.png';
+  static const String commonUiCommonIconManagerTime = 'assets/images/Common/ui_common_icon_manager_time.png';
   static const String commonUiCommonIconPick = 'assets/images/Common/ui_common_icon_pick.png';
   static const String commonUiCommonIconSift = 'assets/images/Common/ui_common_icon_sift.png';
   static const String commonUiCommonIconSystemAdd = 'assets/images/Common/ui_common_icon_system_add.png';
@@ -235,7 +236,9 @@ class Assets {
   static const String managerUiManagerIcon002 = 'assets/images/manager/ui_manager_icon_002.png';
   static const String managerUiManagerIcon003 = 'assets/images/manager/ui_manager_icon_003.png';
   static const String managerUiManagerIconArchive = 'assets/images/manager/ui_manager_icon_archive.png';
+  static const String managerUiManagerIconAshstar = 'assets/images/manager/ui_manager_icon_ashstar.png';
   static const String managerUiManagerIconBg = 'assets/images/manager/ui_manager_icon_bg.png';
+  static const String managerUiManagerIconBubble = 'assets/images/manager/ui_manager_icon_bubble.png';
   static const String managerUiManagerIconBubble01 = 'assets/images/manager/ui_manager_icon_bubble_01.png';
   static const String managerUiManagerIconButton = 'assets/images/manager/ui_manager_icon_button.png';
   static const String managerUiManagerIconCurrency04 = 'assets/images/manager/ui_manager_icon_currency_04.png';
@@ -244,9 +247,11 @@ class Assets {
   static const String managerUiManagerIconFreetreasurechest = 'assets/images/manager/ui_manager_icon_freetreasurechest.png';
   static const String managerUiManagerIconGo = 'assets/images/manager/ui_manager_icon_go.png';
   static const String managerUiManagerIconLine = 'assets/images/manager/ui_manager_icon_line.png';
+  static const String managerUiManagerIconLovebubble = 'assets/images/manager/ui_manager_icon_lovebubble.png';
   static const String managerUiManagerIconMission = 'assets/images/manager/ui_manager_icon_mission.png';
   static const String managerUiManagerIconPlate = 'assets/images/manager/ui_manager_icon_plate.png';
   static const String managerUiManagerIconPrepareprogressbar = 'assets/images/manager/ui_manager_icon-prepareprogressbar.png';
+  static const String managerUiManagerIconPrepareprogressbar01 = 'assets/images/manager/ui_manager_icon-prepareprogressbar_01.png';
   static const String managerUiManagerIconPrepareprogressbar02 = 'assets/images/manager/ui_manager_icon-prepareprogressbar_02.png';
   static const String managerUiManagerIconPrepareprogressbar03 = 'assets/images/manager/ui_manager_icon-prepareprogressbar_03.png';
   static const String managerUiManagerIconPrepareprogressbar04 = 'assets/images/manager/ui_manager_icon-prepareprogressbar_04.png';

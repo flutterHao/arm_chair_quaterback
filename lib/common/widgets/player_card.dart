@@ -2,7 +2,7 @@
  * @Description: 球员头像卡片
  * @Author: lihonghao
  * @Date: 2024-11-18 12:23:44
- * @LastEditTime: 2025-02-15 15:32:16
+ * @LastEditTime: 2025-02-17 15:29:11
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -78,6 +78,13 @@ class PlayerCard extends StatelessWidget {
                     fontFamily: FontFamily.fRobotoBlack,
                   ),
                 ),
+                // child: Text(
+                //   Utils.getPlayBaseInfo(playerId).playerScore.toString(),
+                //   style: 19.w4(
+                //       fontFamily: FontFamily.fOswaldBold,
+                //       height: 0.8,
+                //       color: AppColors.c262626),
+                // ),
               ),
             // Positioned(
             //   top: 4.w,

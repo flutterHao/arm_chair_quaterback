@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-17 10:02:35
+ * @LastEditTime: 2025-02-17 15:18:38
  */
 /*
  * @Description: 
@@ -121,50 +121,72 @@ class IllustratiionsController extends GetxController
       double height =
           (MediaQuery.of(Get.context!).size.width - 33.w - 42.w) / 3 * 1.6;
       var list = onfilter();
-      var activeList = list.where((e) => e.isActive == 0).toList();
-      var notActiveList = list.where((e) => e.isActive == 0).toList();
 
-      // for (var item in activeList) {
-      //   PlayerCollectCollects? myPlayer = playerCollectEntity.collects
-      //       .firstWhereOrNull((e) => e.playerId == item.playerId);
-      //   if (myPlayer != null) {
-      //     //如果是新获取的，添加获得动画
-      //     if (!hasChange.value) {
-      //       int index = activeList.indexOf(item);
-      //       if (index > 0) {
-      //         double offset = ((index + 1) ~/ 3) * (height + 10.w) + 25.w;
-      //         int t = (offset - dy).ceil();
-      //         await scrollController.animateTo(offset,
-      //             duration: Duration(milliseconds: t), curve: Curves.easeInOut);
-      //         await Future.delayed(const Duration(milliseconds: 300));
-      //         dy = offset;
-      //       }
-      //     }
-      //     item.fragmentNum = myPlayer.fragmentNum;
-      //     item.isLight = myPlayer.isLight;
-      //   }
-      // }
-      double beginY = ((activeList.length + 1) ~/ 3) * (height + 10.w) + 25.w;
+      ///现役退役
+      var activeList = list.where((e) => e.isActive == 0).toList();
+      var notActiveList = list.where((e) => e.isActive == 1).toList();
+
+      for (var item in activeList) {
+        PlayerCollectCollects? myPlayer = playerCollectEntity.collects
+            .firstWhereOrNull((e) => e.playerId == item.playerId);
+        if (myPlayer != null) {
+          //如果是新获取的，添加获得动画
+          // if (!hasChange.value) {
+          //   int index = activeList.indexOf(item);
+          //   if (index > 0) {
+          //     double offset = ((index + 1) ~/ 3) * (height + 10.w) + 25.w;
+          //     int t = (offset - dy).ceil();
+          //     await scrollController.animateTo(offset,
+          //         duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+          //     item.fragmentNum = myPlayer.fragmentNum;
+          //     item.isLight = myPlayer.isLight;
+          //     item.isLightRx.value = myPlayer.isLight;
+          //     update(["list"]);
+          //     await Future.delayed(const Duration(milliseconds: 300));
+          //     dy = offset;
+          //   }
+          // } else {
+          //   item.fragmentNum = myPlayer.fragmentNum;
+          //   item.isLight = myPlayer.isLight;
+          //   item.isLightRx.value = myPlayer.isLight;
+          // }
+          item.fragmentNum = myPlayer.fragmentNum;
+          item.isLight = myPlayer.isLight;
+          item.isLightRx.value = myPlayer.isLight;
+        }
+      }
+      double beginY =
+          ((activeList.length) ~/ 3 + 1) * (height + 10.w) + 87.5.w + 25.w;
       for (var item in notActiveList) {
         PlayerCollectCollects? myPlayer = playerCollectEntity.collects
             .firstWhereOrNull((e) => e.playerId == item.playerId);
         if (myPlayer != null) {
-          if (!hasChange.value) {
-            int index = notActiveList.indexOf(item);
-            if (index > 0) {
-              double offset =
-                  beginY + ((index + 1) ~/ 3) * (height + 10.w) + 25.w;
-              int t = (offset - dy).ceil();
-              await scrollController.animateTo(offset,
-                  duration: Duration(milliseconds: t), curve: Curves.easeInOut);
-              await Future.delayed(const Duration(milliseconds: 300));
-              dy = offset;
-            }
-          }
+          // if (hasChange.value) {
+          //   int index = notActiveList.indexOf(item);
+          //   if (index > 0) {
+          //     double offset = beginY + ((index + 1) ~/ 3) * (height + 10.w);
+          //     int t = (offset - dy).ceil();
+          //     // await scrollController.animateTo(offset,
+          //     //     duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+          //     // item.fragmentNum = myPlayer.fragmentNum;
+          //     // item.isLight = myPlayer.isLight;
+          //     // item.isLightRx.value = myPlayer.isLight;
+          //     // update(["list"]);
+          //     // await Future.delayed(const Duration(milliseconds: 300));
+          //     dy = offset;
+          //   }
+          // } else {
+          //   item.fragmentNum = myPlayer.fragmentNum;
+          //   item.isLight = myPlayer.isLight;
+          //   item.isLightRx.value = myPlayer.isLight;
+          // }
           item.fragmentNum = myPlayer.fragmentNum;
           item.isLight = myPlayer.isLight;
+          item.isLightRx.value = myPlayer.isLight;
         }
       }
+      // await scrollController.animateTo(beginY,
+      //     duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
 
       //设置工资帽和升级经验
       var info = playerCollectEntity.teamBookPlayerCollect;

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-02-15 16:27:15
+ * @LastEditTime: 2025-02-17 16:13:04
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -502,7 +502,7 @@ class PlayerCardWidget extends GetView<TeamController> {
           style: 12.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.75),
         ),
         2.5.vGap,
-        PlayerStartWidget(grade: player.breakThroughGrade),
+        PlayerStartWidget(grade: player.breakThroughGrade + 5),
         4.5.vGap,
         Text(
           Utils.getPlayBaseInfo(player.playerId).position,
@@ -527,24 +527,33 @@ class PlayerStartWidget extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          for (int i = 0; i < count; i++)
-            Positioned(
-              left: 8.w * i,
-              child: Image.asset(
-                Assets.managerUiManagerIconStar,
-                height: 18.5.w,
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-          if (half == 1)
-            Positioned(
-              left: 8.w * count,
-              child: Image.asset(
-                Assets.managerUiManagerIconStar01,
-                height: 18.5.w,
-                fit: BoxFit.fitHeight,
-              ),
-            )
+          for (int i = 0; i < 5; i++)
+            count > i
+                ? Positioned(
+                    left: 8.5.w * i,
+                    child: Image.asset(
+                      Assets.managerUiManagerIconStar,
+                      height: 18.5.w,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  )
+                : (grade > i * 2)
+                    ? Positioned(
+                        left: 8.w * count,
+                        child: Image.asset(
+                          Assets.managerUiManagerIconStar01,
+                          height: 18.5.w,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      )
+                    : Positioned(
+                        left: 8.5.w * i,
+                        child: Image.asset(
+                          Assets.managerUiManagerIconAshstar,
+                          height: 18.5.w,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
         ],
       ),
     );

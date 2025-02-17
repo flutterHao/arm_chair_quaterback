@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-02-15 17:45:51
+ * @LastEditTime: 2025-02-17 12:05:59
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -172,93 +172,96 @@ class _Item extends GetView<IllustratiionsController> {
           RouteNames.illustrationDetail,
           arguments: item,
         );
-        if (controller.hasChange == true) controller.updateCollect();
+        if (controller.hasChange.value == true) controller.updateCollect();
       },
       child: Center(
         child: Column(
           children: [
-            Container(
-              width: 100.w,
-              height: 140.w,
-              clipBehavior: Clip.antiAlias,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9.w),
-                  color:
-                      item.isLight == 1 ? AppColors.cFFFFFF : AppColors.cE6E6E),
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  ImageWidget(
-                    url: Utils.getPlayUrl(item.playerId),
-                    color: item.isLight == 1
-                        ? null
-                        : AppColors.c000000.withOpacity(0.2),
-                    width: 100.w,
-                    height: 140.w,
-                    fit: BoxFit.cover,
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      height: 16.w,
-                      alignment: Alignment.center,
-                      color: AppColors.c262626,
+            Obx(() {
+              return Container(
+                width: 100.w,
+                height: 140.w,
+                clipBehavior: Clip.antiAlias,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.w),
+                    color: item.isLightRx.value == 1
+                        ? AppColors.cFFFFFF
+                        : AppColors.cE6E6E),
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    ImageWidget(
+                      url: Utils.getPlayUrl(item.playerId),
+                      color: item.isLightRx.value == 1
+                          ? null
+                          : AppColors.c000000.withOpacity(0.2),
+                      width: 100.w,
+                      height: 140.w,
+                      fit: BoxFit.cover,
                     ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    bottom: 0,
-                    child: Container(
-                      height: 16.w,
-                      width: 100.w * item.fragmentNum / item.needNum,
-                      alignment: Alignment.center,
-                      color: AppColors.c10A86A,
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
                         height: 16.w,
                         alignment: Alignment.center,
-                        child: Text(
-                          "${item.fragmentNum}/${item.needNum}",
-                          style: 12.w4(
-                            color: AppColors.cFFFFFF,
-                            height: 1,
-                            fontFamily: FontFamily.fRobotoRegular,
-                          ),
-                        )),
-                  ),
-                  Positioned(
-                    left: 4.5.w,
-                    bottom: 2.5.w,
-                    child: IconWidget(
-                      iconWidth: 13.w,
-                      // iconHeight: 12.8.w,
-                      icon: Assets.managerUiManagerArchiveDebris,
-                      iconColor: AppColors.cFFFFFF,
-                    ),
-                  ),
-                  if (item.isLight == 1)
-                    Positioned(
-                      top: 7.5.w,
-                      left: 7.w,
-                      child: OutlinedText(
-                        text: Utils.getPlayBaseInfo(item.playerId).grade,
-                        textStyle: TextStyle(
-                            fontSize: 34.h,
-                            fontFamily: FontFamily.fRobotoBlack,
-                            height: 0.8),
+                        color: AppColors.c262626,
                       ),
                     ),
-                ],
-              ),
-            ),
+                    Positioned(
+                      left: 0,
+                      bottom: 0,
+                      child: Container(
+                        height: 16.w,
+                        width: 100.w * item.fragmentNum / item.needNum,
+                        alignment: Alignment.center,
+                        color: AppColors.c10A86A,
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
+                          height: 16.w,
+                          alignment: Alignment.center,
+                          child: Text(
+                            "${item.fragmentNum}/${item.needNum}",
+                            style: 12.w4(
+                              color: AppColors.cFFFFFF,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular,
+                            ),
+                          )),
+                    ),
+                    Positioned(
+                      left: 4.5.w,
+                      bottom: 2.5.w,
+                      child: IconWidget(
+                        iconWidth: 13.w,
+                        // iconHeight: 12.8.w,
+                        icon: Assets.managerUiManagerArchiveDebris,
+                        iconColor: AppColors.cFFFFFF,
+                      ),
+                    ),
+                    if (item.isLight == 1)
+                      Positioned(
+                        top: 7.5.w,
+                        left: 7.w,
+                        child: OutlinedText(
+                          text: Utils.getPlayBaseInfo(item.playerId).grade,
+                          textStyle: TextStyle(
+                              fontSize: 34.h,
+                              fontFamily: FontFamily.fRobotoBlack,
+                              height: 0.8),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            }),
             5.5.vGap,
             Text(
               Utils.getPlayBaseInfo(item.playerId).ename,

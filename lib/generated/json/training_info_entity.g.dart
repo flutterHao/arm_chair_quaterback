@@ -370,6 +370,10 @@ TrainingInfoBuff $TrainingInfoBuffFromJson(Map<String, dynamic> json) {
   if (show != null) {
     trainingInfoBuff.show = show;
   }
+  final double? scale = jsonConvert.convert<double>(json['scale']);
+  if (scale != null) {
+    trainingInfoBuff.scale = scale;
+  }
   return trainingInfoBuff;
 }
 
@@ -388,6 +392,7 @@ Map<String, dynamic> $TrainingInfoBuffToJson(TrainingInfoBuff entity) {
   data['showBuff'] = entity.showBuff;
   data['isMatch'] = entity.isMatch;
   data['show'] = entity.show.toJson();
+  data['scale'] = entity.scale;
   return data;
 }
 
@@ -406,9 +411,11 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
     RxBool? isOpen,
     RxBool? isSelect,
     Rx<Offset>? offset,
+    Rx<double>? rotate,
     bool? showBuff,
     bool? isMatch,
     RxBool? show,
+    double? scale,
   }) {
     return TrainingInfoBuff()
       ..id = id ?? this.id
@@ -424,8 +431,10 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
       ..isOpen = isOpen ?? this.isOpen
       ..isSelect = isSelect ?? this.isSelect
       ..offset = offset ?? this.offset
+      ..rotate = rotate ?? this.rotate
       ..showBuff = showBuff ?? this.showBuff
       ..isMatch = isMatch ?? this.isMatch
-      ..show = show ?? this.show;
+      ..show = show ?? this.show
+      ..scale = scale ?? this.scale;
   }
 }

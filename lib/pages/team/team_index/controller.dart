@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-15 18:11:59
+ * @LastEditTime: 2025-02-17 16:24:38
  */
 
 import 'dart:async';
@@ -55,6 +55,7 @@ class TeamIndexController extends GetxController
   var isCountdownActive = false.obs; // 倒计时是否激活
   Timer? freeBoxTimer;
   Timer? battleBoxTimer;
+  Timer? seasonTimer;
   CardPackInfoCard currentCardPack = CardPackInfoCard();
 
   List<TrainingInfoAward> awardList = [];
@@ -64,6 +65,7 @@ class TeamIndexController extends GetxController
   bool recieved = false;
   // RxInt cup = 0.obs;
   TeamSimpleEntity teamSimpleEntity = TeamSimpleEntity();
+  RxString seasonCountDonwnStr = '0d 00:00:00'.obs;
 
   //step:0 开宝箱 1选卡 2 展示选中的卡牌 3 展示所有,
   int step = 0;
@@ -180,6 +182,7 @@ class TeamIndexController extends GetxController
     ]).then((v) {
       loadDataSuccess = true;
       getTeamInfoCup();
+      getSeasonTime();
       update(["team_index"]);
     });
   }
@@ -304,6 +307,23 @@ class TeamIndexController extends GetxController
     int teamId = HomeController.to.getTeamId();
     teamSimpleEntity = await PicksApi.getTeamSimple(teamId);
     update(["season_info"]);
+  }
+
+  Future getSeasonTime() async {
+    var nowSeasonEntity = await PicksApi.getNowSeason();
+    _startTimer(
+      time: nowSeasonEntity.seasonEndTime,
+      onTick: (s) {
+        int days = (s / (24 * 60 * 60)).floor();
+        int hours = ((s % (24 * 60 * 60)) / (60 * 60)).floor();
+        int minutes = ((s % (60 * 60)) / 60).floor();
+        int remainingSeconds = s % 60;
+        seasonCountDonwnStr.value =
+            "${days}d ${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}";
+      },
+      onComplete: () {},
+      timer: seasonTimer,
+    );
   }
 
   ///宝箱奖励弹窗
@@ -671,6 +691,7 @@ class TeamIndexController extends GetxController
   void onClose() {
     freeBoxTimer?.cancel();
     battleBoxTimer?.cancel();
+    seasonTimer?.cancel();
     super.onClose();
   }
 

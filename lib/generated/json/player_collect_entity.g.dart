@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
+import 'package:get/get.dart';
+
 
 PlayerCollectEntity $PlayerCollectEntityFromJson(Map<String, dynamic> json) {
   final PlayerCollectEntity playerCollectEntity = PlayerCollectEntity();
@@ -114,6 +116,7 @@ extension PlayerCollectCollectsExtension on PlayerCollectCollects {
     int? isAnimation,
     int? createTime,
     int? isLight,
+    dynamic isLightRx,
     int? teamId,
     int? fragmentNum,
     int? updateTime,
@@ -126,6 +129,7 @@ extension PlayerCollectCollectsExtension on PlayerCollectCollects {
       ..isAnimation = isAnimation ?? this.isAnimation
       ..createTime = createTime ?? this.createTime
       ..isLight = isLight ?? this.isLight
+      ..isLightRx = isLightRx ?? this.isLightRx
       ..teamId = teamId ?? this.teamId
       ..fragmentNum = fragmentNum ?? this.fragmentNum
       ..updateTime = updateTime ?? this.updateTime

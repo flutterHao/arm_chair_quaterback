@@ -2,11 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-13 21:01:07
- * @LastEditTime: 2025-01-15 16:32:06
+ * @LastEditTime: 2025-02-17 11:31:44
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/player_collect_entity.g.dart';
 import 'dart:convert';
+
+import 'package:get/get.dart';
 export 'package:arm_chair_quaterback/generated/json/player_collect_entity.g.dart';
 
 @JsonSerializable()
@@ -34,6 +36,8 @@ class PlayerCollectCollects {
   late int isAnimation = 0;
   late int createTime = 0;
   late int isLight = 0;
+  @JSONField(deserialize: false, serialize: false)
+  var isLightRx = 0.obs;
   late int teamId = 0;
   late int fragmentNum = 0;
   late int updateTime = 0;
@@ -44,8 +48,11 @@ class PlayerCollectCollects {
 
   PlayerCollectCollects();
 
-  factory PlayerCollectCollects.fromJson(Map<String, dynamic> json) =>
-      $PlayerCollectCollectsFromJson(json);
+  factory PlayerCollectCollects.fromJson(Map<String, dynamic> json) {
+    var item = $PlayerCollectCollectsFromJson(json);
+    item.isLightRx.value = item.isLight;
+    return item;
+  }
 
   Map<String, dynamic> toJson() => $PlayerCollectCollectsToJson(this);
 
