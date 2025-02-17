@@ -404,4 +404,19 @@ Map<String, String> zh_CN = {
   LangKey.gameButtonUnfold: "展开",
   LangKey.gameTipsTrophiesRisen: "奖杯数量增加了",
   LangKey.gameTipsTrophiesDropped: "奖杯数量减少了",
+
+  // 367
+  LangKey.gameNamePPG: "场均得分",
+  LangKey.gameNameRPG: "场均篮板",
+  LangKey.gameNameAPG: "场均助攻",
+  LangKey.gameMeanTPM: "三分命中个数",
+  LangKey.gameBigNameFGP: "投篮命中率",
+  LangKey.gameBigNameFTM: "罚篮命中个数",
+  LangKey.gameNameFTP: "罚球命中率",
+  LangKey.gameNameTPG: "场均失误",
+  LangKey.gameBigNameFT: "罚球命中率",
+  LangKey.gameBigNameFTA: "罚球出手数",
+  LangKey.gameBigNameTO: "失误",
+  LangKey.gameNameGP: "比赛场数",
+  LangKey.gameNameFT: "罚球",
 };

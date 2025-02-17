@@ -181,6 +181,8 @@ class Api {
       "$API_BASE_PATH/TeamPlayer/composeTeamPlayer";
   static const String destroyTeamPlayer =
       "$API_BASE_PATH/TeamPlayer/destroyTeamPlayer";
+  static const String getPlayerStrengthRank =
+      "$API_BASE_PATH/TeamPlayer/getPlayerStrengthRank";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";

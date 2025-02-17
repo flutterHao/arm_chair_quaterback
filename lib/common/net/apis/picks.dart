@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_enti
 import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
@@ -242,5 +243,13 @@ class PicksApi {
   ///提取附件奖励
   static Future receiveMailAward(String mailIds) async {
     await httpUtil.post(Api.receiveMailAward, data: {"mailIds": mailIds});
+  }
+
+  /// 获取球员实力排行榜
+  static Future<List<PlayerStrengthRankEntity>> getPlayerStrengthRank(
+      {int start = 0, int end = 9}) async {
+    List json = await httpUtil
+        .post(Api.getPlayerStrengthRank, data: {"start": start, "end": end});
+    return json.map((e) => PlayerStrengthRankEntity.fromJson(e)).toList();
   }
 }

@@ -472,4 +472,19 @@ class LangKey {
   static const String gameButtonUnfold = 'gameButtonUnfold';
   static const String gameTipsTrophiesRisen = 'gameTipsTrophiesRisen';
   static const String gameTipsTrophiesDropped = 'gameTipsTrophiesDropped';
+
+  //367
+  static const String gameNamePPG = 'gameNamePPG';
+  static const String gameNameRPG = 'gameNameRPG';
+  static const String gameNameAPG = 'gameNameAPG';
+  static const String gameMeanTPM = 'gameMeanTPM';
+  static const String gameBigNameFGP = 'gameBigNameFGP';
+  static const String gameBigNameFTM = 'gameBigNameFTM';
+  static const String gameNameFTP = 'gameNameFTP';
+  static const String gameNameTPG = 'gameNameTPG';
+  static const String gameBigNameFT = 'gameBigNameFT';
+  static const String gameBigNameFTA = 'gameBigNameFTA';
+  static const String gameBigNameTO = 'gameBigNameTO';
+  static const String gameNameGP = 'gameNameGP';
+  static const String gameNameFT = 'gameNameFT';
 }

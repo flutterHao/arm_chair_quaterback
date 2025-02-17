@@ -381,6 +381,20 @@ Map<String, String> en_US = {
   LangKey.gameButtonUnfold: "UNFOLD",
   LangKey.gameTipsTrophiesRisen: "The number of trophies has risen",
   LangKey.gameTipsTrophiesDropped: "The number of trophies has dropped",
+  // 367
+  LangKey.gameNamePPG: "PPG",
+  LangKey.gameNameRPG: "RPG",
+  LangKey.gameNameAPG: "APG",
+  LangKey.gameMeanTPM: "THREE-POINT MAKES",
+  LangKey.gameBigNameFGP: "FIELD GOAL PERCENTAGE",
+  LangKey.gameBigNameFTM: "FREE THROW MAKES",
+  LangKey.gameNameFTP: "FT%",
+  LangKey.gameNameTPG: "TPG",
+  LangKey.gameBigNameFT: "FREE THROW PERCENT",
+  LangKey.gameBigNameFTA: "FREE THROW ATTEMPT",
+  LangKey.gameBigNameTO: "TURNOVERS",
+  LangKey.gameNameGP: "GP",
+  LangKey.gameNameFT: "FT",
 };
 
 // const Map<String, String> en_US = {

@@ -553,28 +553,28 @@ class Utils {
 
   static String getStatsPlayerRankKey(String type) {
     switch (type) {
-      // case "GP":
-      //   return LangKey.gameNamePts;
+      case "GP":
+        return LangKey.gameNameGP;
       // case "MIN":
       //   return LangKey.gameNamePts;
       case "PPG":
-        return LangKey.nbaTeamNamePpg;
+        return LangKey.gameNamePPG;
       case "PTS":
         return LangKey.gameNamePts;
       case "FG%":
         return LangKey.gameMeanFgp;
       case "FGM":
         return LangKey.gameNameFgm;
-      // case "3P%":
-      //   return LangKey.gameNamePts;
+      case "3P%":
+        return LangKey.gameFullNameTpp;
       case "3PM":
         return LangKey.gameNameTgm;
-      // case "FT":
-      //   return LangKey.gameNamePts;
+      case "FT":
+        return LangKey.gameNameFT;
       case "FTM":
         return LangKey.gameNameFtm;
       case "RPG":
-        return LangKey.nbaTeamNameRpg;
+        return LangKey.gameNameRPG;
       case "REB":
         return LangKey.gameNameReb;
       // case "DREB":
@@ -582,11 +582,11 @@ class Utils {
       // case "OREB":
       //   return LangKey.gameNamePts;
       case "APG":
-        return LangKey.nbaTeamNameApg;
+        return LangKey.gameNameAPG;
       // case "AST":
       //   return LangKey.gameNamePts;
-      // case "TPG":
-      //   return LangKey.gameNamePts;
+      case "TPG":
+        return LangKey.gameNameTPG;
       // case "TO":
       //   return LangKey.gameNamePts;
       // case "FPG":

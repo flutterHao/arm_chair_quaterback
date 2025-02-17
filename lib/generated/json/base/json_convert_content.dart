@@ -68,6 +68,7 @@ import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart
 import 'package:arm_chair_quaterback/common/entities/player_power_rate_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
@@ -888,6 +889,14 @@ class JsonConvert {
       return data.map<PlayerStatusEntity>((Map<String, dynamic> e) =>
           PlayerStatusEntity.fromJson(e)).toList() as M;
     }
+    if (<PlayerStrengthRankEntity>[] is M) {
+      return data.map<PlayerStrengthRankEntity>((Map<String, dynamic> e) =>
+          PlayerStrengthRankEntity.fromJson(e)).toList() as M;
+    }
+    if (<PlayerStrengthRankTrendList>[] is M) {
+      return data.map<PlayerStrengthRankTrendList>((Map<String, dynamic> e) =>
+          PlayerStrengthRankTrendList.fromJson(e)).toList() as M;
+    }
     if (<RankAwardEntity>[] is M) {
       return data.map<RankAwardEntity>((Map<String, dynamic> e) =>
           RankAwardEntity.fromJson(e)).toList() as M;
@@ -1451,6 +1460,9 @@ class JsonConvertClassCollection {
         .fromJson,
     (StatsEntity).toString(): StatsEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,
+    (PlayerStrengthRankEntity).toString(): PlayerStrengthRankEntity.fromJson,
+    (PlayerStrengthRankTrendList).toString(): PlayerStrengthRankTrendList
+        .fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,
     (RankListEntity).toString(): RankListEntity.fromJson,
