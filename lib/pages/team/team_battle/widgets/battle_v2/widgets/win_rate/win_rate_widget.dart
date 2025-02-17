@@ -78,8 +78,11 @@ class WinRateWidget extends StatelessWidget {
                                           color: AppColors.c1F8FE5,
                                           width: 1.w)),
                                   child: ImageWidget(
-                                    url: Utils.getTeamUrl(teamBattleV2Controller
-                                        .battleEntity.homeTeam.teamLogo),
+                                    url: Utils.getTeamUrl(controller.isHomeWin
+                                        ? teamBattleV2Controller
+                                            .battleEntity.homeTeam.teamLogo
+                                        : teamBattleV2Controller
+                                            .battleEntity.awayTeam.teamLogo),
                                     imageFailedPath: Assets.teamUiHead01,
                                     width: 21.w,
                                     height: 21.w,
@@ -140,7 +143,7 @@ class WinRateWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
-                                width: 313.w,
+                                width: controller.getWidth(),
                                 height: 164.h,
                                 decoration: BoxDecoration(
                                     color: AppColors.cF2F2F2,
@@ -153,7 +156,8 @@ class WinRateWidget extends StatelessWidget {
                                     ...List.generate(3, (index) {
                                       return Container(
                                         margin: EdgeInsets.only(
-                                            left: (313.w / 4) * (index + 1) -
+                                            left: (controller.getWidth() / 4) *
+                                                    (index + 1) -
                                                 3.w),
                                         height: 164.h,
                                         width: 3.w,
@@ -192,7 +196,7 @@ class WinRateWidget extends StatelessWidget {
                                         children: [
                                           //倾斜渐变线
                                           SizedBox(
-                                            width: 313.w,
+                                            width: controller.getWidth(),
                                             height: 164.h,
                                             child: ClipPath(
                                               clipper: LineChartClipper(
@@ -217,7 +221,8 @@ class WinRateWidget extends StatelessWidget {
                                           ),
                                           //折线图实线
                                           CustomPaint(
-                                            size: Size(313.w, 164.h),
+                                            size: Size(
+                                                controller.getWidth(), 164.h),
                                             painter: ChartPainter(
                                                 controller.chartPoints.value,
                                                 164.h),
@@ -234,7 +239,7 @@ class WinRateWidget extends StatelessWidget {
                                                 2
                                             : 0,
                                         child: SizedBox(
-                                          width: 313.w,
+                                          width: controller.getWidth(),
                                           height: 164.h,
                                           child: Stack(
                                             children: [
@@ -298,7 +303,7 @@ class WinRateWidget extends StatelessWidget {
                           ),
                           5.vGap,
                           SizedBox(
-                            width: 313.w,
+                            width: controller.getWidth(),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: List.generate(4, (index) {
@@ -314,7 +319,7 @@ class WinRateWidget extends StatelessWidget {
                           ),
                           10.vGap,
                           SizedBox(
-                            width: 313.w,
+                            width: controller.getWidth(),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [

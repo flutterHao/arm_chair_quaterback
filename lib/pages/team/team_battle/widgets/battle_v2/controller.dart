@@ -79,6 +79,8 @@ class TeamBattleV2Controller extends GetxController
 
   late EasyAnimationController<double> quarterTimeCountDownAnimationController;
   var quarterGameCountDown = 40.0.obs;
+
+  /// 第一节 等于 1
   var quarter = 0.obs;
   Map<String, List<GameEvent>> eventCacheMap = {}; //缓存所有的事件，等待事件引擎调用
   Timer? eventEngine; //事件引擎,根据showTime设置显示时间
@@ -295,6 +297,7 @@ class TeamBattleV2Controller extends GetxController
         eventEngine?.cancel();
         isGameOver.value = true;
         normalDanMaKuTimer?.cancel();
+        winRateController.addLast();
         gameSpeed = 1;
         update([idBattleMain]);
         print(
@@ -450,11 +453,11 @@ class TeamBattleV2Controller extends GetxController
               .toInt();
     }
 
-    double winRate = getWinRate(event);
+    WinInfo winInfo = getWinRate(event);
     // print('winRate: $winRate');
-    var offset =
-        Offset((eventCount + getBeforeQuarterEventCount()) * 1.0, winRate);
-    var offsetEvent = OffsetEvent(event, offset);
+    var offset = Offset(
+        (eventCount + getBeforeQuarterEventCount()) * 1.0, winInfo.winRate);
+    var offsetEvent = OffsetEvent(event, offset, winInfo.homeWin);
     winRateController.addPoint(offsetEvent);
 
     if (eventOnScreenMap.containsKey(key)) {
@@ -524,7 +527,7 @@ class TeamBattleV2Controller extends GetxController
     }
   }
 
-  double getWinRate(GameEvent event, {double? time}) {
+  WinInfo getWinRate(GameEvent event, {double? time}) {
     var t = time ??
         ((40 - quarterTimeCountDownAnimationController.value.value) +
             (quarter.value - 1) * 40);
@@ -559,25 +562,29 @@ class TeamBattleV2Controller extends GetxController
 
     var homeCurrentStrengthRate = home * 0.4 * pow2;
     var awayCurrentStrengthRate = away * 0.4 * pow2;
-    print('other2---:$homeCurrentStrengthRate');
+    print('other2---:$homeCurrentStrengthRate,$awayCurrentStrengthRate');
     var homeScoreRateTemp = (t *
-                1.8 /
+                2 /
                 (4 * 40) *
                 (event.homeScore / (event.homeScore + event.awayScore + 1))) *
             0.8 +
         (lastHomeScoreRate * 0.2);
     var awayScoreRateTemp = (t *
-                1.8 /
+                2 /
                 (4 * 40) *
                 (event.awayScore / (event.homeScore + event.awayScore + 1))) *
             0.8 +
         (lastAwayScoreRate * 0.2);
+    print('homeScoreRateTemp---:$homeScoreRateTemp,$awayScoreRateTemp');
     var homeResult = homeScoreRateTemp + homeCurrentStrengthRate;
     var awayResult = awayScoreRateTemp + awayCurrentStrengthRate;
+    print('homeResult---:$homeResult,$awayResult');
 
     lastHomeScoreRate = homeScoreRateTemp;
     lastAwayScoreRate = awayScoreRateTemp;
-    return homeResult > awayResult ? homeResult : awayResult;
+    var winInfo = WinInfo(homeResult > awayResult ? homeResult : awayResult,
+        homeResult > awayResult);
+    return winInfo;
   }
 
   double generateRandomValue(double t) {
@@ -1229,11 +1236,12 @@ class TeamBattleV2Controller extends GetxController
       return p;
     });
     List<OffsetEvent> oes = [];
+    var step = 160 / fold.length;
     for (int i = 0; i < fold.length; i++) {
       var gameEvent = fold[i];
-      var offset =
-          Offset(i.toDouble(), getWinRate(gameEvent, time: i.toDouble()));
-      oes.add(OffsetEvent(gameEvent, offset));
+      var winInfo = getWinRate(gameEvent, time: i * step);
+      var offset = Offset(i.toDouble(), winInfo.winRate);
+      oes.add(OffsetEvent(gameEvent, offset, winInfo.homeWin));
     }
     winRateController.jumpGame(oes);
 
@@ -1351,6 +1359,14 @@ class GameEvent {
 class OffsetEvent {
   final GameEvent event;
   final Offset offset;
+  final bool homeWin;
 
-  OffsetEvent(this.event, this.offset);
+  OffsetEvent(this.event, this.offset, this.homeWin);
+}
+
+class WinInfo {
+  final double winRate;
+  final bool homeWin;
+
+  WinInfo(this.winRate, this.homeWin);
 }

@@ -128,7 +128,7 @@ class HomeController extends GetxController {
 
   void onTap(v) {
     if (v == tabIndex.value) {
-      sameItemTap();
+      onSameItemTap();
       return;
     }
     tabIndex.value = v;
@@ -136,7 +136,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  void sameItemTap() {
+  void onSameItemTap() {
     if (tabIndex.value == 0) {
       Get.find<NewListController>().scrollToTop();
     } else if (tabIndex.value == 1) {

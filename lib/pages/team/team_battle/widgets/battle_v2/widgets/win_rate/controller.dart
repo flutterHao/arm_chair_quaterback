@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
@@ -31,14 +32,28 @@ class WinRateController extends GetxController
     // const Offset(10, 50),
   ];
 
-  EasyAnimationController? easyAnimationController;
+  late EasyAnimationController easyAnimationController;
   int pointIndex = 0;
 
   List<Offset> stepNewList = [];
-  Size size = Size(313.w, 164.h);
+  late Size size;
 
   //游戏速度 默认 1
   double gameSpeed = 1;
+
+  var isHomeWin = true;
+
+  @override
+  void onInit() {
+    super.onInit();
+    size = Size(getWidth(), 164.h);
+    easyAnimationController = EasyAnimationController(
+        vsync: this,
+        begin: 0,
+        end: 1,
+        duration: const Duration(milliseconds: 1000));
+    addListener(animationListener);
+  }
 
   @override
   void onReady() {
@@ -55,8 +70,22 @@ class WinRateController extends GetxController
 
   @override
   void onClose() {
-    easyAnimationController?.dispose();
+    easyAnimationController.dispose();
     super.onClose();
+  }
+
+  void addLast() {
+    Offset offset = getLastOffset();
+    addOffset(offset);
+  }
+
+  Offset getLastOffset() {
+    var offset = Offset(size.width, isHomeWin ? 0 : size.height);
+    return offset;
+  }
+
+  double getWidth() {
+    return Utils.getMaxWidth(Get.context!) - 62.w;
   }
 
   setGameSpeed(double speed) {
@@ -64,13 +93,15 @@ class WinRateController extends GetxController
   }
 
   jumpGame(List<OffsetEvent> oe) {
-    easyAnimationController?.stop();
+    easyAnimationController.stop();
     List<Offset> oldList = List.from(pointData);
     var newList = oe.map((e) => handlerOffset(e)).toList();
     var sublist = newList.sublist(oldList.length);
     List<Offset> allList = [];
     // allList.addAll(oldList);
     allList.addAll(sublist);
+    isHomeWin = oe.isNotEmpty ? oe.last.homeWin : true;
+    // allList.add(getLastOffset());
     chartPoints.addAll(allList);
     pointOffset.value = chartPoints.last;
   }
@@ -78,41 +109,46 @@ class WinRateController extends GetxController
   addPoint(OffsetEvent oe) {
     ///计算每个点的位置
     Offset offset = handlerOffset(oe);
+    isHomeWin = oe.homeWin;
+    addOffset(offset);
+  }
+
+  void addOffset(Offset offset) {
     Offset preview = Offset.zero;
     if (pointData.isNotEmpty) {
       preview = pointData.last;
     }
     pointData.add(offset);
-    if (pointData.length <= 1) {
-      return;
+    if (pointData.length > 1) {
+      var current = pointData.last;
+      easyAnimationController.stop();
+      easyAnimationController.set(preview, current,duration: Duration(milliseconds: (1000 / gameSpeed).toInt()));
+      easyAnimationController.forward(from: 0);
     }
-    var current = pointData.last;
-    easyAnimationController?.stop();
-    easyAnimationController?.controller.removeListener(animationListener);
-    easyAnimationController = EasyAnimationController(
-        vsync: this,
-        begin: preview,
-        end: current,
-        duration: Duration(milliseconds: (1000 / gameSpeed).toInt()))
-      ..controller.addListener(animationListener);
-    easyAnimationController?.forward(from: 0);
   }
 
   Offset handlerOffset(OffsetEvent oe) {
     TeamBattleV2Controller teamBattleV2Controller = Get.find();
     var totalCount = teamBattleV2Controller
         .getQuarterAvailableEventTotalCount(oe.event.quarter);
+    var beforeQuarterEventCount =
+        teamBattleV2Controller.getBeforeQuarterEventCount();
 
     ///计算每个点的位置
-    var stepX = size.width / 4 / totalCount;
+    var quarterWidth = size.width / 4;
+    var beforeQuarterWidth = quarterWidth * (oe.event.quarter - 1);
+    var stepX = quarterWidth / totalCount;
     var dy = (size.height - oe.offset.dy * size.height);
     // print('dy:$dy');
-    var offset = Offset((oe.offset.dx + 1) * stepX, max(0, dy));
+    var offset = Offset(
+        beforeQuarterWidth +
+            (oe.offset.dx - beforeQuarterEventCount + 1) * stepX,
+        max(0, dy));
     return offset;
   }
 
   void animationListener() {
-    pointOffset.value = easyAnimationController?.animation.value;
+    pointOffset.value = easyAnimationController.animation.value;
     chartPoints.add(pointOffset.value);
     chartPoints.refresh();
   }
