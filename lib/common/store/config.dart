@@ -4,7 +4,10 @@
  * @Date: 2024-09-06 15:39:28
  * @LastEditTime: 2024-09-30 18:12:21
  */
+import 'package:arm_chair_quaterback/common/langs/en_US.dart';
+import 'package:arm_chair_quaterback/common/langs/zh_CN.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/values/values.dart';
@@ -31,6 +34,11 @@ class ConfigStore extends GetxController {
     onInitLocale();
   }
 
+  @override
+  void onReady() async {
+    super.onReady();
+    initLanguages();
+  }
   // Future<void> getPlatform() async {
   //   _platform = await PackageInfo.fromPlatform();
   // }
@@ -78,5 +86,15 @@ class ConfigStore extends GetxController {
       url = Address.wsBaseUrl;
     }
     return url;
+  }
+
+  ///获取远程语言包
+  initLanguages() async {
+    List resLangs = await CacheApi.getcLanguages();
+    await Future.forEach(resLangs, (element) {
+      zh_CN[element['key']] = element['zh_CN'];
+      en_US[element['key']] = element['en_US'];
+    });
+    Get.updateLocale(locale);
   }
 }

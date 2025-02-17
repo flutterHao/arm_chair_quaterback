@@ -1,7 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 
+// ignore: non_constant_identifier_names
 Map<String, String> zh_CN = {
-  LangKey.gameNameFgm: "两分命中数",
+  LangKey.gameNameFgm: "两分出手数",
   LangKey.gameNameFga: "两分出手数",
   LangKey.gameNameTgm: "三分命中数",
   LangKey.gameNameTga: "三分出手数",

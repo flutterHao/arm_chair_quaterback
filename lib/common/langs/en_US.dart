@@ -1,5 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 
+// ignore: non_constant_identifier_names
 Map<String, String> en_US = {
   LangKey.gameNameFgm: "FGM",
   LangKey.gameNameFga: "FGA",

@@ -135,6 +135,7 @@ class Api {
   static const String cAppImageVersion =
       "$CONFIG_BASE_PATH/AppImageVersion.json";
   static const String cJumpDefine = "$CONFIG_BASE_PATH/JumpDefine.json";
+  static const String cLanguages = "$CONFIG_BASE_PATH/Languages.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

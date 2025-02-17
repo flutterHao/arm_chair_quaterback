@@ -48,9 +48,6 @@ class LangKey {
   static const String gameMeanPost = 'gameMeanPost';
   static const String gameMeanCareer = 'gameMeanCareer';
   static const String gameNameAvg = 'gameNameAvg';
-  // static const String gameNameHeight = 'gameName';
-  // static const String gameNameWeight = 'gameNameAvg';
-  // static const String gameNameExp = 'gameNameAvg';
   static const String teamInfoTabOverview = 'teamInfoTabOverview';
   static const String teamInfoTabStats = 'teamInfoTabStats';
   static const String teamInfoTabRoster = 'teamInfoTabRoster';

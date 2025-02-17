@@ -296,7 +296,6 @@ class CacheApi {
     List list = await HttpUtil().post(Api.cInboxMessage);
     return inboxMessageList =
         list.map((item) => InboxMessageEntity.fromJson(item)).toList();
-    ;
   }
 
   /// 每日任务转盘
@@ -410,5 +409,10 @@ class CacheApi {
     List list = await HttpUtil().post(Api.cJumpDefine);
     return jumpDefinedList =
         list.map((item) => JumpDefinedEntity.fromJson(item)).toList();
+  }
+
+  static Future<List> getcLanguages() async {
+    List res = await HttpUtil().post(Api.cLanguages);
+    return res;
   }
 }

@@ -552,20 +552,6 @@ class Utils {
   }
 
   static String getStatsPlayerRankKey(String type) {
-    Map<String, Map<String, dynamic>> statsPlayerRankMap = {
-      "POINTS": {
-        "current": 1,
-        "list": ["GP_MIN", "PPG_PTS", "FG%_FGM", "3P%_3PM", "FT_FTM"]
-      },
-      "REBOUNDS": {
-        "current": 1,
-        "list": ["GP_MIN", "RPG_REB", "DREB_OREB"]
-      },
-      "ASSISTS": {
-        "current": 1,
-        "list": ["GP_MIN", "APG_AST", "TPG_TO", "FPG_FOUL"]
-      },
-    };
     switch (type) {
       // case "GP":
       //   return LangKey.gameNamePts;
