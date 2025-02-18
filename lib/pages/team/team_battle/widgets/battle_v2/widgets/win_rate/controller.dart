@@ -100,12 +100,11 @@ class WinRateController extends GetxController
     easyAnimationController.stop();
     List<Offset> oldList = List.from(pointData);
     var newList = oe.map((e) => handlerOffset(e)).toList();
-    var sublist = newList.sublist(oldList.length);
+    var where = newList.where((e)=> e.dx>oldList.last.dx).toList();
     List<Offset> allList = [];
-    // allList.addAll(oldList);
-    allList.addAll(sublist);
+    allList.addAll(where);
     isHomeWin = oe.isNotEmpty ? oe.last.homeWin : true;
-    // allList.add(getLastOffset());
+    allList.add(getLastOffset());
     chartPoints.addAll(allList);
     pointOffset.value = chartPoints.last;
   }
