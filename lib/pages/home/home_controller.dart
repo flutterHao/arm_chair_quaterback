@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2025-01-13 16:02:27
+ * @LastEditTime: 2025-02-17 18:30:26
  */
 /*
  * @Description: 
@@ -51,6 +51,7 @@ class HomeController extends GetxController {
 
   /// 未完成任务列表(进行中的任务)
   List<TeamMissionEntity> ongoingTaskList = [];
+  RxDouble bottomBarDy = 0.0.obs;
 
   refreshMoneyCoinWidget() async {
     await refreshUserEntity();
@@ -120,7 +121,7 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  void goto(int value){
+  void goto(int value) {
     tabIndex.value = value;
     pageController.jumpToPage(value);
     update();

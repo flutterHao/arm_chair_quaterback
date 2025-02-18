@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-02-17 16:13:04
+ * @LastEditTime: 2025-02-17 17:21:13
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -35,7 +35,7 @@ class MyTeamWidget extends StatelessWidget {
         // init: TeamController(),
         builder: (ctrl) {
       return Container(
-        width: double.infinity,
+        width: 375.w,
         margin: EdgeInsets.symmetric(vertical: 9.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.w),
@@ -61,7 +61,7 @@ class MyTeamWidget extends StatelessWidget {
             ),
             34.5.vGap,
             SizedBox(
-              width: double.infinity,
+              width: 375.w,
               height: 185.5.w,
               child: Stack(
                 alignment: Alignment.topCenter,
@@ -72,7 +72,7 @@ class MyTeamWidget extends StatelessWidget {
                     left: 0,
                     right: 0,
                     child: Container(
-                      width: double.infinity,
+                      width: 375.w,
                       height: 109.5.w,
                       color: AppColors.c333333,
                       child: Stack(
@@ -439,7 +439,7 @@ class MyTeamWidget extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   children: [
                     Container(
-                      width: double.infinity,
+                      width: 375.w,
                       height: 51.w,
                       decoration: BoxDecoration(
                           color: AppColors.c000000,

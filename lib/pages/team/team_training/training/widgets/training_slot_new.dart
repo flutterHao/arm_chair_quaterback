@@ -89,7 +89,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "user name user ...",
+                                    "user name user ...".toUpperCase(),
                                     style: 10.w4(
                                       fontFamily: FontFamily.fOswaldRegular,
                                       color: AppColors.cFFFFFF,

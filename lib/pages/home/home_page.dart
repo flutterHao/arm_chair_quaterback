@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/scroll_hide_bottom_bar.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/foundation.dart';
@@ -65,174 +66,128 @@ class _HomePageState extends State<HomePage>
                   PointerDeviceKind.mouse,
                 },
               ),
-              child: BlackAppWidget(
-                const UserInfoBar(),
-                bodyWidget: Expanded(
-                  child: Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Expanded(
-                            child: PageView(
-                              physics: const NeverScrollableScrollPhysics(),
-                              controller: controller.pageController,
-                              children: controller.tabItems
-                                  .map((e) => Center(child: e.tabPage))
-                                  .toList(),
-                            ),
-                          ),
-                          SizedBox(
-                            height:
-                                66.w + MediaQuery.of(context).padding.bottom,
-                          ),
-                        ],
-                      ),
-                      // 竞猜选择结果底部弹框
-                      const BottomGuessTipWidget(),
-                      // 底部tabBar
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.ce5e5e5.withOpacity(0.6),
-                                offset: Offset(0, -5.w),
-                                blurRadius: 9.w,
-                                spreadRadius: 0.w,
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: controller.tabItems.map((e) {
-                                  int index = controller.tabItems.indexOf(e);
-                                  bool select =
-                                      index == controller.tabIndex.value;
-                                  if (index == 2) {
-                                    return Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: AppColors.cFFFFFF,
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(9.w))),
-                                        child: MtInkWell(
-                                          onTap: () {
-                                            TeamIndexController ctrl =
-                                                Get.find();
-                                            if (index == 2 &&
-                                                ctrl.overlayEntry.mounted) {
-                                              ctrl.goToIllustraction();
-                                            } else {
-                                              controller.onTap(2);
-                                            }
-                                          },
-                                          child: Container(
-                                              height: 66.w,
-                                              padding: EdgeInsets.all(4.w),
-                                              decoration: BoxDecoration(
-                                                  color: select
-                                                      ? AppColors.cFFDAD0
-                                                      : AppColors.cFFFFFF,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          9.w)),
-                                              margin:
-                                                  EdgeInsets.only(bottom: 9.w),
-                                              child: Container(
-                                                  height: 58.w,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.w),
-                                                      border: Border.all(
-                                                          color:
-                                                              AppColors.cE6E6E6,
-                                                          width: 1)),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4.w),
-                                                    child: _barItem(
-                                                        controller.tabItems[2],
-                                                        select,
-                                                        58.w,
-                                                        isCenter: true),
-                                                  ))),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  return Flexible(
-                                    flex: 1,
-                                    child: Container(
-                                      color: AppColors.cFFFFFF,
-                                      child: MtInkWell(
-                                        onTap: () => controller.onTap(index),
-                                        child: _barItem(e, select, 66.w,
-                                            showMessageCount: index == 4),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                              Container(
-                                height: MediaQuery.of(context).padding.bottom,
-                                width: double.infinity,
-                                color: AppColors.cFFFFFF,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 70.w,
-                        left: 160.w,
-                        child: GetBuilder<IllustratiionsController>(
-                            init: IllustratiionsController(),
-                            builder: (ctrl) {
-                              return AnimatedScale(
-                                duration: 300.milliseconds,
-                                scale: ctrl.hasChange.value ? 1 : 0,
-                                child: BubbleBox(
-                                  arrowOffset: 120.w,
-                                  color: AppColors.c000000,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.w, vertical: 9.w),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "get new player:  ",
-                                          style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: AppColors.cFFFFFF,
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(top: 1.5.w),
-                                          child: Text(
-                                            "${ctrl.getPlayerCards.length}",
-                                            style: TextStyle(
-                                                fontSize: 16.sp,
-                                                color: AppColors.cFFFFFF,
-                                                fontFamily:
-                                                    FontFamily.fRobotoMedium),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
+              child: ScrollHideBottomBar(
+                bottomBar: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.ce5e5e5.withOpacity(0.6),
+                        offset: Offset(0, -5.w),
+                        blurRadius: 9.w,
+                        spreadRadius: 0.w,
+                      )
                     ],
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: controller.tabItems.map((e) {
+                          int index = controller.tabItems.indexOf(e);
+                          bool select = index == controller.tabIndex.value;
+                          if (index == 2) {
+                            return Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppColors.cFFFFFF,
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(9.w))),
+                                child: MtInkWell(
+                                  onTap: () {
+                                    TeamIndexController ctrl = Get.find();
+                                    if (index == 2 &&
+                                        ctrl.overlayEntry.mounted) {
+                                      ctrl.goToIllustraction();
+                                    } else {
+                                      controller.onTap(2);
+                                    }
+                                  },
+                                  child: Container(
+                                      height: 66.w,
+                                      padding: EdgeInsets.all(4.w),
+                                      decoration: BoxDecoration(
+                                          color: select
+                                              ? AppColors.cFFFFFF
+                                              : AppColors.cFFFFFF,
+                                          borderRadius:
+                                              BorderRadius.circular(9.w)),
+                                      margin: EdgeInsets.only(bottom: 9.w),
+                                      child: Container(
+                                          height: 58.w,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.w),
+                                              border: Border.all(
+                                                  color: AppColors.cE6E6E6,
+                                                  width: 1)),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(4.w),
+                                            child: _barItem(
+                                                controller.tabItems[2],
+                                                select,
+                                                58.w,
+                                                isCenter: true),
+                                          ))),
+                                ),
+                              ),
+                            );
+                          }
+                          return Flexible(
+                            flex: 1,
+                            child: Container(
+                              color: AppColors.cFFFFFF,
+                              child: MtInkWell(
+                                onTap: () => controller.onTap(index),
+                                child: _barItem(e, select, 66.w,
+                                    showMessageCount: index == 4),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).padding.bottom,
+                        width: double.infinity,
+                        color: AppColors.cFFFFFF,
+                      )
+                    ],
+                  ),
+                ),
+                child: BlackAppWidget(
+                  const UserInfoBar(),
+                  bodyWidget: Expanded(
+                    child: Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Expanded(
+                              child: PageView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                controller: controller.pageController,
+                                children: controller.tabItems
+                                    .map((e) => Center(child: e.tabPage))
+                                    .toList(),
+                              ),
+                            ),
+                            // AnimatedContainer(
+                            //   duration: 300.milliseconds,
+                            //   height:
+                            //       66.w + MediaQuery.of(context).padding.bottom,
+                            // )
+                          ],
+                        ),
+                        // 竞猜选择结果底部弹框
+                        const BottomGuessTipWidget(),
+                        // 底部tabBar
+
+                        Positioned(
+                          bottom: 70.w,
+                          left: 160.w,
+                          child: const NewPlayerTip(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -252,7 +207,7 @@ class _HomePageState extends State<HomePage>
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: isCenter && select
-                  ? [AppColors.cFF6A41, AppColors.cFF9071]
+                  ? [AppColors.c272727, AppColors.c272727]
                   : [AppColors.cFFFFFF, AppColors.cFFFFFF])),
       child: Stack(
         children: [
@@ -273,10 +228,10 @@ class _HomePageState extends State<HomePage>
                         margin: EdgeInsets.symmetric(
                             horizontal: 7.w, vertical: 3.w),
                         child: IconWidget(
-                          iconWidth: 24.w,
+                          iconWidth: isCenter ? 26.w : 24.w,
                           icon: select ? e.tabIconSelected : e.tabIconNormal,
                           iconColor: select
-                              ? null
+                              ? (isCenter ? AppColors.cFFFFFF : null)
                               : AppColors.c000000.withOpacity(0.3),
                         ),
                       ),
@@ -331,16 +286,18 @@ class _HomePageState extends State<HomePage>
                     )
                 ],
               ),
-              5.vGap,
+              isCenter ? 3.hGap : 5.vGap,
               Text(
                 e.label.tr,
                 style: select
                     ? 12.w5(
-                        color: AppColors.c000000,
+                        color: isCenter ? AppColors.cFFFFFF : AppColors.c000000,
                         height: 1,
                         fontFamily: FontFamily.fRobotoRegular)
                     : 12.w4(
-                        color: AppColors.c000000.withOpacity(0.3),
+                        color: isCenter && select
+                            ? AppColors.cFFFFFF
+                            : AppColors.c000000.withOpacity(0.3),
                         height: 1,
                         fontFamily: FontFamily.fRobotoMedium),
               )
@@ -363,3 +320,47 @@ class _HomePageState extends State<HomePage>
 
 //   }
 // }
+
+class NewPlayerTip extends StatelessWidget {
+  const NewPlayerTip({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<IllustratiionsController>(
+        init: IllustratiionsController(),
+        builder: (ctrl) {
+          return AnimatedScale(
+            duration: 300.milliseconds,
+            scale: ctrl.hasChange.value ? 1 : 0,
+            child: BubbleBox(
+              arrowOffset: 120.w,
+              color: AppColors.c000000,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 9.w),
+                child: Row(
+                  children: [
+                    Text(
+                      "get new player:  ",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: AppColors.cFFFFFF,
+                          fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 1.5.w),
+                      child: Text(
+                        "${ctrl.getPlayerCards.length}",
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fRobotoMedium),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+}

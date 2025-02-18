@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-02-14 16:50:53
+ * @LastEditTime: 2025-02-17 16:57:19
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -164,15 +164,18 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                         return Positioned(
                             left: e.offset.value.dx,
                             top: e.offset.value.dy + 30.w,
-                            child: Container(
-                              width: 74.w,
-                              alignment: Alignment.center,
-                              child: AnimatedArrow(
-                                end: -5,
-                                child: Image.asset(
-                                  Assets.commonUiCommonArrow,
-                                  width: 10.w,
-                                  // height: 12.w,
+                            child: Visibility(
+                              visible: !ctrl.showBuff.value,
+                              child: Container(
+                                width: 74.w,
+                                alignment: Alignment.center,
+                                child: AnimatedArrow(
+                                  end: -5,
+                                  child: Image.asset(
+                                    Assets.commonUiCommonArrow,
+                                    width: 10.w,
+                                    // height: 12.w,
+                                  ),
                                 ),
                               ),
                             ));
