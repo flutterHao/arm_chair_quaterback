@@ -52,7 +52,7 @@ class WinRateController extends GetxController
         begin: 0,
         end: 1,
         duration: const Duration(milliseconds: 1000));
-    addListener(animationListener);
+    easyAnimationController.controller.addListener(animationListener);
   }
 
   @override
