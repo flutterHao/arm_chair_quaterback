@@ -122,7 +122,7 @@ class TeamBattleV2Controller extends GetxController
   Timer? normalDanMaKuTimer;
 
   ///上个时间比分占比(比分随时间占比)
-  double lastHomeScoreRate = 0, lastAwayScoreRate = 0;
+  double lastHomeScoreDiff = 0, lastAwayScoreDiff = 0;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -531,60 +531,38 @@ class TeamBattleV2Controller extends GetxController
     var t = time ??
         ((40 - quarterTimeCountDownAnimationController.value.value) +
             (quarter.value - 1) * 40);
-    // var scoreDiff = (event.homeScore - event.awayScore);
-    // var prepareDiff = (event.pkEventUpdatedEntity.homeCurrentStrength -
-    //         event.pkEventUpdatedEntity.awayCurrentStrength)
-    //     .abs();
-    // var random = (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
-    // // print('prepareDiff--------:$prepareDiff');
-    // // print('random--------:$random');
-    // var other = t * 0.7 / (4 * 40) * (scoreDiff / max(scoreDiff.abs(), 1));
-    // // print('other--------:$other');
-    //
-    // double winRate = 0.5 + prepareDiff + other - random;
-    //
-    // // print('winRate-------:$winRate');
-    // if (t == 0) {
-    //   winRate = prepareDiff;
-    // }
-    // winRate = min(1, max(0, winRate));
-    // return winRate;
-    var pow2 = pow(e, (-log(10) / 24 * t));
-    print('pow2---:$pow2');
-
+    var homeScoreDiff = (event.homeScore - event.awayScore);
+    var awayScoreDiff = (event.awayScore - event.homeScore);
+    print('winRate---awayScoreDiff:$homeScoreDiff,$awayScoreDiff');
     var home = (event.pkEventUpdatedEntity.homeCurrentStrength /
         (event.pkEventUpdatedEntity.homeCurrentStrength +
             event.pkEventUpdatedEntity.awayCurrentStrength));
     var away = (event.pkEventUpdatedEntity.awayCurrentStrength /
         (event.pkEventUpdatedEntity.homeCurrentStrength +
             event.pkEventUpdatedEntity.awayCurrentStrength));
-    print('d---:$home');
+    print('winRate---home:$home,$away');
+    double a = 0.2;
+    int allTime = 40 * 4;
+    var homeEma = a * homeScoreDiff + (1 - a) * lastHomeScoreDiff;
+    var awayEma = a * awayScoreDiff + (1 - a) * lastAwayScoreDiff;
+    lastHomeScoreDiff = homeScoreDiff.toDouble();
+    lastAwayScoreDiff = awayScoreDiff.toDouble();
+    print('winRate---ema:$homeEma,$awayEma');
+    var homeScoreValue =
+        (1 / (1 + exp(-15 * homeEma / sqrt(allTime - t + 0.1)))) * t / allTime;
+    var awayScoreValue =
+        (1 / (1 + exp(-15 * awayEma / sqrt(allTime - t + 0.1)))) * t / allTime;
+    print('winRate---homeScoreValue:$homeScoreValue,$awayScoreValue');
+    var homePowerValue = 0.3 * home * (1 - t / allTime);
+    var awayPowerValue = 0.3 * away * (1 - t / allTime);
+    print('winRate---homePowerValue:$homePowerValue,$awayPowerValue');
+    var homeValue = homeScoreValue + homePowerValue;
+    var awayValue = awayScoreValue + awayPowerValue;
+    print('winRate---homeValue:$homeValue,$awayValue');
+    var result = WinInfo(
+        homeValue > awayValue ? homeValue : -awayValue, homeValue > awayValue);
+    return result;
 
-    var homeCurrentStrengthRate = home * 0.4 * pow2;
-    var awayCurrentStrengthRate = away * 0.4 * pow2;
-    print('other2---:$homeCurrentStrengthRate,$awayCurrentStrengthRate');
-    var homeScoreRateTemp = (t *
-                2 /
-                (4 * 40) *
-                (event.homeScore / (event.homeScore + event.awayScore + 1))) *
-            0.8 +
-        (lastHomeScoreRate * 0.2);
-    var awayScoreRateTemp = (t *
-                2 /
-                (4 * 40) *
-                (event.awayScore / (event.homeScore + event.awayScore + 1))) *
-            0.8 +
-        (lastAwayScoreRate * 0.2);
-    print('homeScoreRateTemp---:$homeScoreRateTemp,$awayScoreRateTemp');
-    var homeResult = homeScoreRateTemp + homeCurrentStrengthRate;
-    var awayResult = awayScoreRateTemp + awayCurrentStrengthRate;
-    print('homeResult---:$homeResult,$awayResult');
-
-    lastHomeScoreRate = homeScoreRateTemp;
-    lastAwayScoreRate = awayScoreRateTemp;
-    var winInfo = WinInfo(homeResult > awayResult ? homeResult : awayResult,
-        homeResult > awayResult);
-    return winInfo;
   }
 
   double generateRandomValue(double t) {

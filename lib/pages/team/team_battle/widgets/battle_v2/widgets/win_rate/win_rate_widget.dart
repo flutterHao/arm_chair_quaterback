@@ -53,6 +53,7 @@ class WinRateWidget extends StatelessWidget {
               children: [
                 Obx(() {
                   var offset = controller.pointOffset.value;
+                  var homeWin = offset.dy <= controller.getHeight() / 2;
                   return Positioned(
                       top: 6.w,
                       left: offset.dx - 83.w / 2 + 30.w,
@@ -75,15 +76,22 @@ class WinRateWidget extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12.w),
                                       border: Border.all(
-                                          color: AppColors.c1F8FE5,
+                                          color: homeWin
+                                              ?AppColors.c1F8FE5:AppColors.cD60D20,
                                           width: 1.w)),
                                   child: ImageWidget(
-                                    url: Utils.getTeamUrl(controller.isHomeWin
-                                        ? teamBattleV2Controller
-                                            .battleEntity.homeTeam.teamLogo
-                                        : teamBattleV2Controller
-                                            .battleEntity.awayTeam.teamLogo),
-                                    imageFailedPath: Assets.teamUiHead01,
+                                    url: Utils.getTeamUrl(
+                                        homeWin
+                                            ? teamBattleV2Controller
+                                                .battleEntity.homeTeam.teamLogo
+                                            : teamBattleV2Controller
+                                                .battleEntity
+                                                .awayTeam
+                                                .teamLogo),
+                                    imageFailedPath:
+                                        homeWin
+                                            ? Assets.teamUiHead01
+                                            : Assets.teamUiHead03,
                                     width: 21.w,
                                     height: 21.w,
                                     borderRadius: BorderRadius.circular(11.w),
@@ -91,7 +99,7 @@ class WinRateWidget extends StatelessWidget {
                                 ),
                                 10.hGap,
                                 Text(
-                                  controller.getWinRate(),
+                                  "${controller.getWinRate().toStringAsFixed(0)}%",
                                   style: 16.w5(
                                       color: AppColors.c000000,
                                       height: 1,
@@ -144,7 +152,7 @@ class WinRateWidget extends StatelessWidget {
                             children: [
                               Container(
                                 width: controller.getWidth(),
-                                height: 164.h,
+                                height: controller.getHeight(),
                                 decoration: BoxDecoration(
                                     color: AppColors.cF2F2F2,
                                     border: Border.all(
@@ -159,7 +167,7 @@ class WinRateWidget extends StatelessWidget {
                                             left: (controller.getWidth() / 4) *
                                                     (index + 1) -
                                                 3.w),
-                                        height: 164.h,
+                                        height: controller.getHeight(),
                                         width: 3.w,
                                         color: AppColors.cFFFFFF,
                                       );
@@ -197,7 +205,7 @@ class WinRateWidget extends StatelessWidget {
                                           //倾斜渐变线
                                           SizedBox(
                                             width: controller.getWidth(),
-                                            height: 164.h,
+                                            height: controller.getHeight(),
                                             child: ClipPath(
                                               clipper: LineChartClipper(
                                                   controller.chartPoints.value),
@@ -221,11 +229,11 @@ class WinRateWidget extends StatelessWidget {
                                           ),
                                           //折线图实线
                                           CustomPaint(
-                                            size: Size(
-                                                controller.getWidth(), 164.h),
+                                            size: Size(controller.getWidth(),
+                                                controller.getHeight()),
                                             painter: ChartPainter(
                                                 controller.chartPoints.value,
-                                                164.h),
+                                                controller.getHeight()),
                                           )
                                         ],
                                       );
@@ -240,7 +248,7 @@ class WinRateWidget extends StatelessWidget {
                                             : 0,
                                         child: SizedBox(
                                           width: controller.getWidth(),
-                                          height: 164.h,
+                                          height: controller.getHeight(),
                                           child: Stack(
                                             children: [
                                               Container(
@@ -274,7 +282,7 @@ class WinRateWidget extends StatelessWidget {
                               ),
                               2.hGap,
                               SizedBox(
-                                height: 164.h,
+                                height: controller.getHeight(),
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -286,7 +294,7 @@ class WinRateWidget extends StatelessWidget {
                                           color: AppColors.c4D4D4D, height: 1),
                                     ),
                                     Text(
-                                      "50",
+                                      "0",
                                       style: 9.w4(
                                           color: AppColors.c4D4D4D, height: 1),
                                     ),
@@ -367,7 +375,7 @@ class WinRateWidget extends StatelessWidget {
                       //实时数据指示点
                       SizedBox(
                         width: 320.w,
-                        height: 164.h,
+                        height: controller.getHeight(),
                         child: Stack(
                           children: [
                             Obx(() {
@@ -378,7 +386,7 @@ class WinRateWidget extends StatelessWidget {
                                     : 0,
                                 top: controller.pointOffset.value != Offset.zero
                                     ? controller.pointOffset.value.dy - 7.h / 2
-                                    : (164.h - 7.h) / 2, //修改位置
+                                    : (controller.getHeight() - 7.h) / 2, //修改位置
                                 child: Container(
                                   width: 7.h,
                                   height: 7.h,

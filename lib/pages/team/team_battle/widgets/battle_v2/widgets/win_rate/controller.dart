@@ -46,7 +46,7 @@ class WinRateController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    size = Size(getWidth(), 164.h);
+    size = Size(getWidth(), getHeight());
     easyAnimationController = EasyAnimationController(
         vsync: this,
         begin: 0,
@@ -88,6 +88,10 @@ class WinRateController extends GetxController
     return Utils.getMaxWidth(Get.context!) - 62.w;
   }
 
+  double getHeight() {
+    return 164.h;
+  }
+
   setGameSpeed(double speed) {
     gameSpeed = speed;
   }
@@ -122,7 +126,8 @@ class WinRateController extends GetxController
     if (pointData.length > 1) {
       var current = pointData.last;
       easyAnimationController.stop();
-      easyAnimationController.set(preview, current,duration: Duration(milliseconds: (1000 / gameSpeed).toInt()));
+      easyAnimationController.set(preview, current,
+          duration: Duration(milliseconds: (1000 / gameSpeed).toInt()));
       easyAnimationController.forward(from: 0);
     }
   }
@@ -138,7 +143,15 @@ class WinRateController extends GetxController
     var quarterWidth = size.width / 4;
     var beforeQuarterWidth = quarterWidth * (oe.event.quarter - 1);
     var stepX = quarterWidth / totalCount;
-    var dy = (size.height - oe.offset.dy * size.height);
+    double dy = 0;
+    var halfHeight = size.height / 2;
+    if (oe.offset.dy < 0) {
+      /// away
+      dy = halfHeight + oe.offset.dy.abs() * halfHeight;
+    } else {
+      /// home
+      dy = halfHeight - oe.offset.dy.abs() * halfHeight;
+    }
     // print('dy:$dy');
     var offset = Offset(
         beforeQuarterWidth +
@@ -153,11 +166,19 @@ class WinRateController extends GetxController
     chartPoints.refresh();
   }
 
-  String getWinRate() {
+  double getWinRate() {
     var dy = pointOffset.value.dy;
-    var value = (((size.height - dy) / size.height) * 100);
-    value = value > 100 ? 100 : value;
-    return "${value.toStringAsFixed(0)}%";
+    var halfHeight = size.height / 2;
+    double value = 0;
+    if (dy > size.height / 2) {
+      ///away
+      value = ((dy - halfHeight) / halfHeight) * 100;
+    } else {
+      ///home
+      value = (halfHeight - dy) / halfHeight * 100;
+    }
+    value = min(100, max(0, value));
+    return value;
   }
 
   reStart() {

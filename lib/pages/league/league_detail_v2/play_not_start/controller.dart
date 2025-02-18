@@ -104,21 +104,22 @@ class PlayNotStartController extends GetxController
     if (duration <= Duration.zero) {
       return;
     }
-    day = duration.inDays;
-    hh = duration.inHours%60;
-    minute = duration.inMinutes%60;
-    gameStartTimesCountDown.value = duration.inMilliseconds;
+    updateCountDownTime(duration);
     _timer = Timer.periodic(const Duration(minutes: 1), (t) {
       var duration = MyDateUtils.getDateTimeByMs(item.gameStartTime).difference(DateTime.now());
       if (duration <= Duration.zero) {
         t.cancel();
         return;
       }
-      gameStartTimesCountDown.value = duration.inMilliseconds;
-      day = duration.inDays;
-      hh = duration.inHours%60;
-      minute = duration.inMinutes%60;
+      updateCountDownTime(duration);
     });
+  }
+
+  void updateCountDownTime(Duration duration) {
+    day = duration.inDays;
+    hh = duration.inHours%24;
+    minute = duration.inMinutes%60;
+    gameStartTimesCountDown.value = duration.inMilliseconds;
   }
 
   /// 格式化为两位数
