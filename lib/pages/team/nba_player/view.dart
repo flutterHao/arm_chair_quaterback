@@ -99,8 +99,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
           controller.nbaPlayerList[index].trendList;
 
       ///开始到结束分数差值
-      var differenceScore =
-          item[item.length - 1].playerScore - item[0].playerScore;
+      var differenceScore = item[0].playerScore - item[1].playerScore;
       var player =
           Utils.getPlayBaseInfo(controller.nbaPlayerList[index].playerId);
       return Container(
@@ -179,7 +178,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                           Expanded(
                               child: Container(
                             decoration: BoxDecoration(
-                                color: differenceScore > 0
+                                color: differenceScore >= 0
                                     ? AppColors.c13C37B
                                     : AppColors.cE34D4D,
                                 borderRadius: BorderRadius.only(
@@ -194,7 +193,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                                       fontFamily: FontFamily.fOswaldBold),
                                 ),
                                 Transform.rotate(
-                                  angle: differenceScore > 0
+                                  angle: differenceScore >= 0
                                       ? -pi / 180 * 90
                                       : pi / 180 * 90,
                                   child: IconWidget(
@@ -249,7 +248,8 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
       if (index == 0) {
         FlSpot(index.toDouble(), horizontalInterval);
       }
-      return FlSpot(index.toDouble(), item[index].playerScore.toDouble());
+      return FlSpot(index.toDouble(),
+          item[item.length - index - 1].playerScore.toDouble());
     });
     return Stack(
       children: [
@@ -316,7 +316,9 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
     return SizedBox(
       height: 50.w,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          controller.initData();
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -395,6 +395,12 @@ Map<String, String> en_US = {
   LangKey.gameBigNameTO: "TURNOVERS",
   LangKey.gameNameGP: "GP",
   LangKey.gameNameFT: "FT",
+  LangKey.gameNameDREB: "DREB",
+  LangKey.gameNameFPG: "FPG",
+  LangKey.gameNameMIN: "MIN",
+  LangKey.gameNameOREB: "OREB",
+  LangKey.gameNamePtsAst: 'PTS+AST',
+  LangKey.gameNamPtsReb: 'PTS+REB',
 };
 
 // const Map<String, String> en_US = {

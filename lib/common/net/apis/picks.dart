@@ -247,7 +247,7 @@ class PicksApi {
 
   /// 获取球员实力排行榜
   static Future<List<PlayerStrengthRankEntity>> getPlayerStrengthRank(
-      {int start = 0, int end = 9}) async {
+      {int start = 0, int end = 3}) async {
     List json = await httpUtil
         .post(Api.getPlayerStrengthRank, data: {"start": start, "end": end});
     return json.map((e) => PlayerStrengthRankEntity.fromJson(e)).toList();

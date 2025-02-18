@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/success_dialog.dart';
@@ -14,13 +15,13 @@ class ReceiveAwardDilaog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SuccessDialog(
-      title: "Congratulations".toUpperCase(),
+      title: LangKey.gameInfoCongratulation.tr,
       content: Container(
         margin: EdgeInsets.only(top: 74.w),
         child: Column(
           children: [
             Text(
-              "REWARD",
+              LangKey.pickButtonReceiveAll.tr,
               style: 19.w4(
                 fontFamily: FontFamily.fOswaldMedium,
                 height: 0.9,
@@ -50,7 +51,7 @@ class ReceiveAwardDilaog extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Text(
-            "receive reward".toUpperCase(),
+            LangKey.pickButtonConfirm.tr,
             style: 23.w5(
               color: AppColors.cFFFFFF,
               height: 1,
@@ -60,6 +61,5 @@ class ReceiveAwardDilaog extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

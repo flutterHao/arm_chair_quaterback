@@ -227,11 +227,6 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                             indicatorWeight: 4,
                             controller: controller.tabController,
                             tabs: controller.guessGamePlayers.keys.map((e) {
-                              // return Text(e.replaceAll(",", "+"));
-                              if (e == "REB") {
-                                return Text(
-                                    ' ${LangKey.gameNamePts.tr} + ${LangKey.gameNameAst.tr}');
-                              }
                               return Text(
                                   Utils.getPicksTabKey(e.replaceAll(",", "+"))
                                       .tr);

@@ -250,14 +250,11 @@ class SummaryPage extends GetView<SummaryController> {
                                                                 .circular(
                                                                     14.w)),
                                                     child: Text(
-                                                      key == "REB"
-                                                          ? ' ${LangKey.gameNamePts.tr} + ${LangKey.gameNameAst.tr}'
-                                                          : Utils.getPicksTabKey(
-                                                                  key.replaceAll(
-                                                                      ",", "+"))
-                                                              .tr,
+                                                      Utils.getPicksTabKey(
+                                                              key.replaceAll(
+                                                                  ",", "+"))
+                                                          .tr,
                                                       // key.replaceAll(",", "+"),
-
                                                       style: 16.w5(
                                                         color: isSelected
                                                             ? AppColors.cF2F2F2
@@ -516,13 +513,9 @@ class SummaryPage extends GetView<SummaryController> {
                                                         BorderRadius.circular(
                                                             14.w)),
                                                 child: Text(
-                                                  // key.replaceAll(",", "+"),
-                                                  key == "REB"
-                                                      ? ' ${LangKey.gameNamePts.tr} + ${LangKey.gameNameAst.tr}'
-                                                      : Utils.getPicksTabKey(
-                                                              key.replaceAll(
-                                                                  ",", "+"))
-                                                          .tr,
+                                                  Utils.getPicksTabKey(key
+                                                          .replaceAll(",", "+"))
+                                                      .tr,
                                                   style: 16.w5(
                                                     color: isSelected
                                                         ? AppColors.cF2F2F2

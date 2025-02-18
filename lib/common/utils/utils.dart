@@ -539,13 +539,13 @@ class Utils {
     if (type == "PTS") {
       return LangKey.gameNamePts;
     } else if (type == "PTS+AST") {
-      return LangKey.gameNameReb;
+      return LangKey.gameNamePtsAst;
     } else if (type == "AST") {
       return LangKey.gameNameAst;
     } else if (type == "REB") {
-      return LangKey.gametabScores;
+      return LangKey.gameNameReb;
     } else if (type == "PTS+REB") {
-      return LangKey.newsNameTp;
+      return LangKey.gameNamPtsReb;
     } else {
       return type;
     }
@@ -555,8 +555,8 @@ class Utils {
     switch (type) {
       case "GP":
         return LangKey.gameNameGP;
-      // case "MIN":
-      //   return LangKey.gameNamePts;
+      case "MIN":
+        return LangKey.gameNameMIN;
       case "PPG":
         return LangKey.gameNamePPG;
       case "PTS":
@@ -577,10 +577,10 @@ class Utils {
         return LangKey.gameNameRPG;
       case "REB":
         return LangKey.gameNameReb;
-      // case "DREB":
-      //   return LangKey.gameNamePts;
-      // case "OREB":
-      //   return LangKey.gameNamePts;
+      case "DREB":
+        return LangKey.gameNameDREB;
+      case "OREB":
+        return LangKey.gameNameOREB;
       case "APG":
         return LangKey.gameNameAPG;
       // case "AST":
@@ -589,8 +589,8 @@ class Utils {
         return LangKey.gameNameTPG;
       // case "TO":
       //   return LangKey.gameNamePts;
-      // case "FPG":
-      //   return LangKey.gameNamePts;
+      case "FPG":
+        return LangKey.gameNameFPG;
       case "FOUL":
         return LangKey.gameNameFoul;
       default:

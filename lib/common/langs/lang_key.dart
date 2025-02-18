@@ -487,4 +487,10 @@ class LangKey {
   static const String gameBigNameTO = 'gameBigNameTO';
   static const String gameNameGP = 'gameNameGP';
   static const String gameNameFT = 'gameNameFT';
+  static const String gameNameDREB = 'gameNameDREB';
+  static const String gameNameFPG = 'gameNameFPG';
+  static const String gameNameMIN = 'gameNameMIN';
+  static const String gameNameOREB = 'gameNameOREB';
+  static const String gameNamePtsAst = 'gameNamePtsAst';
+  static const String gameNamPtsReb = 'gameNamPtsReb';
 }

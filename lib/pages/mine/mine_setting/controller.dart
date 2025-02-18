@@ -17,7 +17,7 @@ class MineSettingController extends GetxController {
 
   var languages = [
     Language("English", "UK", "English", const Locale('en', 'US')),
-    // Language("Chinese", "ZH", "中文", const Locale('zh', 'CN'))
+    Language("Chinese", "ZH", "中文", const Locale('zh', 'CN'))
   ];
 
   // tap

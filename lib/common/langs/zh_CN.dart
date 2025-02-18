@@ -419,4 +419,10 @@ Map<String, String> zh_CN = {
   LangKey.gameBigNameTO: "失误",
   LangKey.gameNameGP: "比赛场数",
   LangKey.gameNameFT: "罚球",
+  LangKey.gameNameDREB: "防守篮板",
+  LangKey.gameNameFPG: "场均犯规",
+  LangKey.gameNameMIN: "场均时间",
+  LangKey.gameNameOREB: "进攻篮板",
+  LangKey.gameNamePtsAst: '得分+助攻',
+  LangKey.gameNamPtsReb: '得分+篮板',
 };
