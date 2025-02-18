@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-02-17 17:21:13
+ * @LastEditTime: 2025-02-18 17:00:50
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -502,7 +502,7 @@ class PlayerCardWidget extends GetView<TeamController> {
           style: 12.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.75),
         ),
         2.5.vGap,
-        PlayerStartWidget(grade: player.breakThroughGrade + 5),
+        PlayerStartWidget(grade: player.breakThroughGrade),
         4.5.vGap,
         Text(
           Utils.getPlayBaseInfo(player.playerId).position,

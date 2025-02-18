@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-15 17:18:47
+ * @LastEditTime: 2025-02-18 15:34:25
  */
 import 'dart:math';
 
@@ -487,7 +487,7 @@ class _SlotButton extends StatelessWidget {
         id: "training_page",
         builder: (controller) {
           return Obx(() {
-            return MtInkWell(
+            return InkWell(
               onTap: controller.isPlaying.value
                   ? null
                   : () async {
@@ -527,11 +527,14 @@ class _SlotButton extends StatelessWidget {
                         controller.startSlot();
                       }
                     },
-              child: Container(
-                width: 129.w,
-                height: 129.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
+              child: AnimatedScale(
+                scale: controller.isPlaying.value ? 0.9 : 1,
+                duration: const Duration(milliseconds: 50),
+                child: Container(
+                  width: 129.w,
+                  height: 129.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.c000000.withOpacity(0.1),
@@ -540,92 +543,95 @@ class _SlotButton extends StatelessWidget {
                       )
                     ],
                     borderRadius: BorderRadius.circular(66.w),
-                    border:
-                        Border.all(width: 12.5.w, color: AppColors.cF2F2F2)),
-                child: Opacity(
-                  opacity: controller.isPlaying.value ? 0.5 : 1,
+                    color: AppColors.cFFFFFF,
+                  ),
                   child: SizedBox(
                     width: 104.5.w,
                     height: 104.5.w,
-                    child: Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        Image.asset(
-                          Assets.managerUiManagerIconButton,
-                          width: 104.5.w,
-                          height: 104.5.w,
-                          fit: BoxFit.fill,
-                        ),
-                        Positioned(
-                          top: 12.5.w,
-                          child: AnimationArcWidget(
-                            42.w,
-                            progressWidth: 5.w,
-                            progressColor: AppColors.cFFFFFF,
-                            borderColor: Colors.black.withOpacity(0.3),
-                            progressSweepAngle: 180 * 0.5,
-                            borderWidth: 5.w,
+                    child: Opacity(
+                      opacity: controller.isPlaying.value ? 0.5 : 1,
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Image.asset(
+                            Assets.managerUiManagerIconButton,
+                            width: 104.5.w,
+                            height: 104.5.w,
+                            fit: BoxFit.fill,
                           ),
-                        ),
-                        Positioned(
-                          // bottom: 16.w,
-                          top: 74.w,
-                          child: Container(
-                            // height: 72.5.w,
-                            width: 75.w,
-                            alignment: Alignment.bottomCenter,
-                            child: Obx(() {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  AnimatedScale(
-                                    duration: 150.milliseconds,
-                                    scale: controller.showBall.value ? 1.5 : 1,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Obx(() {
-                                          int v = controller.ballNum.value;
-                                          return AnimatedNum(
-                                            milliseconds: 100,
-                                            number: v,
-                                            textStyle: 14.w4(
-                                                color: AppColors.cFFFFFF,
-                                                fontFamily:
-                                                    FontFamily.fOswaldRegular,
-                                                height: 0.8),
-                                          );
-                                        }),
-                                        if (controller.showBall.value)
-                                          Text(
-                                            "+${controller.trainingInfo.prop.num - controller.ballNum.value}",
-                                            style: 14.w4(
-                                                color: AppColors.c31E99E,
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium,
-                                                height: 0.8),
-                                          )
-                                      ],
-                                    ),
-                                  ),
-                                  AnimatedScale(
-                                    duration: 150.milliseconds,
-                                    scale: controller.showBall.value ? 0 : 1,
-                                    child: Text(
-                                      "/${controller.trainDefine.ballMaxNum}",
-                                      style: 14.w4(
-                                          color: AppColors.cFFFFFF,
-                                          fontFamily: FontFamily.fOswaldRegular,
-                                          height: 0.8),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
+                          Positioned(
+                            top: 12.5.w,
+                            child: AnimationArcWidget(
+                              42.w,
+                              progressWidth: 5.w,
+                              progressColor: AppColors.cFFFFFF,
+                              borderColor: Colors.black.withOpacity(0.3),
+                              progressSweepAngle: 180 * 0.5,
+                              borderWidth: 5.w,
+                            ),
                           ),
-                        ),
-                      ],
+                          Positioned(
+                            // bottom: 16.w,
+                            top: 74.w,
+                            child: Container(
+                              // height: 72.5.w,
+                              width: 75.w,
+                              alignment: Alignment.bottomCenter,
+                              child: Obx(() {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    AnimatedScale(
+                                      duration: 150.milliseconds,
+                                      scale:
+                                          controller.showBall.value ? 1.5 : 1,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Obx(() {
+                                            int v = controller.ballNum.value;
+                                            return AnimatedNum(
+                                              milliseconds: 100,
+                                              number: v,
+                                              textStyle: 14.w4(
+                                                  color: AppColors.cFFFFFF,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldRegular,
+                                                  height: 0.8),
+                                            );
+                                          }),
+                                          if (controller.showBall.value)
+                                            Text(
+                                              "+${controller.trainingInfo.prop.num - controller.ballNum.value}",
+                                              style: 14.w4(
+                                                  color: AppColors.c31E99E,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
+                                                  height: 0.8),
+                                            )
+                                        ],
+                                      ),
+                                    ),
+                                    AnimatedScale(
+                                      duration: 150.milliseconds,
+                                      scale: controller.showBall.value ? 0 : 1,
+                                      child: Text(
+                                        "/${controller.trainDefine.ballMaxNum}",
+                                        style: 14.w4(
+                                            color: AppColors.cFFFFFF,
+                                            fontFamily:
+                                                FontFamily.fOswaldRegular,
+                                            height: 0.8),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

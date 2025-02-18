@@ -262,7 +262,7 @@ class IlluSctrationDtlCtrl extends GetxController {
       item.fragmentNum -= item.needNum;
       update(["detail"]);
       IllustratiionsController ctrl = Get.find();
-      ctrl.hasChange.value = true;
+      ctrl.hasNewPlayer.value = true;
     });
   }
 

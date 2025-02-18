@@ -1,5 +1,7 @@
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ScrollHideBottomBar extends StatefulWidget {
   final Widget child;
@@ -42,8 +44,10 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
     // 透明度动画：显示时为1，隐藏时变为0.2
     _opacityAnimation = Tween<double>(
       begin: 1.0,
-      end: 0.2,
+      end: 0,
     ).animate(_animationController);
+
+    _offsetAnimation.addListener(() {});
   }
 
   void _handleScroll(double delta) {
@@ -60,7 +64,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
         delta > 0 ? ScrollDirection.down : ScrollDirection.up;
   }
 
-  void _handleScrollEnd() {
+  void _handleScrollEnd(ScrollEndNotification notification) {
     bool shouldHide;
 
     // 根据滚动方向决定是否隐藏
@@ -68,6 +72,8 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
       shouldHide = true;
     } else if (_lastScrollDirection == ScrollDirection.up) {
       shouldHide = false;
+      if (notification.metrics.pixels >= notification.metrics.maxScrollExtent)
+        shouldHide = true;
     } else {
       // 无滚动方向时，根据当前位置判断
       shouldHide = _animationController.value > 0.5;
@@ -98,9 +104,13 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
           onNotification: (notification) {
             if (notification.metrics.axis != Axis.vertical) return true;
             if (notification is ScrollEndNotification) {
-              if (notification.metrics.pixels > 0) _handleScrollEnd();
+              if (notification.metrics.pixels >= 0) {
+                _handleScrollEnd(notification);
+              }
             } else if (notification is ScrollUpdateNotification) {
               if (notification.metrics.pixels > 0 &&
+                  notification.metrics.pixels <=
+                      notification.metrics.maxScrollExtent &&
                   notification.scrollDelta != null) {
                 _handleScroll(notification.scrollDelta!);
               }
@@ -110,11 +120,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
             }
             return true;
           },
-          child: AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, child) {
-                return widget.child;
-              }),
+          child: widget.child,
         ),
 
         // 底部栏动画

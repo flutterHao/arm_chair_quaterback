@@ -172,7 +172,7 @@ class _Item extends GetView<IllustratiionsController> {
           RouteNames.illustrationDetail,
           arguments: item,
         );
-        if (controller.hasChange.value == true) controller.updateCollect();
+        if (controller.hasNewPlayer.value == true) controller.updateCollect();
       },
       child: Center(
         child: Column(

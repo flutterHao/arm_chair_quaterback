@@ -51,7 +51,7 @@ class HomeController extends GetxController {
 
   /// 未完成任务列表(进行中的任务)
   List<TeamMissionEntity> ongoingTaskList = [];
-  RxDouble bottomBarDy = 0.0.obs;
+  RxDouble bottomBarY = 0.0.obs;
 
   refreshMoneyCoinWidget() async {
     await refreshUserEntity();

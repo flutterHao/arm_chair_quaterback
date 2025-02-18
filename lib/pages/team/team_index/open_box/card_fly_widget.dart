@@ -44,7 +44,7 @@ class _TopDialogState extends State<CardFlyWidget>
         curve: Curves.easeOutSine);
     _controller.forward().then((v) async {
       IllustratiionsController ctrl = Get.find();
-      ctrl.hasChange.value = true;
+      ctrl.hasNewPlayer.value = true;
       isShow = false;
       setState(() {});
     });

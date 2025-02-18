@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-17 16:52:23
+ * @LastEditTime: 2025-02-18 20:05:30
  */
 
 import 'dart:async';
@@ -203,7 +203,7 @@ class TeamIndexController extends GetxController
   // }
 
   void matchBattle() async {
-    await scroToMatch();
+    // await scroToMatch();
     final teamCtrl = Get.find<TeamController>();
     if (teamCtrl.myTeamEntity.salary >= teamCtrl.myTeamEntity.salaryCap) {
       BottomTipDialog.show(
@@ -281,10 +281,15 @@ class TeamIndexController extends GetxController
     IllustratiionsController ctrl = Get.find();
     ctrl.getPlayerCards = currentCardPack.playerCards
         .where((e) => e.isSelect.value && e.isOpen.value)
+        .where((e) => ctrl.playerCollectEntity.collects
+            .where((a) => a.playerId == e.playerId)
+            .isEmpty)
         .toList();
     closeCard();
+    scrollController.animateTo(scrollController.offset - 1,
+        duration: 1.milliseconds, curve: Curves.easeIn);
     if (ctrl.getPlayerCards.isEmpty) return;
-    Overlay.of(ctx).insert(overlayEntry);
+    Overlay.of(Get.context!).insert(overlayEntry);
   }
 
   void goToIllustraction() {

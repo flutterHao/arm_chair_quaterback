@@ -499,7 +499,7 @@ class TrainingController extends GetxController
       }
     }).catchError((e) {
       Log.e("网络错误");
-      // chooseEnd(context, type);
+      chooseEnd(context);
     });
   }
 
@@ -657,6 +657,7 @@ class TrainingController extends GetxController
       update(["training_page"]);
 
       await Future.delayed(const Duration(milliseconds: 500));
+      Get.back();
     }
 
     ///3:道具自动加
@@ -738,7 +739,10 @@ class TrainingController extends GetxController
     // for (var element in scrollerCtrlList) {
     //   Log.d("slot 当前位置 ${element.offset}");
     // }
-
+    if (trainingInfo.buff.length == 5) {
+      TeamIndexController ctrl = Get.find();
+      ctrl.matchBattle();
+    }
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
     updateScroller();
 
@@ -751,9 +755,6 @@ class TrainingController extends GetxController
     // }
     // getPlayerList();
     // update(["training_page"]);
-    if (awads.contains(2) || awads.contains(5)) {
-      Get.back();
-    }
   }
 
   void showAwardDialog() {
@@ -811,6 +812,8 @@ class TrainingController extends GetxController
       HomeController.to.updateMoney();
       await Future.delayed(const Duration(milliseconds: 300));
     });
+
+    Get.back();
   }
 
   ///球员滚动
