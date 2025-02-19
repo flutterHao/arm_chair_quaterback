@@ -28,12 +28,22 @@ class MyDateUtils {
 
   /// 格式化 8:05AM
   static String formatHM_AM(DateTime dateTime) {
-    return "${dateTime.hour < 12 ? dateTime.hour : dateTime.hour - 12}:${dateTime.minute.toString().padLeft(2, "0")}${dateTime.hour < 12 ? "AM" : "PM"}";
+    var hour = dateTime.hour;
+    hour = hour%12;
+    if(hour == 0){
+      hour = 12;
+    }
+    return "$hour:${dateTime.minute.toString().padLeft(2, "0")}${dateTime.hour < 12 ? "AM" : "PM"}";
   }
 
   /// 格式化 AM 8:05
   static String formatAM_HM(DateTime dateTime) {
-    return "${dateTime.hour < 12 ? "AM" : "PM"} ${dateTime.hour < 12 ? dateTime.hour : dateTime.hour - 12}:${dateTime.minute}";
+    var hour = dateTime.hour;
+    hour = hour%12;
+    if(hour == 0){
+      hour = 12;
+    }
+    return "${dateTime.hour < 12 ? "AM" : "PM"} $hour:${dateTime.minute}";
   }
 
   /// 秒格式化为分钟秒: 02:35

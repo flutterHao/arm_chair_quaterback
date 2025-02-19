@@ -28,11 +28,14 @@ class SendCommentWidget extends StatefulWidget {
       this.isReply = false,
       // this.showKeyboard,
       this.hintText = 'Say something...'});
+
   final String hintText;
   final NewsListDetail detail;
   final ReviewEntity? reviewsItem;
+
   // final int targetId;
   final bool isReply;
+
   // final Function? showKeyboard;
 
   @override
@@ -43,11 +46,13 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
   // 使用 MediaQuery 来获取键盘的高度
   var ctrl = TextEditingController();
   var hasText = false.obs;
+
   // NewsDetail detail =
   //     Get.find<NewsDetailController>(tag: newsId.toString()).state.newDetail;
   // controller.focusNode.requestFocus();    final FocusNode focusNode = FocusNode();
 
   final FocusNode focusNode = FocusNode();
+
   // if (isReply) focusNode.requestFocus();
 
   @override
@@ -65,7 +70,18 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom, // 键盘高度
       ),
-      color: isDarkMode ? AppColors.c262626 : AppColors.cFFFFFF,
+      decoration: BoxDecoration(
+          color: MediaQuery.of(context).viewInsets.bottom <= 0
+              ? AppColors.cFFFFFF
+              : isDarkMode
+                  ? AppColors.c262626
+                  : AppColors.cFFFFFF,
+          boxShadow: [
+            BoxShadow(
+                color: AppColors.c000000.withOpacity(0.2),
+                blurRadius: 2,
+                spreadRadius: 2)
+          ]),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -79,9 +95,11 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                       alignment: Alignment.center,
                       constraints: BoxConstraints(minHeight: 42.w),
                       decoration: BoxDecoration(
-                          color: isDarkMode
-                              ? AppColors.c4D4D4D
-                              : AppColors.cE6E6E6,
+                          color: MediaQuery.of(context).viewInsets.bottom <= 0
+                              ? AppColors.cE6E6E6
+                              : isDarkMode
+                                  ? AppColors.c4D4D4D
+                                  : AppColors.cE6E6E6,
                           borderRadius: BorderRadius.circular(24.w)),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -93,9 +111,12 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                               maxLines: 10,
                               focusNode: widget.isReply ? focusNode : null,
                               // keyboardAppearance:Brightness.light,
-                              cursorColor: isDarkMode
-                                  ? AppColors.cF2F2F2
-                                  : AppColors.c262626,
+                              cursorColor:
+                                  MediaQuery.of(context).viewInsets.bottom <= 0
+                                      ? AppColors.c262626
+                                      : isDarkMode
+                                          ? AppColors.cF2F2F2
+                                          : AppColors.c262626,
                               scrollPadding: const EdgeInsets.all(0),
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(10.w),
@@ -105,9 +126,14 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                     borderSide: BorderSide.none),
                               ),
                               style: 14.w4(
-                                  color: isDarkMode
-                                      ? AppColors.cF2F2F2
-                                      : AppColors.c262626),
+                                  color: MediaQuery.of(context)
+                                              .viewInsets
+                                              .bottom <=
+                                          0
+                                      ? AppColors.c262626
+                                      : isDarkMode
+                                          ? AppColors.cF2F2F2
+                                          : AppColors.c262626),
                               onChanged: (v) {
                                 hasText.value = ObjectUtil.isNotEmpty(v);
                               },
@@ -122,9 +148,14 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                   width: 30.w,
                                   height: 30.w,
                                   decoration: BoxDecoration(
-                                      color: isDarkMode
-                                          ? AppColors.cF2F2F2
-                                          : AppColors.c262626,
+                                      color: MediaQuery.of(context)
+                                                  .viewInsets
+                                                  .bottom <=
+                                              0
+                                          ? AppColors.c262626
+                                          : isDarkMode
+                                              ? AppColors.cF2F2F2
+                                              : AppColors.c262626,
                                       borderRadius:
                                           BorderRadius.circular(15.w)),
                                   child: Transform.rotate(

@@ -252,7 +252,6 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                             ),
                             Expanded(
                               child: Obx(() {
-                                gameStartTimeStr.value;
                                 return Container(
                                   margin: EdgeInsets.only(bottom: 3.w),
                                   child: Row(
