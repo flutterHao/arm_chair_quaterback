@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
@@ -42,8 +39,7 @@ class InboxEmailController extends GetxController {
 
   initData() async {
     try {
-      InboxEmailEntity res = (await PicksApi.getMailVOList())
-          .firstWhere((element) => element.mailType == type);
+      InboxEmailEntity res = (await PicksApi.getMailVOList()).firstWhere((element) => element.mailType == type);
       emailList.value = res.mailList;
       loadingStatus.value = LoadDataStatus.success;
     } catch (e) {
@@ -57,12 +53,9 @@ class InboxEmailController extends GetxController {
         needBg: false,
         child: Container(
             margin: EdgeInsets.only(top: 44.w),
-            child: AwardWidget(
-                image: Assets.managerUiManagerGift00,
-                text: "YOU GOT 3  treasure chest".toUpperCase())));
+            child: AwardWidget(image: Assets.managerUiManagerGift00, text: "YOU GOT 3  treasure chest".toUpperCase())));
     await PicksApi.receiveMailAward(mailIds);
-    InboxEmailEntity res = (await PicksApi.getMailVOList())
-        .firstWhere((element) => element.mailType == type);
+    InboxEmailEntity res = (await PicksApi.getMailVOList()).firstWhere((element) => element.mailType == type);
     emailList.value = res.mailList;
   }
 
