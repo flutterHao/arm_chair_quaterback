@@ -100,13 +100,15 @@ class PlayNotStartController extends GetxController
 
   timeCountDown() {
     _timer?.cancel();
-    var duration = MyDateUtils.getDateTimeByMs(item.gameStartTime).difference(DateTime.now());
+    var duration = MyDateUtils.getDateTimeByMs(item.gameStartTime)
+        .difference(DateTime.now());
     if (duration <= Duration.zero) {
       return;
     }
     updateCountDownTime(duration);
     _timer = Timer.periodic(const Duration(minutes: 1), (t) {
-      var duration = MyDateUtils.getDateTimeByMs(item.gameStartTime).difference(DateTime.now());
+      var duration = MyDateUtils.getDateTimeByMs(item.gameStartTime)
+          .difference(DateTime.now());
       if (duration <= Duration.zero) {
         t.cancel();
         return;
@@ -117,8 +119,8 @@ class PlayNotStartController extends GetxController
 
   void updateCountDownTime(Duration duration) {
     day = duration.inDays;
-    hh = duration.inHours%24;
-    minute = duration.inMinutes%60;
+    hh = duration.inHours % 24;
+    minute = duration.inMinutes % 60;
     gameStartTimesCountDown.value = duration.inMilliseconds;
   }
 
@@ -287,16 +289,10 @@ class PlayNotStartController extends GetxController
   scheduleChoose(Question question) {
     LeagueApi.scheduleChoose(question.playerId, question.gameId).then((result) {
       initData();
-      try{
+      try {
         /// 获得篮球，刷新篮球数量
         Get.find<TrainingController>().getData();
-      }finally{
-        showTopToastDialog(
-            needBg: false,
-            child: Container(
-              margin: EdgeInsets.only(top: 44.w),
-                child: const AwardWidget(image: Assets.commonUiCommonProp04, text: "YOU GOT 3 BALL")));
-      }
+      } finally {}
     }, onError: (e) {
       ErrorUtils.toast(e);
     });

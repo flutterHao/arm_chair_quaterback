@@ -632,16 +632,20 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
       int.parse(
           Get.find<LeagueController>().picksDefineEntity?.betCost ?? "0"));
 
+  /// 不能竞猜判断
   bool cantGuess() {
-    DateTime? canGuessScoreDate =
+    var nextCanGuessScoreDate =
         Get.find<LeagueController>().getNextCanGuessScoreDate();
+    bool nextBool = nextCanGuessScoreDate != null;
+    if (nextBool) {
+      var nextGuessDateNextDay = MyDateUtils.nextDay(nextCanGuessScoreDate!);
+      var dayStartTimeMS = MyDateUtils.getDayStartTimeMS(nextGuessDateNextDay);
+      nextBool = item.gameStartTime >= dayStartTimeMS;
+    }
     var beforeNowGuess = (item.gameStartTime < MyDateUtils.getNowDateMs() &&
         item.isGuess == 0 &&
         item.status != 0);
-    return (canGuessScoreDate != null &&
-            !MyDateUtils.isSameDay(canGuessScoreDate,
-                MyDateUtils.getDateTimeByMs(item.gameStartTime))) ||
-        beforeNowGuess;
+    return beforeNowGuess || nextBool;
   }
 
   Widget _buildGuess() {
