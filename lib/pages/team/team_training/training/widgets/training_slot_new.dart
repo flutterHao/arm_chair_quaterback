@@ -234,7 +234,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                           ),
                                           Positioned(
                                             top: 0.w,
-                                            left: 0.w,
+                                            left: 2.w,
                                             child: IconWidget(
                                               iconWidth: 19.5.w,
                                               icon: Assets.commonUiCommonProp03,

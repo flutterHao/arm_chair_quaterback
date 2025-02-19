@@ -455,17 +455,20 @@ class TrainingController extends GetxController
     if (selectTacticId == 0) return;
     tacticFly.value = true;
     showBuff.value = true;
-    for (int i = 0; i < tacticChooseList.length; i++) {
-      double x = (375.w - 68.w) / 2;
-      tacticChooseList[i].rotate.value = 0;
-      if (selectTacticId == tacticChooseList[i].id) {
-        tacticChooseList[i].offset.value = Offset(x, 328.w);
-      } else {
-        tacticChooseList[i].offset.value = Offset(x, 560.w);
-        tacticChooseList[i].scale = 0;
+    if (tacticChooseList.length > 1) {
+      for (int i = 0; i < tacticChooseList.length; i++) {
+        double x = (375.w - 68.w) / 2;
+        tacticChooseList[i].rotate.value = 0;
+        if (selectTacticId == tacticChooseList[i].id) {
+          tacticChooseList[i].offset.value = Offset(x, 328.w);
+          tacticChooseList[i].scale = 1.5;
+        } else {
+          tacticChooseList[i].offset.value = Offset(x, 560.w);
+          tacticChooseList[i].scale = 0;
+        }
       }
+      await Future.delayed(const Duration(milliseconds: 600));
     }
-    await Future.delayed(const Duration(milliseconds: 600));
     for (int i = 0; i < tacticChooseList.length; i++) {
       if (selectTacticId == tacticChooseList[i].id) {
         int length = min(trainingInfo.buff.length, 4);

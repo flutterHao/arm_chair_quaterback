@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-19 17:49:27
+ * @LastEditTime: 2025-02-19 20:54:33
  */
 import 'dart:math';
 
@@ -228,6 +228,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                       children: [
                         PreparationWidget(
                           playerReadiness: ctrl.trainingInfo.playerReadiness,
+                          withAnimated: true,
                         ),
                         3.vGap,
                         SizedBox(
@@ -343,9 +344,19 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   Positioned(
                     top: 515.w,
                     right: 26.5.w,
-                    child: Image.asset(
-                      Assets.managerUiManagerIconDefenseshield,
-                      width: 56.w,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(
+                          Assets.managerUiManagerIconDefenseshield,
+                          width: 56.w,
+                        ),
+                        for (int i = 0; i < 3; i++)
+                          Image.asset(
+                            Assets.managerUiManagerIconDefenseshield,
+                            width: 56.w,
+                          ),
+                      ],
                     ),
                   ),
 
@@ -588,8 +599,10 @@ class _SlotButton extends StatelessWidget {
 
 class PreparationWidget extends StatefulWidget {
   final double playerReadiness;
+  final bool withAnimated;
 
-  const PreparationWidget({super.key, required this.playerReadiness});
+  const PreparationWidget(
+      {super.key, required this.playerReadiness, this.withAnimated = false});
 
   @override
   State<PreparationWidget> createState() => _PreparationWidgetState();
@@ -603,42 +616,48 @@ class _PreparationWidgetState extends State<PreparationWidget>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 500), // 动画时长
-      vsync: this,
-    );
-    _animation = Tween<double>(begin: 0, end: widget.playerReadiness).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut, // 动画曲线
-      ),
-    )..addListener(() => setState(() {}));
-    _controller.forward();
+    if (widget.withAnimated) {
+      _controller = AnimationController(
+        duration: const Duration(milliseconds: 500), // 动画时长
+        vsync: this,
+      );
+      _animation = Tween<double>(begin: 0, end: widget.playerReadiness).animate(
+        CurvedAnimation(
+          parent: _controller,
+          curve: Curves.easeInOut, // 动画曲线
+        ),
+      )..addListener(() => setState(() {}));
+      _controller.forward();
+    }
   }
 
   @override
   void didUpdateWidget(PreparationWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
+    // 当数值变化时启动新动画
     if (oldWidget.playerReadiness != widget.playerReadiness) {
-      // 当数值变化时启动新动画
-      _animation = Tween<double>(
-        begin: oldWidget.playerReadiness,
-        end: widget.playerReadiness,
-      ).animate(
-        CurvedAnimation(
-          parent: _controller,
-          curve: Curves.easeInOut,
-        ),
-      );
-      _controller
-        ..reset()
-        ..forward();
+      if (widget.withAnimated) {
+        _animation = Tween<double>(
+          begin: oldWidget.playerReadiness,
+          end: widget.playerReadiness,
+        ).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: Curves.easeInOut,
+          ),
+        );
+        _controller
+          ..reset()
+          ..forward();
+      }
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    if (widget.withAnimated) {
+      _controller.dispose();
+    }
     super.dispose();
   }
 
@@ -656,7 +675,8 @@ class _PreparationWidgetState extends State<PreparationWidget>
         ClipRect(
           child: Align(
             alignment: Alignment.centerLeft,
-            widthFactor: _animation.value,
+            widthFactor:
+                widget.withAnimated ? _animation.value : widget.playerReadiness,
             child: Image.asset(
               Assets.managerUiManagerIconPrepareprogressbar03,
               width: 103.w,

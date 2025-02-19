@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-02-19 17:51:19
+ * @LastEditTime: 2025-02-19 20:56:23
  */
 import 'dart:math';
 
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/animated_arrow.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
@@ -42,6 +43,89 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                 fit: StackFit.expand,
                 alignment: Alignment.topCenter,
                 children: [
+                  Positioned(
+                    top: 200.w,
+                    child: Image.asset(
+                      Assets.managerUiManagerIconDefenseshield,
+                      width: 56.w,
+                    ),
+                  ),
+                  if (ctrl.showBuff.value)
+                    Positioned(
+                      top: top,
+                      left: 0,
+                      child: Container(
+                        width: 140.w,
+                        height: 157.w,
+                        color: Colors.transparent,
+                        child: Stack(
+                          children: [
+                            for (var i = 0; i < 5; i++)
+                              Positioned(
+                                left: ctrl.offsets[i].dx,
+                                top: ctrl.offsets[i].dy,
+                                child: Transform.rotate(
+                                  alignment: Alignment.center,
+                                  angle: ctrl.angles[i] * pi / 180,
+                                  child: i <= ctrl.trainingInfo.buff.length - 1
+                                      ? SmallTacticCardNew(
+                                          buff: ctrl.trainingInfo.buff[i],
+                                          width: 35.w + i * 2.5.w,
+                                        )
+                                      : CardBackWidget(width: 35.w + i * 2.5.w),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                  ///准备程度进度条
+                  if (ctrl.showBuff.value)
+                    Positioned(
+                      top: 139.5.w + top,
+                      left: 26.w,
+                      child: Column(
+                        children: [
+                          PreparationWidget(
+                            playerReadiness: ctrl.trainingInfo.playerReadiness,
+                          ),
+                          3.vGap,
+                          SizedBox(
+                            width: 106.w,
+                            child: Row(
+                              children: [
+                                //TODO
+                                Text(
+                                  "Preparation",
+                                  style: 12.w4(
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldRegular,
+                                      color: AppColors.cFFFFFF),
+                                ),
+                                31.hGap,
+                                AnimatedNum(
+                                  number:
+                                      (ctrl.trainingInfo.playerReadiness * 100)
+                                          .toInt(),
+                                  textStyle: 12.w4(
+                                      color: AppColors.cFFFFFF,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                                Text(
+                                  "%",
+                                  style: 12.w4(
+                                      color: AppColors.cFFFFFF,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   Positioned(
                     top: 80.w + 100.w + top,
                     left: 0,
@@ -147,32 +231,6 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       );
                     }),
                   ),
-
-                  // if (ctrl.showBuff.value)
-                  //   for (int index = 0;
-                  //       index < ctrl.tacticChooseList.length;
-                  //       index++)
-                  //     Obx(() {
-                  //       var e = ctrl.tacticChooseList[index];
-                  //       return Positioned(
-                  //           left: e.offset.value.dx,
-                  //           top: e.offset.value.dy + 30.w,
-                  //           child: Visibility(
-                  //             visible: !ctrl.showBuff.value,
-                  //             child: Container(
-                  //               width: 74.w,
-                  //               alignment: Alignment.center,
-                  //               child: AnimatedArrow(
-                  //                 end: -5,
-                  //                 child: Image.asset(
-                  //                   Assets.commonUiCommonArrow,
-                  //                   width: 10.w,
-                  //                   // height: 12.w,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ));
-                  //     }),
                   if (ctrl.showBuff.value)
                     Positioned(
                       top: 300.w,
@@ -231,35 +289,6 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       ),
                     ),
 
-                  // Positioned(
-                  //   top: 47.w,
-                  //   left: 0,
-                  //   child: Container(
-                  //     width: 140.w,
-                  //     height: 157.w,
-                  //     color: Colors.transparent,
-                  //     child: Stack(
-                  //       children: [
-                  //         for (var i = 0; i < 5; i++)
-                  // Positioned(
-                  //   left: ctrl.offsets[i].dx,
-                  //   top: ctrl.offsets[i].dy,
-                  //   child: Transform.rotate(
-                  //     alignment: Alignment.center,
-                  //     angle: ctrl.angles[i] * pi / 180,
-                  //     child: i <= ctrl.trainingInfo.buff.length - 1
-                  //         ? SmallTacticCardNew(
-                  //             buff: ctrl.trainingInfo.buff[i],
-                  //             width: 35.w + i * 2.5.w,
-                  //           )
-                  //         : CardBackWidget(width: 35.w + i * 2.5.w),
-                  //   ),
-                  // ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-
                   ///卡牌选择
                   if (ctrl.showBuff.value)
                     for (int index = 0;
@@ -268,7 +297,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       Obx(() {
                         var e = ctrl.tacticChooseList[index];
                         return AnimatedPositioned(
-                          left: e.offset.value.dx,
+                          left: e.offset.value.dx - 2,
                           top: e.offset.value.dy,
                           duration: 200.milliseconds,
                           child: AnimatedRotation(
@@ -320,87 +349,5 @@ class BezierCurve extends Curve {
         3 * (1 - t) * (1 - t) * t * c1 +
         3 * (1 - t) * t * t * c2 +
         t * t * t * end);
-  }
-}
-
-class TrainingSlotPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height);
-    final radius = size.width / 2;
-    final strokeWidth = 1.5;
-    final innerLineWidth = 132.5;
-    final lineCount = 8; // 8 lines with 45-degree intervals
-    final initialAngle =
-        22.5 * (3.141592653589793 / 180); // Convert 22.5 degrees to radians
-
-    // Paint the green semicircle
-    final semicirclePaint = Paint()
-      ..color = Colors.green
-      ..style = PaintingStyle.fill;
-
-    final semicirclePath = Path()
-      ..moveTo(center.dx, center.dy)
-      ..arcToPoint(
-        Offset(center.dx + radius, center.dy),
-        radius: Radius.circular(radius),
-        clockwise: false,
-      )
-      ..arcToPoint(
-        Offset(center.dx - radius, center.dy),
-        radius: Radius.circular(radius),
-        clockwise: false,
-      )
-      ..close();
-
-    canvas.drawPath(semicirclePath, semicirclePaint);
-
-    // Paint the inner line with border
-    final innerLinePaint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth + innerLineWidth;
-
-    final innerLinePath = Path()
-      ..moveTo(center.dx - innerLineWidth / 2, center.dy)
-      ..lineTo(center.dx + innerLineWidth / 2, center.dy);
-
-    canvas.drawPath(innerLinePath, innerLinePaint);
-
-    // Paint the inner line border
-    final innerLineBorderPaint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
-
-    final innerLineBorderPath = Path()
-      ..moveTo(center.dx - innerLineWidth / 2 - strokeWidth / 2, center.dy)
-      ..lineTo(center.dx + innerLineWidth / 2 + strokeWidth / 2, center.dy);
-
-    canvas.drawPath(innerLineBorderPath, innerLineBorderPaint);
-
-    // Paint the connecting lines
-    final linePaint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
-
-    for (int i = 0; i < lineCount; i++) {
-      double angle = initialAngle +
-          i * (45 * (3.141592653589793 / 180)); // Convert 45 degrees to radians
-      double x1 = center.dx + (radius - strokeWidth / 2) * cos(angle);
-      double y1 = center.dy - (radius - strokeWidth / 2) * sin(angle);
-      double x2 = center.dx +
-          (radius + innerLineWidth / 2 + strokeWidth / 2) * cos(angle);
-      double y2 = center.dy -
-          (radius + innerLineWidth / 2 + strokeWidth / 2) * sin(angle);
-
-      canvas.drawLine(Offset(x1, y1), Offset(x2, y2), linePaint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

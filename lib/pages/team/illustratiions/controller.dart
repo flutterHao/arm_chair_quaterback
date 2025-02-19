@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-18 20:27:26
+ * @LastEditTime: 2025-02-19 20:24:43
  */
 /*
  * @Description: 
@@ -110,6 +110,106 @@ class IllustratiionsController extends GetxController
     super.onClose();
   }
 
+  //   Future getPlayerCollectInfo() async {
+  //   await Future.wait([
+  //     TeamApi.getPlayerCollect(),
+  //     CacheApi.getPlayerBookRuleList(),
+  //     CacheApi.getPlayerBookExpRuleList(),
+  //   ]).then((v) async {
+  //     double dy = 0;
+  //     double height =
+  //         (MediaQuery.of(Get.context!).size.width - 33.w - 42.w) / 3 * 1.6;
+
+  //     playerCollectEntity = v[0] as PlayerCollectEntity;
+
+  //     /// activeList现役 notActiveList退役
+  //     var list = onfilter();
+  //     //如果是新获取的，添加获得动画
+  //     if (hasNewPlayer.value) {
+  //       var activeList = list.where((e) => e.isActive == 0).toList();
+  //       var notActiveList = list.where((e) => e.isActive == 1).toList();
+  //       for (var player in getPlayerCards) {
+  //         var item = activeList.firstWhereOrNull(
+  //             (element) => element.playerId == player.playerId);
+  //         if (item != null) {
+  //           int index = activeList.indexOf(item);
+  //           if (index > 0) {
+  //             double offset = ((index) ~/ 3) * (height + 10.w) + 25.w;
+  //             int t = ((offset - dy) * 0.5).ceil();
+  //             await scrollController.animateTo(offset,
+  //                 duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+
+  //             item.isLight = 1;
+  //             item.isLightRx.value = 1;
+  //             update(["list"]);
+  //             await Future.delayed(const Duration(milliseconds: 300));
+  //             dy = offset;
+  //           }
+  //         }
+  //         double beginY =
+  //             ((activeList.length) ~/ 3 + 1) * (height + 10.w) + 87.5.w + 25.w;
+  //         var item2 = notActiveList.firstWhereOrNull(
+  //             (element) => element.playerId == player.playerId);
+  //         if (item2 != null) {
+  //           int index = notActiveList.indexOf(item2);
+  //           if (index > 0) {
+  //             double offset = beginY + ((index + 1) ~/ 3) * (height + 10.w);
+  //             int t = ((offset - dy) * 0.5).ceil();
+  //             await scrollController.animateTo(offset,
+  //                 duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+  //             item2.isLight = 1;
+  //             item2.isLightRx.value = 1;
+  //             update(["list"]);
+  //             await Future.delayed(const Duration(milliseconds: 300));
+  //             dy = offset;
+  //           }
+  //         }
+  //       }
+  //     } else {
+  //       for (var element in list) {
+  //         PlayerCollectCollects? myPlayer = playerCollectEntity.collects
+  //             .firstWhereOrNull((e) => e.playerId == element.playerId);
+  //         if (myPlayer != null) {
+  //           element.fragmentNum = myPlayer.fragmentNum;
+  //           element.isLight = myPlayer.isLight;
+  //           element.isLightRx.value = myPlayer.isLight;
+  //         }
+  //       }
+  //     }
+
+  //     // await scrollController.animateTo(beginY,
+  //     //     duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+
+  //     //设置工资帽和升级经验
+  //     var info = playerCollectEntity.teamBookPlayerCollect;
+  //     for (var e in CacheApi.playerBookExpRuleList) {
+  //       if (info.grade == e.grade) {
+  //         int index = CacheApi.playerBookExpRuleList.indexOf(e);
+  //         if (index + 1 < CacheApi.playerBookExpRuleList.length) {
+  //           info.needExp = CacheApi.playerBookExpRuleList[index + 1].currExp;
+  //         }
+  //         // info.totalExp = e.totalExp;
+  //         // info.needExp = e.currExp;
+  //         info.addSalaryCap = e.addSalaryCap;
+  //       }
+  //     }
+
+  //     currentLevel = info.grade;
+  //     // double p = info.exp / info.needExp;
+  //     // int g = info.grade;
+  //     // p += 0.5;
+  //     // if (p >= 1) {
+  //     //   g++;
+  //     //   // p = p - 1;
+  //     // }
+
+  //     // updateProgress(g, p);
+
+  //     updateProgress(info.grade, info.exp / info.needExp);
+  //     update(["list", "progress"]);
+  //   });
+  // }
+
   Future getPlayerCollectInfo() async {
     await Future.wait([
       TeamApi.getPlayerCollect(),
@@ -216,17 +316,17 @@ class IllustratiionsController extends GetxController
       }
 
       currentLevel = info.grade;
-      // double p = info.exp / info.needExp;
-      // int g = info.grade;
-      // p += 0.5;
-      // if (p >= 1) {
-      //   g++;
-      //   // p = p - 1;
-      // }
+      double p = 0.9;
+      int g = 10;
+      p += 0.5;
+      if (p >= 1) {
+        g++;
+        p = p - 1;
+      }
 
-      // updateProgress(g, p);
+      updateProgress(g, p);
 
-      updateProgress(info.grade, info.exp / info.needExp);
+      // updateProgress(info.grade, info.exp / info.needExp);
       update(["list", "progress"]);
     });
   }
