@@ -4,12 +4,14 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -152,11 +154,16 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                 ),
                                 child: GestureDetector(
                                   onTap: () {
-                                    showDialog(
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) {
+                                    //       return const AwardDialog();
+                                    //     });
+                                    BottomTipDialog.showWithSound(
+                                        isScrollControlled: true,
                                         context: context,
-                                        builder: (context) {
-                                          return const AwardDialog();
-                                        });
+                                        builder: (context) =>
+                                            const AwardBottomsheet());
                                   },
                                   child: Container(
                                     // color: Colors.red,

@@ -178,7 +178,7 @@ class AwardDialog extends GetView<TrainingController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                Utils.getPropIconUrl(award[2]),
+                Utils.getPropIconUrl(award[1]),
                 width: 32.w,
                 fit: BoxFit.fitWidth,
                 errorBuilder: (context, error, stackTrace) => IconWidget(
@@ -222,7 +222,8 @@ class AwardDialog extends GetView<TrainingController> {
       child: Row(
         children: [
           Image.asset(
-            Utils.getSlotIconUrl(award[2]),
+            Utils.getPropIconUrl(int.tryParse(award[1]) ?? 0),
+            // "assets/images/Common/ui_common_prop_05.png",
             width: 32.w,
             fit: BoxFit.fitWidth,
             errorBuilder: (context, error, stackTrace) => IconWidget(

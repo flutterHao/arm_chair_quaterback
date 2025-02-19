@@ -165,7 +165,7 @@ class UserInfoBar extends StatelessWidget {
                             ),
                           ),
                         11.hGap,
-                        MoneyAndCoinWidget(
+                        const MoneyAndCoinWidget(
                           home: true,
                         ),
                       ],
@@ -232,7 +232,7 @@ class UserInfoBar extends StatelessWidget {
 
 class MoneyAndCoinWidget extends StatelessWidget {
   ///不要加const，会导致widget不刷新
-  MoneyAndCoinWidget({super.key, this.home = false});
+  const MoneyAndCoinWidget({super.key, this.home = false});
 
   final bool home;
 
@@ -243,7 +243,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
         builder: (controller) {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-          var child;
+          Flex child;
           if (home) {
             child = Row(
               children: [
@@ -383,7 +383,7 @@ class ServerSwitchDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('取消'),
+          child: const Text('取消'),
           onPressed: () {
             Navigator.of(context).pop();
           },
