@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-09-12 21:40:32
- * @LastEditTime: 2025-01-16 17:24:06
+ * @LastEditTime: 2025-02-19 10:45:53
  */
 import 'package:flutter/foundation.dart';
 
@@ -28,6 +28,7 @@ class Address {
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 
   static const String wsPersonalDevUrl = "ws://192.168.12.46:9003";
+
   ///后台开发内网本机测试地址(-->余溪)
   static const String wsPersonalDevUrl2 = 'http://192.168.12.74:9001';
   static const String wsPublicDevUrl = 'ws://seanba-te.ftxgame.com:9003';

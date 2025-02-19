@@ -343,8 +343,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       }
     }
 
-    update();
     Get.back(result: result);
+    update();
   }
 
   ///计算体力回复时间
@@ -516,9 +516,12 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         });
   }
 
-  CupDefineEntity getCurrentCup() {
+  CupDefineEntity getCurrentCupDefine(int cup) {
     for (int i = 0; i < CacheApi.cupDefineList.length; i++) {
-      if (CacheApi.cupDefineList[i].substituteSum > myTeamEntity.benchCount) {
+      List<int> cupNum = CacheApi.cupDefineList[i].cupNum;
+      int begin = cupNum.first;
+      int end = cupNum.last;
+      if (cup >= begin && cup <= end) {
         return CacheApi.cupDefineList[i];
       }
     }

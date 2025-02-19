@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2025-02-17 16:02:11
+ * @LastEditTime: 2025-02-19 09:42:29
  */
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -170,7 +170,11 @@ class MatchCard extends GetView<TeamIndexController> {
                                     width: 179.w,
                                     height: 9.w,
                                     progress: controller.teamSimpleEntity.cup /
-                                        myTeamCtrl.getCurrentCup().cupNum.last,
+                                        myTeamCtrl
+                                            .getCurrentCupDefine(
+                                                controller.teamSimpleEntity.cup)
+                                            .cupNum
+                                            .last,
                                     progressColor: AppColors.cFFFFFF,
                                     border: Border.all(
                                         color: AppColors.c999999, width: 0.5),
@@ -193,7 +197,7 @@ class MatchCard extends GetView<TeamIndexController> {
                                           textStyle:
                                               14.w7(color: AppColors.cFFFFFF)),
                                       Text(
-                                        "/${myTeamCtrl.getCurrentCup().cupNum.last}",
+                                        "/${myTeamCtrl.getCurrentCupDefine(controller.teamSimpleEntity.cup).cupNum.last}",
                                         style: 14.w7(color: AppColors.cFFFFFF),
                                       )
                                     ],

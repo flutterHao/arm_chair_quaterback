@@ -30,17 +30,17 @@ class TrainingSlotNew extends GetView<TrainingController> {
 
   LinearGradient _linearGradient() {
     return const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          AppColors.cBFBEBE,
-          AppColors.cD9D9D9,
-          AppColors.cFFFFFF,
-          AppColors.cFFFFFF,
-          AppColors.cFFFFFF,
-          AppColors.cD9D9D9,
-          AppColors.cBFBEBE,
-        ]);
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        AppColors.cBFBEBE,
+        AppColors.cD9D9D9,
+        AppColors.cFFFFFF,
+        AppColors.cD9D9D9,
+        AppColors.cBFBEBE,
+      ],
+      stops: [0.0, 0.15, 0.5, 0.85, 1.0],
+    );
   }
 
   @override
@@ -243,17 +243,19 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                           Positioned(
                                             left: 69.5.w,
                                             top: 8.w,
-                                            child: OutlinedText(
-                                                strokeColor: Colors.black,
-                                                strokeWidth: 1,
-                                                text:
-                                                    "${controller.taskValue.value}/${controller.currentTaskNeed}",
-                                                textStyle: const TextStyle(
-                                                    fontFamily: FontFamily
-                                                        .fOswaldMedium,
-                                                    fontSize: 10,
-                                                    height: 1,
-                                                    color: Colors.white)),
+                                            child: Obx(() {
+                                              return OutlinedText(
+                                                  strokeColor: Colors.black,
+                                                  strokeWidth: 1,
+                                                  text:
+                                                      "${controller.taskValue.value}/${controller.currentTaskNeed}",
+                                                  textStyle: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                      fontSize: 10,
+                                                      height: 1,
+                                                      color: Colors.white));
+                                            }),
                                           )
                                         ]),
                                   ),

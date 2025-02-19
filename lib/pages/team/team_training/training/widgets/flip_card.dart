@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2025-02-13 18:06:17
+ * @LastEditTime: 2025-02-19 17:08:26
  */
 
 import 'dart:math';
@@ -95,18 +95,18 @@ class _FlipCardState extends State<FlipCard>
                     child: widget.useSmallTacticCard
                         ? SmallTacticCardNew(
                             buff: widget.buff,
-                            width: widget.width ?? 74.w,
+                            width: widget.width ?? 68.w,
                           )
                         : TacticCard(
                             num: widget.buff.face,
                             color: widget.buff.color,
-                            width: widget.width ?? 74.w,
+                            width: widget.width ?? 68.w,
                             buff: widget.buff,
                           ),
                   )
                 : Image.asset(
                     Assets.managerUiManagerTacticsCardback,
-                    width: 74.w,
+                    width: 68.w,
                     fit: BoxFit.fill,
                   ),
           );

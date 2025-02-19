@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -58,7 +60,7 @@ class _LineUpTabState extends State<LineUpTab>
                       height: 1.w,
                       color: AppColors.cD1D1D1,
                     ),
-                    const MainPlayerList(),
+                    MainPlayerList(),
                   ],
                 ),
               ),
@@ -101,7 +103,7 @@ class _LineUpTabState extends State<LineUpTab>
                       height: 1.w,
                       color: AppColors.cD1D1D1,
                     ),
-                    const SubPlayerList(),
+                    SubPlayerList(),
                   ],
                 ),
               )

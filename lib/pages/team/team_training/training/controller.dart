@@ -447,23 +447,37 @@ class TrainingController extends GetxController
     });
   }
 
+  ///选牌
   void chooseTactic(BuildContext context, TrainingInfoBuff e) async {
     e.isSelect.value = true;
     selectTacticId = e.id;
     canChoose = false;
     if (selectTacticId == 0) return;
-    Get.back();
     tacticFly.value = true;
     showBuff.value = true;
     for (int i = 0; i < tacticChooseList.length; i++) {
+      double x = (375.w - 68.w) / 2;
+      tacticChooseList[i].rotate.value = 0;
       if (selectTacticId == tacticChooseList[i].id) {
-        int length = min(trainingInfo.buff.length, 4);
-        tacticChooseList[i].scale = (35.w + length * 2.5.w) / 74.w;
-        tacticChooseList[i].offset.value = offsets[length];
-        tacticChooseList[i].rotate.value = angles[length] / 360;
+        tacticChooseList[i].offset.value = Offset(x, 328.w);
+      } else {
+        tacticChooseList[i].offset.value = Offset(x, 560.w);
+        tacticChooseList[i].scale = 0;
       }
     }
+    await Future.delayed(const Duration(milliseconds: 600));
+    for (int i = 0; i < tacticChooseList.length; i++) {
+      if (selectTacticId == tacticChooseList[i].id) {
+        int length = min(trainingInfo.buff.length, 4);
+        tacticChooseList[i].scale = (35.w + length * 2.5.w) / 50.w;
+        Offset offset = Offset(offsets[length].dx, offsets[length].dy + 47.w);
+        tacticChooseList[i].offset.value = offset;
+        tacticChooseList[i].rotate.value = angles[length];
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 300));
 
+    // return;
     // update(["training_page"]);
     TeamApi.chooseTactic(selectTacticId, replaceTacticId: changeTacticId)
         .then((v) async {
@@ -475,7 +489,7 @@ class TrainingController extends GetxController
       await chooseEnd(context);
       trainingInfo.buff = v;
       update(["training_page"]);
-
+      Get.back();
       await Future.delayed(const Duration(milliseconds: 200));
       String newTacticType = TacticUtils.checkTacticMatch(trainingInfo.buff);
       // var list = TacticUtils.matchedIndices;
@@ -714,18 +728,32 @@ class TrainingController extends GetxController
 
     ///战术 buff
     if (awads.contains(1)) {
-      showAwardDialog();
       tacticChooseList.clear();
       tacticChooseList = List.from(trainingInfo.chooseBuffs);
       //初始化卡牌的位置和朝向
       initTacticPosition();
-
+      showAwardDialog();
       update(["training_page"]);
       showBuff.value = true;
-      await Future.delayed(const Duration(milliseconds: 300));
-      for (var element in tacticChooseList) {
-        await Future.delayed(const Duration(milliseconds: 100));
-        element.isOpen.value = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      // for (var element in tacticChooseList) {
+      //   await Future.delayed(const Duration(milliseconds: 100));
+      //   element.isOpen.value = true;
+      // }
+
+      //发牌
+      int length = tacticChooseList.length;
+      List<double> rotates2 = [-8, 12];
+      List<double> rotates3 = [-23.23, -8, 12];
+      double spacing = 30.w;
+      for (int i = 0; i < length; i++) {
+        var item = tacticChooseList[i];
+        double x = (375.w - (length * 68.w + (length - 1) * spacing)) / 2 +
+            i * (68.w + spacing);
+        item.offset.value = Offset(x, 328.w);
+        item.rotate.value =
+            length == 1 ? 0 : (length == 2 ? rotates2[i] : rotates3[i]);
+        await Future.delayed(const Duration(milliseconds: 300));
       }
       updateScroller();
       Future.delayed(const Duration(milliseconds: 500), () {
@@ -778,19 +806,32 @@ class TrainingController extends GetxController
   }
 
   void initTacticPosition() {
-    double spacing = 20.w;
+    // double spacing = 20.w;
+    // for (int i = 0; i < tacticChooseList.length; i++) {
+    //   var item = tacticChooseList[i];
+    //   item.isOpen.value = false;
+    //   double x = (375.w -
+    //               (tacticChooseList.length * 74.w +
+    //                   (tacticChooseList.length - 1) * spacing)) /
+    //           2 +
+    //       i * (74.w + spacing);
+    //   item.offset.value = Offset(x, 250.w);
+    //   item.rotate.value = 0;
+    //   item.scale = 1;
+    //   // item.isOpen.value = false;
+    // }
+
     for (int i = 0; i < tacticChooseList.length; i++) {
       var item = tacticChooseList[i];
-      item.isOpen.value = false;
-      double x = (375.w -
-                  (tacticChooseList.length * 74.w +
-                      (tacticChooseList.length - 1) * spacing)) /
-              2 +
-          i * (74.w + spacing);
-      item.offset.value = Offset(x, 250.w);
+      double x = (375.w - 68.w) / 2;
+      item.offset.value = Offset(x, 560.w);
       item.rotate.value = 0;
-      item.scale = 1;
-      // item.isOpen.value = false;
+      item.scale = 68 / 50;
+      // Offset offset = Offset(offsets[i].dx, offsets[i].dy + 47.w);
+      // item.offset.value = offset;
+      // item.isOpen.value = true;
+      // item.scale = (35.w + i * 2.5.w) / 50.w;
+      // item.rotate.value = angles[i];
     }
   }
 

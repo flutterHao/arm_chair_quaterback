@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-18 15:34:25
+ * @LastEditTime: 2025-02-19 17:49:27
  */
 import 'dart:math';
 
@@ -34,7 +34,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
 
   @override
   Widget build(BuildContext context) {
-    // controller.showAward();
+    controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (ctrl) {
@@ -157,6 +157,32 @@ class TrainingNewWidget extends GetView<TrainingController> {
                         ),
                       )),
 
+                  // Positioned(
+                  //     left: 129.5.w,
+                  //     top: 132.5.w,
+                  //     child: MtInkWell(
+                  //       splashColor: Colors.transparent,
+                  //       onTap: () {
+                  //         ctrl.showRuleDilaog();
+                  //       },
+                  //       child: Padding(
+                  //         padding: EdgeInsets.all(10.w),
+                  //         child: Container(
+                  //           width: 13.w,
+                  //           height: 13.w,
+                  //           color: Colors.transparent,
+                  //           alignment: Alignment.bottomRight,
+                  //           child: Align(
+                  //             alignment: Alignment.bottomRight,
+                  //             child: IconWidget(
+                  //               iconWidth: 13.w,
+                  //               icon: Assets.managerUiManagerIconDescribe,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     )),
+
                   ///战术牌
                   Positioned(
                     top: 0,
@@ -194,98 +220,51 @@ class TrainingNewWidget extends GetView<TrainingController> {
                     ),
                   ),
 
-                  Positioned(
-                      left: 129.5.w,
-                      top: 132.5.w,
-                      child: MtInkWell(
-                        splashColor: Colors.transparent,
-                        onTap: () {
-                          ctrl.showRuleDilaog();
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.all(10.w),
-                          child: Container(
-                            width: 13.w,
-                            height: 13.w,
-                            color: Colors.transparent,
-                            alignment: Alignment.bottomRight,
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: IconWidget(
-                                iconWidth: 13.w,
-                                icon: Assets.managerUiManagerIconDescribe,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-
                   ///准备程度进度条
                   Positioned(
                     top: 139.5.w,
                     left: 26.w,
-                    child: Stack(
-                      alignment: Alignment.centerLeft,
+                    child: Column(
                       children: [
-                        Image.asset(
-                          Assets.managerUiManagerIconPrepareprogressbar02,
-                          width: 106.w,
-                          fit: BoxFit.fitWidth,
-                          color: AppColors.c4c4c4c,
+                        PreparationWidget(
+                          playerReadiness: ctrl.trainingInfo.playerReadiness,
                         ),
-                        ClipRect(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            widthFactor: ctrl.trainingInfo.playerReadiness,
-                            child: Image.asset(
-                              Assets.managerUiManagerIconPrepareprogressbar03,
-                              width: 103.w,
-                              fit: BoxFit.contain,
-                              alignment: Alignment.bottomLeft,
-                            ),
+                        3.vGap,
+                        SizedBox(
+                          width: 106.w,
+                          child: Row(
+                            children: [
+                              //TODO
+                              Text(
+                                "Preparation",
+                                style: 12.w4(
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldRegular,
+                                    color: AppColors.cFFFFFF),
+                              ),
+                              31.hGap,
+                              AnimatedNum(
+                                number:
+                                    (ctrl.trainingInfo.playerReadiness * 100)
+                                        .toInt(),
+                                textStyle: 12.w4(
+                                    color: AppColors.cFFFFFF,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium),
+                              ),
+                              Text(
+                                "%",
+                                style: 12.w4(
+                                    color: AppColors.cFFFFFF,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium),
+                              ),
+                            ],
                           ),
-                        ),
-                        Image.asset(
-                          Assets.managerUiManagerIconPrepareprogressbar04,
-                          width: 106.w,
-                          fit: BoxFit.fitWidth,
-                        ),
+                        )
                       ],
                     ),
                   ),
-
-                  ///准备程度文字
-                  Positioned(
-                      top: 161.5.w,
-                      left: 27.w,
-                      child: Row(
-                        children: [
-                          //TODO
-                          Text(
-                            "Preparation",
-                            style: 12.w4(
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldRegular,
-                                color: AppColors.cFFFFFF),
-                          ),
-                          31.hGap,
-                          AnimatedNum(
-                            number: (ctrl.trainingInfo.playerReadiness * 100)
-                                .toInt(),
-                            textStyle: 12.w4(
-                                color: AppColors.cFFFFFF,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldMedium),
-                          ),
-                          Text(
-                            "%",
-                            style: 12.w4(
-                                color: AppColors.cFFFFFF,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldMedium),
-                          ),
-                        ],
-                      )),
 
                   // ///状态
                   Positioned(
@@ -398,41 +377,6 @@ class TrainingNewWidget extends GetView<TrainingController> {
                         ],
                       ),
                     ),
-
-                  ///卡牌选择
-                  for (int index = 0;
-                      index < ctrl.tacticChooseList.length;
-                      index++)
-                    Obx(() {
-                      var e = ctrl.tacticChooseList[index];
-                      return AnimatedPositioned(
-                        left: e.offset.value.dx,
-                        top: e.offset.value.dy,
-                        duration: 300.milliseconds,
-                        child: AnimatedRotation(
-                          duration: 300.milliseconds,
-                          turns: e.rotate.value,
-                          child: AnimatedScale(
-                            alignment: e.offset.value.dy == (250.w)
-                                ? Alignment.center
-                                : Alignment.topLeft,
-                            duration: Duration(
-                                milliseconds: !ctrl.showBuff.value ? 0 : 300),
-                            // scale: !controller.tacticFly.value ? 1 : 0.5,
-                            scale: ctrl.showBuff.value
-                                ? (!ctrl.tacticFly.value
-                                    ? 1
-                                    : (e.offset.value.dy == (250.w) ? 0 : 1))
-                                : 0,
-                            child: Opacity(
-                              opacity: ctrl.tacticFly.value ? 1 : 0,
-                              child: SmallTacticCardNew(
-                                  width: 74.w * e.scale, buff: e),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
                 ],
               ));
         });
@@ -639,5 +583,94 @@ class _SlotButton extends StatelessWidget {
             );
           });
         });
+  }
+}
+
+class PreparationWidget extends StatefulWidget {
+  final double playerReadiness;
+
+  const PreparationWidget({super.key, required this.playerReadiness});
+
+  @override
+  State<PreparationWidget> createState() => _PreparationWidgetState();
+}
+
+class _PreparationWidgetState extends State<PreparationWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500), // 动画时长
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0, end: widget.playerReadiness).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut, // 动画曲线
+      ),
+    )..addListener(() => setState(() {}));
+    _controller.forward();
+  }
+
+  @override
+  void didUpdateWidget(PreparationWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.playerReadiness != widget.playerReadiness) {
+      // 当数值变化时启动新动画
+      _animation = Tween<double>(
+        begin: oldWidget.playerReadiness,
+        end: widget.playerReadiness,
+      ).animate(
+        CurvedAnimation(
+          parent: _controller,
+          curve: Curves.easeInOut,
+        ),
+      );
+      _controller
+        ..reset()
+        ..forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.centerLeft,
+      children: [
+        Image.asset(
+          Assets.managerUiManagerIconPrepareprogressbar02,
+          width: 106.w,
+          fit: BoxFit.fitWidth,
+          color: AppColors.c4c4c4c,
+        ),
+        ClipRect(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            widthFactor: _animation.value,
+            child: Image.asset(
+              Assets.managerUiManagerIconPrepareprogressbar03,
+              width: 103.w,
+              fit: BoxFit.contain,
+              alignment: Alignment.bottomLeft,
+            ),
+          ),
+        ),
+        Image.asset(
+          Assets.managerUiManagerIconPrepareprogressbar04,
+          width: 106.w,
+          fit: BoxFit.fitWidth,
+        ),
+      ],
+    );
   }
 }
