@@ -11,15 +11,12 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
-import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
-import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/inbox/binding.dart';
 import 'package:arm_chair_quaterback/pages/inbox/inbox_email/view.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_detail.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/view.dart';
-import 'package:arm_chair_quaterback/pages/message/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
@@ -42,13 +39,12 @@ import 'package:arm_chair_quaterback/pages/picks/recive_rward/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/illustraction_detail.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/ovr_standing_detail.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/binding.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/index.dart';
-import 'package:arm_chair_quaterback/pages/team/team_historty/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/start_upgrade_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/view.dart';
@@ -80,8 +76,7 @@ class AppPages {
         },
         transitionDuration: const Duration(milliseconds: 300),
         // 进入动画时间
-        reverseTransitionDuration:
-            const Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
+        reverseTransitionDuration: const Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
       );
     }
 
@@ -117,16 +112,14 @@ class AppPages {
           return StartUpgradeWidget(player: Get.arguments['player']);
         case RouteNames.picksPicksHistory:
           PicksHistoryBinding().dependencies();
-          return PicksHistoryPage(
-              tab: (Get.arguments??{})['tab']);
+          return PicksHistoryPage(tab: (Get.arguments ?? {})['tab']);
         case RouteNames.teamDetailPage:
           return const TeamDetailPage();
         case RouteNames.nbaRank:
           RankBinding().dependencies();
           return const NBARankPage();
         case RouteNames.leagueLeagueDetail:
-          return LeagueDetailV2Page(Get.arguments["item"],
-              gameId: Get.arguments["gameId"]);
+          return LeagueDetailV2Page(Get.arguments["item"], gameId: Get.arguments["gameId"]);
         case RouteNames.inboxDetail:
           return const InboxDetailPage();
         case RouteNames.picksPickRank:
@@ -159,6 +152,8 @@ class AppPages {
         case RouteNames.inboxEmail:
           InBoxEmailBinding().dependencies();
           return const InboxEmailPage();
+        case RouteNames.ovrStandingDetailPage:
+          return OvrStandingDetailPage();
         default:
           return const SizedBox.shrink();
       }

@@ -54,8 +54,6 @@ class AwardBottomsheet extends GetView<TrainingController> {
   List<String> get _lastAwardRewardList {
     TrainTaskEntity taskEntity = _list[0];
     List<String> taskRewardList = taskEntity.taskReward.split("|");
-    taskRewardList.add('1_102_400');
-    taskRewardList.add('1_102_400');
     return taskRewardList;
   }
 
