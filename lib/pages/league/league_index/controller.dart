@@ -183,10 +183,14 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
             DateTime(dateTime.year, dateTime.month, dateTime.day);
         if (getDataTimes().contains(nowStartTime)) {
           currentPageIndex.value = getDataTimes().indexOf(nowStartTime);
-        } else if (getDataTimes().length > 6) {
-          currentPageIndex.value = 6;
         } else {
-          currentPageIndex.value = getDataTimes().length - 1;
+          var firstWhereOrNull =
+              getDataTimes().firstWhereOrNull((e) => e.isAfter(nowStartTime));
+          if (firstWhereOrNull != null) {
+            currentPageIndex.value = getDataTimes().indexOf(firstWhereOrNull);
+          } else {
+            currentPageIndex.value = getDataTimes().length - 1;
+          }
         }
       }
       if (getDataTimes().isEmpty) {
@@ -224,6 +228,15 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
       loadStatus.value = LoadDataStatus.error;
       refreshController.refreshCompleted();
     });
+  }
+
+  /// 获取下一个可以竞猜的日期
+  DateTime? getNextCanGuessScoreDate() {
+    var dateTime = DateTime.now();
+    var nowStartTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
+    var firstWhereOrNull =
+        getDataTimes().firstWhereOrNull((e) => e.isAfter(nowStartTime));
+    return firstWhereOrNull;
   }
 
   @override
@@ -340,15 +353,14 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
                   .millisecondsSinceEpoch
                   .toString())
           .scrollController;
-      if(scrollController.offset == 0){
+      if (scrollController.offset == 0) {
         return;
       }
-      scrollController
-          .animateTo(
-            0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
+      scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
     } catch (e) {
       print('LeagueController--scrollToTop--error--: $e');
     }

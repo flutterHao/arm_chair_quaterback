@@ -165,7 +165,7 @@ class UserInfoBar extends StatelessWidget {
                             ),
                           ),
                         11.hGap,
-                        const MoneyAndCoinWidget(
+                        MoneyAndCoinWidget(
                           home: true,
                         ),
                       ],
@@ -232,7 +232,7 @@ class UserInfoBar extends StatelessWidget {
 
 class MoneyAndCoinWidget extends StatelessWidget {
   ///不要加const，会导致widget不刷新
-  const MoneyAndCoinWidget({super.key, this.home = false});
+  MoneyAndCoinWidget({super.key, this.home = false});
 
   final bool home;
 

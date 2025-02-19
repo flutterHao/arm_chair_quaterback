@@ -20,7 +20,7 @@ import 'package:get/get.dart';
 class PicksHistoryPage extends GetView<PicksHistoryController> {
   const PicksHistoryPage({super.key, this.tab});
 
-  final int? tab;
+  final dynamic tab;
 
   @override
   Widget build(BuildContext context) {

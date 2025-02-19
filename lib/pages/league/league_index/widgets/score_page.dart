@@ -632,15 +632,16 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
       int.parse(
           Get.find<LeagueController>().picksDefineEntity?.betCost ?? "0"));
 
-  bool isTodayAndTomorrow() {
-    var nowDateTime = MyDateUtils.getNowDateTime();
-    var nextDay = MyDateUtils.nextDay(nowDateTime);
-    var dayStartTimeMS =
-        MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
-    return item.gameStartTime >= dayStartTimeMS ||
-        (item.gameStartTime < MyDateUtils.getNowDateMs() &&
-            item.isGuess == 0 &&
-            item.status != 0);
+  bool cantGuess() {
+    DateTime? canGuessScoreDate =
+        Get.find<LeagueController>().getNextCanGuessScoreDate();
+    var beforeNowGuess = (item.gameStartTime < MyDateUtils.getNowDateMs() &&
+        item.isGuess == 0 &&
+        item.status != 0);
+    return (canGuessScoreDate != null &&
+            !MyDateUtils.isSameDay(canGuessScoreDate,
+                MyDateUtils.getDateTimeByMs(item.gameStartTime))) ||
+        beforeNowGuess;
   }
 
   Widget _buildGuess() {
@@ -653,8 +654,8 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
       children: [
         Builder(builder: (context) {
           /// 有时区问题
-          ///只能猜今明两天未开始的赛程
-          if (isTodayAndTomorrow()) {
+          ///只能猜今明和下一个日期未开始的赛程
+          if (cantGuess()) {
             return const SizedBox.shrink();
           }
           return Column(
@@ -686,8 +687,8 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
   Widget _buildWinProgress(
       NbaTeamEntity homeTeamInfo, NbaTeamEntity awayTeamInfo, int homePercent) {
     /// 有时区问题
-    ///只能猜今明两天未开始的赛程
-    if (isTodayAndTomorrow()) {
+    ///只能猜今明和下一个日期未开始的赛程
+    if (cantGuess()) {
       return const SizedBox.shrink();
     }
     if (widget.isInScoreDetail) {
