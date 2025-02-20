@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 import 'package:get/get.dart';
 
 
@@ -205,10 +207,9 @@ extension TrainingInfoPropExtension on TrainingInfoProp {
 
 TrainingInfoTraining $TrainingInfoTrainingFromJson(Map<String, dynamic> json) {
   final TrainingInfoTraining trainingInfoTraining = TrainingInfoTraining();
-  final int? ballRefreshTime = jsonConvert.convert<int>(
-      json['ballRefreshTime']);
-  if (ballRefreshTime != null) {
-    trainingInfoTraining.ballRefreshTime = ballRefreshTime;
+  final int? brt = jsonConvert.convert<int>(json['ballRefreshTime']);
+  if (brt != null) {
+    trainingInfoTraining.brt = brt;
   }
   final int? taskItemCount = jsonConvert.convert<int>(json['taskItemCount']);
   if (taskItemCount != null) {
@@ -264,7 +265,7 @@ TrainingInfoTraining $TrainingInfoTrainingFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $TrainingInfoTrainingToJson(TrainingInfoTraining entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['ballRefreshTime'] = entity.ballRefreshTime;
+  data['ballRefreshTime'] = entity.brt;
   data['taskItemCount'] = entity.taskItemCount;
   data['createTime'] = entity.createTime;
   data['currentTaskId'] = entity.currentTaskId;
@@ -282,7 +283,7 @@ Map<String, dynamic> $TrainingInfoTrainingToJson(TrainingInfoTraining entity) {
 
 extension TrainingInfoTrainingExtension on TrainingInfoTraining {
   TrainingInfoTraining copyWith({
-    int? ballRefreshTime,
+    int? brt,
     int? taskItemCount,
     int? createTime,
     int? currentTaskId,
@@ -298,7 +299,7 @@ extension TrainingInfoTrainingExtension on TrainingInfoTraining {
     int? todayBuyCount,
   }) {
     return TrainingInfoTraining()
-      ..ballRefreshTime = ballRefreshTime ?? this.ballRefreshTime
+      ..brt = brt ?? this.brt
       ..taskItemCount = taskItemCount ?? this.taskItemCount
       ..createTime = createTime ?? this.createTime
       ..currentTaskId = currentTaskId ?? this.currentTaskId

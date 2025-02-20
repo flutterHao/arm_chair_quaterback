@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 TradeInfoEntity $TradeInfoEntityFromJson(Map<String, dynamic> json) {
   final TradeInfoEntity tradeInfoEntity = TradeInfoEntity();
@@ -219,9 +221,9 @@ TradeInfoTradePlayers $TradeInfoTradePlayersFromJson(
   if (buyPrice != null) {
     tradeInfoTradePlayers.buyPrice = buyPrice;
   }
-  final int? removalTime = jsonConvert.convert<int>(json['removalTime']);
-  if (removalTime != null) {
-    tradeInfoTradePlayers.removalTime = removalTime;
+  final int? rt = jsonConvert.convert<int>(json['removalTime']);
+  if (rt != null) {
+    tradeInfoTradePlayers.rt = rt;
   }
   final bool? top = jsonConvert.convert<bool>(json['top']);
   if (top != null) {
@@ -267,7 +269,7 @@ Map<String, dynamic> $TradeInfoTradePlayersToJson(
   data['position'] = entity.position;
   data['uuid'] = entity.uuid;
   data['buyPrice'] = entity.buyPrice;
-  data['removalTime'] = entity.removalTime;
+  data['removalTime'] = entity.rt;
   data['top'] = entity.top;
   data['isBuy'] = entity.isBuy;
   return data;
@@ -305,7 +307,7 @@ extension TradeInfoTradePlayersExtension on TradeInfoTradePlayers {
     int? position,
     String? uuid,
     int? buyPrice,
-    int? removalTime,
+    int? rt,
     bool? top,
     bool? isBuy,
   }) {
@@ -341,7 +343,7 @@ extension TradeInfoTradePlayersExtension on TradeInfoTradePlayers {
       ..position = position ?? this.position
       ..uuid = uuid ?? this.uuid
       ..buyPrice = buyPrice ?? this.buyPrice
-      ..removalTime = removalTime ?? this.removalTime
+      ..rt = rt ?? this.rt
       ..top = top ?? this.top
       ..isBuy = isBuy ?? this.isBuy;
   }
