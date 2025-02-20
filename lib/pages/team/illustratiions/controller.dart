@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-19 20:24:43
+ * @LastEditTime: 2025-02-20 19:00:09
  */
 /*
  * @Description: 
@@ -316,17 +316,8 @@ class IllustratiionsController extends GetxController
       }
 
       currentLevel = info.grade;
-      double p = 0.9;
-      int g = 10;
-      p += 0.5;
-      if (p >= 1) {
-        g++;
-        p = p - 1;
-      }
 
-      updateProgress(g, p);
-
-      // updateProgress(info.grade, info.exp / info.needExp);
+      updateProgress(info.grade, info.exp / info.needExp);
       update(["list", "progress"]);
     });
   }

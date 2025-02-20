@@ -54,6 +54,7 @@ class TrainingController extends GetxController
   //护盾
   var showShield = false.obs;
   var showScaleShield = 1.0.obs;
+  var shieldCount = 0.obs;
 
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   // List<TeamPlayerInfoEntity> playerList = [];
@@ -723,6 +724,7 @@ class TrainingController extends GetxController
         await Future.delayed(const Duration(milliseconds: 200));
         showScaleShield.value = 1;
         showShield.value = false;
+        shieldCount.value = trainingInfo.training.shieldCount;
       }
     }
 

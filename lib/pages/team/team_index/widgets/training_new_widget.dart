@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-20 16:41:37
+ * @LastEditTime: 2025-02-20 18:47:05
  */
 import 'dart:math';
 
@@ -352,8 +352,11 @@ class TrainingNewWidget extends GetView<TrainingController> {
                           alignment: Alignment.center,
                           children: [
                             Image.asset(
-                              Assets.managerUiManagerIconDefenseshield,
-                              width: 56.w,
+                              ctrl.shieldCount.value > 0
+                                  ? Assets.managerUiManagerShield
+                                  : Assets.managerUiManagerShield00,
+                              width: 28.w,
+                              fit: BoxFit.fitWidth,
                             ),
                             for (int i = 0; i < 3; i++)
                               Transform.rotate(
@@ -361,7 +364,9 @@ class TrainingNewWidget extends GetView<TrainingController> {
                                 child: Image.asset(
                                   Assets.managerUiManagerShield02,
                                   width: 56.w,
-                                  color: AppColors.cB3B3B3,
+                                  color: ctrl.shieldCount.value > i
+                                      ? AppColors.c13C37B
+                                      : AppColors.cB3B3B3,
                                 ),
                               ),
                           ],

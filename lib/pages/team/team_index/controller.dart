@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-19 19:48:48
+ * @LastEditTime: 2025-02-20 18:50:54
  */
 
 import 'dart:async';
@@ -220,17 +220,18 @@ class TeamIndexController extends GetxController
       return;
     }
     SoundServices.to.playSound(Assets.soundRadaMatch);
-    await Get.put(TeamBattleController()).teamMatchV2().catchError((e){
+    await Get.put(TeamBattleController()).teamMatchV2().then((v) async {
+      await Get.toNamed(RouteNames.teamTeamBattle);
+      Get.delete<TeamBattleController>();
+      getBattleBox();
+      getTeamInfoCup();
+      final ctrl = Get.find<TrainingController>();
+      ctrl.trainingInfo = await TeamApi.getTrainingInfo();
+      ctrl.update(["training_page"]);
+      teamCtrl.updateTeamInfo();
+    }).catchError((e) {
       Get.delete<TeamBattleController>();
     });
-    await Get.toNamed(RouteNames.teamTeamBattle);
-    Get.delete<TeamBattleController>();
-    getBattleBox();
-    getTeamInfoCup();
-    final ctrl = Get.find<TrainingController>();
-    ctrl.trainingInfo = await TeamApi.getTrainingInfo();
-    ctrl.update(["training_page"]);
-    teamCtrl.updateTeamInfo();
   }
 
   ///获取战斗宝箱信息
