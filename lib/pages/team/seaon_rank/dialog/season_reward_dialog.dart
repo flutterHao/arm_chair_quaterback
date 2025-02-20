@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -23,8 +21,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
       child: GetBuilder<SeaonRankController>(builder: (controller) {
         return Container(
           height: 650.h,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
           child: Column(
             children: [
               const DialogTopBtn(),
@@ -49,8 +46,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
                         itemBuilder: (context, index) {
                           return _rewardsItemWidget(index);
                         },
-                        separatorBuilder: (context, index) =>
-                            const Divider(height: 1, color: AppColors.cD4D4D4),
+                        separatorBuilder: (context, index) => const Divider(height: 1, color: AppColors.cD4D4D4),
                       )))
             ],
           ),
@@ -62,8 +58,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
   Widget _rewardsItemWidget(int index) {
     ///判断是否满足领取条件
     ///满足领取条件段位id <= 当前段位id
-    bool isShowReceive = controller.cupDefineList[index].cupNumId <=
-        controller.teamSimpleEntity.value.cupRankId;
+    bool isShowReceive = controller.cupDefineList[index].cupNumId <= controller.teamSimpleEntity.value.cupRankId;
 
     /// 判断是否已经领取
     RxBool haveReceive = controller.teamSimpleEntity.value.receivedRewards
@@ -73,8 +68,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
         .obs;
 
     ///赛季奖励数据转list
-    List<String> cupRewardList =
-        controller.cupDefineList[index].cupReward.split('|');
+    List<String> cupRewardList = controller.cupDefineList[index].cupReward.split('|');
     Widget cupRewardWidget = Container(
       padding: EdgeInsets.all(13.w),
       child: Column(
@@ -101,9 +95,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
                               fit: BoxFit.contain,
                               fieldPath: Assets.managerUiManagerGift00,
                               icon: Utils.getPropIconUrl(propId))),
-                      Text(
-                          controller
-                              .formatToK(int.parse(cupItem.split('_')[2])),
+                      Text(controller.formatToK(int.parse(cupItem.split('_')[2])),
                           style: 14.w5(fontFamily: FontFamily.fOswaldRegular))
                     ],
                   ),
@@ -141,12 +133,9 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
                 width: 59.w,
                 height: 40.w,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.w),
-                    border: Border.all(color: AppColors.cE6E6E)),
+                    borderRadius: BorderRadius.circular(9.w), border: Border.all(color: AppColors.cE6E6E)),
                 child: IconWidget(
-                    iconWidth: 21.w,
-                    iconColor: AppColors.c10A86A,
-                    icon: Assets.commonUiCommonStatusBarMission02),
+                    iconWidth: 21.w, iconColor: AppColors.c10A86A, icon: Assets.commonUiCommonStatusBarMission02),
               )))
         else if (isShowReceive)
           Positioned(
@@ -155,20 +144,15 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
               child: MtInkWell(
                   onTap: () {
                     haveReceive.value = true;
-                    controller.receiveReward(
-                        controller.cupDefineList[index].cupNumId);
+                    controller.receiveReward(controller.cupDefineList[index].cupNumId);
                   },
                   child: Container(
                     width: 59.w,
                     height: 40.w,
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.w),
-                        color: AppColors.c000000),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(9.w), color: AppColors.c000000),
                     child: Text('claim'.toUpperCase(),
-                        style: 16.w5(
-                            color: Colors.white,
-                            fontFamily: FontFamily.fOswaldMedium)),
+                        style: 16.w5(color: Colors.white, fontFamily: FontFamily.fOswaldMedium)),
                   )))
       ],
     );

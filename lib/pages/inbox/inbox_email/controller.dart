@@ -49,12 +49,12 @@ class InboxEmailController extends GetxController {
 
   ///领取奖励
   void receiveMailAward(String mailIds) async {
+    await PicksApi.receiveMailAward(mailIds);
     showTopToastDialog(
         needBg: false,
         child: Container(
             margin: EdgeInsets.only(top: 44.w),
             child: AwardWidget(image: Assets.managerUiManagerGift00, text: "YOU GOT 3  treasure chest".toUpperCase())));
-    await PicksApi.receiveMailAward(mailIds);
     InboxEmailEntity res = (await PicksApi.getMailVOList()).firstWhere((element) => element.mailType == type);
     emailList.value = res.mailList;
   }
