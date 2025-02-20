@@ -286,8 +286,8 @@ class NewsListItem extends GetView<NewListController> {
                 await BottomTipDialog.showWithSound(
                   isScrollControlled: true,
                   context: Get.context!,
-                  barrierColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
+                  // barrierColor: Colors.transparent,
+                  // backgroundColor: Colors.transparent,
                   builder: (context) {
                     return VerticalDragBackWidget(
                         child: CommentsDialog(detail: newsDetail));

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-02-19 20:56:23
+ * @LastEditTime: 2025-02-20 15:10:13
  */
 import 'dart:math';
 
@@ -35,7 +35,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
         builder: (ctrl) {
           return Align(
             child: Container(
-              // color: Colors.white,
+              color: Colors.black.withOpacity(0.6),
               width: 375.w,
               height: 812.h,
               alignment: Alignment.center,
@@ -43,14 +43,19 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                 fit: StackFit.expand,
                 alignment: Alignment.topCenter,
                 children: [
-                  Positioned(
-                    top: 200.w,
-                    child: Image.asset(
-                      Assets.managerUiManagerIconDefenseshield,
-                      width: 56.w,
+                  if (ctrl.showShield.value)
+                    ShowAwardAnimation(
+                      initialPosition: Offset(155.w, 250.w), // 初始位置
+                      targetPosition: Offset(290.w, 514.w + 47.w), // 目标位置
+                      initialScale: 1.0, // 初始缩放
+                      targetScale: 1.5, // 目标缩放
+                      imageAsset: Assets.managerUiManagerShield, // 图片资源
+                      imageWidth: 56.w, // 图片宽度
+                      scaleDuration:
+                          const Duration(milliseconds: 200), // 缩放动画时长
+                      moveDuration: const Duration(milliseconds: 300),
                     ),
-                  ),
-                  if (ctrl.showBuff.value)
+                  if (ctrl.showCard.value)
                     Positioned(
                       top: top,
                       left: 0,
@@ -81,7 +86,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                     ),
 
                   ///准备程度进度条
-                  if (ctrl.showBuff.value)
+                  if (ctrl.showCard.value)
                     Positioned(
                       top: 139.5.w + top,
                       left: 26.w,
@@ -126,6 +131,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                         ],
                       ),
                     ),
+
                   Positioned(
                     top: 80.w + 100.w + top,
                     left: 0,
@@ -231,7 +237,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       );
                     }),
                   ),
-                  if (ctrl.showBuff.value)
+                  if (ctrl.showCard.value)
                     Positioned(
                       top: 300.w,
                       child: Container(
@@ -290,7 +296,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                     ),
 
                   ///卡牌选择
-                  if (ctrl.showBuff.value)
+                  if (ctrl.showCard.value)
                     for (int index = 0;
                         index < ctrl.tacticChooseList.length;
                         index++)
@@ -307,7 +313,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                             child: AnimatedScale(
                               alignment: Alignment.topLeft,
                               duration: Duration(
-                                  milliseconds: !ctrl.showBuff.value ? 0 : 300),
+                                  milliseconds: !ctrl.showCard.value ? 0 : 300),
                               scale: e.scale,
                               child: MtInkWell(
                                 onTap: () {
@@ -349,5 +355,144 @@ class BezierCurve extends Curve {
         3 * (1 - t) * (1 - t) * t * c1 +
         3 * (1 - t) * t * t * c2 +
         t * t * t * end);
+  }
+}
+
+class ShowAwardAnimation extends StatefulWidget {
+  final Offset initialPosition; // 初始位置
+  final Offset targetPosition; // 目标位置
+  final Offset? controlPoint; // 贝塞尔曲线控制点（可选）
+  final double initialScale; // 初始缩放
+  final double targetScale; // 目标缩放
+  final String imageAsset; // 图片资源
+  final double imageWidth; // 图片宽度
+  final Duration scaleDuration; // 缩放动画时长
+  final Duration moveDuration; // 移动动画时长
+
+  const ShowAwardAnimation({
+    super.key,
+    required this.initialPosition,
+    required this.targetPosition,
+    this.controlPoint,
+    this.initialScale = 1.0,
+    this.targetScale = 2,
+    required this.imageAsset,
+    required this.imageWidth,
+    this.scaleDuration = const Duration(milliseconds: 300),
+    this.moveDuration = const Duration(milliseconds: 300),
+  });
+
+  @override
+  State<ShowAwardAnimation> createState() => _ShowAwardAnimationState();
+}
+
+class _ShowAwardAnimationState extends State<ShowAwardAnimation>
+    with SingleTickerProviderStateMixin {
+  var showShield = false.obs;
+  var shieldScale = 1.0.obs;
+  var shieldPosition = Offset.zero.obs;
+
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: widget.moveDuration,
+      vsync: this,
+    );
+
+    // 使用 Curves.easeIn 实现先慢后快
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn, // 先慢后快
+    );
+
+    startAnimation();
+  }
+
+  // 自动计算默认控制点：取两点的中点，并向上偏移 50 像素
+  Offset get _defaultControlPoint {
+    // final midX = (widget.initialPosition.dx + widget.targetPosition.dx) / 2;
+    return Offset(widget.initialPosition.dx + 10.w,
+        widget.initialPosition.dy - 20.w); // 向上偏移形成弧线
+  }
+
+  void startAnimation() async {
+    showShield.value = true;
+    shieldPosition.value = widget.initialPosition;
+    shieldScale.value = widget.initialScale;
+    await Future.delayed(300.milliseconds);
+    // 放大动画
+    shieldScale.value = widget.targetScale;
+    await Future.delayed(widget.scaleDuration);
+
+    // 复原动画
+    shieldScale.value = widget.initialScale;
+    await Future.delayed(widget.scaleDuration);
+    await Future.delayed(100.milliseconds);
+    // 启动贝塞尔曲线动画
+    _controller.forward();
+
+    // 监听动画值变化，更新位置和缩放
+    _controller.addListener(() {
+      final path = Path()
+        ..moveTo(widget.initialPosition.dx, widget.initialPosition.dy)
+        ..quadraticBezierTo(
+          widget.controlPoint?.dx ?? _defaultControlPoint.dx, // 使用默认控制点
+          widget.controlPoint?.dy ?? _defaultControlPoint.dy,
+          widget.targetPosition.dx,
+          widget.targetPosition.dy,
+        );
+
+      final metric = path.computeMetrics().first;
+      final offset = metric
+          .getTangentForOffset(
+              metric.length * _animation.value) // 使用 _animation.value
+          ?.position;
+      if (offset != null) {
+        shieldPosition.value = offset;
+      }
+
+      // 移动过程中逐渐缩小
+      shieldScale.value = 1.0 - 0.5 * _animation.value;
+    });
+
+    // 动画结束后隐藏护盾
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        showShield.value = false;
+        Get.back();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (showShield.value) {
+        return Positioned(
+          top: shieldPosition.value.dy,
+          left: shieldPosition.value.dx,
+          child: AnimatedScale(
+            duration: widget.scaleDuration,
+            scale: shieldScale.value,
+            child: Image.asset(
+              widget.imageAsset,
+              width: widget.imageWidth,
+            ),
+          ),
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    });
   }
 }

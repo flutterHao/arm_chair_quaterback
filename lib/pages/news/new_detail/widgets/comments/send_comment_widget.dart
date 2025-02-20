@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-12-16 21:50:20
+ * @LastEditTime: 2025-02-20 17:24:15
  */
 import 'dart:math';
 
@@ -78,7 +78,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                   : AppColors.cFFFFFF,
           boxShadow: [
             BoxShadow(
-                color: AppColors.c000000.withOpacity(0.2),
+                color: AppColors.c000000.withOpacity(0.05),
                 blurRadius: 2,
                 spreadRadius: 2)
           ]),

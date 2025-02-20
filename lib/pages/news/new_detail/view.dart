@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2025-02-08 11:02:32
+ * @LastEditTime: 2025-02-20 18:06:47
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -284,7 +284,7 @@ class NewsDetailItem extends GetView<NewListController> {
                 16.vGap,
                 const EmojiWidget(),
                 if (showComments) DetailCommentWidget(item: item),
-                if (controller.state.detailList.length == 1) 80.vGap,
+                // if (controller.state.detailList.length == 1) 80.vGap,
               ],
             ),
           ),

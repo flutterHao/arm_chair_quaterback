@@ -306,7 +306,9 @@ class Assets {
   static const String managerUiManagerQualityS = 'assets/images/manager/ui_manager_quality_s.png';
   static const String managerUiManagerRankBg = 'assets/images/manager/ui_manager_rank_bg.jpg';
   static const String managerUiManagerShield = 'assets/images/manager/ui_manager_shield.png';
+  static const String managerUiManagerShield00 = 'assets/images/manager/ui_manager_shield_00.png';
   static const String managerUiManagerShield01 = 'assets/images/manager/ui_manager_shield_01.png';
+  static const String managerUiManagerShield02 = 'assets/images/manager/ui_manager_shield_02.png';
   static const String managerUiManagerTactics01 = 'assets/images/manager/ui_manager_tactics_01.png';
   static const String managerUiManagerTactics02 = 'assets/images/manager/ui_manager_tactics_02.png';
   static const String managerUiManagerTactics03 = 'assets/images/manager/ui_manager_tactics_03.png';

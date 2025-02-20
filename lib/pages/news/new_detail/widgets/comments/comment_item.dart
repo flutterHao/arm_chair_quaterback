@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comm
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -95,9 +96,6 @@ class CommentItemView extends StatelessWidget {
                     // 13.hGap,
                     if (item.targetId != 0)
                       Container(
-                        // width: 70.w,
-                        // constraints:
-                        //     BoxConstraints(maxWidth: 120.w, minWidth: 70.w),
                         margin: EdgeInsets.only(left: 6.w),
                         child: Text(
                           " ${controller.getReplayTeamName(item)}",
@@ -228,7 +226,6 @@ class SubCommentItemView extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        6.hGap,
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,7 +276,8 @@ class SubCommentItemView extends StatelessWidget {
                             style: 12.w4(color: AppColors.cFFFFFF, height: 1),
                           ),
                         ),
-                  if (item.targetId != 0)
+                  if (item.targetId != 0 &&
+                      ObjectUtil.isNotEmpty(controller.getReplayTeamName(item)))
                     Container(
                       constraints:
                           BoxConstraints(maxWidth: 120.w, minWidth: 70.w),

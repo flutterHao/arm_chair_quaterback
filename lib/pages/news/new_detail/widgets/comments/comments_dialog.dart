@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-12-24 18:11:06
+ * @LastEditTime: 2025-02-20 18:23:38
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -39,6 +39,7 @@ class CommentsDialog extends StatelessWidget {
         clipBehavior: Clip.none, // 确保内容不被剪裁
         children: [
           Container(
+            padding: EdgeInsets.only(bottom: 50.w),
             width: double.infinity,
             height: 650.h,
             decoration: BoxDecoration(
@@ -137,7 +138,7 @@ class CommentsList extends StatelessWidget {
                                     list[index].subList.isNotEmpty)
                                   Container(
                                     // width: 295.w,
-                                    margin: EdgeInsets.only(left: 48.w),
+                                    margin: EdgeInsets.only(left: 42.w),
                                     child:
                                         SubComentsListView(list[index], detail),
                                   )
@@ -226,9 +227,9 @@ class SubComentsListView extends GetView<CommentController> {
                                     )
                                   ],
                                 ))
-                              : SizedBox(width: 100.w),
+                              : Container(),
                         ),
-                        30.hGap,
+                        if (has > 0) 10.hGap,
                         if (mainReviews.current > 0)
                           InkWell(
                             onTap: () {
@@ -269,6 +270,14 @@ class SubComentsListView extends GetView<CommentController> {
 class DetailCommentWidget extends StatelessWidget {
   const DetailCommentWidget({super.key, required this.item});
   final NewsListDetail item;
+
+  int getReviewCount(List<ReviewEntity> list) {
+    var count = 0;
+    list.forEach((element) {
+      count += element.subList.length;
+    });
+    return count + list.length;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -320,7 +329,7 @@ class DetailCommentWidget extends StatelessWidget {
                         );
                       })
                   : const SizedBox.shrink(),
-              if (item.reviewsCount.value > list.length)
+              if (item.reviewsCount.value > getReviewCount(list))
                 Container(
                   margin: const EdgeInsets.only(bottom: 100),
                   child: Row(

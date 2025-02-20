@@ -46,10 +46,14 @@ class TrainingController extends GetxController
   var showStatus = false.obs;
   var showCash = false.obs;
   var caShScale = false.obs;
-  var showBuff = false.obs;
-  RxInt cash = 0.obs;
+  var showCard = false.obs;
+  var cash = 0.obs;
   var showProp = false.obs;
   bool canChoose = false;
+
+  //护盾
+  var showShield = false.obs;
+  var showScaleShield = 1.0.obs;
 
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   // List<TeamPlayerInfoEntity> playerList = [];
@@ -454,7 +458,7 @@ class TrainingController extends GetxController
     canChoose = false;
     if (selectTacticId == 0) return;
     tacticFly.value = true;
-    showBuff.value = true;
+    showCard.value = true;
     if (tacticChooseList.length > 1) {
       for (int i = 0; i < tacticChooseList.length; i++) {
         double x = (375.w - 68.w) / 2;
@@ -525,7 +529,7 @@ class TrainingController extends GetxController
     changeTacticId = 0;
 
     await Future.delayed(const Duration(milliseconds: 300));
-    showBuff.value = false;
+    showCard.value = false;
     tacticFly.value = false;
     isPlaying.value = false;
     canChoose = true;
@@ -542,7 +546,7 @@ class TrainingController extends GetxController
   void chooseFinish() {
     selectTacticId = 0;
     changeTacticId = 0;
-    showBuff.value = false;
+    showCard.value = false;
     isPlaying.value = false;
     for (var element in tacticChooseList) {
       element.isOpen.value = false;
@@ -696,7 +700,7 @@ class TrainingController extends GetxController
       //更新道具
       updateProp();
       taskValue.value = trainingInfo.training.taskItemCount;
-      update(["training_page"]);
+      // update(["training_page"]);
 
       ///获取奖励值，获奖动画
       int cashs = 0;
@@ -710,6 +714,15 @@ class TrainingController extends GetxController
         currentLevel = trainingInfo.training.currentTaskId;
         Get.back();
         // HomeController.to.updateMoney();
+      }
+      //护盾
+      if (awardLength == 6) {
+        showShield.value = true;
+        await showAwardDialog();
+        showScaleShield.value = 1.5;
+        await Future.delayed(const Duration(milliseconds: 200));
+        showScaleShield.value = 1;
+        showShield.value = false;
       }
     }
 
@@ -737,7 +750,7 @@ class TrainingController extends GetxController
       initTacticPosition();
       showAwardDialog();
       update(["training_page"]);
-      showBuff.value = true;
+      showCard.value = true;
       await Future.delayed(const Duration(milliseconds: 500));
       // for (var element in tacticChooseList) {
       //   await Future.delayed(const Duration(milliseconds: 100));
@@ -788,11 +801,11 @@ class TrainingController extends GetxController
     // update(["training_page"]);
   }
 
-  void showAwardDialog() {
-    showDialog(
+  Future showAwardDialog() async {
+    await showDialog(
         barrierDismissible: false,
         context: Get.context!,
-        barrierColor: Colors.black.withOpacity(0.6),
+        barrierColor: Colors.transparent,
         builder: (context) {
           return const TrainingAwardDialog();
         });

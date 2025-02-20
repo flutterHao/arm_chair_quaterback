@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-19 20:54:33
+ * @LastEditTime: 2025-02-20 16:41:37
  */
 import 'dart:math';
 
@@ -344,20 +344,30 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   Positioned(
                     top: 515.w,
                     right: 26.5.w,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Image.asset(
-                          Assets.managerUiManagerIconDefenseshield,
-                          width: 56.w,
+                    child: Obx(() {
+                      return AnimatedScale(
+                        scale: ctrl.showScaleShield.value,
+                        duration: 200.milliseconds,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset(
+                              Assets.managerUiManagerIconDefenseshield,
+                              width: 56.w,
+                            ),
+                            for (int i = 0; i < 3; i++)
+                              Transform.rotate(
+                                angle: 2 * pi / 3 * i,
+                                child: Image.asset(
+                                  Assets.managerUiManagerShield02,
+                                  width: 56.w,
+                                  color: AppColors.cB3B3B3,
+                                ),
+                              ),
+                          ],
                         ),
-                        for (int i = 0; i < 3; i++)
-                          Image.asset(
-                            Assets.managerUiManagerIconDefenseshield,
-                            width: 56.w,
-                          ),
-                      ],
-                    ),
+                      );
+                    }),
                   ),
 
                   ///恢复倒计时
@@ -521,7 +531,9 @@ class _SlotButton extends StatelessWidget {
                               progressWidth: 5.w,
                               progressColor: AppColors.cFFFFFF,
                               borderColor: Colors.black.withOpacity(0.3),
-                              progressSweepAngle: 180 * 0.5,
+                              progressSweepAngle: 180 *
+                                  controller.ballNum.value /
+                                  controller.trainDefine.ballMaxNum,
                               borderWidth: 5.w,
                             ),
                           ),

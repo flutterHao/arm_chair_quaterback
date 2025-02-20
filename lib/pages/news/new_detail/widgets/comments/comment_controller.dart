@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-12-28 19:27:34
+ * @LastEditTime: 2025-02-20 18:15:20
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -75,9 +75,12 @@ class CommentController extends GetxController {
       await Future.wait(v.map((e) => getSubReviews(e)));
       mainList.addAll(v);
       update();
-    }).whenComplete(() {
-      isRefresh ? refhreshCtrl.refreshCompleted() : refhreshCtrl.loadComplete();
-    });
+      isRefresh
+          ? refhreshCtrl.refreshCompleted()
+          : (v.isEmpty
+              ? refhreshCtrl.loadNoData()
+              : refhreshCtrl.loadComplete());
+    }).whenComplete(() {});
   }
 
   ///获取二级评论,将它添加到主要item下面
