@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -208,10 +209,11 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
       List<PlayerStrengthRankTrendList> item = controller.allPlayerStrengthRank[index].trendList;
 
       ///最后两天分数差值
-      var differenceScore = item[0].playerScore - item[1].playerScore;
+      int differenceScore = item[0].playerScore - item[1].playerScore;
+      int differenceStrength = item[0].playerStrength - item[1].playerStrength;
       var player = Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId);
       return InkWell(
-        onTap: () => controller.goPlayerDetail(controller.allPlayerStrengthRank[index].playerId),
+        onTap: () async {},
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 16.w),
           height: 93.w,
@@ -290,15 +292,36 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
                     ],
                   ),
                   Text(
-                    ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}'.toUpperCase(),
-                    style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.cB3B3B3),
+                    ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}  SAL ${player.salary}K'
+                        .toUpperCase(),
+                    style: 10.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
                   ),
-                  _playerchartWidget(controller.allPlayerStrengthRank[index].trendList, differenceScore),
-                  4.vGap,
-                  Text(
-                    'POW ${controller.allPlayerStrengthRank[index].strength}',
-                    style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
-                  ),
+                  6.vGap,
+                  Expanded(
+                      child: _playerchartWidget(controller.allPlayerStrengthRank[index].trendList, differenceScore)),
+                  Row(
+                    children: [
+                      Text(
+                        'POW ${controller.allPlayerStrengthRank[index].strength}',
+                        style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
+                      ),
+                      4.hGap,
+                      Transform.rotate(
+                        angle: differenceStrength >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
+                        child: IconWidget(
+                          iconWidth: 5.w,
+                          iconHeight: 8.w,
+                          icon: Assets.commonUiCommonIconSystemArrow,
+                          iconColor: differenceStrength >= 0 ? AppColors.c0FA76C : AppColors.cFF5D54,
+                        ),
+                      ),
+                      4.hGap,
+                      Text(
+                        '${differenceStrength.abs()}',
+                        style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
+                      ),
+                    ],
+                  )
                 ],
               ))),
               16.hGap,
@@ -310,13 +333,25 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
                       children: [
                         Spacer(),
                         InkWell(
-                          onTap: () {
-                            print('star');
+                          onTap: () async {
+                            if (controller.likePlayers.contains(controller.allPlayerStrengthRank[index].playerId)) {
+                              var res = await UserApi.cancelLikingPlayer(
+                                  '${controller.allPlayerStrengthRank[index].playerId}');
+                              controller.likePlayers.value = res.teamPreference!.likePlayers!;
+                            } else {
+                              var res = await UserApi.likePlayer('${controller.allPlayerStrengthRank[index].playerId}');
+                              controller.likePlayers.value = res.teamPreference!.likePlayers!;
+                            }
                           },
-                          child: IconWidget(
+                          child: Obx(() => IconWidget(
                               iconWidth: 16.w,
-                              iconColor: AppColors.c8A8A8A,
-                              icon: Assets.commonUiCommonStatusBarStar01),
+                              iconColor:
+                                  controller.likePlayers.contains(controller.allPlayerStrengthRank[index].playerId)
+                                      ? Colors.yellow
+                                      : AppColors.c8A8A8A,
+                              icon: controller.likePlayers.contains(controller.allPlayerStrengthRank[index].playerId)
+                                  ? Assets.commonUiCommonStatusBarStar02
+                                  : Assets.commonUiCommonStatusBarStar01)),
                         )
                       ],
                     ),

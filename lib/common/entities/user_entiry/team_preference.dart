@@ -15,6 +15,8 @@ class TeamPreference {
   bool? startFirstQuarter;
   bool? useSkill;
   String? version;
+  List<int>? likePlayers;
+  List<int>? likeTeams;
 
   TeamPreference({
     this.changePlayer,
@@ -31,6 +33,8 @@ class TeamPreference {
     this.startFirstQuarter,
     this.useSkill,
     this.version,
+    this.likePlayers,
+    this.likeTeams,
   });
 
   factory TeamPreference.fromMap(Map<String, dynamic> data) {
@@ -49,6 +53,8 @@ class TeamPreference {
       startFirstQuarter: data['startFirstQuarter'] as bool?,
       useSkill: data['useSkill'] as bool?,
       version: data['version'] as String?,
+      likePlayers: (data['likePlayers'] as List?)?.map((e) => e as int).toList(),
+      likeTeams: (data['likeTeams'] as List?)?.map((e) => e as int).toList(),
     );
   }
 

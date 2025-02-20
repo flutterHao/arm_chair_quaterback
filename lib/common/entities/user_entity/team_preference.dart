@@ -13,6 +13,8 @@ class TeamPreference {
   bool? startFirstQuarter;
   bool? useSkill;
   String? version;
+  List<int>? likePlayers;
+  List<int>? likeTeams;
 
   TeamPreference({
     this.changePlayer,
@@ -29,6 +31,8 @@ class TeamPreference {
     this.startFirstQuarter,
     this.useSkill,
     this.version,
+    this.likePlayers,
+    this.likeTeams,
   });
 
   factory TeamPreference.fromJson(Map<String, dynamic> json) {
@@ -47,6 +51,8 @@ class TeamPreference {
       startFirstQuarter: json['startFirstQuarter'] as bool?,
       useSkill: json['useSkill'] as bool?,
       version: json['version'] as String?,
+      likePlayers: (json['likePlayers'] as List?)?.map((e) => e as int).toList(),
+      likeTeams: (json['likeTeams'] as List?)?.map((e) => e as int).toList(),
     );
   }
 

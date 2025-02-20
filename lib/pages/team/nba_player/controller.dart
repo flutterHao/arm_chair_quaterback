@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/routers/routes.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,9 @@ class NbaPlayerController extends GetxController {
   RxList<PlayerStrengthRankEntity> nbaPlayerList = RxList();
   List<String> ordinalNumbers = ['st', 'nd', 'rd', 'th'];
   // ovr详情tab切换
-  RxInt currentIndex = 0.obs;
+  RxInt currentIndex = (-1).obs;
+
+  RxList<int> likePlayers = RxList();
 
   initData() async {
     allPlayerStrengthRank.clear();
@@ -24,11 +27,15 @@ class NbaPlayerController extends GetxController {
     } else {
       nbaPlayerList.addAll(allPlayerStrengthRank.sublist(0, 4));
     }
+
+    var teamLoginInfo = await UserApi.getTeamLoginInfo();
+    likePlayers.value = teamLoginInfo.team!.teamPreference!.likePlayers!;
   }
 
   @override
   void onInit() {
     super.onInit();
+
     // initData();
   }
 
@@ -53,6 +60,28 @@ class NbaPlayerController extends GetxController {
       currentIndex.value = 2 * tabIndex;
     } else {
       currentIndex.value = (2 * tabIndex) + 1;
+    }
+    switch (currentIndex.value) {
+      case 0:
+        {
+          allPlayerStrengthRank.sort((a, b) => a.rank.compareTo(b.rank));
+        }
+      case 1:
+        {
+          allPlayerStrengthRank.sort((a, b) => b.rank.compareTo(a.rank));
+        }
+      case 2:
+        {
+          allPlayerStrengthRank.sort((a, b) => a.strength.compareTo(b.strength));
+        }
+      case 3:
+        {
+          allPlayerStrengthRank.sort((a, b) => b.strength.compareTo(a.strength));
+        }
+      default:
+        {
+          allPlayerStrengthRank.sort((a, b) => a.rank.compareTo(b.rank));
+        }
     }
   }
 }
