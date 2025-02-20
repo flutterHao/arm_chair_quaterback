@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/team_detail_entity.g.dart';
 import 'dart:convert';
@@ -41,7 +42,8 @@ class TeamDetailGameSchedules {
   late int gameType = 0;
   late int gameTime = 0;
   late int createTime = 0;
-  late int gameStartTime = 0;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int homeTeamScore = 0;
   late int seasonId = 0;
   late int awayTeamScore = 0;
@@ -50,6 +52,9 @@ class TeamDetailGameSchedules {
   late int status = 0;
 
   TeamDetailGameSchedules();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory TeamDetailGameSchedules.fromJson(Map<String, dynamic> json) =>
       $TeamDetailGameSchedulesFromJson(json);
@@ -280,7 +285,8 @@ class TeamDetailRecentPick {
   late int guessStatus = 0;
   late int homeTeamWins = 0;
   late int createTime = 0;
-  late int gameStartTime = 0;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int homeTeamScore = 0;
   late int seasonId = 0;
   late int awayTeamScore = 0;
@@ -291,6 +297,9 @@ class TeamDetailRecentPick {
   late int status = 0;
 
   TeamDetailRecentPick();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory TeamDetailRecentPick.fromJson(Map<String, dynamic> json) =>
       $TeamDetailRecentPickFromJson(json);
@@ -328,7 +337,8 @@ class TeamDetailLast5GameScheduleSchedule {
   late int gameType = 0;
   late int gameTime = 0;
   late int createTime = 0;
-  late int gameStartTime = 0;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int homeTeamScore = 0;
   late int seasonId = 0;
   late int awayTeamScore = 0;
@@ -337,6 +347,9 @@ class TeamDetailLast5GameScheduleSchedule {
   late int status = 0;
 
   TeamDetailLast5GameScheduleSchedule();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory TeamDetailLast5GameScheduleSchedule.fromJson(
           Map<String, dynamic> json) =>
@@ -575,7 +588,8 @@ class TeamDetailOutcomeGameSchedule {
   late int gameType = 0;
   late int gameTime = 0;
   late int createTime = 0;
-  late int gameStartTime = 0;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int homeTeamScore = 0;
   late int seasonId = 0;
   late int awayTeamScore = 0;
@@ -584,6 +598,9 @@ class TeamDetailOutcomeGameSchedule {
   late int status = 0;
 
   TeamDetailOutcomeGameSchedule();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory TeamDetailOutcomeGameSchedule.fromJson(Map<String, dynamic> json) =>
       $TeamDetailOutcomeGameScheduleFromJson(json);

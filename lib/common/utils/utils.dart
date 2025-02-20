@@ -479,7 +479,7 @@ class Utils {
   }
 
   /// 获取手机时间时区和服务器时间的时差 (ms)
-  Duration getTimeZoneOffset() {
+  static Duration getTimeZoneOffset() {
     ///当前服务器时区为中国时区,固定返回0
     return Duration.zero;
 

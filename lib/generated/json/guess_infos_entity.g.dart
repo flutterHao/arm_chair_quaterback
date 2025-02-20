@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 GuessInfosEntity $GuessInfosEntityFromJson(Map<String, dynamic> json) {
   final GuessInfosEntity guessInfosEntity = GuessInfosEntity();
@@ -12,9 +14,9 @@ GuessInfosEntity $GuessInfosEntityFromJson(Map<String, dynamic> json) {
   if (l5Avg != null) {
     guessInfosEntity.l5Avg = l5Avg;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    guessInfosEntity.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    guessInfosEntity.gst = gst;
   }
   final double? teamId = jsonConvert.convert<double>(json['teamId']);
   if (teamId != null) {
@@ -61,7 +63,7 @@ Map<String, dynamic> $GuessInfosEntityToJson(GuessInfosEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['L5Avg'] = entity.l5Avg.toJson();
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData.map((v) => v.toJson()).toList();
   data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
@@ -77,7 +79,7 @@ extension GuessInfosEntityExtension on GuessInfosEntity {
   GuessInfosEntity copyWith({
     int? gameId,
     GuessInfosL5Avg? l5Avg,
-    int? gameStartTime,
+    int? gst,
     double? teamId,
     List<GuessInfosGuessData>? guessData,
     GuessInfosGuessReferenceValue? guessReferenceValue,
@@ -90,7 +92,7 @@ extension GuessInfosEntityExtension on GuessInfosEntity {
     return GuessInfosEntity()
       ..gameId = gameId ?? this.gameId
       ..l5Avg = l5Avg ?? this.l5Avg
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue

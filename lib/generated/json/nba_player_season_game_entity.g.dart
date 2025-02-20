@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 NbaPlayerSeasonEntity $NbaPlayerSeasonEntityFromJson(
     Map<String, dynamic> json) {
@@ -146,9 +148,9 @@ NbaPlayerSeasonGameEntity $NbaPlayerSeasonGameEntityFromJson(
   if (awayTeamId != null) {
     nbaPlayerSeasonGameEntity.awayTeamId = awayTeamId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    nbaPlayerSeasonGameEntity.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    nbaPlayerSeasonGameEntity.gst = gst;
   }
   return nbaPlayerSeasonGameEntity;
 }
@@ -181,7 +183,7 @@ Map<String, dynamic> $NbaPlayerSeasonGameEntityToJson(
   data['threePm'] = entity.threePm;
   data['to'] = entity.to;
   data['awayTeamId'] = entity.awayTeamId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   return data;
 }
 
@@ -212,7 +214,7 @@ extension NbaPlayerSeasonGameEntityExtension on NbaPlayerSeasonGameEntity {
     double? threePm,
     double? to,
     int? awayTeamId,
-    int? gameStartTime,
+    int? gst,
   }) {
     return NbaPlayerSeasonGameEntity()
       ..fga = fga ?? this.fga
@@ -240,6 +242,6 @@ extension NbaPlayerSeasonGameEntityExtension on NbaPlayerSeasonGameEntity {
       ..threePm = threePm ?? this.threePm
       ..to = to ?? this.to
       ..awayTeamId = awayTeamId ?? this.awayTeamId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime;
+      ..gst = gst ?? this.gst;
   }
 }

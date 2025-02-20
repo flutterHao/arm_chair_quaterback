@@ -8,6 +8,8 @@ import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 NbaPlayerBaseInfoEntity $NbaPlayerBaseInfoEntityFromJson(
     Map<String, dynamic> json) {
@@ -414,9 +416,9 @@ NbaPlayerBaseInfoGuessInfosAstPicks $NbaPlayerBaseInfoGuessInfosAstPicksFromJson
   if (newsId != null) {
     nbaPlayerBaseInfoGuessInfosAstPicks.newsId = newsId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    nbaPlayerBaseInfoGuessInfosAstPicks.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -458,7 +460,7 @@ Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosAstPicksToJson(
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['newsId'] = entity.newsId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData;
   data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
@@ -473,7 +475,7 @@ extension NbaPlayerBaseInfoGuessInfosAstPicksExtension on NbaPlayerBaseInfoGuess
   NbaPlayerBaseInfoGuessInfosAstPicks copyWith({
     int? gameId,
     int? newsId,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<dynamic>? guessData,
     NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue? guessReferenceValue,
@@ -485,7 +487,7 @@ extension NbaPlayerBaseInfoGuessInfosAstPicksExtension on NbaPlayerBaseInfoGuess
     return NbaPlayerBaseInfoGuessInfosAstPicks()
       ..gameId = gameId ?? this.gameId
       ..newsId = newsId ?? this.newsId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
@@ -830,9 +832,9 @@ NbaPlayerBaseInfoGuessInfosRebPicks $NbaPlayerBaseInfoGuessInfosRebPicksFromJson
   if (newsId != null) {
     nbaPlayerBaseInfoGuessInfosRebPicks.newsId = newsId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    nbaPlayerBaseInfoGuessInfosRebPicks.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -874,7 +876,7 @@ Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosRebPicksToJson(
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['newsId'] = entity.newsId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData;
   data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
@@ -889,7 +891,7 @@ extension NbaPlayerBaseInfoGuessInfosRebPicksExtension on NbaPlayerBaseInfoGuess
   NbaPlayerBaseInfoGuessInfosRebPicks copyWith({
     int? gameId,
     int? newsId,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<dynamic>? guessData,
     NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue? guessReferenceValue,
@@ -901,7 +903,7 @@ extension NbaPlayerBaseInfoGuessInfosRebPicksExtension on NbaPlayerBaseInfoGuess
     return NbaPlayerBaseInfoGuessInfosRebPicks()
       ..gameId = gameId ?? this.gameId
       ..newsId = newsId ?? this.newsId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
@@ -1234,9 +1236,9 @@ NbaPlayerBaseInfoGuessInfosPtsPicks $NbaPlayerBaseInfoGuessInfosPtsPicksFromJson
   if (newsId != null) {
     nbaPlayerBaseInfoGuessInfosPtsPicks.newsId = newsId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    nbaPlayerBaseInfoGuessInfosPtsPicks.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -1278,7 +1280,7 @@ Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosPtsPicksToJson(
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['newsId'] = entity.newsId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData;
   data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
@@ -1293,7 +1295,7 @@ extension NbaPlayerBaseInfoGuessInfosPtsPicksExtension on NbaPlayerBaseInfoGuess
   NbaPlayerBaseInfoGuessInfosPtsPicks copyWith({
     int? gameId,
     int? newsId,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<dynamic>? guessData,
     NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue? guessReferenceValue,
@@ -1305,7 +1307,7 @@ extension NbaPlayerBaseInfoGuessInfosPtsPicksExtension on NbaPlayerBaseInfoGuess
     return NbaPlayerBaseInfoGuessInfosPtsPicks()
       ..gameId = gameId ?? this.gameId
       ..newsId = newsId ?? this.newsId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
@@ -1796,9 +1798,9 @@ NbaPlayerBaseInfoL5GameData $NbaPlayerBaseInfoL5GameDataFromJson(
   if (stl != null) {
     nbaPlayerBaseInfoL5GameData.stl = stl;
   }
-  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
-  if (updateTime != null) {
-    nbaPlayerBaseInfoL5GameData.updateTime = updateTime;
+  final int? ut = jsonConvert.convert<int>(json['updateTime']);
+  if (ut != null) {
+    nbaPlayerBaseInfoL5GameData.ut = ut;
   }
   final double? fgm = jsonConvert.convert<double>(json['fgm']);
   if (fgm != null) {
@@ -1863,7 +1865,7 @@ Map<String, dynamic> $NbaPlayerBaseInfoL5GameDataToJson(
   data['ast'] = entity.ast;
   data['dreb'] = entity.dreb;
   data['stl'] = entity.stl;
-  data['updateTime'] = entity.updateTime;
+  data['updateTime'] = entity.ut;
   data['fgm'] = entity.fgm;
   data['pts'] = entity.pts;
   data['threePa'] = entity.threePa;
@@ -1887,7 +1889,7 @@ extension NbaPlayerBaseInfoL5GameDataExtension on NbaPlayerBaseInfoL5GameData {
     double? ast,
     double? dreb,
     double? stl,
-    int? updateTime,
+    int? ut,
     double? fgm,
     double? pts,
     double? threePa,
@@ -1908,7 +1910,7 @@ extension NbaPlayerBaseInfoL5GameDataExtension on NbaPlayerBaseInfoL5GameData {
       ..ast = ast ?? this.ast
       ..dreb = dreb ?? this.dreb
       ..stl = stl ?? this.stl
-      ..updateTime = updateTime ?? this.updateTime
+      ..ut = ut ?? this.ut
       ..fgm = fgm ?? this.fgm
       ..pts = pts ?? this.pts
       ..threePa = threePa ?? this.threePa
@@ -2782,9 +2784,9 @@ OutComeInfoEntity $OutComeInfoEntityFromJson(Map<String, dynamic> json) {
   if (newsId != null) {
     outComeInfoEntity.newsId = newsId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    outComeInfoEntity.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    outComeInfoEntity.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -2846,7 +2848,7 @@ Map<String, dynamic> $OutComeInfoEntityToJson(OutComeInfoEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['newsId'] = entity.newsId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData.map((v) => v.toJson()).toList();
   data['guessReferenceValue'] = entity.guessReferenceValue;
@@ -2866,7 +2868,7 @@ extension OutComeInfoEntityExtension on OutComeInfoEntity {
   OutComeInfoEntity copyWith({
     int? gameId,
     double? newsId,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<GuessData>? guessData,
     Map<String, double>? guessReferenceValue,
@@ -2883,7 +2885,7 @@ extension OutComeInfoEntityExtension on OutComeInfoEntity {
     return OutComeInfoEntity()
       ..gameId = gameId ?? this.gameId
       ..newsId = newsId ?? this.newsId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue

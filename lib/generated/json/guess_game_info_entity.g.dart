@@ -2,7 +2,7 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 
-import 'package:arm_chair_quaterback/common/entities/guess_reference_value.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 
 
 GuessGameInfoEntity $GuessGameInfoEntityFromJson(Map<String, dynamic> json) {
@@ -15,9 +15,9 @@ GuessGameInfoEntity $GuessGameInfoEntityFromJson(Map<String, dynamic> json) {
   if (newsId != null) {
     guessGameInfoEntity.newsId = newsId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    guessGameInfoEntity.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    guessGameInfoEntity.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -69,7 +69,7 @@ Map<String, dynamic> $GuessGameInfoEntityToJson(GuessGameInfoEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['newsId'] = entity.newsId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData.map((v) => v.toJson()).toList();
   data['guessReferenceValue'] = entity.guessReferenceValue;
@@ -87,7 +87,7 @@ extension GuessGameInfoEntityExtension on GuessGameInfoEntity {
   GuessGameInfoEntity copyWith({
     int? gameId,
     double? newsId,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<GuessData>? guessData,
     Map<String, double>? guessReferenceValue,
@@ -102,7 +102,7 @@ extension GuessGameInfoEntityExtension on GuessGameInfoEntity {
     return GuessGameInfoEntity()
       ..gameId = gameId ?? this.gameId
       ..newsId = newsId ?? this.newsId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue

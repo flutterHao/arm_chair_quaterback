@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/trade_info_entity.g.dart';
 import 'dart:convert';
@@ -78,11 +79,15 @@ class TradeInfoTradePlayers {
   int? position;
   String? uuid;
   int? buyPrice;
-  int? removalTime;
+  @JSONField(name: "removalTime")
+  int? rt;
   bool? top;
   bool? isBuy;
 
   TradeInfoTradePlayers();
+
+  int get removalTime =>
+      (rt??0) + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory TradeInfoTradePlayers.fromJson(Map<String, dynamic> json) =>
       $TradeInfoTradePlayersFromJson(json);

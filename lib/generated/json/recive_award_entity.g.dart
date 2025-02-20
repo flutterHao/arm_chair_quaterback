@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 ReciveAwardEntity $ReciveAwardEntityFromJson(Map<String, dynamic> json) {
   final ReciveAwardEntity reciveAwardEntity = ReciveAwardEntity();
@@ -18,9 +20,9 @@ ReciveAwardEntity $ReciveAwardEntityFromJson(Map<String, dynamic> json) {
   if (createTime != null) {
     reciveAwardEntity.createTime = createTime;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    reciveAwardEntity.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    reciveAwardEntity.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -63,7 +65,7 @@ Map<String, dynamic> $ReciveAwardEntityToJson(ReciveAwardEntity entity) {
   data['gameId'] = entity.gameId;
   data['L5Avg'] = entity.l5Avg.toJson();
   data['createTime'] = entity.createTime;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData.map((v) => v.toJson()).toList();
   data['updateTime'] = entity.updateTime;
@@ -80,7 +82,7 @@ extension ReciveAwardEntityExtension on ReciveAwardEntity {
     int? gameId,
     ReciveAwardL5Avg? l5Avg,
     int? createTime,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<GuessData>? guessData,
     int? updateTime,
@@ -94,7 +96,7 @@ extension ReciveAwardEntityExtension on ReciveAwardEntity {
       ..gameId = gameId ?? this.gameId
       ..l5Avg = l5Avg ?? this.l5Avg
       ..createTime = createTime ?? this.createTime
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..updateTime = updateTime ?? this.updateTime

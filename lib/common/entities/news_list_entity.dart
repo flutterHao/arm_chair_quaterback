@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/news_list_entity.g.dart';
 import 'dart:convert';
@@ -78,7 +79,8 @@ class NewsListDetail {
   late List<ReviewEntity> reviewsList = [];
   late int postTime = 0;
   late int award = 0;
-  late int createTime = 0;
+  @JSONField(name: 'createTime')
+  late int ct = 0;
   late int id = 0;
   late int views = 0;
   late int likes = 0;
@@ -94,6 +96,9 @@ class NewsListDetail {
   double? imamgeWidth;
 
   NewsListDetail();
+
+  int get createTime =>
+      ct + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NewsListDetail.fromJson(Map<String, dynamic> json) {
     NewsListDetail newsDetail = $NewsListDetailFromJson(json);

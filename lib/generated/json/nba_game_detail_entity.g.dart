@@ -4,6 +4,8 @@ import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 NbaGameDetailEntity $NbaGameDetailEntityFromJson(Map<String, dynamic> json) {
   final NbaGameDetailEntity nbaGameDetailEntity = NbaGameDetailEntity();
@@ -348,9 +350,9 @@ NbaGameDetailGameDataTeamScore $NbaGameDetailGameDataTeamScoreFromJson(
   if (ot7 != null) {
     nbaGameDetailGameDataTeamScore.ot7 = ot7;
   }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    nbaGameDetailGameDataTeamScore.createTime = createTime;
+  final int? ct = jsonConvert.convert<int>(json['createTime']);
+  if (ct != null) {
+    nbaGameDetailGameDataTeamScore.ct = ct;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -377,7 +379,7 @@ Map<String, dynamic> $NbaGameDetailGameDataTeamScoreToJson(
   data['ot8'] = entity.ot8;
   data['total'] = entity.total;
   data['ot7'] = entity.ot7;
-  data['createTime'] = entity.createTime;
+  data['createTime'] = entity.ct;
   data['teamId'] = entity.teamId;
   return data;
 }
@@ -399,7 +401,7 @@ extension NbaGameDetailGameDataTeamScoreExtension on NbaGameDetailGameDataTeamSc
     int? ot8,
     int? total,
     int? ot7,
-    int? createTime,
+    int? ct,
     int? teamId,
   }) {
     return NbaGameDetailGameDataTeamScore()
@@ -418,7 +420,7 @@ extension NbaGameDetailGameDataTeamScoreExtension on NbaGameDetailGameDataTeamSc
       ..ot8 = ot8 ?? this.ot8
       ..total = total ?? this.total
       ..ot7 = ot7 ?? this.ot7
-      ..createTime = createTime ?? this.createTime
+      ..ct = ct ?? this.ct
       ..teamId = teamId ?? this.teamId;
   }
 }
@@ -502,9 +504,9 @@ NbaGameDetailGameDataPlayerScores $NbaGameDetailGameDataPlayerScoresFromJson(
   if (oreb != null) {
     nbaGameDetailGameDataPlayerScores.oreb = oreb;
   }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    nbaGameDetailGameDataPlayerScores.createTime = createTime;
+  final int? ct = jsonConvert.convert<int>(json['createTime']);
+  if (ct != null) {
+    nbaGameDetailGameDataPlayerScores.ct = ct;
   }
   final int? pf = jsonConvert.convert<int>(json['pf']);
   if (pf != null) {
@@ -551,7 +553,7 @@ Map<String, dynamic> $NbaGameDetailGameDataPlayerScoresToJson(
   data['threePa'] = entity.threePa;
   data['ename'] = entity.ename;
   data['oreb'] = entity.oreb;
-  data['createTime'] = entity.createTime;
+  data['createTime'] = entity.ct;
   data['pf'] = entity.pf;
   data['teamId'] = entity.teamId;
   data['threePm'] = entity.threePm;
@@ -581,7 +583,7 @@ extension NbaGameDetailGameDataPlayerScoresExtension on NbaGameDetailGameDataPla
     int? threePa,
     String? ename,
     int? oreb,
-    int? createTime,
+    int? ct,
     int? pf,
     int? teamId,
     int? threePm,
@@ -608,7 +610,7 @@ extension NbaGameDetailGameDataPlayerScoresExtension on NbaGameDetailGameDataPla
       ..threePa = threePa ?? this.threePa
       ..ename = ename ?? this.ename
       ..oreb = oreb ?? this.oreb
-      ..createTime = createTime ?? this.createTime
+      ..ct = ct ?? this.ct
       ..pf = pf ?? this.pf
       ..teamId = teamId ?? this.teamId
       ..threePm = threePm ?? this.threePm

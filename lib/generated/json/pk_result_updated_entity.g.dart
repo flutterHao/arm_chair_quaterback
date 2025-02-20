@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 PkResultUpdatedEntity $PkResultUpdatedEntityFromJson(
     Map<String, dynamic> json) {
@@ -261,9 +263,9 @@ ScoreBoardDetailList $ScoreBoardDetailListFromJson(Map<String, dynamic> json) {
   if (blkPoint != null) {
     scoreBoardDetailList.blkPoint = blkPoint;
   }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    scoreBoardDetailList.createTime = createTime;
+  final int? ct = jsonConvert.convert<int>(json['createTime']);
+  if (ct != null) {
+    scoreBoardDetailList.ct = ct;
   }
   final int? dreb = jsonConvert.convert<int>(json['dreb']);
   if (dreb != null) {
@@ -369,9 +371,9 @@ ScoreBoardDetailList $ScoreBoardDetailListFromJson(Map<String, dynamic> json) {
   if (to != null) {
     scoreBoardDetailList.to = to;
   }
-  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
-  if (updateTime != null) {
-    scoreBoardDetailList.updateTime = updateTime;
+  final int? ut = jsonConvert.convert<int>(json['updateTime']);
+  if (ut != null) {
+    scoreBoardDetailList.ut = ut;
   }
   return scoreBoardDetailList;
 }
@@ -382,7 +384,7 @@ Map<String, dynamic> $ScoreBoardDetailListToJson(ScoreBoardDetailList entity) {
   data['astPoint'] = entity.astPoint;
   data['blk'] = entity.blk;
   data['blkPoint'] = entity.blkPoint;
-  data['createTime'] = entity.createTime;
+  data['createTime'] = entity.ct;
   data['dreb'] = entity.dreb;
   data['fga'] = entity.fga;
   data['fgm'] = entity.fgm;
@@ -409,7 +411,7 @@ Map<String, dynamic> $ScoreBoardDetailListToJson(ScoreBoardDetailList entity) {
   data['threePa'] = entity.threePa;
   data['threePm'] = entity.threePm;
   data['to'] = entity.to;
-  data['updateTime'] = entity.updateTime;
+  data['updateTime'] = entity.ut;
   return data;
 }
 
@@ -419,7 +421,7 @@ extension ScoreBoardDetailListExtension on ScoreBoardDetailList {
     int? astPoint,
     int? blk,
     int? blkPoint,
-    int? createTime,
+    int? ct,
     int? dreb,
     int? fga,
     int? fgm,
@@ -446,14 +448,14 @@ extension ScoreBoardDetailListExtension on ScoreBoardDetailList {
     int? threePa,
     int? threePm,
     int? to,
-    int? updateTime,
+    int? ut,
   }) {
     return ScoreBoardDetailList()
       ..ast = ast ?? this.ast
       ..astPoint = astPoint ?? this.astPoint
       ..blk = blk ?? this.blk
       ..blkPoint = blkPoint ?? this.blkPoint
-      ..createTime = createTime ?? this.createTime
+      ..ct = ct ?? this.ct
       ..dreb = dreb ?? this.dreb
       ..fga = fga ?? this.fga
       ..fgm = fgm ?? this.fgm
@@ -480,7 +482,7 @@ extension ScoreBoardDetailListExtension on ScoreBoardDetailList {
       ..threePa = threePa ?? this.threePa
       ..threePm = threePm ?? this.threePm
       ..to = to ?? this.to
-      ..updateTime = updateTime ?? this.updateTime;
+      ..ut = ut ?? this.ut;
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/new_test_entity.g.dart';
 import 'dart:convert';
@@ -26,7 +27,8 @@ class NewTestEntity {
 class NewTestAst {
   late int gameId;
   late int newsId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int teamId;
   late List<dynamic> guessData;
   late NewTestAstGuessReferenceValue guessReferenceValue;
@@ -36,6 +38,9 @@ class NewTestAst {
   late int playerId;
 
   NewTestAst();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NewTestAst.fromJson(Map<String, dynamic> json) =>
       $NewTestAstFromJson(json);
@@ -71,7 +76,8 @@ class NewTestAstGuessReferenceValue {
 class NewTest3pt {
   late int gameId;
   late int newsId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int teamId;
   late List<dynamic> guessData;
   late NewTest3ptGuessReferenceValue guessReferenceValue;
@@ -81,6 +87,9 @@ class NewTest3pt {
   late int playerId;
 
   NewTest3pt();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NewTest3pt.fromJson(Map<String, dynamic> json) =>
       $NewTest3ptFromJson(json);
@@ -117,7 +126,8 @@ class NewTest3ptGuessReferenceValue {
 class NewTestPts {
   late int gameId;
   late int newsId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int teamId;
   late List<dynamic> guessData;
   late NewTestPtsGuessReferenceValue guessReferenceValue;
@@ -127,6 +137,9 @@ class NewTestPts {
   late int playerId;
 
   NewTestPts();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NewTestPts.fromJson(Map<String, dynamic> json) =>
       $NewTestPtsFromJson(json);

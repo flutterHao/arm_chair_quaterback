@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/guess_param_entity.g.dart';
 import 'dart:convert';
@@ -8,7 +9,8 @@ class GuessPlayerParamEntity {
   late int awayTeamId;
   late int gameId;
   late int playerId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late String guessAttr;
   late int guessChoice;
   late double guessReferenceValue;
@@ -16,6 +18,12 @@ class GuessPlayerParamEntity {
 
   GuessPlayerParamEntity();
 
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
+
+  set gameStartTime(int value) {
+    gst = value;
+  }
   factory GuessPlayerParamEntity.fromJson(Map<String, dynamic> json) =>
       $GuessPlayerParamEntityFromJson(json);
 
@@ -33,13 +41,21 @@ class GuessGameParamEntity {
   late int awayTeamId;
   late int homeTeamId;
   late int gameId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int guessChoice;
   int type =2;
   //后端要求，前端不使用
   String guessAttr="";
 
   GuessGameParamEntity();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
+
+  set gameStartTime(int value) {
+    gst = value;
+  }
 
   factory GuessGameParamEntity.fromJson(Map<String, dynamic> json) =>
       $GuessGameParamEntityFromJson(json);

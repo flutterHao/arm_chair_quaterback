@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/recive_award_entity.g.dart';
 import 'dart:convert';
@@ -10,7 +11,8 @@ class ReciveAwardEntity {
   @JSONField(name: "L5Avg")
   late ReciveAwardL5Avg l5Avg;
   late int createTime;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int teamId;
   late List<GuessData> guessData;
   late int updateTime;
@@ -21,6 +23,9 @@ class ReciveAwardEntity {
   late int playerId;
 
   ReciveAwardEntity();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory ReciveAwardEntity.fromJson(Map<String, dynamic> json) =>
       $ReciveAwardEntityFromJson(json);

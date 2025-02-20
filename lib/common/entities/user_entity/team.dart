@@ -1,3 +1,5 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 import 'team_preference.dart';
 
 class Team {
@@ -6,7 +8,7 @@ class Team {
   int? benchCount;
   int? businessCardId;
   String? createIp;
-  int? createTime;
+  int? ct;
   int? currTeamStrength;
   int? dailyLeagueContributValue;
   int? firstLoginTime;
@@ -36,7 +38,7 @@ class Team {
   int? totalLoginDays;
   int? totalOnlineTime;
   int? unforBidTime;
-  int? updateTime;
+  int? ut;
   int? vipGrade;
   int? wearNicknameId;
 
@@ -46,7 +48,7 @@ class Team {
     this.benchCount,
     this.businessCardId,
     this.createIp,
-    this.createTime,
+    this.ct,
     this.currTeamStrength,
     this.dailyLeagueContributValue,
     this.firstLoginTime,
@@ -76,10 +78,16 @@ class Team {
     this.totalLoginDays,
     this.totalOnlineTime,
     this.unforBidTime,
-    this.updateTime,
+    this.ut,
     this.vipGrade,
     this.wearNicknameId,
   });
+
+  int get createTime =>
+      (ct??0) + Utils.getTimeZoneOffset().inMilliseconds;
+
+  int get updateTime =>
+      (ut??0) + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory Team.fromJson(Map<String, dynamic> json) => Team(
         accountId: json['accountId'] as int?,
@@ -87,7 +95,7 @@ class Team {
         benchCount: json['benchCount'] as int?,
         businessCardId: json['businessCardId'] as int?,
         createIp: json['createIp'] as String?,
-        createTime: json['createTime'] as int?,
+        ct: json['createTime'] as int?,
         currTeamStrength: json['currTeamStrength'] as int?,
         dailyLeagueContributValue: json['dailyLeagueContributValue'] as int?,
         firstLoginTime: json['firstLoginTime'] as int?,
@@ -120,7 +128,7 @@ class Team {
         totalLoginDays: json['totalLoginDays'] as int?,
         totalOnlineTime: json['totalOnlineTime'] as int?,
         unforBidTime: json['unforBidTime'] as int?,
-        updateTime: json['updateTime'] as int?,
+        ut: json['updateTime'] as int?,
         vipGrade: json['vipGrade'] as int?,
         wearNicknameId: json['wearNicknameId'] as int?,
       );
@@ -131,7 +139,7 @@ class Team {
         'benchCount': benchCount,
         'businessCardId': businessCardId,
         'createIp': createIp,
-        'createTime': createTime,
+        'createTime': ct,
         'currTeamStrength': currTeamStrength,
         'dailyLeagueContributValue': dailyLeagueContributValue,
         'firstLoginTime': firstLoginTime,
@@ -161,7 +169,7 @@ class Team {
         'totalLoginDays': totalLoginDays,
         'totalOnlineTime': totalOnlineTime,
         'unforBidTime': unforBidTime,
-        'updateTime': updateTime,
+        'updateTime': ut,
         'vipGrade': vipGrade,
         'wearNicknameId': wearNicknameId,
       };

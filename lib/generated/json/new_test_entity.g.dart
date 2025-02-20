@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/new_test_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 NewTestEntity $NewTestEntityFromJson(Map<String, dynamic> json) {
   final NewTestEntity newTestEntity = NewTestEntity();
@@ -52,9 +54,9 @@ NewTestAst $NewTestAstFromJson(Map<String, dynamic> json) {
   if (newsId != null) {
     newTestAst.newsId = newsId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    newTestAst.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    newTestAst.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -93,7 +95,7 @@ Map<String, dynamic> $NewTestAstToJson(NewTestAst entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['newsId'] = entity.newsId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData;
   data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
@@ -108,7 +110,7 @@ extension NewTestAstExtension on NewTestAst {
   NewTestAst copyWith({
     int? gameId,
     int? newsId,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<dynamic>? guessData,
     NewTestAstGuessReferenceValue? guessReferenceValue,
@@ -120,7 +122,7 @@ extension NewTestAstExtension on NewTestAst {
     return NewTestAst()
       ..gameId = gameId ?? this.gameId
       ..newsId = newsId ?? this.newsId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
@@ -181,9 +183,9 @@ NewTest3pt $NewTest3ptFromJson(Map<String, dynamic> json) {
   if (newsId != null) {
     newTest3pt.newsId = newsId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    newTest3pt.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    newTest3pt.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -222,7 +224,7 @@ Map<String, dynamic> $NewTest3ptToJson(NewTest3pt entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['newsId'] = entity.newsId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData;
   data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
@@ -237,7 +239,7 @@ extension NewTest3ptExtension on NewTest3pt {
   NewTest3pt copyWith({
     int? gameId,
     int? newsId,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<dynamic>? guessData,
     NewTest3ptGuessReferenceValue? guessReferenceValue,
@@ -249,7 +251,7 @@ extension NewTest3ptExtension on NewTest3pt {
     return NewTest3pt()
       ..gameId = gameId ?? this.gameId
       ..newsId = newsId ?? this.newsId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
@@ -317,9 +319,9 @@ NewTestPts $NewTestPtsFromJson(Map<String, dynamic> json) {
   if (newsId != null) {
     newTestPts.newsId = newsId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    newTestPts.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    newTestPts.gst = gst;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -358,7 +360,7 @@ Map<String, dynamic> $NewTestPtsToJson(NewTestPts entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['gameId'] = entity.gameId;
   data['newsId'] = entity.newsId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData;
   data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
@@ -373,7 +375,7 @@ extension NewTestPtsExtension on NewTestPts {
   NewTestPts copyWith({
     int? gameId,
     int? newsId,
-    int? gameStartTime,
+    int? gst,
     int? teamId,
     List<dynamic>? guessData,
     NewTestPtsGuessReferenceValue? guessReferenceValue,
@@ -385,7 +387,7 @@ extension NewTestPtsExtension on NewTestPts {
     return NewTestPts()
       ..gameId = gameId ?? this.gameId
       ..newsId = newsId ?? this.newsId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..teamId = teamId ?? this.teamId
       ..guessData = guessData ?? this.guessData
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue

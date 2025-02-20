@@ -1,7 +1,9 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 class NewsGuess {
   int? awayTeamId;
   int? gameId;
-  int? gameStartTime;
+  int? gst;
   List<dynamic>? guessData;
   int? id;
   int? playerId;
@@ -12,7 +14,7 @@ class NewsGuess {
   NewsGuess({
     this.awayTeamId,
     this.gameId,
-    this.gameStartTime,
+    this.gst,
     this.guessData,
     this.id,
     this.playerId,
@@ -21,10 +23,12 @@ class NewsGuess {
     this.type,
   });
 
+  int get gameStartTime => (gst ?? 0) + Utils.getTimeZoneOffset().inMilliseconds;
+
   factory NewsGuess.fromJson(Map<String, dynamic> json) => NewsGuess(
         awayTeamId: json['awayTeamId'] as int?,
         gameId: json['gameId'] as int?,
-        gameStartTime: json['gameStartTime'] as int?,
+        gst: json['gameStartTime'] as int?,
         guessData: json['guessData'] as List<dynamic>?,
         id: json['id'] as int?,
         playerId: json['playerId'] as int?,

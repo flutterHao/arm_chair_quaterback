@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/pk_result_updated_entity.g.dart';
 import 'dart:convert';
@@ -66,7 +67,8 @@ class ScoreBoardDetailList {
   late int astPoint = 0;
   late int blk = 0;
   late int blkPoint = 0;
-  late int createTime = 0;
+  @JSONField(name: 'createTime')
+  late int ct = 0;
   late int dreb = 0;
   late int fga = 0;
   late int fgm = 0;
@@ -93,9 +95,16 @@ class ScoreBoardDetailList {
   late int threePa = 0;
   late int threePm = 0;
   late int to = 0;
-  late int updateTime = 0;
+  @JSONField(name: 'updateTime')
+  late int ut;
 
   ScoreBoardDetailList();
+
+  int get updateTime =>
+      ut + Utils.getTimeZoneOffset().inMilliseconds;
+
+  int get createTime =>
+      ct + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory ScoreBoardDetailList.fromJson(Map<String, dynamic> json) =>
       $ScoreBoardDetailListFromJson(json);
@@ -114,7 +123,7 @@ class ScoreBoardDetailList {
     astPoint += other.astPoint;
     blk += other.blk;
     blkPoint += other.blkPoint;
-    createTime += other.createTime;
+    ct += other.ct;
     dreb += other.dreb;
     fga += other.fga;
     fgm += other.fgm;
@@ -141,7 +150,7 @@ class ScoreBoardDetailList {
     threePa += other.threePa;
     threePm += other.threePm;
     to += other.to;
-    updateTime += other.updateTime;
+    ut += other.ut;
   }
 }
 

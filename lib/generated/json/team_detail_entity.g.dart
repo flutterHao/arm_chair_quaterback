@@ -4,6 +4,8 @@ import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 TeamDetailEntity $TeamDetailEntityFromJson(Map<String, dynamic> json) {
   final TeamDetailEntity teamDetailEntity = TeamDetailEntity();
@@ -119,9 +121,9 @@ TeamDetailGameSchedules $TeamDetailGameSchedulesFromJson(
   if (createTime != null) {
     teamDetailGameSchedules.createTime = createTime;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    teamDetailGameSchedules.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    teamDetailGameSchedules.gst = gst;
   }
   final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
   if (homeTeamScore != null) {
@@ -157,7 +159,7 @@ Map<String, dynamic> $TeamDetailGameSchedulesToJson(
   data['gameType'] = entity.gameType;
   data['gameTime'] = entity.gameTime;
   data['createTime'] = entity.createTime;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['homeTeamScore'] = entity.homeTeamScore;
   data['seasonId'] = entity.seasonId;
   data['awayTeamScore'] = entity.awayTeamScore;
@@ -173,7 +175,7 @@ extension TeamDetailGameSchedulesExtension on TeamDetailGameSchedules {
     int? gameType,
     int? gameTime,
     int? createTime,
-    int? gameStartTime,
+    int? gst,
     int? homeTeamScore,
     int? seasonId,
     int? awayTeamScore,
@@ -186,7 +188,7 @@ extension TeamDetailGameSchedulesExtension on TeamDetailGameSchedules {
       ..gameType = gameType ?? this.gameType
       ..gameTime = gameTime ?? this.gameTime
       ..createTime = createTime ?? this.createTime
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
       ..seasonId = seasonId ?? this.seasonId
       ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
@@ -625,9 +627,9 @@ TeamDetailRecentPick $TeamDetailRecentPickFromJson(Map<String, dynamic> json) {
   if (createTime != null) {
     teamDetailRecentPick.createTime = createTime;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    teamDetailRecentPick.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    teamDetailRecentPick.gst = gst;
   }
   final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
   if (homeTeamScore != null) {
@@ -674,7 +676,7 @@ Map<String, dynamic> $TeamDetailRecentPickToJson(TeamDetailRecentPick entity) {
   data['guessStatus'] = entity.guessStatus;
   data['homeTeamWins'] = entity.homeTeamWins;
   data['createTime'] = entity.createTime;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['homeTeamScore'] = entity.homeTeamScore;
   data['seasonId'] = entity.seasonId;
   data['awayTeamScore'] = entity.awayTeamScore;
@@ -696,7 +698,7 @@ extension TeamDetailRecentPickExtension on TeamDetailRecentPick {
     int? guessStatus,
     int? homeTeamWins,
     int? createTime,
-    int? gameStartTime,
+    int? gst,
     int? homeTeamScore,
     int? seasonId,
     int? awayTeamScore,
@@ -715,7 +717,7 @@ extension TeamDetailRecentPickExtension on TeamDetailRecentPick {
       ..guessStatus = guessStatus ?? this.guessStatus
       ..homeTeamWins = homeTeamWins ?? this.homeTeamWins
       ..createTime = createTime ?? this.createTime
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
       ..seasonId = seasonId ?? this.seasonId
       ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
@@ -797,9 +799,9 @@ TeamDetailLast5GameScheduleSchedule $TeamDetailLast5GameScheduleScheduleFromJson
   if (createTime != null) {
     teamDetailLast5GameScheduleSchedule.createTime = createTime;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    teamDetailLast5GameScheduleSchedule.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    teamDetailLast5GameScheduleSchedule.gst = gst;
   }
   final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
   if (homeTeamScore != null) {
@@ -835,7 +837,7 @@ Map<String, dynamic> $TeamDetailLast5GameScheduleScheduleToJson(
   data['gameType'] = entity.gameType;
   data['gameTime'] = entity.gameTime;
   data['createTime'] = entity.createTime;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['homeTeamScore'] = entity.homeTeamScore;
   data['seasonId'] = entity.seasonId;
   data['awayTeamScore'] = entity.awayTeamScore;
@@ -851,7 +853,7 @@ extension TeamDetailLast5GameScheduleScheduleExtension on TeamDetailLast5GameSch
     int? gameType,
     int? gameTime,
     int? createTime,
-    int? gameStartTime,
+    int? gst,
     int? homeTeamScore,
     int? seasonId,
     int? awayTeamScore,
@@ -864,7 +866,7 @@ extension TeamDetailLast5GameScheduleScheduleExtension on TeamDetailLast5GameSch
       ..gameType = gameType ?? this.gameType
       ..gameTime = gameTime ?? this.gameTime
       ..createTime = createTime ?? this.createTime
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
       ..seasonId = seasonId ?? this.seasonId
       ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
@@ -1654,9 +1656,9 @@ TeamDetailOutcomeGameSchedule $TeamDetailOutcomeGameScheduleFromJson(
   if (createTime != null) {
     teamDetailOutcomeGameSchedule.createTime = createTime;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    teamDetailOutcomeGameSchedule.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    teamDetailOutcomeGameSchedule.gst = gst;
   }
   final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
   if (homeTeamScore != null) {
@@ -1692,7 +1694,7 @@ Map<String, dynamic> $TeamDetailOutcomeGameScheduleToJson(
   data['gameType'] = entity.gameType;
   data['gameTime'] = entity.gameTime;
   data['createTime'] = entity.createTime;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['homeTeamScore'] = entity.homeTeamScore;
   data['seasonId'] = entity.seasonId;
   data['awayTeamScore'] = entity.awayTeamScore;
@@ -1708,7 +1710,7 @@ extension TeamDetailOutcomeGameScheduleExtension on TeamDetailOutcomeGameSchedul
     int? gameType,
     int? gameTime,
     int? createTime,
-    int? gameStartTime,
+    int? gst,
     int? homeTeamScore,
     int? seasonId,
     int? awayTeamScore,
@@ -1721,7 +1723,7 @@ extension TeamDetailOutcomeGameScheduleExtension on TeamDetailOutcomeGameSchedul
       ..gameType = gameType ?? this.gameType
       ..gameTime = gameTime ?? this.gameTime
       ..createTime = createTime ?? this.createTime
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
       ..seasonId = seasonId ?? this.seasonId
       ..awayTeamScore = awayTeamScore ?? this.awayTeamScore

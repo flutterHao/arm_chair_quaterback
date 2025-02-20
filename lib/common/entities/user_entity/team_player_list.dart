@@ -1,3 +1,5 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 import 'potential.dart';
 
 class TeamPlayerList {
@@ -5,7 +7,7 @@ class TeamPlayerList {
   int? breakThroughGrade;
   int? buyPlayerScore;
   int? buyPrice;
-  int? createTime;
+  int? ct;
   int? fromType;
   int? gradeExp;
   int? id;
@@ -15,7 +17,7 @@ class TeamPlayerList {
   Potential? potential;
   int? power;
   int? teamId;
-  int? updateTime;
+  int? ut;
   String? uuid;
 
   TeamPlayerList({
@@ -23,7 +25,7 @@ class TeamPlayerList {
     this.breakThroughGrade,
     this.buyPlayerScore,
     this.buyPrice,
-    this.createTime,
+    this.ct,
     this.fromType,
     this.gradeExp,
     this.id,
@@ -33,9 +35,15 @@ class TeamPlayerList {
     this.potential,
     this.power,
     this.teamId,
-    this.updateTime,
+    this.ut,
     this.uuid,
   });
+
+  int get createTime =>
+      (ct??0) + Utils.getTimeZoneOffset().inMilliseconds;
+
+  int get updateTime =>
+      (ut??0) + Utils.getTimeZoneOffset().inMilliseconds;
 
   int getBreakThroughGrade() {
     if ((breakThroughGrade ?? 0) >= 1) {
@@ -60,7 +68,7 @@ class TeamPlayerList {
       breakThroughGrade: json['breakThroughGrade'] as int?,
       buyPlayerScore: json['buyPlayerScore'] as int?,
       buyPrice: json['buyPrice'] as int?,
-      createTime: json['createTime'] as int?,
+      ct: json['createTime'] as int?,
       fromType: json['fromType'] as int?,
       gradeExp: json['gradeExp'] as int?,
       id: json['id'] as int?,
@@ -72,7 +80,7 @@ class TeamPlayerList {
           : Potential.fromJson(json['potential'] as Map<String, dynamic>),
       power: json['power'] as int?,
       teamId: json['teamId'] as int?,
-      updateTime: json['updateTime'] as int?,
+      ut: json['updateTime'] as int?,
       uuid: json['uuid'] as String?,
     );
   }
@@ -82,7 +90,7 @@ class TeamPlayerList {
         'breakThroughGrade': breakThroughGrade,
         'buyPlayerScore': buyPlayerScore,
         'buyPrice': buyPrice,
-        'createTime': createTime,
+        'createTime': ct,
         'fromType': fromType,
         'gradeExp': gradeExp,
         'id': id,
@@ -92,7 +100,7 @@ class TeamPlayerList {
         'potential': potential?.toJson(),
         'power': power,
         'teamId': teamId,
-        'updateTime': updateTime,
+        'updateTime': ut,
         'uuid': uuid,
       };
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/training_info_entity.g.dart';
 import 'dart:convert';
@@ -89,7 +90,8 @@ class TrainingInfoProp {
 
 @JsonSerializable()
 class TrainingInfoTraining {
-  late int ballRefreshTime = 0;
+  @JSONField(name: "ballRefreshTime")
+  late int brt = 0;
   late int taskItemCount = 0;
   late int createTime = 0;
   late int currentTaskId = 0;
@@ -108,6 +110,9 @@ class TrainingInfoTraining {
   // late RxInt taskValue = 0.obs;
 
   TrainingInfoTraining();
+
+  int get ballRefreshTime =>
+      brt + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory TrainingInfoTraining.fromJson(Map<String, dynamic> json) =>
       $TrainingInfoTrainingFromJson(json);

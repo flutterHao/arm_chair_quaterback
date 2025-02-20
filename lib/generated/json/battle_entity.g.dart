@@ -10,6 +10,8 @@ import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   final BattleEntity battleEntity = BattleEntity();
@@ -1012,9 +1014,9 @@ GameSchedule $GameScheduleFromJson(Map<String, dynamic> json) {
   if (awayScore != null) {
     gameSchedule.awayScore = awayScore;
   }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    gameSchedule.createTime = createTime;
+  final int? ct = jsonConvert.convert<int>(json['createTime']);
+  if (ct != null) {
+    gameSchedule.ct = ct;
   }
   final String? awayTeamName = jsonConvert.convert<String>(
       json['awayTeamName']);
@@ -1070,7 +1072,7 @@ Map<String, dynamic> $GameScheduleToJson(GameSchedule entity) {
   data['homeScore'] = entity.homeScore;
   data['updateTime'] = entity.updateTime;
   data['awayScore'] = entity.awayScore;
-  data['createTime'] = entity.createTime;
+  data['createTime'] = entity.ct;
   data['awayTeamName'] = entity.awayTeamName;
   data['homeLeagueId'] = entity.homeLeagueId;
   data['awayLeagueId'] = entity.awayLeagueId;
@@ -1091,7 +1093,7 @@ extension GameScheduleExtension on GameSchedule {
     int? homeScore,
     int? updateTime,
     int? awayScore,
-    int? createTime,
+    int? ct,
     String? awayTeamName,
     int? homeLeagueId,
     int? awayLeagueId,
@@ -1109,7 +1111,7 @@ extension GameScheduleExtension on GameSchedule {
       ..homeScore = homeScore ?? this.homeScore
       ..updateTime = updateTime ?? this.updateTime
       ..awayScore = awayScore ?? this.awayScore
-      ..createTime = createTime ?? this.createTime
+      ..ct = ct ?? this.ct
       ..awayTeamName = awayTeamName ?? this.awayTeamName
       ..homeLeagueId = homeLeagueId ?? this.homeLeagueId
       ..awayLeagueId = awayLeagueId ?? this.awayLeagueId

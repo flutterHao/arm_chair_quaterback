@@ -4,6 +4,8 @@ import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 
 import 'package:arm_chair_quaterback/common/net/address.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 import 'package:get/get.dart';
 
 
@@ -170,9 +172,9 @@ NewsListDetail $NewsListDetailFromJson(Map<String, dynamic> json) {
   if (award != null) {
     newsListDetail.award = award;
   }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    newsListDetail.createTime = createTime;
+  final int? ct = jsonConvert.convert<int>(json['createTime']);
+  if (ct != null) {
+    newsListDetail.ct = ct;
   }
   final int? id = jsonConvert.convert<int>(json['id']);
   if (id != null) {
@@ -222,7 +224,7 @@ Map<String, dynamic> $NewsListDetailToJson(NewsListDetail entity) {
   data['reviewsList'] = entity.reviewsList.map((v) => v.toJson()).toList();
   data['postTime'] = entity.postTime;
   data['award'] = entity.award;
-  data['createTime'] = entity.createTime;
+  data['createTime'] = entity.ct;
   data['id'] = entity.id;
   data['views'] = entity.views;
   data['likes'] = entity.likes;
@@ -252,7 +254,7 @@ extension NewsListDetailExtension on NewsListDetail {
     List<ReviewEntity>? reviewsList,
     int? postTime,
     int? award,
-    int? createTime,
+    int? ct,
     int? id,
     int? views,
     int? likes,
@@ -279,7 +281,7 @@ extension NewsListDetailExtension on NewsListDetail {
       ..reviewsList = reviewsList ?? this.reviewsList
       ..postTime = postTime ?? this.postTime
       ..award = award ?? this.award
-      ..createTime = createTime ?? this.createTime
+      ..ct = ct ?? this.ct
       ..id = id ?? this.id
       ..views = views ?? this.views
       ..likes = likes ?? this.likes

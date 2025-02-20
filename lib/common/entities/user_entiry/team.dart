@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 import 'team_preference.dart';
 import 'tencent_blue.dart';
 
@@ -14,7 +16,7 @@ class Team {
   List<dynamic>? buyGiftIds;
   int? coachStrength;
   String? createIp;
-  int? createTime;
+  int? ct;
   int? crossMatchGamePoint;
   int? currTeamStrength;
   int? dailyLeagueContributValue;
@@ -73,7 +75,7 @@ class Team {
   String? tourMatchCopyUnlockAwardState;
   String? tourMatchStarAwardState;
   int? unforBidTime;
-  int? updateTime;
+  int? ut;
   int? vipGrade;
   int? wearNicknameId;
 
@@ -88,7 +90,7 @@ class Team {
     this.buyGiftIds,
     this.coachStrength,
     this.createIp,
-    this.createTime,
+    this.ct,
     this.crossMatchGamePoint,
     this.currTeamStrength,
     this.dailyLeagueContributValue,
@@ -147,10 +149,16 @@ class Team {
     this.tourMatchCopyUnlockAwardState,
     this.tourMatchStarAwardState,
     this.unforBidTime,
-    this.updateTime,
+    this.ut,
     this.vipGrade,
     this.wearNicknameId,
   });
+
+  int get createTime =>
+      (ct??0) + Utils.getTimeZoneOffset().inMilliseconds;
+
+  int get updateTime =>
+      (ut??0) + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory Team.fromMap(Map<String, dynamic> data) => Team(
         accountId: data['accountId'] as int?,
@@ -163,7 +171,7 @@ class Team {
         buyGiftIds: data['buyGiftIds'] as List<dynamic>?,
         coachStrength: data['coachStrength'] as int?,
         createIp: data['createIp'] as String?,
-        createTime: data['createTime'] as int?,
+        ct: data['createTime'] as int?,
         crossMatchGamePoint: data['crossMatchGamePoint'] as int?,
         currTeamStrength: data['currTeamStrength'] as int?,
         dailyLeagueContributValue: data['dailyLeagueContributValue'] as int?,
@@ -229,7 +237,7 @@ class Team {
             data['tourMatchCopyUnlockAwardState'] as String?,
         tourMatchStarAwardState: data['tourMatchStarAwardState'] as String?,
         unforBidTime: data['unforBidTime'] as int?,
-        updateTime: data['updateTime'] as int?,
+        ut: data['updateTime'] as int?,
         vipGrade: data['vipGrade'] as int?,
         wearNicknameId: data['wearNicknameId'] as int?,
       );
@@ -245,7 +253,7 @@ class Team {
         'buyGiftIds': buyGiftIds,
         'coachStrength': coachStrength,
         'createIp': createIp,
-        'createTime': createTime,
+        'createTime': ct,
         'crossMatchGamePoint': crossMatchGamePoint,
         'currTeamStrength': currTeamStrength,
         'dailyLeagueContributValue': dailyLeagueContributValue,
@@ -304,7 +312,7 @@ class Team {
         'tourMatchCopyUnlockAwardState': tourMatchCopyUnlockAwardState,
         'tourMatchStarAwardState': tourMatchStarAwardState,
         'unforBidTime': unforBidTime,
-        'updateTime': updateTime,
+        'updateTime': ut,
         'vipGrade': vipGrade,
         'wearNicknameId': wearNicknameId,
       };

@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 ScoresNotStartGameEntity $ScoresNotStartGameEntityFromJson(
     Map<String, dynamic> json) {
@@ -619,9 +621,9 @@ TeamHistory $TeamHistoryFromJson(Map<String, dynamic> json) {
   if (createTime != null) {
     teamHistory.createTime = createTime;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    teamHistory.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    teamHistory.gst = gst;
   }
   final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
   if (homeTeamScore != null) {
@@ -658,7 +660,7 @@ Map<String, dynamic> $TeamHistoryToJson(TeamHistory entity) {
   data['awayPlayerScoreList'] = entity.awayPlayerScoreList;
   data['gameTime'] = entity.gameTime;
   data['createTime'] = entity.createTime;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['homeTeamScore'] = entity.homeTeamScore;
   data['seasonId'] = entity.seasonId;
   data['awayTeamScore'] = entity.awayTeamScore;
@@ -676,7 +678,7 @@ extension TeamHistoryExtension on TeamHistory {
     List<dynamic>? awayPlayerScoreList,
     int? gameTime,
     int? createTime,
-    int? gameStartTime,
+    int? gst,
     int? homeTeamScore,
     int? seasonId,
     int? awayTeamScore,
@@ -691,7 +693,7 @@ extension TeamHistoryExtension on TeamHistory {
       ..awayPlayerScoreList = awayPlayerScoreList ?? this.awayPlayerScoreList
       ..gameTime = gameTime ?? this.gameTime
       ..createTime = createTime ?? this.createTime
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
       ..seasonId = seasonId ?? this.seasonId
       ..awayTeamScore = awayTeamScore ?? this.awayTeamScore

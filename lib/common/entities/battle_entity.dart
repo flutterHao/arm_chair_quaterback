@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/battle_entity.g.dart';
 import 'dart:convert';
@@ -269,7 +270,8 @@ class GameSchedule {
   late int homeScore;
   late int updateTime;
   late int awayScore;
-  late int createTime;
+  @JSONField(name: 'createTime')
+  late int ct;
   late String awayTeamName;
   late int homeLeagueId;
   late int awayLeagueId;
@@ -282,6 +284,9 @@ class GameSchedule {
   late String homeLeagueName;
 
   GameSchedule();
+
+  int get createTime =>
+      ct + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory GameSchedule.fromJson(Map<String, dynamic> json) =>
       $GameScheduleFromJson(json);

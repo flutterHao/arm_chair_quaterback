@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_player_base_info_entity.g.dart';
 import 'dart:convert';
@@ -126,7 +127,8 @@ class NbaPlayerBaseInfoGuessInfosAstCommunityPick {
 class NbaPlayerBaseInfoGuessInfosAstPicks {
   late int gameId;
   late int newsId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int teamId;
   late List<dynamic> guessData;
   late NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue
@@ -137,6 +139,9 @@ class NbaPlayerBaseInfoGuessInfosAstPicks {
   late int playerId;
 
   NbaPlayerBaseInfoGuessInfosAstPicks();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NbaPlayerBaseInfoGuessInfosAstPicks.fromJson(
           Map<String, dynamic> json) =>
@@ -259,7 +264,8 @@ class NbaPlayerBaseInfoGuessInfosRebCommunityPick {
 class NbaPlayerBaseInfoGuessInfosRebPicks {
   late int gameId;
   late int newsId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int teamId;
   late List<dynamic> guessData;
   late NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue
@@ -270,6 +276,9 @@ class NbaPlayerBaseInfoGuessInfosRebPicks {
   late int playerId;
 
   NbaPlayerBaseInfoGuessInfosRebPicks();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NbaPlayerBaseInfoGuessInfosRebPicks.fromJson(
           Map<String, dynamic> json) =>
@@ -393,7 +402,8 @@ class NbaPlayerBaseInfoGuessInfosPtsCommunityPick {
 class NbaPlayerBaseInfoGuessInfosPtsPicks {
   late int gameId;
   late int newsId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int teamId;
   late List<dynamic> guessData;
   late NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue
@@ -404,6 +414,9 @@ class NbaPlayerBaseInfoGuessInfosPtsPicks {
   late int playerId;
 
   NbaPlayerBaseInfoGuessInfosPtsPicks();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NbaPlayerBaseInfoGuessInfosPtsPicks.fromJson(
           Map<String, dynamic> json) =>
@@ -533,7 +546,8 @@ class NbaPlayerBaseInfoL5GameData {
   late double ast;
   late double dreb;
   late double stl;
-  late int updateTime;
+  @JSONField(name: 'updateTime')
+  late int ut;
   late double fgm;
   late double pts;
   late double threePa;
@@ -549,6 +563,9 @@ class NbaPlayerBaseInfoL5GameData {
   late int awayTeamId;
 
   NbaPlayerBaseInfoL5GameData();
+
+  int get updateTime =>
+      ut + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NbaPlayerBaseInfoL5GameData.fromJson(Map<String, dynamic> json) =>
       $NbaPlayerBaseInfoL5GameDataFromJson(json);
@@ -865,7 +882,8 @@ class NbaPlayerBaseInfoPlayerNews {
 class OutComeInfoEntity {
   late int gameId;
   late double newsId;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int teamId;
   late List<GuessData> guessData;
   late Map<String, double> guessReferenceValue;
@@ -880,6 +898,9 @@ class OutComeInfoEntity {
   int reviewsCount = 0;
 
   OutComeInfoEntity();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory OutComeInfoEntity.fromJson(Map<String, dynamic> json) =>
       $OutComeInfoEntityFromJson(json);

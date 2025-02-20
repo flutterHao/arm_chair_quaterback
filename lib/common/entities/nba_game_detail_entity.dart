@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_game_detail_entity.g.dart';
 import 'dart:convert';
@@ -96,10 +97,14 @@ class NbaGameDetailGameDataTeamScore {
 	late int ot8;
 	late int total;
 	late int ot7;
-	int? createTime;
+	@JSONField(name: 'createTime')
+	late int ct = 0;
 	late int teamId;
 
 	NbaGameDetailGameDataTeamScore();
+
+	int get createTime =>
+			ct + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NbaGameDetailGameDataTeamScore.fromJson(Map<String, dynamic> json) =>
       $NbaGameDetailGameDataTeamScoreFromJson(json);
@@ -133,7 +138,8 @@ class NbaGameDetailGameDataPlayerScores {
 	late int threePa;
 	late String ename;
 	late int oreb;
-	int? createTime;
+	@JSONField(name: 'createTime')
+	late int ct = 0;
 	late int pf;
 	late int teamId;
 	late int threePm;
@@ -141,6 +147,9 @@ class NbaGameDetailGameDataPlayerScores {
 	late int awayTeamId;
 
 	NbaGameDetailGameDataPlayerScores();
+
+	int get createTime =>
+			ct + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NbaGameDetailGameDataPlayerScores.fromJson(
           Map<String, dynamic> json) =>

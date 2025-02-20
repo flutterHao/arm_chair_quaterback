@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/recive_award_v2_entity.g.dart';
 import 'dart:convert';
@@ -28,7 +29,8 @@ class ReciveAwardV2Entity {
 @JsonSerializable()
 class ReciveAwardV2GuessInfo {
   late int newsId;
-  late int createTime;
+  @JSONField(name: 'createTime')
+  late int ct = 0;
   late bool success;
   late int teamId;
   late List<ReciveAwardV2GuessInfoGuessData> guessData;
@@ -40,6 +42,9 @@ class ReciveAwardV2GuessInfo {
   late int status;
 
   ReciveAwardV2GuessInfo();
+
+  int get createTime =>
+      ct + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory ReciveAwardV2GuessInfo.fromJson(Map<String, dynamic> json) =>
       $ReciveAwardV2GuessInfoFromJson(json);
@@ -59,7 +64,8 @@ class ReciveAwardV2GuessInfoGuessData {
   /// type 1: 1 more 2 less
   /// type 2: 队伍id
   late int guessChoice;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late List<Awards> awards;
   late bool success;
   late int guessGameAttrValue;
@@ -79,6 +85,9 @@ class ReciveAwardV2GuessInfoGuessData {
 
 
   ReciveAwardV2GuessInfoGuessData();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory ReciveAwardV2GuessInfoGuessData.fromJson(Map<String, dynamic> json) =>
       $ReciveAwardV2GuessInfoGuessDataFromJson(json);

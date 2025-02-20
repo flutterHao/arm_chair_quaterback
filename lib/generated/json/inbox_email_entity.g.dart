@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_email_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 InboxEmailEntity $InboxEmailEntityFromJson(Map<String, dynamic> json) {
   final InboxEmailEntity inboxEmailEntity = InboxEmailEntity();
@@ -47,9 +49,9 @@ InboxEmailMailList $InboxEmailMailListFromJson(Map<String, dynamic> json) {
   if (mailType != null) {
     inboxEmailMailList.mailType = mailType;
   }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    inboxEmailMailList.createTime = createTime;
+  final int? ct = jsonConvert.convert<int>(json['createTime']);
+  if (ct != null) {
+    inboxEmailMailList.ct = ct;
   }
   final int? inboxMessageId = jsonConvert.convert<int>(json['inboxMessageId']);
   if (inboxMessageId != null) {
@@ -95,7 +97,7 @@ Map<String, dynamic> $InboxEmailMailListToJson(InboxEmailMailList entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['receive'] = entity.receive;
   data['mailType'] = entity.mailType;
-  data['createTime'] = entity.createTime;
+  data['createTime'] = entity.ct;
   data['inboxMessageId'] = entity.inboxMessageId;
   data['awardData'] = entity.awardData.map((v) => v.toJson()).toList();
   data['teamId'] = entity.teamId;
@@ -111,7 +113,7 @@ extension InboxEmailMailListExtension on InboxEmailMailList {
   InboxEmailMailList copyWith({
     bool? receive,
     int? mailType,
-    int? createTime,
+    int? ct,
     int? inboxMessageId,
     List<InboxEmailMailListAwardData>? awardData,
     int? teamId,
@@ -124,7 +126,7 @@ extension InboxEmailMailListExtension on InboxEmailMailList {
     return InboxEmailMailList()
       ..receive = receive ?? this.receive
       ..mailType = mailType ?? this.mailType
-      ..createTime = createTime ?? this.createTime
+      ..ct = ct ?? this.ct
       ..inboxMessageId = inboxMessageId ?? this.inboxMessageId
       ..awardData = awardData ?? this.awardData
       ..teamId = teamId ?? this.teamId

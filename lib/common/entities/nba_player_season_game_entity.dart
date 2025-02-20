@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_player_season_game_entity.g.dart';
 import 'dart:convert';
@@ -49,9 +50,13 @@ class NbaPlayerSeasonGameEntity {
   late double threePm;
   late double to;
   late int awayTeamId;
-  late int gameStartTime;
+  @JSONField(name: "gameStartTime")
+  late int gst;
 
   NbaPlayerSeasonGameEntity();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NbaPlayerSeasonGameEntity.fromJson(Map<String, dynamic> json) =>
       $NbaPlayerSeasonGameEntityFromJson(json);

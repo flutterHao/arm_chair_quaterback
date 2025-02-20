@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 GuessPlayerParamEntity $GuessPlayerParamEntityFromJson(
     Map<String, dynamic> json) {
@@ -16,9 +18,9 @@ GuessPlayerParamEntity $GuessPlayerParamEntityFromJson(
   if (playerId != null) {
     guessPlayerParamEntity.playerId = playerId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    guessPlayerParamEntity.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    guessPlayerParamEntity.gst = gst;
   }
   final String? guessAttr = jsonConvert.convert<String>(json['guessAttr']);
   if (guessAttr != null) {
@@ -46,7 +48,7 @@ Map<String, dynamic> $GuessPlayerParamEntityToJson(
   data['awayTeamId'] = entity.awayTeamId;
   data['gameId'] = entity.gameId;
   data['playerId'] = entity.playerId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['guessAttr'] = entity.guessAttr;
   data['guessChoice'] = entity.guessChoice;
   data['guessReferenceValue'] = entity.guessReferenceValue;
@@ -59,7 +61,7 @@ extension GuessPlayerParamEntityExtension on GuessPlayerParamEntity {
     int? awayTeamId,
     int? gameId,
     int? playerId,
-    int? gameStartTime,
+    int? gst,
     String? guessAttr,
     int? guessChoice,
     double? guessReferenceValue,
@@ -69,7 +71,7 @@ extension GuessPlayerParamEntityExtension on GuessPlayerParamEntity {
       ..awayTeamId = awayTeamId ?? this.awayTeamId
       ..gameId = gameId ?? this.gameId
       ..playerId = playerId ?? this.playerId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..guessAttr = guessAttr ?? this.guessAttr
       ..guessChoice = guessChoice ?? this.guessChoice
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
@@ -91,9 +93,9 @@ GuessGameParamEntity $GuessGameParamEntityFromJson(Map<String, dynamic> json) {
   if (gameId != null) {
     guessGameParamEntity.gameId = gameId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    guessGameParamEntity.gameStartTime = gameStartTime;
+  final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gst != null) {
+    guessGameParamEntity.gst = gst;
   }
   final int? guessChoice = jsonConvert.convert<int>(json['guessChoice']);
   if (guessChoice != null) {
@@ -115,7 +117,7 @@ Map<String, dynamic> $GuessGameParamEntityToJson(GuessGameParamEntity entity) {
   data['awayTeamId'] = entity.awayTeamId;
   data['homeTeamId'] = entity.homeTeamId;
   data['gameId'] = entity.gameId;
-  data['gameStartTime'] = entity.gameStartTime;
+  data['gameStartTime'] = entity.gst;
   data['guessChoice'] = entity.guessChoice;
   data['type'] = entity.type;
   data['guessAttr'] = entity.guessAttr;
@@ -127,7 +129,7 @@ extension GuessGameParamEntityExtension on GuessGameParamEntity {
     int? awayTeamId,
     int? homeTeamId,
     int? gameId,
-    int? gameStartTime,
+    int? gst,
     int? guessChoice,
     int? type,
     String? guessAttr,
@@ -136,7 +138,7 @@ extension GuessGameParamEntityExtension on GuessGameParamEntity {
       ..awayTeamId = awayTeamId ?? this.awayTeamId
       ..homeTeamId = homeTeamId ?? this.homeTeamId
       ..gameId = gameId ?? this.gameId
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..gst = gst ?? this.gst
       ..guessChoice = guessChoice ?? this.guessChoice
       ..type = type ?? this.type
       ..guessAttr = guessAttr ?? this.guessAttr;

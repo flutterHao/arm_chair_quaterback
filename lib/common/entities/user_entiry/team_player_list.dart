@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 import 'qualification_ability.dart';
 
 class TeamPlayerList {
@@ -9,7 +11,7 @@ class TeamPlayerList {
   int? buyPlayerScore;
   int? buyPrice;
   List<dynamic>? coachPassivitySkills;
-  int? createTime;
+  int? ct;
   int? famousAlmanacGrade;
   int? fromType;
   int? gradeExp;
@@ -28,7 +30,7 @@ class TeamPlayerList {
   int? qualificationLuckValue;
   int? specialTrainingGrade;
   int? teamId;
-  int? updateTime;
+  int? ut;
   String? uuid;
 
   TeamPlayerList({
@@ -38,7 +40,7 @@ class TeamPlayerList {
     this.buyPlayerScore,
     this.buyPrice,
     this.coachPassivitySkills,
-    this.createTime,
+    this.ct,
     this.famousAlmanacGrade,
     this.fromType,
     this.gradeExp,
@@ -57,7 +59,7 @@ class TeamPlayerList {
     this.qualificationLuckValue,
     this.specialTrainingGrade,
     this.teamId,
-    this.updateTime,
+    this.ut,
     this.uuid,
   });
 
@@ -69,7 +71,7 @@ class TeamPlayerList {
       buyPlayerScore: data['buyPlayerScore'] as int?,
       buyPrice: data['buyPrice'] as int?,
       coachPassivitySkills: data['coachPassivitySkills'] as List<dynamic>?,
-      createTime: data['createTime'] as int?,
+      ct: data['createTime'] as int?,
       famousAlmanacGrade: data['famousAlmanacGrade'] as int?,
       fromType: data['fromType'] as int?,
       gradeExp: data['gradeExp'] as int?,
@@ -90,10 +92,16 @@ class TeamPlayerList {
       qualificationLuckValue: data['qualificationLuckValue'] as int?,
       specialTrainingGrade: data['specialTrainingGrade'] as int?,
       teamId: data['teamId'] as int?,
-      updateTime: data['updateTime'] as int?,
+      ut: data['updateTime'] as int?,
       uuid: data['uuid'] as String?,
     );
   }
+
+  int get createTime =>
+      (ct??0) + Utils.getTimeZoneOffset().inMilliseconds;
+
+  int get updateTime =>
+      (ut??0) + Utils.getTimeZoneOffset().inMilliseconds;
 
   Map<String, dynamic> toMap() => {
         'areaMascotId': areaMascotId,
@@ -102,7 +110,7 @@ class TeamPlayerList {
         'buyPlayerScore': buyPlayerScore,
         'buyPrice': buyPrice,
         'coachPassivitySkills': coachPassivitySkills,
-        'createTime': createTime,
+        'createTime': ct,
         'famousAlmanacGrade': famousAlmanacGrade,
         'fromType': fromType,
         'gradeExp': gradeExp,
@@ -122,7 +130,7 @@ class TeamPlayerList {
         'qualificationLuckValue': qualificationLuckValue,
         'specialTrainingGrade': specialTrainingGrade,
         'teamId': teamId,
-        'updateTime': updateTime,
+        'updateTime': ut,
         'uuid': uuid,
       };
 

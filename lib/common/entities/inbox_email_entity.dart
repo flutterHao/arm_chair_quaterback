@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/inbox_email_entity.g.dart';
 import 'dart:convert';
@@ -24,7 +25,8 @@ class InboxEmailEntity {
 class InboxEmailMailList {
 	late bool receive = false;
 	late int mailType = 0;
-	late int createTime = 0;
+	@JSONField(name: 'createTime')
+	late int ct = 0;
 	late int inboxMessageId = 0;
 	late List<InboxEmailMailListAwardData> awardData = [];
 	late int teamId = 0;
@@ -35,6 +37,9 @@ class InboxEmailMailList {
 	late String content = '';
 
 	InboxEmailMailList();
+
+	int get createTime =>
+			ct + Utils.getTimeZoneOffset().inMilliseconds;
 
 	factory InboxEmailMailList.fromJson(Map<String, dynamic> json) => $InboxEmailMailListFromJson(json);
 

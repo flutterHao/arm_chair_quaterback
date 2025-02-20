@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/scores_not_start_game_entity.g.dart';
 import 'dart:convert';
@@ -186,7 +187,8 @@ class TeamHistory {
   late List<dynamic> awayPlayerScoreList;
   late int gameTime;
   late int createTime;
-  late int gameStartTime;
+  @JSONField(name: 'gameStartTime')
+  late int gst;
   late int homeTeamScore;
   late int seasonId;
   late int awayTeamScore;
@@ -195,6 +197,9 @@ class TeamHistory {
   late int status;
 
   TeamHistory();
+
+  int get gameStartTime =>
+      gst + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory TeamHistory.fromJson(Map<String, dynamic> json) =>
       $TeamHistoryFromJson(json);
