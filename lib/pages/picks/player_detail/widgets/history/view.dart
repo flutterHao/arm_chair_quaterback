@@ -30,109 +30,118 @@ class HistoryPage extends GetView<HistoryController> {
       init: HistoryController(playerId),
       tag: getTag(),
       builder: (_) {
-        return Container(
-          margin: EdgeInsets.only(top: 9.w),
-          color: AppColors.cFFFFFF,
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: ListView.separated(
-              // controller: controller.scrollController,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: controller.items.length,
-              itemBuilder: (context, index) {
-                bool lastItem = index == controller.items.length - 1;
-                String year = controller.items[index];
-                return Container(
-                  margin: EdgeInsets.only(bottom: lastItem ? 9.w : 0),
-                  child: Theme(
-                    data: ThemeData(
-                      dividerColor: AppColors.cTransparent,
-                    ),
-                    child: ExpansionTile(
-                      key: controller.tileKeys[index],
-                      // 使用 GlobalKey
-                      collapsedIconColor: AppColors.c000000,
-                      title: Container(
-                        margin: EdgeInsets.only(left: 16.w),
-                        child: Text(
-                          year,
-                          style: 24.w7(
-                              height: 1, fontFamily: FontFamily.fOswaldBold),
-                        ),
+        return Obx(() {
+          if(controller.loadStatus.value != LoadDataStatus.success){
+            return Center(
+              child: LoadStatusWidget(
+                loadDataStatus: controller.loadStatus.value,
+              ),
+            );
+          }
+          return Container(
+            margin: EdgeInsets.only(top: 9.w),
+            color: AppColors.cFFFFFF,
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: ListView.separated(
+                // controller: controller.scrollController,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.items.length,
+                itemBuilder: (context, index) {
+                  bool lastItem = index == controller.items.length - 1;
+                  String year = controller.items[index];
+                  return Container(
+                    margin: EdgeInsets.only(bottom: lastItem ? 9.w : 0),
+                    child: Theme(
+                      data: ThemeData(
+                        dividerColor: AppColors.cTransparent,
                       ),
-                      initiallyExpanded:
-                          controller.data[year]?.isOpen.value == true,
-                      tilePadding: EdgeInsets.only(right: 16.w),
-                      onExpansionChanged: (expanded) {
-                        if (expanded) {
-                          // 在展开时自动滚动到确保内容在屏幕中
-                          // _scrollToItem(context, index);
-                          if (controller.data[year]!.loadStatus.value ==
-                                  LoadDataStatus.loading &&
-                              controller
-                                      .data[year]!.seasonHistoryItems.isEmpty ==
-                                  true) {
-                            Future.delayed(
-                                const Duration(
-                                  milliseconds: 300,
-                                ), () {
-                              controller.getData(year);
-                            });
+                      child: ExpansionTile(
+                        key: controller.tileKeys[index],
+                        // 使用 GlobalKey
+                        collapsedIconColor: AppColors.c000000,
+                        title: Container(
+                          margin: EdgeInsets.only(left: 16.w),
+                          child: Text(
+                            year,
+                            style: 24.w7(
+                                height: 1, fontFamily: FontFamily.fOswaldBold),
+                          ),
+                        ),
+                        initiallyExpanded:
+                        controller.data[year]?.isOpen.value == true,
+                        tilePadding: EdgeInsets.only(right: 16.w),
+                        onExpansionChanged: (expanded) {
+                          if (expanded) {
+                            // 在展开时自动滚动到确保内容在屏幕中
+                            // _scrollToItem(context, index);
+                            if (controller.data[year]!.loadStatus.value ==
+                                LoadDataStatus.loading &&
+                                controller
+                                    .data[year]!.seasonHistoryItems.isEmpty ==
+                                    true) {
+                              Future.delayed(
+                                  const Duration(
+                                    milliseconds: 300,
+                                  ), () {
+                                controller.getData(year);
+                              });
+                            }
                           }
-                        }
-                      },
-                      children: [
-                        GetBuilder<HistoryController>(
-                            id: year,
-                            tag: getTag(),
-                            builder: (_) {
-                              List<SeasonHistoryItems> itemData =
-                                  controller.data[year]!.seasonHistoryItems;
-                              var loadStatus =
-                                  controller.data[year]!.loadStatus;
-                              var listSize = itemData.length;
-                              print('listSize:$listSize,,,$loadStatus');
-                              return Container(
-                                height: (listSize + 1) * 32.w,
-                                constraints: BoxConstraints(
-                                    minHeight: listSize > 0 ? 0 : 350.w),
-                                child: itemData.isEmpty == true
-                                    ? Obx(() {
-                                        return Center(
-                                          child: LoadStatusWidget(
-                                            loadDataStatus: loadStatus.value,
-                                            onRefreshTap: () {
-                                              controller.getData(year);
-                                            },
-                                          ),
-                                        );
-                                      })
-                                    : SfDataGridTheme(
-                                        data: SfDataGridThemeData(
-                                          gridLineColor: AppColors.cD1D1D1,
-                                          gridLineStrokeWidth: 1.w,
-                                          frozenPaneLineColor:
-                                              Colors.transparent,
-                                          rowHoverColor: Colors.blue,
-                                        ),
-                                        child: _buildDataGrid(itemData)),
-                              );
-                            }),
-                      ],
+                        },
+                        children: [
+                          GetBuilder<HistoryController>(
+                              id: year,
+                              tag: getTag(),
+                              builder: (_) {
+                                List<SeasonHistoryItems> itemData =
+                                    controller.data[year]!.seasonHistoryItems;
+                                var loadStatus =
+                                    controller.data[year]!.loadStatus;
+                                var listSize = itemData.length;
+                                print('listSize:$listSize,,,$loadStatus');
+                                return Container(
+                                  height: (listSize + 1) * 32.w,
+                                  constraints: BoxConstraints(
+                                      minHeight: listSize > 0 ? 0 : 350.w),
+                                  child: itemData.isEmpty == true
+                                      ? Obx(() {
+                                    return Center(
+                                      child: LoadStatusWidget(
+                                        loadDataStatus: loadStatus.value,
+                                        onRefreshTap: () {
+                                          controller.getData(year);
+                                        },
+                                      ),
+                                    );
+                                  })
+                                      : SfDataGridTheme(
+                                      data: SfDataGridThemeData(
+                                        gridLineColor: AppColors.cD1D1D1,
+                                        gridLineStrokeWidth: 1.w,
+                                        frozenPaneLineColor:
+                                        Colors.transparent,
+                                        rowHoverColor: Colors.blue,
+                                      ),
+                                      child: _buildDataGrid(itemData)),
+                                );
+                              }),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(
-                  height: 1.w,
-                  color: AppColors.cD1D1D1,
-                );
-              },
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    height: 1.w,
+                    color: AppColors.cD1D1D1,
+                  );
+                },
+              ),
             ),
-          ),
-        );
+          );
+        });
       },
     );
   }
@@ -162,9 +171,9 @@ class HistoryPage extends GetView<HistoryController> {
             decoration: BoxDecoration(
                 border: Border(
                     right: BorderSide(
-              color: AppColors.cE6E6E6,
-              width: 1.w,
-            ))),
+                      color: AppColors.cE6E6E6,
+                      width: 1.w,
+                    ))),
             child: Text(
               'OPP',
               style: 12.w5(
@@ -227,7 +236,10 @@ class HistoryPage extends GetView<HistoryController> {
       final expansionTileYPosition = position.dy;
 
       // 获取屏幕高度
-      final screenHeight = MediaQuery.of(context).size.height;
+      final screenHeight = MediaQuery
+          .of(context)
+          .size
+          .height;
 
       // 如果 ExpansionTile 的位置接近屏幕底部，滚动到该位置
       if (expansionTileYPosition + renderBox.size.height > screenHeight - 100) {

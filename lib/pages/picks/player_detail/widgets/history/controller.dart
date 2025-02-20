@@ -30,30 +30,38 @@ class HistoryController extends GetxController {
 
   final ScrollController scrollController = ScrollController();
   final List<GlobalKey> tileKeys = List.generate(10, (index) => GlobalKey());
-  final List<String> items = List.generate(
-      MyDateUtils.getNowDateTime().year - 2016,
-      (index) => "${MyDateUtils.getNowDateTime().year - index}");
+  List<String> items = [];
 
   Map<String, SeasonHistory> data = {};
+  var loadStatus = LoadDataStatus.loading.obs;
 
-  // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
-  }
-
-  /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-    data = items.fold({}, (pre, e) {
-      pre[e] = SeasonHistory();
-      return pre;
+    queryPlayerGameYear();
+  }
+
+  queryPlayerGameYear(){
+    loadStatus.value = LoadDataStatus.loading;
+    PicksApi.queryPlayerGameYear(playerId).then((result){
+      if(result.isEmpty){
+        loadStatus.value = LoadDataStatus.noData;
+        return;
+      }
+      loadStatus.value = LoadDataStatus.success;
+      result.sort((a, b) {
+        return b.compareTo(a);
+      });
+      items = result.map((e)=> e.toString()).toList();
+      data = items.fold({}, (pre, e) {
+        pre[e] = SeasonHistory();
+        return pre;
+      });
+      data.values.toList()[0].isOpen.value = true;
+      getData(data.keys.toList()[0]);
+    },onError: (e){
+      loadStatus.value = LoadDataStatus.error;
     });
-    data.values.toList()[0].isOpen.value = true;
-    getData(MyDateUtils.getNowDateTime().year.toString());
   }
 
   getData(String season) {
@@ -84,21 +92,8 @@ class HistoryController extends GetxController {
 
   static String get idHistoryMain => "id_history_main";
 
-  /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  /// 在 [onDelete] 方法之前调用。
   @override
   void onClose() {
     super.onClose();
-  }
-
-  /// dispose 释放内存
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

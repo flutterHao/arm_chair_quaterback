@@ -252,4 +252,11 @@ class PicksApi {
         .post(Api.getPlayerStrengthRank, data: {"start": start, "end": end});
     return json.map((e) => PlayerStrengthRankEntity.fromJson(e)).toList();
   }
+
+  /// 获取球员实力排行榜
+  static Future<List<int>> queryPlayerGameYear(int playerId) async {
+    List json = await httpUtil
+        .post(Api.queryPlayerGameYear, data: {"playerId": playerId});
+    return json.map((e)=> int.parse("$e")).toList();
+  }
 }
