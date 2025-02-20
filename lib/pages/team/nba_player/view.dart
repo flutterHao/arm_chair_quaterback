@@ -163,7 +163,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                             Expanded(
                                 child: Container(
                               decoration: BoxDecoration(
-                                  color: differenceScore >= 0 ? AppColors.c13C37B : AppColors.cE34D4D,
+                                  color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
                                   borderRadius: BorderRadius.only(
                                       bottomRight: Radius.circular(6.w), topRight: Radius.circular(6.w))),
                               child: Column(
