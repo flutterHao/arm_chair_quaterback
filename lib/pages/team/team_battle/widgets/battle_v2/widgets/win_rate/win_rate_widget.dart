@@ -374,7 +374,7 @@ class WinRateWidget extends StatelessWidget {
                       ),
                       //实时数据指示点
                       SizedBox(
-                        width: controller.getWidth()-55.w,
+                        width: Utils.getMaxWidth(Get.context!)-55.w,
                         height: controller.getHeight(),
                         child: Stack(
                           children: [
