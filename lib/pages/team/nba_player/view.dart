@@ -21,7 +21,6 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(NbaPlayerController());
     return GetBuilder<NbaPlayerController>(
       init: NbaPlayerController(),
       id: "nba_player",
@@ -132,7 +131,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                       style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.cB3B3B3),
                     ),
                     10.vGap,
-                    _playerchart(controller.nbaPlayerList[index].trendList),
+                    _playerchartWidget(controller.nbaPlayerList[index].trendList, differenceScore),
                     18.vGap,
                     IntrinsicHeight(
                       child: Container(
@@ -206,7 +205,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
     });
   }
 
-  Widget _playerchart(List<PlayerStrengthRankTrendList> item) {
+  Widget _playerchartWidget(List<PlayerStrengthRankTrendList> item, int differenceScore) {
     // NbaPlayerInfosPlayerBaseInfoList player = Utils.getPlayBaseInfo(1001);
 
     List<int> scores = item.map((element) => element.playerScore).toList();
@@ -235,14 +234,17 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                 lineBarsData: [
                   LineChartBarData(
                       spots: data,
-                      color: AppColors.cE34D4D,
+                      color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
                       dotData: FlDotData(
                         show: true,
                         getDotPainter: (spot, percent, barData, index) {
                           // 如果是最后一个点，则返回一个特定样式的点
                           if (index == data.length - 1) {
                             return FlDotCirclePainter(
-                                radius: 1.6, color: Colors.red, strokeColor: Colors.white, strokeWidth: 1.6);
+                                radius: 1.6,
+                                color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                                strokeColor: Colors.white,
+                                strokeWidth: 1.6);
                           } else {
                             return FlDotCirclePainter(radius: 0);
                           }
@@ -253,7 +255,9 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                       belowBarData: BarAreaData(
                           show: true,
                           gradient: LinearGradient(
-                              colors: [AppColors.cE34D4D.withOpacity(0.3), AppColors.cE34D4D.withOpacity(0.1)])))
+                              colors: differenceScore >= 0
+                                  ? [AppColors.c0FA76C.withOpacity(0.3), AppColors.c0FA76C.withOpacity(0.1)]
+                                  : [AppColors.cE34D4D.withOpacity(0.3), AppColors.cE34D4D.withOpacity(0.1)])))
                 ],
                 gridData: FlGridData(
                     show: true,

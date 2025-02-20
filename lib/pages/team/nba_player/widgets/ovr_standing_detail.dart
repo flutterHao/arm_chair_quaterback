@@ -32,28 +32,31 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
               showPop: true,
             ),
             bodyWidget: Expanded(
-                child: NestedScrollView(
-                    headerSliverBuilder: (context, iOSHorizontalOffset) {
-                      return [
-                        SliverPersistentHeader(
-                            floating: true,
-                            delegate: FixedHeightSliverHeaderDelegate(child: _ovrTitleWidget(), height: 100.w)),
-                        SliverPersistentHeader(
-                            pinned: true,
-                            delegate: FixedHeightSliverHeaderDelegate(child: _ovrTabWidget(), height: 28.w)),
-                      ];
-                    },
-                    body: Container(
-                      color: Colors.white,
-                      child: ListView.separated(
-                        itemCount: controller.allPlayerStrengthRank.length,
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        itemBuilder: (context, index) {
-                          return _playerItemWidget(index);
-                        },
-                        separatorBuilder: (context, index) => Divider(height: 1, color: AppColors.cE3E3E3),
-                      ),
-                    ))));
+                child: Padding(
+              padding: EdgeInsets.only(top: 10.w),
+              child: NestedScrollView(
+                  headerSliverBuilder: (context, iOSHorizontalOffset) {
+                    return [
+                      SliverPersistentHeader(
+                          pinned: true,
+                          delegate: FixedHeightSliverHeaderDelegate(child: _ovrTitleWidget(), height: 100.w)),
+                      SliverPersistentHeader(
+                          pinned: true,
+                          delegate: FixedHeightSliverHeaderDelegate(child: _ovrTabWidget(), height: 28.w)),
+                    ];
+                  },
+                  body: Container(
+                    color: Colors.white,
+                    child: ListView.separated(
+                      itemCount: controller.allPlayerStrengthRank.length,
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      itemBuilder: (context, index) {
+                        return _playerItemWidget(index);
+                      },
+                      separatorBuilder: (context, index) => Divider(height: 1, color: AppColors.cE3E3E3),
+                    ),
+                  )),
+            )));
       }),
     );
   }
@@ -64,7 +67,6 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
     // 创建今天的 23:59:59 时间
     DateTime todayLastSecond = DateTime(now.year, now.month, now.day, 23, 59, 59);
     return Container(
-        margin: EdgeInsets.only(top: 10.w),
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         color: Colors.white,
         child: Column(
@@ -126,9 +128,9 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
             child: Row(
               children: [
                 _tabItemWidget('rank'.toUpperCase(), 0),
-                20.hGap,
+                30.hGap,
                 _tabItemWidget('power'.toUpperCase(), 1),
-                20.hGap,
+                30.hGap,
                 _tabItemWidget('collect'.toUpperCase(), 2),
                 Spacer(),
                 IconWidget(
@@ -148,13 +150,7 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
   Widget _tabItemWidget(String title, int tabIndex) {
     return Obx(
       () => InkWell(
-        onTap: () {
-          if (controller.currentIndex.value != 2 * tabIndex) {
-            controller.currentIndex.value = 2 * tabIndex;
-          } else {
-            controller.currentIndex.value = (2 * tabIndex) + 1;
-          }
-        },
+        onTap: () => controller.currentIndexChange(tabIndex),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -211,7 +207,7 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
     return Obx(() {
       List<PlayerStrengthRankTrendList> item = controller.allPlayerStrengthRank[index].trendList;
 
-      ///开始到结束分数差值
+      ///最后两天分数差值
       var differenceScore = item[0].playerScore - item[1].playerScore;
       var player = Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId);
       return InkWell(
@@ -224,11 +220,23 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
               Container(
                   width: 30.w,
                   height: 30.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.w),
-                    color: Colors.white,
-                  ),
-                  child: Center(child: Text("${index + 1}", style: TextStyle()))),
+                  alignment: Alignment.center,
+                  child: index == 0
+                      ? IconWidget(
+                          iconWidth: 30.w,
+                          icon: Assets.commonUiManagerIconMedal01,
+                        )
+                      : index == 1
+                          ? IconWidget(
+                              iconWidth: 30.w,
+                              icon: Assets.commonUiManagerIconMedal02,
+                            )
+                          : index == 2
+                              ? IconWidget(
+                                  iconWidth: 30.w,
+                                  icon: Assets.commonUiManagerIconMedal03,
+                                )
+                              : Text("${index + 1}", style: 19.w5(fontFamily: FontFamily.fOswaldMedium))),
               6.hGap,
               Stack(
                 children: [
@@ -285,7 +293,7 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
                     ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}'.toUpperCase(),
                     style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.cB3B3B3),
                   ),
-                  _playerchart(controller.allPlayerStrengthRank[index].trendList),
+                  _playerchartWidget(controller.allPlayerStrengthRank[index].trendList, differenceScore),
                   4.vGap,
                   Text(
                     'POW ${controller.allPlayerStrengthRank[index].strength}',
@@ -371,15 +379,11 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
     });
   }
 
-  Widget _playerchart(List<PlayerStrengthRankTrendList> item) {
-    // NbaPlayerInfosPlayerBaseInfoList player = Utils.getPlayBaseInfo(1001);
-
+  Widget _playerchartWidget(List<PlayerStrengthRankTrendList> item, int differenceScore) {
     List<int> scores = item.map((element) => element.playerScore).toList();
-
     // 获取最大值
     int maxScore = scores.reduce(max);
     var horizontalInterval = maxScore / 2;
-
     var data = List.generate(item.length, (index) {
       if (index == 0) {
         FlSpot(index.toDouble(), horizontalInterval);
@@ -402,14 +406,17 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
                 lineBarsData: [
                   LineChartBarData(
                       spots: data,
-                      color: AppColors.cE34D4D,
+                      color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
                       dotData: FlDotData(
                         show: true,
                         getDotPainter: (spot, percent, barData, index) {
                           // 如果是最后一个点，则返回一个特定样式的点
                           if (index == data.length - 1) {
                             return FlDotCirclePainter(
-                                radius: 1.6, color: Colors.red, strokeColor: Colors.white, strokeWidth: 1.6);
+                                radius: 1.6,
+                                color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                                strokeColor: Colors.white,
+                                strokeWidth: 1.6);
                           } else {
                             return FlDotCirclePainter(radius: 0);
                           }
@@ -420,7 +427,9 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
                       belowBarData: BarAreaData(
                           show: true,
                           gradient: LinearGradient(
-                              colors: [AppColors.cE34D4D.withOpacity(0.3), AppColors.cE34D4D.withOpacity(0.1)])))
+                              colors: differenceScore >= 0
+                                  ? [AppColors.c0FA76C.withOpacity(0.3), AppColors.c0FA76C.withOpacity(0.1)]
+                                  : [AppColors.cE34D4D.withOpacity(0.3), AppColors.cE34D4D.withOpacity(0.1)])))
                 ],
                 gridData: FlGridData(
                     show: true,

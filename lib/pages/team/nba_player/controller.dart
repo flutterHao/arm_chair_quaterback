@@ -47,4 +47,12 @@ class NbaPlayerController extends GetxController {
   void goPlayerDetail(int playerId) {
     Get.toNamed(RouteNames.picksPlayerDetail, arguments: PlayerDetailPageArguments(playerId));
   }
+
+  void currentIndexChange(int tabIndex) {
+    if (currentIndex.value != 2 * tabIndex) {
+      currentIndex.value = 2 * tabIndex;
+    } else {
+      currentIndex.value = (2 * tabIndex) + 1;
+    }
+  }
 }
