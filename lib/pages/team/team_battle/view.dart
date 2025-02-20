@@ -6,18 +6,36 @@
  */
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/match_success.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/match_success_new/match_success_new.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TeamBattlePage extends GetView<TeamBattleController> {
+class TeamBattlePage extends StatefulWidget {
   const TeamBattlePage({super.key});
+
+  @override
+  State<TeamBattlePage> createState() => _TeamBattlePageState();
+}
+
+class _TeamBattlePageState extends State<TeamBattlePage> {
+
+  late TeamBattleController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.find();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Get.delete<TeamBattleController>();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TeamBattleController>(
-      init: TeamBattleController(context),
       id: "team_battle",
       builder: (_) {
         return Obx(() {
@@ -27,9 +45,12 @@ class TeamBattlePage extends GetView<TeamBattleController> {
               if (controller.step.value == 1)
                 const Matching()
               else if (controller.step.value == 2)
-                MatchSuccess(onCompleted: () {
+                // MatchSuccess(onCompleted: () {
+                //   controller.nextStep();
+                // })
+                MatchSuccessNew(onEnd: (){
                   controller.nextStep();
-                })
+                },)
               else
                 // const BattleMain()
                 TeamBattleV2Page()

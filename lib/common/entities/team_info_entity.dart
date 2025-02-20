@@ -20,7 +20,7 @@ class TeamInfoEntity {
   late int powerReplyTime;
   late int currentGuessWinningStreak;
   late int currentGameWinningStreak;
-  late int playerReadiness;
+  late double playerReadiness;
   late int accountId;
   late int firstLoginTime;
   late int secretaryId;

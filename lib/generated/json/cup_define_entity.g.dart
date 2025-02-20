@@ -54,6 +54,16 @@ CupDefineEntity $CupDefineEntityFromJson(Map<String, dynamic> json) {
   if (winMoney != null) {
     cupDefineEntity.winMoney = winMoney;
   }
+  final int? cupInTrainMoney = jsonConvert.convert<int>(
+      json['cupInTrainMoney']);
+  if (cupInTrainMoney != null) {
+    cupDefineEntity.cupInTrainMoney = cupInTrainMoney;
+  }
+  final int? cupInBattleMoney = jsonConvert.convert<int>(
+      json['cupInBattleMoney']);
+  if (cupInBattleMoney != null) {
+    cupDefineEntity.cupInBattleMoney = cupInBattleMoney;
+  }
   return cupDefineEntity;
 }
 
@@ -71,6 +81,8 @@ Map<String, dynamic> $CupDefineEntityToJson(CupDefineEntity entity) {
   data['substituteSum'] = entity.substituteSum;
   data['winCup'] = entity.winCup;
   data['winMoney'] = entity.winMoney;
+  data['cupInTrainMoney'] = entity.cupInTrainMoney;
+  data['cupInBattleMoney'] = entity.cupInBattleMoney;
   return data;
 }
 
@@ -88,6 +100,8 @@ extension CupDefineEntityExtension on CupDefineEntity {
     int? substituteSum,
     int? winCup,
     List<int>? winMoney,
+    int? cupInTrainMoney,
+    int? cupInBattleMoney,
   }) {
     return CupDefineEntity()
       ..backUp = backUp ?? this.backUp
@@ -101,6 +115,8 @@ extension CupDefineEntityExtension on CupDefineEntity {
       ..loserMoney = loserMoney ?? this.loserMoney
       ..substituteSum = substituteSum ?? this.substituteSum
       ..winCup = winCup ?? this.winCup
-      ..winMoney = winMoney ?? this.winMoney;
+      ..winMoney = winMoney ?? this.winMoney
+      ..cupInTrainMoney = cupInTrainMoney ?? this.cupInTrainMoney
+      ..cupInBattleMoney = cupInBattleMoney ?? this.cupInBattleMoney;
   }
 }

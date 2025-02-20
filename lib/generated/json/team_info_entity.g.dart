@@ -68,7 +68,7 @@ TeamInfoEntity $TeamInfoEntityFromJson(Map<String, dynamic> json) {
   if (currentGameWinningStreak != null) {
     teamInfoEntity.currentGameWinningStreak = currentGameWinningStreak;
   }
-  final int? playerReadiness = jsonConvert.convert<int>(
+  final double? playerReadiness = jsonConvert.convert<double>(
       json['playerReadiness']);
   if (playerReadiness != null) {
     teamInfoEntity.playerReadiness = playerReadiness;
@@ -291,7 +291,7 @@ extension TeamInfoEntityExtension on TeamInfoEntity {
     int? powerReplyTime,
     int? currentGuessWinningStreak,
     int? currentGameWinningStreak,
-    int? playerReadiness,
+    double? playerReadiness,
     int? accountId,
     int? firstLoginTime,
     int? secretaryId,

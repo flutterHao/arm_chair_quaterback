@@ -11,18 +11,20 @@ export 'package:arm_chair_quaterback/generated/json/cup_define_entity.g.dart';
 
 @JsonSerializable()
 class CupDefineEntity {
-  late String backUp = '';
-  late int cupDailyReward = 0;
-  late List<int> cupNum = [1, 2];
-  late int cupNumId = 0;
-  late String cupPicId = '';
-  late String cupReward = '';
-  late String desc = '';
-  late int loseCup = 0;
-  late List<int> loserMoney = [];
-  late int substituteSum = 1;
-  late int winCup = 20;
-  late List<int> winMoney = [];
+  String backUp = '';
+  int cupDailyReward = 0;
+  List<int> cupNum = [1, 2];
+  int cupNumId = 0;
+  String cupPicId = '';
+  String cupReward = '';
+  String desc = '';
+  int loseCup = 0;
+  List<int> loserMoney = [];
+  int substituteSum = 1;
+  int winCup = 20;
+  List<int> winMoney = [];
+  int cupInTrainMoney = 0;
+  int cupInBattleMoney = 0;
 
   CupDefineEntity();
 

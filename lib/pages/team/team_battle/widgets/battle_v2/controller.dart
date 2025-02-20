@@ -44,9 +44,8 @@ class ShootHistory {
 
 class TeamBattleV2Controller extends GetxController
     with GetTickerProviderStateMixin, WidgetsBindingObserver {
-  TeamBattleV2Controller(this.context);
+  TeamBattleV2Controller();
 
-  final BuildContext context;
   late BarrageWallController normalBarrageWallController =
       BarrageWallController();
   late BarrageWallController highLightBarrageWallController =
@@ -494,7 +493,7 @@ class TeamBattleV2Controller extends GetxController
     handlerDanMaKu(event);
     update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
     Future.delayed(Duration.zero, () {
-      if (context.mounted && (liveTextTabIndex.value + 1) == quarter.value) {
+      if (!isClosed && (liveTextTabIndex.value + 1) == quarter.value) {
         liveTextScrollController.animateTo(
             ((eventOnScreenMap[key] ?? []).length * 44.w),
             duration: Duration(milliseconds: (800 / gameSpeed).toInt()),
@@ -1058,7 +1057,7 @@ class TeamBattleV2Controller extends GetxController
     BottomTipDialog.showWithSound(
         isScrollControlled: true,
         backgroundColor: AppColors.cTransparent,
-        context: context,
+        context: Get.context!,
         builder: (context) {
           return const LiveTextDialogWidget();
         });
@@ -1193,13 +1192,13 @@ class TeamBattleV2Controller extends GetxController
       return;
     }
     BottomTipDialog.show(
-        context: context,
+        context: Get.context!,
         onTap: confirmJumpGame,
         desc: LangKey.gameTipsSkip.tr);
   }
 
   confirmJumpGame() {
-    Navigator.pop(context);
+    Get.back();
 
     quarterTimeCountDownAnimationController.stop();
     eventOnScreenMap = eventCacheMap;

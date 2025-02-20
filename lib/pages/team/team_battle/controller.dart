@@ -21,9 +21,7 @@ import 'dart:developer' as developer;
 
 class TeamBattleController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  TeamBattleController(this.context);
-
-  BuildContext context;
+  TeamBattleController();
 
   /// step :
   ///   0 初始状态
@@ -67,7 +65,7 @@ class TeamBattleController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    step.value = 1;
+    step.value = 2;
     _canPop = false;
     meAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
     totalAvatars.remove(meAvatar);
@@ -77,7 +75,50 @@ class TeamBattleController extends GetxController
     // Future.delayed(const Duration(milliseconds: 3000), () {
     //   nextStep();
     // });
-    teamMatch();
+    // teamMatch();
+  }
+
+  Future<bool> teamMatchV2() async {
+    Completer<bool> completer = Completer();
+    Future.wait([
+      CacheApi.getGameEvent(),
+      CacheApi.getCompetitionVenue(),
+      CacheApi.getNBAPlayerInfo(),
+      CacheApi.getNBATeamDefine(),
+      // PicksApi.getTeamInfo(),
+      CacheApi.getCupDefine(),
+      CacheApi.getDanMaKu(),
+    ]).then((result) {
+      _timer?.cancel();
+      _timer = Timer(const Duration(seconds: 3), (){
+        completer.completeError("MATCH FAILED");
+        _timer?.cancel();
+      });
+      subscription = WSInstance.teamMatch().listen((result) {
+        // developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
+        // print('result.serviceId--${result.serviceId}--:${result.payload}');
+        if (result.serviceId == Api.wsJazminError && step.value == 1) {
+          print('result.serviceId--${result.serviceId}--:${result.payload}');
+          completer.completeError(result.payload);
+          _timer?.cancel();
+          ErrorUtils.toast(result.payload);
+          Get.back();
+          return;
+        }
+        if (result.serviceId == Api.wsPkStartUpdated) {
+          pkStartUpdatedEntity = PkStartUpdatedEntity.fromJson(result.payload);
+        }
+        if (result.serviceId == Api.wsTeamMatch) {
+          _timer?.cancel();
+          battleEntity = BattleEntity.fromJson(result.payload);
+          _initBattleController();
+          completer.complete(true);
+        }
+      });
+    }, onError: (e) {
+      completer.completeError(e);
+    });
+    return completer.future;
   }
 
   teamMatch() async {
@@ -152,11 +193,11 @@ class TeamBattleController extends GetxController
     print('timeout------');
     EasyLoading.showToast("MATCH FAILED");
     _timer?.cancel();
-    Navigator.pop(context);
+    Get.back();
   }
 
   _initBattleController() {
-    Get.put(TeamBattleV2Controller(context));
+    Get.put(TeamBattleV2Controller());
   }
 
   /// 是否有突发新闻

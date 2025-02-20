@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,77 +46,101 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
             ),
           ),
         ),
-        5.vGap,
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4.5.w),
-          child: SizedBox(
-            width: 118.w,
-            height: 9.w,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: GetBuilder<TeamBattleV2Controller>(
-                  id: TeamBattleV2Controller.idReadiness,
-                  builder: (logic) {
-                    var events = controller.getQuarterEvents();
-                    GameEvent? event = events.isEmpty ? null : events.last;
-
-                    double value = event == null
-                        ? teamBattleController
-                            .pkStartUpdatedEntity!.homeTeamStrength
-                        : event.pkEventUpdatedEntity.homeCurrentStrength;
-                    return _buildPrePercentWidget(value);
-                  }),
+        10.vGap,
+        SizedBox(
+          width: 118.w,
+          child: Center(
+            child: SizedBox(
+              width: 76.w,
+              child: PreparationWidget(
+                  playerReadiness: teamBattleController
+                      .battleEntity.homeTeam.playerReadiness),
             ),
           ),
         ),
-        5.vGap,
+        // ClipRRect(
+        //   borderRadius: BorderRadius.circular(4.5.w),
+        //   child: SizedBox(
+        //     width: 118.w,
+        //     height: 9.w,
+        //     child: Align(
+        //       alignment: Alignment.centerLeft,
+        //       child: GetBuilder<TeamBattleV2Controller>(
+        //           id: TeamBattleV2Controller.idReadiness,
+        //           builder: (logic) {
+        //             var events = controller.getQuarterEvents();
+        //             GameEvent? event = events.isEmpty ? null : events.last;
+        //
+        //             double value = event == null
+        //                 ? teamBattleController
+        //                     .pkStartUpdatedEntity!.homeTeamStrength
+        //                 : event.pkEventUpdatedEntity.homeCurrentStrength;
+        //             return _buildPrePercentWidget(value);
+        //           }),
+        //     ),
+        //   ),
+        // ),
+        7.vGap,
         SizedBox(
           width: 118.w,
-          child: Obx(() {
-            var value2 = controller.showBuff.value;
-            var buff = controller
-                .getBuff(teamBattleController.battleEntity.homeTeam.teamId);
-            if (buff == 0) {
-              return const SizedBox.shrink();
-            }
-            return AnimatedOpacity(
-              opacity: value2 ? 1 : 0,
-              duration: const Duration(milliseconds: 1000),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  6.hGap,
-                  IconWidget(
-                    iconWidth: 6.w,
-                    icon: Assets.commonUiCommonIconSystemArrow,
-                    rotateAngle: controller.getBuffAngle(
-                        teamBattleController.battleEntity.homeTeam.teamId),
-                    iconColor: controller.getBuffColor(
-                        teamBattleController.battleEntity.homeTeam.teamId),
-                  ),
-                  1.hGap,
-                  SizedBox(
-                    width: 35.w,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text("${buff > 0 ? "+" : "-"}$buff",
-                          style: 12.w4(
-                              color: controller.getBuffColor(
-                                  teamBattleController
-                                      .battleEntity.homeTeam.teamId),
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular)),
-                    ),
-                  )
-                ],
-              ),
-            );
-          }),
-        ),
+          child: Center(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text("POWER ${teamBattleController.battleEntity.homeTeam.currTeamStrength}",style: 12.w4(
+                color: AppColors.c000000,
+                height: 1,
+                fontFamily: FontFamily.fOswaldRegular,
+              ),),
+            ),
+          ),
+        )
+        // SizedBox(
+        //   width: 118.w,
+        //   child: Obx(() {
+        //     var value2 = controller.showBuff.value;
+        //     var buff = controller
+        //         .getBuff(teamBattleController.battleEntity.homeTeam.teamId);
+        //     if (buff == 0) {
+        //       return const SizedBox.shrink();
+        //     }
+        //     return AnimatedOpacity(
+        //       opacity: value2 ? 1 : 0,
+        //       duration: const Duration(milliseconds: 1000),
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           6.hGap,
+        //           IconWidget(
+        //             iconWidth: 6.w,
+        //             icon: Assets.commonUiCommonIconSystemArrow,
+        //             rotateAngle: controller.getBuffAngle(
+        //                 teamBattleController.battleEntity.homeTeam.teamId),
+        //             iconColor: controller.getBuffColor(
+        //                 teamBattleController.battleEntity.homeTeam.teamId),
+        //           ),
+        //           1.hGap,
+        //           SizedBox(
+        //             width: 35.w,
+        //             child: FittedBox(
+        //               fit: BoxFit.scaleDown,
+        //               child: Text("${buff > 0 ? "+" : "-"}$buff",
+        //                   style: 12.w4(
+        //                       color: controller.getBuffColor(
+        //                           teamBattleController
+        //                               .battleEntity.homeTeam.teamId),
+        //                       height: 1,
+        //                       fontFamily: FontFamily.fRobotoRegular)),
+        //             ),
+        //           )
+        //         ],
+        //       ),
+        //     );
+        //   }),
+        // ),
       ],
     );
     return Container(
-      height: 101.w,
+      height: 121.w,
       margin: EdgeInsets.only(bottom: 1.w),
       decoration: BoxDecoration(color: AppColors.cFFFFFF, boxShadow: [
         BoxShadow(
@@ -307,74 +332,98 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       ),
                     ),
                   ),
-                  5.vGap,
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(4.5.w),
-                    child: SizedBox(
-                      width: 118.w,
-                      height: 9.w,
-                      child: GetBuilder<TeamBattleV2Controller>(
-                          id: TeamBattleV2Controller.idReadiness,
-                          builder: (logic) {
-                            var events = controller.getQuarterEvents();
-                            GameEvent? event =
-                                events.isEmpty ? null : events.last;
-
-                            double value = event == null
-                                ? teamBattleController
-                                    .pkStartUpdatedEntity!.awayTeamStrength
-                                : event
-                                    .pkEventUpdatedEntity.awayCurrentStrength;
-                            return _buildPrePercentWidget(value);
-                          }),
-                    ),
-                  ),
-                  5.vGap,
+                  10.vGap,
                   SizedBox(
                     width: 118.w,
-                    child: Obx(() {
-                      var value2 = controller.showBuff.value;
-                      var buff = controller.getBuff(
-                          teamBattleController.battleEntity.awayTeam.teamId);
-                      if (buff == 0) {
-                        return const SizedBox.shrink();
-                      }
-                      return AnimatedOpacity(
-                        opacity: value2 ? 1 : 0,
-                        duration: const Duration(milliseconds: 1000),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            6.hGap,
-                            IconWidget(
-                              iconWidth: 6.w,
-                              icon: Assets.commonUiCommonIconSystemArrow,
-                              rotateAngle: controller.getBuffAngle(
-                                  teamBattleController
-                                      .battleEntity.awayTeam.teamId),
-                              iconColor: controller.getBuffColor(
-                                  teamBattleController
-                                      .battleEntity.awayTeam.teamId),
-                            ),
-                            1.hGap,
-                            SizedBox(
-                              width: 35.w,
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text("${buff > 0 ? "+" : "-"}$buff",
-                                    style: 12.w4(
-                                        color: controller.getBuffColor(
-                                            teamBattleController
-                                                .battleEntity.awayTeam.teamId),
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoRegular)),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
+                    child: Center(
+                      child: SizedBox(
+                        width: 76.w,
+                        child: PreparationWidget(
+                            playerReadiness: teamBattleController
+                                .battleEntity.awayTeam.playerReadiness),
+                      ),
+                    ),
                   ),
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(4.5.w),
+                  //   child: SizedBox(
+                  //     width: 118.w,
+                  //     height: 9.w,
+                  //     child: GetBuilder<TeamBattleV2Controller>(
+                  //         id: TeamBattleV2Controller.idReadiness,
+                  //         builder: (logic) {
+                  //           var events = controller.getQuarterEvents();
+                  //           GameEvent? event =
+                  //               events.isEmpty ? null : events.last;
+                  //
+                  //           double value = event == null
+                  //               ? teamBattleController
+                  //                   .pkStartUpdatedEntity!.awayTeamStrength
+                  //               : event
+                  //                   .pkEventUpdatedEntity.awayCurrentStrength;
+                  //           return _buildPrePercentWidget(value);
+                  //         }),
+                  //   ),
+                  // ),
+                  7.vGap,
+                  SizedBox(
+                    width: 118.w,
+                    child: Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text("POWER ${teamBattleController.battleEntity.awayTeam.currTeamStrength}",style: 12.w4(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldRegular,
+                        ),),
+                      ),
+                    ),
+                  )
+                  // SizedBox(
+                  //   width: 118.w,
+                  //   child: Obx(() {
+                  //     var value2 = controller.showBuff.value;
+                  //     var buff = controller.getBuff(
+                  //         teamBattleController.battleEntity.awayTeam.teamId);
+                  //     if (buff == 0) {
+                  //       return const SizedBox.shrink();
+                  //     }
+                  //     return AnimatedOpacity(
+                  //       opacity: value2 ? 1 : 0,
+                  //       duration: const Duration(milliseconds: 1000),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           6.hGap,
+                  //           IconWidget(
+                  //             iconWidth: 6.w,
+                  //             icon: Assets.commonUiCommonIconSystemArrow,
+                  //             rotateAngle: controller.getBuffAngle(
+                  //                 teamBattleController
+                  //                     .battleEntity.awayTeam.teamId),
+                  //             iconColor: controller.getBuffColor(
+                  //                 teamBattleController
+                  //                     .battleEntity.awayTeam.teamId),
+                  //           ),
+                  //           1.hGap,
+                  //           SizedBox(
+                  //             width: 35.w,
+                  //             child: FittedBox(
+                  //               fit: BoxFit.scaleDown,
+                  //               child: Text("${buff > 0 ? "+" : "-"}$buff",
+                  //                   style: 12.w4(
+                  //                       color: controller.getBuffColor(
+                  //                           teamBattleController
+                  //                               .battleEntity.awayTeam.teamId),
+                  //                       height: 1,
+                  //                       fontFamily: FontFamily.fRobotoRegular)),
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     );
+                  //   }),
+                  // ),
                 ],
               ),
               24.hGap,

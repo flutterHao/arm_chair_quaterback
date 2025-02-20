@@ -26,6 +26,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/card_fly_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 
@@ -219,7 +220,11 @@ class TeamIndexController extends GetxController
       return;
     }
     SoundServices.to.playSound(Assets.soundRadaMatch);
+    await Get.put(TeamBattleController()).teamMatchV2().catchError((e){
+      Get.delete<TeamBattleController>();
+    });
     await Get.toNamed(RouteNames.teamTeamBattle);
+    Get.delete<TeamBattleController>();
     getBattleBox();
     getTeamInfoCup();
     final ctrl = Get.find<TrainingController>();
