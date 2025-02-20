@@ -181,17 +181,19 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                 GetBuilder<TeamBattleV2Controller>(
                     id: TeamBattleV2Controller.idPlayersLocation,
                     builder: (_) {
+                      var r = (Utils.getMaxWidth(context)-18.w)/357.w;
+                      var jHeight = r*89.w;
                       return Container(
                         margin: EdgeInsets.only(top: 38.w),
                         width: Utils.getMaxWidth(context)-18.w,
-                        height: ((Utils.getMaxWidth(context)-18.w)*89.w)/357.w,
+                        height: jHeight,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
                             /// 左边篮球架
                             Positioned(
                                 left: 3.w,
-                                top: 5.w,
+                                top: jHeight/2-38.w,
                                 width: 26.w,
                                 height: 38.w,
                                 child: Center(
@@ -202,7 +204,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                             /// 右边篮球架
                             Positioned(
                                 right: 3.w,
-                                top: 5.w,
+                                top: jHeight/2-38.w,
                                 width: 26.w,
                                 height: 38.w,
                                 child: Transform(

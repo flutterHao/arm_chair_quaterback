@@ -577,6 +577,11 @@ class TeamBattleV2Controller extends GetxController
     return random.nextDouble() * 2 * range - range;
   }
 
+  double getR(){
+    var r = (Utils.getMaxWidth(Get.context!)-18.w)/357.w;
+    return r;
+  }
+
   /// 投篮动画
   shoot(GameEvent event) {
     if (shootAnimationController.isAnimating) {
@@ -597,8 +602,8 @@ class TeamBattleV2Controller extends GetxController
     addToShootHistory(mainOffset = ShootHistory(isAway, start, isSuccess));
     update([idPlayersLocation]);
     end = isAway
-        ? Offset(22.w, 49.w)
-        : Offset(Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w, 49.w);
+        ? Offset(22.w, 49.w * getR())
+        : Offset(Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w, 49.w * getR());
     // 随机生成最高点
     // peak = Offset(
     //     (start.dx + end.dx) / 2, Random().nextDouble() * min(start.dy, end.dy));
@@ -657,13 +662,13 @@ class TeamBattleV2Controller extends GetxController
       //     Offset(Random().nextDouble() * 50 + end.dx + 10, end.dy + end.dy / 2);
       // end = isAway ? Offset(22.w, 49.w) : Offset(375.w - 22.w - 18.w - 6.w, 49.w);
 
-      end = Offset(10.w, 35.w);
+      end = Offset(10.w, 35.w*getR());
     } else {
       //左边投篮
       // end =
       //     Offset(end.dx - Random().nextDouble() * 50 - 10, end.dy + end.dy / 2);
       end = Offset(
-          Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w + 12.w, 35.w);
+          Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w + 12.w, 35.w*getR());
     }
     // 随机生成最高点
     peak = Offset((start.dx + end.dx) / 2, peak.dy - 5);

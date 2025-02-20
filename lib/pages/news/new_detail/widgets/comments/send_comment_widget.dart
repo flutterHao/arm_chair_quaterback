@@ -135,6 +135,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                           ? AppColors.cF2F2F2
                                           : AppColors.c262626),
                               onChanged: (v) {
+                                print('onChanged');
                                 hasText.value = ObjectUtil.isNotEmpty(v);
                               },
                             ),
@@ -173,6 +174,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                 onPressed: () {
                                   String content = ctrl.text;
                                   ctrl.text = "";
+                                  hasText.value = false;
                                   FocusScope.of(context).unfocus();
                                   Get.find<CommentController>(
                                           tag: widget.detail.id.toString())
