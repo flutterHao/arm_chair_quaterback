@@ -136,7 +136,9 @@ class _HomePageState extends State<HomePage>
                       }).toList(),
                     ),
                     Container(
-                      height: MediaQuery.of(context).padding.bottom,
+                      height: MediaQuery.of(context).padding.bottom > 0
+                          ? MediaQuery.of(context).padding.bottom / 2
+                          : 0,
                       width: double.infinity,
                       color: AppColors.cFFFFFF,
                     )
