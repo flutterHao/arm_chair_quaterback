@@ -25,118 +25,185 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
 
   @override
   Widget build(BuildContext context) {
+    return HorizontalDragBackContainer(
+      child: GetBuilder<NbaPlayerController>(builder: (context) {
+        return BlackAppWidget(
+            UserInfoBar(
+              showPop: true,
+            ),
+            bodyWidget: Expanded(
+                child: NestedScrollView(
+                    headerSliverBuilder: (context, iOSHorizontalOffset) {
+                      return [
+                        SliverPersistentHeader(
+                            floating: true,
+                            delegate: FixedHeightSliverHeaderDelegate(child: _ovrTitleWidget(), height: 100.w)),
+                        SliverPersistentHeader(
+                            pinned: true,
+                            delegate: FixedHeightSliverHeaderDelegate(child: _ovrTabWidget(), height: 28.w)),
+                      ];
+                    },
+                    body: Container(
+                      color: Colors.white,
+                      child: ListView.separated(
+                        itemCount: controller.allPlayerStrengthRank.length,
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        itemBuilder: (context, index) {
+                          return _playerItemWidget(index);
+                        },
+                        separatorBuilder: (context, index) => Divider(height: 1, color: AppColors.cE3E3E3),
+                      ),
+                    ))));
+      }),
+    );
+  }
+
+  Widget _ovrTitleWidget() {
     // 获取当前时间
     DateTime now = DateTime.now();
     // 创建今天的 23:59:59 时间
     DateTime todayLastSecond = DateTime(now.year, now.month, now.day, 23, 59, 59);
-    return HorizontalDragBackContainer(
-      child: BlackAppWidget(
-          UserInfoBar(
-            showPop: true,
-          ),
-          bodyWidget: Expanded(
-              child: NestedScrollView(
-                  headerSliverBuilder: (context, iOSHorizontalOffset) {
-                    return [
-                      SliverPersistentHeader(
-                          floating: true,
-                          delegate: FixedHeightSliverHeaderDelegate(
-                              child: Container(
-                                  margin: EdgeInsets.only(top: 10.w),
-                                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                  color: Colors.white,
-                                  child: Column(
-                                    children: [
-                                      8.vGap,
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            child: Text(
-                                              'OVR STANDING',
-                                              style: 34.w7(fontFamily: FontFamily.fOswaldBold),
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: AppColors.cD1D1D1),
-                                                borderRadius: BorderRadius.circular(8.w)),
-                                            child: Row(
-                                              children: [
-                                                IconWidget(
-                                                  iconWidth: 16.w,
-                                                  icon: Assets.commonUiCommonIconSystemLikeComment,
-                                                  iconColor: Colors.black,
-                                                ),
-                                                8.hGap,
-                                                Text('329K')
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          IconWidget(iconWidth: 13.w, icon: Assets.commonUiCommonCountdown02),
-                                          6.hGap,
-                                          Text(
-                                            '6D ${DateUtil.formatDate(todayLastSecond, format: 'HH:mm:ss')}',
-                                            style: 12.w5(fontFamily: FontFamily.fOswaldRegular),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )),
-                              height: 100.w)),
-                      SliverPersistentHeader(
-                          pinned: true,
-                          delegate: FixedHeightSliverHeaderDelegate(
-                              child: Container(
-                                color: Colors.white,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                        child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            'Rank',
-                                            style: 12.w5(fontFamily: FontFamily.fRobotoMedium),
-                                          ),
-                                          20.hGap,
-                                          Text(
-                                            'POWER',
-                                            style: 12.w5(fontFamily: FontFamily.fRobotoMedium),
-                                          ),
-                                          20.hGap,
-                                          Text(
-                                            'collect'.toUpperCase(),
-                                            style: 12.w5(fontFamily: FontFamily.fRobotoMedium),
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                                    Divider(height: 1, color: AppColors.cE3E3E3),
-                                  ],
-                                ),
-                              ),
-                              height: 28.w)),
-                    ];
-                  },
-                  body: Container(
-                    color: Colors.white,
-                    child: ListView.separated(
-                      itemCount: controller.allPlayerStrengthRank.length,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      itemBuilder: (context, index) {
-                        return _playerItemWidget(index);
-                      },
-                      separatorBuilder: (context, index) => Divider(height: 1, color: AppColors.cE3E3E3),
-                    ),
-                  )))),
+    return Container(
+        margin: EdgeInsets.only(top: 10.w),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        color: Colors.white,
+        child: Column(
+          children: [
+            10.vGap,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text(
+                    'OVR STANDING',
+                    style: 34.w7(fontFamily: FontFamily.fOswaldBold),
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.cD1D1D1), borderRadius: BorderRadius.circular(8.w)),
+                  child: Row(
+                    children: [
+                      IconWidget(
+                        iconWidth: 16.w,
+                        icon: Assets.commonUiCommonIconSystemLikeComment,
+                        iconColor: Colors.black,
+                      ),
+                      8.hGap,
+                      Text(
+                        '329K',
+                        style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                IconWidget(iconWidth: 13.w, icon: Assets.commonUiCommonCountdown02),
+                6.hGap,
+                Text(
+                  '6D ${DateUtil.formatDate(todayLastSecond, format: 'HH:mm:ss')}',
+                  style: 12.w5(fontFamily: FontFamily.fOswaldRegular),
+                ),
+              ],
+            ),
+          ],
+        ));
+  }
+
+  Widget _ovrTabWidget() {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Expanded(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Row(
+              children: [
+                _tabItemWidget('rank'.toUpperCase(), 0),
+                20.hGap,
+                _tabItemWidget('power'.toUpperCase(), 1),
+                20.hGap,
+                _tabItemWidget('collect'.toUpperCase(), 2),
+                Spacer(),
+                IconWidget(
+                  iconWidth: 16.w,
+                  icon: Assets.commonUiCommonIconManager,
+                  iconColor: AppColors.c000000,
+                )
+              ],
+            ),
+          )),
+          Divider(height: 1, color: AppColors.cE3E3E3),
+        ],
+      ),
+    );
+  }
+
+  Widget _tabItemWidget(String title, int tabIndex) {
+    return Obx(
+      () => InkWell(
+        onTap: () {
+          if (controller.currentIndex.value != 2 * tabIndex) {
+            controller.currentIndex.value = 2 * tabIndex;
+          } else {
+            controller.currentIndex.value = (2 * tabIndex) + 1;
+          }
+        },
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: 12.w7(
+                fontFamily: FontFamily.fRobotoMedium,
+                color:
+                    controller.currentIndex.value != 2 * tabIndex && controller.currentIndex.value != (2 * tabIndex) + 1
+                        ? AppColors.c000000
+                        : AppColors.cFF5D54,
+              ),
+            ),
+            6.hGap,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Spacer(),
+                Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..rotateZ(-pi / 180 * 90.0)
+                    ..translate(-1.w, 0.0),
+                  child: IconWidget(
+                    iconWidth: 5.w,
+                    iconHeight: 10.w,
+                    icon: Assets.commonUiCommonIconSystemArrow,
+                    iconColor: controller.currentIndex.value == 2 * tabIndex ? AppColors.cFF5D54 : AppColors.cDBDBDB,
+                  ),
+                ),
+                Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..rotateZ(pi / 180 * 90.0)
+                    ..translate(-1.w, 0.0),
+                  child: IconWidget(
+                      iconWidth: 5.w,
+                      iconHeight: 10.w,
+                      icon: Assets.commonUiCommonIconSystemArrow,
+                      iconColor:
+                          controller.currentIndex.value == (2 * tabIndex) + 1 ? AppColors.cFF5D54 : AppColors.cDBDBDB),
+                ),
+                Spacer(),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 

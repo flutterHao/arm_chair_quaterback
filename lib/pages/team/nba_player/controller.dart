@@ -9,6 +9,8 @@ class NbaPlayerController extends GetxController {
   RxList<PlayerStrengthRankEntity> allPlayerStrengthRank = RxList();
   RxList<PlayerStrengthRankEntity> nbaPlayerList = RxList();
   List<String> ordinalNumbers = ['st', 'nd', 'rd', 'th'];
+  // ovr详情tab切换
+  RxInt currentIndex = 0.obs;
 
   initData() async {
     allPlayerStrengthRank.clear();
