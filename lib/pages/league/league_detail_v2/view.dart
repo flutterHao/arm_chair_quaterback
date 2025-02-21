@@ -51,258 +51,180 @@ class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
                 );
               }
 
-              return NestedScrollView(
-                  headerSliverBuilder: (_, __) {
-                    return <Widget>[
-                      SliverPersistentHeader(
-                          pinned: true,
-                          delegate: FixedHeightSliverHeaderDelegate(
-                              child: Container(
-                                color: AppColors.cFFFFFF,
-                                child: Stack(
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Expanded(
-                                                child: SizedBox.shrink()),
-                                            SizedBox(
-                                              height: 81.w,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  PlaceHolderWidget(
-                                                    width: 34.w,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            17.w),
-                                                    showChild: controller
-                                                            .item?.homeTeamId !=
-                                                        null,
-                                                    child: MtInkWell(
-                                                      onTap: () => Get.toNamed(
-                                                          RouteNames
-                                                              .teamDetailPage,
-                                                          arguments: controller
-                                                              .item
-                                                              ?.homeTeamId),
-                                                      child: ImageWidget(
-                                                        url: Utils.getTeamUrl(
-                                                            controller.item
-                                                                ?.homeTeamId),
-                                                        width: 34.w,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  2.vGap,
-                                                  PlaceHolderWidget(
-                                                    width: 20,
-                                                    height: 10,
-                                                    showChild:
-                                                        controller.item != null,
-                                                    child: Text(
-                                                      "${controller.item?.homeTeamWL}",
-                                                      style: 10.w4(
-                                                          color:
-                                                              AppColors.c000000,
-                                                          height: 1,
-                                                          fontFamily: FontFamily
-                                                              .fRobotoRegular),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                11.hGap,
-                                                if (controller.isGameStart)
-                                                  SizedBox(
-                                                    height: 34.w,
-                                                    child: PlaceHolderWidget(
-                                                      width: 30,
-                                                      height: 24,
-                                                      showChild:
-                                                          controller.item !=
-                                                              null,
-                                                      child: Text(
-                                                        "${controller.item?.homeTeamScore}",
-                                                        style: 24.w7(
-                                                            color: AppColors
-                                                                .c000000,
-                                                            height: 1,
-                                                            fontFamily: FontFamily
-                                                                .fOswaldBold),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                14.hGap,
-                                                Obx(() {
-                                                  return SizedBox(
-                                                    height: 81.w,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        PlaceHolderWidget(
-                                                          width: 50,
-                                                          height: 21,
-                                                          showChild:
-                                                              controller.item !=
-                                                                  null,
-                                                          child: Text(
-                                                            "VS",
-                                                            style: 21.w7(
-                                                                color: AppColors
-                                                                    .cB3B3B3,
-                                                                height: 1,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .fOswaldBold),
-                                                          ),
-                                                        ),
-                                                        7.vGap,
-                                                        PlaceHolderWidget(
-                                                          width: 50,
-                                                          height: 12,
-                                                          showChild:
-                                                              controller.item !=
-                                                                  null,
-                                                          child: Text(
-                                                            controller
-                                                                .gameStartTimeStr
-                                                                .value,
-                                                            style: 12.w4(
-                                                                color: controller
-                                                                            .item
-                                                                            ?.status ==
-                                                                        1
-                                                                    ? AppColors
-                                                                        .c10A86A
-                                                                    : AppColors
-                                                                        .c000000,
-                                                                height: 1,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .fRobotoRegular),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                }),
-                                                14.hGap,
-                                                if (controller.isGameStart)
-                                                  SizedBox(
-                                                    height: 34.w,
-                                                    child: PlaceHolderWidget(
-                                                      width: 30,
-                                                      height: 24,
-                                                      showChild:
-                                                          controller.item !=
-                                                              null,
-                                                      child: Text(
-                                                        "${controller.item?.awayTeamScore}",
-                                                        style: 24.w7(
-                                                            color: AppColors
-                                                                .c000000,
-                                                            height: 1,
-                                                            fontFamily: FontFamily
-                                                                .fOswaldBold),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                11.hGap,
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 81.w,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  PlaceHolderWidget(
-                                                    width: 34.w,
-                                                    showChild:
-                                                        controller.item != null,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            17.w),
-                                                    child: MtInkWell(
-                                                      onTap: () => Get.toNamed(
-                                                          RouteNames
-                                                              .teamDetailPage,
-                                                          arguments: controller
-                                                              .item
-                                                              ?.awayTeamId),
-                                                      child: ImageWidget(
-                                                        url: Utils.getTeamUrl(
-                                                            controller.item
-                                                                ?.awayTeamId),
-                                                        width: 34.w,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  2.vGap,
-                                                  PlaceHolderWidget(
-                                                    width: 20,
-                                                    height: 10,
-                                                    showChild:
-                                                        controller.item != null,
-                                                    child: Text(
-                                                      "${controller.item?.awayTeamWL}",
-                                                      style: 10.w4(
-                                                          color:
-                                                              AppColors.c000000,
-                                                          height: 1,
-                                                          fontFamily: FontFamily
-                                                              .fRobotoRegular),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            const Expanded(
-                                                child: SizedBox.shrink()),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    Positioned(
-                                        top: 14.w,
-                                        right: 10.w,
-                                        child: Container(
-                                          width: 24.w,
-                                          height: 24.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(4.w),
-                                              border: Border.all(
-                                                  color: AppColors.c666666,
-                                                  width: 1)),
-                                          child: IconWidget(
-                                            iconWidth: 15.w,
-                                            icon: Assets
-                                                .commonUiCommonIconSystemShare,
-                                            iconColor: AppColors.c262626,
-                                          ),
-                                        ))
-                                  ],
+              var headerWidget = Container(
+                color: AppColors.cFFFFFF,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Expanded(child: SizedBox.shrink()),
+                        SizedBox(
+                          height: 81.w,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              PlaceHolderWidget(
+                                width: 34.w,
+                                borderRadius: BorderRadius.circular(17.w),
+                                showChild: controller.item?.homeTeamId != null,
+                                child: MtInkWell(
+                                  onTap: () => Get.toNamed(
+                                      RouteNames.teamDetailPage,
+                                      arguments: controller.item?.homeTeamId),
+                                  child: ImageWidget(
+                                    url: Utils.getTeamUrl(
+                                        controller.item?.homeTeamId),
+                                    width: 34.w,
+                                  ),
                                 ),
                               ),
-                              height: 81.w)),
-                    ];
-                  },
-                  body: controller.isGameStart
-                      ? LeagueDetailPlayPage(controller.item!)
-                      : PlayNotStartPage(controller.item!));
+                              2.vGap,
+                              PlaceHolderWidget(
+                                width: 20,
+                                height: 10,
+                                showChild: controller.item != null,
+                                child: Text(
+                                  "${controller.item?.homeTeamWL}",
+                                  style: 10.w4(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            11.hGap,
+                            if (controller.isGameStart)
+                              SizedBox(
+                                height: 34.w,
+                                child: PlaceHolderWidget(
+                                  width: 30,
+                                  height: 24,
+                                  showChild: controller.item != null,
+                                  child: Text(
+                                    "${controller.item?.homeTeamScore}",
+                                    style: 24.w7(
+                                        color: AppColors.c000000,
+                                        height: 1,
+                                        fontFamily: FontFamily.fOswaldBold),
+                                  ),
+                                ),
+                              ),
+                            14.hGap,
+                            Obx(() {
+                              return SizedBox(
+                                height: 81.w,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    PlaceHolderWidget(
+                                      width: 50,
+                                      height: 21,
+                                      showChild: controller.item != null,
+                                      child: Text(
+                                        "VS",
+                                        style: 21.w7(
+                                            color: AppColors.cB3B3B3,
+                                            height: 1,
+                                            fontFamily: FontFamily.fOswaldBold),
+                                      ),
+                                    ),
+                                    7.vGap,
+                                    PlaceHolderWidget(
+                                      width: 50,
+                                      height: 12,
+                                      showChild: controller.item != null,
+                                      child: Text(
+                                        controller.gameStartTimeStr.value,
+                                        style: 12.w4(
+                                            color: controller.item?.status == 1
+                                                ? AppColors.c10A86A
+                                                : AppColors.c000000,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fRobotoRegular),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                            14.hGap,
+                            if (controller.isGameStart)
+                              SizedBox(
+                                height: 34.w,
+                                child: PlaceHolderWidget(
+                                  width: 30,
+                                  height: 24,
+                                  showChild: controller.item != null,
+                                  child: Text(
+                                    "${controller.item?.awayTeamScore}",
+                                    style: 24.w7(
+                                        color: AppColors.c000000,
+                                        height: 1,
+                                        fontFamily: FontFamily.fOswaldBold),
+                                  ),
+                                ),
+                              ),
+                            11.hGap,
+                          ],
+                        ),
+                        SizedBox(
+                          height: 81.w,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              PlaceHolderWidget(
+                                width: 34.w,
+                                showChild: controller.item != null,
+                                borderRadius: BorderRadius.circular(17.w),
+                                child: MtInkWell(
+                                  onTap: () => Get.toNamed(
+                                      RouteNames.teamDetailPage,
+                                      arguments: controller.item?.awayTeamId),
+                                  child: ImageWidget(
+                                    url: Utils.getTeamUrl(
+                                        controller.item?.awayTeamId),
+                                    width: 34.w,
+                                  ),
+                                ),
+                              ),
+                              2.vGap,
+                              PlaceHolderWidget(
+                                width: 20,
+                                height: 10,
+                                showChild: controller.item != null,
+                                child: Text(
+                                  "${controller.item?.awayTeamWL}",
+                                  style: 10.w4(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        const Expanded(child: SizedBox.shrink()),
+                      ],
+                    )
+                  ],
+                ),
+              );
+              return controller.isGameStart
+                  ? LeagueDetailPlayPage(
+                      controller.item!,
+                      header: headerWidget,
+                    )
+                  : PlayNotStartPage(
+                      controller.item!,
+                      header: headerWidget,
+                    );
             })),
           );
         },

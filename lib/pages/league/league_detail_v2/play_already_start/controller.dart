@@ -22,6 +22,12 @@ class LeagueDetailPlayController extends GetxController
 
   LeagueDetailPlayController(this.item);
 
+  GlobalKey headerKey = GlobalKey();
+
+  GlobalKey gameLeaderKey = GlobalKey();
+
+  GlobalKey teamStatsKey = GlobalKey();
+
   var loadStatus = LoadDataStatus.loading.obs;
 
   NbaGameDetailEntity? nbaGameDetailEntity;

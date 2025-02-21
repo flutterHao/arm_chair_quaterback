@@ -9,16 +9,11 @@ import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entit
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_already_start/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
@@ -36,6 +31,8 @@ class PlayNotStartController extends GetxController
   final ScoresEntity item;
 
   PlayNotStartController(this.item);
+
+  GlobalKey headerKey = GlobalKey();
 
   ScoresNotStartGameEntity? scoresNotStartGameEntity;
 
