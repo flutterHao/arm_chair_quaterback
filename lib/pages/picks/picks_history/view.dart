@@ -166,7 +166,7 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorWeight: 3.w,
           tabs: List.generate(controller.tabs.length, (index) {
-            return Text(controller.tabs[index].tr);
+            return Tab(text: controller.tabs[index].tr,);
           })),
     );
   }

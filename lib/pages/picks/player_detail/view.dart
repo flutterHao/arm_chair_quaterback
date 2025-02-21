@@ -83,7 +83,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   indicatorSize: TabBarIndicatorSize.tab,
                                   indicatorColor: AppColors.cFF7954,
                                   tabs: controller.tabs.map((e) {
-                                    return Text(e.tr);
+                                    return Tab(
+                                        child: Text(e.tr));
                                   }).toList(),
                                 ),
                               ),

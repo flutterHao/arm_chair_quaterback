@@ -424,39 +424,43 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                           unselectedLabelColor:
                                               AppColors.cB2B2B2,
                                           tabs: [
-                                            Row(
-                                              children: [
-                                                ImageWidget(
-                                                  url: Utils.getTeamUrl(
-                                                      controller
-                                                          .item.homeTeamId),
-                                                  width: 28.w,
-                                                ),
-                                                7.hGap,
-                                                Text(
-                                                  Utils.getTeamInfo(controller
-                                                          .item.homeTeamId)
-                                                      .shortEname,
-                                                )
-                                              ],
+                                            Tab(
+                                              child: Row(
+                                                children: [
+                                                  ImageWidget(
+                                                    url: Utils.getTeamUrl(
+                                                        controller
+                                                            .item.homeTeamId),
+                                                    width: 28.w,
+                                                  ),
+                                                  7.hGap,
+                                                  Text(
+                                                    Utils.getTeamInfo(controller
+                                                            .item.homeTeamId)
+                                                        .shortEname,
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Text(
-                                                  Utils.getTeamInfo(controller
-                                                          .item.awayTeamId)
-                                                      .shortEname,
-                                                ),
-                                                7.hGap,
-                                                ImageWidget(
-                                                  url: Utils.getTeamUrl(
-                                                      controller
-                                                          .item.awayTeamId),
-                                                  width: 28.w,
-                                                ),
-                                              ],
+                                            Tab(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    Utils.getTeamInfo(controller
+                                                            .item.awayTeamId)
+                                                        .shortEname,
+                                                  ),
+                                                  7.hGap,
+                                                  ImageWidget(
+                                                    url: Utils.getTeamUrl(
+                                                        controller
+                                                            .item.awayTeamId),
+                                                    width: 28.w,
+                                                  ),
+                                                ],
+                                              ),
                                             )
                                           ]),
                                     ),

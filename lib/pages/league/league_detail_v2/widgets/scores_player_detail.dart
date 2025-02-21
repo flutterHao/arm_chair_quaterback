@@ -63,30 +63,34 @@ class _ScoresPlayerDetailState extends State<ScoresPlayerDetail>
                   16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
               unselectedLabelColor: AppColors.cB2B2B2,
               tabs: [
-                Row(
-                  children: [
-                    ImageWidget(
-                      url: Utils.getTeamUrl(homeTeamInfo.id),
-                      width: 28.w,
-                    ),
-                    7.hGap,
-                    Text(
-                      homeTeamInfo.shortEname,
-                    )
-                  ],
+                Tab(
+                  child: Row(
+                    children: [
+                      ImageWidget(
+                        url: Utils.getTeamUrl(homeTeamInfo.id),
+                        width: 28.w,
+                      ),
+                      7.hGap,
+                      Text(
+                        homeTeamInfo.shortEname,
+                      )
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      awayTeamInfo.shortEname,
-                    ),
-                    7.hGap,
-                    ImageWidget(
-                      url: Utils.getTeamUrl(awayTeamInfo.id),
-                      width: 28.w,
-                    ),
-                  ],
+                Tab(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        awayTeamInfo.shortEname,
+                      ),
+                      7.hGap,
+                      ImageWidget(
+                        url: Utils.getTeamUrl(awayTeamInfo.id),
+                        width: 28.w,
+                      ),
+                    ],
+                  ),
                 )
               ]),
         ),

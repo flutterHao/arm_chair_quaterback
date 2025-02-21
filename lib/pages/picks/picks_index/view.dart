@@ -208,6 +208,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                       child: Container(
                         alignment: Alignment.bottomCenter,
                         color: AppColors.c262626,
+                        height: 34.w,
                         child: TabBar(
                             isScrollable: true,
                             tabAlignment: TabAlignment.start,
@@ -227,9 +228,11 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                             indicatorWeight: 4,
                             controller: controller.tabController,
                             tabs: controller.guessGamePlayers.keys.map((e) {
-                              return Text(
-                                  Utils.getPicksTabKey(e.replaceAll(",", "+"))
-                                      .tr);
+                              return Tab(
+                                child: Text(
+                                    Utils.getPicksTabKey(e.replaceAll(",", "+"))
+                                        .tr),
+                              );
                             }).toList()),
                       ),
                       height: 34.w)),
