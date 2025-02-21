@@ -12,13 +12,11 @@ import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dar
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
@@ -51,10 +49,8 @@ class PicksApi {
     return ReciveAwardV2Entity.fromJson(json);
   }
 
-  static Future<List<PlayerDayDataEntity>> getRecentAvg(int playerId,
-      {int gameCount = 5}) async {
-    List json = await httpUtil.post(Api.getRecentAvg,
-        data: {"playerId": playerId, "gameCount": gameCount});
+  static Future<List<PlayerDayDataEntity>> getRecentAvg(int playerId, {int gameCount = 5}) async {
+    List json = await httpUtil.post(Api.getRecentAvg, data: {"playerId": playerId, "gameCount": gameCount});
     return json.map((e) => PlayerDayDataEntity.fromJson(e)).toList();
   }
 
@@ -70,9 +66,7 @@ class PicksApi {
   }
 
   static Future<RankListEntity> getRedisRankInfo(
-      {RankType type = RankType.newsGuess,
-      int page = 0,
-      int pageSize = 10}) async {
+      {RankType type = RankType.newsGuess, int page = 0, int pageSize = 10}) async {
     var json = await httpUtil.post(Api.getRedisRankInfo, data: {
       "type": type.value,
       "page": page,
@@ -97,42 +91,34 @@ class PicksApi {
   }
 
   static Future<List> getRankRewards(RankType rankType) async {
-    var json =
-        await httpUtil.post(Api.getRankRewards, data: {"rankType": rankType});
+    var json = await httpUtil.post(Api.getRankRewards, data: {"rankType": rankType});
     return json;
   }
 
-  static Future<TeamPlayerInfoEntity> getTeamPlayerByUUID(
-      int teamId, String uuid) async {
-    var json = await httpUtil
-        .post(Api.getTeamPlayerByUUID, data: {"teamId": teamId, "uuid": uuid});
+  static Future<TeamPlayerInfoEntity> getTeamPlayerByUUID(int teamId, String uuid) async {
+    var json = await httpUtil.post(Api.getTeamPlayerByUUID, data: {"teamId": teamId, "uuid": uuid});
     return TeamPlayerInfoEntity.fromJson(json);
   }
 
   static Future<TeamPlayerInfoEntity> getPlayerUpGradeInfo(String uuid) async {
-    var json =
-        await httpUtil.post(Api.getPlayerUpGradeInfo, data: {"uuid": uuid});
+    var json = await httpUtil.post(Api.getPlayerUpGradeInfo, data: {"uuid": uuid});
     return TeamPlayerInfoEntity.fromJson(json);
   }
 
-  static Future<NbaPlayerBaseInfoEntity> getNBAPlayerBaseInfo(
-      int playerId) async {
-    var json = await httpUtil
-        .post(Api.getNBAPlayerBaseInfo, data: {"playerId": playerId});
+  static Future<NbaPlayerBaseInfoEntity> getNBAPlayerBaseInfo(int playerId) async {
+    var json = await httpUtil.post(Api.getNBAPlayerBaseInfo, data: {"playerId": playerId});
     return NbaPlayerBaseInfoEntity.fromJson(json);
   }
 
-  static Future<UpStartTeamPlayerResponseEntity> upStarTeamPlayer(
-      String uuid, String materialScienceUUID) async {
-    var json = await httpUtil.post(Api.upStarTeamPlayer,
-        data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
+  static Future<UpStartTeamPlayerResponseEntity> upStarTeamPlayer(String uuid, String materialScienceUUID) async {
+    var json =
+        await httpUtil.post(Api.upStarTeamPlayer, data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
     return UpStartTeamPlayerResponseEntity.fromJson(json);
   }
 
-  static Future<UpStarTeamPlayerV2Entity> upStarTeamPlayerV2(
-      String uuid, String materialScienceUUID) async {
-    var json = await httpUtil.post(Api.upStarTeamPlayer,
-        data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
+  static Future<UpStarTeamPlayerV2Entity> upStarTeamPlayerV2(String uuid, String materialScienceUUID) async {
+    var json =
+        await httpUtil.post(Api.upStarTeamPlayer, data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
     return UpStarTeamPlayerV2Entity.fromJson(json);
   }
 
@@ -146,10 +132,8 @@ class PicksApi {
     return StarUpDoneEntity.fromJson(json);
   }
 
-  static Future<List<AllTeamPlayersByUpStarEntity>> getAllTeamPlayersByUpStar(
-      String uuid) async {
-    List json = await httpUtil
-        .post(Api.getAllTeamPlayersByUpStar, data: {"uuid": uuid});
+  static Future<List<AllTeamPlayersByUpStarEntity>> getAllTeamPlayersByUpStar(String uuid) async {
+    List json = await httpUtil.post(Api.getAllTeamPlayersByUpStar, data: {"uuid": uuid});
     return json.map((e) => AllTeamPlayersByUpStarEntity.fromJson(e)).toList();
   }
 
@@ -185,37 +169,30 @@ class PicksApi {
     return GuessRankByCycleEntity.fromJson(json);
   }
 
-  static Future<Map<String, List<PerGameEntity>>>
-      getNBAPlayerOverAllPerGameData(
-          {required int playerId,
-          int limit = 20,
-          SeasonType seasonType = SeasonType.regular}) async {
+  static Future<Map<String, List<PerGameEntity>>> getNBAPlayerOverAllPerGameData(
+      {required int playerId, int limit = 20, SeasonType seasonType = SeasonType.regular}) async {
     Map json = await httpUtil.post(Api.getNBAPlayerOverAllPerGameData, data: {
       "seasonType": seasonType.value,
       "playerId": playerId,
       "limit": limit,
     });
-    return json.map((key, value) => MapEntry(key,
-        (value as List).map((item) => PerGameEntity.fromJson(item)).toList()));
+    return json
+        .map((key, value) => MapEntry(key, (value as List).map((item) => PerGameEntity.fromJson(item)).toList()));
   }
 
-  static Future<List<GameSchedule>> getGameSchedules(int teamId,
-      [int limit = 5]) async {
-    List json = await httpUtil
-        .post(Api.getGameSchedules, data: {"teamId": teamId, "limit": limit});
+  static Future<List<GameSchedule>> getGameSchedules(int teamId, [int limit = 5]) async {
+    List json = await httpUtil.post(Api.getGameSchedules, data: {"teamId": teamId, "limit": limit});
     return json.map((e) => GameSchedule.fromJson(e)).toList();
   }
 
   static Future<GameResultInfoEntity> getGameResultInfo(int gameId) async {
-    var json =
-        await httpUtil.post(Api.getGameResultInfo, data: {"gameId": gameId});
+    var json = await httpUtil.post(Api.getGameResultInfo, data: {"gameId": gameId});
     return GameResultInfoEntity.fromJson(json);
   }
 
-  static Future<SeasonRankInfoEntity> getSeasonRankInfo(int seasonId,
-      {int page = 0, String pageSize = '50'}) async {
-    var json = await httpUtil.post(Api.getSeasonRankInfo,
-        data: {"seasonId": seasonId, "page": page, "pageSize": pageSize});
+  static Future<SeasonRankInfoEntity> getSeasonRankInfo(int seasonId, {int page = 0, String pageSize = '50'}) async {
+    var json =
+        await httpUtil.post(Api.getSeasonRankInfo, data: {"seasonId": seasonId, "page": page, "pageSize": pageSize});
     return SeasonRankInfoEntity.fromJson(json);
   }
 
@@ -246,17 +223,8 @@ class PicksApi {
   }
 
   /// 获取球员实力排行榜
-  static Future<List<PlayerStrengthRankEntity>> getPlayerStrengthRank(
-      {int start = 0, int end = 3}) async {
-    List json = await httpUtil
-        .post(Api.getPlayerStrengthRank, data: {"start": start, "end": end});
-    return json.map((e) => PlayerStrengthRankEntity.fromJson(e)).toList();
-  }
-
-  /// 获取球员实力排行榜
   static Future<List<int>> queryPlayerGameYear(int playerId) async {
-    List json = await httpUtil
-        .post(Api.queryPlayerGameYear, data: {"playerId": playerId});
-    return json.map((e)=> int.parse("$e")).toList();
+    List json = await httpUtil.post(Api.queryPlayerGameYear, data: {"playerId": playerId});
+    return json.map((e) => int.parse("$e")).toList();
   }
 }

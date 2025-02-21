@@ -69,8 +69,7 @@ class Api {
   static const String scheduleChoose = "$API_BASE_PATH/NBAData/scheduleChoose";
   static const String getNBAPlayerOverAllPerGameData = "$API_BASE_PATH/NBAData/getNBAPlayerOverAllPerGameData";
   static const String getNBAGameLogByTeamId = "$API_BASE_PATH/NBAData/getNBAGameLogByTeamId";
-  static const String queryPlayerGameYear =
-      "$API_BASE_PATH/NBAData/queryPlayerGameYear";
+  static const String queryPlayerGameYear = "$API_BASE_PATH/NBAData/queryPlayerGameYear";
 
   /// config
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";
@@ -139,6 +138,7 @@ class Api {
   static const String composeTeamPlayer = "$API_BASE_PATH/TeamPlayer/composeTeamPlayer";
   static const String destroyTeamPlayer = "$API_BASE_PATH/TeamPlayer/destroyTeamPlayer";
   static const String getPlayerStrengthRank = "$API_BASE_PATH/TeamPlayer/getPlayerStrengthRank";
+  static const String getPlayerTrends = "$API_BASE_PATH/NBAData/getPlayerTrends";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";

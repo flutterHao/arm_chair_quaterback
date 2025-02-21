@@ -16,7 +16,8 @@ import 'package:get/get.dart';
 import '../controller.dart';
 
 class AwardBottomsheet extends GetView<TrainingController> {
-  const AwardBottomsheet({super.key});
+  AwardBottomsheet({super.key});
+  final ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +29,26 @@ class AwardBottomsheet extends GetView<TrainingController> {
         children: [
           const DialogTopBtn(),
           14.vGap,
+          // InkWell(
+          //   onTap: () {
+          //     scrollController.jumpTo(78.w * 3);
+          //   },
+          //   child: Text('data'),
+          // ),
           _awardTiTleWidget(),
+          const Divider(height: 1, color: AppColors.cD1D1D1),
           4.vGap,
+          _lastAwardItemWidget(),
           const Divider(height: 1, color: AppColors.cD1D1D1),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.only(bottom: 20.w),
               itemCount: _list.length,
+              controller: scrollController,
               itemBuilder: (context, index) {
                 bool isLast = index == 0;
                 if (isLast) {
-                  return _lastAwardItemWidget();
+                  return SizedBox();
                 }
                 return Stack(
                   children: [_leftWidget(index), _awardItemWidget(index)],
@@ -72,98 +82,92 @@ class AwardBottomsheet extends GetView<TrainingController> {
   }
 
   Widget _lastAwardItemWidget() {
-    return Column(
-      children: [
-        Container(
-          height: 92.w,
-          margin: EdgeInsets.symmetric(vertical: 20.w, horizontal: 16.w),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(9.w),
-              border: Border.all(
-                color: AppColors.c000000,
-              ),
-              color: AppColors.cF2F2F2),
-          clipBehavior: Clip.hardEdge,
-          child: Row(
+    return Container(
+      height: 92.w,
+      margin: EdgeInsets.symmetric(vertical: 20.w, horizontal: 16.w),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(9.w),
+          border: Border.all(
+            color: AppColors.c000000,
+          ),
+          color: AppColors.cF2F2F2),
+      clipBehavior: Clip.hardEdge,
+      child: Row(
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
             children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: 55.w,
-                    color: Colors.black,
-                    child: Column(
-                      children: [
-                        Spacer(),
-                        IconWidget(iconWidth: 24.w, icon: Assets.inboxUiInboxIconAward),
-                        8.vGap,
-                        Text(
-                          'AWARD',
-                          style: 12.w5(color: Colors.white, fontFamily: FontFamily.fOswaldRegular),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                      right: -7.w,
-                      top: 40.w,
-                      child: CustomPaint(
-                        size: Size(8.w, 12.w), // 设置三角形的大小
-                        painter: TrianglePainter(color: Colors.black),
-                      )),
-                  Positioned(
-                      right: -3.w,
-                      top: 41.w,
-                      child: CustomPaint(
-                        size: Size(6.w, 10.w), // 设置三角形的大小
-                        painter: TrianglePainter(color: AppColors.cFF7954),
-                      ))
-                ],
-              ),
-              Expanded(
-                  child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              Container(
+                width: 55.w,
+                color: Colors.black,
+                child: Column(
                   children: [
-                    ..._lastAwardRewardList.mapIndexed((index, element) {
-                      return Container(
-                        margin: EdgeInsets.only(left: index == 0 ? 0 : 16.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Spacer(),
-                            Image.asset(
-                              // Utils.getSlotIconUrl(int.tryParse(element.split("_")[1])),
-                              Utils.getPropIconUrl(int.tryParse(element.split("_")[1])),
-                              width: 48.w,
-                              height: 40.w,
-                              fit: BoxFit.fitWidth,
-                              alignment: Alignment.center,
-                              errorBuilder: (context, error, stackTrace) => IconWidget(
-                                iconWidth: 48.w,
-                                icon: Assets.teamUiMoney02,
-                              ),
-                            ),
-                            2.vGap,
-                            Text(
-                              element.split("_")[2],
-                              style: 14.w5(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
-                            ),
-                            6.vGap
-                          ],
-                        ),
-                      );
-                    }),
+                    Spacer(),
+                    IconWidget(iconWidth: 24.w, icon: Assets.inboxUiInboxIconAward),
+                    8.vGap,
+                    Text(
+                      'AWARD',
+                      style: 12.w5(color: Colors.white, fontFamily: FontFamily.fOswaldRegular),
+                    ),
+                    Spacer(),
                   ],
                 ),
-              ))
+              ),
+              Positioned(
+                  right: -7.w,
+                  top: 40.w,
+                  child: CustomPaint(
+                    size: Size(8.w, 12.w), // 设置三角形的大小
+                    painter: TrianglePainter(color: Colors.black),
+                  )),
+              Positioned(
+                  right: -3.w,
+                  top: 41.w,
+                  child: CustomPaint(
+                    size: Size(6.w, 10.w), // 设置三角形的大小
+                    painter: TrianglePainter(color: AppColors.cFF7954),
+                  ))
             ],
           ),
-        ),
-        const Divider(height: 1, color: AppColors.cD1D1D1),
-        6.vGap
-      ],
+          Expanded(
+              child: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ..._lastAwardRewardList.mapIndexed((index, element) {
+                  return Container(
+                    margin: EdgeInsets.only(left: index == 0 ? 0 : 16.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Spacer(),
+                        Image.asset(
+                          // Utils.getSlotIconUrl(int.tryParse(element.split("_")[1])),
+                          Utils.getPropIconUrl(int.tryParse(element.split("_")[1])),
+                          width: 48.w,
+                          height: 40.w,
+                          fit: BoxFit.fitWidth,
+                          alignment: Alignment.center,
+                          errorBuilder: (context, error, stackTrace) => IconWidget(
+                            iconWidth: 48.w,
+                            icon: Assets.teamUiMoney02,
+                          ),
+                        ),
+                        2.vGap,
+                        Text(
+                          element.split("_")[2],
+                          style: 14.w5(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
+                        ),
+                        6.vGap
+                      ],
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ))
+        ],
+      ),
     );
   }
 
@@ -293,7 +297,7 @@ class AwardBottomsheet extends GetView<TrainingController> {
                       children: [
                         Expanded(
                             child: Image.asset(
-                          Utils.getSlotIconUrl(int.tryParse(element.split("_")[1])),
+                          Utils.getPropIconUrl(int.tryParse(element.split("_")[1])),
                           width: 40.w,
                           fit: BoxFit.fitWidth,
                           errorBuilder: (context, error, stackTrace) => IconWidget(

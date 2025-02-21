@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -209,7 +210,9 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
     return Obx(() {
       NbaPlayerInfosPlayerBaseInfoList player = Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId);
       return InkWell(
-        onTap: () async {},
+        onTap: () async {
+          Get.toNamed(RouteNames.playerTrendPage, arguments: controller.allPlayerStrengthRank[index]);
+        },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 16.w),
           height: 93.w,

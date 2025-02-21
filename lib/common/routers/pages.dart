@@ -40,6 +40,7 @@ import 'package:arm_chair_quaterback/pages/picks/recive_rward/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/illustraction_detail.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/ovr_standing_detail.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/player_trend.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/binding.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
@@ -154,6 +155,8 @@ class AppPages {
           return const InboxEmailPage();
         case RouteNames.ovrStandingDetailPage:
           return OvrStandingDetailPage();
+        case RouteNames.playerTrendPage:
+          return PlayerTrendPage();
         default:
           return const SizedBox.shrink();
       }

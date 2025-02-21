@@ -154,7 +154,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                     BottomTipDialog.showWithSound(
                                         isScrollControlled: true,
                                         context: context,
-                                        builder: (context) => const AwardBottomsheet());
+                                        builder: (context) => AwardBottomsheet());
                                   },
                                   child: Container(
                                     // color: Colors.red,
@@ -235,9 +235,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                         child: MtInkWell(
                           onTap: () {
                             BottomTipDialog.showWithSound(
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (context) => const AwardBottomsheet());
+                                isScrollControlled: true, context: context, builder: (context) => AwardBottomsheet());
                           },
                           child: Column(
                             children: [

@@ -1,23 +1,23 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
-import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
@@ -30,11 +30,7 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SummaryPage extends GetView<SummaryController> {
-  const SummaryPage(
-      {required this.playerId,
-      super.key,
-      this.tabStr,
-      required this.playerDetailController});
+  const SummaryPage({required this.playerId, super.key, this.tabStr, required this.playerDetailController});
 
   final int playerId;
   final String? tabStr;
@@ -77,9 +73,7 @@ class SummaryPage extends GetView<SummaryController> {
                   children: [
                     9.vGap,
                     Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.w),
-                          color: AppColors.cFFFFFF),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -89,9 +83,7 @@ class SummaryPage extends GetView<SummaryController> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "${controller.formatSeasonDate()} ${LangKey.nbaTeamTabAvg.tr}",
-                              style: 24.w7(
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldBold),
+                              style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
                             ),
                           ),
                           Divider(
@@ -99,8 +91,7 @@ class SummaryPage extends GetView<SummaryController> {
                             height: 1.w,
                           ),
                           Builder(builder: (context) {
-                            var seasonAverageData =
-                                controller.getSeasonAverageData();
+                            var seasonAverageData = controller.getSeasonAverageData();
                             return SizedBox(
                               width: double.infinity,
                               height: 101.w,
@@ -111,13 +102,10 @@ class SummaryPage extends GetView<SummaryController> {
                                     scrollDirection: Axis.horizontal,
                                     itemCount: seasonAverageData.length,
                                     controller: scrollController,
-                                    physics: OneBoundaryScrollPhysics(
-                                        scrollController: scrollController),
+                                    physics: OneBoundaryScrollPhysics(scrollController: scrollController),
                                     itemBuilder: (context, index) {
-                                      PlayerRegular item =
-                                          seasonAverageData[index];
-                                      bool lastIndex =
-                                          seasonAverageData.length - 1 == index;
+                                      PlayerRegular item = seasonAverageData[index];
+                                      bool lastIndex = seasonAverageData.length - 1 == index;
                                       return SizedBox(
                                         height: 101.w,
                                         width: 93.w,
@@ -125,15 +113,11 @@ class SummaryPage extends GetView<SummaryController> {
                                           alignment: Alignment.center,
                                           children: [
                                             Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   item.value.toStringAsFixed(1),
-                                                  style: 21.w5(
-                                                      height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fOswaldMedium),
+                                                  style: 21.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
                                                 ),
                                                 6.vGap,
                                                 Text(
@@ -141,23 +125,17 @@ class SummaryPage extends GetView<SummaryController> {
                                                   style: 10.w4(
                                                       color: AppColors.c666666,
                                                       height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fRobotoRegular),
+                                                      fontFamily: FontFamily.fRobotoRegular),
                                                 ),
                                                 13.vGap,
                                                 Opacity(
-                                                    opacity: item.rank <= 100
-                                                        ? 1
-                                                        : 0,
+                                                    opacity: item.rank <= 100 ? 1 : 0,
                                                     child: Text(
-                                                      Utils.getSortWithInt(
-                                                          item.rank),
+                                                      Utils.getSortWithInt(item.rank),
                                                       style: 12.w5(
-                                                          color:
-                                                              AppColors.cFF7954,
+                                                          color: AppColors.cFF7954,
                                                           height: 1,
-                                                          fontFamily: FontFamily
-                                                              .fRobotoMedium),
+                                                          fontFamily: FontFamily.fRobotoMedium),
                                                     )),
                                                 2.vGap
                                               ],
@@ -183,9 +161,7 @@ class SummaryPage extends GetView<SummaryController> {
                     ),
                     9.vGap,
                     Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.w),
-                          color: AppColors.cFFFFFF),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -194,9 +170,7 @@ class SummaryPage extends GetView<SummaryController> {
                             margin: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Text(
                               LangKey.nbaTeamTabOppg.tr,
-                              style: 24.w7(
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldBold),
+                              style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
                             ),
                           ),
                           25.vGap,
@@ -212,59 +186,32 @@ class SummaryPage extends GetView<SummaryController> {
                                         context: context,
                                         removeTop: true,
                                         child: ListView.builder(
-                                            itemCount:
-                                                controller.getTitles().length,
+                                            itemCount: controller.getTitles().length,
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder: (context, index) {
-                                              var key = controller
-                                                  .getTitles()
-                                                  .toList()[index];
+                                              var key = controller.getTitles().toList()[index];
                                               return Obx(() {
-                                                bool isSelected = controller
-                                                        .currentIndex.value ==
-                                                    index;
+                                                bool isSelected = controller.currentIndex.value == index;
                                                 return InkWell(
-                                                  onTap: () => controller
-                                                      .onTabTap(index),
+                                                  onTap: () => controller.onTabTap(index),
                                                   child: Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 4.w,
-                                                        left: index == 0
-                                                            ? 16.w
-                                                            : 0),
+                                                    margin: EdgeInsets.only(right: 4.w, left: index == 0 ? 16.w : 0),
                                                     height: 28.w,
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 21.w),
+                                                    padding: EdgeInsets.symmetric(horizontal: 21.w),
                                                     alignment: Alignment.center,
                                                     decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: AppColors
-                                                                .c666666,
-                                                            width: 1.w),
-                                                        color: isSelected
-                                                            ? AppColors.c262626
-                                                            : AppColors.cFFFFFF,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    14.w)),
+                                                        border: Border.all(color: AppColors.c666666, width: 1.w),
+                                                        color: isSelected ? AppColors.c262626 : AppColors.cFFFFFF,
+                                                        borderRadius: BorderRadius.circular(14.w)),
                                                     child: Text(
-                                                      Utils.getPicksTabKey(
-                                                              key.replaceAll(
-                                                                  ",", "+"))
-                                                          .tr,
+                                                      Utils.getPicksTabKey(key.replaceAll(",", "+")).tr,
                                                       // key.replaceAll(",", "+"),
                                                       style: 16.w5(
-                                                        color: isSelected
-                                                            ? AppColors.cF2F2F2
-                                                            : AppColors.c262626,
+                                                        color: isSelected ? AppColors.cF2F2F2 : AppColors.c262626,
                                                         height: 1,
                                                         fontFamily: isSelected
-                                                            ? FontFamily
-                                                                .fOswaldMedium
-                                                            : FontFamily
-                                                                .fOswaldRegular,
+                                                            ? FontFamily.fOswaldMedium
+                                                            : FontFamily.fOswaldRegular,
                                                       ),
                                                     ),
                                                   ),
@@ -279,37 +226,28 @@ class SummaryPage extends GetView<SummaryController> {
                                       height: 1.w,
                                     ),
                                     Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 16.w),
+                                      margin: EdgeInsets.symmetric(horizontal: 16.w),
                                       child: Row(
                                         children: [
                                           Expanded(
                                               child: Container(
                                             height: 94.w,
-                                            padding:
-                                                EdgeInsets.only(left: 14.w),
+                                            padding: EdgeInsets.only(left: 14.w),
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   LangKey.gameTabSeasonAvg.tr,
                                                   style: 12.w4(
                                                       color: AppColors.c000000,
                                                       height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fRobotoRegular),
+                                                      fontFamily: FontFamily.fRobotoRegular),
                                                 ),
                                                 9.vGap,
                                                 Text(
-                                                  controller
-                                                      .getSeasonAvgWithTab(),
-                                                  style: 27.w7(
-                                                      height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fOswaldBold),
+                                                  controller.getSeasonAvgWithTab(),
+                                                  style: 27.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
                                                 )
                                               ],
                                             ),
@@ -322,29 +260,22 @@ class SummaryPage extends GetView<SummaryController> {
                                           Expanded(
                                               child: Container(
                                             height: 94.w,
-                                            padding:
-                                                EdgeInsets.only(left: 14.w),
+                                            padding: EdgeInsets.only(left: 14.w),
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   LangKey.gameTabL5Avg.tr,
                                                   style: 14.w4(
                                                       color: AppColors.c000000,
                                                       height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fRobotoRegular),
+                                                      fontFamily: FontFamily.fRobotoRegular),
                                                 ),
                                                 9.vGap,
                                                 Text(
                                                   "${controller.getLast5AvgWithTab().format()}",
-                                                  style: 27.w7(
-                                                      height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fOswaldBold),
+                                                  style: 27.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
                                                 )
                                               ],
                                             ),
@@ -353,8 +284,7 @@ class SummaryPage extends GetView<SummaryController> {
                                       ),
                                     ),
                                     Builder(builder: (context) {
-                                      if (controller.nbaPlayerBaseInfoEntity!
-                                          .l5GameData.isEmpty) {
+                                      if (controller.nbaPlayerBaseInfoEntity!.l5GameData.isEmpty) {
                                         return const SizedBox.shrink();
                                       }
                                       return Column(
@@ -362,13 +292,11 @@ class SummaryPage extends GetView<SummaryController> {
                                           9.vGap,
                                           Container(
                                             height: 162.w,
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 16.w),
+                                            margin: EdgeInsets.symmetric(horizontal: 16.w),
                                             padding: EdgeInsets.all(10.w),
                                             child: Stack(
                                               children: [
-                                                _buildDefaultColumnChart(
-                                                    context),
+                                                _buildDefaultColumnChart(context),
                                               ],
                                             ),
                                           ),
@@ -383,12 +311,9 @@ class SummaryPage extends GetView<SummaryController> {
                                         children: [
                                           34.vGap,
                                           Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 35.w),
+                                            margin: EdgeInsets.symmetric(horizontal: 35.w),
                                             child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Row(
                                                   children: [
@@ -396,29 +321,21 @@ class SummaryPage extends GetView<SummaryController> {
                                                       "@${controller.getPickInfo()?.teamInfo.shortEname}",
                                                       style: 12.w5(
                                                         height: 1,
-                                                        fontFamily: FontFamily
-                                                            .fRobotoMedium,
+                                                        fontFamily: FontFamily.fRobotoMedium,
                                                       ),
                                                     ),
                                                     7.hGap,
                                                     ImageWidget(
-                                                      url: Utils.getTeamUrl(
-                                                          controller
-                                                              .getPickInfo()
-                                                              ?.teamInfo
-                                                              .id),
+                                                      url: Utils.getTeamUrl(controller.getPickInfo()?.teamInfo.id),
                                                       width: 21.w,
                                                     )
                                                   ],
                                                 ),
                                                 Text(
-                                                  controller
-                                                      .getCurrentTabKey()
-                                                      .replaceAll(",", "+"),
+                                                  controller.getCurrentTabKey().replaceAll(",", "+"),
                                                   style: 12.w5(
                                                     height: 1,
-                                                    fontFamily: FontFamily
-                                                        .fRobotoMedium,
+                                                    fontFamily: FontFamily.fRobotoMedium,
                                                   ),
                                                 ),
                                               ],
@@ -453,21 +370,17 @@ class SummaryPage extends GetView<SummaryController> {
                           }
                           return Container(
                             margin: EdgeInsets.only(top: 9.w),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.w),
-                                color: AppColors.cFFFFFF),
+                            decoration:
+                                BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 25.vGap,
                                 Container(
-                                  margin:
-                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  margin: EdgeInsets.symmetric(horizontal: 16.w),
                                   child: Text(
                                     LangKey.nbaTeamTabOppg.tr,
-                                    style: 24.w7(
-                                        height: 1,
-                                        fontFamily: FontFamily.fOswaldBold),
+                                    style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
                                   ),
                                 ),
                                 25.vGap,
@@ -477,55 +390,31 @@ class SummaryPage extends GetView<SummaryController> {
                                     context: context,
                                     removeTop: true,
                                     child: ListView.builder(
-                                        itemCount:
-                                            controller.getTitles().length,
+                                        itemCount: controller.getTitles().length,
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index) {
-                                          var key = controller
-                                              .getTitles()
-                                              .toList()[index];
+                                          var key = controller.getTitles().toList()[index];
                                           return Obx(() {
-                                            bool isSelected = controller
-                                                    .currentRecentPickIndex
-                                                    .value ==
-                                                index;
+                                            bool isSelected = controller.currentRecentPickIndex.value == index;
                                             return InkWell(
-                                              onTap: () => controller
-                                                  .onRecentPickTabTap(index),
+                                              onTap: () => controller.onRecentPickTabTap(index),
                                               child: Container(
-                                                margin: EdgeInsets.only(
-                                                    right: 4.w,
-                                                    left:
-                                                        index == 0 ? 16.w : 0),
+                                                margin: EdgeInsets.only(right: 4.w, left: index == 0 ? 16.w : 0),
                                                 height: 28.w,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 21.w),
+                                                padding: EdgeInsets.symmetric(horizontal: 21.w),
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color:
-                                                            AppColors.c666666,
-                                                        width: 1.w),
-                                                    color: isSelected
-                                                        ? AppColors.c262626
-                                                        : AppColors.cFFFFFF,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            14.w)),
+                                                    border: Border.all(color: AppColors.c666666, width: 1.w),
+                                                    color: isSelected ? AppColors.c262626 : AppColors.cFFFFFF,
+                                                    borderRadius: BorderRadius.circular(14.w)),
                                                 child: Text(
-                                                  Utils.getPicksTabKey(key
-                                                          .replaceAll(",", "+"))
-                                                      .tr,
+                                                  Utils.getPicksTabKey(key.replaceAll(",", "+")).tr,
                                                   style: 16.w5(
-                                                    color: isSelected
-                                                        ? AppColors.cF2F2F2
-                                                        : AppColors.c262626,
+                                                    color: isSelected ? AppColors.cF2F2F2 : AppColors.c262626,
                                                     height: 1,
                                                     fontFamily: isSelected
-                                                        ? FontFamily
-                                                            .fOswaldMedium
-                                                        : FontFamily
-                                                            .fOswaldRegular,
+                                                        ? FontFamily.fOswaldMedium
+                                                        : FontFamily.fOswaldRegular,
                                                   ),
                                                 ),
                                               ),
@@ -918,9 +807,7 @@ class SummaryPage extends GetView<SummaryController> {
                       return Container(
                         margin: EdgeInsets.only(top: 9.w),
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: AppColors.cFFFFFF,
-                            borderRadius: BorderRadius.circular(12.w)),
+                        decoration: BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(12.w)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -931,23 +818,20 @@ class SummaryPage extends GetView<SummaryController> {
                               ),
                               child: Text(
                                 LangKey.nbaTeamTabOutcome.tr,
-                                style:
-                                    19.w7(color: AppColors.c262626, height: 1),
+                                style: 19.w7(color: AppColors.c262626, height: 1),
                               ),
                             ),
                             SizedBox(
                               height: 150.w,
                               child: PageView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount:
-                                      controller.getOutComeWithTab().length,
+                                  itemCount: controller.getOutComeWithTab().length,
                                   controller: PageController(
                                     viewportFraction: 324 / 375,
                                   ),
                                   padEnds: false,
                                   itemBuilder: (context, index) {
-                                    OutCome outCome =
-                                        controller.getOutComeWithTab()[index];
+                                    OutCome outCome = controller.getOutComeWithTab()[index];
                                     return Container(
                                       height: 96.w,
                                       width: 298.w,
@@ -958,50 +842,38 @@ class SummaryPage extends GetView<SummaryController> {
                                         left: 16.w,
                                       ),
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(12.w),
+                                        borderRadius: BorderRadius.circular(12.w),
                                         border: Border.all(
                                           color: AppColors.cD9D9D9,
                                           width: 1.w,
                                         ),
                                       ),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 18.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 18.w),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
                                                 children: [
                                                   if (outCome.guessData != null)
                                                     Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 8.w),
+                                                        margin: EdgeInsets.only(right: 8.w),
                                                         child: IconWidget(
                                                           iconWidth: 20.w,
-                                                          icon: Assets
-                                                              .picksUiPicksHistoryPick,
-                                                          iconColor: outCome
-                                                                  .guessData!
-                                                                  .success
-                                                              ? AppColors
-                                                                  .cE71629
-                                                              : AppColors
-                                                                  .c0FA76C,
+                                                          icon: Assets.picksUiPicksHistoryPick,
+                                                          iconColor: outCome.guessData!.success
+                                                              ? AppColors.cE71629
+                                                              : AppColors.c0FA76C,
                                                         )),
                                                   Text(
                                                     "@${Utils.getTeamInfo(outCome.awayTeamId).shortEname}",
                                                     style: 14.w5(
                                                       color: AppColors.c000000,
                                                       height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fOswaldMedium,
+                                                      fontFamily: FontFamily.fOswaldMedium,
                                                     ),
                                                   )
                                                 ],
@@ -1009,24 +881,19 @@ class SummaryPage extends GetView<SummaryController> {
                                               if (outCome.guessData != null)
                                                 Builder(builder: (context) {
                                                   var text = "";
-                                                  if (outCome.guessData!
-                                                          .guessGameAttrValue ==
-                                                      -1) {
+                                                  if (outCome.guessData!.guessGameAttrValue == -1) {
                                                     text = "DNP";
                                                   } else {
-                                                    text =
-                                                        "Result: ${outCome.guessData!.guessGameAttrValue}";
+                                                    text = "Result: ${outCome.guessData!.guessGameAttrValue}";
                                                   }
                                                   return Text(
                                                     text,
                                                     style: 14.w5(
-                                                      color: outCome.guessData!
-                                                              .success
+                                                      color: outCome.guessData!.success
                                                           ? AppColors.cE71629
                                                           : AppColors.c0FA76C,
                                                       height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fOswaldMedium,
+                                                      fontFamily: FontFamily.fOswaldMedium,
                                                     ),
                                                   );
                                                 })
@@ -1036,8 +903,7 @@ class SummaryPage extends GetView<SummaryController> {
                                                   style: 14.w5(
                                                     color: AppColors.cB3B3B3,
                                                     height: 1,
-                                                    fontFamily: FontFamily
-                                                        .fOswaldMedium,
+                                                    fontFamily: FontFamily.fOswaldMedium,
                                                   ),
                                                 )
                                             ],
@@ -1045,23 +911,17 @@ class SummaryPage extends GetView<SummaryController> {
                                           9.vGap,
                                           Text.rich(
                                             TextSpan(children: [
-                                              TextSpan(
-                                                  text: Utils.getLongName(
-                                                      outCome.key)),
+                                              TextSpan(text: Utils.getLongName(outCome.key)),
                                               if (outCome.guessData != null)
                                                 TextSpan(
-                                                    text:
-                                                        " ${outCome.guessData!.guessChoice == 1 ? "MORE" : "LESS"}"),
+                                                    text: " ${outCome.guessData!.guessChoice == 1 ? "MORE" : "LESS"}"),
                                               if (outCome.guessData != null)
-                                                TextSpan(
-                                                    text:
-                                                        " ${outCome.guessData!.guessReferenceValue}"),
+                                                TextSpan(text: " ${outCome.guessData!.guessReferenceValue}"),
                                             ]),
                                             style: 10.w4(
                                                 color: AppColors.c000000,
                                                 height: 1,
-                                                fontFamily:
-                                                    FontFamily.fRobotoRegular),
+                                                fontFamily: FontFamily.fRobotoRegular),
                                           ),
                                           16.vGap,
                                           Divider(
@@ -1070,43 +930,28 @@ class SummaryPage extends GetView<SummaryController> {
                                           ),
                                           13.vGap,
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               MtInkWell(
-                                                onTap: () => Get.toNamed(
-                                                    RouteNames
-                                                        .leagueLeagueDetail,
-                                                    arguments: {
-                                                      "gameId": outCome.gameId
-                                                    }),
+                                                onTap: () => Get.toNamed(RouteNames.leagueLeagueDetail,
+                                                    arguments: {"gameId": outCome.gameId}),
                                                 child: Row(
                                                   children: [
                                                     Text(
-                                                      controller
-                                                          .formatGameStartTime(
-                                                              outCome
-                                                                  .gameStartTime),
+                                                      controller.formatGameStartTime(outCome.gameStartTime),
                                                       style: TextStyle(
-                                                          color:
-                                                              AppColors.c000000,
+                                                          color: AppColors.c000000,
                                                           height: 1,
-                                                          fontFamily: FontFamily
-                                                              .fRobotoRegular,
+                                                          fontFamily: FontFamily.fRobotoRegular,
                                                           fontSize: 10.w,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .underline),
+                                                          fontWeight: FontWeight.w400,
+                                                          decoration: TextDecoration.underline),
                                                     ),
                                                     7.hGap,
                                                     IconWidget(
                                                       iconWidth: 4.w,
-                                                      icon: Assets
-                                                          .commonUiCommonIconSystemJumpto,
-                                                      iconColor:
-                                                          AppColors.c000000,
+                                                      icon: Assets.commonUiCommonIconSystemJumpto,
+                                                      iconColor: AppColors.c000000,
                                                     )
                                                   ],
                                                 ),
@@ -1115,20 +960,16 @@ class SummaryPage extends GetView<SummaryController> {
                                                 children: [
                                                   IconWidget(
                                                     iconWidth: 17.w,
-                                                    icon: Assets
-                                                        .picksUiPicksHistoryComment,
-                                                    iconColor:
-                                                        AppColors.c000000,
+                                                    icon: Assets.picksUiPicksHistoryComment,
+                                                    iconColor: AppColors.c000000,
                                                   ),
                                                   6.hGap,
                                                   Text(
                                                     "${outCome.reviewsCount}",
                                                     style: 10.w4(
-                                                        color:
-                                                            AppColors.c000000,
+                                                        color: AppColors.c000000,
                                                         height: 1,
-                                                        fontFamily: FontFamily
-                                                            .fRobotoRegular),
+                                                        fontFamily: FontFamily.fRobotoRegular),
                                                   )
                                                 ],
                                               )
@@ -1146,8 +987,7 @@ class SummaryPage extends GetView<SummaryController> {
                     _buildStats(context),
                     // _buildNews(),
                     Obx(() {
-                      var picksIndexController =
-                          Get.find<PicksIndexController>();
+                      var picksIndexController = Get.find<PicksIndexController>();
                       var leagueController = Get.find<LeagueController>();
                       var value = picksIndexController.choiceSize.value;
                       value += leagueController.choiceSize.value;
@@ -1176,9 +1016,7 @@ class SummaryPage extends GetView<SummaryController> {
         return const SizedBox.shrink();
       }
       return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.w),
-            color: AppColors.cFFFFFF),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
         margin: EdgeInsets.only(top: 9.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1191,10 +1029,8 @@ class SummaryPage extends GetView<SummaryController> {
                 style: 19.w7(color: AppColors.c262626, height: 1),
               ),
             ),
-            ...List.generate(
-                controller.nbaPlayerBaseInfoEntity!.playerNews.length, (index) {
-              var playerNew =
-                  controller.nbaPlayerBaseInfoEntity!.playerNews[index];
+            ...List.generate(controller.nbaPlayerBaseInfoEntity!.playerNews.length, (index) {
+              var playerNew = controller.nbaPlayerBaseInfoEntity!.playerNews[index];
               return InkWell(
                 onTap: () {
                   print('playerNew:${playerNew.id}');
@@ -1203,18 +1039,13 @@ class SummaryPage extends GetView<SummaryController> {
                 child: Container(
                   width: double.infinity,
                   margin: EdgeInsets.only(left: 16.w, right: 16.w, top: 13.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cF2F2F2,
-                      borderRadius: BorderRadius.circular(16.w)),
-                  padding: EdgeInsets.only(
-                      top: 14.w, right: 30.w, left: 14.w, bottom: 14.w),
+                  decoration: BoxDecoration(color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
+                  padding: EdgeInsets.only(top: 14.w, right: 30.w, left: 14.w, bottom: 14.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        playerNew.title.isEmpty
-                            ? playerNew.content
-                            : playerNew.title,
+                        playerNew.title.isEmpty ? playerNew.content : playerNew.title,
                         maxLines: 3,
                         style: TextStyle(
                           fontSize: 12.sp,
@@ -1248,8 +1079,7 @@ class SummaryPage extends GetView<SummaryController> {
       if (controller.getCommunityPick() == null) {
         return const SizedBox.shrink();
       }
-      NbaPlayerBaseInfoGuessInfosPtsCommunityPick communityPick =
-          controller.getCommunityPick()!;
+      NbaPlayerBaseInfoGuessInfosPtsCommunityPick communityPick = controller.getCommunityPick()!;
       return Column(
         children: [
           9.vGap,
@@ -1257,9 +1087,7 @@ class SummaryPage extends GetView<SummaryController> {
             height: 77.w,
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: 16.w),
-            decoration: BoxDecoration(
-                color: AppColors.cF2F2F2,
-                borderRadius: BorderRadius.circular(16.w)),
+            decoration: BoxDecoration(color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
             padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1272,16 +1100,14 @@ class SummaryPage extends GetView<SummaryController> {
                 8.vGap,
                 Builder(builder: (context) {
                   double morePercent = 0;
-                  if (communityPick.moreCount == 0 &&
-                      communityPick.lessCount == 0) {
+                  if (communityPick.moreCount == 0 && communityPick.lessCount == 0) {
                     morePercent = 50;
                   } else if (communityPick.moreCount == 0) {
                     morePercent = 0;
                   } else if (communityPick.lessCount == 0) {
                     morePercent = 100;
                   } else {
-                    morePercent = communityPick.moreCount /
-                        (communityPick.moreCount + communityPick.lessCount);
+                    morePercent = communityPick.moreCount / (communityPick.moreCount + communityPick.lessCount);
                   }
                   int moreFlex = int.parse((morePercent).toStringAsFixed(0));
                   return Column(
@@ -1362,8 +1188,7 @@ class SummaryPage extends GetView<SummaryController> {
 
   Widget _buildStats(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
       margin: EdgeInsets.only(top: 9.w),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         25.vGap,
@@ -1391,21 +1216,15 @@ class SummaryPage extends GetView<SummaryController> {
                         padding: EdgeInsets.only(left: 16.w),
                         decoration: BoxDecoration(
                             border: Border(
-                          bottom:
-                              BorderSide(color: AppColors.cD1D1D1, width: 1.w),
-                          right:
-                              BorderSide(color: AppColors.cE6E6E6, width: 1.w),
+                          bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+                          right: BorderSide(color: AppColors.cE6E6E6, width: 1.w),
                         )),
                         alignment: Alignment.center,
                         child: Text(LangKey.nbaTeamMeanStats.tr,
-                            style: 12.w4(
-                                color: AppColors.c000000,
-                                fontFamily: FontFamily.fRobotoMedium)),
+                            style: 12.w4(color: AppColors.c000000, fontFamily: FontFamily.fRobotoMedium)),
                       )),
                   if (controller.nbaPlayerBaseInfoEntity != null &&
-                      controller.nbaPlayerBaseInfoEntity!.playerRegularMap
-                              ?.isNotEmpty() ==
-                          true)
+                      controller.nbaPlayerBaseInfoEntity!.playerRegularMap?.isNotEmpty() == true)
                     SizedBox(
                         height: 30.w,
                         width: 77.w,
@@ -1413,21 +1232,15 @@ class SummaryPage extends GetView<SummaryController> {
                           margin: EdgeInsets.only(left: 16.w),
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(
-                                color: AppColors.cE6E6E6, width: 1.w),
-                            right: BorderSide(
-                                color: AppColors.cE6E6E6, width: 1.w),
+                            bottom: BorderSide(color: AppColors.cE6E6E6, width: 1.w),
+                            right: BorderSide(color: AppColors.cE6E6E6, width: 1.w),
                           )),
                           alignment: Alignment.center,
                           child: Text(LangKey.gameMeanRegular.tr,
-                              style: 12.w4(
-                                  color: AppColors.c000000,
-                                  fontFamily: FontFamily.fRobotoRegular)),
+                              style: 12.w4(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular)),
                         )),
                   if (controller.nbaPlayerBaseInfoEntity != null &&
-                      controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
-                              ?.isNotEmpty() ==
-                          true)
+                      controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap?.isNotEmpty() == true)
                     SizedBox(
                       height: 30.w,
                       width: 77.w,
@@ -1435,16 +1248,12 @@ class SummaryPage extends GetView<SummaryController> {
                           margin: EdgeInsets.only(left: 16.w),
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(
-                                color: AppColors.cE6E6E6, width: 1.w),
-                            right: BorderSide(
-                                color: AppColors.cE6E6E6, width: 1.w),
+                            bottom: BorderSide(color: AppColors.cE6E6E6, width: 1.w),
+                            right: BorderSide(color: AppColors.cE6E6E6, width: 1.w),
                           )),
                           alignment: Alignment.center,
                           child: Text(LangKey.gameMeanPost.tr,
-                              style: 12.w4(
-                                  color: AppColors.c000000,
-                                  fontFamily: FontFamily.fRobotoRegular))),
+                              style: 12.w4(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular))),
                     ),
                   // if (controller.nbaPlayerBaseInfoEntity != null &&
                   //     controller.nbaPlayerBaseInfoEntity!.playerDataAvg
@@ -1487,22 +1296,15 @@ class SummaryPage extends GetView<SummaryController> {
                     //   );
                     // }),
                     if (controller.nbaPlayerBaseInfoEntity != null &&
-                        (controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
-                                    ?.isNotEmpty() ==
-                                true ||
-                            controller.nbaPlayerBaseInfoEntity!.playerRegularMap
-                                    ?.isNotEmpty() ==
-                                true))
+                        (controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap?.isNotEmpty() == true ||
+                            controller.nbaPlayerBaseInfoEntity!.playerRegularMap?.isNotEmpty() == true))
                       Builder(builder: (context) {
                         var keys = controller.getStatsKeys();
                         var children = List.generate(3, (index) {
                           if (index == 0) {
                             return TableRow(
                                 decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: AppColors.cD1D1D1,
-                                            width: 1.w))),
+                                    border: Border(bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w))),
                                 children: List.generate(
                                     keys.length,
                                     (index) => Container(
@@ -1510,53 +1312,35 @@ class SummaryPage extends GetView<SummaryController> {
                                         alignment: Alignment.center,
                                         child: Text(
                                           keys[index],
-                                          style: 12.w4(
-                                              color: AppColors.c000000,
-                                              fontFamily:
-                                                  FontFamily.fRobotoMedium),
+                                          style: 12.w4(color: AppColors.c000000, fontFamily: FontFamily.fRobotoMedium),
                                         ))));
                           } else if (index == 1) {
                             return TableRow(
                                 decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: AppColors.cE6E6E6,
-                                            width: 1.w))),
+                                    border: Border(bottom: BorderSide(color: AppColors.cE6E6E6, width: 1.w))),
                                 children: List.generate(keys.length, (index) {
-                                  var value = controller
-                                      .nbaPlayerBaseInfoEntity!
-                                      .playerRegularMap!
-                                      .toJson()[keys[index]];
+                                  var value =
+                                      controller.nbaPlayerBaseInfoEntity!.playerRegularMap!.toJson()[keys[index]];
                                   return Container(
                                       height: 30.w,
                                       alignment: Alignment.center,
                                       child: Text(
-                                        (value == null
-                                            ? "-"
-                                            : (value as num).formatToString()),
-                                        style: 14.w4(
-                                            color: AppColors.c4D4D4D,
-                                            fontFamily:
-                                                FontFamily.fRobotoRegular),
+                                        (value == null ? "-" : (value as num).formatToString()),
+                                        style: 14.w4(color: AppColors.c4D4D4D, fontFamily: FontFamily.fRobotoRegular),
                                       ));
                                 }));
                           } else {
                             return TableRow(
                                 children: List.generate(keys.length, (index) {
-                              var value = controller
-                                  .nbaPlayerBaseInfoEntity!.playerPlayoffsMap!
+                              var value = controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap!
                                   .toJson()[keys[index].toLowerCase()];
 
                               return Container(
                                   height: 30.w,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    (value == null
-                                        ? "-"
-                                        : (value as num).formatToString()),
-                                    style: 14.w4(
-                                        color: AppColors.c4D4D4D,
-                                        fontFamily: FontFamily.fRobotoRegular),
+                                    (value == null ? "-" : (value as num).formatToString()),
+                                    style: 14.w4(color: AppColors.c4D4D4D, fontFamily: FontFamily.fRobotoRegular),
                                   ));
                             }));
                           }
@@ -1613,8 +1397,7 @@ class SummaryPage extends GetView<SummaryController> {
                           child: Column(
                             children: [
                               Table(
-                                columnWidths: List.generate((keys).length,
-                                    (index) => FixedColumnWidth(40.w)).asMap(),
+                                columnWidths: List.generate((keys).length, (index) => FixedColumnWidth(40.w)).asMap(),
                                 children: children,
                               ),
                             ],
@@ -1641,10 +1424,7 @@ class SummaryPage extends GetView<SummaryController> {
               children: [
                 Text(
                   LangKey.gameButtonSeeAll.tr,
-                  style: 16.w7(
-                      color: AppColors.c262626,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldBold),
+                  style: 16.w7(color: AppColors.c262626, height: 1, fontFamily: FontFamily.fOswaldBold),
                 ),
                 6.hGap,
                 IconWidget(
@@ -1688,10 +1468,7 @@ class SummaryPage extends GetView<SummaryController> {
           children: [
             Text(
               enMMDDYYYY,
-              style: 12.w4(
-                  color: AppColors.c000000,
-                  height: 1,
-                  fontFamily: FontFamily.fRobotoRegular),
+              style: 12.w4(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoRegular),
             ),
             Text(
               "${value.format()}",
@@ -1762,8 +1539,7 @@ class SummaryPage extends GetView<SummaryController> {
     var value = controller.getLast5AvgWithTab();
     var plotBands = <PlotBand>[];
     if (value != 0) {
-      var verticalTextPadding =
-          controller.getColumnMaxYValue() / 2 > value ? "0" : "-20";
+      var verticalTextPadding = controller.getColumnMaxYValue() / 2 > value ? "0" : "-20";
       plotBands = <PlotBand>[
         PlotBand(
           start: value,
@@ -1775,10 +1551,7 @@ class SummaryPage extends GetView<SummaryController> {
           verticalTextPadding: "14",
           horizontalTextAlignment: TextAnchor.end,
           verticalTextAlignment: TextAnchor.middle,
-          textStyle: 10.w4(
-              color: AppColors.cFF7954,
-              height: 1,
-              fontFamily: FontFamily.fOswaldMedium),
+          textStyle: 10.w4(color: AppColors.cFF7954, height: 1, fontFamily: FontFamily.fOswaldMedium),
           // 虚线的宽度
           borderColor: AppColors.cFF7954,
           shouldRenderAboveSeries: true,
@@ -1795,25 +1568,18 @@ class SummaryPage extends GetView<SummaryController> {
         axisLine: const AxisLine(color: AppColors.cD9D9D9, width: 1),
         majorTickLines: const MajorTickLines(size: 0),
         labelIntersectAction: AxisLabelIntersectAction.wrap,
-        labelStyle: 10.w4(
-            color: AppColors.cB3B3B3,
-            height: 1,
-            fontFamily: FontFamily.fRobotoRegular),
+        labelStyle: 10.w4(color: AppColors.cB3B3B3, height: 1, fontFamily: FontFamily.fRobotoRegular),
       ),
       // 添加标注
       primaryYAxis: NumericAxis(
-        labelStyle: 10.w4(
-            color: AppColors.cB3B3B3,
-            height: 1,
-            fontFamily: FontFamily.fOswaldMedium),
+        labelStyle: 10.w4(color: AppColors.cB3B3B3, height: 1, fontFamily: FontFamily.fOswaldMedium),
         plotBands: plotBands,
         maximum: controller.getColumnMaxYValue() * 1.2,
         minimum: 0,
         axisLine: const AxisLine(width: 0),
         // maximum: controller.getColumnMaxYValue().toDouble(),
         majorTickLines: const MajorTickLines(size: 0),
-        majorGridLines: const MajorGridLines(
-            width: 1, color: AppColors.cD9D9D9, dashArray: [3, 3]),
+        majorGridLines: const MajorGridLines(width: 1, color: AppColors.cD9D9D9, dashArray: [3, 3]),
       ),
       series: controller.getDefaultColumnSeries(width),
       // tooltipBehavior: _tooltipBehavior,
