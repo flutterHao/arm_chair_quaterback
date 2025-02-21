@@ -1,15 +1,16 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -206,12 +207,7 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
 
   Widget _playerItemWidget(int index) {
     return Obx(() {
-      List<PlayerStrengthRankTrendList> item = controller.allPlayerStrengthRank[index].trendList;
-
-      ///最后两天分数差值
-      int differenceScore = item[0].playerScore - item[1].playerScore;
-      int differenceStrength = item[0].playerStrength - item[1].playerStrength;
-      var player = Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId);
+      NbaPlayerInfosPlayerBaseInfoList player = Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId);
       return InkWell(
         onTap: () async {},
         child: Container(
@@ -219,199 +215,218 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
           height: 93.w,
           child: Row(
             children: [
-              Container(
-                  width: 30.w,
-                  height: 30.w,
-                  alignment: Alignment.center,
-                  child: index == 0
-                      ? IconWidget(
-                          iconWidth: 30.w,
-                          icon: Assets.commonUiManagerIconMedal01,
-                        )
-                      : index == 1
-                          ? IconWidget(
-                              iconWidth: 30.w,
-                              icon: Assets.commonUiManagerIconMedal02,
-                            )
-                          : index == 2
-                              ? IconWidget(
-                                  iconWidth: 30.w,
-                                  icon: Assets.commonUiManagerIconMedal03,
-                                )
-                              : Text("${index + 1}", style: 19.w5(fontFamily: FontFamily.fOswaldMedium))),
+              _playRankWidget(index),
               6.hGap,
-              Stack(
-                children: [
-                  PlayerAvatarWidget(
-                    width: 73.w,
-                    height: 93.w,
-                    radius: 9.w,
-                    playerId: controller.allPlayerStrengthRank[index].playerId,
-                    backgroundColor: AppColors.cD9D9D9,
-                  ),
-                  Positioned(
-                      top: 4.w,
-                      right: 4.w,
-                      child: Container(
-                        height: 16.w,
-                        width: 16.w,
-                        decoration: BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(4.w)),
-                        child: IconWidget(
-                          iconWidth: 9.w,
-                          icon: Assets.iconUiIconRead,
-                          iconColor: AppColors.c000000,
-                        ),
-                      ))
-                ],
-              ),
+              _playerCardWidget(player),
               10.hGap,
-              Expanded(
-                  child: Container(
-                      // color: Colors.green.withOpacity(.1),
-                      child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                          child: Text(
-                        Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId).ename.toUpperCase(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
-                      )),
-                      4.hGap,
-                      Container(
-                        decoration: BoxDecoration(color: AppColors.cFF5454, borderRadius: BorderRadius.circular(4.w)),
-                        padding: EdgeInsets.symmetric(horizontal: 4.w),
-                        child: Text(
-                          'INJ',
-                          style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: Colors.white),
-                        ),
-                      )
-                    ],
-                  ),
-                  Text(
-                    ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}  SAL ${player.salary}K'
-                        .toUpperCase(),
-                    style: 10.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
-                  ),
-                  6.vGap,
-                  Expanded(
-                      child: _playerchartWidget(controller.allPlayerStrengthRank[index].trendList, differenceScore)),
-                  Row(
-                    children: [
-                      Text(
-                        'POW ${controller.allPlayerStrengthRank[index].strength}',
-                        style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
-                      ),
-                      4.hGap,
-                      Transform.rotate(
-                        angle: differenceStrength >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
-                        child: IconWidget(
-                          iconWidth: 5.w,
-                          iconHeight: 8.w,
-                          icon: Assets.commonUiCommonIconSystemArrow,
-                          iconColor: differenceStrength >= 0 ? AppColors.c0FA76C : AppColors.cFF5D54,
-                        ),
-                      ),
-                      4.hGap,
-                      Text(
-                        '${differenceStrength.abs()}',
-                        style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
-                      ),
-                    ],
-                  )
-                ],
-              ))),
-              16.hGap,
-              Container(
-                width: 82.w,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Spacer(),
-                        InkWell(
-                          onTap: () async {
-                            if (controller.likePlayers.contains(controller.allPlayerStrengthRank[index].playerId)) {
-                              var res = await UserApi.cancelLikingPlayer(
-                                  '${controller.allPlayerStrengthRank[index].playerId}');
-                              controller.likePlayers.value = res.teamPreference!.likePlayers!;
-                            } else {
-                              var res = await UserApi.likePlayer('${controller.allPlayerStrengthRank[index].playerId}');
-                              controller.likePlayers.value = res.teamPreference!.likePlayers!;
-                            }
-                          },
-                          child: Obx(() => IconWidget(
-                              iconWidth: 16.w,
-                              iconColor:
-                                  controller.likePlayers.contains(controller.allPlayerStrengthRank[index].playerId)
-                                      ? Colors.yellow
-                                      : AppColors.c8A8A8A,
-                              icon: controller.likePlayers.contains(controller.allPlayerStrengthRank[index].playerId)
-                                  ? Assets.commonUiCommonStatusBarStar02
-                                  : Assets.commonUiCommonStatusBarStar01)),
-                        )
-                      ],
-                    ),
-                    Spacer(),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 55.w,
-                          height: 50.w,
-                          decoration: BoxDecoration(
-                              color: AppColors.c333333,
-                              borderRadius:
-                                  BorderRadius.only(topLeft: Radius.circular(6.w), bottomLeft: Radius.circular(6.w))),
-                          child: Column(
-                            children: [
-                              Text(
-                                '${item[0].playerScore}',
-                                style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
-                              ),
-                              Text(
-                                'OVR',
-                                style: 12.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldRegular),
-                              ),
-                              2.vGap
-                            ],
-                          ),
-                        ),
-                        3.hGap,
-                        Container(
-                          height: 50.w,
-                          width: 24.w,
-                          decoration: BoxDecoration(
-                              color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
-                              borderRadius:
-                                  BorderRadius.only(bottomRight: Radius.circular(6.w), topRight: Radius.circular(6.w))),
-                          child: Column(
-                            children: [
-                              Text(
-                                '${differenceScore.abs()}',
-                                style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
-                              ),
-                              Transform.rotate(
-                                angle: differenceScore >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
-                                child: IconWidget(
-                                    iconWidth: 8.w, iconHeight: 12.w, icon: Assets.commonUiCommonIconSystemArrow),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              Expanded(child: _playerInfoWidget(index, player)),
+              10.hGap,
+              _playerOvrRightWidget(index)
             ],
           ),
         ),
       );
     });
+  }
+
+  Widget _playerInfoWidget(int index, NbaPlayerInfosPlayerBaseInfoList player) {
+    List<PlayerStrengthRankTrendList> item = controller.allPlayerStrengthRank[index].trendList;
+
+    ///最后两天分数差值
+    int differenceScore = item[0].playerScore - item[1].playerScore;
+    int differenceStrength = item[0].playerStrength - item[1].playerStrength;
+    return Container(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Flexible(
+                child: Text(
+              Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId).ename.toUpperCase(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
+            )),
+            4.hGap,
+            Container(
+              decoration: BoxDecoration(color: AppColors.cFF5454, borderRadius: BorderRadius.circular(4.w)),
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              child: Text(
+                'INJ',
+                style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: Colors.white),
+              ),
+            )
+          ],
+        ),
+        Text(
+          ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}  SAL ${player.salary}K'.toUpperCase(),
+          style: 10.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
+        ),
+        6.vGap,
+        Expanded(child: _playerchartWidget(controller.allPlayerStrengthRank[index].trendList, differenceScore)),
+        Row(
+          children: [
+            Text(
+              'POW ${controller.allPlayerStrengthRank[index].strength}',
+              style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
+            ),
+            4.hGap,
+            Transform.rotate(
+              angle: differenceStrength >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
+              child: IconWidget(
+                iconWidth: 5.w,
+                iconHeight: 8.w,
+                icon: Assets.commonUiCommonIconSystemArrow,
+                iconColor: differenceStrength >= 0 ? AppColors.c0FA76C : AppColors.cFF5D54,
+              ),
+            ),
+            4.hGap,
+            Text(
+              '${differenceStrength.abs()}',
+              style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
+            ),
+          ],
+        )
+      ],
+    ));
+  }
+
+  Widget _playerOvrRightWidget(int index) {
+    List<PlayerStrengthRankTrendList> item = controller.allPlayerStrengthRank[index].trendList;
+    int differenceScore = item[0].playerScore - item[1].playerScore;
+    return SizedBox(
+      width: 82.w,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Spacer(),
+              InkWell(
+                onTap: () => controller.changeLikePlayer(index),
+                child: Obx(() => IconWidget(
+                    iconWidth: 16.w,
+                    iconColor: controller.likePlayersList.contains(controller.allPlayerStrengthRank[index].playerId)
+                        ? Colors.yellow
+                        : AppColors.c8A8A8A,
+                    icon: controller.likePlayersList.contains(controller.allPlayerStrengthRank[index].playerId)
+                        ? Assets.commonUiCommonStatusBarStar02
+                        : Assets.commonUiCommonStatusBarStar01)),
+              )
+            ],
+          ),
+          Spacer(),
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 55.w,
+                  decoration: BoxDecoration(
+                      color: AppColors.c333333,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(6.w), bottomLeft: Radius.circular(6.w))),
+                  child: Column(
+                    children: [
+                      Text(
+                        '${item[0].playerScore}',
+                        style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
+                      ),
+                      Text(
+                        'OVR',
+                        style: 12.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldRegular),
+                      ),
+                      2.vGap
+                    ],
+                  ),
+                ),
+                3.hGap,
+                Container(
+                  width: 24.w,
+                  decoration: BoxDecoration(
+                      color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                      borderRadius:
+                          BorderRadius.only(bottomRight: Radius.circular(6.w), topRight: Radius.circular(6.w))),
+                  child: Column(
+                    children: [
+                      Text(
+                        '${differenceScore.abs()}',
+                        style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
+                      ),
+                      Transform.rotate(
+                        angle: differenceScore >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
+                        child: IconWidget(iconWidth: 8.w, iconHeight: 12.w, icon: Assets.commonUiCommonIconSystemArrow),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          7.vGap
+        ],
+      ),
+    );
+  }
+
+  Widget _playRankWidget(int index) {
+    return Container(
+        width: 30.w,
+        height: 30.w,
+        alignment: Alignment.center,
+        child: index == 0
+            ? IconWidget(
+                iconWidth: 30.w,
+                icon: Assets.commonUiManagerIconMedal01,
+              )
+            : index == 1
+                ? IconWidget(
+                    iconWidth: 30.w,
+                    icon: Assets.commonUiManagerIconMedal02,
+                  )
+                : index == 2
+                    ? IconWidget(
+                        iconWidth: 30.w,
+                        icon: Assets.commonUiManagerIconMedal03,
+                      )
+                    : Text("${index + 1}", style: 19.w5(fontFamily: FontFamily.fOswaldMedium)));
+  }
+
+  Widget _playerCardWidget(NbaPlayerInfosPlayerBaseInfoList player) {
+    return Stack(
+      children: [
+        PlayerAvatarWidget(
+          width: 73.w,
+          height: 93.w,
+          radius: 9.w,
+          playerId: player.playerId,
+          backgroundColor: AppColors.cD9D9D9,
+        ),
+        Positioned(
+            left: 3.5.w,
+            top: 4.w,
+            child: OutlinedText(
+              text: Utils.getPlayBaseInfo(player.playerId).grade,
+              textStyle: 21.w4(
+                color: AppColors.c262626,
+                height: 0.8,
+                fontFamily: FontFamily.fRobotoBlack,
+              ),
+            )),
+        Positioned(
+            top: 4.w,
+            right: 4.w,
+            child: Container(
+              height: 16.w,
+              width: 16.w,
+              decoration: BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(4.w)),
+              child: IconWidget(
+                iconWidth: 9.w,
+                icon: Assets.iconUiIconRead,
+                iconColor: AppColors.c000000,
+              ),
+            ))
+      ],
+    );
   }
 
   Widget _playerchartWidget(List<PlayerStrengthRankTrendList> item, int differenceScore) {

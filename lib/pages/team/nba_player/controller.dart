@@ -13,7 +13,7 @@ class NbaPlayerController extends GetxController {
   // ovr详情tab切换
   RxInt currentIndex = (-1).obs;
 
-  RxList<int> likePlayers = RxList();
+  RxList<int> likePlayersList = RxList();
 
   initData() async {
     allPlayerStrengthRank.clear();
@@ -29,7 +29,7 @@ class NbaPlayerController extends GetxController {
     }
 
     var teamLoginInfo = await UserApi.getTeamLoginInfo();
-    likePlayers.value = teamLoginInfo.team!.teamPreference!.likePlayers!;
+    likePlayersList.value = teamLoginInfo.team!.teamPreference!.likePlayers!;
   }
 
   @override
@@ -55,6 +55,7 @@ class NbaPlayerController extends GetxController {
     Get.toNamed(RouteNames.picksPlayerDetail, arguments: PlayerDetailPageArguments(playerId));
   }
 
+  /// 切换ovr排行榜tab
   void currentIndexChange(int tabIndex) {
     if (currentIndex.value != 2 * tabIndex) {
       currentIndex.value = 2 * tabIndex;
@@ -78,10 +79,38 @@ class NbaPlayerController extends GetxController {
         {
           allPlayerStrengthRank.sort((a, b) => b.strength.compareTo(a.strength));
         }
+      case 4:
+        {
+          allPlayerStrengthRank.sort((a, b) {
+            if (likePlayersList.contains(a.playerId) == likePlayersList.contains(b.playerId)) {
+              return a.rank.compareTo(b.rank);
+            }
+            return likePlayersList.contains(b.playerId) ? 1 : -1;
+          });
+        }
+      case 5:
+        {
+          allPlayerStrengthRank.sort((a, b) {
+            if (likePlayersList.contains(a.playerId) == likePlayersList.contains(b.playerId)) {
+              return a.rank.compareTo(b.rank);
+            }
+            return likePlayersList.contains(b.playerId) ? -1 : 1;
+          });
+        }
       default:
         {
           allPlayerStrengthRank.sort((a, b) => a.rank.compareTo(b.rank));
         }
+    }
+  }
+
+  void changeLikePlayer(int index) async {
+    if (likePlayersList.contains(allPlayerStrengthRank[index].playerId)) {
+      var res = await UserApi.cancelLikingPlayer('${allPlayerStrengthRank[index].playerId}');
+      likePlayersList.value = res.teamPreference!.likePlayers!;
+    } else {
+      var res = await UserApi.likePlayer('${allPlayerStrengthRank[index].playerId}');
+      likePlayersList.value = res.teamPreference!.likePlayers!;
     }
   }
 }
