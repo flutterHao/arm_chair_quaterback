@@ -60,7 +60,10 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
     // 限制动画进度在0到1之间
     newValue = newValue.clamp(0.0, 1.0);
     _animationController.value = newValue;
-
+    bool shouldHide = _animationController.value > 0.5;
+    if(shouldHide != widget.controller?.barHideStatus.value) {
+      widget.controller?.barHideStatus.value = shouldHide;
+    }
   }
 
   void _handleScrollEnd(ScrollEndNotification notification) {
