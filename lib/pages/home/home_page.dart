@@ -71,78 +71,94 @@ class _HomePageState extends State<HomePage>
                 bottomBar: Column(
                   children: [
                     const NewPlayerTip(),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: controller.tabItems.map((e) {
-                        int index = controller.tabItems.indexOf(e);
-                        bool select = index == controller.tabIndex.value;
-                        if (index == 2) {
-                          return Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: AppColors.cFFFFFF,
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(9.w))),
-                              child: MtInkWell(
-                                onTap: () {
-                                  TeamIndexController ctrl = Get.find();
-                                  if (index == 2 && ctrl.overlayEntry.mounted) {
-                                    ctrl.goToIllustraction();
-                                  } else {
-                                    controller.onTap(2);
-                                  }
-                                },
-                                child: Container(
-                                    height: 66.w,
-                                    padding: EdgeInsets.all(4.w),
-                                    decoration: BoxDecoration(
-                                        color: select
-                                            ? AppColors.cFFFFFF
-                                            : AppColors.cFFFFFF,
-                                        borderRadius:
-                                            BorderRadius.circular(9.w)),
-                                    margin: EdgeInsets.only(bottom: 9.w),
-                                    child: Container(
-                                        height: 58.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5.w),
-                                            border: Border.all(
-                                                color: AppColors.cE6E6E6,
-                                                width: 1)),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(4.w),
-                                          child: _barItem(
-                                              controller.tabItems[2],
-                                              select,
-                                              58.w,
-                                              isCenter: true),
-                                        ))),
-                              ),
-                            ),
-                          );
-                        }
-                        return Flexible(
-                          flex: 1,
-                          child: Container(
-                            color: AppColors.cFFFFFF,
-                            child: MtInkWell(
-                              onTap: () => controller.onTap(index),
-                              child: _barItem(e, select, 66.w,
-                                  showMessageCount: index == 4),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
                     Container(
-                      height: MediaQuery.of(context).padding.bottom > 0
-                          ? MediaQuery.of(context).padding.bottom / 2
-                          : 0,
-                      width: double.infinity,
-                      color: AppColors.cFFFFFF,
-                    )
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.ce5e5e5.withOpacity(0.6),
+                            offset: Offset(0, -5.w),
+                            blurRadius: 9.w,
+                            spreadRadius: 0.w,
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: controller.tabItems.map((e) {
+                              int index = controller.tabItems.indexOf(e);
+                              bool select = index == controller.tabIndex.value;
+                              if (index == 2) {
+                                return Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: AppColors.cFFFFFF,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(9.w))),
+                                    child: MtInkWell(
+                                      onTap: () {
+                                        TeamIndexController ctrl = Get.find();
+                                        if (index == 2 && ctrl.overlayEntry.mounted) {
+                                          ctrl.goToIllustraction();
+                                        } else {
+                                          controller.onTap(2);
+                                        }
+                                      },
+                                      child: Container(
+                                          height: 66.w,
+                                          padding: EdgeInsets.all(4.w),
+                                          decoration: BoxDecoration(
+                                              color: select
+                                                  ? AppColors.cFFFFFF
+                                                  : AppColors.cFFFFFF,
+                                              borderRadius:
+                                                  BorderRadius.circular(9.w)),
+                                          margin: EdgeInsets.only(bottom: 9.w),
+                                          child: Container(
+                                              height: 58.w,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5.w),
+                                                  border: Border.all(
+                                                      color: AppColors.cE6E6E6,
+                                                      width: 1)),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(4.w),
+                                                child: _barItem(
+                                                    controller.tabItems[2],
+                                                    select,
+                                                    58.w,
+                                                    isCenter: true),
+                                              ))),
+                                    ),
+                                  ),
+                                );
+                              }
+                              return Flexible(
+                                flex: 1,
+                                child: Container(
+                                  color: AppColors.cFFFFFF,
+                                  child: MtInkWell(
+                                    onTap: () => controller.onTap(index),
+                                    child: _barItem(e, select, 66.w,
+                                        showMessageCount: index == 4),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).padding.bottom > 0
+                                ? MediaQuery.of(context).padding.bottom / 2
+                                : 0,
+                            width: double.infinity,
+                            color: AppColors.cFFFFFF,
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 child: BlackAppWidget(

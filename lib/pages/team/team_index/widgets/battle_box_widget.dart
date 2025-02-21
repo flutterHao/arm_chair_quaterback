@@ -176,7 +176,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                           onTap: () async {
                             // item.status = 1;
                             if (item.status == -1) {
-                              controller.scroToSlot();
+                              controller.scrollToSlot();
                             } else if (item.status == 2) {
                               // var a = item.toString();
                               controller.toOpenBoxPage(context, item);

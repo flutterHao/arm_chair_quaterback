@@ -24,7 +24,7 @@ class JumpUtils {
         if (queryParameters["scroll"] == "1") {
           Get.find<TeamIndexController>().scroToMatch();
         } else if (queryParameters["scroll"] == "2") {
-          Get.find<TeamIndexController>().scroToSlot();
+          Get.find<TeamIndexController>().scrollToSlot();
         }
       }
     } else {

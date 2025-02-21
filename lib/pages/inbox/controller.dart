@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +28,15 @@ class InboxController extends GetxController {
     subscription = WSInstance.netStream.listen((_) {
       if (!loadDataSuccess) {
         _initData();
+      }
+    });
+    // 监听滚动事件
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        // 判断是否滚动到边界
+        Get.find<HomeController>()
+            .scrollHideBottomBarController
+            .changeHideStatus(false);
       }
     });
   }

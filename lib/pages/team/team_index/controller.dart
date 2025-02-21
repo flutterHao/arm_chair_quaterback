@@ -64,6 +64,7 @@ class TeamIndexController extends GetxController
   ScrollController scrollController = ScrollController();
   RefreshController refreshController = RefreshController();
   bool recieved = false;
+
   // RxInt cup = 0.obs;
   TeamSimpleEntity teamSimpleEntity = TeamSimpleEntity();
   RxString seasonCountDonwnStr = '0d 00:00:00'.obs;
@@ -96,6 +97,7 @@ class TeamIndexController extends GetxController
   late StreamSubscription<int> subscription;
   late AnimationController fallOutAnimatedCtrl;
   late Animation<double> fallOutAnimation;
+
   //获取球员
   // var getPlayerCount = 0.obs;
   // var showGetPlayerTip = false.obs;
@@ -155,6 +157,16 @@ class TeamIndexController extends GetxController
 
     breathAnimation =
         Tween<double>(begin: 0.95, end: 0.9).animate(breathController);
+
+    // 监听滚动事件
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        // 判断是否滚动到边界
+        Get.find<HomeController>()
+            .scrollHideBottomBarController
+            .changeHideStatus(false);
+      }
+    });
   }
 
   @override
@@ -167,6 +179,7 @@ class TeamIndexController extends GetxController
   @override
   void dispose() {
     subscription.cancel();
+    scrollController.dispose();
     super.dispose();
     shakeController.dispose();
   }
@@ -447,13 +460,17 @@ class TeamIndexController extends GetxController
   }
 
   ///滚动到老虎机
-  void scroToSlot() {
+  void scrollToSlot({Function? onEnd}) {
     if (scrollController.offset != 890.w) {
-      scrollController.animateTo(
+      scrollController
+          .animateTo(
         0.w,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
-      );
+      )
+          .then((_) {
+        onEnd?.call();
+      });
     }
   }
 

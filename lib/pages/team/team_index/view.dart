@@ -38,55 +38,6 @@ class _TeamIndexPageState extends State<TeamIndexPage>
   Widget build(BuildContext context) {
     super.build(context);
     return const _TeamView();
-    // return Navigator(
-    //   key: GlobalNestedKey.TeamTabGlobalKey,
-    //   initialRoute: RouteNames.teamTeamIndex,
-    //   onGenerateRoute: (settings) {
-    //     switch (settings.name) {
-    //       case RouteNames.teamTeamIndex:
-    //         return GetPageRoute(
-    //           settings: settings,
-    //           customTransition: HalfSlideRightToLeftTransition(),
-    //           page: () => const _TeamView(),
-    //         );
-    //       case RouteNames.teamBeautyPage:
-    //         return GetPageRoute(
-    //           opaque: false,
-    //           settings: settings,
-    //           customTransition: HalfSlideRightToLeftTransition(),
-    //           page: () => const BeautyPage(),
-    //         );
-    //       case RouteNames.mineMineInfo:
-    //         return GetPageRoute(
-    //             opaque: false,
-    //             settings: settings,
-    //             customTransition: HalfSlideRightToLeftTransition(),
-    //             page: () => const MineInfoPage(),
-    //             binding: MineInfoBinding());
-    //       case RouteNames.mineMineSetting:
-    //         return GetPageRoute(
-    //             opaque: false,
-    //             settings: settings,
-    //             page: () => const MineSettingPage(),
-    //             binding: MineSettingBinding());
-    //       case RouteNames.mineMineAccount:
-    //         return GetPageRoute(
-    //             opaque: false,
-    //             settings: settings,
-    //             customTransition: HalfSlideRightToLeftTransition(),
-    //             page: () => const MineAccountPage(),
-    //             binding: MineAccountBinding());
-    //       // case RouteNames.teamMemberPage:
-    //       //   return GetPageRoute(
-    //       //     opaque: false,
-    //       //     settings: settings,
-    //       //     customTransition: HalfSlideRightToLeftTransition(),
-    //       //     page: () => const TeamMenberView(),
-    //       //   );
-    //     }
-    //     return null;
-    //   },
-    // );
   }
 }
 

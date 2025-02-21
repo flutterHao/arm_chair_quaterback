@@ -577,7 +577,11 @@ class TrainingController extends GetxController
     if (isPlaying.value) return;
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
-    teamIndexCtrl.scroToSlot();
+    teamIndexCtrl.scrollToSlot(onEnd: (){
+      Get.find<HomeController>()
+          .scrollHideBottomBarController
+          .changeHideStatus(true);
+    });
     playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
     playerIdx = random.nextInt(playerList.length);
 

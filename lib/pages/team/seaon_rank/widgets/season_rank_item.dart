@@ -291,7 +291,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
     Get.back();
     Get.back();
     TeamIndexController teamIndexController = Get.find();
-    teamIndexController.scroToSlot();
+    teamIndexController.scrollToSlot();
   }
 
   ///未上榜显示样式

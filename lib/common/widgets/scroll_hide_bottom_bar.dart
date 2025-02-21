@@ -24,12 +24,12 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
   late AnimationController _animationController;
   late Animation<double> _offsetAnimation;
   late Animation<double> _opacityAnimation;
-  ScrollDirection _lastScrollDirection = ScrollDirection.idle;
   final double _bottomBarHeight = 80.0; // 底部栏高度，根据实际调整
 
   @override
   void initState() {
     super.initState();
+    widget.controller?._changeHideStatus = changeHideStatus;
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -61,30 +61,14 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
     newValue = newValue.clamp(0.0, 1.0);
     _animationController.value = newValue;
 
-    // 记录最后滚动方向
-    _lastScrollDirection =
-        delta > 0 ? ScrollDirection.down : ScrollDirection.up;
   }
 
   void _handleScrollEnd(ScrollEndNotification notification) {
-    bool shouldHide;
-
-    // 根据滚动方向决定是否隐藏
-    if (_lastScrollDirection == ScrollDirection.down) {
-      shouldHide = true;
-    } else if (_lastScrollDirection == ScrollDirection.up) {
-      shouldHide = false;
-      if (notification.metrics.pixels >= notification.metrics.maxScrollExtent) {
-        shouldHide = true;
-      }
-    } else {
-      // 无滚动方向时，根据当前位置判断
-      shouldHide = _animationController.value > 0.5;
+    bool shouldHide = _animationController.value > 0.5;
+    double targetValue = _animationController.value > 0.5 ? 1.0 : 0.0;
+    if(shouldHide != widget.controller?.barHideStatus.value) {
+      widget.controller?.barHideStatus.value = shouldHide;
     }
-
-    // 目标动画值
-    final double targetValue = shouldHide ? 1.0 : 0.0;
-    widget.controller?.barHideStatus.value = shouldHide;
 
     // 启动动画
     _animationController.animateTo(
@@ -92,6 +76,23 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
+  }
+
+  /// true:hide false:show
+  changeHideStatus(bool hide) {
+    if (widget.controller?.barHideStatus.value == hide) {
+      return;
+    }
+    double targetValue = hide ? 1.0 : 0.0;
+    widget.controller?.barHideStatus.value = hide;
+    /// 延迟是因为先响应子组件的滚到，然后再传递到这里的滚动监听
+    Future.delayed(Duration(milliseconds: 50),(){
+      _animationController.animateTo(
+        targetValue,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
   }
 
   @override
@@ -120,7 +121,6 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
               }
             } else if (notification is ScrollStartNotification) {
               // 滚动开始时重置方向
-              _lastScrollDirection = ScrollDirection.idle;
             }
             return true;
           },
@@ -147,9 +147,11 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
   }
 }
 
-enum ScrollDirection { idle, up, down }
-
-
-class ScrollHideBottomBarController{
+class ScrollHideBottomBarController {
   var barHideStatus = false.obs;
+  Function(bool hide)? _changeHideStatus;
+
+  void changeHideStatus(bool hide) {
+    _changeHideStatus?.call(hide);
+  }
 }

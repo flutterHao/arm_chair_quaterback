@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -52,6 +53,15 @@ class ScorePageController extends GetxController {
       if (v.contains("${startTime}_$endTime")) {
         //下注成功，刷新数据，清除所有选中状态
         getDataFromNet([]);
+      }
+    });
+    // 监听滚动事件
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        // 判断是否滚动到边界
+        Get.find<HomeController>()
+            .scrollHideBottomBarController
+            .changeHideStatus(false);
       }
     });
   }
