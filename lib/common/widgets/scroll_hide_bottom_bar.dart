@@ -88,7 +88,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
     }
     double targetValue = hide ? 1.0 : 0.0;
     widget.controller?.barHideStatus.value = hide;
-    /// 延迟是因为先响应子组件的滚到，然后再传递到这里的滚动监听
+    /// 延迟是因为先响应子组件的滚动监听，然后再传递到这里的滚动监听
     Future.delayed(Duration(milliseconds: 50),(){
       _animationController.animateTo(
         targetValue,
