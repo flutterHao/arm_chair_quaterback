@@ -263,7 +263,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                   ),
                                 ),
                                 SizedBox(
-                                  height: MediaQuery.of(context).padding.bottom,
+                                  height: MediaQuery.of(context).padding.bottom+9.w,
                                 ),
                               ],
                             ),

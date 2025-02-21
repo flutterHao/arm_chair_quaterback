@@ -6,11 +6,13 @@ import 'package:get/get.dart';
 class ScrollHideBottomBar extends StatefulWidget {
   final Widget child;
   final Widget bottomBar;
+  final ScrollHideBottomBarController? controller;
 
   const ScrollHideBottomBar({
     super.key,
     required this.child,
     required this.bottomBar,
+    this.controller,
   });
 
   @override
@@ -72,8 +74,9 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
       shouldHide = true;
     } else if (_lastScrollDirection == ScrollDirection.up) {
       shouldHide = false;
-      if (notification.metrics.pixels >= notification.metrics.maxScrollExtent)
+      if (notification.metrics.pixels >= notification.metrics.maxScrollExtent) {
         shouldHide = true;
+      }
     } else {
       // 无滚动方向时，根据当前位置判断
       shouldHide = _animationController.value > 0.5;
@@ -81,6 +84,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
 
     // 目标动画值
     final double targetValue = shouldHide ? 1.0 : 0.0;
+    widget.controller?.barHideStatus.value = shouldHide;
 
     // 启动动画
     _animationController.animateTo(
@@ -144,3 +148,8 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
 }
 
 enum ScrollDirection { idle, up, down }
+
+
+class ScrollHideBottomBarController{
+  var barHideStatus = false.obs;
+}

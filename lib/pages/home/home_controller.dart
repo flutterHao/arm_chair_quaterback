@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/utils/platform_file_manager.dart';
+import 'package:arm_chair_quaterback/common/widgets/scroll_hide_bottom_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
@@ -45,6 +46,8 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
   late PageController pageController;
+  ScrollHideBottomBarController scrollHideBottomBarController =
+      ScrollHideBottomBarController();
   RxInt tabIndex = 2.obs;
 
   UserEntity userEntiry = UserEntity();

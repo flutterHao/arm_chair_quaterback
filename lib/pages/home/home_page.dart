@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage>
                 },
               ),
               child: ScrollHideBottomBar(
+                controller: logic.scrollHideBottomBarController,
                 bottomBar: Column(
                   children: [
                     const NewPlayerTip(),
@@ -169,7 +170,9 @@ class _HomePageState extends State<HomePage>
                           ],
                         ),
                         // 竞猜选择结果底部弹框
-                        const BottomGuessTipWidget(),
+                        const BottomGuessTipWidget(
+                          needCheckHomeTab: true,
+                        ),
                         // 底部tabBar
                       ],
                     ),

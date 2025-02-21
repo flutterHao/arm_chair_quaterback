@@ -20,15 +20,14 @@ import 'package:get/get.dart';
 ///created at 2024/11/26/17:51
 
 class BottomGuessTipWidget extends StatelessWidget {
-  const BottomGuessTipWidget(
-      {super.key,
-      this.bottomValue,
-      this.needCheckHomeTab = true,
-      this.widgetReady = true});
+  const BottomGuessTipWidget({
+    super.key,
+    this.bottomValue,
+    this.needCheckHomeTab = false,
+  });
 
   final double? bottomValue;
   final bool needCheckHomeTab;
-  final bool widgetReady;
 
   @override
   Widget build(BuildContext context) {
@@ -39,18 +38,23 @@ class BottomGuessTipWidget extends StatelessWidget {
       }
       var picksIndexController = Get.find<PicksIndexController>();
       var leagueController = Get.find<LeagueController>();
+      var barHideStatus = Get.find<HomeController>()
+          .scrollHideBottomBarController
+          .barHideStatus
+          .value;
       var value = picksIndexController.choiceSize.value;
       value += leagueController.choiceSize.value;
       return AnimatedPositioned(
           duration: const Duration(milliseconds: 300),
           left: 0,
           right: 0,
-          bottom: !widgetReady
+          bottom: value <= 0
               ? -75.w
-              : value <= 0
-                  ? -75.w
-                  : bottomValue ??
-                      75.w + 7.w + MediaQuery.of(context).padding.bottom,
+              : bottomValue ??
+                  ((barHideStatus ? 0 : (75.w + 7.w)) +
+                      (MediaQuery.of(context).padding.bottom == 0
+                          ? 0
+                          : MediaQuery.of(context).padding.bottom / 2)),
           child: Center(
             child: MtInkWell(
               scaleX: true,
