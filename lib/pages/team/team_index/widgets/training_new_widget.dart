@@ -228,7 +228,8 @@ class TrainingNewWidget extends GetView<TrainingController> {
                     child: Column(
                       children: [
                         PreparationWidget(
-                          playerReadiness: ctrl.trainingInfo.playerReadiness,
+                          playerReadiness:
+                              ctrl.trainingInfo.playerReadiness,
                           withAnimated: true,
                         ),
                         3.vGap,
@@ -616,11 +617,14 @@ class _SlotButton extends StatelessWidget {
 }
 
 class PreparationWidget extends StatefulWidget {
-  final double playerReadiness;
+  late double playerReadinessValue;
   final bool withAnimated;
 
-  const PreparationWidget(
-      {super.key, required this.playerReadiness, this.withAnimated = false});
+  PreparationWidget(
+      {super.key,
+      required double playerReadiness,
+      this.withAnimated = false})
+      : playerReadinessValue = min(1, playerReadiness);
 
   @override
   State<PreparationWidget> createState() => _PreparationWidgetState();
@@ -639,7 +643,7 @@ class _PreparationWidgetState extends State<PreparationWidget>
         duration: const Duration(milliseconds: 500), // 动画时长
         vsync: this,
       );
-      _animation = Tween<double>(begin: 0, end: widget.playerReadiness).animate(
+      _animation = Tween<double>(begin: 0, end: widget.playerReadinessValue).animate(
         CurvedAnimation(
           parent: _controller,
           curve: Curves.easeInOut, // 动画曲线
@@ -653,11 +657,11 @@ class _PreparationWidgetState extends State<PreparationWidget>
   void didUpdateWidget(PreparationWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     // 当数值变化时启动新动画
-    if (oldWidget.playerReadiness != widget.playerReadiness) {
+    if (oldWidget.playerReadinessValue != widget.playerReadinessValue) {
       if (widget.withAnimated) {
         _animation = Tween<double>(
-          begin: oldWidget.playerReadiness,
-          end: widget.playerReadiness,
+          begin: oldWidget.playerReadinessValue,
+          end: widget.playerReadinessValue,
         ).animate(
           CurvedAnimation(
             parent: _controller,
@@ -694,7 +698,7 @@ class _PreparationWidgetState extends State<PreparationWidget>
           child: Align(
             alignment: Alignment.centerLeft,
             widthFactor:
-                widget.withAnimated ? _animation.value : widget.playerReadiness,
+                widget.withAnimated ? _animation.value : widget.playerReadinessValue,
             child: Image.asset(
               Assets.managerUiManagerIconPrepareprogressbar03,
               width: 103.w,
