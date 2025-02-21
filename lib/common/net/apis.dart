@@ -139,6 +139,7 @@ class Api {
   static const String destroyTeamPlayer = "$API_BASE_PATH/TeamPlayer/destroyTeamPlayer";
   static const String getPlayerStrengthRank = "$API_BASE_PATH/TeamPlayer/getPlayerStrengthRank";
   static const String getPlayerTrends = "$API_BASE_PATH/NBAData/getPlayerTrends";
+  static const String getOVRRankPlayerInfo = "$API_BASE_PATH/NBAData/getOVRRankPlayerInfo";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";

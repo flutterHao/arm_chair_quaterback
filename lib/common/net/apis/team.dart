@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/o_v_r_rank_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
@@ -204,9 +205,15 @@ class TeamApi {
     return json.map((e) => PlayerStrengthRankEntity.fromJson(e)).toList();
   }
 
-  /// 获取球员实力排行榜
+  /// 获取球员趋势图果day=-1则获取所有趋势
   static Future<List<PlayerStrengthRankTrendList>> getPlayerTrends({required int playerId, int day = -1}) async {
     List json = await httpUtil.post(Api.getPlayerTrends, data: {"playerId": playerId, "day": day});
     return json.map((e) => PlayerStrengthRankTrendList.fromJson(e)).toList();
+  }
+
+  /// 获取球员评分榜的球员详细信息
+  static Future<OVRRankPlayerInfoEntity> getOVRRankPlayerInfo({required int playerId}) async {
+    var json = await httpUtil.post(Api.getOVRRankPlayerInfo, data: {"playerId": playerId});
+    return OVRRankPlayerInfoEntity.fromJson(json);
   }
 }

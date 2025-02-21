@@ -54,6 +54,7 @@ import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/o_v_r_rank_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
@@ -774,6 +775,27 @@ class JsonConvert {
       return data.map<NowSeasonEntity>((Map<String, dynamic> e) =>
           NowSeasonEntity.fromJson(e)).toList() as M;
     }
+    if (<OVRRankPlayerInfoEntity>[] is M) {
+      return data.map<OVRRankPlayerInfoEntity>((Map<String, dynamic> e) =>
+          OVRRankPlayerInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<OVRRankPlayerInfoOVRTrend>[] is M) {
+      return data.map<OVRRankPlayerInfoOVRTrend>((Map<String, dynamic> e) =>
+          OVRRankPlayerInfoOVRTrend.fromJson(e)).toList() as M;
+    }
+    if (<OVRRankPlayerInfoSeasonStats>[] is M) {
+      return data.map<OVRRankPlayerInfoSeasonStats>((Map<String, dynamic> e) =>
+          OVRRankPlayerInfoSeasonStats.fromJson(e)).toList() as M;
+    }
+    if (<OVRRankPlayerInfoGameStats>[] is M) {
+      return data.map<OVRRankPlayerInfoGameStats>((Map<String, dynamic> e) =>
+          OVRRankPlayerInfoGameStats.fromJson(e)).toList() as M;
+    }
+    if (<OVRRankPlayerInfoGameStatsSchedule>[] is M) {
+      return data.map<OVRRankPlayerInfoGameStatsSchedule>((
+          Map<String, dynamic> e) =>
+          OVRRankPlayerInfoGameStatsSchedule.fromJson(e)).toList() as M;
+    }
     if (<PerGameEntity>[] is M) {
       return data.map<PerGameEntity>((Map<String, dynamic> e) =>
           PerGameEntity.fromJson(e)).toList() as M;
@@ -1425,6 +1447,14 @@ class JsonConvertClassCollection {
     (NewsListDetail).toString(): NewsListDetail.fromJson,
     (NewsSourceEntity).toString(): NewsSourceEntity.fromJson,
     (NowSeasonEntity).toString(): NowSeasonEntity.fromJson,
+    (OVRRankPlayerInfoEntity).toString(): OVRRankPlayerInfoEntity.fromJson,
+    (OVRRankPlayerInfoOVRTrend).toString(): OVRRankPlayerInfoOVRTrend.fromJson,
+    (OVRRankPlayerInfoSeasonStats).toString(): OVRRankPlayerInfoSeasonStats
+        .fromJson,
+    (OVRRankPlayerInfoGameStats).toString(): OVRRankPlayerInfoGameStats
+        .fromJson,
+    (OVRRankPlayerInfoGameStatsSchedule)
+        .toString(): OVRRankPlayerInfoGameStatsSchedule.fromJson,
     (PerGameEntity).toString(): PerGameEntity.fromJson,
     (PickTypeEntity).toString(): PickTypeEntity.fromJson,
     (PkEventUpdatedEntity).toString(): PkEventUpdatedEntity.fromJson,

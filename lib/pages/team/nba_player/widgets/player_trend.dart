@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/o_v_r_rank_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -141,8 +142,9 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                 margin: EdgeInsets.symmetric(horizontal: 16.w),
                 alignment: Alignment.centerLeft,
                 child: InkWell(
-                    onTap: () {
-                      initData();
+                    onTap: () async {
+                      OVRRankPlayerInfoEntity res = await TeamApi.getOVRRankPlayerInfo(playerId: playerId);
+                      print(res.seasonStats.aGE);
                     },
                     child: Text(
                       "OVR TREND",
@@ -537,6 +539,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                           )),
                       8.hGap,
                       IconWidget(iconWidth: 16.w, icon: Assets.commonUiCommonProp05),
+                      2.hGap,
                       Text('${playerInfo.salary}K',
                           style: 12.w5(
                             fontFamily: FontFamily.fOswaldRegular,
