@@ -1,6 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -106,46 +106,45 @@ class PlayerStatusGridSource extends DataGridSource {
             ],
           ),
         );
-      // } else if (e.columnName == "morale") {
-      //   return Container(
-      //     decoration: BoxDecoration(
-      //         border: Border(
-      //       bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
-      //     )),
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: [
-      //         Text(
-      //           "${(e.value as double).formatToString()}%",
-      //           style: 12.w4(
-      //               color: AppColors.c4D4D4D,
-      //               height: 1,
-      //               fontFamily: FontFamily.fRobotoRegular),
-      //         ),
-      //         4.hGap,
-      //         Container(
-      //           width: 34.w,
-      //           height: 6.w,
-      //           decoration: BoxDecoration(
-      //               border: Border.all(color: AppColors.cD1D1D1, width: 1.w),
-      //               borderRadius: BorderRadius.circular(3.w)),
-      //           child: LinearProgressIndicator(
-      //             value: e.value / 100,
-      //             backgroundColor: AppColors.cFFFFFF,
-      //             color: Utils.getChartColor(e.value),
-      //           ),
-      //         )
-      //       ],
-      //     ),
-      //   );
+        // } else if (e.columnName == "morale") {
+        //   return Container(
+        //     decoration: BoxDecoration(
+        //         border: Border(
+        //       bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+        //     )),
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         Text(
+        //           "${(e.value as double).formatToString()}%",
+        //           style: 12.w4(
+        //               color: AppColors.c4D4D4D,
+        //               height: 1,
+        //               fontFamily: FontFamily.fRobotoRegular),
+        //         ),
+        //         4.hGap,
+        //         Container(
+        //           width: 34.w,
+        //           height: 6.w,
+        //           decoration: BoxDecoration(
+        //               border: Border.all(color: AppColors.cD1D1D1, width: 1.w),
+        //               borderRadius: BorderRadius.circular(3.w)),
+        //           child: LinearProgressIndicator(
+        //             value: e.value / 100,
+        //             backgroundColor: AppColors.cFFFFFF,
+        //             color: Utils.getChartColor(e.value),
+        //           ),
+        //         )
+        //       ],
+        //     ),
+        //   );
       } else if (e.columnName == "status") {
         return Container(
             decoration: BoxDecoration(
                 border: Border(
               bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
             )),
-            child:
-                IconWidget(iconWidth: 20.w, icon: Utils.getStatusUrl(e.value)));
+            child: IconWidget(iconWidth: 20.w, icon: Utils.getStatusUrl(e.value)));
       }
       PlayerStatus playerStatus = e.value as PlayerStatus;
       return Container(
@@ -157,11 +156,8 @@ class PlayerStatusGridSource extends DataGridSource {
           child: Text(
             playerStatus.score.toStringAsFixed(1),
             style: 12.w5(
-                color:
-                    playerStatus.isMvp ? AppColors.c000000 : AppColors.c4D4D4D,
-                fontFamily: playerStatus.isMvp
-                    ? FontFamily.fRobotoMedium
-                    : FontFamily.fRobotoRegular,
+                color: playerStatus.isMvp ? AppColors.c000000 : AppColors.c4D4D4D,
+                fontFamily: playerStatus.isMvp ? FontFamily.fRobotoMedium : FontFamily.fRobotoRegular,
                 height: 1),
           ),
         ),

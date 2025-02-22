@@ -1,7 +1,9 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/player_status/player_status_grid_source.dart';
@@ -11,7 +13,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'dart:math';
 
 class HistoryStatusWidget extends GetView<TeamHistortyController> {
   const HistoryStatusWidget({super.key});
@@ -21,14 +22,11 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
     return Obx(() => AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           height: controller.isExpanded.value
-              ? (255.w +
-                  max(0, controller.getPlayerStatusData().length - 5) * 34.w)
+              ? (255.w + max(0, controller.getPlayerStatusData().length - 5) * 34.w)
               : 255.w,
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(top: 9.w),
-          decoration: BoxDecoration(
-              color: AppColors.cFFFFFF,
-              borderRadius: BorderRadius.circular(9.w)),
+          decoration: BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
           child: Column(
             children: [
               Expanded(
@@ -43,12 +41,9 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
                       headerRowHeight: 31.w,
                       columnWidthMode: ColumnWidthMode.fill,
                       gridLinesVisibility: GridLinesVisibility.none,
-                      horizontalScrollPhysics:
-                          const NeverScrollableScrollPhysics(),
-                      verticalScrollPhysics:
-                          const NeverScrollableScrollPhysics(),
-                      source: PlayerStatusGridSource(
-                          controller.getPlayerStatusData(), context),
+                      horizontalScrollPhysics: const NeverScrollableScrollPhysics(),
+                      verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+                      source: PlayerStatusGridSource(controller.getPlayerStatusData(), context),
                       columns: [
                         GridColumn(
                             columnName: 'player',
@@ -57,16 +52,10 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
                               alignment: Alignment.centerLeft,
                               padding: EdgeInsets.only(left: 20.w),
                               decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: AppColors.cD1D1D1,
-                                          width: 1.w))),
+                                  border: Border(bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w))),
                               child: Text(
                                 LangKey.gameTabStarter.tr,
-                                style: 12.w5(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoMedium),
+                                style: 12.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium),
                               ),
                             )),
                         GridColumn(
@@ -74,16 +63,10 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
                             label: Container(
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: AppColors.cD1D1D1,
-                                          width: 1.w))),
+                                  border: Border(bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w))),
                               child: Text(
                                 LangKey.gameMeanSkip.tr,
-                                style: 12.w5(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoMedium),
+                                style: 12.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium),
                               ),
                             )),
                         GridColumn(
@@ -91,25 +74,16 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
                             label: Container(
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: AppColors.cD1D1D1,
-                                          width: 1.w))),
+                                  border: Border(bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w))),
                               child: Text(
                                 LangKey.gameMeanRating.tr,
-                                style: 12.w5(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoMedium),
+                                style: 12.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium),
                               ),
                             )),
                       ],
                     )),
               ),
-              Divider(
-                color: AppColors.cD1D1D1,
-                height: 1.w,
-              ),
+              Divider(color: AppColors.cD1D1D1, height: 1.w),
               InkWell(
                 onTap: () {
                   controller.isExpanded.value = !controller.isExpanded.value;
@@ -127,10 +101,7 @@ class HistoryStatusWidget extends GetView<TeamHistortyController> {
                     children: [
                       Text(
                         LangKey.gameButtonUnfold.tr,
-                        style: 16.w7(
-                            color: AppColors.c262626,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldBold),
+                        style: 16.w7(color: AppColors.c262626, height: 1, fontFamily: FontFamily.fOswaldBold),
                       ),
                       4.vGap,
                       AnimatedRotation(

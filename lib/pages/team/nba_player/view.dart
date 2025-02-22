@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -97,7 +98,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
       var differenceScore = item[0].playerScore - item[1].playerScore;
       var player = Utils.getPlayBaseInfo(controller.nbaPlayerList[index].playerId);
       return InkWell(
-        onTap: () => controller.goPlayerDetail(controller.nbaPlayerList[index].playerId),
+        onTap: () => Get.toNamed(RouteNames.playerTrendPage, arguments: controller.nbaPlayerList[index]),
         child: Container(
           width: 143.w,
           decoration: BoxDecoration(

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/o_v_r_rank_player_info_entity.dart';
@@ -15,15 +16,20 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/game_status_grid_soucre.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class PlayerTrendPage extends StatefulWidget {
   const PlayerTrendPage({super.key});
@@ -44,7 +50,8 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
   List trendTypeList = ['1W', '1M', '3M', '1Y', '3Y', 'ALL'];
 
   int selectedIndexType = 0;
-
+  List<OVRRankPlayerInfoGameStats> gameStats = [];
+  OVRRankPlayerInfoSeasonStats seasonStats = OVRRankPlayerInfoSeasonStats();
   @override
   void initState() {
     // TODO: implement initState
@@ -60,16 +67,19 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
     initData();
   }
 
-  initData() async {
-    var res = await TeamApi.getPlayerTrends(playerId: playerId, day: -1);
+  void initData() async {
+    List<PlayerStrengthRankTrendList> resTrendList = await TeamApi.getPlayerTrends(playerId: playerId, day: -1);
+    OVRRankPlayerInfoEntity ovrPlayerInfo = await TeamApi.getOVRRankPlayerInfo(playerId: playerId);
     setState(() {
       rankDialogloadingStatus = LoadDataStatus.success;
-      trendList = res;
+      trendList = resTrendList;
       if (trendList.length > 7) {
         showTrendList = trendList.sublist(0, 7);
       } else {
         showTrendList = trendList;
       }
+      gameStats = ovrPlayerInfo.gameStats;
+      seasonStats = ovrPlayerInfo.seasonStats;
     });
   }
 
@@ -88,14 +98,248 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                             _buildHeaderWidget(),
                             10.vGap,
                             _ovrTrendWidget(),
+                            10.vGap,
+                            _gameStatsWidget(),
+                            10.vGap,
+                            _statsWidget()
                           ],
                         ),
                       )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      ))));
+                    : Center(child: LoadStatusWidget(loadDataStatus: rankDialogloadingStatus)))));
   }
 
+  ///球员趋势图
+  Widget _ovrTrendWidget() {
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 16.w),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
+        child: Column(
+          children: [
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                alignment: Alignment.centerLeft,
+                child: InkWell(
+                    onTap: () async {
+                      OVRRankPlayerInfoEntity res = await TeamApi.getOVRRankPlayerInfo(playerId: playerId);
+                      print(res.seasonStats.aGE);
+                    },
+                    child: Text(
+                      "OVR TREND",
+                      style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+                    ))),
+            16.vGap,
+            Divider(color: AppColors.cE6E6E6, height: 1.w),
+            _playerOVRInfoWidget(),
+            16.vGap,
+            _playerchartWidget(showTrendList),
+            _trendTabWidget(),
+          ],
+        ));
+  }
+
+  List<PlayerRegular> getSeasonAverageData() {
+    var json = seasonStats.toJson();
+    List<PlayerRegular> list = Constant.statTypeList.fold([], (p, e) {
+      var key = e;
+      if (key == "TO") {
+        key = "TOV";
+      }
+      if (json.containsKey(key) == true && json.containsKey("${key}_RANK") == true) {
+        var value = json[key];
+        var rank = json["${key}_RANK"];
+        p.add(PlayerRegular(rank ?? 0, value ?? 0, e));
+      }
+      return p;
+    });
+    return list;
+  }
+
+  Widget _statsWidget() {
+    return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 70.w,
+            margin: EdgeInsets.only(left: 16.w),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "STATS",
+              style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+            ),
+          ),
+          Divider(
+            color: AppColors.cE6E6E6,
+            height: 1.w,
+          ),
+          Builder(builder: (context) {
+            var seasonAverageData = getSeasonAverageData();
+            return SizedBox(
+              width: double.infinity,
+              height: 101.w,
+              child: MediaQuery.removePadding(
+                removeTop: true,
+                context: context,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: seasonAverageData.length,
+                    // controller: scrollController,
+                    // physics: OneBoundaryScrollPhysics(scrollController: scrollController),
+                    itemBuilder: (context, index) {
+                      PlayerRegular item = seasonAverageData[index];
+                      bool lastIndex = seasonAverageData.length - 1 == index;
+                      return SizedBox(
+                        height: 101.w,
+                        width: 93.w,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  item.value.toStringAsFixed(1),
+                                  style: 21.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                                6.vGap,
+                                Text(
+                                  item.key,
+                                  style:
+                                      10.w4(color: AppColors.c666666, height: 1, fontFamily: FontFamily.fRobotoRegular),
+                                ),
+                                13.vGap,
+                                Opacity(
+                                    opacity: item.rank <= 100 ? 1 : 0,
+                                    child: Text(
+                                      Utils.getSortWithInt(item.rank),
+                                      style: 12.w5(
+                                          color: AppColors.cFF7954, height: 1, fontFamily: FontFamily.fRobotoMedium),
+                                    )),
+                                2.vGap
+                              ],
+                            ),
+                            if (!lastIndex)
+                              Positioned(
+                                right: 0,
+                                child: Container(
+                                  color: AppColors.cE6E6E6,
+                                  width: 1.w,
+                                  height: 54.w,
+                                ),
+                              )
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  ///比赛信息
+  Widget _gameStatsWidget() {
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 16.w),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
+        child: Column(children: [
+          10.vGap,
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "GAME STATS",
+                style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+              )),
+          20.vGap,
+          SfDataGridTheme(
+              data: const SfDataGridThemeData(
+                  gridLineColor: AppColors.cTransparent,
+                  frozenPaneLineColor: AppColors.cTransparent,
+                  rowHoverColor: AppColors.c10A86A,
+                  gridLineStrokeWidth: 0),
+              child: SizedBox(
+                height: 32.w * (gameStats.length + 1),
+                child: SfDataGrid(
+                  headerRowHeight: 32.w,
+                  columnWidthMode: ColumnWidthMode.fill,
+                  rowHeight: 32.w,
+                  gridLinesVisibility: GridLinesVisibility.none,
+                  source: GameStatusGridSoucre(gameStats, context),
+                  horizontalScrollPhysics: const NeverScrollableScrollPhysics(),
+                  verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+                  columns: [
+                    GridColumn(
+                        columnName: 'date',
+                        width: 74.w,
+                        autoFitPadding: EdgeInsets.zero,
+                        label: Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 10.w),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+                                  top: BorderSide(color: AppColors.cD1D1D1, width: 1.w))),
+                          child: Text(
+                            'DATE',
+                            style: 12.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium),
+                          ),
+                        )),
+                    GridColumn(
+                        columnName: 'opp',
+                        width: 74.w,
+                        label: Container(
+                          padding: EdgeInsets.only(left: 10.w),
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+                                  top: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+                                  right: BorderSide(color: AppColors.cD1D1D1, width: 1.w))),
+                          child: Text(
+                            'OPP',
+                            style: 12.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium),
+                          ),
+                        )),
+                    GridColumn(
+                        columnName: 'power',
+                        label: Container(
+                          width: 80.w,
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 40.w),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+                                  top: BorderSide(color: AppColors.cD1D1D1, width: 1.w))),
+                          child: Text(
+                            'POWER',
+                            style: 12.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium),
+                          ),
+                        )),
+                    GridColumn(
+                        columnName: 'ovr',
+                        width: 84.w,
+                        label: Container(
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+                                  top: BorderSide(color: AppColors.cD1D1D1, width: 1.w))),
+                          child: Text(
+                            'OVR',
+                            style: 12.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium),
+                          ),
+                        )),
+                  ],
+                ),
+              ))
+        ]));
+  }
+
+  ///切换趋势图日期
   void changeselectedIndexType(int index) {
     setState(() {
       selectedIndexType = index;
@@ -132,137 +376,119 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
     });
   }
 
-  Widget _ovrTrendWidget() {
-    return Container(
-        padding: EdgeInsets.symmetric(vertical: 16.w),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
-        child: Column(
-          children: [
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                alignment: Alignment.centerLeft,
-                child: InkWell(
-                    onTap: () async {
-                      OVRRankPlayerInfoEntity res = await TeamApi.getOVRRankPlayerInfo(playerId: playerId);
-                      print(res.seasonStats.aGE);
-                    },
-                    child: Text(
-                      "OVR TREND",
-                      style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
-                    ))),
-            16.vGap,
-            Divider(color: AppColors.cE6E6E6, height: 1.w),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
-                child: IntrinsicHeight(
-                    child: Row(
-                  children: [
-                    Expanded(
-                        child: Column(
-                      children: [
-                        Text(
-                          '${playerInfo.maxPlayerScore}',
-                          style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
-                        ),
-                        Text(
-                          'H-OVR',
-                          style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
-                        )
-                      ],
-                    )),
-                    VerticalDivider(color: AppColors.cD1D1D1),
-                    Expanded(
-                        child: Column(
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              '${playerInfo.playerScore}',
-                              style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
-                            ),
-                            6.hGap,
-                            Column(
-                              children: [
-                                Text('${differenceScore.abs()}',
-                                    style: 14.w5(
-                                      height: 0.95,
-                                      color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
-                                      fontFamily: FontFamily.fRobotoRegular,
-                                    )),
-                                Transform.rotate(
-                                  angle: differenceScore >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
-                                  child: Image.asset(
-                                    Assets.commonUiCommonIconSystemArrow,
-                                    width: 5.w,
-                                    height: 8.w,
-                                    color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        Text(
-                          'OVR',
-                          style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
-                        )
-                      ],
-                    )),
-                    VerticalDivider(color: AppColors.cD1D1D1),
-                    Expanded(
-                        child: Column(
-                      children: [
-                        Text(
-                          '${playerInfo.minPlayerScore}',
-                          style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
-                        ),
-                        Text(
-                          'L-OVR',
-                          style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
-                        )
-                      ],
-                    )),
-                  ],
-                ))),
-            16.vGap,
-            _playerchartWidget(showTrendList),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ...trendTypeList.mapIndexed((index, element) {
-                    return InkWell(
-                      onTap: () => changeselectedIndexType(index),
-                      child: Container(
-                        width: 46.w,
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.only(bottom: 4.w),
-                        foregroundDecoration: BoxDecoration(
-                            border: Border(
-                                bottom: selectedIndexType == index
-                                    ? BorderSide(
-                                        color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D, width: 2.w)
-                                    : BorderSide.none)),
-                        child: Text(
-                          '${trendTypeList[index]}',
-                          style: 16.w5(
-                              fontFamily: FontFamily.fOswaldRegular,
-                              color: selectedIndexType != index
-                                  ? AppColors.cB3B3B3
-                                  : differenceScore >= 0
-                                      ? AppColors.c0FA76C
-                                      : AppColors.cE34D4D),
-                        ),
-                      ),
-                    );
-                  })
-                ],
+  ///趋势图切换
+  Widget _trendTabWidget() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ...trendTypeList.mapIndexed((index, element) {
+            return InkWell(
+              onTap: () => changeselectedIndexType(index),
+              child: Container(
+                width: 46.w,
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(bottom: 4.w),
+                foregroundDecoration: BoxDecoration(
+                    border: Border(
+                        bottom: selectedIndexType == index
+                            ? BorderSide(
+                                color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D, width: 2.w)
+                            : BorderSide.none)),
+                child: Text(
+                  '${trendTypeList[index]}',
+                  style: 16.w5(
+                      fontFamily: FontFamily.fOswaldRegular,
+                      color: selectedIndexType != index
+                          ? AppColors.cB3B3B3
+                          : differenceScore >= 0
+                              ? AppColors.c0FA76C
+                              : AppColors.cE34D4D),
+                ),
               ),
-            )
+            );
+          })
+        ],
+      ),
+    );
+  }
+
+  ///球员OVR信息
+  Widget _playerOVRInfoWidget() {
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
+        child: IntrinsicHeight(
+            child: Row(
+          children: [
+            Expanded(
+                child: Column(
+              children: [
+                Text(
+                  '${playerInfo.maxPlayerScore}',
+                  style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
+                ),
+                Text(
+                  'H-OVR',
+                  style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
+                )
+              ],
+            )),
+            VerticalDivider(color: AppColors.cD1D1D1),
+            Expanded(
+                child: Column(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${playerInfo.playerScore}',
+                      style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                    6.hGap,
+                    Column(
+                      children: [
+                        Text('${differenceScore.abs()}',
+                            style: 14.w5(
+                              height: 0.95,
+                              color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                              fontFamily: FontFamily.fRobotoRegular,
+                            )),
+                        Transform.rotate(
+                          angle: differenceScore >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
+                          child: Image.asset(
+                            Assets.commonUiCommonIconSystemArrow,
+                            width: 5.w,
+                            height: 8.w,
+                            color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                Text(
+                  'OVR',
+                  style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
+                )
+              ],
+            )),
+            VerticalDivider(color: AppColors.cD1D1D1),
+            Expanded(
+                child: Column(
+              children: [
+                Text(
+                  '${playerInfo.minPlayerScore}',
+                  style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
+                ),
+                Text(
+                  'L-OVR',
+                  style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
+                )
+              ],
+            )),
           ],
-        ));
+        )));
   }
 
   Widget _playerchartWidget(List<PlayerStrengthRankTrendList> item) {
@@ -280,7 +506,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
               lineTouchData: const LineTouchData(enabled: false),
               titlesData: FlTitlesData(
                 show: true,
-                leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
@@ -288,7 +514,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                     getTitlesWidget: (value, meta) {
                       if (value == 0 || value == item.length - 1) {
                         String text = '';
-                        if (value.toInt() == 0) {
+                        if (value.toInt() == item.length - 1) {
                           text = MyDateUtils.formatDate(DateTime.fromMillisecondsSinceEpoch(item[0].updateTime),
                               format: 'MM/dd/yy');
                         } else {
@@ -308,7 +534,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                     },
                   ),
                 ),
-                rightTitles: AxisTitles(
+                leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
                     reservedSize: 24.w,
@@ -328,8 +554,8 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
               ),
               borderData: FlBorderData(
                   show: true,
-                  border: Border(
-                      right: BorderSide(color: AppColors.cD1D1D1), bottom: BorderSide(color: AppColors.cD1D1D1))),
+                  border:
+                      Border(left: BorderSide(color: AppColors.cD1D1D1), bottom: BorderSide(color: AppColors.cD1D1D1))),
               minY: 0,
               maxY: 100,
               lineBarsData: [

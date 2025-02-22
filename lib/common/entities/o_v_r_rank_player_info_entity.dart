@@ -50,19 +50,19 @@ class OVRRankPlayerInfoSeasonStats {
   @JSONField(name: 'PFD_RANK')
   late int pfdRank = 0;
   @JSONField(name: 'FG3_PCT')
-  late double fg3Pct;
+  late double fg3Pct = 0.0;
   @JSONField(name: 'OREB_RANK')
   late int orebRank = 0;
   @JSONField(name: 'STL')
-  late double sTL;
+  late double sTL = 0.0;
   @JSONField(name: 'DREB')
-  late double dREB;
+  late double dREB = 0.0;
   @JSONField(name: 'FG_PCT_RANK')
   late int fgPctRank = 0;
   @JSONField(name: 'PLUS_MINUS_RANK')
   late int plusMinusRank = 0;
   @JSONField(name: 'PFD')
-  late double pFD;
+  late double pFD = 0.0;
   @JSONField(name: 'PF_RANK')
   late int pfRank = 0;
   @JSONField(name: 'DREB_RANK')
@@ -70,7 +70,7 @@ class OVRRankPlayerInfoSeasonStats {
   @JSONField(name: 'TOV_RANK')
   late int tovRank = 0;
   @JSONField(name: 'FGA')
-  late double fGA;
+  late double fGA = 0.0;
   @JSONField(name: 'FG3_PCT_RANK')
   late int fg3PctRank = 0;
   @JSONField(name: 'BLK_RANK')
@@ -78,23 +78,23 @@ class OVRRankPlayerInfoSeasonStats {
   @JSONField(name: 'TEAM_ABBREVIATION')
   late String teamAbbreviation = '';
   @JSONField(name: 'NBA_FANTASY_PTS')
-  late double nbaFantasyPts;
+  late double nbaFantasyPts = 0.0;
   @JSONField(name: 'FGM')
-  late double fGM;
+  late double fGM = 0.0;
   @JSONField(name: 'L_RANK')
   late int lRank = 0;
   @JSONField(name: 'W_PCT')
-  late double wPct;
+  late double wPct = 0.0;
   @JSONField(name: 'FG3A_RANK')
   late int fg3aRank = 0;
   @JSONField(name: 'NICKNAME')
   late String nICKNAME = '';
   @JSONField(name: 'FTA')
-  late double fTA;
+  late double fTA = 0.0;
   @JSONField(name: 'NBA_FANTASY_PTS_RANK')
   late int nbaFantasyPtsRank = 0;
   @JSONField(name: 'MIN')
-  late double mIN;
+  late double mIN = 0.0;
   @JSONField(name: 'DD2')
   late int dD2 = 0;
   @JSONField(name: 'DD2_RANK')
@@ -102,19 +102,19 @@ class OVRRankPlayerInfoSeasonStats {
   @JSONField(name: 'PLAYER_ID')
   late int playerId = 0;
   @JSONField(name: 'TOV')
-  late double tOV;
+  late double tOV = 0.0;
   @JSONField(name: 'FG3M_RANK')
   late int fg3mRank = 0;
   @JSONField(name: 'FTM')
-  late double fTM;
+  late double fTM = 0.0;
   @JSONField(name: 'TEAM_ID')
   late int teamId = 0;
   @JSONField(name: 'BLKA')
-  late double bLKA;
+  late double bLKA = 0.0;
   @JSONField(name: 'BLK')
-  late double bLK;
+  late double bLK = 0.0;
   @JSONField(name: 'PLUS_MINUS')
-  late double plusMinus;
+  late double plusMinus = 0.0;
   @JSONField(name: 'TD3')
   late int tD3 = 0;
   @JSONField(name: 'W_RANK')
@@ -122,15 +122,15 @@ class OVRRankPlayerInfoSeasonStats {
   @JSONField(name: 'MIN_RANK')
   late int minRank = 0;
   @JSONField(name: 'FG_PCT')
-  late double fgPct;
+  late double fgPct = 0.0;
   @JSONField(name: 'L')
   late int l = 0;
   @JSONField(name: 'WNBA_FANTASY_PTS')
-  late double wnbaFantasyPts;
+  late double wnbaFantasyPts = 0.0;
   @JSONField(name: 'PTS')
-  late double pTS;
+  late double pTS = 0.0;
   @JSONField(name: 'FG3A')
-  late double fG3A;
+  late double fG3A = 0.0;
   @JSONField(name: 'FTM_RANK')
   late int ftmRank = 0;
   @JSONField(name: 'FTA_RANK')
@@ -156,9 +156,9 @@ class OVRRankPlayerInfoSeasonStats {
   @JSONField(name: 'PLAYER_NAME')
   late String playerName = '';
   @JSONField(name: 'AST')
-  late double aST;
+  late double aST = 0.0;
   @JSONField(name: 'OREB')
-  late double oREB;
+  late double oREB = 0.0;
   @JSONField(name: 'FT_PCT_RANK')
   late int ftPctRank = 0;
   @JSONField(name: 'GP')
@@ -166,15 +166,15 @@ class OVRRankPlayerInfoSeasonStats {
   @JSONField(name: 'FGM_RANK')
   late int fgmRank = 0;
   @JSONField(name: 'REB')
-  late double rEB;
+  late double rEB = 0.0;
   @JSONField(name: 'FT_PCT')
-  late double ftPct;
+  late double ftPct = 0.0;
   @JSONField(name: 'WNBA_FANTASY_PTS_RANK')
   late int wnbaFantasyPtsRank = 0;
   @JSONField(name: 'PTS_RANK')
   late int ptsRank = 0;
   @JSONField(name: 'PF')
-  late double pF;
+  late double pF = 0.0;
   @JSONField(name: 'GP_RANK')
   late int gpRank = 0;
   @JSONField(name: 'STL_RANK')
