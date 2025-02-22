@@ -61,15 +61,21 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
     newValue = newValue.clamp(0.0, 1.0);
     _animationController.value = newValue;
     bool shouldHide = _animationController.value > 0.5;
-    if(shouldHide != widget.controller?.barHideStatus.value) {
+    if (shouldHide != widget.controller?.barHideStatus.value) {
       widget.controller?.barHideStatus.value = shouldHide;
     }
   }
 
   void _handleScrollEnd(ScrollEndNotification notification) {
+    bool atEdge = notification.metrics.extentAfter == 0 ||
+            notification.metrics.extentBefore == 0;
+    if(atEdge){
+      changeHideStatus(false);
+      return;
+    }
     bool shouldHide = _animationController.value > 0.5;
     double targetValue = _animationController.value > 0.5 ? 1.0 : 0.0;
-    if(shouldHide != widget.controller?.barHideStatus.value) {
+    if (shouldHide != widget.controller?.barHideStatus.value) {
       widget.controller?.barHideStatus.value = shouldHide;
     }
 
@@ -88,14 +94,11 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
     }
     double targetValue = hide ? 1.0 : 0.0;
     widget.controller?.barHideStatus.value = hide;
-    /// 延迟是因为先响应子组件的滚动监听，然后再传递到这里的滚动监听
-    Future.delayed(Duration(milliseconds: 50),(){
-      _animationController.animateTo(
-        targetValue,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
+    _animationController.animateTo(
+      targetValue,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   @override

@@ -55,15 +55,6 @@ class ScorePageController extends GetxController {
         getDataFromNet([]);
       }
     });
-    // 监听滚动事件
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        // 判断是否滚动到边界
-        Get.find<HomeController>()
-            .scrollHideBottomBarController
-            .changeHideStatus(false);
-      }
-    });
   }
 
   @override

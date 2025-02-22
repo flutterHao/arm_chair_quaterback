@@ -56,7 +56,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
   Widget _buildView(BuildContext context) {
     return NestedScrollView(
         controller: controller.scrollController,
-        // floatHeaderSlivers: true,
+        floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverPersistentHeader(
