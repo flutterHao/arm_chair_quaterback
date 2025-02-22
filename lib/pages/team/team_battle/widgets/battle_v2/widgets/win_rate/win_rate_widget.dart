@@ -80,7 +80,7 @@ class WinRateWidget extends StatelessWidget {
                                               ?AppColors.c1F8FE5:AppColors.cD60D20,
                                           width: 1.w)),
                                   child: ImageWidget(
-                                    url: Utils.getTeamUrl(
+                                    url: Utils.getAvatarUrl(
                                         homeWin
                                             ? teamBattleV2Controller
                                                 .battleEntity.homeTeam.teamLogo
