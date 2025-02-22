@@ -62,10 +62,15 @@ class GuessHistoryItemController extends GetxController {
 
   /// 获取开奖剩余时间，第二天的零点开奖
   int getLastTime() {
-    var nowDateTime = MyDateUtils.getNowDateTime();
-    var nextDay = nowDateTime.add(const Duration(days: 1));
+    List<ReciveAwardV2GuessInfoGuessData> list = List.from(guessInfo.guessData);
+    list.sort((a, b) {
+      return a.gameStartTime - b.gameStartTime;
+    });
+    var gameStartTime = list.last.gameStartTime;
+    var gameCloseTime = MyDateUtils.getDateTimeByMs(gameStartTime);
+    var nextDay = gameCloseTime.add(const Duration(days: 1));
     var nextDayStartTimeMS = MyDateUtils.getDayStartTimeMS(nextDay);
-    var ms = nextDayStartTimeMS - nowDateTime.millisecondsSinceEpoch;
+    var ms = nextDayStartTimeMS - DateTime.now().millisecondsSinceEpoch;
     return ms;
   }
 
