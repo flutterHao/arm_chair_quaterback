@@ -1,7 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
@@ -19,8 +18,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
     return VerticalDragBackWidget(
         child: Container(
       height: 650.h,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         children: [
           const DialogTopBtn(),
@@ -39,8 +37,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
           ),
           Expanded(
               child: Obx(() => ListView.builder(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
                     itemCount: controller.cupDefineList.length,
                     itemBuilder: (context, index) {
                       return _matchLevelItemWidget(index);
@@ -71,13 +68,9 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                     children: [
                       if (index == 0) const Spacer(),
                       Expanded(
-                        child: Container(
-                            width: 2.w,
-                            height: double.infinity,
-                            color: AppColors.cB3B3B3),
+                        child: Container(width: 2.w, height: double.infinity, color: AppColors.cB3B3B3),
                       ),
-                      if (index == controller.cupDefineList.length - 1)
-                        const Spacer(),
+                      if (index == controller.cupDefineList.length - 1) const Spacer(),
                     ],
                   ),
                 ),
@@ -96,13 +89,11 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                   width: 15.w,
                   height: 15.w,
                   alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                      color: AppColors.c4D4D4D, shape: BoxShape.circle),
+                  decoration: const BoxDecoration(color: AppColors.c4D4D4D, shape: BoxShape.circle),
                   child: Container(
                     width: 9.w,
                     height: 9.w,
-                    decoration: const BoxDecoration(
-                        color: AppColors.cF2F2F2, shape: BoxShape.circle),
+                    decoration: const BoxDecoration(color: AppColors.cF2F2F2, shape: BoxShape.circle),
                   ),
                 ),
               ),
@@ -114,8 +105,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                   children: [
                     IconWidget(
                         iconWidth: 46.w,
-                        icon:
-                            'assets/images/manager/${controller.cupDefineList.reversed.toList()[index].cupPicId}.png',
+                        icon: 'assets/images/manager/${controller.cupDefineList.reversed.toList()[index].cupPicId}.png',
                         fieldPath: Assets.managerUiManagerGameGrade01),
                     16.hGap,
                     Expanded(
@@ -123,22 +113,17 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            controller.cupDefineList.reversed
-                                .toList()[index]
-                                .backUp,
+                            controller.cupDefineList.reversed.toList()[index].backUp,
                             style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
                           ),
                           Container(
                               child: Row(
                             children: [
-                              IconWidget(
-                                  iconWidth: 15.w,
-                                  icon: Assets.managerUiManagerIconCurrency04),
+                              IconWidget(iconWidth: 15.w, icon: Assets.managerUiManagerIconCurrency04),
                               5.hGap,
                               Text(
-                                ' ${controller.cupDefineList.reversed.toList()[index].cupNum[1].toInt()}',
-                                style:
-                                    14.w5(fontFamily: FontFamily.fOswaldMedium),
+                                ' ${controller.cupDefineList.reversed.toList()[index].cupNum[0].toInt()} ~ ${controller.cupDefineList.reversed.toList()[index].cupNum[1].toInt()}',
+                                style: 14.w5(fontFamily: FontFamily.fOswaldMedium),
                               ),
                             ],
                           ))

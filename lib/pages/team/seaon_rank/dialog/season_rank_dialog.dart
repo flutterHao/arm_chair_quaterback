@@ -1,8 +1,9 @@
 import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -29,8 +30,7 @@ class _SeasonRankDialogState extends State<SeasonRankDialog> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      controller.pageController
-          .jumpToPage(controller.seasonRankList.length - 1);
+      controller.pageController.jumpToPage(controller.seasonRankList.length - 1);
     });
   }
 
@@ -40,8 +40,7 @@ class _SeasonRankDialogState extends State<SeasonRankDialog> {
     return VerticalDragBackWidget(
         child: Container(
       height: 650.h,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         children: [
           const DialogTopBtn(),
@@ -60,15 +59,11 @@ class _SeasonRankDialogState extends State<SeasonRankDialog> {
                     itemCount: controller.seasonRankList.length,
                     itemBuilder: (context, index) {
                       return Obx(() {
-                        if (controller.rankDialogloadingStatus.value !=
-                            LoadDataStatus.success) {
+                        if (controller.rankDialogloadingStatus.value != LoadDataStatus.success) {
                           return Center(
-                              child: LoadStatusWidget(
-                                  loadDataStatus: controller
-                                      .rankDialogloadingStatus.value));
+                              child: LoadStatusWidget(loadDataStatus: controller.rankDialogloadingStatus.value));
                         }
-                        return SeasonRankItemView(
-                            controller.seasonRankList[index]);
+                        return SeasonRankItemView(controller.seasonRankList[index]);
                       });
                     });
               }))
@@ -78,6 +73,13 @@ class _SeasonRankDialogState extends State<SeasonRankDialog> {
   }
 
   Widget _seasonRankHeaderWidget() {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 14.w),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          'Season Ranks',
+          style: 19.w5(fontFamily: FontFamily.fOswaldMedium),
+        ));
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14.w),
       child: Obx(() => Row(
@@ -97,11 +99,7 @@ class _SeasonRankDialogState extends State<SeasonRankDialog> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                              color: controller
-                                          .seasonRankList[
-                                              controller.pageviewIndex.value]
-                                          .lastRank !=
-                                      null
+                              color: controller.seasonRankList[controller.pageviewIndex.value].lastRank != null
                                   ? AppColors.cB3B3B3
                                   : AppColors.cE6E6E,
                               width: 1)),
@@ -109,11 +107,7 @@ class _SeasonRankDialogState extends State<SeasonRankDialog> {
                           angle: pi,
                           child: IconWidget(
                               iconWidth: 5.w,
-                              iconColor: controller
-                                          .seasonRankList[
-                                              controller.pageviewIndex.value]
-                                          .lastRank !=
-                                      null
+                              iconColor: controller.seasonRankList[controller.pageviewIndex.value].lastRank != null
                                   ? AppColors.c000000
                                   : AppColors.cB3B3B3,
                               icon: Assets.commonUiCommonIconSystemJumpto)))),
@@ -140,21 +134,13 @@ class _SeasonRankDialogState extends State<SeasonRankDialog> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                            color: controller
-                                        .seasonRankList[
-                                            controller.pageviewIndex.value]
-                                        .nextRank !=
-                                    null
+                            color: controller.seasonRankList[controller.pageviewIndex.value].nextRank != null
                                 ? AppColors.cB3B3B3
                                 : AppColors.cE6E6E,
                             width: 1)),
                     child: IconWidget(
                         iconWidth: 5.w,
-                        iconColor: controller
-                                    .seasonRankList[
-                                        controller.pageviewIndex.value]
-                                    .nextRank !=
-                                null
+                        iconColor: controller.seasonRankList[controller.pageviewIndex.value].nextRank != null
                             ? AppColors.c000000
                             : AppColors.cB3B3B3,
                         icon: Assets.commonUiCommonIconSystemJumpto),
