@@ -83,9 +83,9 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
 
   /// true:hide false:show
   changeHideStatus(bool hide) {
-    // if (widget.controller?.barHideStatus.value == hide) {
-    //   return;
-    // }
+    if (widget.controller?.barHideStatus.value == hide) {
+      return;
+    }
     double targetValue = hide ? 1.0 : 0.0;
     widget.controller?.barHideStatus.value = hide;
     _animateTo(targetValue);

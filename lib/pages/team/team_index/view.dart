@@ -6,6 +6,7 @@
  */
 
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
@@ -69,7 +70,7 @@ class _TeamView extends GetView<TeamIndexController> {
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             controller: ctrl.scrollController,
-            child: const Column(
+            child: Column(
               children: [
                 TrainingNewWidget(),
                 BattleBoxWidget(),
@@ -77,6 +78,7 @@ class _TeamView extends GetView<TeamIndexController> {
                 // TrainingPage(),
                 NbaPlayerPage(),
                 MyTeamWidget(),
+                80.vGap,
               ],
             ),
           ),

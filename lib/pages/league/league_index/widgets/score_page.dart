@@ -91,7 +91,7 @@ class _ScorePageState extends State<ScorePage>
                               value += leagueController.choiceSize.value;
                               return AnimatedContainer(
                                 margin: EdgeInsets.only(
-                                    bottom: value > 0 ? 94.w : 0),
+                                    bottom: (value > 0 ? 94.w : 0) + 80.w),
                                 duration: const Duration(milliseconds: 300),
                               );
                             })

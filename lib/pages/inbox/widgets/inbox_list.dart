@@ -55,7 +55,11 @@ class InboxList extends GetView<InboxController> {
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
-                      return _buildItem(index, context);
+                      bool lastIndex =
+                          index == controller.messageList.length - 1;
+                      return Container(
+                          margin: EdgeInsets.only(bottom: lastIndex ? 80.w : 0),
+                          child: _buildItem(index, context));
                     },
                     separatorBuilder: (context, index) => Container(
                           width: double.infinity,
@@ -258,6 +262,7 @@ class IconSlidableAction extends StatelessWidget {
   final SlidableActionCallback? onPressed;
   final String icon;
   final double iconWidth;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(

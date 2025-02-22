@@ -19,6 +19,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
@@ -316,8 +317,10 @@ class _TabViewItemPageState extends State<_TabViewItemPage>
                   var leagueController = Get.find<LeagueController>();
                   var value = picksIndexController.choiceSize.value;
                   value += leagueController.choiceSize.value;
+                  double bottom = 0;
+                  bottom =  80.w + (value > 0 ? 94.w : 0);
                   return AnimatedContainer(
-                    margin: EdgeInsets.only(bottom: value > 0 ? 94.w : 0),
+                    margin: EdgeInsets.only(bottom: bottom),
                     duration: const Duration(milliseconds: 300),
                   );
                 })
