@@ -1,12 +1,6 @@
 /*
  * @Description: 
  * @Author: lihonghao
- * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2025-02-17 18:30:26
- */
-/*
- * @Description: 
- * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
  * @LastEditTime: 2024-09-24 10:57:13
  */
@@ -16,7 +10,6 @@ import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
-import 'package:arm_chair_quaterback/common/utils/platform_file_manager.dart';
 import 'package:arm_chair_quaterback/common/widgets/scroll_hide_bottom_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
@@ -184,10 +177,7 @@ class HomeController extends GetxController {
     String accountName = StorageService.to.getString(Constant.deviceId);
     // accountName = await DeviceUtils.getDeviceId();
     if (ObjectUtil.isEmpty(accountName)) {
-      accountName = (await PlatformFileManager.readUuid()) ?? "";
-      if (ObjectUtil.isEmpty(accountName)) {
         accountName = await DeviceUtils.getDeviceId();
-      }
     }
 
     Log.d("deviceId=$accountName");

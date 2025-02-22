@@ -223,7 +223,7 @@ class TeamIndexController extends GetxController
               "Salary cap over limit，please adjust the lineup  before the game can begin.");
       return;
     }
-    SoundServices.to.playSound(Assets.soundRadaMatch);
+    // SoundServices.to.playSound(Assets.soundRadaMatch);
     await Get.put(TeamBattleController()).teamMatchV2().then((v) async {
       await Get.toNamed(RouteNames.teamTeamBattle);
       Get.delete<TeamBattleController>();

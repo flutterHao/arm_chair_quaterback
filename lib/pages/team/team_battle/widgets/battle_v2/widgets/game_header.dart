@@ -52,9 +52,18 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
           child: Center(
             child: SizedBox(
               width: 76.w,
-              child: PreparationWidget(
-                  playerReadiness: teamBattleController
-                      .battleEntity.homeTeam.playerReadiness),
+              child: GetBuilder<TeamBattleV2Controller>(
+                  id: TeamBattleV2Controller.idReadiness,
+                  builder: (logic) {
+                    var events = controller.getQuarterEvents();
+                    GameEvent? event = events.isEmpty ? null : events.last;
+
+                    double value = event == null
+                        ? teamBattleController
+                            .pkStartUpdatedEntity!.homeTeamStrength
+                        : event.pkEventUpdatedEntity.homeCurrentStrength;
+                    return PreparationWidget(playerReadiness: value);
+                  }),
             ),
           ),
         ),
@@ -86,11 +95,14 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
           child: Center(
             child: FittedBox(
               fit: BoxFit.scaleDown,
-              child: Text("POWER ${teamBattleController.battleEntity.homeTeam.currTeamStrength}",style: 12.w4(
-                color: AppColors.c000000,
-                height: 1,
-                fontFamily: FontFamily.fOswaldRegular,
-              ),),
+              child: Text(
+                "POWER ${teamBattleController.battleEntity.homeTeam.currTeamStrength}",
+                style: 12.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldRegular,
+                ),
+              ),
             ),
           ),
         )
@@ -338,9 +350,20 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     child: Center(
                       child: SizedBox(
                         width: 76.w,
-                        child: PreparationWidget(
-                            playerReadiness: teamBattleController
-                                .battleEntity.awayTeam.playerReadiness),
+                        child: GetBuilder<TeamBattleV2Controller>(
+                            id: TeamBattleV2Controller.idReadiness,
+                            builder: (logic) {
+                              var events = controller.getQuarterEvents();
+                              GameEvent? event =
+                                  events.isEmpty ? null : events.last;
+
+                              double value = event == null
+                                  ? teamBattleController
+                                      .pkStartUpdatedEntity!.awayTeamStrength
+                                  : event
+                                      .pkEventUpdatedEntity.awayCurrentStrength;
+                              return PreparationWidget(playerReadiness: value);
+                            }),
                       ),
                     ),
                   ),
@@ -371,11 +394,14 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     child: Center(
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: Text("POWER ${teamBattleController.battleEntity.awayTeam.currTeamStrength}",style: 12.w4(
-                          color: AppColors.c000000,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldRegular,
-                        ),),
+                        child: Text(
+                          "POWER ${teamBattleController.battleEntity.awayTeam.currTeamStrength}",
+                          style: 12.w4(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldRegular,
+                          ),
+                        ),
                       ),
                     ),
                   )

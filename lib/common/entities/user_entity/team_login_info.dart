@@ -18,6 +18,8 @@ class TeamLoginInfo {
   List<TeamRecordList>? teamRecordList;
   List<dynamic>? timerServiceList;
   ZoneInfo? zoneInfo;
+  /// 服务器当前时间
+  int currentTimeMillis = 0;
 
   TeamLoginInfo({
     this.firstLogin,
