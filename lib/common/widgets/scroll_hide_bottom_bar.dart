@@ -67,7 +67,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
   }
 
   void _handleScrollEnd(ScrollEndNotification notification) {
-    bool atEdge = notification.metrics.extentAfter == 0 ||
+    bool atEdge = notification.metrics.extentAfter < 80.w ||
         notification.metrics.extentBefore == 0;
     if (atEdge) {
       changeHideStatus(false);
