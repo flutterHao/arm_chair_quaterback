@@ -266,6 +266,7 @@ class Assets {
   static const String managerUiManagerIconRecover01 = 'assets/images/manager/ui_manager_icon_recover_01.png';
   static const String managerUiManagerIconStar = 'assets/images/manager/ui_manager_icon_star.png';
   static const String managerUiManagerIconStar01 = 'assets/images/manager/ui_manager_icon_star_01.png';
+  static const String managerUiManagerIconStar02 = 'assets/images/manager/ui_manager_icon_star_02.png';
   static const String managerUiManagerIconWheelArrows = 'assets/images/manager/ui_manager_icon_wheel_arrows.png';
   static const String managerUiManagerIconWheelHurt = 'assets/images/manager/ui_manager_icon_wheel_hurt.png';
   static const String managerUiManagerIconWheelKey = 'assets/images/manager/ui_manager_icon_wheel_key.png';
@@ -283,6 +284,9 @@ class Assets {
   static const String managerUiManagerPlayercardBig01 = 'assets/images/manager/ui_manager_playercard_big_01.png';
   static const String managerUiManagerPlayercardBig02 = 'assets/images/manager/ui_manager_playercard_big_02.png';
   static const String managerUiManagerPlayercardBig03 = 'assets/images/manager/ui_manager_playercard_big_03.png';
+  static const String managerUiManagerPlayercardBig04 = 'assets/images/manager/ui_manager_playercard_big_04.png';
+  static const String managerUiManagerPlayercardBig05 = 'assets/images/manager/ui_manager_playercard_big_05.png';
+  static const String managerUiManagerPlayercardBig06 = 'assets/images/manager/ui_manager_playercard_big_06.png';
   static const String managerUiManagerPlayercardBigLine01 = 'assets/images/manager/ui_manager_playercard_big_line_01.png';
   static const String managerUiManagerPlayercardBigLine02 = 'assets/images/manager/ui_manager_playercard_big_line_02.png';
   static const String managerUiManagerPlayercardBigLine03 = 'assets/images/manager/ui_manager_playercard_big_line_03.png';

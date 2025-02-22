@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-20 18:50:54
+ * @LastEditTime: 2025-02-21 14:37:00
  */
 
 import 'dart:async';
@@ -49,10 +49,7 @@ class TeamIndexController extends GetxController
   final maxRow = 3; // 假设每行最多3个卡片
 
   ///宝箱
-  var box1Claimed = false.obs;
-  var box2Claimed = false.obs;
-  var box1Timer = 0.obs;
-  var box2Timer = 0.obs;
+  var hasClick = false;
   var isCountdownActive = false.obs; // 倒计时是否激活
   Timer? freeBoxTimer;
   Timer? battleBoxTimer;
@@ -291,8 +288,8 @@ class TeamIndexController extends GetxController
     IllustratiionsController ctrl = Get.find();
     ctrl.getPlayerCards = currentCardPack.playerCards
         .where((e) => e.isSelect.value && e.isOpen.value)
-        .where((e) => ctrl.playerCollectEntity.collects
-            .where((a) => a.playerId == e.playerId)
+        .where((e) => CacheApi.playerBookRuleList
+            .where((a) => a.playerId == e.playerId && a.isLight == 0)
             .isEmpty)
         .toList();
     closeCard();
@@ -313,6 +310,8 @@ class TeamIndexController extends GetxController
 
   ///开启免费宝箱
   void openFreeGift() async {
+    if (hasClick) return;
+    hasClick = true;
     awardList = await TeamApi.openFreeGift();
     showBoxDialog();
   }
@@ -350,6 +349,9 @@ class TeamIndexController extends GetxController
         builder: (context) {
           return const FreeBoxDialog();
         });
+    Future.delayed(const Duration(microseconds: 300)).then((v) {
+      hasClick = false;
+    });
     getBattleBox();
     HomeController.to.updateMoney();
   }

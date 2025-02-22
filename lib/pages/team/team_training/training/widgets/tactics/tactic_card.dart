@@ -24,12 +24,12 @@ class SmallTacticCard extends StatelessWidget {
       height: 52.w * scale,
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF,
-          borderRadius: BorderRadius.circular(6.w),
+          borderRadius: BorderRadius.circular(6.w * scale),
           boxShadow: [
             BoxShadow(
                 color: AppColors.c000000.withOpacity(0.2),
-                offset: const Offset(0, 0.5),
-                blurRadius: 1.5.w)
+                offset: Offset(0, 0.5 * scale),
+                blurRadius: 1.5.w * scale)
           ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +42,7 @@ class SmallTacticCard extends StatelessWidget {
                 fontFamily: FontFamily.fRobotoMedium),
           ),
           (4 * scale).vGap,
-          Image.asset(getCardNewImage(color), width: 18.w * scale),
+          Image.asset(getCardImage(color), width: 18.w * scale),
         ],
       ),
     );

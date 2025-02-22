@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2025-01-08 20:50:59
+ * @LastEditTime: 2025-02-22 18:57:16
  */
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -25,6 +25,7 @@ class ImageWidget extends StatelessWidget {
   final Widget? errorWidget;
   final Color? color;
   final Alignment? alignment;
+  final BlendMode? colorBlendMode;
 
   const ImageWidget(
       {super.key,
@@ -37,7 +38,8 @@ class ImageWidget extends StatelessWidget {
       this.loadingWidget,
       this.errorWidget,
       this.color,
-      this.alignment});
+      this.alignment,
+      this.colorBlendMode});
 
   @override
   Widget build(BuildContext context) {
@@ -108,10 +110,11 @@ class ImageWidget extends StatelessWidget {
       cache: true,
       width: width,
       height: height,
-      color: color,
       alignment: alignment ?? Alignment.center,
       borderRadius: borderRadius,
       shape: BoxShape.rectangle,
+      colorBlendMode: colorBlendMode,
+      color: color,
       //非服务器的图片资源缓存4天过期
       cacheMaxAge: url.contains(sUrl) ? null : const Duration(days: 4),
 

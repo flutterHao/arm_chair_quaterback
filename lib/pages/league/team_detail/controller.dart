@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-02-07 16:13:22
+ * @LastEditTime: 2025-02-21 19:36:17
  */
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
@@ -37,9 +37,9 @@ class TeamDetailController extends GetxController
   // int typeIndex = 0;
 
   List<String> positionList = [
-    LangKey.nbaTeamMeanCenter,
-    LangKey.nbaTeamMeanGuard,
-    LangKey.nbaTeamMeanForward
+    LangKey.nbaTeamMeanCenter.tr,
+    LangKey.nbaTeamMeanGuard.tr,
+    LangKey.nbaTeamMeanForward.tr
   ];
 
   List<String> yearList = [];
@@ -64,6 +64,7 @@ class TeamDetailController extends GetxController
   List<StatsEntity> statPlayerList = [];
   List<TeamRankEntity> confRankList = [];
   List<bool> openList = [];
+  Set<int> addedPlayerIds = {}; // 用于记录已经添加的球员ID
 
   void onTap() {}
 
@@ -228,25 +229,35 @@ class TeamDetailController extends GetxController
   }
 
   List<StatsEntity> getPlayerList(String type) {
+    List<StatsEntity> result = [];
+
+    // 定义不同位置的筛选条件
+    List<String> positions = [];
     switch (type) {
       case "CENTER":
-        return statPlayerList
-            .where(
-                (e) => Utils.getPlayBaseInfo(e.playerId).position.contains("C"))
-            .toList();
+        positions = ["C"];
+        break;
       case "GUARD":
-        return statPlayerList
-            .where(
-                (e) => Utils.getPlayBaseInfo(e.playerId).position.contains("G"))
-            .toList();
+        positions = ["G"];
+        break;
       case "FORWARD":
-        return statPlayerList
-            .where(
-                (e) => Utils.getPlayBaseInfo(e.playerId).position.contains("F"))
-            .toList();
+        positions = ["F"];
+        break;
       default:
         return statPlayerList;
     }
+
+    // 遍历球员列表，按顺序筛选并去重
+    for (var e in statPlayerList) {
+      var playerInfo = Utils.getPlayBaseInfo(e.playerId);
+      if (positions.any((pos) => playerInfo.position.contains(pos)) &&
+          !addedPlayerIds.contains(e.playerId)) {
+        result.add(e);
+        addedPlayerIds.add(e.playerId); // 记录已添加的球员ID
+      }
+    }
+
+    return result;
   }
 
   double getOppg() {

@@ -521,7 +521,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       List<int> cupNum = CacheApi.cupDefineList[i].cupNum;
       int begin = cupNum.first;
       int end = cupNum.last;
-      if (cup >= begin && cup <= end) {
+      if (cup >= begin && cup < end) {
         return CacheApi.cupDefineList[i];
       }
     }

@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -18,6 +19,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/preparation_tip.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/card_rule_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_utils.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tatic_match.dart';
@@ -32,7 +34,8 @@ import 'package:get/get.dart';
 ///3:道具
 ///4:篮球
 ///5:钞票
-class TrainingController extends GetxController with GetTickerProviderStateMixin {
+class TrainingController extends GetxController
+    with GetTickerProviderStateMixin {
   final random = Random();
   RxBool isPlaying = false.obs;
   // RxInt currentIndex = 0.obs;
@@ -50,6 +53,9 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
   var showShield = false.obs;
   var showScaleShield = 1.0.obs;
   var shieldCount = 0.obs;
+  //战术牌
+  var showTactics = false.obs;
+  List<TrainingInfoBuff> newCardList = [];
 
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   // List<TeamPlayerInfoEntity> playerList = [];
@@ -57,19 +63,48 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
   TrainDefineEntity trainDefine = TrainDefineEntity();
   RxInt ballNum = 0.obs;
   RxString recoverTimeStr = "".obs;
-  List<RxBool> slotCard = [false.obs, false.obs, false.obs, false.obs, false.obs, false.obs];
+  List<RxBool> slotCard = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs
+  ];
   List<double> offsetList = [];
-  final List<ScrollController> scrollerCtrlList = List.generate(6, (_) => ScrollController());
+  final List<ScrollController> scrollerCtrlList =
+      List.generate(6, (_) => ScrollController());
 
   List<AnimationController> slotsAnimlList = [];
   List<Animation<double>> sizeAnimations = [];
   List<Animation<double>> scaleAnimations = [];
   int awardLength = 3;
-  List<RxBool> isAwards = [false.obs, false.obs, false.obs, false.obs, false.obs, false.obs];
+  List<RxBool> isAwards = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs
+  ];
 
-  List<RxBool> showBoxList = [false.obs, false.obs, false.obs, false.obs, false.obs, false.obs];
+  List<RxBool> showBoxList = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs
+  ];
 
-  List<RxBool> isShowColor = [false.obs, false.obs, false.obs, false.obs, false.obs, false.obs];
+  List<RxBool> isShowColor = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs
+  ];
   late AnimationController colorAnimatedCtrl;
   late Animation<double> colorAnimation;
 
@@ -158,23 +193,30 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
     sizeAnimations = List.generate(6, (index) {
       return TweenSequence([
         TweenSequenceItem<double>(tween: Tween(begin: 1, end: 0.9), weight: 1),
-        TweenSequenceItem<double>(tween: Tween(begin: 0.9, end: 0.9), weight: 40),
-        TweenSequenceItem<double>(tween: Tween(begin: 0.9, end: 0.8), weight: 10),
-        TweenSequenceItem<double>(tween: Tween(begin: 0.8, end: 1.0), weight: 10),
+        TweenSequenceItem<double>(
+            tween: Tween(begin: 0.9, end: 0.9), weight: 40),
+        TweenSequenceItem<double>(
+            tween: Tween(begin: 0.9, end: 0.8), weight: 10),
+        TweenSequenceItem<double>(
+            tween: Tween(begin: 0.8, end: 1.0), weight: 10),
         TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.2), weight: 10),
-        TweenSequenceItem<double>(tween: Tween(begin: 1.2, end: 1.0), weight: 10),
-      ]).animate(CurvedAnimation(parent: slotsAnimlList[index], curve: Curves.easeInOut));
+        TweenSequenceItem<double>(
+            tween: Tween(begin: 1.2, end: 1.0), weight: 10),
+      ]).animate(CurvedAnimation(
+          parent: slotsAnimlList[index], curve: Curves.easeInOut));
     });
     scaleAnimations = List.generate(6, (index) {
       return TweenSequence([
         TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 60),
         TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.2), weight: 10),
         TweenSequenceItem<double>(tween: Tween(begin: 1.2, end: 1), weight: 10),
-      ]).animate(CurvedAnimation(parent: slotsAnimlList[index], curve: Curves.linear));
+      ]).animate(
+          CurvedAnimation(parent: slotsAnimlList[index], curve: Curves.linear));
     });
 
     //飞行
-    flyAnimationCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    flyAnimationCtrl = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
     flyAnimation = Tween<double>(begin: 0, end: 1).animate(flyAnimationCtrl);
 
     // shakeController = AnimationController(
@@ -219,7 +261,8 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
       })
       ..addStatusListener((status) {
         // Log.d("status:$status");
-        if (status == AnimationStatus.forward || status == AnimationStatus.reverse) {
+        if (status == AnimationStatus.forward ||
+            status == AnimationStatus.reverse) {
           // 每次动画完成或结束时，增加持续时间
           currentDuration += 25.milliseconds; // 可以根据需要调整增加的毫秒数
           arrowAnimCtrl.duration = currentDuration;
@@ -269,6 +312,11 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
   void onReady() {
     super.onReady();
     getData();
+    // isPlaying.addListener(rxGetx)
+    ever(isPlaying, (v) {
+      HomeController.to.isAbsorbPointer.value = v;
+      HomeController.to.update();
+    });
   }
 
   /// 在 [onDelete] 方法之前调用。
@@ -347,7 +395,8 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
     int recover = trainDefine.ballRecoverTime;
     DateTime now = DateTime.now();
     DateTime recoverTime =
-        DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime).add(Duration(seconds: recover));
+        DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
+            .add(Duration(seconds: recover));
     int recoverSeconds = recoverTime.difference(now).inSeconds;
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
@@ -356,7 +405,8 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
       ///获取回复篮球与当前时间倒计时，转换成mm:ss
       final minutes = recoverSeconds ~/ 60;
       final remainingSeconds = recoverSeconds % 60;
-      recoverTimeStr.value = '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+      recoverTimeStr.value =
+          '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
       if (recoverSeconds <= 0) {
         _timer?.cancel();
         // 重新获取新的恢复时间进行倒计时
@@ -411,7 +461,7 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
   }
 
   ///选牌
-  void chooseTactic(BuildContext context, TrainingInfoBuff e) async {
+  void chooseTactic(TrainingInfoBuff e) async {
     e.isSelect.value = true;
     selectTacticId = e.id;
     canChoose = false;
@@ -445,13 +495,14 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
 
     // return;
     // update(["training_page"]);
-    TeamApi.chooseTactic(selectTacticId, replaceTacticId: changeTacticId).then((v) async {
+    TeamApi.chooseTactic(selectTacticId, replaceTacticId: changeTacticId)
+        .then((v) async {
       changeTacticId = 0;
 
-      await Future.delayed(const Duration(milliseconds: 200));
+      // await Future.delayed(const Duration(milliseconds: 200));
       trainingInfo = await TeamApi.getTrainingInfo();
 
-      await chooseEnd(context);
+      await chooseEnd();
       trainingInfo.buff = v;
       update(["training_page"]);
       Get.back();
@@ -478,15 +529,15 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
       }
     }).catchError((e) {
       Log.e("网络错误");
-      chooseEnd(context);
+      chooseEnd();
     });
   }
 
-  Future chooseEnd(BuildContext context) async {
+  Future chooseEnd() async {
     selectTacticId = 0;
     changeTacticId = 0;
 
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 150));
     showCard.value = false;
     tacticFly.value = false;
     isPlaying.value = false;
@@ -523,6 +574,11 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
   }
 
   void startSlot() async {
+    if (trainingInfo.buff.length == 5) {
+      TeamIndexController ctrl = Get.find();
+      ctrl.matchBattle();
+      return;
+    }
     if (ballNum.value > 0) {
       ballNum.value = ballNum.value - 1;
     }
@@ -535,7 +591,9 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scrollToSlot(onEnd: () {
-      Get.find<HomeController>().scrollHideBottomBarController.changeHideStatus(true);
+      Get.find<HomeController>()
+          .scrollHideBottomBarController
+          .changeHideStatus(true);
     });
     playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
     playerIdx = random.nextInt(playerList.length);
@@ -579,8 +637,9 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
     double offset = 68.w * (propIndex + propList.length * 3);
     offsetList.add(offset);
     slotsAnimlList[index].forward();
-    await scrollerCtrlList[index]
-        .animateTo(offset, duration: const Duration(milliseconds: 600), curve: const Cubic(0.27, 0.59, 0.19, 1.1));
+    await scrollerCtrlList[index].animateTo(offset,
+        duration: const Duration(milliseconds: 600),
+        curve: const Cubic(0.27, 0.59, 0.19, 1.1));
 
     if (index == 5) {
       ///最后一个旋转结束
@@ -592,33 +651,35 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
   ///奖励表达
   Future showAward() async {
     // tacticType = TacticUtils.checkTacticMatch(tacticList);
-    isPlaying.value = true;
+    // isPlaying.value = true;
     canChoose = false;
     int cashNum = 0;
     List<int> awads = [];
     for (var e in trainingInfo.award) {
       ///槽位显示中奖放大动画
-      awardLength = 0;
-      for (int i = 0; i < trainingInfo.propArray.length; i++) {
-        if (trainingInfo.propArray[i] == e.id) {
-          awardLength++;
-          isAwards[i].value = true;
-          showBoxList[i].value = true;
-          //槽位恢复
-          Future.delayed(const Duration(milliseconds: 200), () async {
-            isAwards[i].value = false;
-            isShowColor[i].value = true;
-            colorAnimatedCtrl.forward();
-            await Future.delayed(const Duration(milliseconds: 150));
-            isShowColor[i].value = false;
-            colorAnimatedCtrl.reset();
-          });
+      if (e.num != 0) {
+        awardLength = 0;
+        for (int i = 0; i < trainingInfo.propArray.length; i++) {
+          if (trainingInfo.propArray[i] == e.id) {
+            awardLength++;
+            isAwards[i].value = true;
+            showBoxList[i].value = true;
+            //槽位恢复
+            Future.delayed(const Duration(milliseconds: 200), () async {
+              isAwards[i].value = false;
+              isShowColor[i].value = true;
+              colorAnimatedCtrl.forward();
+              await Future.delayed(const Duration(milliseconds: 150));
+              isShowColor[i].value = false;
+              colorAnimatedCtrl.reset();
+            });
+          }
         }
+        if (e.id == 5) {
+          cashNum = e.num;
+        }
+        awads.add(e.id);
       }
-      if (e.id == 5) {
-        cashNum = e.num;
-      }
-      awads.add(e.id);
     }
 
     await Future.delayed(const Duration(milliseconds: 300));
@@ -628,15 +689,25 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
 
     ///2:状态
     if (awads.contains(2)) {
-      showAwardDialog();
-      SoundServices.to.playSound(awardLength > 4 ? Assets.soundStatusBig : Assets.soundStatusSmall);
-      await startPlayerScroll(0);
+      if (awardLength < 6) {
+        showAwardDialog();
+        SoundServices.to.playSound(
+            awardLength > 4 ? Assets.soundStatusBig : Assets.soundStatusSmall);
+        await startPlayerScroll(0);
+
+        // await Future.delayed(const Duration(milliseconds: 500));
+        Get.back();
+      } else {
+        ///六个状态调升星
+        TeamController ctrl = Get.find();
+        int idx = Random().nextInt(ctrl.myTeamEntity.teamPlayers.length);
+        String uuid = ctrl.myTeamEntity.teamPlayers[idx].uuid;
+        Get.toNamed(RouteNames.teamTeamUpgrade,
+            arguments: {"playerUuid": uuid});
+      }
       //更新球员状态
       Get.find<TeamController>().updateTeamInfo();
       update(["training_page"]);
-
-      await Future.delayed(const Duration(milliseconds: 500));
-      Get.back();
     }
 
     ///3:道具自动加
@@ -665,7 +736,8 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
       if (trainingInfo.training.currentTaskId > currentLevel) {
         await Future.delayed(const Duration(milliseconds: 300));
 
-        var item = trainTaskList.where((e) => e.taskLevel == currentLevel).first;
+        var item =
+            trainTaskList.where((e) => e.taskLevel == currentLevel).first;
         cashs = item.propNum;
         await showCashAward(cashs);
         currentLevel = trainingInfo.training.currentTaskId;
@@ -702,35 +774,70 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
 
     ///战术 buff
     if (awads.contains(1)) {
-      tacticChooseList.clear();
-      tacticChooseList = List.from(trainingInfo.chooseBuffs);
-      //初始化卡牌的位置和朝向
-      initTacticPosition();
-      showAwardDialog();
-      update(["training_page"]);
-      showCard.value = true;
-      await Future.delayed(const Duration(milliseconds: 500));
-      // for (var element in tacticChooseList) {
-      //   await Future.delayed(const Duration(milliseconds: 100));
-      //   element.isOpen.value = true;
-      // }
+      if (awardLength < 6) {
+        tacticChooseList.clear();
+        tacticChooseList = List.from(trainingInfo.chooseBuffs);
+        //初始化卡牌的位置和朝向
+        initTacticPosition();
+        showAwardDialog();
+        update(["training_page"]);
+        showCard.value = true;
+        await Future.delayed(const Duration(milliseconds: 500));
 
-      //发牌
-      int length = tacticChooseList.length;
-      List<double> rotates2 = [-8, 12];
-      List<double> rotates3 = [-23.23, -8, 12];
-      double spacing = 30.w;
-      for (int i = 0; i < length; i++) {
-        var item = tacticChooseList[i];
-        double x = (375.w - (length * 68.w + (length - 1) * spacing)) / 2 + i * (68.w + spacing);
-        item.offset.value = Offset(x, 328.w);
-        item.rotate.value = length == 1 ? 0 : (length == 2 ? rotates2[i] : rotates3[i]);
-        await Future.delayed(const Duration(milliseconds: 300));
+        //发牌
+        int length = tacticChooseList.length;
+        List<double> rotates2 = [-8, 12];
+        List<double> rotates3 = [-23.23, -8, 12];
+        double spacing = 30.w;
+        for (int i = 0; i < length; i++) {
+          var item = tacticChooseList[i];
+          double x = (375.w - (length * 68.w + (length - 1) * spacing)) / 2 +
+              i * (68.w + spacing);
+          item.offset.value = Offset(x, 328.w);
+          item.rotate.value =
+              length == 1 ? 0 : (length == 2 ? rotates2[i] : rotates3[i]);
+          await Future.delayed(const Duration(milliseconds: 150));
+        }
+        updateScroller();
+        Future.delayed(const Duration(milliseconds: 300), () {
+          canChoose = true;
+          if (tacticChooseList.length == 1) {
+            chooseTactic(tacticChooseList.first);
+          }
+        });
+      } else {
+        //·6爱心赋值4张红心相同的战术卡牌
+        showTactics.value = true;
+        newCardList = List.from(trainingInfo.buff);
+        for (int i = 0; i < newCardList.length; i++) {
+          var item = newCardList[i];
+          double x = (375.w - 68.w) / 2;
+          item.offset.value = Offset(x, 560.w);
+          item.rotate.value = 0;
+          item.scale = 68 / 50;
+        }
+        showAwardDialog();
+        for (int i = 0; i < newCardList.length; i++) {
+          // int length = i + 1;
+          newCardList[i].scale = (35.w + i * 2.5.w) / 50.w;
+          Offset offset = Offset(offsets[i].dx, offsets[i].dy + 47.w);
+          newCardList[i].offset.value = offset;
+          newCardList[i].rotate.value = angles[i];
+          await Future.delayed(50.milliseconds);
+        }
+        await Future.delayed(500.milliseconds);
+        showTactics.value = false;
+        newCardList = [];
+        isPlaying.value = false;
+        update(["training_page"]);
+        Get.back();
       }
-      updateScroller();
-      Future.delayed(const Duration(milliseconds: 500), () {
-        canChoose = true;
-      });
+
+      // for (var element in slotsAnimlList) {
+      //   element.reset();
+      // }
+      // getPlayerList();
+      // update(["training_page"]);
     }
 
     if (!awads.contains(1)) {
@@ -739,29 +846,21 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
     // for (var element in scrollerCtrlList) {
     //   Log.d("slot 当前位置 ${element.offset}");
     // }
-    if (trainingInfo.buff.length == 5) {
-      TeamIndexController ctrl = Get.find();
-      ctrl.matchBattle();
-    }
+
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
     updateScroller();
 
     Future.delayed(const Duration(milliseconds: 10), () {
       updateScroller();
     });
-
-    // for (var element in slotsAnimlList) {
-    //   element.reset();
-    // }
-    // getPlayerList();
-    // update(["training_page"]);
   }
 
   Future showAwardDialog() async {
     await showDialog(
         barrierDismissible: false,
         context: Get.context!,
-        barrierColor: Colors.transparent,
+        barrierColor: Colors.black.withOpacity(0.6),
+        // barrierColor: Colors.transparent,
         builder: (context) {
           return const TrainingAwardDialog();
         });
@@ -815,7 +914,8 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
     cash.value = cashs;
     caShScale.value = true;
     updateScroller();
-    SoundServices.to.playSound(awardLength > 4 ? Assets.soundMoneyBig : Assets.soundMoneySmall);
+    SoundServices.to.playSound(
+        awardLength > 4 ? Assets.soundMoneyBig : Assets.soundMoneySmall);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       caShScale.value = false;
     });
@@ -833,8 +933,10 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
     ///状态控制
 
     await Future.delayed(const Duration(milliseconds: 150));
-    var teamPlayers = Get.find<TeamController>().myTeamEntity.teamPlayers.toList();
-    trainingInfo.selectPlayer.value = trainingInfo.statusReplyPlayers.map((e) => e.playerId).toList();
+    var teamPlayers =
+        Get.find<TeamController>().myTeamEntity.teamPlayers.toList();
+    trainingInfo.selectPlayer.value =
+        trainingInfo.statusReplyPlayers.map((e) => e.playerId).toList();
     playerList = List.from(teamPlayers)
       ..sort((a, b) {
         bool aInStatus = trainingInfo.selectPlayer.contains(a.playerId);
@@ -916,10 +1018,13 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
         // update(["playerList"]);
         for (int i = 0; i < statusScollerList.length; i++) {
           statusScroll(i, oldList[i]);
-          SoundServices.to.playSound(awardLength > 4 ? Assets.soundStatsRecoverAll : Assets.soundStatsRecoverOne);
+          SoundServices.to.playSound(awardLength > 4
+              ? Assets.soundStatsRecoverAll
+              : Assets.soundStatsRecoverOne);
         }
         updateScroller();
-        await Future.delayed(Duration(milliseconds: 500 + statusScollerList.length * 250), () {
+        await Future.delayed(
+            Duration(milliseconds: 500 + statusScollerList.length * 250), () {
           showPlayerBox.value = false;
           showPlayer.value = false;
           playerScrollerEnd = false;
@@ -943,12 +1048,15 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
 
   void statusScroll(int index, int oldIndex) async {
     if (statusScollerList[index].hasClients) {
-      int newIndex = statusList.indexOf(trainingInfo.statusReplyPlayers[index].playerStatus);
+      int newIndex = statusList
+          .indexOf(trainingInfo.statusReplyPlayers[index].playerStatus);
       double offset = 30.w * (newIndex);
       statusScollerList[index].animateTo(
         offset,
         duration: const Duration(milliseconds: 300),
-        curve: oldIndex == newIndex ? Curves.bounceOut : const Cubic(0.27, 0.59, 0.19, 1.0),
+        curve: oldIndex == newIndex
+            ? Curves.bounceOut
+            : const Cubic(0.27, 0.59, 0.19, 1.0),
         // curve: const Cubic(0.27, 0.59, 0.19, 1.0),
       );
     }
@@ -1006,7 +1114,8 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
   }
 
   TrainTaskEntity getTaskAward() {
-    var item = trainTaskList.firstWhereOrNull((e) => e.taskLevel == currentLevel);
+    var item =
+        trainTaskList.firstWhereOrNull((e) => e.taskLevel == currentLevel);
     return item ?? TrainTaskEntity();
   }
 
@@ -1017,7 +1126,7 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
         backgroundColor: Colors.transparent,
         context: Get.context!,
         builder: (context) {
-          return const VerticalDragBackWidget(child: CardRuleDialog());
+          return const VerticalDragBackWidget(child: PreparationTip());
         });
   }
 }

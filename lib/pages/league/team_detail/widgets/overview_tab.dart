@@ -226,100 +226,105 @@ class _Schedule extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var item = gameSchedules[index];
 
-                  return Container(
-                    width: 193.5.w,
-                    height: 123.5.w,
-                    padding:
-                        EdgeInsets.only(left: 14.w, right: 14.w, top: 14.w),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(color: AppColors.cB3B3B3),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              DateUtil.formatDateMs(item.gameStartTime,
-                                  format: DateFormats.mo_d_h_m),
-                              style: 12.w4(
-                                  color: AppColors.c000000,
-                                  fontFamily: FontFamily.fRobotoRegular,
-                                  height: 0.9),
-                            ),
-                            12.5.hGap,
-                            if (item.status == 2 ||
-                                item.gameStartTime <
-                                    DateTime.now().millisecondsSinceEpoch)
+                  return InkWell(
+                    onTap: () => Get.toNamed(RouteNames.leagueLeagueDetail,
+                        arguments: {"gameId": item.gameId}),
+                    child: Container(
+                      width: 193.5.w,
+                      height: 123.5.w,
+                      padding:
+                          EdgeInsets.only(left: 14.w, right: 14.w, top: 14.w),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.r),
+                        border: Border.all(color: AppColors.cB3B3B3),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
                               Text(
-                                LangKey.scoreTipsFinal.tr,
+                                DateUtil.formatDateMs(item.gameStartTime,
+                                    format: DateFormats.mo_d_h_m),
                                 style: 12.w4(
                                     color: AppColors.c000000,
                                     fontFamily: FontFamily.fRobotoRegular,
                                     height: 0.9),
                               ),
-                            const Expanded(child: SizedBox.shrink()),
-                            IconWidget(
-                              iconWidth: 10.w,
-                              iconColor: AppColors.c000000,
-                              icon: Assets.iconUiIconArrows04,
-                              rotateAngle: -90,
-                            ),
-                            9.hGap,
-                          ],
-                        ),
-                        9.5.vGap,
-                        Container(
-                          width: double.infinity,
-                          height: 1,
-                          color: AppColors.cE6E6E,
-                        ),
-                        5.5.vGap,
-                        ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: 2,
-                            padding: EdgeInsets.zero,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              int score = index == 0
-                                  ? item.homeTeamScore
-                                  : item.awayTeamScore;
-                              int teamId = index == 0
-                                  ? item.homeTeamId
-                                  : item.awayTeamId;
-                              return Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Get.toNamed(RouteNames.teamDetailPage,
-                                          preventDuplicates: false,
-                                          arguments: teamId);
-                                    },
-                                    child: ImageWidget(
-                                      url: Utils.getTeamUrl(teamId),
-                                      width: 38.5.w,
-                                      height: 38.5.w,
+                              12.5.hGap,
+                              if (item.status == 2 ||
+                                  item.gameStartTime <
+                                      DateTime.now().millisecondsSinceEpoch)
+                                Text(
+                                  LangKey.scoreTipsFinal.tr,
+                                  style: 12.w4(
+                                      color: AppColors.c000000,
+                                      fontFamily: FontFamily.fRobotoRegular,
+                                      height: 0.9),
+                                ),
+                              const Expanded(child: SizedBox.shrink()),
+                              IconWidget(
+                                iconWidth: 10.w,
+                                iconColor: AppColors.c000000,
+                                icon: Assets.iconUiIconArrows04,
+                                rotateAngle: -90,
+                              ),
+                              9.hGap,
+                            ],
+                          ),
+                          9.5.vGap,
+                          Container(
+                            width: double.infinity,
+                            height: 1,
+                            color: AppColors.cE6E6E,
+                          ),
+                          5.5.vGap,
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 2,
+                              padding: EdgeInsets.zero,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                int score = index == 0
+                                    ? item.homeTeamScore
+                                    : item.awayTeamScore;
+                                int teamId = index == 0
+                                    ? item.homeTeamId
+                                    : item.awayTeamId;
+                                return Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Get.toNamed(RouteNames.teamDetailPage,
+                                            preventDuplicates: false,
+                                            arguments: teamId);
+                                      },
+                                      child: ImageWidget(
+                                        url: Utils.getTeamUrl(teamId),
+                                        width: 38.5.w,
+                                        height: 38.5.w,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    Utils.getTeamInfo(teamId).shortEname,
-                                    style: 12.w4(
-                                        fontFamily: FontFamily.fOswaldMedium),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      item.status != 2 ? "-" : "$score",
-                                      textAlign: TextAlign.right,
-                                      style: 16.w4(
+                                    Text(
+                                      Utils.getTeamInfo(teamId).shortEname,
+                                      style: 12.w4(
                                           fontFamily: FontFamily.fOswaldMedium),
                                     ),
-                                  ),
-                                  6.hGap,
-                                ],
-                              );
-                            })
-                      ],
+                                    Expanded(
+                                      child: Text(
+                                        item.status != 2 ? "-" : "$score",
+                                        textAlign: TextAlign.right,
+                                        style: 16.w4(
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium),
+                                      ),
+                                    ),
+                                    6.hGap,
+                                  ],
+                                );
+                              })
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -848,98 +853,104 @@ class _OutCome extends StatelessWidget {
                     : homeName;
                 return Align(
                   alignment: Alignment.topCenter,
-                  child: Container(
-                    width: 298.w,
-                    height: 96.w,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 18.w,
-                      // vertical: 10.5.w,
-                    ),
-                    decoration: BoxDecoration(
-                      // color: Colors.red,
-                      borderRadius: BorderRadius.circular(12.w),
-                      border: Border.all(color: AppColors.cD9D9D9),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        10.5.vGap,
-                        Row(
-                          children: [
-                            IconWidget(
-                              iconWidth: 20.w,
-                              icon: Assets.picksUiPicksHistoryPick,
-                              iconColor: AppColors.c0FA76C,
-                            ),
-                            7.5.hGap,
-                            Expanded(
-                              child: Text(
-                                "@$vsName",
+                  child: InkWell(
+                    onTap: () {
+                      Get.toNamed(RouteNames.leagueLeagueDetail,
+                          arguments: {"gameId": item.gameSchedule.gameId});
+                    },
+                    child: Container(
+                      width: 298.w,
+                      height: 96.w,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 18.w,
+                        // vertical: 10.5.w,
+                      ),
+                      decoration: BoxDecoration(
+                        // color: Colors.red,
+                        borderRadius: BorderRadius.circular(12.w),
+                        border: Border.all(color: AppColors.cD9D9D9),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          10.5.vGap,
+                          Row(
+                            children: [
+                              IconWidget(
+                                iconWidth: 20.w,
+                                icon: Assets.picksUiPicksHistoryPick,
+                                iconColor: AppColors.c0FA76C,
+                              ),
+                              7.5.hGap,
+                              Expanded(
+                                child: Text(
+                                  "@$vsName",
+                                  style: 14.w4(
+                                      fontFamily: FontFamily.fOswaldMedium,
+                                      height: 0.9),
+                                ),
+                              ),
+                              Text(
+                                " Result: $winName WIN",
                                 style: 14.w4(
+                                    color: AppColors.c0FA76C,
                                     fontFamily: FontFamily.fOswaldMedium,
                                     height: 0.9),
+                              )
+                            ],
+                          ),
+                          7.vGap,
+                          Text(
+                            "$homeName ${item.gameSchedule.homeTeamScore}  @  ${item.gameSchedule.awayTeamScore} $awayName",
+                            style: 7.w4(
+                                fontFamily: FontFamily.fRobotoMedium,
+                                height: 0.9),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 1,
+                            color: AppColors.cD4D4D4,
+                            margin: EdgeInsets.only(top: 13.5.w, bottom: 10.w),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                decoration: const BoxDecoration(
+                                    border:
+                                        Border(bottom: BorderSide(width: 0.5))),
+                                child: Text(
+                                  "${_formatDate12Hours(item.gameSchedule.gameStartTime)} ${isFinal ? "Final" : ""}",
+                                  style: 10.w4(
+                                      fontFamily: FontFamily.fRobotoRegular,
+                                      color: AppColors.c000000,
+                                      height: 0.9),
+                                ),
                               ),
-                            ),
-                            Text(
-                              " Result: $winName WIN",
-                              style: 14.w4(
-                                  color: AppColors.c0FA76C,
-                                  fontFamily: FontFamily.fOswaldMedium,
-                                  height: 0.9),
-                            )
-                          ],
-                        ),
-                        7.vGap,
-                        Text(
-                          "$homeName ${item.gameSchedule.homeTeamScore}  @  ${item.gameSchedule.awayTeamScore} $awayName",
-                          style: 7.w4(
-                              fontFamily: FontFamily.fRobotoMedium,
-                              height: 0.9),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          height: 1,
-                          color: AppColors.cD4D4D4,
-                          margin: EdgeInsets.only(top: 13.5.w, bottom: 10.w),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                  border:
-                                      Border(bottom: BorderSide(width: 0.5))),
-                              child: Text(
-                                "${_formatDate12Hours(item.gameSchedule.gameStartTime)} ${isFinal ? "Final" : ""}",
+                              6.5.hGap,
+                              IconWidget(
+                                iconWidth: 7.5.w,
+                                icon: Assets.iconUiIconArrows04,
+                                rotateAngle: -90,
+                                iconColor: AppColors.c000000,
+                              ),
+                              Expanded(child: Container()),
+                              IconWidget(
+                                iconWidth: 16.5.w,
+                                iconHeight: 13.5.w,
+                                icon: Assets.picksUiPicksHistoryComment,
+                                iconColor: AppColors.c000000,
+                              ),
+                              6.hGap,
+                              Text(
+                                "${item.reviewsCount}",
                                 style: 10.w4(
                                     fontFamily: FontFamily.fRobotoRegular,
-                                    color: AppColors.c000000,
                                     height: 0.9),
-                              ),
-                            ),
-                            6.5.hGap,
-                            IconWidget(
-                              iconWidth: 7.5.w,
-                              icon: Assets.iconUiIconArrows04,
-                              rotateAngle: -90,
-                              iconColor: AppColors.c000000,
-                            ),
-                            Expanded(child: Container()),
-                            IconWidget(
-                              iconWidth: 16.5.w,
-                              iconHeight: 13.5.w,
-                              icon: Assets.picksUiPicksHistoryComment,
-                              iconColor: AppColors.c000000,
-                            ),
-                            6.hGap,
-                            Text(
-                              "${item.reviewsCount}",
-                              style: 10.w4(
-                                  fontFamily: FontFamily.fRobotoRegular,
-                                  height: 0.9),
-                            )
-                          ],
-                        )
-                      ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );

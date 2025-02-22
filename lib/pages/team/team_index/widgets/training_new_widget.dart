@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-20 18:47:05
+ * @LastEditTime: 2025-02-22 20:53:46
  */
 import 'dart:math';
 
@@ -18,7 +18,6 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/free_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
@@ -35,7 +34,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.showAward();
+    // controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (ctrl) {
@@ -228,8 +227,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                     child: Column(
                       children: [
                         PreparationWidget(
-                          playerReadiness:
-                              ctrl.trainingInfo.playerReadiness,
+                          playerReadiness: ctrl.trainingInfo.playerReadiness,
                           withAnimated: true,
                         ),
                         3.vGap,
@@ -381,7 +379,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   if (ctrl.trainingInfo.prop.num < ctrl.trainDefine.ballMaxNum)
                     Positioned(
                       // bottom: 12.w,
-                      top: 585.w,
+                      top: 587.w,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -515,7 +513,7 @@ class _SlotButton extends StatelessWidget {
                       )
                     ],
                     borderRadius: BorderRadius.circular(66.w),
-                    color: AppColors.cFFFFFF,
+                    color: AppColors.cF2F2F2,
                   ),
                   child: SizedBox(
                     width: 104.5.w,
@@ -621,9 +619,7 @@ class PreparationWidget extends StatefulWidget {
   final bool withAnimated;
 
   PreparationWidget(
-      {super.key,
-      required double playerReadiness,
-      this.withAnimated = false})
+      {super.key, required double playerReadiness, this.withAnimated = false})
       : playerReadinessValue = min(1, playerReadiness);
 
   @override
@@ -643,7 +639,8 @@ class _PreparationWidgetState extends State<PreparationWidget>
         duration: const Duration(milliseconds: 500), // 动画时长
         vsync: this,
       );
-      _animation = Tween<double>(begin: 0, end: widget.playerReadinessValue).animate(
+      _animation =
+          Tween<double>(begin: 0, end: widget.playerReadinessValue).animate(
         CurvedAnimation(
           parent: _controller,
           curve: Curves.easeInOut, // 动画曲线
@@ -697,8 +694,9 @@ class _PreparationWidgetState extends State<PreparationWidget>
         ClipRect(
           child: Align(
             alignment: Alignment.centerLeft,
-            widthFactor:
-                widget.withAnimated ? _animation.value : widget.playerReadinessValue,
+            widthFactor: widget.withAnimated
+                ? _animation.value
+                : widget.playerReadinessValue,
             child: Image.asset(
               Assets.managerUiManagerIconPrepareprogressbar03,
               width: 103.w,

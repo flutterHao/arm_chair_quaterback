@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-02-20 15:10:13
+ * @LastEditTime: 2025-02-21 19:44:04
  */
 import 'dart:math';
 
@@ -35,9 +35,9 @@ class TrainingAwardDialog extends GetView<TrainingController> {
         builder: (ctrl) {
           return Align(
             child: Container(
-              color: Colors.black.withOpacity(0.6),
+              // color: Colors.black.withOpacity(0.6),
               width: 375.w,
-              height: 812.h,
+              height: double.infinity,
               alignment: Alignment.center,
               child: Stack(
                 fit: StackFit.expand,
@@ -55,7 +55,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                           const Duration(milliseconds: 200), // 缩放动画时长
                       moveDuration: const Duration(milliseconds: 300),
                     ),
-                  if (ctrl.showCard.value)
+                  if (ctrl.showCard.value || ctrl.showTactics.value)
                     Positioned(
                       top: top,
                       left: 0,
@@ -86,7 +86,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                     ),
 
                   ///准备程度进度条
-                  if (ctrl.showCard.value)
+                  if (ctrl.showCard.value || ctrl.showTactics.value)
                     Positioned(
                       top: 139.5.w + top,
                       left: 26.w,
@@ -237,6 +237,8 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       );
                     }),
                   ),
+
+                  ///卡牌选择
                   if (ctrl.showCard.value)
                     Positioned(
                       top: 300.w,
@@ -316,14 +318,40 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                                   milliseconds: !ctrl.showCard.value ? 0 : 300),
                               scale: e.scale,
                               child: MtInkWell(
+                                splashColor: Colors.transparent,
                                 onTap: () {
                                   if (!ctrl.canChoose) return;
-                                  ctrl.chooseTactic(context, e);
+                                  ctrl.chooseTactic(e);
                                 },
                                 child: SmallTacticCardNew(
                                   buff: e,
                                   width: 50.w,
                                 ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+
+                  if (ctrl.showTactics.value)
+                    for (var e in ctrl.newCardList)
+                      Obx(() {
+                        return AnimatedPositioned(
+                          left: e.offset.value.dx,
+                          top: e.offset.value.dy,
+                          duration: 200.milliseconds,
+                          child: AnimatedRotation(
+                            duration: 300.milliseconds,
+                            turns: e.rotate.value / 360,
+                            curve: Curves.decelerate,
+                            child: AnimatedScale(
+                              alignment: Alignment.topCenter,
+                              duration: Duration(
+                                  milliseconds: !ctrl.showCard.value ? 0 : 300),
+                              scale: e.scale,
+                              child: SmallTacticCardNew(
+                                buff: e,
+                                width: 50.w,
                               ),
                             ),
                           ),

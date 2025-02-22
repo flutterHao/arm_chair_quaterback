@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2025-01-23 10:47:08
+ * @LastEditTime: 2025-02-22 20:17:04
  */
 
 import 'dart:math';
@@ -154,6 +154,18 @@ String getBigCardImage(String grade) {
       return Assets.managerUiManagerPlayercardBig02;
     default:
       return Assets.managerUiManagerPlayercardBig01;
+  }
+}
+
+String getBigCardImageNew(String grade) {
+  grade = grade.replaceAll("-", "").replaceAll("+", "");
+  switch (grade) {
+    case "S":
+      return Assets.managerUiManagerPlayercardBig04;
+    case "A":
+      return Assets.managerUiManagerPlayercardBig06;
+    default:
+      return Assets.managerUiManagerPlayercardBig05;
   }
 }
 

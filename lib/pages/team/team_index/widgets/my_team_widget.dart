@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-02-18 17:00:50
+ * @LastEditTime: 2025-02-20 20:52:08
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -541,7 +541,9 @@ class PlayerStartWidget extends StatelessWidget {
                     ? Positioned(
                         left: 8.w * count,
                         child: Image.asset(
-                          Assets.managerUiManagerIconStar01,
+                          grade >= 9
+                              ? Assets.managerUiManagerIconStar01
+                              : Assets.managerUiManagerIconStar02,
                           height: 18.5.w,
                           fit: BoxFit.fitHeight,
                         ),

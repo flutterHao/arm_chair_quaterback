@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-24 18:53:16
- * @LastEditTime: 2024-12-30 20:04:41
+ * @LastEditTime: 2025-02-22 16:11:09
  */
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
@@ -20,7 +22,8 @@ class CardRuleDialog extends StatefulWidget {
   State<CardRuleDialog> createState() => _CardRuleDialogState();
 }
 
-class _CardRuleDialogState extends State<CardRuleDialog> {
+class _CardRuleDialogState extends State<CardRuleDialog>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -42,166 +45,105 @@ class _CardRuleDialogState extends State<CardRuleDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return Container(
-        width: double.infinity,
-        height: 469.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(9.w)),
-        ),
-        child: Column(
-          children: [
-            Container(
-              width: 44.w,
-              height: 4.w,
-              margin: EdgeInsets.symmetric(vertical: 8.w),
-              decoration: BoxDecoration(
-                color: AppColors.c000000.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(2.w),
-              ),
-            ),
-            10.vGap,
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(left: 15.w),
-              child: Text(
-                "Tactics Grade",
-                style: 19.w4(
-                    color: Colors.black, fontFamily: FontFamily.fOswaldMedium),
-              ),
-            ),
-            25.vGap,
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: _colomns
-                    .map((e) => Text(
-                          e,
-                          style: 12.w4(
-                            height: 0.8,
-                            fontFamily: FontFamily.fRobotoMedium,
-                          ),
-                        ))
-                    .toList(),
-              ),
-            ),
-            10.vGap,
-            Container(
-              width: double.infinity,
-              height: 1,
-              color: AppColors.cD1D1D1,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                  // physics: const BouncingScrollPhysics(),
-                  child: Table(
-                      columnWidths: {
-                    for (var k in _colomnsWidth.asMap().keys)
-                      k: FixedColumnWidth(_colomnsWidth[k])
-                  },
-                      textBaseline: TextBaseline.alphabetic,
-                      border: const TableBorder.symmetric(
-                        inside: BorderSide(color: AppColors.cE6E6E),
+    return ListView.separated(
+        itemBuilder: (context, index) {
+          var item = _list[index];
+          return Container(
+            width: 323.w,
+            height: 74.w,
+            margin: EdgeInsets.symmetric(horizontal: 23.5.w),
+            padding: EdgeInsets.only(left: 14.w),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.w),
+                color: AppColors.cF2F2F2),
+            child: Row(
+              children: [
+                Container(
+                  width: 104.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.name,
+                        style: 19.w4(
+                            fontFamily: FontFamily.fOswaldMedium, height: 0.8),
                       ),
-                      children: _list.map((e) {
-                        return TableRow(children: [
-                          Container(
-                              height: 60.w,
-                              alignment: Alignment.centerLeft,
-                              margin: EdgeInsets.only(left: 4.w),
-                              child: Text(
-                                e.name,
-                                style:
-                                    14.w4(fontFamily: FontFamily.fOswaldMedium),
-                              )),
-                          Container(
-                              height: 60.w,
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(left: 10.w),
-                              child: SizedBox(
-                                // height: 36.w,
-                                child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      var item = e.cards[index];
-                                      return Center(
-                                        child: Container(
-                                          width: 25.w,
-                                          height: 36.w,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.cFFFFFF,
-                                              borderRadius:
-                                                  BorderRadius.circular(6.w),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: AppColors.c000000
-                                                        .withOpacity(0.2),
-                                                    offset:
-                                                        const Offset(0, 0.5),
-                                                    blurRadius: 1.5.w)
-                                              ]),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                geCardtName(item.value),
-                                                style: 12.w4(
-                                                    color: getCardColor(
-                                                        item.color),
-                                                    height: 0.9),
-                                              ),
-                                              3.vGap,
-                                              Image.asset(
-                                                  getCardImage(item.color),
-                                                  width: 14.w,
-                                                  height: 14.w),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) =>
-                                        5.hGap,
-                                    itemCount: e.cards.length),
-                              )),
-                          Container(
-                              height: 60.w,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "+${e.percent}%",
-                                style: 12.w4(),
-                              )),
-                        ]);
-                      }).toList())
-
-                  // child: Padding(
-                  //   padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  //   child: DataTable(
-                  //     border: TableBorder.symmetric(
-                  //         inside: BorderSide(color: AppColors.cE6E6E)),
-                  //     columns: _colomns.map((e) {
-                  //       return DataColumn(label: Text(e));
-                  //     }).toList(),
-                  //     rows: list.map((e) {
-                  //       return DataRow(cells: [
-                  //         DataCell(Text(e.name)),
-                  //         DataCell(Text(e.name)),
-                  //         DataCell(Text("+${e.percent}%")),
-                  //       ]);
-                  //     }).toList(),
-                  //   ),
-                  // ),
+                      12.5.vGap,
+                      Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.circular(4.w)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 6.5.w, vertical: 5.w),
+                        child: Text(
+                          "Prep: +${item.percent}%",
+                          style: 16.w4(
+                              color: AppColors.cFFFFFF,
+                              height: 1,
+                              fontFamily: FontFamily.fOswaldRegular),
+                        ),
+                      )
+                    ],
                   ),
+                ),
+                SizedBox(
+                  height: 49.w,
+                  child: Row(
+                    children: [
+                      ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.all(0),
+                          itemBuilder: (context, index) {
+                            return SmallTacticCard(
+                              color: item.cards[index].color,
+                              num: item.cards[index].value,
+                              width: 35.5.w,
+                            );
+                          },
+                          separatorBuilder: (context, index) => 3.hGap,
+                          itemCount: item.cards.length),
+                      if (_list[index].cards.isNotEmpty) 14.hGap,
+                      if (_list[index].cards.isNotEmpty)
+                        SizedBox(
+                          height: 41.5.w,
+                          child: ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.all(0),
+                              itemBuilder: (context, index) {
+                                // Random random = Random();
+                                // int color = random.nextInt(5) + 9;
+                                // int num = random.nextInt(4) + 1;
+                                return Opacity(
+                                  opacity: 0.5,
+                                  child: SmallTacticCard(
+                                    key: Key("${index}_${item.id}"),
+                                    color: index,
+                                    num: index + 9,
+                                    width: 30.w,
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) => 3.hGap,
+                              itemCount: 5 - _list[index].cards.length),
+                        ),
+                    ],
+                  ),
+                )
+              ],
             ),
-          ],
-        ),
-      );
-    });
+          );
+        },
+        separatorBuilder: (context, index) => 9.5.vGap,
+        itemCount: _list.length);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 List<TacticGradeEntity> _list = [];
@@ -236,7 +178,7 @@ final _ruleMap = [
   },
   {
     "id": 1004,
-    "name": "Three of a Kind",
+    "name": "Three Kind",
     "cards": [
       {"color": 1, "value": 10},
       {"color": 2, "value": 10},
@@ -282,7 +224,7 @@ final _ruleMap = [
   },
   {
     "id": 1008,
-    "name": "Four of a Kind",
+    "name": "Four  Kind",
     "cards": [
       {"color": 1, "value": 10},
       {"color": 4, "value": 10},

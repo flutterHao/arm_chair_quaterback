@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2024-09-24 10:57:13
+ * @LastEditTime: 2025-02-22 16:18:05
  */
 import 'dart:async';
 
@@ -42,6 +42,7 @@ class HomeController extends GetxController {
   ScrollHideBottomBarController scrollHideBottomBarController =
       ScrollHideBottomBarController();
   RxInt tabIndex = 2.obs;
+  RxBool isAbsorbPointer = false.obs;
 
   UserEntity userEntiry = UserEntity();
 
@@ -177,7 +178,7 @@ class HomeController extends GetxController {
     String accountName = StorageService.to.getString(Constant.deviceId);
     // accountName = await DeviceUtils.getDeviceId();
     if (ObjectUtil.isEmpty(accountName)) {
-        accountName = await DeviceUtils.getDeviceId();
+      accountName = await DeviceUtils.getDeviceId();
     }
 
     Log.d("deviceId=$accountName");
