@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -8,7 +10,6 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:collection/collection.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,8 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
     return controller.trainingInfo.training.currentTaskId;
   }
 
+  late Timer _timer;
+  late Duration _remaining;
   @override
   initState() {
     super.initState();
@@ -40,6 +43,32 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
       } else {
         controller.awardBottomScrollController.jumpTo(0);
       }
+    });
+    _updateRemainingTime();
+    // 每秒更新一次剩余时间
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _updateRemainingTime());
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // 当组件销毁时取消定时器
+    super.dispose();
+  }
+
+  String formatDuration(Duration d) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(_remaining.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(_remaining.inSeconds.remainder(60));
+    return "${twoDigits(_remaining.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  void _updateRemainingTime() {
+    DateTime now = DateTime.now();
+    DateTime midnight = DateTime(now.year, now.month, now.day + 1); // 明天凌晨
+    Duration remaining = midnight.difference(now);
+
+    setState(() {
+      _remaining = remaining;
     });
   }
 
@@ -214,10 +243,6 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
   }
 
   Widget _awardTiTleWidget() {
-    // 获取当前时间
-    DateTime now = DateTime.now();
-    // 创建今天的 23:59:59 时间
-    DateTime todayLastSecond = DateTime(now.year, now.month, now.day, 23, 59, 59);
     return Column(
       children: [
         Padding(
@@ -232,9 +257,7 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
               IconWidget(iconWidth: 16.h, icon: Assets.commonUiCommonCountdown02),
               6.hGap,
               Text(
-                '6D ${DateUtil.formatDate(todayLastSecond, format: 'HH:mm:ss')}',
-                // DateUtil.formatDateMs(
-                //     controller.trainingInfo.training.taskEndTime),
+                '6D ${formatDuration(_remaining)}',
                 style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
               ),
               6.hGap,
