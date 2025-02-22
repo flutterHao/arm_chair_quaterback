@@ -53,7 +53,7 @@ class TeamBattleV2Controller extends GetxController
 
   late AnimationController shootAnimationController;
   Animation? shootAnimation;
-  var shootOffset = Offset.infinite.obs;
+  var shootOffset = Offset(-1000,-1000).obs;
   var shootPathOffsets = <Offset>[].obs;
   var shootPathColor = AppColors.cTransparent;
 
@@ -532,32 +532,32 @@ class TeamBattleV2Controller extends GetxController
             (quarter.value - 1) * 40);
     var homeScoreDiff = (event.homeScore - event.awayScore);
     var awayScoreDiff = (event.awayScore - event.homeScore);
-    print('winRate---awayScoreDiff:$homeScoreDiff,$awayScoreDiff');
+    // print('winRate---awayScoreDiff:$homeScoreDiff,$awayScoreDiff');
     var home = (event.pkEventUpdatedEntity.homeCurrentStrength /
         (event.pkEventUpdatedEntity.homeCurrentStrength +
             event.pkEventUpdatedEntity.awayCurrentStrength));
     var away = (event.pkEventUpdatedEntity.awayCurrentStrength /
         (event.pkEventUpdatedEntity.homeCurrentStrength +
             event.pkEventUpdatedEntity.awayCurrentStrength));
-    print('winRate---home:$home,$away');
+    // print('winRate---home:$home,$away');
     double a = 0.2;
     int allTime = 40 * 4;
     var homeEma = a * homeScoreDiff + (1 - a) * lastHomeScoreDiff;
     var awayEma = a * awayScoreDiff + (1 - a) * lastAwayScoreDiff;
     lastHomeScoreDiff = homeScoreDiff.toDouble();
     lastAwayScoreDiff = awayScoreDiff.toDouble();
-    print('winRate---ema:$homeEma,$awayEma');
+    // print('winRate---ema:$homeEma,$awayEma');
     var homeScoreValue =
         (1 / (1 + exp(-15 * homeEma / sqrt(allTime - t + 0.1)))) * t / allTime;
     var awayScoreValue =
         (1 / (1 + exp(-15 * awayEma / sqrt(allTime - t + 0.1)))) * t / allTime;
-    print('winRate---homeScoreValue:$homeScoreValue,$awayScoreValue');
+    // print('winRate---homeScoreValue:$homeScoreValue,$awayScoreValue');
     var homePowerValue = 0.3 * home * (1 - t / allTime);
     var awayPowerValue = 0.3 * away * (1 - t / allTime);
-    print('winRate---homePowerValue:$homePowerValue,$awayPowerValue');
+    // print('winRate---homePowerValue:$homePowerValue,$awayPowerValue');
     var homeValue = homeScoreValue + homePowerValue;
     var awayValue = awayScoreValue + awayPowerValue;
-    print('winRate---homeValue:$homeValue,$awayValue');
+    // print('winRate---homeValue:$homeValue,$awayValue');
     var result = WinInfo(
         homeValue > awayValue ? homeValue : -awayValue, homeValue > awayValue);
     return result;
