@@ -683,7 +683,7 @@ class DailyTaskController extends GetxController
 
   ///每日任务剩余倒计时时间（ms）
   int getDailyEndTime() {
-    var dateTime = DateTime.now();
+    var dateTime = DateTime.now().subtract(Utils.getTimeZoneOffset());
     var endTime =
         DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59, 999);
     var difference = endTime.difference(dateTime);

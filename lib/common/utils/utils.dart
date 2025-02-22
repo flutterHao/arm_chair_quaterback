@@ -22,6 +22,7 @@ import 'package:arm_chair_quaterback/common/services/storage.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -481,12 +482,12 @@ class Utils {
   /// 获取手机时间时区和服务器时间的时差 (ms)
   static Duration getTimeZoneOffset() {
     ///当前服务器时区为中国时区,固定返回0
-    return Duration.zero;
-
-    ///服务器时间为utc时间需要加上下面的返回值
-    var dateTime = DateTime.now();
-    var difference = dateTime.difference(dateTime.toUtc());
-    return difference;
+    var offset = Get.find<HomeController>()
+            .userEntiry
+            .teamLoginInfo
+            ?.getServerTimeOffset() ??
+        0;
+    return Duration(milliseconds: offset);
   }
 
   static String getTeamTypeKey(String type) {

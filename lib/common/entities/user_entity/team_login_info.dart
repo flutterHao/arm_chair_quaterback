@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:get/get.dart';
 
 import 'team.dart';
@@ -19,8 +20,12 @@ class TeamLoginInfo {
   List<TeamRecordList>? teamRecordList;
   List<dynamic>? timerServiceList;
   ZoneInfo? zoneInfo;
+
   /// 服务器当前时间
   int currentTimeMillis = 0;
+
+  /// 设备时间，和服务器同步
+  int deviceCurrentTimeMillis = 0;
 
   TeamLoginInfo({
     this.firstLogin,
@@ -34,26 +39,36 @@ class TeamLoginInfo {
     this.teamRecordList,
     this.timerServiceList,
     this.zoneInfo,
-  });
+    this.currentTimeMillis = 0,
+  }) : deviceCurrentTimeMillis = DateTime.now().millisecondsSinceEpoch;
 
   num getCoin() {
-    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propBetCoinId);
+    var firstWhere = teamPropList
+        ?.firstWhereOrNull((e) => e.propId == Constant.propBetCoinId);
     return firstWhere?.num ?? 0;
   }
 
   num getMoney() {
-    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propMoneyTickId);
+    var firstWhere = teamPropList
+        ?.firstWhereOrNull((e) => e.propId == Constant.propMoneyTickId);
     return firstWhere?.num ?? 0;
   }
 
   num getLuckyCoin() {
-    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propLuckyCoinId);
+    var firstWhere = teamPropList
+        ?.firstWhereOrNull((e) => e.propId == Constant.propLuckyCoinId);
     return firstWhere?.num ?? 0;
   }
 
   num getBall() {
-    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propBallId);
+    var firstWhere =
+        teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propBallId);
     return firstWhere?.num ?? 0;
+  }
+
+  /// 获取服务器与本地时间差
+  int getServerTimeOffset() {
+    return deviceCurrentTimeMillis - currentTimeMillis;
   }
 
   factory TeamLoginInfo.fromJson(Map<String, dynamic> json) => TeamLoginInfo(
@@ -81,6 +96,7 @@ class TeamLoginInfo {
         zoneInfo: json['zoneInfo'] == null
             ? null
             : ZoneInfo.fromJson(json['zoneInfo'] as Map<String, dynamic>),
+        currentTimeMillis: json['currentTimeMillis'] as int,
       );
 
   Map<String, dynamic> toJson() => {
@@ -95,5 +111,6 @@ class TeamLoginInfo {
         'teamRecordList': teamRecordList?.map((e) => e.toJson()).toList(),
         'timerServiceList': timerServiceList,
         'zoneInfo': zoneInfo?.toJson(),
+        'currentTimeMillis': currentTimeMillis,
       };
 }

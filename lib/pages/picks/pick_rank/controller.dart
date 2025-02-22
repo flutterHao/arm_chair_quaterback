@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -141,7 +142,7 @@ class PickRankController extends GetxController
   }
 
   Duration getTimeDifferenceToTarget() {
-    DateTime now = DateTime.now();
+    DateTime now = DateTime.now().subtract(Utils.getTimeZoneOffset());
     int currentWeekday = now.weekday;
 
     // 计算周三和周六的零点时间

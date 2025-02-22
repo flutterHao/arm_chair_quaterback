@@ -1,14 +1,16 @@
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:get/get.dart';
 
 ///
 ///@auther gejiahui
 ///created at 2025/1/20/11:52
 
-class WeekPrizeController extends GetxController{
+class WeekPrizeController extends GetxController {
   Timer? timer;
   var lastDuration = Duration.zero.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -29,7 +31,7 @@ class WeekPrizeController extends GetxController{
 
   Duration getRemainingTimeToSundayMidnight() {
     // 获取当前日期和时间
-    DateTime now = DateTime.now();
+    DateTime now = DateTime.now().subtract(Utils.getTimeZoneOffset());
 
     // 计算本周日的日期
     int daysUntilSunday = DateTime.sunday - now.weekday;
@@ -65,5 +67,4 @@ class WeekPrizeController extends GetxController{
 
     return remainingTime;
   }
-
 }
