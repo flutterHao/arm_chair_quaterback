@@ -107,13 +107,22 @@ class WebsocketServices extends GetxService {
     for (int i = 0; i < result.length; i++) {
       TeamPropList teamProp = result[i];
       var isBall = teamProp.propId == Constant.propBallId;
-      //todo 后端需要给是不是增加的逻辑判断
       var isLuckyCoin = teamProp.propId == Constant.propLuckyCoinId;
       var isMoney = teamProp.propId == Constant.propMoneyTickId;
       var isBetCoin = teamProp.propId == Constant.propBetCoinId;
+      if (isLuckyCoin) {
+        try {
+          var luckyCoinNum = Get.find<HomeController>().userEntiry.teamLoginInfo!.getLuckyCoin();
+          if (luckyCoinNum < teamProp.num!) {
+            addProp(teamProp, "${teamProp.num! - luckyCoinNum}", EventType.luckyCoin);
+          }
+        } catch (e) {
+          print('TrainingController not init');
+        }
+      }
       if (isBall) {
         try {
-          var ballNum = Get.find<TrainingController>().ballNum.value;
+          var ballNum = Get.find<HomeController>().userEntiry.teamLoginInfo!.getBall();
           if (ballNum < teamProp.num!) {
             addProp(teamProp, "${teamProp.num! - ballNum}", EventType.ball);
           }
@@ -151,7 +160,7 @@ class WebsocketServices extends GetxService {
       }
     }
 
-    if (hasMoney || hasBetCoin) {
+    if (hasMoney || hasBetCoin || hasLuckyCoin || hasBall) {
       Get.find<HomeController>().refreshMoneyCoinWidget();
     }
   }

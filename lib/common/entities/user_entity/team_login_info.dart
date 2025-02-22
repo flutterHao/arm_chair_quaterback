@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:get/get.dart';
 
@@ -36,12 +37,22 @@ class TeamLoginInfo {
   });
 
   num getCoin() {
-    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == 103);
+    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propBetCoinId);
     return firstWhere?.num ?? 0;
   }
 
   num getMoney() {
-    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == 102);
+    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propMoneyTickId);
+    return firstWhere?.num ?? 0;
+  }
+
+  num getLuckyCoin() {
+    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propLuckyCoinId);
+    return firstWhere?.num ?? 0;
+  }
+
+  num getBall() {
+    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == Constant.propBallId);
     return firstWhere?.num ?? 0;
   }
 

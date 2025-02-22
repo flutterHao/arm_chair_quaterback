@@ -30,6 +30,7 @@ class WSInstance {
   /// 用来当作网络状态监听器,只有连上服务器才会有通知，断开是没有通知的
   static final _networkConnectedStreamController =
       StreamController<int>.broadcast();
+  static StreamSubscription? _streamSubscription;
 
   WSInstance._();
 
@@ -49,7 +50,7 @@ class WSInstance {
     _startPingTimer();
     _lastPongTime = DateTime.now();
 
-    _channel?.stream
+    _streamSubscription = _channel?.stream
         .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
   }
 
@@ -145,6 +146,7 @@ class WSInstance {
     _pingTimer?.cancel();
     _readyCheckTimer?.cancel();
     _channel?.sink.close();
+    _streamSubscription?.cancel();
     _channel = null;
   }
 
