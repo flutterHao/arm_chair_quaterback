@@ -15,40 +15,60 @@ import 'package:get/get.dart';
 
 import '../controller.dart';
 
-class AwardBottomsheet extends GetView<TrainingController> {
-  AwardBottomsheet({super.key});
-  final ScrollController scrollController = ScrollController();
+class AwardBottomsheet extends StatefulWidget {
+  const AwardBottomsheet({super.key});
+
+  @override
+  State<AwardBottomsheet> createState() => _AwardBottomsheetState();
+}
+
+class _AwardBottomsheetState extends State<AwardBottomsheet> {
+  final TrainingController controller = Get.find<TrainingController>();
+  int get _currentLevel {
+    return controller.trainingInfo.training.currentTaskId;
+  }
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var currentIndex = _list.indexWhere((TrainTaskEntity e) => e.taskLevel == _currentLevel);
+      if (currentIndex > 0 && currentIndex < _list.length - 4) {
+        controller.awardBottomScrollController.jumpTo(90.h * (currentIndex + 4) - 360.h);
+      } else if (currentIndex >= _list.length - 4) {
+        controller.awardBottomScrollController.jumpTo(90.h * (_list.length - 1) - 360.h);
+      } else {
+        controller.awardBottomScrollController.jumpTo(0);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return VerticalDragBackWidget(
         child: Container(
-      height: 570.h,
+      height: 572.h,
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         children: [
           const DialogTopBtn(),
-          14.vGap,
-          // InkWell(
-          //   onTap: () {
-          //     scrollController.jumpTo(78.w * 3);
-          //   },
-          //   child: Text('data'),
-          // ),
+          Spacer(),
           _awardTiTleWidget(),
+          SizedBox(height: 4.h),
           const Divider(height: 1, color: AppColors.cD1D1D1),
-          4.vGap,
           _lastAwardItemWidget(),
           const Divider(height: 1, color: AppColors.cD1D1D1),
-          Expanded(
+          Container(
+            height: 378.h,
             child: ListView.builder(
-              padding: EdgeInsets.only(bottom: 20.w),
+              padding: EdgeInsets.only(bottom: 20.h),
               itemCount: _list.length,
-              controller: scrollController,
+              physics: NeverScrollableScrollPhysics(),
+              controller: controller.awardBottomScrollController,
               itemBuilder: (context, index) {
                 bool isLast = index == 0;
                 if (isLast) {
-                  return SizedBox();
+                  return SizedBox(height: 0);
                 }
                 return Stack(
                   children: [_leftWidget(index), _awardItemWidget(index)],
@@ -67,10 +87,6 @@ class AwardBottomsheet extends GetView<TrainingController> {
     return taskRewardList;
   }
 
-  int get _currentLevel {
-    return controller.trainingInfo.training.currentTaskId;
-  }
-
   List<TrainTaskEntity> get _list {
     TrainTaskEntity task = controller.trainTaskList.where((e) => e.taskLevel == _currentLevel).first;
     String prefix = task.taskLevel.toString().substring(0, 2);
@@ -83,8 +99,8 @@ class AwardBottomsheet extends GetView<TrainingController> {
 
   Widget _lastAwardItemWidget() {
     return Container(
-      height: 92.w,
-      margin: EdgeInsets.symmetric(vertical: 20.w, horizontal: 16.w),
+      height: 92.h,
+      margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.w),
           border: Border.all(
@@ -103,8 +119,8 @@ class AwardBottomsheet extends GetView<TrainingController> {
                 child: Column(
                   children: [
                     Spacer(),
-                    IconWidget(iconWidth: 24.w, icon: Assets.inboxUiInboxIconAward),
-                    8.vGap,
+                    IconWidget(iconWidth: 24.h, icon: Assets.inboxUiInboxIconAward),
+                    SizedBox(height: 6.h),
                     Text(
                       'AWARD',
                       style: 12.w5(color: Colors.white, fontFamily: FontFamily.fOswaldRegular),
@@ -115,16 +131,16 @@ class AwardBottomsheet extends GetView<TrainingController> {
               ),
               Positioned(
                   right: -7.w,
-                  top: 40.w,
+                  top: 40.h,
                   child: CustomPaint(
-                    size: Size(8.w, 12.w), // 设置三角形的大小
+                    size: Size(8.w, 12.h), // 设置三角形的大小
                     painter: TrianglePainter(color: Colors.black),
                   )),
               Positioned(
                   right: -3.w,
-                  top: 41.w,
+                  top: 41.h,
                   child: CustomPaint(
-                    size: Size(6.w, 10.w), // 设置三角形的大小
+                    size: Size(6.w, 10.h), // 设置三角形的大小
                     painter: TrianglePainter(color: AppColors.cFF7954),
                   ))
             ],
@@ -142,23 +158,22 @@ class AwardBottomsheet extends GetView<TrainingController> {
                       children: [
                         const Spacer(),
                         Image.asset(
-                          // Utils.getSlotIconUrl(int.tryParse(element.split("_")[1])),
                           Utils.getPropIconUrl(int.tryParse(element.split("_")[1])),
-                          width: 48.w,
-                          height: 40.w,
+                          width: 48.h,
+                          height: 40.h,
                           fit: BoxFit.fitWidth,
                           alignment: Alignment.center,
                           errorBuilder: (context, error, stackTrace) => IconWidget(
-                            iconWidth: 48.w,
+                            iconWidth: 48.h,
                             icon: Assets.teamUiMoney02,
                           ),
                         ),
-                        2.vGap,
+                        SizedBox(height: 4.h),
                         Text(
                           element.split("_")[2],
                           style: 14.w5(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
                         ),
-                        6.vGap
+                        SizedBox(height: 1.h),
                       ],
                     ),
                   );
@@ -174,13 +189,13 @@ class AwardBottomsheet extends GetView<TrainingController> {
   Widget _leftWidget(int index) {
     return index != _list.length - 1 && index != 1
         ? Positioned(
-            left: 55.w,
+            left: 53.w,
             top: 0,
             bottom: 0,
             child: Container(width: 5.w, color: AppColors.cE6E6E),
           )
         : Positioned(
-            left: 55.w,
+            left: 53.w,
             top: 0,
             bottom: 0,
             child: SizedBox(
@@ -214,7 +229,7 @@ class AwardBottomsheet extends GetView<TrainingController> {
                 style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
               ),
               const Spacer(),
-              IconWidget(iconWidth: 16.w, icon: Assets.commonUiCommonCountdown02),
+              IconWidget(iconWidth: 16.h, icon: Assets.commonUiCommonCountdown02),
               6.hGap,
               Text(
                 '6D ${DateUtil.formatDate(todayLastSecond, format: 'HH:mm:ss')}',
@@ -224,13 +239,13 @@ class AwardBottomsheet extends GetView<TrainingController> {
               ),
               6.hGap,
               Container(
-                width: 18.w,
-                height: 18.w,
+                width: 18.h,
+                height: 18.h,
                 decoration: BoxDecoration(
                   color: AppColors.cB3B3B3,
                   shape: BoxShape.circle,
                 ),
-                child: IconWidget(iconWidth: 3.w, icon: Assets.inboxUiInboxIconTips),
+                child: IconWidget(iconWidth: 3.h, icon: Assets.inboxUiInboxIconTips),
               )
             ],
           ),
@@ -251,36 +266,36 @@ class AwardBottomsheet extends GetView<TrainingController> {
     int level = _list[index].taskLevel;
     List<String> taskRewardList = _list[index].taskReward.split("|");
     return Container(
-      margin: EdgeInsets.only(right: 45.w, top: 8.w),
-      height: 70.w,
+      margin: EdgeInsets.only(right: 44.w, top: 18.h),
+      height: 72.h,
       child: Row(
         children: [
           42.hGap,
           Container(
-            width: 31.w,
-            height: 31.w,
+            width: 32.h,
+            height: 32.h,
             color: AppColors.cFFFFFF,
             alignment: Alignment.center,
             child: Container(
-              width: 23.w,
-              height: 23.w,
+              width: 24.h,
+              height: 24.h,
               alignment: Alignment.center,
               decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 1, color: AppColors.cD1D1D1)),
               child: level < _currentLevel
                   ? Container(
-                      width: 11.w,
-                      height: 11.w,
+                      width: 12.h,
+                      height: 12.h,
                       decoration: const BoxDecoration(
                         color: AppColors.c000000,
                         shape: BoxShape.circle,
                       ))
                   : Center(
                       child: IconWidget(
-                          iconWidth: 9.w, iconColor: AppColors.cD1D1D1, icon: Assets.commonUiCommonIconSystemLock),
+                          iconWidth: 10.h, iconColor: AppColors.cD1D1D1, icon: Assets.commonUiCommonIconSystemLock),
                     ),
             ),
           ),
-          27.hGap,
+          26.hGap,
           Expanded(
               child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -295,23 +310,24 @@ class AwardBottomsheet extends GetView<TrainingController> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                            child: Image.asset(
+                        SizedBox(height: 6.h),
+                        Image.asset(
                           Utils.getPropIconUrl(int.tryParse(element.split("_")[1])),
-                          width: 40.w,
-                          fit: BoxFit.fitWidth,
-                          errorBuilder: (context, error, stackTrace) => IconWidget(
-                            iconWidth: 40.w,
-                            icon: Assets.teamUiMoney02,
+                          height: 40.h,
+                          width: 43.h,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) => Image.asset(
+                            Assets.teamUiMoney02,
+                            height: 40.h,
+                            fit: BoxFit.fitHeight,
                           ),
-                        )),
-                        Text(
-                          element.split("_")[2],
-                          // Utils.formatMoney(
-                          //   int.tryParse(element.split("_")[2]) ?? 0,
-                          // ),
-                          style: 14.w5(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
                         ),
+                        Flexible(
+                          child: Text(
+                            element.split("_")[2],
+                            style: 14.w5(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
+                          ),
+                        )
                       ],
                     ),
                   );
