@@ -164,7 +164,11 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                     child: IconWidget(
                                       iconWidth: 15.w,
                                       icon: Assets.iconIconBack,
-                                      iconColor: !isDarkMode
+                                      iconColor: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom <=
+                                          0
+                                          ? AppColors.cF2F2F2:!isDarkMode
                                           ? AppColors.cF2F2F2
                                           : AppColors.c262626,
                                       // iconColor: AppColors.c262626,
