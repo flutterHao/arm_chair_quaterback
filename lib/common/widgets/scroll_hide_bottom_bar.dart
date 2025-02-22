@@ -68,8 +68,8 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
 
   void _handleScrollEnd(ScrollEndNotification notification) {
     bool atEdge = notification.metrics.extentAfter == 0 ||
-            notification.metrics.extentBefore == 0;
-    if(atEdge){
+        notification.metrics.extentBefore == 0;
+    if (atEdge) {
       changeHideStatus(false);
       return;
     }
@@ -78,22 +78,21 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
     if (shouldHide != widget.controller?.barHideStatus.value) {
       widget.controller?.barHideStatus.value = shouldHide;
     }
-
-    // 启动动画
-    _animationController.animateTo(
-      targetValue,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
+    _animateTo(targetValue);
   }
 
   /// true:hide false:show
   changeHideStatus(bool hide) {
-    if (widget.controller?.barHideStatus.value == hide) {
-      return;
-    }
+    // if (widget.controller?.barHideStatus.value == hide) {
+    //   return;
+    // }
     double targetValue = hide ? 1.0 : 0.0;
     widget.controller?.barHideStatus.value = hide;
+    _animateTo(targetValue);
+  }
+
+  // 启动动画
+  void _animateTo(double targetValue) {
     _animationController.animateTo(
       targetValue,
       duration: const Duration(milliseconds: 300),

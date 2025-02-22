@@ -9,15 +9,8 @@ import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -118,70 +111,72 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
           16.hGap,
           Expanded(
               child: Container(
-            height: 44.w,
-            decoration: BoxDecoration(
-              color: AppColors.c000000,
-              borderRadius: BorderRadius.circular(9.w),
-            ),
-            child: TabBar(
-              isScrollable: true,
-              dividerHeight: 0,
-              tabAlignment: TabAlignment.start,
-              labelStyle: 12.w4(
-                  color: AppColors.cFFFFFF,
-                  height: 1,
-                  fontFamily: FontFamily.fRobotoRegular),
-              unselectedLabelStyle: 12.w4(
-                  color: AppColors.c808080,
-                  height: 1,
-                  fontFamily: FontFamily.fRobotoRegular),
-              controller: controller.tabController,
-              indicator: BoxDecoration(
-                  color: AppColors.c262626,
-                  borderRadius: BorderRadius.circular(7.w)),
-              indicatorPadding: EdgeInsets.symmetric(vertical: 3.w),
-              indicatorSize: TabBarIndicatorSize.tab,
-              onTap: controller.onPageChanged,
-              tabs: controller.getDataTimes().map((e) {
-                var specialDay = MyDateUtils.isToday(e.millisecondsSinceEpoch);
-                int index = controller.getDataTimes().indexOf(e);
-                return Tab(
-                  child: Obx(() {
-                    var currentIndex = controller.currentPageIndex.value;
-                    var select = currentIndex == index;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          (specialDay
+                height: 44.w,
+                decoration: BoxDecoration(
+                  color: AppColors.c000000,
+                  borderRadius: BorderRadius.circular(9.w),
+                ),
+                child: TabBar(
+                  isScrollable: true,
+                  dividerHeight: 0,
+                  tabAlignment: TabAlignment.start,
+                  labelStyle: 12.w4(
+                      color: AppColors.cFFFFFF,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
+                  unselectedLabelStyle: 12.w4(
+                      color: AppColors.c808080,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
+                  controller: controller.tabController,
+                  indicator: BoxDecoration(
+                      color: AppColors.c262626,
+                      borderRadius: BorderRadius.circular(7.w)),
+                  indicatorPadding: EdgeInsets.symmetric(vertical: 3.w),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  onTap: controller.onPageChanged,
+                  tabs: controller.getDataTimes().map((e) {
+                    var specialDay = MyDateUtils.isToday(
+                        e.millisecondsSinceEpoch);
+                    int index = controller.getDataTimes().indexOf(e);
+                    return Tab(
+                      child: Obx(() {
+                        var currentIndex = controller.currentPageIndex.value;
+                        var select = currentIndex == index;
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              (specialDay
                                   ? "TODAY"
                                   : MyDateUtils.getWeekday(e, short: true))
-                              .toUpperCase(),
-                          style: 12.w4(
-                              color: specialDay
-                                  ? AppColors.cFF7954
-                                  : select
+                                  .toUpperCase(),
+                              style: 12.w4(
+                                  color: specialDay
+                                      ? AppColors.cFF7954
+                                      : select
                                       ? AppColors.cFFFFFF
                                       : AppColors.c808080,
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular),
-                        ),
-                        2.vGap,
-                        Text(
-                          e.day.toString(),
-                          style: 16.w5(
-                              color:
-                                  select ? AppColors.cFFFFFF : AppColors.c808080,
-                              fontFamily: FontFamily.fOswaldMedium,
-                              height: 1),
-                        )
-                      ],
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoRegular),
+                            ),
+                            2.vGap,
+                            Text(
+                              e.day.toString(),
+                              style: 16.w5(
+                                  color:
+                                  select ? AppColors.cFFFFFF : AppColors
+                                      .c808080,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                  height: 1),
+                            )
+                          ],
+                        );
+                      }),
                     );
-                  }),
-                );
-              }).toList(),
-            ),
-          )),
+                  }).toList(),
+                ),
+              )),
           21.hGap,
           Container(
             width: 40.w,
