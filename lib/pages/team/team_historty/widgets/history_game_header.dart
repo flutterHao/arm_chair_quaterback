@@ -1,12 +1,13 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/controller.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,7 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
       height: 101.w,
       margin: EdgeInsets.only(bottom: 1.w),
       decoration: BoxDecoration(color: AppColors.cFFFFFF, boxShadow: [
-        BoxShadow(
-            color: AppColors.cDEDEDE,
-            offset: Offset(0, 9.w),
-            blurRadius: 9.w,
-            spreadRadius: -5.w)
+        BoxShadow(color: AppColors.cDEDEDE, offset: Offset(0, 9.w), blurRadius: 9.w, spreadRadius: -5.w)
       ]),
       child: Column(
         children: [
@@ -36,18 +33,22 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
             child: Row(
               children: [
                 16.hGap,
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(19.w),
-                      border: Border.all(color: AppColors.c1F8FE5, width: 1.w)),
-                  child: ImageWidget(
-                    url: Utils.getAvatarUrl(
-                        controller.gameSchedule.homeTeamLogo),
-                    imageFailedPath: Assets.teamUiHead01,
-                    width: 36.w,
-                    borderRadius: BorderRadius.circular(18.w),
-                  ),
-                ),
+                MtInkWell(
+                    onTap: () {
+                      // controller.gameSchedule.homeTeamId;
+                      // Get.toNamed('page');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(19.w),
+                          border: Border.all(color: AppColors.c1F8FE5, width: 1.w)),
+                      child: ImageWidget(
+                        url: Utils.getAvatarUrl(controller.gameSchedule.homeTeamLogo),
+                        imageFailedPath: Assets.teamUiHead01,
+                        width: 36.w,
+                        borderRadius: BorderRadius.circular(18.w),
+                      ),
+                    )),
                 10.hGap,
                 Container(
                   width: 45.w,
@@ -55,20 +56,14 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
                   child: AnimatedNum(
                     number: controller.gameSchedule.homeScore,
                     milliseconds: 300,
-                    textStyle: 24.w7(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldBold),
+                    textStyle: 24.w7(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fOswaldBold),
                   ),
                 ),
                 Expanded(
                     child: Center(
                         child: Text(
                   LangKey.scoreTipsFinal.tr,
-                  style: 12.w4(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fRobotoRegular),
+                  style: 12.w4(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoRegular),
                 ))),
                 Container(
                   width: 45.w,
@@ -76,10 +71,7 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
                   child: AnimatedNum(
                     number: controller.gameSchedule.awayScore,
                     milliseconds: 300,
-                    textStyle: 24.w7(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldBold),
+                    textStyle: 24.w7(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fOswaldBold),
                   ),
                 ),
                 10.hGap,
@@ -88,8 +80,7 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
                       borderRadius: BorderRadius.circular(19.w),
                       border: Border.all(color: AppColors.cD60D20, width: 1.w)),
                   child: ImageWidget(
-                    url: Utils.getAvatarUrl(
-                        controller.gameSchedule.awayTeamLogo),
+                    url: Utils.getAvatarUrl(controller.gameSchedule.awayTeamLogo),
                     imageFailedPath: Assets.teamUiHead03,
                     width: 36.w,
                     borderRadius: BorderRadius.circular(18.w),
@@ -126,8 +117,7 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
                     child: SizedBox(
                         width: 118.w,
                         height: 9.w,
-                        child: _buildPrePercentWidget(controller
-                            .gameResultInfoEntity.homeTeamResult.strength)),
+                        child: _buildPrePercentWidget(controller.gameResultInfoEntity.homeTeamResult.strength)),
                   ),
                   5.vGap,
                 ],
@@ -155,8 +145,7 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
                     child: SizedBox(
                         width: 118.w,
                         height: 9.w,
-                        child: _buildPrePercentWidget(controller
-                            .gameResultInfoEntity.awayTeamResult.strength)),
+                        child: _buildPrePercentWidget(controller.gameResultInfoEntity.awayTeamResult.strength)),
                   ),
                   5.vGap,
                 ],
@@ -190,10 +179,8 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
               width: 118.w * min(1, (value / firstMaxValue)),
               height: 7.w,
               decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.horizontal(left: Radius.circular(3.5.w)),
-                  gradient: const LinearGradient(
-                      colors: [AppColors.cB3B3B3, AppColors.c000000])),
+                  borderRadius: BorderRadius.horizontal(left: Radius.circular(3.5.w)),
+                  gradient: const LinearGradient(colors: [AppColors.cB3B3B3, AppColors.c000000])),
             ),
           ),
         ),
@@ -206,13 +193,10 @@ class HistoryGameHeaderWidget extends GetView<TeamHistortyController> {
                 alignment: Alignment.center,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  width: 118.w *
-                      (min(secondMaxValue, (value - firstMaxValue)) /
-                          secondMaxValue),
+                  width: 118.w * (min(secondMaxValue, (value - firstMaxValue)) / secondMaxValue),
                   height: 7.w,
                   decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(3.5.w)),
+                    borderRadius: BorderRadius.horizontal(left: Radius.circular(3.5.w)),
                     color: AppColors.c10A86A,
                   ),
                 ),
