@@ -95,18 +95,21 @@ class AnimatedNum extends StatefulWidget {
   final int milliseconds;
   final bool fromZero;
   final bool withConma; //是否显示千分符
+  final Function? onEnd;
 
   ///单位
   final TextStyle textStyle;
 
-  const AnimatedNum(
-      {super.key,
-      required this.number,
-      required this.textStyle,
-      this.isMoney = false,
-      this.milliseconds = 300,
-      this.fromZero = false,
-      this.withConma = false});
+  const AnimatedNum({
+    super.key,
+    required this.number,
+    required this.textStyle,
+    this.isMoney = false,
+    this.milliseconds = 300,
+    this.fromZero = false,
+    this.withConma = false,
+    this.onEnd,
+  });
 
   @override
   State<StatefulWidget> createState() => AnimState();
@@ -145,6 +148,7 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
         ),
       )..addStatusListener((status) {
           if (status == AnimationStatus.completed) {
+            widget.onEnd?.call();
             // 动画完成时，可以执行一些操作
           }
         });

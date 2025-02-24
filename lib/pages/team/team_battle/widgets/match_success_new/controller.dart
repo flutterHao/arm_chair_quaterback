@@ -1,12 +1,10 @@
 import 'dart:ui';
 
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 ///

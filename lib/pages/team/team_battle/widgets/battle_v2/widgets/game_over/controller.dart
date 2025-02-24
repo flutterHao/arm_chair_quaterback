@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/widget/reward_dialog/reward_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -52,6 +53,7 @@ class GameOverController extends GetxController {
     SoundServices.to
         .playSound(isLeftWin() ? Assets.soundGamewin : Assets.soundGameFail);
     print('=========onReady');
+    Get.dialog(RewardDialog());
   }
 
   PkResultUpdatedPlayerResults? getMvpInfo() {

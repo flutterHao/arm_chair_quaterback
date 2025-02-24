@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/money_income_animation.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/widgets/heartbeat.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
@@ -16,6 +17,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/co
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_court.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/game_leader_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/widget/reward_dialog/reward_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/player_status/player_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
@@ -470,7 +472,7 @@ class GameOverWidget extends GetView<GameOverController> {
     });
   }
 
-  Stack _buildLeftWinWidget(BuildContext context) {
+  Widget _buildLeftWinWidget(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [

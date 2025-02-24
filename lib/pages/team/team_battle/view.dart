@@ -21,9 +21,21 @@ class TeamBattlePage extends StatefulWidget {
 class _TeamBattlePageState extends State<TeamBattlePage> {
 
   late TeamBattleController controller;
+  /// todo test code
+  bool loadData = false;
   @override
   void initState() {
     super.initState();
+    ///todo 测试代码，需删除
+    controller = Get.put(TeamBattleController());
+    controller.teamMatchV2().then((value){
+      loadData = true;
+      setState(() {
+
+      });
+    },onError: (e){
+      Get.delete<TeamBattleController>();
+    });
     controller = Get.find();
   }
 
@@ -38,6 +50,15 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
     return GetBuilder<TeamBattleController>(
       id: "team_battle",
       builder: (_) {
+        if(!loadData){
+          return Center(
+            child: SizedBox(
+              width: 30,
+              height: 30,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
         return Obx(() {
           return Stack(
             alignment: Alignment.center,
