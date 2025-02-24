@@ -50,97 +50,63 @@ class GameOverWidget extends GetView<GameOverController> {
             color: AppColors.cF2F2F2,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: Stack(
+              child: Column(
                 children: [
-                  Column(
+                  // 中间
+                  Stack(
                     children: [
-                      // 中间
-                      Stack(
-                        children: [
-                          /// 背景球场
-                          GameCourtWidget(
-                            height: Utils.getMaxWidth(context) * 156.w / 375.w,
-                            needCountDown: false,
-                          ),
-                          Container(
-                            color: AppColors.c000000.withOpacity(0.7),
-                            height: 219.w,
-                            width: double.infinity,
-                            child: controller.isLeftWin()
-                                ? _buildLeftWinWidget(context)
-                                : _buildRightWinWidget(context),
-                          ),
-                        ],
+                      /// 背景球场
+                      GameCourtWidget(
+                        height: Utils.getMaxWidth(context) * 156.w / 375.w,
+                        needCountDown: false,
                       ),
-                      //底部
                       Container(
+                        color: AppColors.c000000.withOpacity(0.7),
+                        height: 219.w,
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: AppColors.cF2F2F2,
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(9.w))),
-                        child: Column(
-                          children: [
-                            Obx(() {
-                              if (controller.onMvpAnimationEndObs.value) {
-                                /// 动画结束后真实显示的视图
-                                return _buildMvpWidget();
-                              }
-
-                              ///动画占位视图
-                              return AnimatedContainer(
-                                  height: controller.mvpObs.value ? 165.w : 0,
-                                  margin: EdgeInsets.only(
-                                      bottom:
-                                          controller.mvpObs.value ? 9.w : 0),
-                                  duration: const Duration(milliseconds: 300));
-                            }),
-                            PlayerStatusWidget(teamBattleV2Controller),
-                            GetBuilder<TeamBattleV2Controller>(
-                                id: TeamBattleV2Controller.idQuarterScore,
-                                builder: (_) {
-                                  return QuarterScoreWidget(
-                                    hasTopMargin: false,
-                                  );
-                                }),
-                            GameLeaderWidget(
-                              controller:
-                                  teamBattleV2Controller.gameLeaderController,
-                              title: LangKey.gameTabGameLeader.tr,
-                            ),
-                            WinRateWidget(
-                                teamBattleV2Controller.winRateController),
-                            TeamStatsWidget(
-                              controller:
-                                  teamBattleV2Controller.teamStatsController,
-                            ),
-                            9.vGap,
-                            const LiveTextWidget(
-                              isGameOverStatus: true,
-                            ),
-                            9.vGap,
-                          ],
-                        ),
-                      )
+                        child: controller.isLeftWin()
+                            ? _buildLeftWinWidget(context)
+                            : _buildRightWinWidget(context),
+                      ),
                     ],
                   ),
-                  Obx(() {
-                    if (controller.onMvpAnimationEndObs.value) {
-                      ///动画结束后视图
-                      return const SizedBox.shrink();
-                    }
-
-                    /// 位移动画视图
-                    return AnimatedPositioned(
-                        top: controller.mvpObs.value ? 219.w : 2500.h,
-                        left: 0,
-                        right: 0,
-                        duration: const Duration(milliseconds: 500),
-                        onEnd: () {
-                          controller.onMvpAnimationEndObs.value = true;
-                        },
-                        child: _buildMvpWidget());
-                  }),
+                  //底部
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: AppColors.cF2F2F2,
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(9.w))),
+                    child: Column(
+                      children: [
+                        PlayerStatusWidget(teamBattleV2Controller),
+                        _buildMvpWidget(),
+                        GameLeaderWidget(
+                          controller:
+                              teamBattleV2Controller.gameLeaderController,
+                          title: LangKey.gameTabGameLeader.tr,
+                        ),
+                        GetBuilder<TeamBattleV2Controller>(
+                            id: TeamBattleV2Controller.idQuarterScore,
+                            builder: (_) {
+                              return QuarterScoreWidget(
+                                hasTopMargin: false,
+                              );
+                            }),
+                        WinRateWidget(
+                            teamBattleV2Controller.winRateController),
+                        TeamStatsWidget(
+                          controller:
+                              teamBattleV2Controller.teamStatsController,
+                        ),
+                        9.vGap,
+                        const LiveTextWidget(
+                          isGameOverStatus: true,
+                        ),
+                        9.vGap,
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
