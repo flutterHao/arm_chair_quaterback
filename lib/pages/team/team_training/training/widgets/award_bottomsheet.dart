@@ -273,43 +273,7 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                 onTap: () {
                   _overlayEntry = OverlayEntry(
                     builder: (context) {
-                      return SafeArea(
-                          child: InkWell(
-                        onTap: () {
-                          _overlayEntry?.remove();
-                        },
-                        child: Container(
-                          color: Colors.transparent,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                  top: 0,
-                                  right: 40.w,
-                                  child: Container(
-                                    width: 308.w,
-                                    color: Colors.pink,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          height: 100,
-                                          color: Colors.yellow,
-                                        ),
-                                        Container(
-                                          height: 100,
-                                          color: Colors.purple,
-                                        ),
-                                        Container(
-                                          height: 100,
-                                          color: Colors.green,
-                                        )
-                                      ],
-                                    ),
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ));
+                      return _taskCollectWidget(context);
                     },
                   );
                   Overlay.of(context).insert(_overlayEntry!);
@@ -329,6 +293,115 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
         )
       ],
     );
+  }
+
+  ///气泡框的任务图标
+  Widget _taskCollectWidget(BuildContext context) {
+    TrainingController trainingController = Get.find();
+    var taskIconNum = [0, 0, 3, 4, 5, 6];
+    List<int> taskCollectList = trainingController.trainDefine.taskCollect;
+    return SafeArea(
+        right: false,
+        child: InkWell(
+          onTap: () {
+            _overlayEntry?.remove();
+          },
+          child: Container(
+            color: Colors.transparent,
+            child: Stack(
+              children: [
+                Positioned(
+                    top: 100.h,
+                    right: 36.w,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                            width: 308.w,
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(.35),
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    offset: Offset(4.w, 1.h)),
+                              ],
+                              borderRadius: BorderRadius.circular(4.h),
+                            ),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: taskCollectList.length,
+                              itemBuilder: (context, index) {
+                                if (index < 2) {
+                                  return SizedBox();
+                                }
+                                return Container(
+                                  height: 40.h,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Row(
+                                        children: [
+                                          ...List.generate(taskIconNum[index], (int taskIconIndex) {
+                                            return Container(
+                                                height: 25.h,
+                                                margin: taskIconIndex != taskIconNum.length - 1
+                                                    ? EdgeInsets.only(right: 8.w)
+                                                    : null,
+                                                padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 2.w),
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.cE6E6E, borderRadius: BorderRadius.circular(2.w)),
+                                                child: Image.asset(
+                                                  Assets.commonUiCommonProp03,
+                                                  height: 14.h,
+                                                ));
+                                          })
+                                        ],
+                                      )),
+                                      Text('Get ${taskIconNum[index]} icon',
+                                          style: 12.w4(fontFamily: FontFamily.fRobotoMedium)),
+                                      10.hGap,
+                                      IconWidget(iconWidth: 20.w, icon: Assets.commonUiCommonProp03),
+                                      2.hGap,
+                                      SizedBox(
+                                        width: 26.w,
+                                        child: Text('x ${taskCollectList[index]}',
+                                            style: 12.w4(fontFamily: FontFamily.fRobotoMedium)),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                if (index < 2) {
+                                  return SizedBox();
+                                }
+                                return Divider(height: 1, color: AppColors.cE6E6E);
+                              },
+                            )),
+                        Positioned(
+                            right: -5.w,
+                            bottom: 26.h,
+                            child: CustomPaint(
+                              size: Size(6.w, 10.h), // 设置三角形的大小
+                              painter: TrianglePainter(color: AppColors.cFFFFFF),
+                            )),
+                        Positioned(
+                            right: -3.w,
+                            bottom: 28.h,
+                            child: CustomPaint(
+                              size: Size(4.w, 6.h), // 设置三角形的大小
+                              painter: TrianglePainter(color: AppColors.cFF7954),
+                            ))
+                      ],
+                    ))
+              ],
+            ),
+          ),
+        ));
   }
 
   Color _getColor(int level) {
