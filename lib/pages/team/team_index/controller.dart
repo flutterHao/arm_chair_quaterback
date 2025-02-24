@@ -154,7 +154,6 @@ class TeamIndexController extends GetxController
 
     breathAnimation =
         Tween<double>(begin: 0.95, end: 0.9).animate(breathController);
-
   }
 
   @override
@@ -223,16 +222,14 @@ class TeamIndexController extends GetxController
     // SoundServices.to.playSound(Assets.soundRadaMatch);
     await Get.put(TeamBattleController()).teamMatchV2().then((v) async {
       await Get.toNamed(RouteNames.teamTeamBattle);
-      Get.delete<TeamBattleController>();
       getBattleBox();
       getTeamInfoCup();
       final ctrl = Get.find<TrainingController>();
       ctrl.trainingInfo = await TeamApi.getTrainingInfo();
       ctrl.update(["training_page"]);
       teamCtrl.updateTeamInfo();
-    }).catchError((e) {
-      Get.delete<TeamBattleController>();
-    });
+    }).catchError((e) {});
+    Get.delete<TeamBattleController>();
   }
 
   ///获取战斗宝箱信息

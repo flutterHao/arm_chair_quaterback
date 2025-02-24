@@ -3,21 +3,16 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'dart:developer' as developer;
 
 class TeamBattleController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -78,7 +73,7 @@ class TeamBattleController extends GetxController
     // teamMatch();
   }
 
-  Future<bool> teamMatchV2() async {
+  Future<bool> teamMatchV2() {
     Completer<bool> completer = Completer();
     Future.wait([
       CacheApi.getGameEvent(),
