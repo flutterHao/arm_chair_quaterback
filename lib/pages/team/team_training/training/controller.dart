@@ -460,6 +460,12 @@ class TrainingController extends GetxController
     });
   }
 
+  void buySlotCount() async {
+    await TeamApi.buySlotCount().then((v) {
+      // update(["training_page"]);
+    });
+  }
+
   ///选牌
   void chooseTactic(TrainingInfoBuff e) async {
     e.isSelect.value = true;

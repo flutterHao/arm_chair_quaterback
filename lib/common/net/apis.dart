@@ -171,7 +171,7 @@ class Api {
       "/p/TeamPlayer/getTeamPlayerUpStarVO";
   static const String continueStarUp = "/p/TeamPlayer/continueStarUp";
   static const String starUpDone = "/p/TeamPlayer/starUpDone";
-
+  static const String buySlotCount = "$API_BASE_PATH/TeamPlayer/buySlotCount";
   static const String getCardPackInfo = "$API_BASE_PATH/match/getCardPackInfo";
   static const String activeBox = "$API_BASE_PATH/match/activeBox";
   static const String getFreeGift = "$API_BASE_PATH/match/getFreeGift";

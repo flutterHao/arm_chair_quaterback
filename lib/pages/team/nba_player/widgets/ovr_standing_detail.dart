@@ -31,15 +31,17 @@ class OvrStandingDetailPage extends StatefulWidget {
 }
 
 class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
-  NbaPlayerController controller = Get.put(NbaPlayerController());
+  NbaPlayerController controller = Get.find();
   int? lastPagePlayerId;
+  // late ScrollController scrollController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     lastPagePlayerId = Get.arguments;
     if (lastPagePlayerId != null) {
-      print('开始滚动');
+      // scrollController = ScrollController();
+      // scrollController.jumpTo(200);
     }
   }
 
@@ -70,7 +72,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                     child: ListView.separated(
                       itemCount: controller.allPlayerStrengthRank.length,
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      controller: ScrollController(),
+                      // controller: scrollController,
                       itemBuilder: (context, index) {
                         return _playerItemWidget(index);
                       },
@@ -127,7 +129,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                 Obx(() {
                   controller.gameStartTimesCountDown.value;
                   return Text(
-                    '6D ${controller.getTime}',
+                    '${controller.getTime}',
                     style: 12.w5(fontFamily: FontFamily.fOswaldRegular),
                   );
                 })
@@ -391,6 +393,9 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
   }
 
   Widget _playRankWidget(int index) {
+    var playerId = controller.allPlayerStrengthRank[index].playerId;
+    NbaPlayerInfosPlayerBaseInfoList playerBaseInfoList =
+        Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId);
     return Container(
         width: 30.w,
         height: 30.w,

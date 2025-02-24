@@ -17,7 +17,7 @@ class NbaPlayerController extends GetxController {
   RxInt currentIndex = 0.obs;
 
   RxList<int> likePlayersList = RxList();
-
+  Map<int, int> playerRankMap = {};
   initData() async {
     allPlayerStrengthRank.clear();
     allPlayerStrengthRank.value = await TeamApi.getPlayerStrengthRank();
@@ -33,7 +33,9 @@ class NbaPlayerController extends GetxController {
 
     var teamLoginInfo = await UserApi.getTeamLoginInfo();
     likePlayersList.value = teamLoginInfo.team!.teamPreference!.likePlayers!;
+
     currentIndexChange(currentIndex.value);
+    // playerRankMap = {for (var e in allPlayerStrengthRank) ...[e.playerId: e.playerId]};
   }
 
   @override

@@ -82,7 +82,7 @@ class BuyGoBottomsheet extends StatelessWidget {
               onTap: () {
                 TrainingController controller = Get.find<TrainingController>();
                 Get.back();
-                controller.buyTrainingBall(controller.trainDefine.coinBuySlot);
+                controller.buySlotCount();
                 controller.startSlot();
                 Utils.saveNotTip("ball");
               },

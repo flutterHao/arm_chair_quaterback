@@ -216,4 +216,8 @@ class TeamApi {
     var json = await httpUtil.post(Api.getOVRRankPlayerInfo, data: {"playerId": playerId});
     return OVRRankPlayerInfoEntity.fromJson(json);
   }
+
+  static Future buySlotCount() async {
+    await httpUtil.post(Api.getOVRRankPlayerInfo);
+  }
 }
