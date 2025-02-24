@@ -67,7 +67,7 @@ class PlayerItem extends GetView<TeamController> {
       child: RotatedBox(
         quarterTurns: -1,
         child: Text(
-          Utils.getPosition(item.position,getKey: false).tr,
+          Utils.getPosition(item.position, getKey: false).tr,
           style: 14.w4(
               color: item.position > 0 ? AppColors.cFFFFFF : AppColors.c000000,
               height: 1,
