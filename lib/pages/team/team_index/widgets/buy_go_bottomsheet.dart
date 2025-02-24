@@ -79,10 +79,10 @@ class BuyGoBottomsheet extends StatelessWidget {
             decoration: BoxDecoration(color: AppColors.c000000, borderRadius: BorderRadius.circular(9.w)),
             child: MtInkWell(
               splashColor: Colors.transparent,
-              onTap: () {
+              onTap: () async {
                 TrainingController controller = Get.find<TrainingController>();
                 Get.back();
-                controller.buySlotCount();
+                await controller.buySlotCount();
                 controller.startSlot();
                 Utils.saveNotTip("ball");
               },

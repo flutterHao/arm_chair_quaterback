@@ -218,6 +218,6 @@ class TeamApi {
   }
 
   static Future buySlotCount() async {
-    await httpUtil.post(Api.getOVRRankPlayerInfo);
+    await httpUtil.post(Api.buySlotCount);
   }
 }
