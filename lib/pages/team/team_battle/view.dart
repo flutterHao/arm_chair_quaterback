@@ -21,8 +21,8 @@ class TeamBattlePage extends StatefulWidget {
 class _TeamBattlePageState extends State<TeamBattlePage> {
 
   late TeamBattleController controller;
-  /// todo test code
-  bool loadData = false;
+  // /// todo test code
+  // bool loadData = false;
   @override
   void initState() {
     super.initState();
@@ -51,15 +51,15 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
     return GetBuilder<TeamBattleController>(
       id: "team_battle",
       builder: (_) {
-        if(!loadData){
-          return Center(
-            child: SizedBox(
-              width: 30,
-              height: 30,
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
+        // if(!loadData){
+        //   return Center(
+        //     child: SizedBox(
+        //       width: 30,
+        //       height: 30,
+        //       child: CircularProgressIndicator(),
+        //     ),
+        //   );
+        // }
         return Obx(() {
           return Stack(
             alignment: Alignment.center,
