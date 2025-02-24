@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,32 +72,33 @@ class WebsocketServices extends GetxService {
     if (teamMissionEntity.status == 2) {
       add(ToastItem(
           widget: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          13.hGap,
-          IconWidget(iconWidth: 43.w, icon: Assets.commonUiCommonIconTask),
-          13.hGap,
-          Expanded(
-              child: Text(
-            "${missionDefineEntity.desc} is Completed",
-            maxLines: 2,
-            textAlign: TextAlign.start,
-            style: 18.w5(
-              color: AppColors.c000000,
-              height: 1,
-              overflow: TextOverflow.ellipsis,
-              fontFamily: FontFamily.fOswaldMedium,
-            ),
-          )),
-          40.hGap,
-          IconWidget(
-            iconWidth: 7.w,
-            icon: Assets.commonUiCommonIconSystemJumpto,
-            iconColor: AppColors.c000000,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              13.hGap,
+              IconWidget(iconWidth: 43.w, icon: Assets.commonUiCommonIconTask),
+              13.hGap,
+              Expanded(
+                  child: Text(
+                "${missionDefineEntity.desc} is Completed",
+                maxLines: 2,
+                textAlign: TextAlign.start,
+                style: 18.w5(
+                  color: AppColors.c000000,
+                  height: 1,
+                  overflow: TextOverflow.ellipsis,
+                  fontFamily: FontFamily.fOswaldMedium,
+                ),
+              )),
+              40.hGap,
+              IconWidget(
+                iconWidth: 7.w,
+                icon: Assets.commonUiCommonIconSystemJumpto,
+                iconColor: AppColors.c000000,
+              ),
+              16.hGap,
+            ],
           ),
-          16.hGap,
-        ],
-      )));
+          canTap: true));
     }
   }
 
@@ -112,9 +114,13 @@ class WebsocketServices extends GetxService {
       var isBetCoin = teamProp.propId == Constant.propBetCoinId;
       if (isLuckyCoin) {
         try {
-          var luckyCoinNum = Get.find<HomeController>().userEntiry.teamLoginInfo!.getLuckyCoin();
+          var luckyCoinNum = Get.find<HomeController>()
+              .userEntiry
+              .teamLoginInfo!
+              .getLuckyCoin();
           if (luckyCoinNum < teamProp.num!) {
-            addProp(teamProp, "${teamProp.num! - luckyCoinNum}", EventType.luckyCoin);
+            addProp(teamProp, "${teamProp.num! - luckyCoinNum}",
+                EventType.luckyCoin);
           }
         } catch (e) {
           print('TrainingController not init');
@@ -122,7 +128,8 @@ class WebsocketServices extends GetxService {
       }
       if (isBall) {
         try {
-          var ballNum = Get.find<HomeController>().userEntiry.teamLoginInfo!.getBall();
+          var ballNum =
+              Get.find<HomeController>().userEntiry.teamLoginInfo!.getBall();
           if (ballNum < teamProp.num!) {
             addProp(teamProp, "${teamProp.num! - ballNum}", EventType.ball);
           }
@@ -146,13 +153,18 @@ class WebsocketServices extends GetxService {
         }
       }
     }
-    var hasBall = result.where((e) => e.propId == Constant.propBallId).isNotEmpty;
-    var hasLuckyCoin = result.where((e) => e.propId == Constant.propLuckyCoinId).isNotEmpty;
-    var hasMoney = result.where((e) => e.propId == Constant.propMoneyTickId).isNotEmpty;
-    var hasBetCoin = result.where((e) => e.propId == Constant.propBetCoinId).isNotEmpty;
+    var hasBall =
+        result.where((e) => e.propId == Constant.propBallId).isNotEmpty;
+    var hasLuckyCoin =
+        result.where((e) => e.propId == Constant.propLuckyCoinId).isNotEmpty;
+    var hasMoney =
+        result.where((e) => e.propId == Constant.propMoneyTickId).isNotEmpty;
+    var hasBetCoin =
+        result.where((e) => e.propId == Constant.propBetCoinId).isNotEmpty;
     if (hasBall) {
       try {
-        int ballNum = result.where((e) => e.propId == Constant.propBallId).first.num!;
+        int ballNum =
+            result.where((e) => e.propId == Constant.propBallId).first.num!;
         Get.find<TrainingController>().ballNum.value = ballNum;
         Get.find<TrainingController>().trainingInfo.prop.num = ballNum;
       } catch (e) {
@@ -211,35 +223,41 @@ class WebsocketServices extends GetxService {
   }
 
   void show(ToastItem item) {
+    Widget child = Center(
+      child: Container(
+        height: 61.w,
+        width: 355.w,
+        padding: EdgeInsets.symmetric(horizontal: 19.w),
+        margin: EdgeInsets.only(bottom: 9.w),
+        decoration: BoxDecoration(
+            color: AppColors.cFFFFFF,
+            borderRadius: BorderRadius.circular(9.w),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.c000000.withOpacity(0.2),
+                offset: Offset.zero,
+                blurRadius: 4.w,
+                spreadRadius: 4.w,
+              )
+            ]),
+        child: item.widget,
+      ),
+    );
+    if (item.canTap == true) {
+      child = InkWell(
+        onTap: () {
+          if (!Get.isRegistered<TeamBattleController>()) {
+            Get.toNamed(RouteNames.mineDailyTask);
+          }
+        },
+        child: child,
+      );
+    }
     showTopToastDialog(
         needBg: false,
         duration: const Duration(seconds: 2),
         onEnd: onEnd,
-        child: Container(
-            margin: EdgeInsets.only(top: 44.w),
-            child: InkWell(
-              onTap: () => Get.toNamed(RouteNames.mineDailyTask),
-              child: Center(
-                child: Container(
-                  height: 61.w,
-                  width: 355.w,
-                  padding: EdgeInsets.symmetric(horizontal: 19.w),
-                  margin: EdgeInsets.only(bottom: 9.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cFFFFFF,
-                      borderRadius: BorderRadius.circular(9.w),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.c000000.withOpacity(0.2),
-                          offset: Offset.zero,
-                          blurRadius: 4.w,
-                          spreadRadius: 4.w,
-                        )
-                      ]),
-                  child: item.widget,
-                ),
-              ),
-            )));
+        child: Container(margin: EdgeInsets.only(top: 44.w), child: child));
   }
 
   @override
@@ -252,8 +270,9 @@ class WebsocketServices extends GetxService {
 class ToastItem {
   final Widget widget;
   final EventType? type;
+  final bool canTap;
 
-  ToastItem({required this.widget, this.type});
+  ToastItem({required this.widget, this.type, this.canTap = false});
 }
 
 enum EventType {

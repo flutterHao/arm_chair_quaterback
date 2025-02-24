@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/week_price/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -106,32 +107,43 @@ class WeekPrizeWidget extends GetView<WeekPrizeController> {
                                 )),
                             height: 92.w,
                             width: 343.w,
+                            clipBehavior: Clip.hardEdge,
                             child: Row(
                               children: [
-                                Container(
-                                  width: 55.w,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.c000000,
-                                      borderRadius: BorderRadius.horizontal(
-                                          left: Radius.circular(9.w))),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      IconWidget(
-                                        iconWidth: 23.w,
-                                        icon: Assets.inboxUiInboxIconAward,
+                                Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Container(
+                                      width: 55.w,
+                                      color: Colors.black,
+                                      child: Column(
+                                        children: [
+                                          Spacer(),
+                                          IconWidget(iconWidth: 24.h, icon: Assets.inboxUiInboxIconAward),
+                                          SizedBox(height: 6.h),
+                                          Text(
+                                            'AWARD',
+                                            style: 12.w5(color: Colors.white, fontFamily: FontFamily.fOswaldRegular),
+                                          ),
+                                          Spacer(),
+                                        ],
                                       ),
-                                      10.vGap,
-                                      Text(
-                                        "AWARD",
-                                        style: 12.w4(
-                                          color: AppColors.cFFFFFF,
-                                          height: 1,
-                                          fontFamily: FontFamily.fOswaldRegular,
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                    Positioned(
+                                        right: -7.w,
+                                        top: 40.h,
+                                        child: CustomPaint(
+                                          size: Size(8.w, 12.h), // 设置三角形的大小
+                                          painter: TrianglePainter(color: Colors.black),
+                                        )),
+                                    Positioned(
+                                        right: -3.w,
+                                        top: 41.h,
+                                        child: CustomPaint(
+                                          size: Size(6.w, 10.h), // 设置三角形的大小
+                                          painter: TrianglePainter(color: AppColors.cFF7954),
+                                        ))
+                                  ],
                                 ),
                                 Expanded(child: Builder(builder: (context) {
                                   var list = dailyTaskController.getAwardList(

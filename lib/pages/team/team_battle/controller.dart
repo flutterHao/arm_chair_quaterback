@@ -111,6 +111,7 @@ class TeamBattleController extends GetxController
         }
       });
     }, onError: (e) {
+      _timer?.cancel();
       completer.completeError(e);
     });
     return completer.future;
