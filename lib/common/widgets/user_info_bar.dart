@@ -105,6 +105,7 @@ class UserInfoBar extends StatelessWidget {
                               final List<String> servers = [
                                 Address.personalDevUrl,
                                 Address.personalDevUrl2,
+                                Address.personalDevUrl3,
                                 Address.privateDevUrl,
                                 Address.publicDevUrl,
                                 Address.pubDevUrl,
@@ -112,6 +113,7 @@ class UserInfoBar extends StatelessWidget {
                               final List<String> wsServers = [
                                 Address.wsPersonalDevUrl,
                                 Address.wsPersonalDevUrl2,
+                                Address.wsPersonalDevUrl3,
                                 Address.wsPrivateDevUrl,
                                 Address.wsPublicDevUrl,
                                 Address.wsPubDevUrl,
@@ -325,7 +327,9 @@ class ServerSwitchDialog extends StatelessWidget {
         case Address.personalDevUrl:
           return '${Address.personalDevUrl}(本地yw)';
         case Address.personalDevUrl2:
-          return '${Address.personalDevUrl}(本地yx)';
+          return '${Address.personalDevUrl2}(本地yx)';
+        case Address.personalDevUrl3:
+          return '${Address.personalDevUrl3}(本地hc)';
         case Address.privateDevUrl:
           return '${Address.privateDevUrl}(内网)';
         case Address.publicDevUrl:

@@ -7,11 +7,15 @@
 import 'package:flutter/foundation.dart';
 
 class Address {
+
   ///后台开发内网本机测试地址(-->应威)
   static const String personalDevUrl = 'http://192.168.12.46:9001';
 
   ///后台开发内网本机测试地址(-->余溪)
   static const String personalDevUrl2 = 'http://192.168.12.74:9001';
+
+  ///后台开发内网本机测试地址(-->胡川)
+  static const String personalDevUrl3 = 'http://192.168.12.227:9001';
 
   ///外网测试地址
   // static const String publicDevUrl = 'http://172.18.3.137:7007';
@@ -27,10 +31,15 @@ class Address {
 
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 
+  ///后台开发内网本机测试地址(-->应威)
   static const String wsPersonalDevUrl = "ws://192.168.12.46:9003";
 
   ///后台开发内网本机测试地址(-->余溪)
   static const String wsPersonalDevUrl2 = 'http://192.168.12.74:9001';
+
+  ///后台开发内网本机测试地址(-->胡川)
+  static const String wsPersonalDevUrl3 = 'http://192.168.12.227:9001';
+
   static const String wsPublicDevUrl = 'ws://seanba-te.ftxgame.com:9003';
 
   ///海外外网测试地址
