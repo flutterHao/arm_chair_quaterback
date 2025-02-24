@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
@@ -63,7 +65,8 @@ class BottomTipDialog {
     bool isScrollControlled = false,
   }) {
     SoundServices.to.playSound(Assets.soundWindowOpen);
-    return showModalBottomSheet(
+    Completer<bool?> completer = Completer();
+    showModalBottomSheet(
             isScrollControlled: isScrollControlled,
             backgroundColor: AppColors.cTransparent,
             barrierColor: barrierColor,
@@ -73,7 +76,11 @@ class BottomTipDialog {
             builder: builder)
         .then((v) {
       SoundServices.to.playSound(Assets.soundDelete);
+      completer.complete(v);
+    },onError: (e){
+      completer.complete(null);
     });
+    return completer.future;
   }
 }
 

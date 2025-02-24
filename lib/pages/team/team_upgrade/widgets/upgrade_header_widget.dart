@@ -47,7 +47,8 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                       height: 116.w,
                       width: 144.w,
                       child: ImageWidget(
-                        url: Utils.getPlayUrl(controller.teamPlayerUpStarVoEntity.playerId),
+                        url: Utils.getPlayUrl(
+                            controller.teamPlayerUpStarVoEntity.playerId),
                         imageFailedPath: Assets.iconUiDefault04,
                         fit: BoxFit.fitHeight,
                         alignment: Alignment.bottomCenter,
@@ -171,7 +172,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                             iconWidth: 22.w,
                             icon: Assets.managerUiManagerPlayerstar),
                         Text(
-                          "${controller.starUpDoneEntity != null ? (controller.starUpDoneEntity!.teamPlayerVO.breakThroughGrade) : (controller.teamPlayerUpStarVoEntity.breakThroughGrade)}",
+                          "${controller.getPlayer().breakThroughGrade}",
                           style: 13.w5(
                             color: AppColors.cFFFFFF,
                             fontFamily: FontFamily.fRobotoMedium,

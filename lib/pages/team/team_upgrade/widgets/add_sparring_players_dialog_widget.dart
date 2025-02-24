@@ -31,7 +31,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
     required this.onBack,
   });
 
-  final Function(dynamic value) onBack;
+  final Function(bool? value) onBack;
 
   @override
   Widget build(BuildContext context) {

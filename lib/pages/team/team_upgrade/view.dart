@@ -527,7 +527,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
       print('isSuccess-upgrade:$result');
     }
     controller.initData();
-    if (result != null && result is bool && result) {
+    if (result == true) {
       controller.refreshPlayerAbilityUI();
     }
   }
