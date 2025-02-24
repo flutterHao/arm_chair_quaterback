@@ -308,8 +308,8 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
           Row(
             children: [
               Spacer(),
-              InkWell(
-                onTap: () => controller.changeLikePlayer(index),
+              MtInkWell(
+                onTap: () => controller.changeLikePlayer(controller.allPlayerStrengthRank[index].playerId),
                 child: Obx(() => IconWidget(
                     iconWidth: 16.w,
                     iconColor: controller.likePlayersList.contains(controller.allPlayerStrengthRank[index].playerId)

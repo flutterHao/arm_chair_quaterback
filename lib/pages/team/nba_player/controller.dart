@@ -113,12 +113,12 @@ class NbaPlayerController extends GetxController {
     }
   }
 
-  void changeLikePlayer(int index) async {
-    if (likePlayersList.contains(allPlayerStrengthRank[index].playerId)) {
-      var res = await UserApi.cancelLikingPlayer('${allPlayerStrengthRank[index].playerId}');
+  void changeLikePlayer(int playerId) async {
+    if (likePlayersList.contains(playerId)) {
+      var res = await UserApi.cancelLikingPlayer('${playerId}');
       likePlayersList.value = res.teamPreference!.likePlayers!;
     } else {
-      var res = await UserApi.likePlayer('${allPlayerStrengthRank[index].playerId}');
+      var res = await UserApi.likePlayer('${playerId}');
       likePlayersList.value = res.teamPreference!.likePlayers!;
     }
   }

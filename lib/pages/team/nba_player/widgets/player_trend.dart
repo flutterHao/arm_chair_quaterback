@@ -27,6 +27,7 @@ import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/game_status_grid_soucre.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:collection/collection.dart';
@@ -60,6 +61,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
   OVRRankPlayerInfoSeasonStats seasonStats = OVRRankPlayerInfoSeasonStats();
   NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
   GlobalKey globalKey = GlobalKey();
+  NbaPlayerController controller = Get.find();
   @override
   void initState() {
     // TODO: implement initState
@@ -178,17 +180,19 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
             children: [
               Container(
                 height: 70.w,
-                margin: EdgeInsets.only(left: 16.w),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "${formatSeasonDate()} STATS",
-                  style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Row(
+                  children: [
+                    Text(
+                      "${formatSeasonDate()} STATS",
+                      style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+                    ),
+                    Spacer(),
+                    IconWidget(iconWidth: 16.w, iconColor: Colors.black, icon: Assets.commonUiCommonIconSystemInfo)
+                  ],
                 ),
               ),
-              Divider(
-                color: AppColors.cE6E6E6,
-                height: 1.w,
-              ),
+              Divider(color: AppColors.cE6E6E6, height: 1.w),
               Builder(builder: (context) {
                 var seasonAverageData = getSeasonAverageData();
                 return SizedBox(
@@ -718,6 +722,19 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                       )
                     ],
                   )),
+              Positioned(
+                  top: 20.w,
+                  right: 16.w,
+                  child: MtInkWell(
+                    splashColor: Colors.transparent,
+                    onTap: () => controller.changeLikePlayer(playerId),
+                    child: Obx(() => IconWidget(
+                        iconWidth: 16.w,
+                        iconColor: controller.likePlayersList.contains(playerId) ? Colors.yellow : AppColors.c8A8A8A,
+                        icon: controller.likePlayersList.contains(playerId)
+                            ? Assets.commonUiCommonStatusBarStar02
+                            : Assets.commonUiCommonStatusBarStar01)),
+                  ))
             ],
           ),
         ),
