@@ -4,13 +4,16 @@
  * @Date: 2024-11-14 11:47:53
  * @LastEditTime: 2025-02-06 14:43:12
  */
+import 'dart:convert';
+
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/train_define_entity.g.dart';
-import 'dart:convert';
+
 export 'package:arm_chair_quaterback/generated/json/train_define_entity.g.dart';
 
 @JsonSerializable()
 class TrainDefineEntity {
+  late int coinBuySlot = 0;
   late int ballMaxNum = 0;
   late int ballRecoverNum = 0;
   late int ballRecoverTime = 0;
@@ -33,8 +36,7 @@ class TrainDefineEntity {
 
   TrainDefineEntity();
 
-  factory TrainDefineEntity.fromJson(Map<String, dynamic> json) =>
-      $TrainDefineEntityFromJson(json);
+  factory TrainDefineEntity.fromJson(Map<String, dynamic> json) => $TrainDefineEntityFromJson(json);
 
   Map<String, dynamic> toJson() => $TrainDefineEntityToJson(this);
 

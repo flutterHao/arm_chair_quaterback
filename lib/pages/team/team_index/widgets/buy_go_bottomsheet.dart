@@ -13,8 +13,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class BuyGoBottomsheet extends StatelessWidget {
-  const BuyGoBottomsheet({super.key});
-
+  BuyGoBottomsheet({super.key});
+  final TrainingController controller = Get.find<TrainingController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +31,7 @@ class BuyGoBottomsheet extends StatelessWidget {
             style: 27.w5(fontFamily: FontFamily.fOswaldMedium),
           ),
           Text(
-            'Do you want to buy 40 frequency for 10K cions?',
+            'Do you want to buy ${controller.trainDefine.coinBuySlot} frequency for  ${controller.trainDefine.trainCoinNum[controller.trainingInfo.training.todayBuyCount]}K cions?',
             style: 14.w5(fontFamily: FontFamily.fRobotoRegular),
           ),
           28.vGap,
@@ -44,7 +44,7 @@ class BuyGoBottomsheet extends StatelessWidget {
                 Spacer(),
                 IconWidget(iconWidth: 76.w, icon: Assets.commonUiCommonProp04),
                 Text(
-                  '+40',
+                  '+ ${controller.trainDefine.ballMaxNum}',
                   style: 20.w4(fontFamily: FontFamily.fOswaldBold),
                 ),
                 22.vGap
@@ -67,7 +67,7 @@ class BuyGoBottomsheet extends StatelessWidget {
               ),
               5.hGap,
               Text(
-                "30",
+                "${controller.trainDefine.trainCoinNum[controller.trainingInfo.training.todayBuyCount]}",
                 style: 16.w4(height: .5, fontFamily: FontFamily.fOswaldMedium),
               ),
             ],
@@ -82,7 +82,7 @@ class BuyGoBottomsheet extends StatelessWidget {
               onTap: () {
                 TrainingController controller = Get.find<TrainingController>();
                 Get.back();
-                controller.buyTrainingBall(20);
+                controller.buyTrainingBall(controller.trainDefine.coinBuySlot);
                 controller.startSlot();
                 Utils.saveNotTip("ball");
               },

@@ -66,7 +66,6 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     playerStrengthRankEntity = Get.arguments;
     playerId = playerStrengthRankEntity.playerId;
     playerInfo = Utils.getPlayBaseInfo(playerId);
@@ -104,6 +103,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
             bodyWidget: Expanded(
                 child: rankDialogloadingStatus == LoadDataStatus.success
                     ? SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         child: Column(
                           children: [
                             _buildHeaderWidget(),

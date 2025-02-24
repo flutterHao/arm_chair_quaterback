@@ -470,9 +470,9 @@ class _SlotButton extends StatelessWidget {
                         //       Utils.saveNotTip("ball");
                         //     });
                       } else {
-                        // BottomTipDialog.showWithSound(
-                        //     context: context, isScrollControlled: true, builder: (context) => BuyGoBottomsheet());
-                        controller.startSlot();
+                        BottomTipDialog.showWithSound(
+                            context: context, isScrollControlled: true, builder: (context) => BuyGoBottomsheet());
+                        // controller.startSlot();
                       }
                     },
               child: AnimatedScale(

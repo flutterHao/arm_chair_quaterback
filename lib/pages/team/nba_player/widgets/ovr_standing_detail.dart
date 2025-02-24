@@ -137,7 +137,7 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
                 30.hGap,
                 _tabItemWidget('power'.toUpperCase(), 1),
                 30.hGap,
-                _tabItemWidget('collect'.toUpperCase(), 2),
+                // _tabItemWidget('collect'.toUpperCase(), 2),
                 Spacer(),
                 IconWidget(
                   iconWidth: 16.w,
