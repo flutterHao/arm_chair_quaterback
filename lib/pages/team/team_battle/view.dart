@@ -27,15 +27,16 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
   void initState() {
     super.initState();
     ///todo 测试代码，需删除
-    controller = Get.put(TeamBattleController());
-    controller.teamMatchV2().then((value){
-      loadData = true;
-      setState(() {
+    // controller = Get.put(TeamBattleController());
+    // controller.teamMatchV2().then((value){
+    //   loadData = true;
+    //   setState(() {
+    //
+    //   });
+    // },onError: (e){
+    //   Get.delete<TeamBattleController>();
+    // });
 
-      });
-    },onError: (e){
-      Get.delete<TeamBattleController>();
-    });
     controller = Get.find();
   }
 

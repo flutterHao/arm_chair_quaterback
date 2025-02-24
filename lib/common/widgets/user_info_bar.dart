@@ -194,8 +194,8 @@ class UserInfoBar extends StatelessWidget {
                       if (canTapDailyTask) {
                         child = MtInkWell(
                           onTap: () {
-                            Get.toNamed(RouteNames.teamTeamBattle);
-                            // Get.toNamed(RouteNames.mineDailyTask);
+                            // Get.toNamed(RouteNames.teamTeamBattle);
+                            Get.toNamed(RouteNames.mineDailyTask);
                           },
                           child: child,
                         );
