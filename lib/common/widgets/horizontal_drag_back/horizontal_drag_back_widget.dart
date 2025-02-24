@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/getsure_recognizer/custom_drag_gesture_recognizer.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
@@ -279,9 +280,17 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
               },
             )
           },
-          child: Transform.translate(
-              offset: Offset((widget.noBackAnimation ? 0 : offsetX), 0),
-              child: widget.child),
+          child: Stack(
+            children: [
+              Container(
+                color: Color.lerp(AppColors.c000000.withOpacity(0.3),
+                    AppColors.c000000.withOpacity(.0), offsetX / width),
+              ),
+              Transform.translate(
+                  offset: Offset((widget.noBackAnimation ? 0 : offsetX), 0),
+                  child: widget.child),
+            ],
+          ),
         ),
       );
     }
