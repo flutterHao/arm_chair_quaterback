@@ -11,7 +11,7 @@ class NbaPlayerController extends GetxController {
   RxList<PlayerStrengthRankEntity> nbaPlayerList = RxList();
   List<String> ordinalNumbers = ['st', 'nd', 'rd', 'th'];
   // ovr详情tab切换
-  RxInt currentIndex = (-1).obs;
+  RxInt currentIndex = 0.obs;
 
   RxList<int> likePlayersList = RxList();
 
@@ -30,6 +30,7 @@ class NbaPlayerController extends GetxController {
 
     var teamLoginInfo = await UserApi.getTeamLoginInfo();
     likePlayersList.value = teamLoginInfo.team!.teamPreference!.likePlayers!;
+    currentIndexChange(currentIndex.value);
   }
 
   @override
@@ -65,19 +66,27 @@ class NbaPlayerController extends GetxController {
     switch (currentIndex.value) {
       case 0:
         {
-          allPlayerStrengthRank.sort((a, b) => a.rank.compareTo(b.rank));
+          allPlayerStrengthRank.sort((a, b) => a.strength.compareTo(b.strength));
         }
       case 1:
         {
-          allPlayerStrengthRank.sort((a, b) => b.rank.compareTo(a.rank));
+          allPlayerStrengthRank.sort((a, b) => b.strength.compareTo(a.strength));
         }
       case 2:
         {
-          allPlayerStrengthRank.sort((a, b) => a.strength.compareTo(b.strength));
+          allPlayerStrengthRank.sort((a, b) {
+            var aDifferenceScore = a.trendList[0].playerScore - a.trendList[1].playerScore;
+            var bDifferenceScore = b.trendList[0].playerScore - b.trendList[1].playerScore;
+            return aDifferenceScore.compareTo(bDifferenceScore);
+          });
         }
       case 3:
         {
-          allPlayerStrengthRank.sort((a, b) => b.strength.compareTo(a.strength));
+          allPlayerStrengthRank.sort((a, b) {
+            var aDifferenceScore = a.trendList[0].playerScore - a.trendList[1].playerScore;
+            var bDifferenceScore = b.trendList[0].playerScore - b.trendList[1].playerScore;
+            return bDifferenceScore.compareTo(aDifferenceScore);
+          });
         }
       case 4:
         {

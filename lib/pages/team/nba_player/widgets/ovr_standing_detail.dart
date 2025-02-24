@@ -289,6 +289,10 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
               '${differenceStrength.abs()}',
               style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
             ),
+            // Text(
+            //   'Rank:${controller.allPlayerStrengthRank[index].rank}',
+            //   style: 10.w5(color: Colors.pink, fontFamily: FontFamily.fRobotoMedium),
+            // ),
           ],
         )
       ],
