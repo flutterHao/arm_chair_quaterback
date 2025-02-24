@@ -1,16 +1,14 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../controller.dart';
 
@@ -31,30 +29,32 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
         padding: EdgeInsets.only(top: 9.w),
         child: RepaintBoundary(
             key: globalKey,
-            child: Obx(() => Stack(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 20.w, horizontal: 20.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cFFFFFF,
-                          borderRadius: BorderRadius.circular(4.5.w)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'LEGENDARY MANAGER 3',
-                            style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
-                          ),
-                          22.vGap,
-                          _processWidget(),
-                          18.vGap,
-                          _contestsWonWidget()
-                        ],
+            child: Obx(() => InkWell(
+                  onTap: () {
+                    controller.goMatchLevelDialog();
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.w),
+                        decoration: BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(4.5.w)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'LEGENDARY MANAGER 3',
+                              style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
+                            ),
+                            22.vGap,
+                            _processWidget(),
+                            18.vGap,
+                            _contestsWonWidget()
+                          ],
+                        ),
                       ),
-                    ),
-                    Positioned(right: 10.w, top: 10.w, child: _shareButton())
-                  ],
+                      Positioned(right: 10.w, top: 10.w, child: _shareButton())
+                    ],
+                  ),
                 ))));
   }
 
@@ -75,9 +75,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                     child: Row(
                       children: [
                         const Spacer(),
-                        IconWidget(
-                            iconWidth: 20.w,
-                            icon: Assets.managerUiManagerIconCurrency04),
+                        IconWidget(iconWidth: 20.w, icon: Assets.managerUiManagerIconCurrency04),
                         5.hGap,
                         Text(
                           '${controller.teamSimpleEntity.value.cup}/${controller.getCupDefineItem(controller.teamSimpleEntity.value.cupRankId).cupNum[1]}',
@@ -100,10 +98,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                             progressColor: AppColors.c000000,
                             backgroundColor: AppColors.cFFFFFF,
                             progress: controller.teamSimpleEntity.value.cup /
-                                controller
-                                    .getCupDefineItem(controller
-                                        .teamSimpleEntity.value.cupRankId)
-                                    .cupNum[1]),
+                                controller.getCupDefineItem(controller.teamSimpleEntity.value.cupRankId).cupNum[1]),
                       ),
                       Positioned(
                         top: 0.w,
@@ -113,8 +108,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                           height: 14.w,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7.w),
-                              border: Border.all(
-                                  width: 1, color: AppColors.cD1D1D1)),
+                              border: Border.all(width: 1, color: AppColors.cD1D1D1)),
                         ),
                       ),
                     ],
@@ -127,8 +121,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
           bottom: 0,
           child: IconWidget(
             iconWidth: 57.w,
-            icon: controller
-                .getcupUrl(controller.teamSimpleEntity.value.cupRankId),
+            icon: controller.getcupUrl(controller.teamSimpleEntity.value.cupRankId),
             // icon: Assets.managerUiManagerGameGrade01
           ),
         )
@@ -168,9 +161,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                   style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
                 ),
                 Text.rich(TextSpan(
-                    text:
-                        ((controller.teamSimpleEntity.value.gameWinRate) * 100)
-                            .toStringAsFixed(0),
+                    text: ((controller.teamSimpleEntity.value.gameWinRate) * 100).toStringAsFixed(0),
                     style: 35.w5(fontFamily: FontFamily.fOswaldBold),
                     children: [
                       TextSpan(
@@ -189,7 +180,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
   Widget _shareButton() {
     return InkWell(
       onTap: () {
-        Utils.generateAndShareImage(globalKey).then((ShareResult onValue) {});
+        Utils.generateAndShareImage(globalKey);
       },
       child: Container(
         width: 24.w,
