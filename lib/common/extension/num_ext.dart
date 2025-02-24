@@ -90,9 +90,9 @@ extension NumExt on num {
         width: toDouble(),
       );
 
-  String formatToString() {
-    var stringAsFixed = toStringAsFixed(1);
-    return stringAsFixed.endsWith(".0") ? toInt().toString() : stringAsFixed;
+  String formatToString([int fractionDigits = 1]) {
+    String stringAsFixed = toStringAsFixed(fractionDigits).replaceAll(RegExp(r'0*$'), '').replaceAll(RegExp(r'\.$'), '');
+    return stringAsFixed;
   }
 
   num format() {

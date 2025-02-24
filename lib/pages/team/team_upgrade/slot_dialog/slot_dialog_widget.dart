@@ -373,6 +373,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                                     Container(
                                                                   height: 17.w,
                                                                   width: 34.w,
+                                                                  padding: EdgeInsets.symmetric(horizontal: 3.w),
                                                                   margin: EdgeInsets
                                                                       .only(
                                                                           top: 7
@@ -391,28 +392,29 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                                   alignment:
                                                                       Alignment
                                                                           .center,
-                                                                  child: Text(
-                                                                    "+${(prop.bet * controller.upStarTeamPlayerV2Entity.addRate).toStringAsFixed(1)}",
-                                                                    style: TextStyle(
-                                                                        fontSize: 10
-                                                                            .sp,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color: AppColors
-                                                                            .cFFFFFF,
-                                                                        height:
-                                                                            1,
-                                                                        decorationColor:
-                                                                            AppColors
-                                                                                .cFFFFFF,
-                                                                        fontFamily:
-                                                                            FontFamily
-                                                                                .fRobotoMedium,
-                                                                        decoration: controller.isGameOver.value &&
-                                                                                !controller.isSuccess
-                                                                            ? TextDecoration.lineThrough
-                                                                            : null),
+                                                                  child:
+                                                                      FittedBox(
+                                                                    fit: BoxFit
+                                                                        .scaleDown,
+                                                                    child: Text(
+                                                                      "+${(prop.bet * controller.upStarTeamPlayerV2Entity.addRate).formatToString(5)}",
+                                                                      style: TextStyle(
+                                                                          fontSize: 10
+                                                                              .sp,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color: AppColors
+                                                                              .cFFFFFF,
+                                                                          height:
+                                                                              1,
+                                                                          decorationColor: AppColors
+                                                                              .cFFFFFF,
+                                                                          fontFamily: FontFamily
+                                                                              .fRobotoMedium,
+                                                                          decoration: controller.isGameOver.value && !controller.isSuccess
+                                                                              ? TextDecoration.lineThrough
+                                                                              : null),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               );
@@ -451,16 +453,16 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            if (!controller.isGameOver.value &&
-                                                controller.slotCount < 8)
-                                              Text(
-                                                "${LangKey.gameTipsTimes.tr}:${max(0, 8 - controller.slotCount.value)}",
-                                                style: 12.w4(
-                                                    color: AppColors.c000000,
-                                                    height: 1,
-                                                    fontFamily: FontFamily
-                                                        .fRobotoRegular),
-                                              ),
+                                            // if (!controller.isGameOver.value &&
+                                            //     controller.slotCount < 8)
+                                            //   Text(
+                                            //     "${LangKey.gameTipsTimes.tr}:${max(0, 8 - controller.slotCount.value)}",
+                                            //     style: 12.w4(
+                                            //         color: AppColors.c000000,
+                                            //         height: 1,
+                                            //         fontFamily: FontFamily
+                                            //             .fRobotoRegular),
+                                            //   ),
                                             const Spacer(),
                                             MtInkWell(
                                               onTap: () {
@@ -473,8 +475,8 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                 if (controller.isSlotRunning) {
                                                   return;
                                                 }
-                                                if (controller.slotCount.value <
-                                                    8) return;
+                                                // if (controller.slotCount.value <
+                                                //     8) return;
                                                 if (controller
                                                     .isGameOver.value) {
                                                   return;
@@ -492,11 +494,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                 height: 51.w,
                                                 width: 118.w,
                                                 decoration: BoxDecoration(
-                                                    color: controller.slotCount
-                                                                .value >=
-                                                            8
-                                                        ? AppColors.cFF7954
-                                                        : AppColors.cEEEEEE,
+                                                    color: AppColors.cFF7954,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             9.w)),
@@ -504,12 +502,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                 child: Text(
                                                   LangKey.gameButtonFinish.tr,
                                                   style: 25.w5(
-                                                      color: controller
-                                                                  .slotCount
-                                                                  .value >=
-                                                              8
-                                                          ? AppColors.cFFFFFF
-                                                          : AppColors.ccccccc,
+                                                      color: AppColors.cFFFFFF,
                                                       fontFamily: FontFamily
                                                           .fOswaldMedium,
                                                       height: 1),
@@ -791,7 +784,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                       Widget child = FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Text(
-                                          "${controller.propertys[index]} ${index < 8 && controller.selectIndexList.length == 1 ? "+${controller.upStarTeamPlayerV2Entity.addRate.formatToString()}" : ""}",
+                                          "${controller.propertys[index]} ${index < 8 && controller.selectIndexList.length == 1 ? "+${controller.upStarTeamPlayerV2Entity.addRate.formatToString(5)}" : ""}",
                                           style: 16.w7(
                                               color: slotMachineController
                                                       .isAnimating
