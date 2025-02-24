@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/routers/routes.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:get/get.dart';
 
@@ -44,6 +47,13 @@ class NbaPlayerController extends GetxController {
   void onReady() {
     super.onReady();
     initData();
+    timeCountDown();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   ///球员排行榜详情页
@@ -113,6 +123,7 @@ class NbaPlayerController extends GetxController {
     }
   }
 
+  ///球员收藏或者取消收藏
   void changeLikePlayer(int playerId) async {
     if (likePlayersList.contains(playerId)) {
       var res = await UserApi.cancelLikingPlayer('${playerId}');
@@ -122,4 +133,54 @@ class NbaPlayerController extends GetxController {
       likePlayersList.value = res.teamPreference!.likePlayers!;
     }
   }
+
+  Timer? _timer;
+  RxInt gameStartTimesCountDown = 0.obs;
+  int day = 0;
+  int hh = 0;
+  int minute = 0;
+  int second = 0;
+
+  void timeCountDown() {
+    _timer?.cancel();
+    var nowDate = DateTime.now();
+    var nowMs = DateTime.now().millisecondsSinceEpoch;
+
+    ///结束时间
+    var endDate = DateTime(nowDate.year, nowDate.month, nowDate.day + 1, 4).add(Utils.getTimeZoneOffset());
+
+    ///结束时间的服务器时间
+    ///注意：服务器时间是utc时间，需要加上时区偏移
+    var serverDate = endDate.add(Utils.getTimeZoneOffset());
+    var serverMs = serverDate.millisecondsSinceEpoch;
+    var diff = serverMs - nowMs;
+
+    if (diff <= 0) {
+      return;
+    }
+    gameStartTimesCountDown.value = diff;
+    day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400;
+    hh = gameStartTimesCountDown.value ~/ 1000 % 86400 ~/ 3600;
+    minute = gameStartTimesCountDown.value ~/ 1000 % 3600 ~/ 60;
+    second = gameStartTimesCountDown.value ~/ 1000 % 60;
+    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      var temp = gameStartTimesCountDown.value - 1000;
+      if (temp <= 0) {
+        t.cancel();
+      } else {
+        gameStartTimesCountDown.value = temp;
+        day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400;
+        hh = gameStartTimesCountDown.value ~/ 1000 % 86400 ~/ 3600;
+        minute = gameStartTimesCountDown.value ~/ 1000 % 3600 ~/ 60;
+        second = gameStartTimesCountDown.value ~/ 1000 % 60;
+      }
+    });
+  }
+
+  /// 格式化为两位数
+  String twoDigits(int n) {
+    return n.toString().padLeft(2, '0');
+  }
+
+  String get getTime => '${twoDigits(hh)}:${twoDigits(minute)}:${twoDigits(second)}';
 }

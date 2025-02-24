@@ -16,7 +16,6 @@ import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -111,10 +110,13 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
               children: [
                 IconWidget(iconWidth: 13.w, icon: Assets.commonUiCommonCountdown02),
                 6.hGap,
-                Text(
-                  '6D ${DateUtil.formatDate(todayLastSecond, format: 'HH:mm:ss')}',
-                  style: 12.w5(fontFamily: FontFamily.fOswaldRegular),
-                ),
+                Obx(() {
+                  controller.gameStartTimesCountDown.value;
+                  return Text(
+                    '6D ${controller.getTime}',
+                    style: 12.w5(fontFamily: FontFamily.fOswaldRegular),
+                  );
+                })
               ],
             ),
           ],
