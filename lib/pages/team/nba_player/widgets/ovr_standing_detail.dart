@@ -23,8 +23,25 @@ import 'package:get/get.dart';
 
 import '../controller.dart';
 
-class OvrStandingDetailPage extends GetView<NbaPlayerController> {
+class OvrStandingDetailPage extends StatefulWidget {
   const OvrStandingDetailPage({super.key});
+
+  @override
+  State<OvrStandingDetailPage> createState() => _OvrStandingDetailPageState();
+}
+
+class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
+  NbaPlayerController controller = Get.put(NbaPlayerController());
+  int? lastPagePlayerId;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    lastPagePlayerId = Get.arguments;
+    if (lastPagePlayerId != null) {
+      print('开始滚动');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +70,7 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
                     child: ListView.separated(
                       itemCount: controller.allPlayerStrengthRank.length,
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      controller: ScrollController(),
                       itemBuilder: (context, index) {
                         return _playerItemWidget(index);
                       },
@@ -65,10 +83,6 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
   }
 
   Widget _ovrTitleWidget() {
-    // 获取当前时间
-    DateTime now = DateTime.now();
-    // 创建今天的 23:59:59 时间
-    DateTime todayLastSecond = DateTime(now.year, now.month, now.day, 23, 59, 59);
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         color: Colors.white,
@@ -100,7 +114,7 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
                       Text(
                         '329K',
                         style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
-                      )
+                      ),
                     ],
                   ),
                 ),

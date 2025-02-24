@@ -31,7 +31,7 @@ class BuyGoBottomsheet extends StatelessWidget {
             style: 27.w5(fontFamily: FontFamily.fOswaldMedium),
           ),
           Text(
-            'Do you want to buy ${controller.trainDefine.coinBuySlot} frequency for  ${controller.trainDefine.trainCoinNum[controller.trainingInfo.training.todayBuyCount]}K cions?',
+            'Do you want to buy ${controller.trainDefine.coinBuySlot} frequency for  ${controller.trainDefine.trainCoinNum[controller.trainingInfo.training.todayBuyCount]}K coins?',
             style: 14.w5(fontFamily: FontFamily.fRobotoRegular),
           ),
           28.vGap,

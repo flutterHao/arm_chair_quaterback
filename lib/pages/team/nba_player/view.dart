@@ -99,7 +99,10 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
       var differenceScore = item[0].playerScore - item[1].playerScore;
       var player = Utils.getPlayBaseInfo(controller.nbaPlayerList[index].playerId);
       return MtInkWell(
-        onTap: () => Get.toNamed(RouteNames.playerTrendPage, arguments: controller.nbaPlayerList[index]),
+        onTap: () {
+          Get.toNamed(RouteNames.ovrStandingDetailPage, arguments: controller.nbaPlayerList[index].playerId);
+          //  Get.toNamed(RouteNames.playerTrendPage, arguments: controller.nbaPlayerList[index]);
+        },
         child: Container(
           width: 143.w,
           decoration: BoxDecoration(
