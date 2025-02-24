@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/widget/player_detail_datasource.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/index.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/big_player_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_item_widget.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
@@ -165,6 +166,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                 {"MIN": "${item.playerInfo.min}"}
                               ]);
                             }
+
                             return MtInkWell(
                               minScale: 1,
                               onTap: () {
@@ -180,13 +182,27 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                 child: Row(
                                   children: [
                                     13.hGap,
-                                    PlayerCard(
-                                      width: 73.w,
-                                      height: 93.w,
-                                      playerId: item.playerInfo.playerId,
-                                      grade: Utils.getPlayBaseInfo(item.playerInfo.playerId).grade,
-                                      level: controller.getMvpBreakThroughGrade(item.teamId, item.playerInfo.playerId),
-                                    ),
+                                    MtInkWell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Center(
+                                                  child: BigPlayerCard(
+                                                    playerId: item.playerInfo.playerId,
+                                                  ),
+                                                );
+                                              });
+                                        },
+                                        child: PlayerCard(
+                                          width: 73.w,
+                                          height: 93.w,
+                                          canTap: false,
+                                          playerId: item.playerInfo.playerId,
+                                          grade: Utils.getPlayBaseInfo(item.playerInfo.playerId).grade,
+                                          level:
+                                              controller.getMvpBreakThroughGrade(item.teamId, item.playerInfo.playerId),
+                                        )),
                                     13.hGap,
                                     Expanded(
                                         child: Column(
