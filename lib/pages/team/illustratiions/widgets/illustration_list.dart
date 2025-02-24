@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-02-22 20:47:27
+ * @LastEditTime: 2025-02-24 12:11:15
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -170,70 +170,53 @@ class IllustrationList extends GetView<IllustratiionsController> {
                             ),
                           ),
                         ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 16.w),
-                      child: Text(
-                        LangKey.gameTabFreeAgency.tr,
-                        style: 24.w4(
-                          fontFamily: FontFamily.fOswaldBold,
-                          height: 0.9,
+                  if (!ctrl.isCollect.value)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 16.w),
+                        child: Text(
+                          LangKey.gameTabFreeAgency.tr,
+                          style: 24.w4(
+                            fontFamily: FontFamily.fOswaldBold,
+                            height: 0.9,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.w),
-                      child: Container(
-                        width: double.infinity,
-                        height: 1,
-                        color: AppColors.cD1D1D1,
+                  if (!ctrl.isCollect.value)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 16.w),
+                        child: Container(
+                          width: double.infinity,
+                          height: 1,
+                          color: AppColors.cD1D1D1,
+                        ),
                       ),
                     ),
-                  ),
-                  ctrl.isCollect.value
-                      ? SliverPadding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 21.w, vertical: 25.w),
-                          sliver: SliverGrid(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: 109 / 160,
-                              crossAxisSpacing: 8.w,
-                              mainAxisSpacing: 15.5.w,
-                              crossAxisCount: 3,
-                            ),
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                return _Item(item: notActiveList[index]);
-                              },
-                              childCount: notActiveList.length,
-                            ),
-                          ),
-                        )
-                      : SliverPadding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 21.w, vertical: 25.w),
-                          sliver: SliverGrid(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: 64 / 90,
-                              crossAxisSpacing: 6.w,
-                              mainAxisSpacing: 15.5.w,
-                              crossAxisCount: 5,
-                            ),
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                return _ItemSmall(
-                                  item: activeList[index],
-                                  index: index,
-                                );
-                              },
-                              childCount: activeList.length,
-                            ),
-                          ),
+                  //自由球员
+                  if (!ctrl.isCollect.value)
+                    SliverPadding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 21.w, vertical: 16.w),
+                      sliver: SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 64 / 90,
+                          crossAxisSpacing: 6.w,
+                          mainAxisSpacing: 15.5.w,
+                          crossAxisCount: 5,
                         ),
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            return _ItemSmall(
+                              item: notActiveList[index],
+                              index: index,
+                            );
+                          },
+                          childCount: notActiveList.length,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -257,7 +240,7 @@ class _Item extends GetView<IllustratiionsController> {
           RouteNames.illustrationDetail,
           arguments: item,
         );
-        if (controller.hasNewPlayer.value == true) controller.updateCollect();
+        // if (controller.hasNewPlayer.value == true) controller.updateCollect();
       },
       child: Center(
         child: Container(
@@ -300,43 +283,68 @@ class _Item extends GetView<IllustratiionsController> {
                   )),
               Positioned(
                 bottom: 18.w,
-                right: 61.w,
+                right: 0.w,
+                left: 0.w,
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ImageWidget(
-                      url: Utils.getTeamUrl(player.teamId),
-                      height: 18.w,
-                      fit: BoxFit.fitHeight,
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ImageWidget(
+                            url: Utils.getTeamUrl(player.teamId),
+                            height: 18.w,
+                            width: 18.w,
+                            fit: BoxFit.fitHeight,
+                          ),
+                          1.hGap,
+                          Text(
+                            '#${player.number}',
+                            style: 10.w4(
+                                fontFamily: FontFamily.fRobotoRegular,
+                                height: 1),
+                          ),
+                        ],
+                      ),
                     ),
-                    1.hGap,
-                    Text(
-                      '#${player.number}',
-                      style: 10
-                          .w4(fontFamily: FontFamily.fRobotoRegular, height: 1),
+                    Container(
+                      width: 0.5.w,
+                      height: 7.5.w,
+                      color: AppColors.c000000,
+                      margin: EdgeInsets.symmetric(horizontal: 5.5.w),
                     ),
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        player.position,
+                        style: 10.w4(
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
-              Positioned(
-                  bottom: 24.w,
-                  child: Container(
-                    width: 0.5.w,
-                    height: 7.5.w,
-                    color: AppColors.c000000,
-                  )),
-              Positioned(
-                bottom: 21.w,
-                left: 60.w,
-                child: Text(
-                  player.position,
-                  style: 10.w4(
-                    height: 1,
-                    fontFamily: FontFamily.fRobotoRegular,
-                  ),
-                ),
-              ),
+              // Positioned(
+              //     bottom: 24.w,
+              //     child: Container(
+              //       width: 0.5.w,
+              //       height: 7.5.w,
+              //       color: AppColors.c000000,
+              //     )),
+              // Positioned(
+              //   bottom: 21.w,
+              //   left: 60.w,
+              //   child: Text(
+              //     player.position,
+              //     style: 10.w4(
+              //       height: 1,
+              //       fontFamily: FontFamily.fRobotoRegular,
+              //     ),
+              //   ),
+              // ),
               Positioned(
                 left: 0,
                 bottom: 0,
@@ -416,88 +424,96 @@ class _ItemSmall extends StatelessWidget {
   Widget build(BuildContext context) {
     var player = Utils.getPlayBaseInfo(item.playerId);
     // item.isLight = 1;
-    return item.isLight == 1
-        ? Container(
-            width: 64.w,
-            height: 90.w,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: AppColors.cFFFFFF,
-              borderRadius: BorderRadius.circular(9.w),
-            ),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Positioned(
-                  bottom: 0,
-                  child: ImageWidget(
-                    url: Utils.getPlayUrl(item.playerId),
-                    width: 68.w,
-                    height: 75.w,
-                    // height: 140.w,
-                    fit: BoxFit.cover,
+    return MtInkWell(
+      onTap: () async {
+        await Get.toNamed(
+          RouteNames.illustrationDetail,
+          arguments: item,
+        );
+      },
+      child: item.isLight == 1
+          ? Container(
+              width: 64.w,
+              height: 90.w,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: AppColors.cFFFFFF,
+                borderRadius: BorderRadius.circular(9.w),
+              ),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Positioned(
+                    bottom: 0,
+                    child: ImageWidget(
+                      url: Utils.getPlayUrl(item.playerId),
+                      width: 68.w,
+                      height: 75.w,
+                      // height: 140.w,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                if (item.isLight == 1)
+                  if (item.isLight == 1)
+                    Positioned(
+                      top: 5.w,
+                      left: 5.5.w,
+                      child: Text(
+                        Utils.getPlayBaseInfo(item.playerId)
+                            .playerScore
+                            .toString(),
+                        style: TextStyle(
+                            fontSize: 14.w,
+                            fontFamily: FontFamily.fOswaldMedium,
+                            height: 0.8),
+                      ),
+                    ),
+                ],
+              ),
+            )
+          : Container(
+              width: 64.w,
+              height: 90.w,
+              decoration: BoxDecoration(
+                color: AppColors.cE6E6E6,
+                borderRadius: BorderRadius.circular(9.w),
+              ),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
                   Positioned(
                     top: 5.w,
-                    left: 5.5.w,
+                    child: Opacity(
+                      opacity: 0.35,
+                      child: ImageWidget(
+                        width: 50.w,
+                        height: 50.w,
+                        url: Utils.getTeamUrl(player.teamId),
+                        color: AppColors.cE6E6E6,
+                        colorBlendMode: BlendMode.saturation,
+                        // color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 52.w,
                     child: Text(
-                      Utils.getPlayBaseInfo(item.playerId)
-                          .playerScore
-                          .toString(),
-                      style: TextStyle(
-                          fontSize: 14.w,
-                          fontFamily: FontFamily.fOswaldMedium,
-                          height: 0.8),
+                      "#${Utils.getPlayBaseInfo(item.playerId).number}",
+                      style: 10.w4(color: AppColors.cB3B3B3, height: 0.8),
                     ),
                   ),
-              ],
-            ),
-          )
-        : Container(
-            width: 64.w,
-            height: 90.w,
-            decoration: BoxDecoration(
-              color: AppColors.cE6E6E6,
-              borderRadius: BorderRadius.circular(9.w),
-            ),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Positioned(
-                  top: 5.w,
-                  child: Opacity(
-                    opacity: 0.35,
-                    child: ImageWidget(
-                      width: 50.w,
-                      height: 50.w,
-                      url: Utils.getTeamUrl(player.teamId),
-                      color: AppColors.cE6E6E6,
-                      colorBlendMode: BlendMode.saturation,
-                      // color: Colors.grey,
+                  Positioned(
+                    bottom: 9.w,
+                    child: CustomLinearProgressBar(
+                      width: 54.w,
+                      height: 5.w,
+                      progressColor: AppColors.c43BF8F,
+                      backgroundColor: AppColors.cD4D4D4,
+                      progress: item.fragmentNum / item.needNum,
                     ),
-                  ),
-                ),
-                Positioned(
-                  top: 52.w,
-                  child: Text(
-                    "#${Utils.getPlayBaseInfo(item.playerId).number}",
-                    style: 10.w4(color: AppColors.cB3B3B3, height: 0.8),
-                  ),
-                ),
-                Positioned(
-                  bottom: 9.w,
-                  child: CustomLinearProgressBar(
-                    width: 54.w,
-                    height: 5.w,
-                    progressColor: AppColors.c43BF8F,
-                    backgroundColor: AppColors.cD4D4D4,
-                    progress: item.fragmentNum / item.needNum,
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          );
+    );
   }
 }

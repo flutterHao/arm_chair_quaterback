@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-22 20:39:28
+ * @LastEditTime: 2025-02-24 18:07:40
  */
 /*
  * @Description: 
@@ -68,7 +68,7 @@ class IllustratiionsController extends GetxController
   ScrollController scrollController = ScrollController();
   var hasNewPlayer = false.obs;
   List<PlayerCardEntity> getPlayerCards = [];
-  var isCollect = false.obs;
+  var isCollect = true.obs;
 
   @override
   void onInit() {
@@ -212,14 +212,13 @@ class IllustratiionsController extends GetxController
   // }
 
   Future getPlayerCollectInfo() async {
-    isCollect.value = false;
     await Future.wait([
       TeamApi.getPlayerCollect(),
       CacheApi.getPlayerBookRuleList(),
       CacheApi.getPlayerBookExpRuleList(),
     ]).then((v) async {
       double dy = 0;
-      double height = (MediaQuery.of(Get.context!).size.width - 32.w - 24.w) /
+      double height = (MediaQuery.of(Get.context!).size.width - 42.w - 24.w) /
           5 *
           (90 / 64);
       double vSpace = 15.5.w;
@@ -227,6 +226,11 @@ class IllustratiionsController extends GetxController
       var activeList = list.where((e) => e.isActive == 0).toList();
       var notActiveList = list.where((e) => e.isActive == 1).toList();
       playerCollectEntity = v[0] as PlayerCollectEntity;
+      // double offset = ((300) ~/ 5) * (height + vSpace) + 12.w;
+      // int t = ((offset - dy) * 0.5).ceil();
+      // await scrollController.animateTo(offset,
+      //     duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+      // return;
 
       /// activeList现役 notActiveList退役
       for (var item in activeList) {
@@ -247,7 +251,7 @@ class IllustratiionsController extends GetxController
           if (hasNewPlayer.value) {
             int index = activeList.indexOf(item);
             if (index > 0) {
-              double offset = ((index) ~/ 5) * (height + vSpace) + 25.w;
+              double offset = ((index) ~/ 5) * (height + vSpace) + 12.w;
               int t = ((offset - dy) * 0.5).ceil();
               await scrollController.animateTo(offset,
                   duration: Duration(milliseconds: t), curve: Curves.easeInOut);
@@ -464,9 +468,12 @@ class IllustratiionsController extends GetxController
   }
 
   void updateCollect() async {
-    Future.delayed(300.milliseconds).then((v) async {
+    if (hasNewPlayer.value) {
+      reset();
       await getPlayerCollectInfo();
       hasNewPlayer.value = false;
-    });
+    } else {
+      await getPlayerCollectInfo();
+    }
   }
 }

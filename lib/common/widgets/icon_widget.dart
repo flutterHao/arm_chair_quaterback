@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-01 19:20:51
- * @LastEditTime: 2024-11-24 11:14:38
+ * @LastEditTime: 2025-02-24 17:23:40
  */
 import 'dart:math';
 
@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 class IconWidget extends StatelessWidget {
   const IconWidget(
       {super.key,
-      required this.iconWidth,
+      this.iconWidth,
       this.iconHeight,
       required this.icon,
       this.backgroudWitdh,
@@ -35,7 +35,7 @@ class IconWidget extends StatelessWidget {
       this.alignment = Alignment.center,
       this.fieldPath});
 
-  final double iconWidth;
+  final double? iconWidth;
   final double? iconHeight;
   final String icon;
   final Color? iconColor;

@@ -164,7 +164,8 @@ class TeamUpgradeController extends GetxController {
 
   /// 获取满星属性最大值
   double getLevel10Ability(String key) {
-    var playerCapData = Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
+    var playerCapData =
+        Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
     if (key == "FGM") {
       key = "PTS";
     }
@@ -188,7 +189,8 @@ class TeamUpgradeController extends GetxController {
   }
 
   void setBeforePlayerAbility() {
-    var playerCapData = Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
+    var playerCapData =
+        Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
     for (int i = 0; i < upgradePlayerAbilityList.length; i++) {
       var upgradePlayerAbility = upgradePlayerAbilityList[i];
       var key = upgradePlayerAbility.name;
@@ -223,7 +225,8 @@ class TeamUpgradeController extends GetxController {
   }
 
   void setAfterPlayerAbility() {
-    var playerCapData = Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
+    var playerCapData =
+        Utils.getPlayerCapData(teamPlayerUpStarVoEntity.playerId);
     for (int i = 0; i < upgradePlayerAbilityList.length; i++) {
       var upgradePlayerAbility = upgradePlayerAbilityList[i];
       var key = upgradePlayerAbility.name;
@@ -269,7 +272,7 @@ class UpgradePlayerAbility {
   final String name;
 
   /// 一星s级球员最大值
-  double sGradeLevel1PlayerMaxValue = 0;
+  double sGradeLevel1PlayerMaxValue = 10;
   double baseValue = 0;
 
   /// 升级前值

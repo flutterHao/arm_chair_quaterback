@@ -810,6 +810,7 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
         barrierDismissible: false,
         context: Get.context!,
         barrierColor: Colors.black.withOpacity(0.6),
+
         // barrierColor: Colors.transparent,
         builder: (context) {
           return const TrainingAwardDialog();

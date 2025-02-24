@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2025-02-11 10:07:33
+ * @LastEditTime: 2025-02-24 14:58:35
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -190,6 +190,7 @@ class BattleBoxDialog extends StatelessWidget {
                         // height: 6.w,
                         width: 297.w,
                         height: 14.w,
+                        progressColorBegin: AppColors.c000000,
                         progress: item.progress,
                         progressColor: AppColors.cFF7954,
                       ),

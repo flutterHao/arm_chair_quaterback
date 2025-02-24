@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-02-10 19:46:54
+ * @LastEditTime: 2025-02-24 15:43:36
  */
 import 'dart:math';
 
@@ -527,7 +527,10 @@ class OpenBoxPage extends GetView<TeamIndexController> {
 //颜色背景
   Widget _colorBackgroud() {
     var item = controller.currentCardPack;
-    var player = item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
+    PlayerCardEntity? player = item.playerCards.firstWhereOrNull(
+        (e) => item.playerCards.indexOf(e) == controller.selectIndex);
+    // var item = controller.currentCardPack;
+    // var player = item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
     if (player == null && controller.step != 2) {
       return Container();
     }

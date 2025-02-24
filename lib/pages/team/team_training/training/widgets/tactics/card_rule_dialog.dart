@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-24 18:53:16
- * @LastEditTime: 2025-02-22 16:11:09
+ * @LastEditTime: 2025-02-24 18:24:58
  */
 import 'dart:math';
 
@@ -59,7 +59,7 @@ class _CardRuleDialogState extends State<CardRuleDialog>
             child: Row(
               children: [
                 Container(
-                  width: 104.w,
+                  width: 110.w,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,51 +87,55 @@ class _CardRuleDialogState extends State<CardRuleDialog>
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 49.w,
-                  child: Row(
-                    children: [
-                      ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.all(0),
-                          itemBuilder: (context, index) {
-                            return SmallTacticCard(
-                              color: item.cards[index].color,
-                              num: item.cards[index].value,
-                              width: 35.5.w,
-                            );
-                          },
-                          separatorBuilder: (context, index) => 3.hGap,
-                          itemCount: item.cards.length),
-                      if (_list[index].cards.isNotEmpty) 14.hGap,
-                      if (_list[index].cards.isNotEmpty)
-                        SizedBox(
-                          height: 41.5.w,
-                          child: ListView.separated(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.all(0),
-                              itemBuilder: (context, index) {
-                                // Random random = Random();
-                                // int color = random.nextInt(5) + 9;
-                                // int num = random.nextInt(4) + 1;
-                                return Opacity(
-                                  opacity: 0.5,
-                                  child: SmallTacticCard(
-                                    key: Key("${index}_${item.id}"),
-                                    color: index,
-                                    num: index + 9,
-                                    width: 30.w,
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (context, index) => 3.hGap,
-                              itemCount: 5 - _list[index].cards.length),
-                        ),
-                    ],
+                Expanded(
+                  child: SizedBox(
+                    height: 49.w,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.all(0),
+                            itemBuilder: (context, index) {
+                              return SmallTacticCard(
+                                color: item.cards[index].color,
+                                num: item.cards[index].value,
+                                width: 35.5.w,
+                              );
+                            },
+                            separatorBuilder: (context, index) => 3.hGap,
+                            itemCount: item.cards.length),
+                        if (_list[index].cards.isNotEmpty) 14.hGap,
+                        if (_list[index].cards.isNotEmpty)
+                          SizedBox(
+                            height: 41.5.w,
+                            child: ListView.separated(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.all(0),
+                                itemBuilder: (context, index) {
+                                  // Random random = Random();
+                                  // int color = random.nextInt(5) + 9;
+                                  // int num = random.nextInt(4) + 1;
+                                  return Opacity(
+                                    opacity: 0.5,
+                                    child: SmallTacticCard(
+                                      key: Key("${index}_${item.id}"),
+                                      color: index,
+                                      num: index + 9,
+                                      width: 30.w,
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) => 3.hGap,
+                                itemCount: 5 - _list[index].cards.length),
+                          ),
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -153,7 +157,13 @@ final _ruleMap = [
   {
     "id": 1001,
     "name": "High Card",
-    "cards": [],
+    "cards": [
+      {"color": 4, "value": 9},
+      {"color": 4, "value": 11},
+      {"color": 2, "value": 12},
+      {"color": 3, "value": 13},
+      {"color": 4, "value": 14}
+    ],
     "percent": 0,
   },
   {
@@ -224,12 +234,12 @@ final _ruleMap = [
   },
   {
     "id": 1008,
-    "name": "Four  Kind",
+    "name": "Four Kind",
     "cards": [
-      {"color": 1, "value": 10},
-      {"color": 4, "value": 10},
-      {"color": 3, "value": 10},
-      {"color": 2, "value": 10},
+      {"color": 1, "value": 14},
+      {"color": 4, "value": 14},
+      {"color": 3, "value": 14},
+      {"color": 2, "value": 14},
     ],
     "percent": 15,
   },
@@ -237,11 +247,11 @@ final _ruleMap = [
     "id": 1009,
     "name": "Straight Flush",
     "cards": [
-      {"color": 1, "value": 9},
-      {"color": 1, "value": 10},
-      {"color": 1, "value": 11},
-      {"color": 1, "value": 12},
-      {"color": 1, "value": 13},
+      {"color": 4, "value": 9},
+      {"color": 4, "value": 10},
+      {"color": 4, "value": 11},
+      {"color": 4, "value": 12},
+      {"color": 4, "value": 13},
     ],
     "percent": 18
   },
