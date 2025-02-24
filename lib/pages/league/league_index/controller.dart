@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page_controller.dart';
@@ -203,6 +204,18 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
         }
         if (tabController != null) {
           tabController!.dispose();
+        }
+        var dateTime = DateTime.now();
+        var serverTime = dateTime.subtract(Utils.getTimeZoneOffset());
+        var nowStartTime =
+            DateTime(dateTime.year, dateTime.month, dateTime.day);
+        if (serverTime.hour > 16) {
+          /// 服务器四点刷新成明天的赛程，前端也要刷新
+          var add = nowStartTime.add(Duration(days: 1));
+          var indexOf = getDataTimes().indexOf(add);
+          if (indexOf != -1 && indexOf != currentPageIndex.value) {
+            currentPageIndex.value = indexOf;
+          }
         }
         tabController = TabController(
             initialIndex: currentPageIndex.value,
