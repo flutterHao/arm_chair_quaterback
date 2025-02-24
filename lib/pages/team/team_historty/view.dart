@@ -1,11 +1,10 @@
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/widgets/history_game_court.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/widgets/history_game_header.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/widgets/history_game_leader.dart';
@@ -15,6 +14,7 @@ import 'package:arm_chair_quaterback/pages/team/team_historty/widgets/history_st
 import 'package:arm_chair_quaterback/pages/team/team_historty/widgets/history_team_status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'index.dart';
 
 class TeamHistortyPage extends GetView<TeamHistortyController> {
@@ -58,9 +58,7 @@ class TeamHistortyPage extends GetView<TeamHistortyController> {
           bodyWidget: Expanded(child: Obx(
             () {
               if (controller.loadingStatus.value != LoadDataStatus.success) {
-                return Center(
-                    child: LoadStatusWidget(
-                        loadDataStatus: controller.loadingStatus.value));
+                return Center(child: LoadStatusWidget(loadDataStatus: controller.loadingStatus.value));
               }
               return _buildView();
             },

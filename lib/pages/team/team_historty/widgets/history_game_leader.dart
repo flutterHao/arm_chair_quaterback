@@ -1,11 +1,10 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/WidgetUtils.dart';
@@ -14,16 +13,11 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/widget/player_detail.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/widget/player_detail_datasource.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_item_widget.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,8 +32,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 9.w),
-      decoration: BoxDecoration(
-          color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
+      decoration: BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         children: [
           25.vGap,
@@ -50,9 +43,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
               children: [
                 Text(
                   LangKey.gameTabGameLeader.tr,
-                  style: 30.w7(
-                      color: AppColors.c000000,
-                      fontFamily: FontFamily.fOswaldBold),
+                  style: 30.w7(color: AppColors.c000000, fontFamily: FontFamily.fOswaldBold),
                 ),
               ],
             ),
@@ -63,8 +54,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
             margin: EdgeInsets.symmetric(horizontal: 16.w),
             child: TLBuildWidget(
                 controller: controller.tabController,
-                builder: (int current, int next, double progress,
-                    double totalProgress) {
+                builder: (int current, int next, double progress, double totalProgress) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: controller.tabTitles.map((e) {
@@ -81,23 +71,18 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(14.w),
-                              border: Border.all(
-                                  color: AppColors.c666666, width: 1),
+                              border: Border.all(color: AppColors.c666666, width: 1),
                               color: index == current
-                                  ? Color.lerp(AppColors.c000000,
-                                      AppColors.cFFFFFF, progress)
+                                  ? Color.lerp(AppColors.c000000, AppColors.cFFFFFF, progress)
                                   : index == next
-                                      ? Color.lerp(AppColors.cFFFFFF,
-                                          AppColors.c000000, progress)
+                                      ? Color.lerp(AppColors.cFFFFFF, AppColors.c000000, progress)
                                       : AppColors.cFFFFFF),
                           child: Text(e.tr,
                               style: 16.w4(
                                 color: index == current
-                                    ? Color.lerp(AppColors.cFFFFFF,
-                                        AppColors.c000000, progress)!
+                                    ? Color.lerp(AppColors.cFFFFFF, AppColors.c000000, progress)!
                                     : index == next
-                                        ? Color.lerp(AppColors.c000000,
-                                            AppColors.cFFFFFF, progress)!
+                                        ? Color.lerp(AppColors.c000000, AppColors.cFFFFFF, progress)!
                                         : AppColors.c000000,
                               )),
                         ),
@@ -157,23 +142,15 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                         else
                           ...List.generate(list.length, (i) {
                             HistoryGameLeader item = list[i];
-                            var playBaseInfo =
-                                Utils.getPlayBaseInfo(item.playerInfo.playerId);
-                            var teamInfo =
-                                Utils.getTeamInfo(playBaseInfo.teamId);
+                            var playBaseInfo = Utils.getPlayBaseInfo(item.playerInfo.playerId);
+                            var teamInfo = Utils.getTeamInfo(playBaseInfo.teamId);
 
                             List<Map<String, String>> values = [];
                             if (index == 0) {
                               values.addAll([
                                 {"PTS": "${item.playerInfo.pts}"},
-                                {
-                                  "FG":
-                                      "${item.playerInfo.fgm}/${item.playerInfo.fga}"
-                                },
-                                {
-                                  "FT":
-                                      "${item.playerInfo.ftm}/${item.playerInfo.fta}"
-                                }
+                                {"FG": "${item.playerInfo.fgm}/${item.playerInfo.fga}"},
+                                {"FT": "${item.playerInfo.ftm}/${item.playerInfo.fta}"}
                               ]);
                             } else if (index == 1) {
                               values.addAll([
@@ -193,17 +170,13 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                               onTap: () {
                                 Get.toNamed(
                                   RouteNames.picksPlayerDetail,
-                                  arguments: PlayerDetailPageArguments(
-                                      item.playerInfo.playerId),
+                                  arguments: PlayerDetailPageArguments(item.playerInfo.playerId),
                                 );
                               },
                               child: Container(
                                 height: 132.w,
                                 decoration: const BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: AppColors.cE6E6E,
-                                            width: 1))),
+                                    border: Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
                                 child: Row(
                                   children: [
                                     13.hGap,
@@ -211,28 +184,21 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                       width: 73.w,
                                       height: 93.w,
                                       playerId: item.playerInfo.playerId,
-                                      grade: Utils.getPlayBaseInfo(
-                                              item.playerInfo.playerId)
-                                          .grade,
-                                      level: controller.getMvpBreakThroughGrade(
-                                          item.teamId,
-                                          item.playerInfo.playerId),
+                                      grade: Utils.getPlayBaseInfo(item.playerInfo.playerId).grade,
+                                      level: controller.getMvpBreakThroughGrade(item.teamId, item.playerInfo.playerId),
                                     ),
                                     13.hGap,
                                     Expanded(
                                         child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           playBaseInfo.ename,
                                           style: 21.w5(
                                               color: AppColors.c262626,
                                               height: 1,
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium),
+                                              fontFamily: FontFamily.fOswaldMedium),
                                         ),
                                         7.vGap,
                                         Text(
@@ -240,35 +206,29 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                           style: 12.w4(
                                               color: AppColors.c000000,
                                               height: 1,
-                                              fontFamily:
-                                                  FontFamily.fRobotoRegular),
+                                              fontFamily: FontFamily.fRobotoRegular),
                                         ),
                                         16.vGap,
                                         Row(
                                           children: values
                                               .map((e) => Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 25.w),
+                                                    margin: EdgeInsets.only(right: 25.w),
                                                     child: Column(
                                                       children: [
                                                         Text(
                                                           e.values.first,
                                                           style: 14.w5(
-                                                              color: AppColors
-                                                                  .c000000,
+                                                              color: AppColors.c000000,
                                                               height: 1,
-                                                              fontFamily: FontFamily
-                                                                  .fRobotoMedium),
+                                                              fontFamily: FontFamily.fRobotoMedium),
                                                         ),
                                                         5.vGap,
                                                         Text(
                                                           e.keys.first,
                                                           style: 10.w4(
-                                                              color: AppColors
-                                                                  .c4D4D4D,
+                                                              color: AppColors.c4D4D4D,
                                                               height: 1,
-                                                              fontFamily: FontFamily
-                                                                  .fRobotoRegular),
+                                                              fontFamily: FontFamily.fRobotoRegular),
                                                         )
                                                       ],
                                                     ),
@@ -287,28 +247,17 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                                 width: 21.w,
                                                 height: 21.w,
                                                 decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.5.w),
-                                                    border: Border.all(
-                                                        width: 1.w,
-                                                        color: item.color)),
+                                                    borderRadius: BorderRadius.circular(10.5.w),
+                                                    border: Border.all(width: 1.w, color: item.color)),
                                                 child: ImageWidget(
-                                                    imageFailedPath:
-                                                        Assets.teamUiHead03,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.5.w),
+                                                    imageFailedPath: Assets.teamUiHead03,
+                                                    borderRadius: BorderRadius.circular(10.5.w),
                                                     url: Utils.getAvatarUrl(
-                                                        controller
-                                                            .getBattleTeam(
-                                                                item.teamId)
-                                                            .teamLogo)),
+                                                        controller.getBattleTeam(item.teamId).teamLogo)),
                                               )),
                                           IconWidget(
                                             iconWidth: 8.w,
-                                            icon: Assets
-                                                .commonUiCommonIconSystemJumpto,
+                                            icon: Assets.commonUiCommonIconSystemJumpto,
                                             iconColor: AppColors.c000000,
                                           ),
                                         ],
@@ -328,21 +277,16 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                   backgroundColor: AppColors.cTransparent,
                                   builder: (_) {
                                     return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height,
+                                      height: MediaQuery.of(context).size.height,
                                       width: MediaQuery.of(context).size.width,
                                       child: Column(
                                         children: [
-                                          WidgetUtils.getDialogTransWidget(
-                                              context),
+                                          WidgetUtils.getDialogTransWidget(context),
                                           Container(
                                             height: Utils.getDialogHeight(),
                                             decoration: BoxDecoration(
                                                 color: AppColors.cFFFFFF,
-                                                borderRadius:
-                                                    BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                            9.w))),
+                                                borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
                                             child: Column(
                                               children: [
                                                 8.vGap,
@@ -350,16 +294,11 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                                                   width: 44.w,
                                                   height: 4.w,
                                                   decoration: BoxDecoration(
-                                                      color: AppColors.c000000
-                                                          .withOpacity(.2),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              2.w)),
+                                                      color: AppColors.c000000.withOpacity(.2),
+                                                      borderRadius: BorderRadius.circular(2.w)),
                                                 ),
                                                 24.vGap,
-                                                const Expanded(
-                                                    child:
-                                                        HistoryPlayerDetail()),
+                                                const Expanded(child: HistoryPlayerDetail()),
                                               ],
                                             ),
                                           ),
@@ -374,10 +313,7 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                               children: [
                                 Text(
                                   LangKey.gameButtonSeeAll.tr,
-                                  style: 16.w7(
-                                      color: AppColors.c262626,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldBold),
+                                  style: 16.w7(color: AppColors.c262626, height: 1, fontFamily: FontFamily.fOswaldBold),
                                 ),
                                 6.hGap,
                                 IconWidget(
@@ -407,8 +343,7 @@ class HistoryPlayerDetail extends StatefulWidget {
   State<HistoryPlayerDetail> createState() => _HistoryPlayerDetailState();
 }
 
-class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
-    with SingleTickerProviderStateMixin {
+class _HistoryPlayerDetailState extends State<HistoryPlayerDetail> with SingleTickerProviderStateMixin {
   late TabController tabController;
 
   TeamHistortyController controller = Get.find();
@@ -437,23 +372,19 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
               indicatorSize: TabBarIndicatorSize.tab,
               dividerColor: AppColors.cD1D1D1,
               overlayColor: null,
-              labelStyle:
-                  16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+              labelStyle: 16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
               labelColor: AppColors.c000000,
-              unselectedLabelStyle:
-                  16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+              unselectedLabelStyle: 16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
               unselectedLabelColor: AppColors.c000000.withOpacity(0.5),
               tabs: [
                 Row(
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          border:
-                              Border.all(color: AppColors.c1F8FE5, width: 1.w),
+                          border: Border.all(color: AppColors.c1F8FE5, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
-                        url: Utils.getAvatarUrl(
-                            controller.gameSchedule.homeTeamLogo),
+                        url: Utils.getAvatarUrl(controller.gameSchedule.homeTeamLogo),
                         imageFailedPath: Assets.teamUiHead01,
                         width: 28.w,
                         height: 28.w,
@@ -475,12 +406,10 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
                     7.hGap,
                     Container(
                       decoration: BoxDecoration(
-                          border:
-                              Border.all(color: AppColors.cD60D20, width: 1.w),
+                          border: Border.all(color: AppColors.cD60D20, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
-                        url: Utils.getAvatarUrl(
-                            controller.gameSchedule.awayTeamLogo),
+                        url: Utils.getAvatarUrl(controller.gameSchedule.awayTeamLogo),
                         imageFailedPath: Assets.teamUiHead03,
                         width: 28.w,
                         height: 28.w,
@@ -502,21 +431,7 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
   }
 
   Widget _buildTabViewItem(List<ScoreBoardDetailList> playerScores) {
-    List<String> keys = [
-      "MIN",
-      "PTS",
-      "3PM",
-      "REB",
-      "AST",
-      "STL",
-      "BLK",
-      "FTM",
-      "TO",
-      "FOUL",
-      "FG",
-      "FT",
-      "3P"
-    ];
+    List<String> keys = ["MIN", "PTS", "3PM", "REB", "AST", "STL", "BLK", "FTM", "TO", "FOUL", "FG", "FT", "3P"];
     item(List<ScoreBoardDetailList> list) {
       return SizedBox(
         height: 29.w + 34.w * list.length,
@@ -541,10 +456,8 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
                     label: Container(
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(left: 19.w),
-                      decoration: const BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  color: AppColors.cD1D1D1, width: 1))),
+                      decoration:
+                          const BoxDecoration(border: Border(bottom: BorderSide(color: AppColors.cD1D1D1, width: 1))),
                       child: Text(
                         LangKey.gameTabStarter.tr,
                       ),
@@ -555,10 +468,8 @@ class _HistoryPlayerDetailState extends State<HistoryPlayerDetail>
                       width: 50.w,
                       label: Container(
                         alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: AppColors.cD1D1D1, width: 1))),
+                        decoration:
+                            const BoxDecoration(border: Border(bottom: BorderSide(color: AppColors.cD1D1D1, width: 1))),
                         child: Text(
                           e,
                         ),

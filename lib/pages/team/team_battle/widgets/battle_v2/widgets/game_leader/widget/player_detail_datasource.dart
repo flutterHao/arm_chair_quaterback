@@ -1,12 +1,14 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/big_player_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 ///
@@ -34,8 +36,7 @@ class PlayerDetailDatasource extends DataGridSource {
       cells.add(DataGridCell(columnName: "FOUL", value: e.pf));
       cells.add(DataGridCell(columnName: "FG", value: "${e.fgm}-${e.fga}"));
       cells.add(DataGridCell(columnName: "FT", value: "${e.ftm}-${e.fta}"));
-      cells.add(
-          DataGridCell(columnName: "3P", value: "${e.threePm}-${e.threePa}"));
+      cells.add(DataGridCell(columnName: "3P", value: "${e.threePm}-${e.threePa}"));
       return cells;
     }).toList();
     List<DataGridRow> list = map.fold(<DataGridRow>[], (p, e) {
@@ -52,36 +53,42 @@ class PlayerDetailDatasource extends DataGridSource {
   DataGridRowAdapter? buildRow(DataGridRow row) {
     List<Widget> cells = row.getCells().map((e) {
       if (e.columnName == "id") {
-        NbaPlayerInfosPlayerBaseInfoList baseInfo =
-            Utils.getPlayBaseInfo(e.value);
+        NbaPlayerInfosPlayerBaseInfoList baseInfo = Utils.getPlayBaseInfo(e.value);
         return Container(
             alignment: Alignment.centerLeft,
-            decoration: const BoxDecoration(
-                border: Border(
-                    right: BorderSide(color: AppColors.cE6E6E, width: 1))),
+            decoration: const BoxDecoration(border: Border(right: BorderSide(color: AppColors.cE6E6E, width: 1))),
             padding: EdgeInsets.only(left: 19.w, right: 9.w),
             child: Row(
               children: [
                 Expanded(
-                  child: Text(
-                    baseInfo.ename,
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        color: AppColors.c000000,
-                        overflow: TextOverflow.ellipsis,
-                        fontFamily: FontFamily.fRobotoRegular,
-                        decoration: TextDecoration.underline),
-                  ),
+                  child: MtInkWell(
+                      onTap: () {
+                        showDialog(
+                            context: Get.context!,
+                            builder: (context) {
+                              return Center(
+                                child: BigPlayerCard(
+                                  playerId: e.value,
+                                ),
+                              );
+                            });
+                      },
+                      child: Text(
+                        baseInfo.ename,
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 12.sp,
+                            color: AppColors.c000000,
+                            overflow: TextOverflow.ellipsis,
+                            fontFamily: FontFamily.fRobotoRegular,
+                            decoration: TextDecoration.underline),
+                      )),
                 ),
                 9.hGap,
                 if (baseInfo.number > 0)
                   Text(
                     "#${baseInfo.number}",
-                    style: 12.w4(
-                        color: AppColors.cB3B3B3,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
+                    style: 12.w4(color: AppColors.cB3B3B3, height: 1, fontFamily: FontFamily.fRobotoRegular),
                   )
               ],
             ));
@@ -91,10 +98,7 @@ class PlayerDetailDatasource extends DataGridSource {
           child: Center(
               child: Text(
             "${e.value}",
-            style: 12.w4(
-                color: AppColors.c4D4D4D,
-                height: 1,
-                fontFamily: FontFamily.fRobotoRegular),
+            style: 12.w4(color: AppColors.c4D4D4D, height: 1, fontFamily: FontFamily.fRobotoRegular),
           )));
     }).toList();
     return DataGridRowAdapter(cells: cells);
