@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
@@ -209,7 +210,7 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
   Widget _playerItemWidget(int index) {
     return Obx(() {
       NbaPlayerInfosPlayerBaseInfoList player = Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId);
-      return InkWell(
+      return MtInkWell(
         onTap: () async {
           Get.toNamed(RouteNames.playerTrendPage, arguments: controller.allPlayerStrengthRank[index]);
         },
@@ -252,14 +253,16 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
               style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
             )),
             4.hGap,
-            Container(
-              decoration: BoxDecoration(color: AppColors.cFF5454, borderRadius: BorderRadius.circular(4.w)),
-              padding: EdgeInsets.symmetric(horizontal: 4.w),
-              child: Text(
-                'INJ',
-                style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: Colors.white),
-              ),
-            )
+            player.injuries
+                ? Container(
+                    decoration: BoxDecoration(color: AppColors.cFF5454, borderRadius: BorderRadius.circular(4.w)),
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    child: Text(
+                      'INJ',
+                      style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: Colors.white),
+                    ),
+                  )
+                : SizedBox()
           ],
         ),
         Text(
@@ -289,10 +292,6 @@ class OvrStandingDetailPage extends GetView<NbaPlayerController> {
               '${differenceStrength.abs()}',
               style: 10.w5(fontFamily: FontFamily.fRobotoMedium),
             ),
-            // Text(
-            //   'Rank:${controller.allPlayerStrengthRank[index].rank}',
-            //   style: 10.w5(color: Colors.pink, fontFamily: FontFamily.fRobotoMedium),
-            // ),
           ],
         )
       ],

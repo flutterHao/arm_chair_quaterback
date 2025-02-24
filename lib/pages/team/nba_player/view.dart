@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
       ///开始到结束分数差值
       var differenceScore = item[0].playerScore - item[1].playerScore;
       var player = Utils.getPlayBaseInfo(controller.nbaPlayerList[index].playerId);
-      return InkWell(
+      return MtInkWell(
         onTap: () => Get.toNamed(RouteNames.playerTrendPage, arguments: controller.nbaPlayerList[index]),
         child: Container(
           width: 143.w,
@@ -283,7 +284,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
   Widget _seeAllWidget() {
     return SizedBox(
       height: 50.w,
-      child: InkWell(
+      child: MtInkWell(
         onTap: () => controller.goOvrStandingDetail(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,

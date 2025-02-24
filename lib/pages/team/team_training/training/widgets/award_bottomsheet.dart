@@ -242,6 +242,8 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
           );
   }
 
+  OverlayEntry? _overlayEntry;
+
   Widget _awardTiTleWidget() {
     return Column(
       children: [
@@ -249,9 +251,14 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Row(
             children: [
-              Text(
-                'Training task',
-                style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
+              InkWell(
+                onTap: () {
+                  _overlayEntry?.remove();
+                },
+                child: Text(
+                  'Training task',
+                  style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
+                ),
               ),
               const Spacer(),
               IconWidget(iconWidth: 16.h, icon: Assets.commonUiCommonCountdown02),
@@ -261,14 +268,61 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                 style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
               ),
               6.hGap,
-              Container(
-                width: 18.h,
-                height: 18.h,
-                decoration: BoxDecoration(
-                  color: AppColors.cB3B3B3,
-                  shape: BoxShape.circle,
+              //_overlayEntry?.remove();
+              InkWell(
+                onTap: () {
+                  _overlayEntry = OverlayEntry(
+                    builder: (context) {
+                      return SafeArea(
+                          child: InkWell(
+                        onTap: () {
+                          _overlayEntry?.remove();
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                  top: 0,
+                                  right: 40.w,
+                                  child: Container(
+                                    width: 308.w,
+                                    color: Colors.pink,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          height: 100,
+                                          color: Colors.yellow,
+                                        ),
+                                        Container(
+                                          height: 100,
+                                          color: Colors.purple,
+                                        ),
+                                        Container(
+                                          height: 100,
+                                          color: Colors.green,
+                                        )
+                                      ],
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ));
+                    },
+                  );
+                  Overlay.of(context).insert(_overlayEntry!);
+                },
+                child: Container(
+                  width: 18.h,
+                  height: 18.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.cB3B3B3,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconWidget(iconWidth: 3.h, icon: Assets.inboxUiInboxIconTips),
                 ),
-                child: IconWidget(iconWidth: 3.h, icon: Assets.inboxUiInboxIconTips),
               )
             ],
           ),

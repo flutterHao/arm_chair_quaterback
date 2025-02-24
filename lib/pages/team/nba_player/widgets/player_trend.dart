@@ -2,13 +2,16 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/o_v_r_rank_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -17,9 +20,12 @@ import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizon
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
+import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/game_status_grid_soucre.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
@@ -52,6 +58,8 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
   int selectedIndexType = 0;
   List<OVRRankPlayerInfoGameStats> gameStats = [];
   OVRRankPlayerInfoSeasonStats seasonStats = OVRRankPlayerInfoSeasonStats();
+  NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
+  GlobalKey globalKey = GlobalKey();
   @override
   void initState() {
     // TODO: implement initState
@@ -70,6 +78,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
   void initData() async {
     List<PlayerStrengthRankTrendList> resTrendList = await TeamApi.getPlayerTrends(playerId: playerId, day: -1);
     OVRRankPlayerInfoEntity ovrPlayerInfo = await TeamApi.getOVRRankPlayerInfo(playerId: playerId);
+    nbaPlayerBaseInfoEntity = await PicksApi.getNBAPlayerBaseInfo(playerId);
     setState(() {
       rankDialogloadingStatus = LoadDataStatus.success;
       trendList = resTrendList;
@@ -110,31 +119,34 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
 
   ///球员趋势图
   Widget _ovrTrendWidget() {
-    return Container(
-        padding: EdgeInsets.symmetric(vertical: 16.w),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
-        child: Column(
-          children: [
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                alignment: Alignment.centerLeft,
-                child: InkWell(
-                    onTap: () async {
-                      OVRRankPlayerInfoEntity res = await TeamApi.getOVRRankPlayerInfo(playerId: playerId);
-                      print(res.seasonStats.aGE);
-                    },
-                    child: Text(
-                      "OVR TREND",
-                      style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
-                    ))),
-            16.vGap,
-            Divider(color: AppColors.cE6E6E6, height: 1.w),
-            _playerOVRInfoWidget(),
-            16.vGap,
-            _playerchartWidget(showTrendList),
-            _trendTabWidget(),
-          ],
-        ));
+    return Stack(
+      children: [
+        RepaintBoundary(
+          key: globalKey,
+          child: Container(
+              padding: EdgeInsets.symmetric(vertical: 16.w),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
+              child: Column(
+                children: [
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 16.w),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "OVR TREND",
+                        style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+                      )),
+                  16.vGap,
+                  Divider(color: AppColors.cE6E6E6, height: 1.w),
+                  _playerOVRInfoWidget(),
+                  16.vGap,
+                  _playerchartWidget(showTrendList),
+                  _trendTabWidget(),
+                ],
+              )),
+        ),
+        Positioned(top: 16.w, right: 16.w, child: ShareWidget(globalKey: globalKey))
+      ],
+    );
   }
 
   List<PlayerRegular> getSeasonAverageData() {
@@ -155,89 +167,95 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
   }
 
   Widget _statsWidget() {
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 70.w,
-            margin: EdgeInsets.only(left: 16.w),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "STATS",
-              style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
-            ),
-          ),
-          Divider(
-            color: AppColors.cE6E6E6,
-            height: 1.w,
-          ),
-          Builder(builder: (context) {
-            var seasonAverageData = getSeasonAverageData();
-            return SizedBox(
-              width: double.infinity,
-              height: 101.w,
-              child: MediaQuery.removePadding(
-                removeTop: true,
-                context: context,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: seasonAverageData.length,
-                    // controller: scrollController,
-                    // physics: OneBoundaryScrollPhysics(scrollController: scrollController),
-                    itemBuilder: (context, index) {
-                      PlayerRegular item = seasonAverageData[index];
-                      bool lastIndex = seasonAverageData.length - 1 == index;
-                      return SizedBox(
-                        height: 101.w,
-                        width: 93.w,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+    return MtInkWell(
+        onTap: () {
+          Get.toNamed(RouteNames.picksPlayerDetail, arguments: PlayerDetailPageArguments(playerId));
+        },
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 70.w,
+                margin: EdgeInsets.only(left: 16.w),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "${formatSeasonDate()} STATS",
+                  style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+                ),
+              ),
+              Divider(
+                color: AppColors.cE6E6E6,
+                height: 1.w,
+              ),
+              Builder(builder: (context) {
+                var seasonAverageData = getSeasonAverageData();
+                return SizedBox(
+                  width: double.infinity,
+                  height: 101.w,
+                  child: MediaQuery.removePadding(
+                    removeTop: true,
+                    context: context,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: seasonAverageData.length,
+                        // controller: scrollController,
+                        // physics: OneBoundaryScrollPhysics(scrollController: scrollController),
+                        itemBuilder: (context, index) {
+                          PlayerRegular item = seasonAverageData[index];
+                          bool lastIndex = seasonAverageData.length - 1 == index;
+                          return SizedBox(
+                            height: 101.w,
+                            width: 93.w,
+                            child: Stack(
+                              alignment: Alignment.center,
                               children: [
-                                Text(
-                                  item.value.toStringAsFixed(1),
-                                  style: 21.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      item.value.toStringAsFixed(1),
+                                      style: 21.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+                                    ),
+                                    6.vGap,
+                                    Text(
+                                      item.key,
+                                      style: 10.w4(
+                                          color: AppColors.c666666, height: 1, fontFamily: FontFamily.fRobotoRegular),
+                                    ),
+                                    13.vGap,
+                                    Opacity(
+                                        opacity: item.rank <= 100 ? 1 : 0,
+                                        child: Text(
+                                          Utils.getSortWithInt(item.rank),
+                                          style: 12.w5(
+                                              color: AppColors.cFF7954,
+                                              height: 1,
+                                              fontFamily: FontFamily.fRobotoMedium),
+                                        )),
+                                    2.vGap
+                                  ],
                                 ),
-                                6.vGap,
-                                Text(
-                                  item.key,
-                                  style:
-                                      10.w4(color: AppColors.c666666, height: 1, fontFamily: FontFamily.fRobotoRegular),
-                                ),
-                                13.vGap,
-                                Opacity(
-                                    opacity: item.rank <= 100 ? 1 : 0,
-                                    child: Text(
-                                      Utils.getSortWithInt(item.rank),
-                                      style: 12.w5(
-                                          color: AppColors.cFF7954, height: 1, fontFamily: FontFamily.fRobotoMedium),
-                                    )),
-                                2.vGap
+                                if (!lastIndex)
+                                  Positioned(
+                                    right: 0,
+                                    child: Container(
+                                      color: AppColors.cE6E6E6,
+                                      width: 1.w,
+                                      height: 54.w,
+                                    ),
+                                  )
                               ],
                             ),
-                            if (!lastIndex)
-                              Positioned(
-                                right: 0,
-                                child: Container(
-                                  color: AppColors.cE6E6E6,
-                                  width: 1.w,
-                                  height: 54.w,
-                                ),
-                              )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
-            );
-          }),
-        ],
-      ),
-    );
+                          );
+                        }),
+                  ),
+                );
+              }),
+            ],
+          ),
+        ));
   }
 
   ///比赛信息
@@ -337,6 +355,11 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                 ),
               ))
         ]));
+  }
+
+  String formatSeasonDate() {
+    var seasonDate = nbaPlayerBaseInfoEntity?.playerDataAvg.seasonId ?? 1971;
+    return "${(seasonDate.toString()).substring(2)}-${((seasonDate + 1).toString()).substring(2)}";
   }
 
   ///切换趋势图日期
