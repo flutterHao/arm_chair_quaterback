@@ -88,12 +88,13 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                   ),
                   Expanded(
                       child: Stack(
+                    clipBehavior: Clip.none,
                     children: [
                       Positioned(
                         top: 0.w,
-                        left: -4.w,
+                        left: -10.w,
                         child: CustomLinearProgressBar(
-                            width: 282.w,
+                            width: 286.w,
                             height: 14.w,
                             progressColor: AppColors.c000000,
                             backgroundColor: AppColors.cFFFFFF,
@@ -102,9 +103,9 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                       ),
                       Positioned(
                         top: 0.w,
-                        left: -4.w,
+                        left: -10.w,
                         child: Container(
-                          width: 282.w,
+                          width: 286.w,
                           height: 14.w,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7.w),
@@ -120,7 +121,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
           left: 0,
           bottom: 0,
           child: IconWidget(
-            iconWidth: 57.w,
+            iconWidth: 58.w,
             icon: controller.getcupUrl(controller.teamSimpleEntity.value.cupRankId),
             // icon: Assets.managerUiManagerGameGrade01
           ),

@@ -264,7 +264,7 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
               IconWidget(iconWidth: 16.h, icon: Assets.commonUiCommonCountdown02),
               6.hGap,
               Text(
-                '6D ${formatDuration(_remaining)}',
+                formatDuration(_remaining),
                 style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
               ),
               6.hGap,

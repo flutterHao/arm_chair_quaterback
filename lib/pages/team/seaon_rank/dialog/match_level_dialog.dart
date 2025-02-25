@@ -122,7 +122,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                               IconWidget(iconWidth: 15.w, icon: Assets.managerUiManagerIconCurrency04),
                               5.hGap,
                               Text(
-                                ' ${controller.cupDefineList.reversed.toList()[index].cupNum[0].toInt()} ~ ${controller.cupDefineList.reversed.toList()[index].cupNum[1].toInt()}',
+                                ' ${controller.cupDefineList.reversed.toList()[index].cupNum[0].toInt()}',
                                 style: 14.w5(fontFamily: FontFamily.fOswaldMedium),
                               ),
                             ],
