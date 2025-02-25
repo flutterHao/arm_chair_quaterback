@@ -1,23 +1,21 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/heartbeat.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/money_income_animation.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/widgets/heartbeat.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_court.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/game_leader_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/widget/reward_dialog/reward_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/player_status/player_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
@@ -64,9 +62,7 @@ class GameOverWidget extends GetView<GameOverController> {
                         color: AppColors.c000000.withOpacity(0.7),
                         height: 219.w,
                         width: double.infinity,
-                        child: controller.isLeftWin()
-                            ? _buildLeftWinWidget(context)
-                            : _buildRightWinWidget(context),
+                        child: controller.isLeftWin() ? _buildLeftWinWidget(context) : _buildRightWinWidget(context),
                       ),
                     ],
                   ),
@@ -74,16 +70,13 @@ class GameOverWidget extends GetView<GameOverController> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        color: AppColors.cF2F2F2,
-                        borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(9.w))),
+                        color: AppColors.cF2F2F2, borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
                     child: Column(
                       children: [
                         PlayerStatusWidget(teamBattleV2Controller),
                         _buildMvpWidget(),
                         GameLeaderWidget(
-                          controller:
-                              teamBattleV2Controller.gameLeaderController,
+                          controller: teamBattleV2Controller.gameLeaderController,
                           title: LangKey.gameTabGameLeader.tr,
                         ),
                         GetBuilder<TeamBattleV2Controller>(
@@ -93,11 +86,9 @@ class GameOverWidget extends GetView<GameOverController> {
                                 hasTopMargin: false,
                               );
                             }),
-                        WinRateWidget(
-                            teamBattleV2Controller.winRateController),
+                        WinRateWidget(teamBattleV2Controller.winRateController),
                         TeamStatsWidget(
-                          controller:
-                              teamBattleV2Controller.teamStatsController,
+                          controller: teamBattleV2Controller.teamStatsController,
                         ),
                         9.vGap,
                         const LiveTextWidget(
@@ -119,23 +110,15 @@ class GameOverWidget extends GetView<GameOverController> {
       if (controller.getMvpInfo() == null) {
         return const SizedBox.shrink();
       }
-      PkResultUpdatedPlayerResults pkResultUpdatedPlayer =
-          controller.getMvpInfo()!;
+      PkResultUpdatedPlayerResults pkResultUpdatedPlayer = controller.getMvpInfo()!;
       var breakThroughGrade = controller.getMvpBreakThroughGrade();
-      print('breakThroughGrade:$breakThroughGrade');
       Widget parent({required Widget child}) {
         return InkWell(
           onTap: () {
-            if (pkResultUpdatedPlayer.teamId ==
-                Get.find<TeamBattleV2Controller>()
-                    .battleEntity
-                    .homeTeam
-                    .teamId) {
+            if (pkResultUpdatedPlayer.teamId == Get.find<TeamBattleV2Controller>().battleEntity.homeTeam.teamId) {
               Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
                 "playerUuid": controller
-                    .getTeamPlayerInfoEntityByPlayerId(
-                        pkResultUpdatedPlayer.teamId,
-                        pkResultUpdatedPlayer.playerId)
+                    .getTeamPlayerInfoEntityByPlayerId(pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId)
                     .uuid
               });
             }
@@ -143,9 +126,7 @@ class GameOverWidget extends GetView<GameOverController> {
           child: Container(
             height: 165.w,
             margin: EdgeInsets.only(bottom: 9.w),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.w),
-                color: AppColors.cFFFFFF),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(9.w), color: AppColors.cFFFFFF),
             child: child,
           ),
         );
@@ -168,18 +149,13 @@ class GameOverWidget extends GetView<GameOverController> {
                 right: -8.w,
                 child: Text(
                   "MVP",
-                  style: 100.w7(
-                      color: AppColors.cF2F2F2,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldBold),
+                  style: 100.w7(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldBold),
                 ),
               ),
               Row(
                 children: [
                   17.hGap,
-                  SmallPlayerCard(
-                      playerId: pkResultUpdatedPlayer.playerId,
-                      breakThroughGrade: breakThroughGrade),
+                  SmallPlayerCard(playerId: pkResultUpdatedPlayer.playerId, breakThroughGrade: breakThroughGrade),
                   15.hGap,
                   Expanded(
                     child: Column(
@@ -190,24 +166,18 @@ class GameOverWidget extends GetView<GameOverController> {
                           children: [
                             Text(
                               "MVP",
-                              style: 40.w7(
-                                  color: AppColors.cFF7954,
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldBold),
+                              style: 40.w7(color: AppColors.cFF7954, height: 1, fontFamily: FontFamily.fOswaldBold),
                             ),
                             10.hGap,
                             Container(
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: controller.isLeftWin()
-                                        ? AppColors.c1F8FE5
-                                        : AppColors.cD60D20,
+                                    color: controller.isLeftWin() ? AppColors.c1F8FE5 : AppColors.cD60D20,
                                     width: 1.w,
                                   ),
                                   borderRadius: BorderRadius.circular(12.w)),
                               child: ImageWidget(
-                                url: Utils.getAvatarUrl(
-                                    controller.getWinnerInfo()?.teamLogo),
+                                url: Utils.getAvatarUrl(controller.getWinnerInfo()?.teamLogo),
                                 width: 21.w,
                                 height: 21.w,
                                 imageFailedPath: Assets.teamUiHead01,
@@ -218,12 +188,8 @@ class GameOverWidget extends GetView<GameOverController> {
                         ),
                         20.vGap,
                         Text(
-                          Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
-                              .ename,
-                          style: 27.w7(
-                              color: AppColors.c262626,
-                              fontFamily: FontFamily.fOswaldBold,
-                              height: 1),
+                          Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId).ename,
+                          style: 27.w7(color: AppColors.c262626, fontFamily: FontFamily.fOswaldBold, height: 1),
                         ),
                         9.vGap,
                         Row(
@@ -231,17 +197,13 @@ class GameOverWidget extends GetView<GameOverController> {
                             Column(
                               children: [
                                 Text("${pkResultUpdatedPlayer.pts}",
-                                    style: 14.w5(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoMedium)),
+                                    style: 14
+                                        .w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium)),
                                 4.vGap,
                                 Text(
                                   "PTS",
-                                  style: 10.w4(
-                                      color: AppColors.c4D4D4D,
-                                      height: 1,
-                                      fontFamily: FontFamily.fRobotoRegular),
+                                  style:
+                                      10.w4(color: AppColors.c4D4D4D, height: 1, fontFamily: FontFamily.fRobotoRegular),
                                 )
                               ],
                             ),
@@ -249,17 +211,13 @@ class GameOverWidget extends GetView<GameOverController> {
                             Column(
                               children: [
                                 Text("${pkResultUpdatedPlayer.reb}",
-                                    style: 14.w5(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoMedium)),
+                                    style: 14
+                                        .w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium)),
                                 4.vGap,
                                 Text(
                                   "REB",
-                                  style: 10.w4(
-                                      color: AppColors.c4D4D4D,
-                                      height: 1,
-                                      fontFamily: FontFamily.fRobotoRegular),
+                                  style:
+                                      10.w4(color: AppColors.c4D4D4D, height: 1, fontFamily: FontFamily.fRobotoRegular),
                                 )
                               ],
                             ),
@@ -267,17 +225,13 @@ class GameOverWidget extends GetView<GameOverController> {
                             Column(
                               children: [
                                 Text("${pkResultUpdatedPlayer.ast}",
-                                    style: 14.w5(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoMedium)),
+                                    style: 14
+                                        .w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium)),
                                 4.vGap,
                                 Text(
                                   "AST",
-                                  style: 10.w4(
-                                      color: AppColors.c4D4D4D,
-                                      height: 1,
-                                      fontFamily: FontFamily.fRobotoRegular),
+                                  style:
+                                      10.w4(color: AppColors.c4D4D4D, height: 1, fontFamily: FontFamily.fRobotoRegular),
                                 )
                               ],
                             ),
@@ -308,10 +262,7 @@ class GameOverWidget extends GetView<GameOverController> {
               left: -20.w,
               child: Text(
                 "MVP",
-                style: 100.w7(
-                    color: AppColors.cF2F2F2,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldBold),
+                style: 100.w7(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldBold),
               ),
             ),
             Row(
@@ -328,15 +279,12 @@ class GameOverWidget extends GetView<GameOverController> {
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: controller.isLeftWin()
-                                      ? AppColors.c1F8FE5
-                                      : AppColors.cD60D20,
+                                  color: controller.isLeftWin() ? AppColors.c1F8FE5 : AppColors.cD60D20,
                                   width: 1.w,
                                 ),
                                 borderRadius: BorderRadius.circular(12.w)),
                             child: ImageWidget(
-                              url: Utils.getAvatarUrl(
-                                  controller.getWinnerInfo()?.teamLogo),
+                              url: Utils.getAvatarUrl(controller.getWinnerInfo()?.teamLogo),
                               width: 21.w,
                               height: 21.w,
                               imageFailedPath: Assets.teamUiHead01,
@@ -346,22 +294,15 @@ class GameOverWidget extends GetView<GameOverController> {
                           10.hGap,
                           Text(
                             "MVP",
-                            style: 40.w7(
-                                color: AppColors.cFF7954,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldBold),
+                            style: 40.w7(color: AppColors.cFF7954, height: 1, fontFamily: FontFamily.fOswaldBold),
                           ),
                         ],
                       ),
                       15.vGap,
                       Text(
-                        Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
-                            .ename,
+                        Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId).ename,
                         textAlign: TextAlign.end,
-                        style: 27.w7(
-                            color: AppColors.c262626,
-                            fontFamily: FontFamily.fOswaldBold,
-                            height: 1),
+                        style: 27.w7(color: AppColors.c262626, fontFamily: FontFamily.fOswaldBold, height: 1),
                       ),
                       13.vGap,
                       Row(
@@ -370,17 +311,13 @@ class GameOverWidget extends GetView<GameOverController> {
                           Column(
                             children: [
                               Text("${pkResultUpdatedPlayer.pts}",
-                                  style: 14.w5(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fRobotoMedium)),
+                                  style:
+                                      14.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium)),
                               4.vGap,
                               Text(
                                 "PTS",
-                                style: 10.w4(
-                                    color: AppColors.c4D4D4D,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoRegular),
+                                style:
+                                    10.w4(color: AppColors.c4D4D4D, height: 1, fontFamily: FontFamily.fRobotoRegular),
                               )
                             ],
                           ),
@@ -388,17 +325,13 @@ class GameOverWidget extends GetView<GameOverController> {
                           Column(
                             children: [
                               Text("${pkResultUpdatedPlayer.reb}",
-                                  style: 14.w5(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fRobotoMedium)),
+                                  style:
+                                      14.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium)),
                               4.vGap,
                               Text(
                                 "REB",
-                                style: 10.w4(
-                                    color: AppColors.c4D4D4D,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoRegular),
+                                style:
+                                    10.w4(color: AppColors.c4D4D4D, height: 1, fontFamily: FontFamily.fRobotoRegular),
                               )
                             ],
                           ),
@@ -406,17 +339,13 @@ class GameOverWidget extends GetView<GameOverController> {
                           Column(
                             children: [
                               Text("${pkResultUpdatedPlayer.ast}",
-                                  style: 14.w5(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fRobotoMedium)),
+                                  style:
+                                      14.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fRobotoMedium)),
                               4.vGap,
                               Text(
                                 "AST",
-                                style: 10.w4(
-                                    color: AppColors.c4D4D4D,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoRegular),
+                                style:
+                                    10.w4(color: AppColors.c4D4D4D, height: 1, fontFamily: FontFamily.fRobotoRegular),
                               )
                             ],
                           ),
@@ -426,9 +355,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   ),
                 ),
                 15.hGap,
-                SmallPlayerCard(
-                    playerId: pkResultUpdatedPlayer.playerId,
-                    breakThroughGrade: breakThroughGrade),
+                SmallPlayerCard(playerId: pkResultUpdatedPlayer.playerId, breakThroughGrade: breakThroughGrade),
                 17.hGap,
               ],
             ),
@@ -500,22 +427,14 @@ class GameOverWidget extends GetView<GameOverController> {
                 children: [
                   7.hGap,
                   IconWidget(
-                      iconWidth: 28.w,
-                      fit: BoxFit.fitWidth,
-                      iconHeight: 22.w,
-                      icon: Assets.commonUiCommonProp05),
+                      iconWidth: 28.w, fit: BoxFit.fitWidth, iconHeight: 22.w, icon: Assets.commonUiCommonProp05),
                   Expanded(
                     child: Center(
                       child: AnimatedNum(
-                        number: controller.moneyAnimationEnd.value
-                            ? controller.getMoneyCount()
-                            : 0,
+                        number: controller.moneyAnimationEnd.value ? controller.getMoneyCount() : 0,
                         isMoney: true,
                         milliseconds: 300,
-                        textStyle: 14.w5(
-                            color: AppColors.cFFFFFF,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium),
+                        textStyle: 14.w5(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fOswaldMedium),
                       ),
                     ),
                   ),
@@ -536,10 +455,7 @@ class GameOverWidget extends GetView<GameOverController> {
           alignment: Alignment.topCenter,
           child: Text(
             "LOSER",
-            style: 26.w7(
-                color: AppColors.c666666,
-                height: 1,
-                fontFamily: FontFamily.fOswaldBold),
+            style: 26.w7(color: AppColors.c666666, height: 1, fontFamily: FontFamily.fOswaldBold),
           ),
         ));
   }
@@ -630,9 +546,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   child: Text(
                     controller.isFull() ? "FULL" : "CHEST",
                     style: 14.w5(
-                        color: controller.isFull()
-                            ? AppColors.c666666
-                            : AppColors.cFFFFFF,
+                        color: controller.isFull() ? AppColors.c666666 : AppColors.cFFFFFF,
                         height: 1,
                         fontFamily: FontFamily.fOswaldMedium),
                   ),
@@ -640,9 +554,7 @@ class GameOverWidget extends GetView<GameOverController> {
                 if (controller.isFull())
                   Positioned(
                     right: 0,
-                    child: IconWidget(
-                        iconWidth: 16.w,
-                        icon: Assets.commonUiCommonIconSystemDanger01),
+                    child: IconWidget(iconWidth: 16.w, icon: Assets.commonUiCommonIconSystemDanger01),
                   )
               ],
             ),
@@ -667,9 +579,7 @@ class GameOverWidget extends GetView<GameOverController> {
                     children: [
                       Container(
                         margin: EdgeInsets.only(right: 2.w),
-                        child: IconWidget(
-                            iconWidth: 23.w,
-                            icon: Assets.managerUiManagerIconCurrency04),
+                        child: IconWidget(iconWidth: 23.w, icon: Assets.managerUiManagerIconCurrency04),
                       ),
                       Positioned(
                         right: 0,
@@ -685,10 +595,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   3.hGap,
                   Text(
                     "+${(isLeft ? controller.leftCup.value : controller.rightCup.value).abs()}",
-                    style: 16.w5(
-                        color: AppColors.cF2F2F2,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium),
+                    style: 16.w5(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldMedium),
                   )
                 ],
               ),
@@ -769,15 +676,11 @@ class GameOverWidget extends GetView<GameOverController> {
         return const SizedBox.shrink();
       }
       return MoneyIncomeAnimation(
-        randRect: Rect.fromLTWH((MediaQuery.of(context).size.width - 100) / 2,
-            (219.w - 100) / 2, 100, 100),
+        randRect: Rect.fromLTWH((MediaQuery.of(context).size.width - 100) / 2, (219.w - 100) / 2, 100, 100),
         childSize: Size(28.w, 22.w),
         targetPosition: Offset(!isLeft ? 250.w : 43.w, 137.w),
-        childWidget: IconWidget(
-            iconWidth: 28.w,
-            fit: BoxFit.fitWidth,
-            iconHeight: 22.w,
-            icon: Assets.commonUiCommonProp05),
+        childWidget:
+            IconWidget(iconWidth: 28.w, fit: BoxFit.fitWidth, iconHeight: 22.w, icon: Assets.commonUiCommonProp05),
         onEnd: _onHeaderAnimationEnd,
       );
     }));
@@ -791,8 +694,7 @@ class GameOverWidget extends GetView<GameOverController> {
         child: Obx(() {
           controller.rightCup.value;
           controller.leftCup.value;
-          var value2 =
-              isLeftWin ? controller.rightCup.value : controller.leftCup.value;
+          var value2 = isLeftWin ? controller.rightCup.value : controller.leftCup.value;
           return HeartbeatWidget(
             onEnd: () {},
             child: Container(
@@ -805,9 +707,7 @@ class GameOverWidget extends GetView<GameOverController> {
                     children: [
                       Container(
                         margin: EdgeInsets.only(right: 2.w),
-                        child: IconWidget(
-                            iconWidth: 23.w,
-                            icon: Assets.managerUiManagerIconCurrency04),
+                        child: IconWidget(iconWidth: 23.w, icon: Assets.managerUiManagerIconCurrency04),
                       ),
                       Positioned(
                         right: 0,
@@ -824,10 +724,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   3.hGap,
                   Text(
                     "-${value2.abs()}",
-                    style: 16.w5(
-                        color: AppColors.cF2F2F2,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium),
+                    style: 16.w5(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldMedium),
                   )
                 ],
               ),
@@ -848,10 +745,7 @@ class GameOverWidget extends GetView<GameOverController> {
           children: [
             Text(
               "WINNER",
-              style: 30.w7(
-                  color: AppColors.cC01223,
-                  height: 1,
-                  fontFamily: FontFamily.fOswaldBold),
+              style: 30.w7(color: AppColors.cC01223, height: 1, fontFamily: FontFamily.fOswaldBold),
             ),
           ],
         ),

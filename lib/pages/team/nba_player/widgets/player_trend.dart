@@ -567,7 +567,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                     showTitles: true,
                     reservedSize: 24.w,
                     getTitlesWidget: (value, meta) {
-                      if (value == 0 || value == 50 || value == 100) {
+                      if (value == 1 || value == 50 || value == 100) {
                         return SideTitleWidget(
                           axisSide: meta.axisSide,
                           space: 4.w,
@@ -584,7 +584,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                   show: true,
                   border:
                       Border(left: BorderSide(color: AppColors.cD1D1D1), bottom: BorderSide(color: AppColors.cD1D1D1))),
-              minY: 0,
+              minY: 1,
               maxY: 100,
               lineBarsData: [
                 LineChartBarData(
