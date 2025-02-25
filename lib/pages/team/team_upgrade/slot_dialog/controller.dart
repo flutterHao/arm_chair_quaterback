@@ -61,9 +61,6 @@ class SlotDialogController extends GetxController
 
   UpStarTeamPlayerV2StarUpList? startUpItem;
 
-  /// 进行了多少次
-  var slotCount = 0.obs;
-
   ///continueStarUp接口报错
   bool isContinueStarUpError = false;
 
@@ -170,7 +167,6 @@ class SlotDialogController extends GetxController
 
         return result;
       });
-      slotCount.value = result.starUpList.length - 1;
       handlerInitData(result);
       result.starUpList = [];
       upStarTeamPlayerV2Entity = result;
@@ -205,6 +201,7 @@ class SlotDialogController extends GetxController
   }
 
   void onResult(UpStarTeamPlayerV2Entity result) {
+    print('result:${result.toJson()}');
     upStarTeamPlayerV2Entity = result;
     setStarUpItem();
   }
@@ -213,8 +210,8 @@ class SlotDialogController extends GetxController
     if (upStarTeamPlayerV2Entity.successRate <= 0) {
       /// 模拟第一次就抽到受伤结束游戏
       selectIndexList = [9];
+      startUpItem = null;
     } else {
-      slotCount.value += 1;
       startUpItem = upStarTeamPlayerV2Entity.starUpList.last;
       upStarTeamPlayerV2Entity.starUpList.removeAt(0);
       if (startUpItem?.type == 2) {
@@ -300,6 +297,7 @@ class SlotDialogController extends GetxController
     spinCount--;
     if (spinCount == 0) {
       /// 所有的老虎机都停了
+      print('startUpItem:$startUpItem');
       if ((startUpItem?.successRate ?? 0) <= 0) {
         gameOver(false);
         return;
