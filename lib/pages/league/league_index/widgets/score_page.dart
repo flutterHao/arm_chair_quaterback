@@ -381,7 +381,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget> with WidgetsBindingOb
                     ],
                   ),
                 ),
-                if (item.status != 0) ...[
+                if (!cantGuess()) ...[
                   Container(
                     height: 1,
                     width: double.infinity,

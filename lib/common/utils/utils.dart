@@ -601,6 +601,6 @@ class Utils {
 
   /// 获取底部安全距离高度
   static double getPaddingBottom() {
-    return MediaQuery.of(Get.context!).padding.bottom;
+    return MediaQuery.of(Get.context!).padding.bottom/2;
   }
 }
