@@ -25,6 +25,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
   late Animation<double> _offsetAnimation;
   late Animation<double> _opacityAnimation;
   final double _bottomBarHeight = 80.0; // 底部栏高度，根据实际调整
+  double startY = 0;
 
   @override
   void initState() {
@@ -121,11 +122,17 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
               if (notification.metrics.pixels > 0 &&
                   notification.metrics.pixels <=
                       notification.metrics.maxScrollExtent &&
-                  notification.scrollDelta != null) {
+                  notification.scrollDelta != null &&
+                  ((notification.scrollDelta! > 0 &&
+                          (notification.dragDetails?.globalPosition.dy ?? 0) -
+                                  startY <
+                              -_bottomBarHeight*2) ||
+                      notification.scrollDelta! <= 0)) {
                 _handleScroll(notification.scrollDelta!);
               }
             } else if (notification is ScrollStartNotification) {
               // 滚动开始时重置方向
+              startY = notification.dragDetails?.globalPosition.dy ?? 0;
             }
             return true;
           },
