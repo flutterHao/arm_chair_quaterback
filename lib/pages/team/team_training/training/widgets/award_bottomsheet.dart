@@ -190,7 +190,7 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                           Utils.getPropIconUrl(int.tryParse(element.split("_")[1])),
                           width: 48.h,
                           height: 40.h,
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.contain,
                           alignment: Alignment.center,
                           errorBuilder: (context, error, stackTrace) => IconWidget(
                             iconWidth: 48.h,
