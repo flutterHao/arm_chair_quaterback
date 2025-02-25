@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/star_up_player_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
@@ -42,7 +43,7 @@ class TrainingController extends GetxController
   var showBall = false.obs;
   var showPlayer = false.obs;
   var showStatus = false.obs;
-  var showCash = false.obs;
+  var showCash = 0.obs;
   var caShScale = false.obs;
   var showCard = false.obs;
   var cash = 0.obs;
@@ -177,6 +178,8 @@ class TrainingController extends GetxController
   ];
   List<double> angles = [-40.23, -23.23, -6.81, 10.76, 23.46];
   late ScrollController awardBottomScrollController;
+//升星球员列表
+  StarUpPlayerEntity starUpPlayerEntity = StarUpPlayerEntity();
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -582,12 +585,6 @@ class TrainingController extends GetxController
 
   void startSlot() async {
     if (isPlaying.value) return;
-    // Get.to(
-    //   StarUpList(),
-    //   opaque: false,
-    //   transition: Transition.fadeIn,
-    // );
-    // return;
     if (trainingInfo.buff.length == 5) {
       // trainingInfo.buff.clear();
       TeamIndexController ctrl = Get.find();
@@ -694,6 +691,8 @@ class TrainingController extends GetxController
         }
         if (e.id == 5) {
           cashNum = e.num;
+        } else if (e.id == 4) {
+          cashNum = e.num;
         }
         awads.add(e.id);
       }
@@ -706,25 +705,24 @@ class TrainingController extends GetxController
 
     ///2:状态
     if (awads.contains(2)) {
-      if (awardLength < 6) {
-        showAwardDialog();
-        SoundServices.to.playSound(
-            awardLength > 4 ? Assets.soundStatusBig : Assets.soundStatusSmall);
-        await startPlayerScroll(0);
+      showAwardDialog();
+      SoundServices.to.playSound(
+          awardLength > 4 ? Assets.soundStatusBig : Assets.soundStatusSmall);
+      await startPlayerScroll(0);
 
-        // await Future.delayed(const Duration(milliseconds: 500));
-        Get.back();
-      } else {
-        ///六个状态调升星
-        TeamController ctrl = Get.find();
-        int idx = Random().nextInt(ctrl.myTeamEntity.teamPlayers.length);
-        String uuid = ctrl.myTeamEntity.teamPlayers[idx].uuid;
-        Get.toNamed(RouteNames.teamTeamUpgrade,
-            arguments: {"playerUuid": uuid});
-      }
+      // await Future.delayed(const Duration(milliseconds: 500));
+      Get.back();
       //更新球员状态
       Get.find<TeamController>().updateTeamInfo();
       update(["training_page"]);
+      if (awardLength == 6) {
+        getSlotStarUpEventVO(0);
+        Get.to(
+          StarUpList(),
+          opaque: false,
+          transition: Transition.fadeIn,
+        );
+      }
     }
 
     ///3:道具自动加
@@ -756,7 +754,7 @@ class TrainingController extends GetxController
         var item =
             trainTaskList.where((e) => e.taskLevel == currentLevel).first;
         cashs = item.propNum;
-        await showCashAward(cashs);
+        await showCashAward(1, cashs);
         currentLevel = trainingInfo.training.currentTaskId;
         Get.back();
         // HomeController.to.updateMoney();
@@ -775,18 +773,19 @@ class TrainingController extends GetxController
 
     ///4:篮球
     if (awads.contains(4)) {
-      showBall.value = true;
-      // ballNum.value = trainingInfo.prop.num;
-      await Future.delayed(const Duration(milliseconds: 500), () async {
-        showBall.value = false;
-        await Future.delayed(const Duration(milliseconds: 200));
-        ballNum.value = trainingInfo.prop.num;
-      });
+      await showCashAward(2, cashNum);
+      // showBall.value = true;
+      // // ballNum.value = trainingInfo.prop.num;
+      // await Future.delayed(const Duration(milliseconds: 500), () async {
+      //   showBall.value = false;
+      //   await Future.delayed(const Duration(milliseconds: 200));
+      //   ballNum.value = trainingInfo.prop.num;
+      // });
     }
 
     ///5:钞票
     if (awads.contains(5)) {
-      await showCashAward(cashNum);
+      await showCashAward(1, cashNum);
     }
 
     ///战术 buff
@@ -924,11 +923,11 @@ class TrainingController extends GetxController
     }
   }
 
-  Future showCashAward(int cashs) async {
+  Future showCashAward(int type, int cashs) async {
     ///5:钞票
     showAwardDialog();
     await Future.delayed(const Duration(milliseconds: 300));
-    showCash.value = true;
+    showCash.value = type;
     cash.value = cashs;
     caShScale.value = true;
     updateScroller();
@@ -938,12 +937,11 @@ class TrainingController extends GetxController
       caShScale.value = false;
     });
     await Future.delayed(const Duration(milliseconds: 1500), () async {
-      showCash.value = false;
+      Get.back();
       HomeController.to.updateMoney();
       await Future.delayed(const Duration(milliseconds: 300));
+      showCash.value = 0;
     });
-
-    Get.back();
   }
 
   ///球员滚动
@@ -1127,7 +1125,7 @@ class TrainingController extends GetxController
       if (trainDefine.giveUpTactics.length > awardLength - 1) {
         cashNum = trainDefine.giveUpTactics[awardLength - 1];
       }
-      await showCashAward(cashNum);
+      await showCashAward(1, cashNum);
     });
   }
 
@@ -1146,5 +1144,13 @@ class TrainingController extends GetxController
         builder: (context) {
           return const VerticalDragBackWidget(child: PreparationTip());
         });
+  }
+
+  Future getSlotStarUpEventVO(int type) async {
+    TeamApi.getSlotStarUpEventVO(type: type).then((value) {
+      starUpPlayerEntity = value;
+      HomeController.to.updateMoney();
+      update(["starUpSelect"]);
+    });
   }
 }

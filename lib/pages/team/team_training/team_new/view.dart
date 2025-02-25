@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-12-10 21:40:42
+ * @LastEditTime: 2025-02-25 14:10:11
  */
 /*
  * @Description: 
@@ -35,7 +35,7 @@ class TeamMenberView extends GetView<TeamController> {
             builder: (_) {
               return Column(
                 children: [
-                  const TeamTabbar(),
+                  TeamTabbar(),
                   Expanded(
                     child: TabBarView(
                       // physics: const NeverScrollableScrollPhysics(),

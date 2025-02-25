@@ -15,8 +15,8 @@ TrainDefineEntity $TrainDefineEntityFromJson(Map<String, dynamic> json) {
   if (ballRecoverNum != null) {
     trainDefineEntity.ballRecoverNum = ballRecoverNum;
   }
-  final int? ballRecoverTime = jsonConvert.convert<int>(
-      json['ballRecoverTime']);
+  final int? ballRecoverTime =
+      jsonConvert.convert<int>(json['ballRecoverTime']);
   if (ballRecoverTime != null) {
     trainDefineEntity.ballRecoverTime = ballRecoverTime;
   }
@@ -28,18 +28,20 @@ TrainDefineEntity $TrainDefineEntityFromJson(Map<String, dynamic> json) {
   if (id != null) {
     trainDefineEntity.id = id;
   }
-  final List<int>? lineOrder = (json['lineOrder'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<int>(e) as int).toList();
+  final List<int>? lineOrder = (json['lineOrder'] as List<dynamic>?)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
+      .toList();
   if (lineOrder != null) {
     trainDefineEntity.lineOrder = lineOrder;
   }
-  final double? shootInWeight = jsonConvert.convert<double>(
-      json['shootInWeight']);
+  final double? shootInWeight =
+      jsonConvert.convert<double>(json['shootInWeight']);
   if (shootInWeight != null) {
     trainDefineEntity.shootInWeight = shootInWeight;
   }
-  final List<int>? taskCollect = (json['taskCollect'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<int>(e) as int).toList();
+  final List<int>? taskCollect = (json['taskCollect'] as List<dynamic>?)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
+      .toList();
   if (taskCollect != null) {
     trainDefineEntity.taskCollect = taskCollect;
   }
@@ -51,55 +53,60 @@ TrainDefineEntity $TrainDefineEntityFromJson(Map<String, dynamic> json) {
   if (taskTrigger != null) {
     trainDefineEntity.taskTrigger = taskTrigger;
   }
-  final List<int>? trainBuffAdd = (json['trainBuffAdd'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<int>(e) as int).toList();
+  final List<int>? trainBuffAdd = (json['trainBuffAdd'] as List<dynamic>?)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
+      .toList();
   if (trainBuffAdd != null) {
     trainDefineEntity.trainBuffAdd = trainBuffAdd;
   }
   final List<int>? trainLessMoney = (json['trainLessMoney'] as List<dynamic>?)
-      ?.map(
-          (e) => jsonConvert.convert<int>(e) as int)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
       .toList();
   if (trainLessMoney != null) {
     trainDefineEntity.trainLessMoney = trainLessMoney;
   }
   final List<int>? trainMoneyCon = (json['trainMoneyCon'] as List<dynamic>?)
-      ?.map(
-          (e) => jsonConvert.convert<int>(e) as int)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
       .toList();
   if (trainMoneyCon != null) {
     trainDefineEntity.trainMoneyCon = trainMoneyCon;
   }
-  final List<int>? trainCoinNum = (json['trainCoinNum'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<int>(e) as int).toList();
+  final List<int>? trainCoinNum = (json['trainCoinNum'] as List<dynamic>?)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
+      .toList();
   if (trainCoinNum != null) {
     trainDefineEntity.trainCoinNum = trainCoinNum;
   }
-  final List<int>? trainNormalMoney = (json['trainNormalMoney'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<int>(e) as int).toList();
+  final List<int>? trainNormalMoney =
+      (json['trainNormalMoney'] as List<dynamic>?)
+          ?.map((e) => jsonConvert.convert<int>(e) as int)
+          .toList();
   if (trainNormalMoney != null) {
     trainDefineEntity.trainNormalMoney = trainNormalMoney;
   }
-  final List<int>? trainRecoverStats = (json['trainRecoverStats'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<int>(e) as int).toList();
+  final List<int>? trainRecoverStats =
+      (json['trainRecoverStats'] as List<dynamic>?)
+          ?.map((e) => jsonConvert.convert<int>(e) as int)
+          .toList();
   if (trainRecoverStats != null) {
     trainDefineEntity.trainRecoverStats = trainRecoverStats;
   }
   final List<int>? trainRewardBall = (json['trainRewardBall'] as List<dynamic>?)
-      ?.map(
-          (e) => jsonConvert.convert<int>(e) as int)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
       .toList();
   if (trainRewardBall != null) {
     trainDefineEntity.trainRewardBall = trainRewardBall;
   }
   final List<int>? giveUpTactics = (json['giveUpTatics'] as List<dynamic>?)
-      ?.map(
-          (e) => jsonConvert.convert<int>(e) as int)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
       .toList();
   if (giveUpTactics != null) {
     trainDefineEntity.giveUpTactics = giveUpTactics;
+  }
+  final String? refreshPlayerCost =
+      jsonConvert.convert<String>(json['refreshPlayerCost']);
+  if (refreshPlayerCost != null) {
+    trainDefineEntity.refreshPlayerCost = refreshPlayerCost;
   }
   return trainDefineEntity;
 }
@@ -125,6 +132,7 @@ Map<String, dynamic> $TrainDefineEntityToJson(TrainDefineEntity entity) {
   data['trainRecoverStats'] = entity.trainRecoverStats;
   data['trainRewardBall'] = entity.trainRewardBall;
   data['giveUpTatics'] = entity.giveUpTactics;
+  data['refreshPlayerCost'] = entity.refreshPlayerCost;
   return data;
 }
 
@@ -149,6 +157,7 @@ extension TrainDefineEntityExtension on TrainDefineEntity {
     List<int>? trainRecoverStats,
     List<int>? trainRewardBall,
     List<int>? giveUpTactics,
+    String? refreshPlayerCost,
   }) {
     return TrainDefineEntity()
       ..coinBuySlot = coinBuySlot ?? this.coinBuySlot
@@ -169,6 +178,8 @@ extension TrainDefineEntityExtension on TrainDefineEntity {
       ..trainNormalMoney = trainNormalMoney ?? this.trainNormalMoney
       ..trainRecoverStats = trainRecoverStats ?? this.trainRecoverStats
       ..trainRewardBall = trainRewardBall ?? this.trainRewardBall
+      ..giveUpTactics = giveUpTactics ?? this.giveUpTactics
+      ..refreshPlayerCost = refreshPlayerCost ?? this.refreshPlayerCost
       ..giveUpTactics = giveUpTactics ?? this.giveUpTactics;
   }
 }

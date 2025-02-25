@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:47:53
- * @LastEditTime: 2025-02-06 14:43:12
+ * @LastEditTime: 2025-02-25 17:23:49
  */
 import 'dart:convert';
 
@@ -33,10 +33,12 @@ class TrainDefineEntity {
   late List<int> trainRewardBall = [];
   @JSONField(name: 'giveUpTatics')
   late List<int> giveUpTactics = [];
+  late String refreshPlayerCost = "1_103_10";
 
   TrainDefineEntity();
 
-  factory TrainDefineEntity.fromJson(Map<String, dynamic> json) => $TrainDefineEntityFromJson(json);
+  factory TrainDefineEntity.fromJson(Map<String, dynamic> json) =>
+      $TrainDefineEntityFromJson(json);
 
   Map<String, dynamic> toJson() => $TrainDefineEntityToJson(this);
 

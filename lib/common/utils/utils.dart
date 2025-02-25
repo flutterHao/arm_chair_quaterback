@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2025-01-18 17:21:53
+ * @LastEditTime: 2025-02-25 20:02:28
  */
 import 'dart:async';
 import 'dart:io';
@@ -64,6 +64,9 @@ class Utils {
 
   ///道具
   static String getSlotIconUrl(id) {
+    if (id == 4) {
+      return Assets.commonUiCommonIconCurrency02;
+    }
     return "assets/images/Common/ui_common_prop_0$id${Constant.imageSuffix}";
   }
 

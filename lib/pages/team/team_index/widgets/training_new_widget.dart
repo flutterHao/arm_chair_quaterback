@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-24 21:32:27
+ * @LastEditTime: 2025-02-25 20:44:45
  */
 import 'dart:math';
 
@@ -75,32 +75,32 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   ),
 
                   ///美女图片
-                  Positioned(
-                    top: -15.w,
-                    child: GetBuilder<BeautyController>(
-                        // init: BeautyController(),
-                        builder: (beautyCtrl) {
-                      return InkWell(
-                        onTap: () => Get.toNamed(RouteNames.teamBeautyPage),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            left: 130.w,
-                          ),
-                          height: 498.w,
-                          child: Visibility(
-                            visible: beautyCtrl.beautyIndex.value != 0,
-                            child: Image.asset(
-                              alignment: Alignment.topLeft,
-                              beautyCtrl.girlList[beautyCtrl.beautyIndex.value]
-                                  .girlImg,
-                              height: 498.w,
-                              fit: BoxFit.fitHeight,
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
+                  // Positioned(
+                  //   top: -15.w,
+                  //   child: GetBuilder<BeautyController>(
+                  //       // init: BeautyController(),
+                  //       builder: (beautyCtrl) {
+                  //     return InkWell(
+                  //       onTap: () => Get.toNamed(RouteNames.teamBeautyPage),
+                  //       child: Container(
+                  //         margin: EdgeInsets.only(
+                  //           left: 130.w,
+                  //         ),
+                  //         height: 498.w,
+                  //         child: Visibility(
+                  //           visible: beautyCtrl.beautyIndex.value != 0,
+                  //           child: Image.asset(
+                  //             alignment: Alignment.topLeft,
+                  //             beautyCtrl.girlList[beautyCtrl.beautyIndex.value]
+                  //                 .girlImg,
+                  //             height: 498.w,
+                  //             fit: BoxFit.fitHeight,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     );
+                  //   }),
+                  // ),
 
                   ///美女动画
                   Positioned(
@@ -111,20 +111,19 @@ class TrainingNewWidget extends GetView<TrainingController> {
                         // init: BeautyController(),
                         builder: (beautyCtrl) {
                       return InkWell(
-                        onTap: () => Get.toNamed(RouteNames.teamBeautyPage),
+                        onTap: () {
+                          Random random = Random();
+                          beautyCtrl.setAnimation(random.nextBool() ? 1 : 2);
+                        },
                         child: Container(
                             margin: EdgeInsets.only(left: 130.w, top: 20.w),
                             height: 468.5.w,
-                            child: Opacity(
-                              opacity:
-                                  beautyCtrl.beautyIndex.value == 0 ? 1 : 0,
-                              child: SpineWidget.fromAsset(
-                                Assets.assetsSpineNv1,
-                                "assets/spine/nv_1.json",
-                                beautyCtrl.spineWidgetController,
-                                fit: BoxFit.fitHeight,
-                                alignment: Alignment.topCenter,
-                              ),
+                            child: SpineWidget.fromAsset(
+                              Assets.assetsSpineNv1,
+                              "assets/spine/nv_1.json",
+                              beautyCtrl.spineWidgetController,
+                              fit: BoxFit.fitHeight,
+                              alignment: Alignment.topCenter,
                             )),
                       );
                     }),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-02-21 19:44:04
+ * @LastEditTime: 2025-02-25 20:31:14
  */
 import 'dart:math';
 
@@ -185,7 +185,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                     top: 66.w + 150.w + top,
                     child: Obx(() {
                       return AnimatedOpacity(
-                        opacity: ctrl.showCash.value ? 1 : 0,
+                        opacity: ctrl.showCash.value > 0 ? 1 : 0,
                         duration: const Duration(milliseconds: 300),
                         child: Container(
                           width: 126.w,
@@ -206,7 +206,9 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                               children: [
                                 IconWidget(
                                   iconWidth: 32.w,
-                                  icon: Assets.teamUiMoney02,
+                                  icon: ctrl.showCash.value == 1
+                                      ? Assets.teamUiMoney02
+                                      : Assets.commonUiCommonIconCurrency02,
                                 ),
                                 4.hGap,
                                 Text(
@@ -219,8 +221,9 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                                   return AnimatedNum(
                                     fromZero: true,
                                     number: ctrl.cash.value,
-                                    milliseconds: 800,
-                                    isMoney: true,
+                                    milliseconds:
+                                        ctrl.showCash.value == 1 ? 800 : 300,
+                                    isMoney: ctrl.showCash.value == 1,
                                     textStyle: 16.w4(
                                         color: AppColors.cFFFFFF,
                                         fontFamily: FontFamily.fOswaldMedium),

@@ -85,6 +85,7 @@ import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entit
 import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/star_up_player_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
@@ -1028,6 +1029,10 @@ class JsonConvert {
       return data.map<StarUpDoneRandomCount>((Map<String, dynamic> e) =>
           StarUpDoneRandomCount.fromJson(e)).toList() as M;
     }
+    if (<StarUpPlayerEntity>[] is M) {
+      return data.map<StarUpPlayerEntity>((Map<String, dynamic> e) =>
+          StarUpPlayerEntity.fromJson(e)).toList() as M;
+    }
     if (<TacticGradeEntity>[] is M) {
       return data.map<TacticGradeEntity>((Map<String, dynamic> e) =>
           TacticGradeEntity.fromJson(e)).toList() as M;
@@ -1521,6 +1526,7 @@ class JsonConvertClassCollection {
     (StarUpDoneEntity).toString(): StarUpDoneEntity.fromJson,
     (StarUpDoneAddPotential).toString(): StarUpDoneAddPotential.fromJson,
     (StarUpDoneRandomCount).toString(): StarUpDoneRandomCount.fromJson,
+    (StarUpPlayerEntity).toString(): StarUpPlayerEntity.fromJson,
     (TacticGradeEntity).toString(): TacticGradeEntity.fromJson,
     (TacticGradeCards).toString(): TacticGradeCards.fromJson,
     (TacticsDefineEntity).toString(): TacticsDefineEntity.fromJson,
