@@ -19,7 +19,6 @@ class NbaPlayerBaseInfoEntity {
   List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames;
   NbaPlayerRankInfo? playerPlayoffsMap;
   late List<NbaPlayerBaseInfoPlayerTrends> playerTrends;
-  late List<NewsListDetail> playerNews;
   TradeInfoTradePlayers? tradePlayers;
   List<OutComeInfoEntity> outCome = [];
   NbaPlayerRankInfo? teamPreSeasonRankInfoMap;

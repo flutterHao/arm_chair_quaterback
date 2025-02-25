@@ -74,14 +74,6 @@ NbaPlayerBaseInfoEntity $NbaPlayerBaseInfoEntityFromJson(
   if (playerTrends != null) {
     nbaPlayerBaseInfoEntity.playerTrends = playerTrends;
   }
-  final List<NewsListDetail>? playerNews = (json['playerNews'] as List<
-      dynamic>?)
-      ?.map(
-          (e) => jsonConvert.convert<NewsListDetail>(e) as NewsListDetail)
-      .toList();
-  if (playerNews != null) {
-    nbaPlayerBaseInfoEntity.playerNews = playerNews;
-  }
   final TradeInfoTradePlayers? tradePlayers = jsonConvert.convert<
       TradeInfoTradePlayers>(json['tradePlayers']);
   if (tradePlayers != null) {
@@ -114,7 +106,6 @@ Map<String, dynamic> $NbaPlayerBaseInfoEntityToJson(
   data['twoTeamGames'] = entity.twoTeamGames?.map((v) => v.toJson()).toList();
   data['playerPlayoffsMap'] = entity.playerPlayoffsMap?.toJson();
   data['playerTrends'] = entity.playerTrends.map((v) => v.toJson()).toList();
-  data['playerNews'] = entity.playerNews.map((v) => v.toJson()).toList();
   data['tradePlayers'] = entity.tradePlayers?.toJson();
   data['outCome'] = entity.outCome.map((v) => v.toJson()).toList();
   data['teamPreSeasonRankInfoMap'] = entity.teamPreSeasonRankInfoMap?.toJson();
@@ -132,7 +123,6 @@ extension NbaPlayerBaseInfoEntityExtension on NbaPlayerBaseInfoEntity {
     List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames,
     NbaPlayerRankInfo? playerPlayoffsMap,
     List<NbaPlayerBaseInfoPlayerTrends>? playerTrends,
-    List<NewsListDetail>? playerNews,
     TradeInfoTradePlayers? tradePlayers,
     List<OutComeInfoEntity>? outCome,
     NbaPlayerRankInfo? teamPreSeasonRankInfoMap,
@@ -147,7 +137,6 @@ extension NbaPlayerBaseInfoEntityExtension on NbaPlayerBaseInfoEntity {
       ..twoTeamGames = twoTeamGames ?? this.twoTeamGames
       ..playerPlayoffsMap = playerPlayoffsMap ?? this.playerPlayoffsMap
       ..playerTrends = playerTrends ?? this.playerTrends
-      ..playerNews = playerNews ?? this.playerNews
       ..tradePlayers = tradePlayers ?? this.tradePlayers
       ..outCome = outCome ?? this.outCome
       ..teamPreSeasonRankInfoMap = teamPreSeasonRankInfoMap ??

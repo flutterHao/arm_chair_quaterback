@@ -73,6 +73,7 @@ class HistoryPage extends GetView<HistoryController> {
                         controller.data[year]?.isOpen.value == true,
                         tilePadding: EdgeInsets.only(right: 16.w),
                         onExpansionChanged: (expanded) {
+                          controller.data[year]?.isOpen.value = expanded;
                           if (expanded) {
                             // 在展开时自动滚动到确保内容在屏幕中
                             // _scrollToItem(context, index);

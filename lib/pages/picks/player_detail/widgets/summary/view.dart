@@ -1251,132 +1251,60 @@ class SummaryPage extends GetView<SummaryController> {
   }
 
   Widget _buildNews() {
-    if (controller.nbaPlayerBaseInfoEntity?.playerNews.isEmpty == true) {
-      return SliverPadding(padding: EdgeInsets.zero);
-    } else {
-      return GetBuilder<SummaryController>(
-          tag: getTag(),
-          id: SummaryController.idPlayerNews,
-          builder: (logic) {
-            return SliverList.separated(
-              itemCount: controller.newsList.length,
-              itemBuilder: (context, index) {
-                var playerNew = controller.newsList[index];
-                Widget item = NewsListItem(newsDetail: playerNew);
-                if (index == 0) {
-                  item = Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(12.w)),
-                            color: AppColors.cFFFFFF),
-                        margin: EdgeInsets.only(top: 9.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            19.vGap,
-                            Container(
-                              margin: EdgeInsets.only(left: 16.w, right: 16.w),
-                              child: Text(
-                                "News",
-                                style:
-                                    19.w7(color: AppColors.c262626, height: 1),
-                              ),
+    return GetBuilder<SummaryController>(
+        tag: getTag(),
+        id: SummaryController.idPlayerNews,
+        builder: (logic) {
+          if (controller.newsList.isEmpty == true) {
+            return SliverPadding(padding: EdgeInsets.zero);
+          }
+          return SliverList.separated(
+            itemCount: controller.newsList.length,
+            itemBuilder: (context, index) {
+              var playerNew = controller.newsList[index];
+              Widget item = NewsListItem(newsDetail: playerNew);
+              if (index == 0) {
+                item = Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(12.w)),
+                          color: AppColors.cFFFFFF),
+                      margin: EdgeInsets.only(top: 9.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          19.vGap,
+                          Container(
+                            margin: EdgeInsets.only(left: 16.w, right: 16.w),
+                            child: Text(
+                              "News",
+                              style: 19.w7(color: AppColors.c262626, height: 1),
                             ),
-                            9.vGap,
-                          ],
-                        ),
+                          ),
+                          9.vGap,
+                        ],
                       ),
-                      item,
-                    ],
-                  );
-                }
-                return InkWell(
-                    onTap: () =>
-                        Get.find<NewListController>().pageToDetail(playerNew),
-                    child: item);
-              },
-              separatorBuilder: (context, index) {
-                return Divider(
-                  color: AppColors.cE6E6E6,
-                  height: 1.w,
+                    ),
+                    item,
+                  ],
                 );
-              },
-            );
-          });
-    }
-    return Builder(builder: (context) {
-      if (controller.nbaPlayerBaseInfoEntity?.playerNews.isEmpty == true) {
-        return const SizedBox.shrink();
-      }
-      return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.w),
-            color: AppColors.cFFFFFF),
-        margin: EdgeInsets.only(top: 9.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            19.vGap,
-            Container(
-              margin: EdgeInsets.only(left: 16.w, right: 16.w),
-              child: Text(
-                "News",
-                style: 19.w7(color: AppColors.c262626, height: 1),
-              ),
-            ),
-            ...List.generate(
-                controller.nbaPlayerBaseInfoEntity!.playerNews.length, (index) {
-              var playerNew =
-                  controller.nbaPlayerBaseInfoEntity!.playerNews[index];
+              }
               return InkWell(
-                onTap: () {
-                  print('playerNew:${playerNew.id}');
-                  Get.find<NewListController>().pageToDetail(playerNew);
-                },
-                child: Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(left: 16.w, right: 16.w, top: 13.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cF2F2F2,
-                      borderRadius: BorderRadius.circular(16.w)),
-                  padding: EdgeInsets.only(
-                      top: 14.w, right: 30.w, left: 14.w, bottom: 14.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        playerNew.title.isEmpty
-                            ? playerNew.content
-                            : playerNew.title,
-                        maxLines: 3,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          height: 1.5,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        // style: 12.w4(
-                        //     color: AppColors.c262626,
-                        //     height: 1,
-                        //     overflow: TextOverflow.ellipsis),
-                      ),
-                      10.vGap,
-                      Text(
-                        "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(playerNew.createTime), format: DateFormats.PARAM_Y_M_D_H_M)} -${playerNew.source}",
-                        style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                      )
-                    ],
-                  ),
-                ),
+                  onTap: () =>
+                      Get.find<NewListController>().pageToDetail(playerNew),
+                  child: item);
+            },
+            separatorBuilder: (context, index) {
+              return Divider(
+                color: AppColors.cE6E6E6,
+                height: 1.w,
               );
-            }),
-            9.vGap,
-          ],
-        ),
-      );
-    });
+            },
+          );
+        });
   }
 
   Builder _buildCommunityPick() {
