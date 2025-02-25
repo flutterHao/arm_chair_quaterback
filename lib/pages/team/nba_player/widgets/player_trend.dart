@@ -29,6 +29,7 @@ import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/game_status_grid_soucre.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/big_player_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -644,55 +645,72 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
               Row(
                 children: [
                   20.hGap,
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      SizedBox(
-                        height: 116.w,
-                        width: 144.w,
-                        child: ImageWidget(
-                          url: Utils.getPlayUrl(playerId),
-                          imageFailedPath: Assets.iconUiDefault04,
-                          fit: BoxFit.fitHeight,
-                          alignment: Alignment.bottomCenter,
-                        ),
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                              child: BigPlayerCard(
+                                playerId: playerId,
+                              ),
+                            );
+                          });
+                    },
+                    splashColor: Colors.transparent,
+                    child: SizedBox(
+                      height: 116.w,
+                      width: 144.w,
+                      child: ImageWidget(
+                        url: Utils.getPlayUrl(playerId),
+                        imageFailedPath: Assets.iconUiDefault04,
+                        fit: BoxFit.fitHeight,
+                        alignment: Alignment.bottomCenter,
                       ),
-                    ],
+                    ),
                   ),
                   8.hGap,
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        18.vGap,
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            getFirstName(),
-                            style: 16.w4(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fRobotoRegular),
-                          ),
-                        ),
-                        4.vGap,
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            getLastName(),
-                            style: 24.w5(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fOswaldMedium),
-                          ),
-                        ),
-                        11.vGap,
-                        Row(
-                          children: [
-                            Text(
-                              "${Utils.getTeamInfo(playerInfo.teamId).shortEname} · ${playerInfo.position}",
-                              style: 12.w4(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fRobotoRegular),
-                            ),
-                            10.hGap,
-                          ],
-                        )
-                      ],
-                    ),
-                  )
+                  Flexible(
+                      child: MtInkWell(
+                          onTap: () {
+                            Get.toNamed(RouteNames.picksPlayerDetail, arguments: PlayerDetailPageArguments(playerId));
+                          },
+                          splashColor: Colors.transparent,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              18.vGap,
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  getFirstName(),
+                                  style:
+                                      16.w4(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fRobotoRegular),
+                                ),
+                              ),
+                              4.vGap,
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  getLastName(),
+                                  style:
+                                      24.w5(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ),
+                              11.vGap,
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "${Utils.getTeamInfo(playerInfo.teamId).shortEname} · ${playerInfo.position}",
+                                    style: 12
+                                        .w4(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fRobotoRegular),
+                                  ),
+                                  10.hGap,
+                                ],
+                              )
+                            ],
+                          )))
                 ],
               ),
               Positioned(
