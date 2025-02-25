@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-25 10:17:45
+ * @LastEditTime: 2025-02-25 12:01:47
  */
 
 import 'dart:async';
@@ -203,7 +203,7 @@ class TeamIndexController extends GetxController
   //   });
   // }
 
-  void matchBattle() async {
+  Future matchBattle() async {
     // await scroToMatch();
     final teamCtrl = Get.find<TeamController>();
     if (teamCtrl.myTeamEntity.salary >= teamCtrl.myTeamEntity.salaryCap) {

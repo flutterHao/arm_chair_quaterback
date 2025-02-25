@@ -423,10 +423,14 @@ class Assets {
   static const String soundOpenwindow = 'assets/sound/Openwindow.mp3';
   static const String soundPickConfirm = 'assets/sound/PickConfirm.mp3';
   static const String soundPickReward = 'assets/sound/PickReward.mp3';
+  static const String soundPlayerBookLevelUp = 'assets/sound/PlayerBookLevelUp.mp3';
   static const String soundPropMove = 'assets/sound/PropMove.mp3';
   static const String soundRadaMatch = 'assets/sound/RadaMatch.mp3';
   static const String soundSayNo = 'assets/sound/SayNo.mp3';
   static const String soundSayYes = 'assets/sound/SayYes.mp3';
+  static const String soundSlotReward3 = 'assets/sound/SlotReward3.mp3';
+  static const String soundSlotReward45 = 'assets/sound/SlotReward45.mp3';
+  static const String soundSlotReward6 = 'assets/sound/SlotReward6.mp3';
   static const String soundStamainNormal = 'assets/sound/StamainNormal.mp3';
   static const String soundStaminaBoom = 'assets/sound/StaminaBoom.mp3';
   static const String soundStarupFail = 'assets/sound/StarupFail.mp3';

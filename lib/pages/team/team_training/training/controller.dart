@@ -20,6 +20,7 @@ import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/preparation_tip.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/star_up_list.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_utils.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tatic_match.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_award_dialog.dart';
@@ -509,6 +510,7 @@ class TrainingController extends GetxController
       trainingInfo.buff = v;
       update(["training_page"]);
       Get.back();
+      if (trainingInfo.buff.length == 5) isPlaying.value = true;
       await Future.delayed(const Duration(milliseconds: 200));
       String newTacticType = TacticUtils.checkTacticMatch(trainingInfo.buff);
       // var list = TacticUtils.matchedIndices;
@@ -527,8 +529,10 @@ class TrainingController extends GetxController
       // });
       ///取战斗
       if (trainingInfo.buff.length == 5) {
+        isPlaying.value = true;
         TeamIndexController ctrl = Get.find();
-        ctrl.matchBattle();
+        await ctrl.matchBattle();
+        isPlaying.value = false;
       }
     }).catchError((e) {
       Log.e("网络错误");
@@ -577,6 +581,7 @@ class TrainingController extends GetxController
   }
 
   void startSlot() async {
+    if (isPlaying.value) return;
     // Get.to(
     //   StarUpList(),
     //   opaque: false,
@@ -584,8 +589,11 @@ class TrainingController extends GetxController
     // );
     // return;
     if (trainingInfo.buff.length == 5) {
+      // trainingInfo.buff.clear();
       TeamIndexController ctrl = Get.find();
-      ctrl.matchBattle();
+      isPlaying.value = true;
+      await ctrl.matchBattle();
+      isPlaying.value = false;
       return;
     }
     if (ballNum.value > 0) {
@@ -596,7 +604,7 @@ class TrainingController extends GetxController
     //   bool result = HomeController.to.updateTeamProp(-cost);
     //   if (!result) return;
     // }
-    if (isPlaying.value) return;
+
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scrollToSlot(onEnd: () {
