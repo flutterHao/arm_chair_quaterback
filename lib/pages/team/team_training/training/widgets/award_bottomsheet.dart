@@ -218,22 +218,22 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
   Widget _leftWidget(int index) {
     return index != _list.length - 1 && index != 1
         ? Positioned(
-            left: 53.w,
+            left: 54,
             top: 0,
             bottom: 0,
-            child: Container(width: 5.w, color: AppColors.cE6E6E),
+            child: Container(width: 4, color: AppColors.cE6E6E),
           )
         : Positioned(
-            left: 53.w,
+            left: 54,
             top: 0,
             bottom: 0,
             child: SizedBox(
-              width: 5.w,
+              width: 4,
               child: Column(
                 children: [
                   if (index == 1) const Spacer(),
                   Expanded(
-                    child: Container(width: 5.w, height: double.infinity, color: AppColors.cE6E6E),
+                    child: Container(width: 4, height: double.infinity, color: AppColors.cE6E6E),
                   ),
                   if (index == _list.length - 1) const Spacer(),
                 ],
@@ -253,7 +253,20 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
             children: [
               InkWell(
                 onTap: () {
-                  _overlayEntry?.remove();
+                  var currentIndex = _list.indexWhere((TrainTaskEntity e) => e.taskLevel == _currentLevel);
+                  if (currentIndex > 4) {
+                    print(11);
+                    controller.awardBottomScrollController.jumpTo(90.h * (currentIndex) - 360.h);
+                  }
+
+                  // else if (currentIndex >= _list.length - 4) {
+                  //   print(22);
+                  //   controller.awardBottomScrollController.jumpTo(90.h * (_list.length - 1) - 360.h);
+                  // }
+                  else {
+                    print(33);
+                    controller.awardBottomScrollController.jumpTo(0);
+                  }
                 },
                 child: Text(
                   'Training task',
@@ -312,7 +325,7 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
               children: [
                 Positioned(
                     top: 100.h,
-                    right: 36.w,
+                    right: 40.w,
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
@@ -347,16 +360,16 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                                         children: [
                                           ...List.generate(taskIconNum[index], (int taskIconIndex) {
                                             return Container(
-                                                height: 25.h,
+                                                // height: 25.h,
                                                 margin: taskIconIndex != taskIconNum.length - 1
                                                     ? EdgeInsets.only(right: 8.w)
                                                     : null,
-                                                padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 2.w),
+                                                padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 1),
                                                 decoration: BoxDecoration(
                                                     color: AppColors.cE6E6E, borderRadius: BorderRadius.circular(2.w)),
                                                 child: Image.asset(
                                                   Assets.commonUiCommonProp03,
-                                                  height: 14.h,
+                                                  width: 14.w,
                                                 ));
                                           })
                                         ],
@@ -405,7 +418,7 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
   }
 
   Color _getColor(int level) {
-    if (level < _currentLevel) {
+    if (level <= _currentLevel) {
       return AppColors.c666666;
     } else {
       return AppColors.cD1D1D1;
@@ -420,28 +433,28 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
       height: 72.h,
       child: Row(
         children: [
-          42.hGap,
+          SizedBox(width: 40),
           Container(
-            width: 32.h,
-            height: 32.h,
+            width: 32,
+            height: 32,
             color: AppColors.cFFFFFF,
             alignment: Alignment.center,
             child: Container(
-              width: 24.h,
-              height: 24.h,
+              width: 23,
+              height: 23,
               alignment: Alignment.center,
               decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 1, color: AppColors.cD1D1D1)),
-              child: level < _currentLevel
+              child: level <= _currentLevel
                   ? Container(
-                      width: 12.h,
-                      height: 12.h,
+                      width: 11,
+                      height: 11,
                       decoration: const BoxDecoration(
                         color: AppColors.c000000,
                         shape: BoxShape.circle,
                       ))
                   : Center(
                       child: IconWidget(
-                          iconWidth: 10.h, iconColor: AppColors.cD1D1D1, icon: Assets.commonUiCommonIconSystemLock),
+                          iconWidth: 10, iconColor: AppColors.cD1D1D1, icon: Assets.commonUiCommonIconSystemLock),
                     ),
             ),
           ),

@@ -37,7 +37,6 @@ class GameStatusGridSoucre extends DataGridSource {
   DataGridRowAdapter? buildRow(DataGridRow row) {
     List<Widget> cells = row.getCells().map((e) {
       OVRRankPlayerInfoGameStats playerInfoGameStats = e.value as OVRRankPlayerInfoGameStats;
-
       if (e.columnName == "date") {
         return Container(
             alignment: Alignment.centerLeft,
@@ -49,7 +48,14 @@ class GameStatusGridSoucre extends DataGridSource {
             padding: EdgeInsets.only(left: 10.w),
             child: MtInkWell(
               onTap: () {
-                Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.homeTeamId);
+                // print(playerTeamId == playerInfoGameStats.schedule.homeTeamId);
+                // print(playerTeamId);
+                // print(playerInfoGameStats.schedule.homeTeamId);
+                // if (playerTeamId == playerInfoGameStats.schedule.homeTeamId) {
+                //   Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.homeTeamId);
+                // } else {
+                //   Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.awayTeamId);
+                // }
               },
               child: Text(
                 MyDateUtils.formatDate(DateTime.fromMillisecondsSinceEpoch(playerInfoGameStats.schedule.gameStartTime),

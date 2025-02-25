@@ -62,6 +62,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
   NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
   GlobalKey globalKey = GlobalKey();
   NbaPlayerController controller = Get.find();
+
   @override
   void initState() {
     // TODO: implement initState
