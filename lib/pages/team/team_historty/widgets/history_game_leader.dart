@@ -170,10 +170,20 @@ class HistoryGameLeaderWidget extends GetView<TeamHistortyController> {
                             return MtInkWell(
                               minScale: 1,
                               onTap: () {
-                                Get.toNamed(
-                                  RouteNames.picksPlayerDetail,
-                                  arguments: PlayerDetailPageArguments(item.playerInfo.playerId),
-                                );
+                                if (item.playerInfo.teamId ==
+                                    controller.gameResultInfoEntity.gsGameSchedule.homeTeamId) {
+                                  Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
+                                    "playerUuid": controller
+                                        .getTeamPlayerInfoEntityByPlayerId(
+                                            item.playerInfo.teamId, item.playerInfo.playerId)
+                                        .uuid
+                                  });
+                                } else {
+                                  Get.toNamed(
+                                    RouteNames.picksPlayerDetail,
+                                    arguments: PlayerDetailPageArguments(item.playerInfo.playerId),
+                                  );
+                                }
                               },
                               child: Container(
                                 height: 132.w,
