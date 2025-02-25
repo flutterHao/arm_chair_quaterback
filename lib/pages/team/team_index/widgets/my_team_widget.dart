@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-02-20 20:52:08
+ * @LastEditTime: 2025-02-25 10:22:58
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -255,7 +255,7 @@ class MyTeamWidget extends StatelessWidget {
                                   onTap: () {
                                     TeamIndexController ctrl = Get.find();
                                     ctrl.goToIllustraction();
-                                    Get.toNamed(RouteNames.illustrationPage);
+                                    // Get.toNamed(RouteNames.illustrationPage);
                                     iCtrl.reset();
                                   },
                                   child: Container(

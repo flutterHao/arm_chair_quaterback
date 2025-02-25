@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-24 18:53:16
- * @LastEditTime: 2025-02-24 18:24:58
+ * @LastEditTime: 2025-02-25 10:56:25
  */
 import 'dart:math';
 
@@ -52,7 +52,7 @@ class _CardRuleDialogState extends State<CardRuleDialog>
             width: 323.w,
             height: 74.w,
             margin: EdgeInsets.symmetric(horizontal: 23.5.w),
-            padding: EdgeInsets.only(left: 14.w),
+            padding: EdgeInsets.symmetric(horizontal: 14.w),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.w),
                 color: AppColors.cF2F2F2),
@@ -108,7 +108,8 @@ class _CardRuleDialogState extends State<CardRuleDialog>
                             },
                             separatorBuilder: (context, index) => 3.hGap,
                             itemCount: item.cards.length),
-                        if (_list[index].cards.isNotEmpty) 14.hGap,
+                        if (_list[index].cards.isNotEmpty)
+                          Expanded(child: Container()),
                         if (_list[index].cards.isNotEmpty)
                           SizedBox(
                             height: 41.5.w,

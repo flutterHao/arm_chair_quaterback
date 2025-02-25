@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-10 18:08:14
- * @LastEditTime: 2025-02-15 18:18:23
+ * @LastEditTime: 2025-02-25 11:12:40
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +45,12 @@ class _TopDialogState extends State<CardFlyWidget>
         curve: Curves.easeOutSine);
     _controller.forward().then((v) async {
       IllustratiionsController ctrl = Get.find();
+      ctrl.update();
       ctrl.hasNewPlayer.value = true;
       isShow = false;
       setState(() {});
+      TeamIndexController teamIndexCtrl = Get.find();
+      teamIndexCtrl.overlayEntry.remove();
     });
   }
 

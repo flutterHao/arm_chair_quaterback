@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-22 21:10:29
+ * @LastEditTime: 2025-02-24 21:32:27
  */
 import 'dart:math';
 
@@ -91,7 +91,8 @@ class TrainingNewWidget extends GetView<TrainingController> {
                             visible: beautyCtrl.beautyIndex.value != 0,
                             child: Image.asset(
                               alignment: Alignment.topLeft,
-                              beautyCtrl.girlList[beautyCtrl.beautyIndex.value].girlImg,
+                              beautyCtrl.girlList[beautyCtrl.beautyIndex.value]
+                                  .girlImg,
                               height: 498.w,
                               fit: BoxFit.fitHeight,
                             ),
@@ -115,7 +116,8 @@ class TrainingNewWidget extends GetView<TrainingController> {
                             margin: EdgeInsets.only(left: 130.w, top: 20.w),
                             height: 468.5.w,
                             child: Opacity(
-                              opacity: beautyCtrl.beautyIndex.value == 0 ? 1 : 0,
+                              opacity:
+                                  beautyCtrl.beautyIndex.value == 0 ? 1 : 0,
                               child: SpineWidget.fromAsset(
                                 Assets.assetsSpineNv1,
                                 "assets/spine/nv_1.json",
@@ -237,18 +239,27 @@ class TrainingNewWidget extends GetView<TrainingController> {
                               //TODO
                               Text(
                                 "Preparation",
-                                style:
-                                    12.w4(height: 1, fontFamily: FontFamily.fOswaldRegular, color: AppColors.cFFFFFF),
+                                style: 12.w4(
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldRegular,
+                                    color: AppColors.cFFFFFF),
                               ),
                               31.hGap,
                               AnimatedNum(
-                                number: (ctrl.trainingInfo.playerReadiness * 100).toInt(),
-                                textStyle:
-                                    12.w4(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fOswaldMedium),
+                                number:
+                                    (ctrl.trainingInfo.playerReadiness * 100)
+                                        .toInt(),
+                                textStyle: 12.w4(
+                                    color: AppColors.cFFFFFF,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium),
                               ),
                               Text(
                                 "%",
-                                style: 12.w4(color: AppColors.cFFFFFF, height: 1, fontFamily: FontFamily.fOswaldMedium),
+                                style: 12.w4(
+                                    color: AppColors.cFFFFFF,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium),
                               ),
                             ],
                           ),
@@ -283,7 +294,8 @@ class TrainingNewWidget extends GetView<TrainingController> {
                               blurRadius: 35.w,
                             )
                           ],
-                          borderRadius: BorderRadius.vertical(bottom: Radius.circular(9.w)),
+                          borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(9.w)),
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -353,7 +365,9 @@ class TrainingNewWidget extends GetView<TrainingController> {
                                 child: Image.asset(
                                   Assets.managerUiManagerShield02,
                                   width: 56.w,
-                                  color: ctrl.shieldCount.value > i ? AppColors.c13C37B : AppColors.cB3B3B3,
+                                  color: ctrl.shieldCount.value > i
+                                      ? AppColors.c13C37B
+                                      : AppColors.cB3B3B3,
                                 ),
                               ),
                           ],
@@ -372,7 +386,10 @@ class TrainingNewWidget extends GetView<TrainingController> {
                         children: [
                           Text(
                             "${ctrl.trainDefine.ballRecoverNum} balls ready in ",
-                            style: 12.w4(height: 1, fontFamily: FontFamily.fRobotoRegular, color: AppColors.c000000),
+                            style: 12.w4(
+                                height: 1,
+                                fontFamily: FontFamily.fRobotoRegular,
+                                color: AppColors.c000000),
                           ),
                           Obx(() {
                             return Text(
@@ -407,14 +424,21 @@ class PlayerStatusWidget extends StatelessWidget {
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            int count = teamCtrl.myTeamEntity.teamPlayers.where((e) => e.playerStatus == statusList[index]).length;
+            int count = teamCtrl.myTeamEntity.teamPlayers
+                .where((e) => e.playerStatus == statusList[index])
+                .length;
             return Column(
               children: [
-                IconWidget(iconWidth: 19.5.w, icon: Utils.getStatusUrl(statusList[index])),
+                IconWidget(
+                    iconWidth: 19.5.w,
+                    icon: Utils.getStatusUrl(statusList[index])),
                 2.vGap,
                 Text(
                   "$count",
-                  style: 12.w4(height: 1, fontFamily: FontFamily.fRobotoMedium, color: AppColors.cFFFFFF),
+                  style: 12.w4(
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoMedium,
+                      color: AppColors.cFFFFFF),
                 )
               ],
             );
@@ -440,7 +464,9 @@ class _SlotButton extends StatelessWidget {
                   : () async {
                       if (controller.ballNum.value <= 0) {
                         BottomTipDialog.showWithSound(
-                            context: context, isScrollControlled: true, builder: (context) => BuyGoBottomsheet());
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => BuyGoBottomsheet());
                         // BottomTipDialog.show(
                         //     context: Get.context!,
                         //     desc: "Automatically use Coins for training when there's a shortage of balls ",
@@ -512,7 +538,9 @@ class _SlotButton extends StatelessWidget {
                               progressWidth: 5.w,
                               progressColor: AppColors.cFFFFFF,
                               borderColor: Colors.black.withOpacity(0.3),
-                              progressSweepAngle: 180 * controller.ballNum.value / controller.trainDefine.ballMaxNum,
+                              progressSweepAngle: 180 *
+                                  controller.ballNum.value /
+                                  controller.trainDefine.ballMaxNum,
                               borderWidth: 5.w,
                             ),
                           ),
@@ -529,9 +557,11 @@ class _SlotButton extends StatelessWidget {
                                   children: [
                                     AnimatedScale(
                                       duration: 150.milliseconds,
-                                      scale: controller.showBall.value ? 1.5 : 1,
+                                      scale:
+                                          controller.showBall.value ? 1.5 : 1,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Obx(() {
                                             int v = controller.ballNum.value;
@@ -540,7 +570,8 @@ class _SlotButton extends StatelessWidget {
                                               number: v,
                                               textStyle: 14.w4(
                                                   color: AppColors.cFFFFFF,
-                                                  fontFamily: FontFamily.fOswaldRegular,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldRegular,
                                                   height: 0.8),
                                             );
                                           }),
@@ -549,7 +580,8 @@ class _SlotButton extends StatelessWidget {
                                               "+${controller.trainingInfo.prop.num - controller.ballNum.value}",
                                               style: 14.w4(
                                                   color: AppColors.c31E99E,
-                                                  fontFamily: FontFamily.fOswaldMedium,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
                                                   height: 0.8),
                                             )
                                         ],
@@ -562,7 +594,8 @@ class _SlotButton extends StatelessWidget {
                                         "/${controller.trainDefine.ballMaxNum}",
                                         style: 14.w4(
                                             color: AppColors.cFFFFFF,
-                                            fontFamily: FontFamily.fOswaldRegular,
+                                            fontFamily:
+                                                FontFamily.fOswaldRegular,
                                             height: 0.8),
                                       ),
                                     ),
@@ -587,14 +620,16 @@ class PreparationWidget extends StatefulWidget {
   late double playerReadinessValue;
   final bool withAnimated;
 
-  PreparationWidget({super.key, required double playerReadiness, this.withAnimated = false})
+  PreparationWidget(
+      {super.key, required double playerReadiness, this.withAnimated = false})
       : playerReadinessValue = min(1, playerReadiness);
 
   @override
   State<PreparationWidget> createState() => _PreparationWidgetState();
 }
 
-class _PreparationWidgetState extends State<PreparationWidget> with SingleTickerProviderStateMixin {
+class _PreparationWidgetState extends State<PreparationWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -606,7 +641,8 @@ class _PreparationWidgetState extends State<PreparationWidget> with SingleTicker
         duration: const Duration(milliseconds: 500), // 动画时长
         vsync: this,
       );
-      _animation = Tween<double>(begin: 0, end: widget.playerReadinessValue).animate(
+      _animation =
+          Tween<double>(begin: 0, end: widget.playerReadinessValue).animate(
         CurvedAnimation(
           parent: _controller,
           curve: Curves.easeInOut, // 动画曲线
@@ -660,7 +696,9 @@ class _PreparationWidgetState extends State<PreparationWidget> with SingleTicker
         ClipRect(
           child: Align(
             alignment: Alignment.centerLeft,
-            widthFactor: widget.withAnimated ? _animation.value : widget.playerReadinessValue,
+            widthFactor: widget.withAnimated
+                ? _animation.value
+                : widget.playerReadinessValue,
             child: Image.asset(
               Assets.managerUiManagerIconPrepareprogressbar03,
               width: 103.w,

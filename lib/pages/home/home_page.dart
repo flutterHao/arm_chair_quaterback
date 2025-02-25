@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
@@ -101,9 +102,12 @@ class _HomePageState extends State<HomePage>
                                               top: Radius.circular(9.w))),
                                       child: MtInkWell(
                                         onTap: () {
-                                          TeamIndexController ctrl = Get.find();
+                                          IllustratiionsController illuCtrl =
+                                              Get.find();
                                           if (index == 2 &&
-                                              ctrl.overlayEntry.mounted) {
+                                              illuCtrl.hasNewPlayer.value) {
+                                            TeamIndexController ctrl =
+                                                Get.find();
                                             ctrl.goToIllustraction();
                                           } else {
                                             controller.onTap(2);
@@ -356,7 +360,7 @@ class NewPlayerTip extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "get new player:  ",
+                        "Get new player:  ",
                         style: TextStyle(
                             fontSize: 16.sp,
                             color: AppColors.cFFFFFF,
@@ -364,12 +368,13 @@ class NewPlayerTip extends StatelessWidget {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 1.5.w),
-                        child: Text(
-                          "${ctrl.getPlayerCards.length}",
-                          style: TextStyle(
+                        child: AnimatedNum(
+                          milliseconds: 100,
+                          textStyle: TextStyle(
                               fontSize: 16.sp,
                               color: AppColors.cFFFFFF,
                               fontFamily: FontFamily.fRobotoMedium),
+                          number: ctrl.getPlayerCards.length,
                         ),
                       )
                     ],

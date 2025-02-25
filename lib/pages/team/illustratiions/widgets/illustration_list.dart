@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-02-24 12:11:15
+ * @LastEditTime: 2025-02-25 11:28:30
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -431,89 +431,91 @@ class _ItemSmall extends StatelessWidget {
           arguments: item,
         );
       },
-      child: item.isLight == 1
-          ? Container(
-              width: 64.w,
-              height: 90.w,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.circular(9.w),
-              ),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Positioned(
-                    bottom: 0,
-                    child: ImageWidget(
-                      url: Utils.getPlayUrl(item.playerId),
-                      width: 68.w,
-                      height: 75.w,
-                      // height: 140.w,
-                      fit: BoxFit.cover,
+      child: Obx(() {
+        return item.isLightRx.value == 1
+            ? Container(
+                width: 64.w,
+                height: 90.w,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  color: AppColors.cFFFFFF,
+                  borderRadius: BorderRadius.circular(9.w),
+                ),
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Positioned(
+                      bottom: 0,
+                      child: ImageWidget(
+                        url: Utils.getPlayUrl(item.playerId),
+                        width: 68.w,
+                        height: 75.w,
+                        // height: 140.w,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  if (item.isLight == 1)
+                    if (item.isLightRx.value == 1)
+                      Positioned(
+                        top: 5.w,
+                        left: 5.5.w,
+                        child: Text(
+                          Utils.getPlayBaseInfo(item.playerId)
+                              .playerScore
+                              .toString(),
+                          style: TextStyle(
+                              fontSize: 14.w,
+                              fontFamily: FontFamily.fOswaldMedium,
+                              height: 0.8),
+                        ),
+                      ),
+                  ],
+                ),
+              )
+            : Container(
+                width: 64.w,
+                height: 90.w,
+                decoration: BoxDecoration(
+                  color: AppColors.cE6E6E6,
+                  borderRadius: BorderRadius.circular(9.w),
+                ),
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
                     Positioned(
                       top: 5.w,
-                      left: 5.5.w,
+                      child: Opacity(
+                        opacity: 0.35,
+                        child: ImageWidget(
+                          width: 50.w,
+                          height: 50.w,
+                          url: Utils.getTeamUrl(player.teamId),
+                          color: AppColors.cE6E6E6,
+                          colorBlendMode: BlendMode.saturation,
+                          // color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 52.w,
                       child: Text(
-                        Utils.getPlayBaseInfo(item.playerId)
-                            .playerScore
-                            .toString(),
-                        style: TextStyle(
-                            fontSize: 14.w,
-                            fontFamily: FontFamily.fOswaldMedium,
-                            height: 0.8),
+                        "#${Utils.getPlayBaseInfo(item.playerId).number}",
+                        style: 10.w4(color: AppColors.cB3B3B3, height: 0.8),
                       ),
                     ),
-                ],
-              ),
-            )
-          : Container(
-              width: 64.w,
-              height: 90.w,
-              decoration: BoxDecoration(
-                color: AppColors.cE6E6E6,
-                borderRadius: BorderRadius.circular(9.w),
-              ),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Positioned(
-                    top: 5.w,
-                    child: Opacity(
-                      opacity: 0.35,
-                      child: ImageWidget(
-                        width: 50.w,
-                        height: 50.w,
-                        url: Utils.getTeamUrl(player.teamId),
-                        color: AppColors.cE6E6E6,
-                        colorBlendMode: BlendMode.saturation,
-                        // color: Colors.grey,
+                    Positioned(
+                      bottom: 9.w,
+                      child: CustomLinearProgressBar(
+                        width: 54.w,
+                        height: 5.w,
+                        progressColor: AppColors.c43BF8F,
+                        backgroundColor: AppColors.cD4D4D4,
+                        progress: item.fragmentNum / item.needNum,
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 52.w,
-                    child: Text(
-                      "#${Utils.getPlayBaseInfo(item.playerId).number}",
-                      style: 10.w4(color: AppColors.cB3B3B3, height: 0.8),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 9.w,
-                    child: CustomLinearProgressBar(
-                      width: 54.w,
-                      height: 5.w,
-                      progressColor: AppColors.c43BF8F,
-                      backgroundColor: AppColors.cD4D4D4,
-                      progress: item.fragmentNum / item.needNum,
-                    ),
-                  )
-                ],
-              ),
-            ),
+                    )
+                  ],
+                ),
+              );
+      }),
     );
   }
 }

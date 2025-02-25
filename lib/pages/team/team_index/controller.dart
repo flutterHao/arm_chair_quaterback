@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-24 17:44:26
+ * @LastEditTime: 2025-02-25 10:17:45
  */
 
 import 'dart:async';
@@ -288,11 +288,15 @@ class TeamIndexController extends GetxController
         .where((e) => e.isSelect.value && e.isOpen.value)
         .toList();
     // 获取新卡
-    ctrl.getPlayerCards = selectList
+    var newList = selectList
         .where((e) => CacheApi.playerBookRuleList
             .where((a) => a.playerId == e.playerId && a.isLight == 0)
             .isNotEmpty)
         .toList();
+    ctrl.hasNewPlayer.value
+        ? ctrl.getPlayerCards.addAll(newList)
+        : ctrl.getPlayerCards = newList;
+
     closeCard();
     Log.d("抽卡${selectList.length}");
     Log.d("抽卡新卡${ctrl.getPlayerCards.length}");

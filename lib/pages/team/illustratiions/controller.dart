@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-24 18:07:40
+ * @LastEditTime: 2025-02-25 11:25:15
  */
 /*
  * @Description: 
@@ -241,14 +241,9 @@ class IllustratiionsController extends GetxController
               getPlayerCards
                   .where(((e) => e.playerId == item.playerId))
                   .isNotEmpty);
-        } else {
-          myPlayer = playerCollectEntity.collects
-              .firstWhereOrNull((e) => e.playerId == item.playerId);
-        }
 
-        if (myPlayer != null) {
-          //如果是新获取的，添加获得动画
-          if (hasNewPlayer.value) {
+          if (myPlayer != null) {
+            //如果是新获取的，添加获得动画
             int index = activeList.indexOf(item);
             if (index > 0) {
               double offset = ((index) ~/ 5) * (height + vSpace) + 12.w;
@@ -258,15 +253,19 @@ class IllustratiionsController extends GetxController
               item.fragmentNum = myPlayer.fragmentNum;
               item.isLight = myPlayer.isLight;
               item.isLightRx.value = myPlayer.isLight;
-              update(["list"]);
+              // update(["list"]);
               await Future.delayed(const Duration(milliseconds: 300));
               dy = offset;
             }
-          } else {
-            item.fragmentNum = myPlayer.fragmentNum;
-            item.isLight = myPlayer.isLight;
-            item.isLightRx.value = myPlayer.isLight;
           }
+        }
+
+        myPlayer = playerCollectEntity.collects
+            .firstWhereOrNull((e) => e.playerId == item.playerId);
+        if (myPlayer != null) {
+          item.fragmentNum = myPlayer.fragmentNum;
+          item.isLight = myPlayer.isLight;
+          item.isLightRx.value = myPlayer.isLight;
         }
       }
       double beginY =
@@ -279,33 +278,35 @@ class IllustratiionsController extends GetxController
               getPlayerCards
                   .where(((e) => e.playerId == item.playerId))
                   .isNotEmpty);
-        } else {
-          myPlayer = playerCollectEntity.collects
-              .firstWhereOrNull((e) => e.playerId == item.playerId);
-        }
-        if (myPlayer != null) {
-          if (hasNewPlayer.value) {
-            int index = notActiveList.indexOf(item);
-            if (index > 0) {
-              double offset = beginY + ((index + 1) ~/ 5) * (height + 10.w);
-              int t = ((offset - dy) * 0.5).ceil();
-              await scrollController.animateTo(offset,
-                  duration: Duration(milliseconds: t), curve: Curves.easeInOut);
-              item.fragmentNum = myPlayer.fragmentNum;
-              item.isLight = myPlayer.isLight;
-              item.isLightRx.value = myPlayer.isLight;
-              update(["list"]);
-              await Future.delayed(const Duration(milliseconds: 300));
-              dy = offset;
+          if (myPlayer != null) {
+            if (hasNewPlayer.value) {
+              int index = notActiveList.indexOf(item);
+              if (index > 0) {
+                double offset = beginY + ((index + 1) ~/ 5) * (height + 10.w);
+                int t = ((offset - dy) * 0.5).ceil();
+                await scrollController.animateTo(offset,
+                    duration: Duration(milliseconds: t),
+                    curve: Curves.easeInOut);
+                item.fragmentNum = myPlayer.fragmentNum;
+                item.isLight = myPlayer.isLight;
+                item.isLightRx.value = myPlayer.isLight;
+                // update(["list"]);
+                await Future.delayed(const Duration(milliseconds: 300));
+                dy = offset;
+              }
             }
-          } else {
-            item.fragmentNum = myPlayer.fragmentNum;
-            item.isLight = myPlayer.isLight;
-            item.isLightRx.value = myPlayer.isLight;
           }
         }
+        //如果不是新获取的，直接赋值
+        myPlayer = playerCollectEntity.collects
+            .firstWhereOrNull((e) => e.playerId == item.playerId);
+        if (myPlayer != null) {
+          item.fragmentNum = myPlayer.fragmentNum;
+          item.isLight = myPlayer.isLight;
+          item.isLightRx.value = myPlayer.isLight;
+        }
       }
-
+      // update(["list"]);
       // await scrollController.animateTo(beginY,
       //     duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
 
@@ -473,6 +474,7 @@ class IllustratiionsController extends GetxController
       await getPlayerCollectInfo();
       hasNewPlayer.value = false;
     } else {
+      isCollect.value = true;
       await getPlayerCollectInfo();
     }
   }
