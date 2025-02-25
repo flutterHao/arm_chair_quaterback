@@ -24,8 +24,8 @@ class NbaPlayerController extends GetxController {
 
     ///涨跌幅都是0，取前四个,否则取前两个和最后两个展示
     if (allPlayerStrengthRank[0].trendList[0].playerScore - allPlayerStrengthRank[0].trendList[1].playerScore != 0) {
-      nbaPlayerList
-          .addAll(allPlayerStrengthRank.sublist(allPlayerStrengthRank.length - 3, allPlayerStrengthRank.length - 1));
+      nbaPlayerList.add(allPlayerStrengthRank[allPlayerStrengthRank.length - 1]);
+      nbaPlayerList.add(allPlayerStrengthRank[allPlayerStrengthRank.length - 2]);
       nbaPlayerList.addAll(allPlayerStrengthRank.sublist(0, 2));
     } else {
       nbaPlayerList.addAll(allPlayerStrengthRank.sublist(0, 4));
