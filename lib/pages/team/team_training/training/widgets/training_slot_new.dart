@@ -289,8 +289,13 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                 );
                               }),
                               Text(
-                                Utils.formatMoney(
-                                    controller.getTaskAward().propNum),
+                                controller.getTaskAward().propId == 102
+                                    ? Utils.formatMoney(
+                                        controller.getTaskAward().propNum)
+                                    : controller
+                                        .getTaskAward()
+                                        .propNum
+                                        .toString(),
                                 style: 10.w4(
                                     fontFamily: FontFamily.fOswaldMedium,
                                     color: AppColors.cFFFFFF,

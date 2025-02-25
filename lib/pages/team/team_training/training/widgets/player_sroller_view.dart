@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2025-02-11 20:37:39
+ * @LastEditTime: 2025-02-25 21:22:40
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -66,6 +66,12 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                               controller.currentPlayerIndex.value <=
                                   (index + count);
                     } else {
+                      isSelect = controller.currentPlayerIndex.value <=
+                              (index + count) &&
+                          controller.currentPlayerIndex.value >=
+                              (index - count);
+                    }
+                    if (selectPlayers.length >= 6) {
                       isSelect = controller.currentPlayerIndex.value <=
                               (index + count) &&
                           controller.currentPlayerIndex.value >=

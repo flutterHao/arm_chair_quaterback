@@ -709,7 +709,7 @@ class TrainingController extends GetxController
       SoundServices.to.playSound(
           awardLength > 4 ? Assets.soundStatusBig : Assets.soundStatusSmall);
       await startPlayerScroll(0);
-
+// return;
       // await Future.delayed(const Duration(milliseconds: 500));
       Get.back();
       //更新球员状态
