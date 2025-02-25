@@ -127,6 +127,18 @@ class NewsApi {
     return Future.wait(details);
   }
 
+  static Future<List<NewsListDetail>> getPlayerNews(int playerId,int page,
+      {int limit = 10}) async {
+    List list = await HttpUtil()
+        .post(Api.getPlayerNews, data: {"playerId":playerId,"page": page, "limit": limit});
+    var details = list.map((e) async {
+      var item = NewsListDetail.fromJson(e);
+      getImageWith(item);
+      return item;
+    }).toList();
+    return Future.wait(details);
+  }
+
   static void getImageWith(NewsListDetail item) {
     if (ObjectUtil.isNotEmpty(item.imgUrl)) {
       final uri = Uri.parse(item.imgUrl);

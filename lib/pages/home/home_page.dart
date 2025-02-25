@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
@@ -162,9 +163,7 @@ class _HomePageState extends State<HomePage>
                               }).toList(),
                             ),
                             Container(
-                              height: MediaQuery.of(context).padding.bottom > 0
-                                  ? MediaQuery.of(context).padding.bottom / 2
-                                  : 0,
+                              height: Utils.getPaddingBottom(),
                               width: double.infinity,
                               color: AppColors.cFFFFFF,
                             )
@@ -192,7 +191,7 @@ class _HomePageState extends State<HomePage>
                               // Obx(() {
                               //   return Container(
                               //     height: controller.bottomBarY.value.abs() +
-                              //         MediaQuery.of(context).padding.bottom,
+                              //         Utils.getPaddingBottom(),
                               //   );
                               // })
                             ],

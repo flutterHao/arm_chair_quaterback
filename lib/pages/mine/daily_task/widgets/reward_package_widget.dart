@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:io';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -263,7 +264,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                   ),
                                 ),
                                 SizedBox(
-                                  height: MediaQuery.of(context).padding.bottom+9.w,
+                                  height: Utils.getPaddingBottom()+9.w,
                                 ),
                               ],
                             ),

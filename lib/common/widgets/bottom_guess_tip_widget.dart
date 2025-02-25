@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -52,9 +53,7 @@ class BottomGuessTipWidget extends StatelessWidget {
               ? -75.w
               : bottomValue ??
                   ((barHideStatus ? 0 : (75.w + 7.w)) +
-                      (MediaQuery.of(context).padding.bottom == 0
-                          ? 0
-                          : MediaQuery.of(context).padding.bottom / 2)),
+                      Utils.getPaddingBottom()),
           child: Center(
             child: MtInkWell(
               scaleX: true,

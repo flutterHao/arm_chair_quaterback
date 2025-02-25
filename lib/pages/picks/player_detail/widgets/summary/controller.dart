@@ -7,10 +7,12 @@ import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/trade.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -26,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class PlayerRegular {
@@ -37,12 +40,12 @@ class PlayerRegular {
 }
 
 class SummaryController extends GetxController {
-  SummaryController(this.playerId, this.playerDetailController, {this.initTabStr});
+  SummaryController(this.playerId, this.playerDetailController,
+      {this.initTabStr});
 
   final int playerId;
   final String? initTabStr;
   final PlayerDetailController playerDetailController;
-
 
   var currentIndex = 0.obs;
 
@@ -64,6 +67,11 @@ class SummaryController extends GetxController {
   Timer? timer;
 
   late PageController outComePageController;
+
+  int newPage = -1;
+  List<NewsListDetail> newsList = [];
+
+  var refreshController = RefreshController();
 
   void startCountDown(trendPlayer) {
     timer?.cancel();
@@ -107,14 +115,31 @@ class SummaryController extends GetxController {
     });
     picksIndexController = Get.find();
     initData();
+    getPlayerNews();
+  }
+
+  getPlayerNews(){
+    newPage ++;
+    NewsApi.getPlayerNews(playerId, newPage).then((result) {
+      if(result.isNotEmpty){
+        newsList.addAll(result);
+        update([idPlayerNews]);
+        refreshController.loadComplete();
+      }else{
+        refreshController.loadNoData();
+      }
+    },onError: (e){
+      refreshController.loadFailed();
+    });
   }
 
   initData() {
     loadStatus.value = LoadDataStatus.loading;
-    Future.wait([CacheApi.getNBATeamDefine(), CacheApi.getPickType()]).then(
-        (result) {
-      nbaPlayerBaseInfoEntity =
-          playerDetailController.nbaPlayerBaseInfoEntity;
+    Future.wait([
+      CacheApi.getNBATeamDefine(),
+      CacheApi.getPickType(),
+    ]).then((result) {
+      nbaPlayerBaseInfoEntity = playerDetailController.nbaPlayerBaseInfoEntity;
       if (initTabStr != null) {
         var i = nbaPlayerBaseInfoEntity?.guessInfos.keys
                 .toList()
@@ -150,6 +175,8 @@ class SummaryController extends GetxController {
   static String get idTabContent => "id_tab_content";
 
   static String get idRecentPickTabContent => "id_recent_pick_tab_content";
+
+  static String get idPlayerNews => "id_player_news";
 
   int getSeasonDate() {
     return nbaPlayerBaseInfoEntity?.playerDataAvg.seasonId ?? 1971;
