@@ -37,6 +37,7 @@ class GameStatusGridSoucre extends DataGridSource {
   DataGridRowAdapter? buildRow(DataGridRow row) {
     List<Widget> cells = row.getCells().map((e) {
       OVRRankPlayerInfoGameStats playerInfoGameStats = e.value as OVRRankPlayerInfoGameStats;
+      bool isHomeTeam = playerInfoGameStats.playerTeamId == playerInfoGameStats.schedule.homeTeamId;
       if (e.columnName == "date") {
         return Container(
             alignment: Alignment.centerLeft,
@@ -48,14 +49,11 @@ class GameStatusGridSoucre extends DataGridSource {
             padding: EdgeInsets.only(left: 10.w),
             child: MtInkWell(
               onTap: () {
-                // print(playerTeamId == playerInfoGameStats.schedule.homeTeamId);
-                // print(playerTeamId);
-                // print(playerInfoGameStats.schedule.homeTeamId);
-                // if (playerTeamId == playerInfoGameStats.schedule.homeTeamId) {
-                //   Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.homeTeamId);
-                // } else {
-                //   Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.awayTeamId);
-                // }
+                if (isHomeTeam) {
+                  Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.homeTeamId);
+                } else {
+                  Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.awayTeamId);
+                }
               },
               child: Text(
                 MyDateUtils.formatDate(DateTime.fromMillisecondsSinceEpoch(playerInfoGameStats.schedule.gameStartTime),
@@ -69,7 +67,8 @@ class GameStatusGridSoucre extends DataGridSource {
               ),
             ));
       } else if (e.columnName == "opp") {
-        bool isWin = playerInfoGameStats.schedule.homeTeamScore >= playerInfoGameStats.schedule.awayTeamScore;
+        bool isHomeWin = playerInfoGameStats.schedule.homeTeamScore >= playerInfoGameStats.schedule.awayTeamScore;
+        bool playerWin = isHomeTeam ? isHomeWin : !isHomeWin;
         return Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
@@ -82,12 +81,21 @@ class GameStatusGridSoucre extends DataGridSource {
                   ))),
           padding: EdgeInsets.only(left: 10.w),
           child: MtInkWell(
-              onTap: () => Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.awayTeamId),
+              onTap: () {
+                if (!isHomeTeam) {
+                  Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.homeTeamId);
+                } else {
+                  Get.toNamed(RouteNames.teamDetailPage, arguments: playerInfoGameStats.schedule.awayTeamId);
+                }
+              },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    Utils.getTeamInfo(playerInfoGameStats.schedule.awayTeamId).shortEname,
+                    Utils.getTeamInfo(isHomeTeam
+                            ? playerInfoGameStats.schedule.awayTeamId
+                            : playerInfoGameStats.schedule.homeTeamId)
+                        .shortEname,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: AppColors.c4D4D4D,
@@ -96,7 +104,7 @@ class GameStatusGridSoucre extends DataGridSource {
                     ),
                   ),
                   4.hGap,
-                  isWin
+                  playerWin
                       ? Text(
                           'W',
                           style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c0FA76C),

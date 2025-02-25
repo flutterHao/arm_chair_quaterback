@@ -3,6 +3,10 @@ import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 
 TrainDefineEntity $TrainDefineEntityFromJson(Map<String, dynamic> json) {
   final TrainDefineEntity trainDefineEntity = TrainDefineEntity();
+  final int? coinBuySlot = jsonConvert.convert<int>(json['coinBuySlot']);
+  if (coinBuySlot != null) {
+    trainDefineEntity.coinBuySlot = coinBuySlot;
+  }
   final int? ballMaxNum = jsonConvert.convert<int>(json['ballMaxNum']);
   if (ballMaxNum != null) {
     trainDefineEntity.ballMaxNum = ballMaxNum;
@@ -97,15 +101,12 @@ TrainDefineEntity $TrainDefineEntityFromJson(Map<String, dynamic> json) {
   if (giveUpTactics != null) {
     trainDefineEntity.giveUpTactics = giveUpTactics;
   }
-  final int? coinBuySlot = jsonConvert.convert<int>(json['coinBuySlot']);
-  if (coinBuySlot != null) {
-    trainDefineEntity.coinBuySlot = coinBuySlot;
-  }
   return trainDefineEntity;
 }
 
 Map<String, dynamic> $TrainDefineEntityToJson(TrainDefineEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
+  data['coinBuySlot'] = entity.coinBuySlot;
   data['ballMaxNum'] = entity.ballMaxNum;
   data['ballRecoverNum'] = entity.ballRecoverNum;
   data['ballRecoverTime'] = entity.ballRecoverTime;
@@ -124,12 +125,12 @@ Map<String, dynamic> $TrainDefineEntityToJson(TrainDefineEntity entity) {
   data['trainRecoverStats'] = entity.trainRecoverStats;
   data['trainRewardBall'] = entity.trainRewardBall;
   data['giveUpTatics'] = entity.giveUpTactics;
-  data['coinBuySlot'] = entity.coinBuySlot;
   return data;
 }
 
 extension TrainDefineEntityExtension on TrainDefineEntity {
   TrainDefineEntity copyWith({
+    int? coinBuySlot,
     int? ballMaxNum,
     int? ballRecoverNum,
     int? ballRecoverTime,
@@ -148,9 +149,9 @@ extension TrainDefineEntityExtension on TrainDefineEntity {
     List<int>? trainRecoverStats,
     List<int>? trainRewardBall,
     List<int>? giveUpTactics,
-    int? coinBuySlot,
   }) {
     return TrainDefineEntity()
+      ..coinBuySlot = coinBuySlot ?? this.coinBuySlot
       ..ballMaxNum = ballMaxNum ?? this.ballMaxNum
       ..ballRecoverNum = ballRecoverNum ?? this.ballRecoverNum
       ..ballRecoverTime = ballRecoverTime ?? this.ballRecoverTime
@@ -168,7 +169,6 @@ extension TrainDefineEntityExtension on TrainDefineEntity {
       ..trainNormalMoney = trainNormalMoney ?? this.trainNormalMoney
       ..trainRecoverStats = trainRecoverStats ?? this.trainRecoverStats
       ..trainRewardBall = trainRewardBall ?? this.trainRewardBall
-      ..giveUpTactics = giveUpTactics ?? this.giveUpTactics
-      ..coinBuySlot = coinBuySlot ?? this.coinBuySlot;
+      ..giveUpTactics = giveUpTactics ?? this.giveUpTactics;
   }
 }

@@ -606,6 +606,10 @@ OVRRankPlayerInfoGameStats $OVRRankPlayerInfoGameStatsFromJson(
   if (afterPower != null) {
     oVRRankPlayerInfoGameStats.afterPower = afterPower;
   }
+  final int? playerTeamId = jsonConvert.convert<int>(json['playerTeamId']);
+  if (playerTeamId != null) {
+    oVRRankPlayerInfoGameStats.playerTeamId = playerTeamId;
+  }
   final OVRRankPlayerInfoGameStatsSchedule? schedule = jsonConvert.convert<
       OVRRankPlayerInfoGameStatsSchedule>(json['schedule']);
   if (schedule != null) {
@@ -630,6 +634,7 @@ Map<String, dynamic> $OVRRankPlayerInfoGameStatsToJson(
     OVRRankPlayerInfoGameStats entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['afterPower'] = entity.afterPower;
+  data['playerTeamId'] = entity.playerTeamId;
   data['schedule'] = entity.schedule.toJson();
   data['OVR'] = entity.oVR;
   data['afterOVR'] = entity.afterOVR;
@@ -640,6 +645,7 @@ Map<String, dynamic> $OVRRankPlayerInfoGameStatsToJson(
 extension OVRRankPlayerInfoGameStatsExtension on OVRRankPlayerInfoGameStats {
   OVRRankPlayerInfoGameStats copyWith({
     int? afterPower,
+    int? playerTeamId,
     OVRRankPlayerInfoGameStatsSchedule? schedule,
     int? oVR,
     int? afterOVR,
@@ -647,6 +653,7 @@ extension OVRRankPlayerInfoGameStatsExtension on OVRRankPlayerInfoGameStats {
   }) {
     return OVRRankPlayerInfoGameStats()
       ..afterPower = afterPower ?? this.afterPower
+      ..playerTeamId = playerTeamId ?? this.playerTeamId
       ..schedule = schedule ?? this.schedule
       ..oVR = oVR ?? this.oVR
       ..afterOVR = afterOVR ?? this.afterOVR

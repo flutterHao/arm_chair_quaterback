@@ -196,6 +196,7 @@ class OVRRankPlayerInfoSeasonStats {
 @JsonSerializable()
 class OVRRankPlayerInfoGameStats {
   late int afterPower = 0;
+  late int playerTeamId = 0;
   late OVRRankPlayerInfoGameStatsSchedule schedule;
   @JSONField(name: 'OVR')
   late int oVR = 0;
