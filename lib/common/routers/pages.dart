@@ -47,6 +47,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_upgrade/star_upgrade_new/star_upgrade_new.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/start_upgrade_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/view.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,8 @@ class AppPages {
         },
         transitionDuration: const Duration(milliseconds: 300),
         // 进入动画时间
-        reverseTransitionDuration: const Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
+        reverseTransitionDuration:
+            const Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
       );
     }
 
@@ -120,7 +122,8 @@ class AppPages {
           RankBinding().dependencies();
           return const NBARankPage();
         case RouteNames.leagueLeagueDetail:
-          return LeagueDetailV2Page(Get.arguments["item"], gameId: Get.arguments["gameId"]);
+          return LeagueDetailV2Page(Get.arguments["item"],
+              gameId: Get.arguments["gameId"]);
         case RouteNames.inboxDetail:
           return const InboxDetailPage();
         case RouteNames.picksPickRank:
@@ -157,6 +160,8 @@ class AppPages {
           return OvrStandingDetailPage();
         case RouteNames.playerTrendPage:
           return PlayerTrendPage();
+        case RouteNames.teamStarUpNew:
+          return StarUpgradeNew(Get.arguments["playerUuid"]);
         default:
           return const SizedBox.shrink();
       }

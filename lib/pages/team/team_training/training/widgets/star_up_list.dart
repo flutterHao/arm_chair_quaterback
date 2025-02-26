@@ -197,7 +197,7 @@ class _Item extends StatelessWidget {
           splashColor: Colors.transparent,
           minScale: 0.95,
           onTap: () {
-            Get.toNamed(RouteNames.teamTeamUpgrade,
+            Get.toNamed(RouteNames.teamStarUpNew,
                 arguments: {"playerUuid": item.uuid});
           },
           child: Container(

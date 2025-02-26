@@ -36,6 +36,8 @@ class RouteNames {
   static const teamBeautyPage = "/beauty_page";
   static const teamMemberPage = "/team_detail";
   static const teamBeautyDetail = "/beauty_detail";
+  static const teamStarUpNew = "/team_star_up_new";
+
   static const teamMenber = "/teamMenberView";
   static const teamTeamUpgrade = '/team_team_upgrade';
   static const openBoxPage = "/open_box_page";
