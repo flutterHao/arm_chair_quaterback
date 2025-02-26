@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/vi
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/match_success_new/match_success_new.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class TeamBattlePage extends StatefulWidget {
@@ -31,11 +32,11 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
       controller = Get.put(TeamBattleController());
       controller.teamMatchV2().then((value) {
         loadData = true;
-        setState(() {
-
-        });
+        setState(() {});
       }, onError: (e) {
         Get.delete<TeamBattleController>();
+        Get.back();
+        EasyLoading.showToast("MATCH FAILED");
       });
     }else {
       controller = Get.find();
@@ -54,6 +55,7 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
     return GetBuilder<TeamBattleController>(
       id: "team_battle",
       builder: (_) {
+        /// todo test code
         if(!loadData){
           return Center(
             child: SizedBox(
