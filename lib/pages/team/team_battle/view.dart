@@ -32,7 +32,9 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
       controller = Get.put(TeamBattleController());
       controller.teamMatchV2().then((value) {
         loadData = true;
-        setState(() {});
+        if(mounted) {
+          setState(() {});
+        }
       }, onError: (e) {
         Get.delete<TeamBattleController>();
         Get.back();

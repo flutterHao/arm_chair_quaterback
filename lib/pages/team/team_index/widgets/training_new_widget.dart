@@ -150,21 +150,23 @@ class TrainingNewWidget extends GetView<TrainingController> {
                       top: 105.w,
                       right: 5.w,
                       child: Obx(() {
+                        ctrl.recoverTimeStr.value;
                         return Text(
-                          // "02:30:30",
-                          "00:${ctrl.recoverTimeStr.value}",
+                          "02:30:30",
+                          // "00:${ctrl.recoverTimeStr.value}",
                           style: 10.w4(
                             fontFamily: FontFamily.fRobotoMedium,
                             height: 0.8,
                           ),
                         );
                       })),
+
                   /// todo test code
                   Positioned(
                       top: 70.w,
                       right: -10.w,
                       child: InkWell(
-                        onTap: (){
+                        onTap: () {
                           Get.toNamed(RouteNames.teamTeamBattle);
                         },
                         child: Opacity(
