@@ -82,17 +82,38 @@ class GameOverWidget extends GetView<GameOverController> {
                         GetBuilder<TeamBattleV2Controller>(
                             id: TeamBattleV2Controller.idQuarterScore,
                             builder: (_) {
-                              return QuarterScoreWidget(
-                                hasTopMargin: false,
-                              );
+                              return QuarterScoreWidget();
                             }),
                         WinRateWidget(teamBattleV2Controller.winRateController),
                         TeamStatsWidget(
                           controller: teamBattleV2Controller.teamStatsController,
                         ),
                         9.vGap,
-                        const LiveTextWidget(
-                          isGameOverStatus: true,
+                        Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
+                          child: Column(
+                            children: [
+                              25.vGap,
+                              Container(
+                                margin: EdgeInsets.only(left: 16.w, right: 10.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "PLAY BY PLAY",
+                                      style: 30.w7(
+                                          color: AppColors.c000000,
+                                          fontFamily: FontFamily.fOswaldBold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const LiveTextWidget(
+                                isGameOverStatus: true,
+                              ),
+                            ],
+                          ),
                         ),
                         9.vGap,
                       ],
