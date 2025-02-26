@@ -73,7 +73,7 @@ class WSInstance {
           await Future.delayed(const Duration(seconds: 2));
           _auth();
         } else {
-          authAccount(Get.find<HomeController>()
+          _authAccount(Get.find<HomeController>()
               .userEntiry
               .teamLoginInfo!
               .team!
@@ -81,7 +81,7 @@ class WSInstance {
         }
       }
     } else {
-      authAccount(
+      _authAccount(
           Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId!);
     }
   }
@@ -97,7 +97,7 @@ class WSInstance {
       // }
       // 每 10 秒发送一个 ping 消息
       // print('WebSocket--发送 ping:${DateTime.now().millisecondsSinceEpoch}');
-      ping();
+      _ping();
 
       // 检查是否超时
       if (DateTime.now().difference(_lastPongTime).inSeconds > 15) {
@@ -201,11 +201,11 @@ class WSInstance {
     return responseMessage;
   }
 
-  static void authAccount(int teamId) {
+  static void _authAccount(int teamId) {
     WSInstance._sendMessage(teamId, path: Api.wsAuthAccount);
   }
 
-  static void ping() {
+  static void _ping() {
     WSInstance._sendMessage("ping", path: Api.wsHeartBeat);
   }
 

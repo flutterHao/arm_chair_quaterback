@@ -90,6 +90,8 @@ class HomeController extends GetxController {
 
   RxBool isHide = false.obs;
 
+  late AppLifecycleListener _appLifecycleListener;
+
   @override
   void onInit() {
     super.onInit();
@@ -101,6 +103,11 @@ class HomeController extends GetxController {
     //   tabController.animateTo(tabController.index);
     //   update();
     // });
+    _appLifecycleListener = AppLifecycleListener(
+      onResume: () {
+        scrollHideBottomBarController.changeHideStatus(false);
+      },
+    );
   }
 
   @override
@@ -115,6 +122,7 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     pageController.dispose();
+    _appLifecycleListener.dispose();
     super.onClose();
   }
 
