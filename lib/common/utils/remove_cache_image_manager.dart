@@ -11,6 +11,8 @@ import 'package:flutter/foundation.dart';
 
 class RemoveCacheImageManager {
   static void check() async {
+    /// 清除非服务器图片缓存
+    clearDiskCachedImages(duration: Duration(days: Constant.defaultImageCacheTimes));
     try {
       ///1.获取最新图片版本号
       List<AppImageVersionEntity> appImageVersions =

@@ -127,4 +127,7 @@ class Constant {
   static const double maxWebWidth = 600;
 
   static const appImageVersionKey = "app_image_version";
+
+  /// 非服务器图片缓存时间
+  static const int defaultImageCacheTimes = 4;
 }

@@ -4,6 +4,7 @@
  * @Date: 2024-09-09 17:29:19
  * @LastEditTime: 2025-02-22 18:57:16
  */
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -116,7 +117,7 @@ class ImageWidget extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       color: color,
       //非服务器的图片资源缓存4天过期
-      cacheMaxAge: url.contains(sUrl) ? null : const Duration(days: 4),
+      cacheMaxAge: url.contains(sUrl) ? null : const Duration(days: Constant.defaultImageCacheTimes),
 
       clearMemoryCacheWhenDispose: false,
       loadStateChanged: (ExtendedImageState state) {
