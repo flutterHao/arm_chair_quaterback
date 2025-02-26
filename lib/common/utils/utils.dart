@@ -490,7 +490,8 @@ class Utils {
             .teamLoginInfo
             ?.getServerTimeOffset() ??
         0;
-    return Duration(milliseconds: offset);
+    /// 一分钟以内的时差忽略
+    return Duration(milliseconds: offset < 60 * 1000 ? 0 : offset);
   }
 
   static String getTeamTypeKey(String type) {

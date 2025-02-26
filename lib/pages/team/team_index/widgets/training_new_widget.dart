@@ -156,7 +156,23 @@ class TrainingNewWidget extends GetView<TrainingController> {
                           height: 0.8,
                         ),
                       )),
-
+                  /// todo test code
+                  Positioned(
+                      top: 70.w,
+                      right: -10.w,
+                      child: InkWell(
+                        onTap: (){
+                          Get.toNamed(RouteNames.teamTeamBattle);
+                        },
+                        child: Opacity(
+                          opacity: 0,
+                          child: Image.asset(
+                            Assets.managerUiManagerIconBubble01,
+                            height: 64.w,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                      )),
                   // Positioned(
                   //     left: 129.5.w,
                   //     top: 132.5.w,
