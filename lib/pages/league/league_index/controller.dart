@@ -56,6 +56,9 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
 
   late StreamSubscription<int> tabSubscription;
 
+  /// 16小时时间点已经获取过数据
+  bool is16HoursLoaded = false;
+
   List<DateTime> getDataTimes() {
     var dateList = getAllDataTimes();
     dateList.removeWhere((e) => noDataDayList.contains(e));
@@ -202,20 +205,23 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
         if (needShowLoading) {
           loadStatus.value = LoadDataStatus.success;
         }
-        if (tabController != null) {
-          tabController!.dispose();
-        }
+
         var dateTime = DateTime.now();
         var serverTime = dateTime.subtract(Utils.getTimeZoneOffset());
         var nowStartTime =
             DateTime(dateTime.year, dateTime.month, dateTime.day);
-        if (serverTime.hour > 16) {
+        if (serverTime.hour >= 16 && !is16HoursLoaded) {
+          is16HoursLoaded = true;
           /// 服务器四点刷新成明天的赛程，前端也要刷新
           var add = nowStartTime.add(Duration(days: 1));
           var indexOf = getDataTimes().indexOf(add);
           if (indexOf != -1 && indexOf != currentPageIndex.value) {
             currentPageIndex.value = indexOf;
+            tabController?.animateTo(indexOf,duration: Duration.zero,curve: Curves.linear);
           }
+        }
+        if (tabController != null) {
+          tabController!.dispose();
         }
         tabController = TabController(
             initialIndex: currentPageIndex.value,
