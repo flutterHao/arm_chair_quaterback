@@ -340,6 +340,7 @@ class TrainingController extends GetxController
   }
 
   Future getData() async {
+    isPlaying.value = true;
     await Future.wait([
       // CacheApi.getRewardGroup(),
       TeamApi.getTrainingInfo(),
@@ -363,6 +364,8 @@ class TrainingController extends GetxController
         recoverBallCountDown();
       }
       // taskCountDownTime();
+      isPlaying.value = false;
+
       update(["training_page"]);
     }).catchError((v) {
       ErrorUtils.toast(v);

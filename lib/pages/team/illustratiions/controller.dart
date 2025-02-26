@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-25 11:25:15
+ * @LastEditTime: 2025-02-26 10:26:12
  */
 /*
  * @Description: 
@@ -253,7 +253,7 @@ class IllustratiionsController extends GetxController
               item.fragmentNum = myPlayer.fragmentNum;
               item.isLight = myPlayer.isLight;
               item.isLightRx.value = myPlayer.isLight;
-              // update(["list"]);
+              update(["list"]);
               await Future.delayed(const Duration(milliseconds: 300));
               dy = offset;
             }
@@ -290,7 +290,7 @@ class IllustratiionsController extends GetxController
                 item.fragmentNum = myPlayer.fragmentNum;
                 item.isLight = myPlayer.isLight;
                 item.isLightRx.value = myPlayer.isLight;
-                // update(["list"]);
+                update(["list"]);
                 await Future.delayed(const Duration(milliseconds: 300));
                 dy = offset;
               }
@@ -355,17 +355,17 @@ class IllustratiionsController extends GetxController
 
   ///筛选点击
   void onTapChange(List<RxBool> list, int index) {
-    // if (index != 0) {
-    //   list[0].value = false;
-    //   list[index].value = !list[index].value;
-    // } else {
-    //   // for (var i = 1; i < list.length; i++) {
-    //   //   list[index].value = false;
-    //   // }
-    //   // list[0].value = !list[0].value;
-    //   list[index].value = !list[index].value;
-    // }
-    list[index].value = !list[index].value;
+    if (index != 0) {
+      list[0].value = false;
+      list[index].value = !list[index].value;
+    } else {
+      for (var i = 1; i < list.length; i++) {
+        list[i].value = false;
+      }
+      list[0].value = !list[0].value;
+      // list[index].value = !list[index].value;
+    }
+    // list[index].value = !list[index].value;
   }
 
   ///根据Position,Grade,Team等条件进行筛选

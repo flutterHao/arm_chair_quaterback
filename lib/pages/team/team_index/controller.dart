@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-25 14:22:18
+ * @LastEditTime: 2025-02-26 10:12:54
  */
 
 import 'dart:async';
@@ -94,6 +94,8 @@ class TeamIndexController extends GetxController
   late StreamSubscription<int> subscription;
   late AnimationController fallOutAnimatedCtrl;
   late Animation<double> fallOutAnimation;
+
+  var heartCountDownStr = "00:00:00".obs;
 
   //获取球员
   // var getPlayerCount = 0.obs;

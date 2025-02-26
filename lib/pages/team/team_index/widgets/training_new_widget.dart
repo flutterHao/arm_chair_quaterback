@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-25 20:44:45
+ * @LastEditTime: 2025-02-26 10:11:14
  */
 import 'dart:math';
 
@@ -149,13 +149,16 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   Positioned(
                       top: 105.w,
                       right: 5.w,
-                      child: Text(
-                        "02:30:30",
-                        style: 10.w4(
-                          fontFamily: FontFamily.fRobotoMedium,
-                          height: 0.8,
-                        ),
-                      )),
+                      child: Obx(() {
+                        return Text(
+                          // "02:30:30",
+                          "00:${ctrl.recoverTimeStr.value}",
+                          style: 10.w4(
+                            fontFamily: FontFamily.fRobotoMedium,
+                            height: 0.8,
+                          ),
+                        );
+                      })),
                   /// todo test code
                   Positioned(
                       top: 70.w,
