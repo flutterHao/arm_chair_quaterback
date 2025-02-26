@@ -90,7 +90,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
       } else {
         showTrendList = trendList;
       }
-      gameStats = ovrPlayerInfo.gameStats;
+      gameStats = ovrPlayerInfo.gameStats.reversed.toList();
       seasonStats = ovrPlayerInfo.seasonStats;
     });
   }
