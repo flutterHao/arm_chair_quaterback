@@ -110,6 +110,7 @@ class Api {
   static const String cJumpDefine = "$CONFIG_BASE_PATH/JumpDefine.json";
   static const String cLanguages = "$CONFIG_BASE_PATH/Languages.json";
   static const String cGirlGiftDefine = "$CONFIG_BASE_PATH/GirlGiftDefine.json";
+  static const String cGirlDefine = "$CONFIG_BASE_PATH/GirlDefine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID = "$API_BASE_PATH/TeamPlayer/getTeamPlayerByUUID";
@@ -190,4 +191,8 @@ class Api {
   ///InboxMail
   static const String getMailVOList = "$API_BASE_PATH/Mail/getMailVOList";
   static const String receiveMailAward = "$API_BASE_PATH/Mail/receiveMailAward";
+
+  ///Girl
+  static const String getGivingGifts = "$API_BASE_PATH/Girl/givingGifts";
+  static const String getQueryGirls = "$API_BASE_PATH/Girl/queryGirls";
 }

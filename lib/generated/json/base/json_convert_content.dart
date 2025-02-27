@@ -24,7 +24,9 @@ import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dar
 import 'package:arm_chair_quaterback/common/entities/game_schedules_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/gilr_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girl_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/girl_gift_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/giving_gifts_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
@@ -71,6 +73,7 @@ import 'package:arm_chair_quaterback/common/entities/player_power_rate_define_en
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/query_girls_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
@@ -449,9 +452,17 @@ class JsonConvert {
       return data.map<GirlEntity>((Map<String, dynamic> e) =>
           GirlEntity.fromJson(e)).toList() as M;
     }
+    if (<GirlDefineEntity>[] is M) {
+      return data.map<GirlDefineEntity>((Map<String, dynamic> e) =>
+          GirlDefineEntity.fromJson(e)).toList() as M;
+    }
     if (<GirlGiftDefineEntity>[] is M) {
       return data.map<GirlGiftDefineEntity>((Map<String, dynamic> e) =>
           GirlGiftDefineEntity.fromJson(e)).toList() as M;
+    }
+    if (<GivingGiftsEntity>[] is M) {
+      return data.map<GivingGiftsEntity>((Map<String, dynamic> e) =>
+          GivingGiftsEntity.fromJson(e)).toList() as M;
     }
     if (<GradeInStaminaEntity>[] is M) {
       return data.map<GradeInStaminaEntity>((Map<String, dynamic> e) =>
@@ -925,6 +936,10 @@ class JsonConvert {
       return data.map<PlayerStrengthRankTrendList>((Map<String, dynamic> e) =>
           PlayerStrengthRankTrendList.fromJson(e)).toList() as M;
     }
+    if (<QueryGirlsEntity>[] is M) {
+      return data.map<QueryGirlsEntity>((Map<String, dynamic> e) =>
+          QueryGirlsEntity.fromJson(e)).toList() as M;
+    }
     if (<RankAwardEntity>[] is M) {
       return data.map<RankAwardEntity>((Map<String, dynamic> e) =>
           RankAwardEntity.fromJson(e)).toList() as M;
@@ -1346,7 +1361,9 @@ class JsonConvertClassCollection {
     (GameSchedulesEntity).toString(): GameSchedulesEntity.fromJson,
     (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
     (GirlEntity).toString(): GirlEntity.fromJson,
+    (GirlDefineEntity).toString(): GirlDefineEntity.fromJson,
     (GirlGiftDefineEntity).toString(): GirlGiftDefineEntity.fromJson,
+    (GivingGiftsEntity).toString(): GivingGiftsEntity.fromJson,
     (GradeInStaminaEntity).toString(): GradeInStaminaEntity.fromJson,
     (GradeInStarDefineEntity).toString(): GradeInStarDefineEntity.fromJson,
     (GuessData).toString(): GuessData.fromJson,
@@ -1504,6 +1521,7 @@ class JsonConvertClassCollection {
     (PlayerStrengthRankEntity).toString(): PlayerStrengthRankEntity.fromJson,
     (PlayerStrengthRankTrendList).toString(): PlayerStrengthRankTrendList
         .fromJson,
+    (QueryGirlsEntity).toString(): QueryGirlsEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,
     (RankListEntity).toString(): RankListEntity.fromJson,

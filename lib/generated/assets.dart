@@ -188,6 +188,7 @@ class Assets {
   static const String managerUiManagerBattleTextbase01 = 'assets/images/manager/ui_manager_battle_textbase_01.png';
   static const String managerUiManagerBattleTextbase02 = 'assets/images/manager/ui_manager_battle_textbase_02.png';
   static const String managerUiManagerBlankcard = 'assets/images/manager/ui_manager_blankcard.png';
+  static const String managerUiManagerBubble = 'assets/images/manager/ui_manager_bubble.png';
   static const String managerUiManagerCourt = 'assets/images/manager/ui_manager_court.jpg';
   static const String managerUiManagerCourt01 = 'assets/images/manager/ui_manager_court_01.png';
   static const String managerUiManagerCourt02 = 'assets/images/manager/ui_manager_court_02.png';
@@ -252,6 +253,8 @@ class Assets {
   static const String managerUiManagerIconDefenseshield = 'assets/images/manager/ui_manager_icon_defenseshield.png';
   static const String managerUiManagerIconDescribe = 'assets/images/manager/ui_manager_icon_describe.png';
   static const String managerUiManagerIconFreetreasurechest = 'assets/images/manager/ui_manager_icon_freetreasurechest.png';
+  static const String managerUiManagerIconGift01 = 'assets/images/manager/ui_manager_icon_gift_01.png';
+  static const String managerUiManagerIconGift02 = 'assets/images/manager/ui_manager_icon_gift_02.png';
   static const String managerUiManagerIconGo = 'assets/images/manager/ui_manager_icon_go.png';
   static const String managerUiManagerIconLine = 'assets/images/manager/ui_manager_icon_line.png';
   static const String managerUiManagerIconLovebubble = 'assets/images/manager/ui_manager_icon_lovebubble.png';

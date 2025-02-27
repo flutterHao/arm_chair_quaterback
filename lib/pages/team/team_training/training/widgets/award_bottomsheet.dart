@@ -36,10 +36,8 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var currentIndex = _list.indexWhere((TrainTaskEntity e) => e.taskLevel == _currentLevel);
-      if (currentIndex > 0 && currentIndex < _list.length - 4) {
-        controller.awardBottomScrollController.jumpTo(90.h * (currentIndex + 4) - 360.h);
-      } else if (currentIndex >= _list.length - 4) {
-        controller.awardBottomScrollController.jumpTo(90.h * (_list.length - 1) - 360.h);
+      if (currentIndex > 4) {
+        controller.awardBottomScrollController.jumpTo(90.h * (currentIndex) - 360.h);
       } else {
         controller.awardBottomScrollController.jumpTo(0);
       }
@@ -252,14 +250,7 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
           child: Row(
             children: [
               InkWell(
-                onTap: () {
-                  var currentIndex = _list.indexWhere((TrainTaskEntity e) => e.taskLevel == _currentLevel);
-                  if (currentIndex > 4) {
-                    controller.awardBottomScrollController.jumpTo(90.h * (currentIndex) - 360.h);
-                  } else {
-                    controller.awardBottomScrollController.jumpTo(0);
-                  }
-                },
+                onTap: () {},
                 child: Text(
                   'Training task',
                   style: 16.w5(fontFamily: FontFamily.fOswaldMedium),

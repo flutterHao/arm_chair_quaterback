@@ -825,7 +825,7 @@ class _PlayerTrendPageState extends State<PlayerTrendPage> {
                       8.hGap,
                       IconWidget(iconWidth: 16.w, icon: Assets.commonUiCommonProp05),
                       2.hGap,
-                      Text('${playerInfo.salary}K',
+                      Text(Utils.formatMoney(playerInfo.salary),
                           style: 12.w5(
                             fontFamily: FontFamily.fOswaldRegular,
                           )),

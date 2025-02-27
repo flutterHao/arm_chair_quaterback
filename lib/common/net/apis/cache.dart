@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girl_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/girl_gift_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
@@ -397,5 +398,11 @@ class CacheApi {
   static Future<List<GirlGiftDefineEntity>> getGirlGiftDefine() async {
     List list = await HttpUtil().post(Api.cGirlGiftDefine);
     return list.map((item) => GirlGiftDefineEntity.fromJson(item)).toList();
+  }
+
+  /// 获取人物信息表
+  static Future<List<GirlDefineEntity>> getGirlDefine() async {
+    List list = await HttpUtil().post(Api.cGirlDefine);
+    return list.map((item) => GirlDefineEntity.fromJson(item)).toList();
   }
 }

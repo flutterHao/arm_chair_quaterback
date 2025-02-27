@@ -284,7 +284,8 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
           ],
         ),
         Text(
-          ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}  SAL ${player.salary}K'.toUpperCase(),
+          ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}  SAL ${Utils.formatMoney(player.salary)}'
+              .toUpperCase(),
           style: 10.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
         ),
         6.vGap,
