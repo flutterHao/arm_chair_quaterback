@@ -313,6 +313,17 @@ class Assets {
   static const String managerUiManagerPlayerstar = 'assets/images/manager/ui_manager_playerstar.png';
   static const String managerUiManagerQualityS = 'assets/images/manager/ui_manager_quality_s.png';
   static const String managerUiManagerRankBg = 'assets/images/manager/ui_manager_rank_bg.jpg';
+  static const String managerUiManagerRisingstar01 = 'assets/images/manager/ui_manager_risingstar_01.png';
+  static const String managerUiManagerRisingstar02 = 'assets/images/manager/ui_manager_risingstar_02.png';
+  static const String managerUiManagerRisingstar03 = 'assets/images/manager/ui_manager_risingstar_03.png';
+  static const String managerUiManagerRisingstar04 = 'assets/images/manager/ui_manager_risingstar_04.png';
+  static const String managerUiManagerRisingstar05 = 'assets/images/manager/ui_manager_risingstar_05.png';
+  static const String managerUiManagerRisingstar06 = 'assets/images/manager/ui_manager_risingstar_06.png';
+  static const String managerUiManagerRisingstar07 = 'assets/images/manager/ui_manager_risingstar_07.png';
+  static const String managerUiManagerRisingstar08 = 'assets/images/manager/ui_manager_risingstar_08.png';
+  static const String managerUiManagerRisingstar09 = 'assets/images/manager/ui_manager_risingstar_09.png';
+  static const String managerUiManagerRisingstar10 = 'assets/images/manager/ui_manager_risingstar_10.png';
+  static const String managerUiManagerRisingstarButton = 'assets/images/manager/ui_manager_risingstar_button.png';
   static const String managerUiManagerShield = 'assets/images/manager/ui_manager_shield.png';
   static const String managerUiManagerShield00 = 'assets/images/manager/ui_manager_shield_00.png';
   static const String managerUiManagerShield01 = 'assets/images/manager/ui_manager_shield_01.png';

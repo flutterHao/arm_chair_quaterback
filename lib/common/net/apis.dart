@@ -110,6 +110,7 @@ class Api {
   static const String cJumpDefine = "$CONFIG_BASE_PATH/JumpDefine.json";
   static const String cLanguages = "$CONFIG_BASE_PATH/Languages.json";
   static const String cGirlGiftDefine = "$CONFIG_BASE_PATH/GirlGiftDefine.json";
+  static const String cStarUpNumDefine = "$CONFIG_BASE_PATH/StarUpNumDefine.json";
   static const String cGirlDefine = "$CONFIG_BASE_PATH/GirlDefine.json";
 
   /// TeamPlayer

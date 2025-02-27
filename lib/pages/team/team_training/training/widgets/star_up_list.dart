@@ -79,7 +79,7 @@ class StarUpList extends StatelessWidget {
                       home: true,
                     )),
                 Positioned(
-                  top: -35.w,
+                  top: -35.h,
                   // left: 10,
                   // right: -10,
                   child: OutlinedText(

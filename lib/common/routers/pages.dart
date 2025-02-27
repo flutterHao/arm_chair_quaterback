@@ -47,6 +47,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_upgrade/star_upgrade_game/star_upgrade_game.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/star_upgrade_new/star_upgrade_new.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/start_upgrade_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/view.dart';
@@ -162,6 +163,8 @@ class AppPages {
           return PlayerTrendPage();
         case RouteNames.teamStarUpNew:
           return StarUpgradeNew(Get.arguments["playerUuid"]);
+        case RouteNames.teamStarUpGame:
+          return StarUpgradeGame(Get.arguments["playerUuid"]);
         default:
           return const SizedBox.shrink();
       }

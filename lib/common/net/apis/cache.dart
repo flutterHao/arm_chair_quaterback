@@ -29,6 +29,7 @@ import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/star_up_num_defined_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/wheel_reward_type_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
@@ -80,6 +81,7 @@ class CacheApi {
   static List<GameConstantEntity> gameConstantList = [];
   static List<WheelRandomRewardEntity> wheelRandomRewardList = [];
   static List<JumpDefinedEntity> jumpDefinedList = [];
+  static List<StarUpNumDefinedEntity> starUpNumDefinedList = [];
 
   static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
   static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
@@ -152,7 +154,8 @@ class CacheApi {
       return gameRankAwardRuleList!;
     }
     List json = await httpUtil.get(Api.cGameRankAwardRule);
-    return gameRankAwardRuleList = json.map((e) => RankAwardEntity.fromJson(e)).toList();
+    return gameRankAwardRuleList =
+        json.map((e) => RankAwardEntity.fromJson(e)).toList();
   }
 
   ///道具定义
@@ -168,7 +171,8 @@ class CacheApi {
   static Future<List<RewardGroupEntity>> getRewardGroup() async {
     if (rewardGroupList?.isNotEmpty == true) return rewardGroupList!;
     List list = await httpUtil.get(Api.cRewardGroup);
-    return rewardGroupList = list.map((e) => RewardGroupEntity.fromJson(e)).toList();
+    return rewardGroupList =
+        list.map((e) => RewardGroupEntity.fromJson(e)).toList();
   }
 
   static Future<List<StarUpDefineEntity>> getStarUpDefine() async {
@@ -182,7 +186,8 @@ class CacheApi {
   static Future<List<GradeInStarDefineEntity>> getGradeInStarDefine() async {
     if (gradeInStars == null) {
       List json = await httpUtil.post(Api.cGradeInStarDefine);
-      gradeInStars = json.map((e) => GradeInStarDefineEntity.fromJson(e)).toList();
+      gradeInStars =
+          json.map((e) => GradeInStarDefineEntity.fromJson(e)).toList();
     }
     return gradeInStars!;
   }
@@ -190,7 +195,8 @@ class CacheApi {
   static Future<List<TeamRuleConfigEntity>> getTeamRuleConfig() async {
     if (teamRuleConfigList?.isNotEmpty == true) return teamRuleConfigList!;
     List list = await httpUtil.get(Api.cTeamRuleConfig);
-    teamRuleConfigList = list.map((e) => TeamRuleConfigEntity.fromJson(e)).toList();
+    teamRuleConfigList =
+        list.map((e) => TeamRuleConfigEntity.fromJson(e)).toList();
     return teamRuleConfigList!;
   }
 
@@ -228,7 +234,8 @@ class CacheApi {
       return competitionVenues;
     }
     List json = await httpUtil.get(Api.cCompetitionVenue);
-    competitionVenues = json.map((e) => CompetitionVenueEntity.fromJson(e)).toList();
+    competitionVenues =
+        json.map((e) => CompetitionVenueEntity.fromJson(e)).toList();
     return competitionVenues;
   }
 
@@ -238,7 +245,8 @@ class CacheApi {
       return gradeInStaminaList;
     }
     List list = await HttpUtil().post(Api.cGradeInStamina);
-    gradeInStaminaList = list.map((e) => GradeInStaminaEntity.fromJson(e)).toList();
+    gradeInStaminaList =
+        list.map((e) => GradeInStaminaEntity.fromJson(e)).toList();
     return gradeInStaminaList;
   }
 
@@ -268,7 +276,9 @@ class CacheApi {
     }
     List list = await HttpUtil().post(Api.cCardPackDefine);
     cardPackDefineMap = {
-      for (var item in list) CardPackDefineEntity.fromJson(item).cardPackID: CardPackDefineEntity.fromJson(item)
+      for (var item in list)
+        CardPackDefineEntity.fromJson(item).cardPackID:
+            CardPackDefineEntity.fromJson(item)
     };
     return cardPackDefineMap;
   }
@@ -278,7 +288,8 @@ class CacheApi {
       return newsSourceList;
     }
     List list = await HttpUtil().post(Api.cSourceTranslate);
-    newsSourceList = list.map((item) => NewsSourceEntity.fromJson(item)).toList();
+    newsSourceList =
+        list.map((item) => NewsSourceEntity.fromJson(item)).toList();
     return newsSourceList;
   }
 
@@ -287,7 +298,8 @@ class CacheApi {
       return inboxMessageList;
     }
     List list = await HttpUtil().post(Api.cInboxMessage);
-    return inboxMessageList = list.map((item) => InboxMessageEntity.fromJson(item)).toList();
+    return inboxMessageList =
+        list.map((item) => InboxMessageEntity.fromJson(item)).toList();
   }
 
   /// 每日任务转盘
@@ -296,7 +308,8 @@ class CacheApi {
       return dailyTaskWheelList;
     }
     List list = await HttpUtil().post(Api.cDailyTaskWheel);
-    return dailyTaskWheelList = list.map((item) => DailyTaskWheelEntity.fromJson(item)).toList();
+    return dailyTaskWheelList =
+        list.map((item) => DailyTaskWheelEntity.fromJson(item)).toList();
   }
 
   /// 每日任务转盘奖励
@@ -305,7 +318,8 @@ class CacheApi {
       return wheelRewardTypeList;
     }
     List list = await HttpUtil().post(Api.cWheelRewardType);
-    return wheelRewardTypeList = list.map((item) => WheelRewardTypeEntity.fromJson(item)).toList();
+    return wheelRewardTypeList =
+        list.map((item) => WheelRewardTypeEntity.fromJson(item)).toList();
   }
 
   static Future<Map<int, PlayerCollectCollects>> getPlayerBookRuleList() async {
@@ -313,26 +327,35 @@ class CacheApi {
       return playerBookRuleMap;
     }
     List list = await HttpUtil().post(Api.cPlayerBookRule);
-    playerBookRuleList = list.map((item) => PlayerCollectCollects.fromJson(item)).toList();
-    playerBookRuleMap = {for (var item in playerBookRuleList) item.playerId: item};
+    playerBookRuleList =
+        list.map((item) => PlayerCollectCollects.fromJson(item)).toList();
+    playerBookRuleMap = {
+      for (var item in playerBookRuleList) item.playerId: item
+    };
     return playerBookRuleMap;
   }
 
-  static Future<List<PlayerBookExpRuleEntity>> getPlayerBookExpRuleList() async {
+  static Future<List<PlayerBookExpRuleEntity>>
+      getPlayerBookExpRuleList() async {
     if (playerBookExpRuleList.isNotEmpty) {
       return playerBookExpRuleList;
     }
     List list = await HttpUtil().post(Api.cPlayerBookExpRule);
-    return playerBookExpRuleList = list.map((item) => PlayerBookExpRuleEntity.fromJson(item)).toList();
+    return playerBookExpRuleList =
+        list.map((item) => PlayerBookExpRuleEntity.fromJson(item)).toList();
   }
 
-  static Future<Map<String, PlayerPowerRateDefineEntity>> playerPowerRateDefine() async {
+  static Future<Map<String, PlayerPowerRateDefineEntity>>
+      playerPowerRateDefine() async {
     if (playerPowerRateDefineMap.isNotEmpty) {
       return playerPowerRateDefineMap;
     }
     List list = await HttpUtil().post(Api.cPlayerPowerRateDefine);
-    var playerPowerRateDefineList = list.map((item) => PlayerPowerRateDefineEntity.fromJson(item)).toList();
-    playerPowerRateDefineMap = {for (var item in playerPowerRateDefineList) item.backUp: item};
+    var playerPowerRateDefineList =
+        list.map((item) => PlayerPowerRateDefineEntity.fromJson(item)).toList();
+    playerPowerRateDefineMap = {
+      for (var item in playerPowerRateDefineList) item.backUp: item
+    };
     return playerPowerRateDefineMap;
   }
 
@@ -352,7 +375,8 @@ class CacheApi {
       return missionDefineList;
     }
     List list = await HttpUtil().post(Api.cMissionDefine);
-    return missionDefineList = list.map((item) => MissionDefineEntity.fromJson(item)).toList();
+    return missionDefineList =
+        list.map((item) => MissionDefineEntity.fromJson(item)).toList();
   }
 
   /// 游戏常量表
@@ -361,7 +385,8 @@ class CacheApi {
       return gameConstantList;
     }
     List list = await HttpUtil().post(Api.cGameConstant);
-    return gameConstantList = list.map((item) => GameConstantEntity.fromJson(item)).toList();
+    return gameConstantList =
+        list.map((item) => GameConstantEntity.fromJson(item)).toList();
   }
 
   /// 转盘随机奖励配置表
@@ -370,7 +395,8 @@ class CacheApi {
       return wheelRandomRewardList;
     }
     List list = await HttpUtil().post(Api.cWheelRandomReward);
-    return wheelRandomRewardList = list.map((item) => WheelRandomRewardEntity.fromJson(item)).toList();
+    return wheelRandomRewardList =
+        list.map((item) => WheelRandomRewardEntity.fromJson(item)).toList();
   }
 
   ///获取图片版本
@@ -385,7 +411,8 @@ class CacheApi {
       return jumpDefinedList;
     }
     List list = await HttpUtil().post(Api.cJumpDefine);
-    return jumpDefinedList = list.map((item) => JumpDefinedEntity.fromJson(item)).toList();
+    return jumpDefinedList =
+        list.map((item) => JumpDefinedEntity.fromJson(item)).toList();
   }
 
   ///获取翻译表
@@ -398,6 +425,16 @@ class CacheApi {
   static Future<List<GirlGiftDefineEntity>> getGirlGiftDefine() async {
     List list = await HttpUtil().post(Api.cGirlGiftDefine);
     return list.map((item) => GirlGiftDefineEntity.fromJson(item)).toList();
+  }
+
+  /// 球员升星数值
+  static Future<List<StarUpNumDefinedEntity>> getStarUpNumDefine() async {
+    if (starUpNumDefinedList.isNotEmpty) {
+      return starUpNumDefinedList;
+    }
+    List list = await HttpUtil().post(Api.cStarUpNumDefine);
+    return starUpNumDefinedList =
+        list.map((item) => StarUpNumDefinedEntity.fromJson(item)).toList();
   }
 
   /// 获取人物信息表

@@ -140,13 +140,13 @@ class WSInstance {
   }
 
   // 手动关闭连接
-  static void close() {
+  static void close() async {
     _isClosed = true;
     _ready = false;
     _pingTimer?.cancel();
     _readyCheckTimer?.cancel();
-    _channel?.sink.close();
-    _streamSubscription?.cancel();
+    await _channel?.sink.close();
+    await _streamSubscription?.cancel();
     _channel = null;
   }
 

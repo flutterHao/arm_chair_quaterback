@@ -130,4 +130,7 @@ class Constant {
 
   /// 非服务器图片缓存时间
   static const int defaultImageCacheTimes = 4;
+
+  /// 球员低成功率阈值
+  static const int playerStarUpWarningId = 10021;
 }

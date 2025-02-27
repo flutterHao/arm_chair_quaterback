@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
@@ -34,7 +35,8 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalDragBackContainer(
+    return PopScope(
+      canPop: false,
       child: Container(
         color: AppColors.c1A1A1A,
         child: GetBuilder<StarUpgradeNewController>(
@@ -65,7 +67,7 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
 
                     /// sparring
                     Positioned(
-                        top: -35.w,
+                        top: -35.h,
                         bottom: 0,
                         child: OutlinedText(
                             text: "SPARRING",
@@ -440,7 +442,7 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
                                             ),
                                             7.5.vGap,
                                             Text(
-                                              "+${controller.ppUpValue.value.toStringAsFixed(3)}",
+                                              "+${controller.ppUpValue.value.formatToString(4)}",
                                               style: 18.w5(
                                                   color: AppColors.c000000,
                                                   height: 1,
@@ -519,14 +521,17 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
                                         borderRadius:
                                             BorderRadius.circular(9.w),
                                       ),
-                                      child: Center(
-                                        child: Text(
-                                          "START",
-                                          style: 23.w5(
-                                            color: AppColors.cF2F2F2,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium,
+                                      child: MtInkWell(
+                                        onTap: () => onStartClick(context),
+                                        child: Center(
+                                          child: Text(
+                                            "START",
+                                            style: 23.w5(
+                                              color: AppColors.cF2F2F2,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -611,9 +616,8 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
                   ),
                 ),
                 Positioned(
-                  bottom: 0,
-                    child:  PlayerStartWidget(
-                    grade: item.breakThroughGrade))
+                    bottom: 0,
+                    child: PlayerStartWidget(grade: item.breakThroughGrade))
               ],
             ),
           ),
@@ -735,15 +739,15 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
       EasyLoading.showToast("not sufficient funds");
       return;
     }
+
+    ///退出选球员升星页面
     Get.back();
-    // var result = await BottomTipDialog.showWithSound(
-    //     isScrollControlled: true,
-    //     enableDrag: false,
-    //     backgroundColor: AppColors.cTransparent,
-    //     context: context,
-    //     builder: (context) {
-    //       return SlotDialogWidget(controller.upSuccessRate.value / 100);
-    //     });
-    // onBack.call(result);
+
+    ///退出选择消耗球员卡页面
+    Get.back();
+
+    await Get.toNamed(RouteNames.teamStarUpGame, arguments: {
+      "playerUuid": playerUuid,
+    });
   }
 }
