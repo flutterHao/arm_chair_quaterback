@@ -33,6 +33,8 @@ import 'package:arm_chair_quaterback/pages/picks/picks_index/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
 import 'package:common_utils/common_utils.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -178,6 +180,11 @@ class HomeController extends GetxController {
     await UserStore.to.setToken(v);
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
+    if (!kReleaseMode) {
+      /// 关联用户id
+      FirebaseCrashlytics.instance
+          .setUserIdentifier("${userEntiry.teamLoginInfo?.team?.teamId}");
+    }
     getOngoingDailyTaskList();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
