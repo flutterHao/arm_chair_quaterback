@@ -53,9 +53,14 @@ class GameOverController extends GetxController {
     SoundServices.to
         .playSound(isLeftWin() ? Assets.soundGamewin : Assets.soundGameFail);
     print('=========onReady');
-    Get.dialog(RewardDialog());
+    showRewardDialog();
   }
 
+  showRewardDialog(){
+    showDialog(context: context, builder: (c){
+      return RewardDialog();
+    });
+  }
   PkResultUpdatedPlayerResults? getMvpInfo() {
     var teamBattleV2Controller = Get.find<TeamBattleV2Controller>();
     return teamBattleV2Controller.pkResultUpdatedEntity?.playerResults

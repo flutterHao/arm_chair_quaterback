@@ -961,7 +961,7 @@ class TeamBattleV2Controller extends GetxController
   void didChangeAppLifecycleState(AppLifecycleState state) {
     /// app退到后台则直接返回
     if (!kIsWeb && state == AppLifecycleState.paused && !isGameOver.value) {
-      isGameOver.value = true;
+      // isGameOver.value = true;
       Get.back();
     }
     super.didChangeAppLifecycleState(state);
