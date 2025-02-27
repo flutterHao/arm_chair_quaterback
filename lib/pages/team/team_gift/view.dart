@@ -1,11 +1,13 @@
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_gift/widgets/bottom_gift.dart';
+import 'package:arm_chair_quaterback/pages/team/team_gift/widgets/girl_status.dart';
+import 'package:arm_chair_quaterback/pages/team/team_gift/widgets/gril_bg_text.dart';
+import 'package:arm_chair_quaterback/pages/team/team_gift/widgets/money_info.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,66 +42,27 @@ class TeamGiftPage extends GetView<TeamGiftController> {
                   alignment: Alignment.topCenter,
                 ),
               ),
-              //文字
-              Positioned(
-                top: -14.w,
-                left: -25.w,
-                child: ShaderMask(
-                  shaderCallback: (Rect bounds) {
-                    return LinearGradient(
-                            begin: Alignment.centerRight,
-                            end: Alignment.centerLeft,
-                            colors: beautyController.currentGirl.backGroundColor.map((e) => Color(e)).toList())
-                        .createShader(bounds);
-                  },
-                  child: Text(
-                    "cheerle".toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 122.sp,
-                        letterSpacing: 0,
-                        color: Colors.white,
-                        height: 0.95,
-                        fontFamily: FontFamily.fOswaldBold),
-                  ),
-                ),
-              ),
+              //背景文字
+              GrilBgTextWidget(),
+
+              ///妹子人物
               Positioned(
                 top: 48.w + 80.h,
                 left: 0,
                 right: 0,
                 bottom: 210.h,
-                child: Container(
-                  // color: Colors.yellow,
-                  child: Image.asset(
-                    beautyController.currentGirl.girlImg,
-                    fit: BoxFit.fitHeight,
-                    alignment: Alignment.bottomCenter,
-                  ),
+                child: Image.asset(
+                  beautyController.currentGirl.girlImg,
+                  fit: BoxFit.fitHeight,
+                  alignment: Alignment.bottomCenter,
                 ),
               ),
-              _grade(),
-              Positioned(
-                  top: 58.h,
-                  right: 16.w,
-                  child: Row(
-                    children: [
-                      IconWidget(iconWidth: 17.w, icon: Assets.commonUiCommonIconCurrency02),
-                      2.hGap,
-                      AnimatedNum(
-                        number: controller.userEntiry.teamLoginInfo!.getCoin().toInt(),
-                        textStyle: 12.w4(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldRegular),
-                      ),
-                      10.hGap,
-                      IconWidget(iconWidth: 20.w, icon: Assets.teamUiMoney02),
-                      2.hGap,
-                      AnimatedNum(
-                        number: controller.userEntiry.teamLoginInfo!.getMoney().toInt(),
-                        isMoney: true,
-                        milliseconds: 1000,
-                        textStyle: 12.w4(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldRegular),
-                      )
-                    ],
-                  )),
+
+              ///妹子状态
+              GirlStatusWidget(),
+
+              ///钱币信息
+              MoneyInfoWidget(),
 
               ///赠礼气泡窗
               GirlDescWidget(),
@@ -120,12 +83,8 @@ class TeamGiftPage extends GetView<TeamGiftController> {
         id: "team_gift",
         builder: (_) {
           return Scaffold(
-              body: _buildView(),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  controller.sendGift.toggle();
-                },
-              ));
+            body: _buildView(),
+          );
         },
       ),
     );
@@ -202,7 +161,7 @@ class TeamGiftPage extends GetView<TeamGiftController> {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  '${controller.gGirlDefine.value.initialCharm}',
+                  controller.gGirlDefine.value.initialCharm,
                   style: 12.w5(color: Colors.white, fontFamily: FontFamily.fRobotoMedium),
                 )
               ],

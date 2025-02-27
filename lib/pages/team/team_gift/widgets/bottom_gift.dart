@@ -23,6 +23,7 @@ class BottomGiftWidget extends GetView<TeamGiftController> {
       right: 0,
       child: Obx(() => Stack(
             children: [
+              ///底部总高度
               Container(height: 294.h + Utils.getPaddingBottom()),
               Positioned(
                 bottom: 0,
@@ -34,32 +35,25 @@ class BottomGiftWidget extends GetView<TeamGiftController> {
                   child: Column(
                     children: [
                       SizedBox(height: 62.h),
+
+                      /// 礼物列表布局
                       Container(
                         height: 152.h,
-                        child: controller.sendGift.value
-                            ? _sendGiftWidget()
-                            : Obx(
-                                () => ListView.separated(
-                                  itemCount: controller.girlGiftDefineList.length,
-                                  scrollDirection: Axis.horizontal,
-                                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                  itemBuilder: (context, index) {
-                                    return _giftInfoWidget(index);
-                                  },
-                                  separatorBuilder: (context, index) => SizedBox(width: 16.w),
-                                ),
-                              ),
-                      ),
+                        child: controller.sendGift.value ? _sendGiftWidget() : _giftInfoWidget(),
+                      )
                     ],
                   ),
                 ),
               ),
+
+              ///buff信息
               Positioned(top: 0, left: 16.w, right: 16.w, child: _deepAffectionWidget()),
             ],
           )),
     );
   }
 
+  ///送完礼物
   Widget _sendGiftWidget() {
     return Column(
       children: [
@@ -109,83 +103,95 @@ class BottomGiftWidget extends GetView<TeamGiftController> {
     );
   }
 
-  Widget _giftInfoWidget(int index) {
-    List<String> costList = controller.girlGiftDefineList[index].cost.split('_').toList();
-    int propid = int.parse(controller.girlGiftDefineList[index].id);
-
-    return MtInkWell(
-        onTap: () {
-          controller.sendGiftClick(girlId: controller.gGirlDefine.value.id, giftId: propid);
-        },
-        child: Container(
-          width: 100.h,
-          decoration: BoxDecoration(color: AppColors.c000000, borderRadius: BorderRadius.circular(9.h)),
-          child: Column(
-            children: [
-              Container(
-                height: 128.h,
-                padding: EdgeInsets.symmetric(horizontal: 10.h),
-                decoration: BoxDecoration(
-                    color: AppColors.cFFFFFF,
-                    borderRadius: BorderRadius.circular(9.h),
-                    border: Border.all(color: AppColors.c666666, width: 1)),
+  ///未送礼物
+  Widget _giftInfoWidget() {
+    return Obx(
+      () => ListView.separated(
+        itemCount: controller.girlGiftDefineList.length,
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        itemBuilder: (context, index) {
+          List<String> costList = controller.girlGiftDefineList[index].cost.split('_').toList();
+          int propid = int.parse(controller.girlGiftDefineList[index].id);
+          return MtInkWell(
+              onTap: () {
+                controller.sendGiftClick(girlId: controller.gGirlDefine.value.id, giftId: propid);
+              },
+              child: Container(
+                width: 100.h,
+                decoration: BoxDecoration(color: AppColors.c000000, borderRadius: BorderRadius.circular(9.h)),
                 child: Column(
                   children: [
-                    SizedBox(height: 2.h),
-                    Text(
-                      CacheApi.propDefineMap[propid]!.propName,
-                      style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    Container(
+                      height: 128.h,
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
+                      decoration: BoxDecoration(
+                          color: AppColors.cFFFFFF,
+                          borderRadius: BorderRadius.circular(9.h),
+                          border: Border.all(color: AppColors.c666666, width: 1)),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 2.h),
+                          Text(
+                            CacheApi.propDefineMap[propid]!.propName,
+                            style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Spacer(),
+                          Image.asset(
+                            Utils.getPropIconUrl(propid),
+                            height: 50.h,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                Assets.picksUiPickGift01,
+                                height: 50.h,
+                              );
+                            },
+                          ),
+                          Spacer(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconWidget(
+                                iconWidth: 21.h,
+                                icon: Assets.cheerleadersUiCheerleadersIconIntimacy,
+                              ),
+                              SizedBox(width: 2.h),
+                              Text(
+                                '+${controller.girlGiftDefineList[index].addIntimacy[0]}~${controller.girlGiftDefineList[index].addIntimacy[1]}',
+                                style: 12.w5(fontFamily: FontFamily.fRobotoMedium),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 6.h),
+                        ],
+                      ),
                     ),
-                    Spacer(),
-                    Image.asset(
-                      Utils.getPropIconUrl(propid),
-                      height: 50.h,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          Assets.picksUiPickGift01,
-                          height: 50.h,
-                        );
-                      },
-                    ),
-                    Spacer(),
-                    Row(
+                    Flexible(
+                        child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         IconWidget(
-                          iconWidth: 21.h,
-                          icon: Assets.cheerleadersUiCheerleadersIconIntimacy,
+                          icon: Utils.getPropIconUrl(int.tryParse(costList[1])),
+                          iconHeight: 20.h,
                         ),
-                        SizedBox(width: 2.h),
-                        Text(
-                          '+${controller.girlGiftDefineList[index].addIntimacy[0]}~${controller.girlGiftDefineList[index].addIntimacy[1]}',
-                          style: 12.w5(fontFamily: FontFamily.fRobotoMedium),
-                        ),
+                        Text('${costList[2]}${costList[1] == "102" ? "K" : ""}',
+                            style:
+                                TextStyle(fontSize: 16.h, color: Colors.white, fontFamily: FontFamily.fOswaldMedium)),
                       ],
-                    ),
-                    SizedBox(height: 6.h),
+                    ))
                   ],
                 ),
-              ),
-              Flexible(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconWidget(
-                    icon: Utils.getPropIconUrl(int.tryParse(costList[1])),
-                    iconHeight: 20.h,
-                  ),
-                  Text('${costList[2]}${costList[1] == "102" ? "K" : ""}',
-                      style: TextStyle(fontSize: 16.h, color: Colors.white, fontFamily: FontFamily.fOswaldMedium)),
-                ],
-              ))
-            ],
-          ),
-        ));
+              ));
+        },
+        separatorBuilder: (context, index) => SizedBox(width: 16.w),
+      ),
+    );
   }
 
+  ///buff信息
   Widget _deepAffectionWidget() {
     return Container(
       height: 84.h,
@@ -274,30 +280,4 @@ class BottomGiftWidget extends GetView<TeamGiftController> {
       ),
     );
   }
-}
-
-class TriangleClipper extends CustomClipper<Path> {
-  final bool isSender;
-
-  TriangleClipper({required this.isSender});
-
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    if (isSender) {
-      path.moveTo(size.width, 0);
-      path.lineTo(size.width, size.height);
-      path.lineTo(0, size.height / 2);
-    } else {
-      path.moveTo(0, 0);
-      path.lineTo(size.width, 0);
-      path.lineTo(size.width, size.height);
-      path.lineTo(0, size.height / 2);
-    }
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
