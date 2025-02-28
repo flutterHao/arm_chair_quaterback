@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-26 19:58:38
- * @LastEditTime: 2025-02-27 20:21:29
+ * @LastEditTime: 2025-02-28 19:04:30
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -24,14 +24,12 @@ class ChatDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isGirl = true;
     return GetBuilder<BeautyChatController>(
       init: BeautyChatController(),
       id: "beauty_chat",
       builder: (controller) {
-        controller.getChatList();
         var list = controller.girlChatEntity.historicalChatRecords;
-        var chooseList = controller.getChooseList(list.last.choicesStr);
+        var chooseList = list.last.choices;
         return Align(
           alignment: Alignment.bottomCenter,
           child: Container(
@@ -93,15 +91,13 @@ class ChatDetailPage extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: list.length,
                       itemBuilder: (context, index) {
-                        isGirl = true;
                         return Align(
-                          alignment: isGirl
+                          alignment: list[index].type == 1
                               ? Alignment.centerLeft
                               : Alignment.centerRight,
                           child: Container(
                             margin: EdgeInsets.only(top: 4.w),
                             child: ChatBubble(
-                              isLeft: true,
                               message: list[index],
                             ),
                           ),
@@ -121,7 +117,9 @@ class ChatDetailPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return MtInkWell(
                             onTap: () {
-                              controller.nextMessage(index, chooseList[index]);
+                              int messageId =
+                                  controller.girlChatEntity.currentMessageId;
+                              controller.nextMessage(index, messageId);
                             },
                             child: SelectBubble(
                               message: chooseList[index],

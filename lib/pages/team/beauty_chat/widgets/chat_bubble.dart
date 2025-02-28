@@ -2,24 +2,34 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-27 12:17:59
- * @LastEditTime: 2025-02-27 19:57:45
+ * @LastEditTime: 2025-02-28 19:10:44
  */
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/girl_dialogue_define_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatBubble extends StatelessWidget {
-  const ChatBubble({super.key, this.isLeft = true, required this.message});
-  final bool isLeft;
+  const ChatBubble({super.key, required this.message});
   final GirlDialogueDefineEntity message;
+
+  String getCurrentDataStr(int ms) {
+    DateTime now = DateTime.now();
+    DateTime targetDate = DateTime.fromMillisecondsSinceEpoch(ms);
+
+    if (now.difference(targetDate).inDays > 1) {
+      // 如果超过一天，显示日期
+      return MyDateUtils.formatDateMilliseconds(ms, format: "yyyy-MM-dd");
+    } else {
+      // 否则显示时间
+      return MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(ms));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +38,10 @@ class ChatBubble extends StatelessWidget {
         minHeight: 32.w,
         maxWidth: 240.w,
       ),
+      margin: EdgeInsets.only(top: message.type == 2 ? 3.w : 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.w),
-        color: isLeft ? AppColors.cED4873 : AppColors.cFFFFFF,
-        // image: DecorationImage(
-        //     // repeat: ImageRepeat.repeatX,
-        //     centerSlice: Rect.fromLTRB(1, 1, 10, 10), // 中心区域
-        //     fit: BoxFit.scaleDown, // 拉伸模式
-        //     image: AssetImage(Assets.managerUiManagerBattleTextbase)),
+        color: message.type == 1 ? AppColors.cED4873 : AppColors.cFFFFFF,
       ),
       child: Padding(
         padding: EdgeInsets.only(
@@ -48,10 +54,11 @@ class ChatBubble extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              message.dialogue,
+              message.context,
               style: 14.w4(
                 fontFamily: FontFamily.fRobotoRegular,
-                color: isLeft ? AppColors.cFFFFFF : AppColors.cED4873,
+                color:
+                    message.type == 1 ? AppColors.cFFFFFF : AppColors.c000000,
               ),
               softWrap: true,
               overflow: TextOverflow.visible,
@@ -60,10 +67,12 @@ class ChatBubble extends StatelessWidget {
             Container(
               alignment: Alignment.centerRight,
               child: Text(
-                "12:11",
+                getCurrentDataStr(message.updateTime),
                 style: 10.w4(
                     fontFamily: FontFamily.fRobotoRegular,
-                    color: AppColors.cFFFFFF,
+                    color: message.type == 1
+                        ? AppColors.cFFFFFF
+                        : AppColors.cB3B3B3,
                     height: 1),
               ),
             )
@@ -71,66 +80,66 @@ class ChatBubble extends StatelessWidget {
         ),
       ),
     );
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = min(240.w, constraints.maxWidth * 0.8); // 动态宽度限制
+    // return LayoutBuilder(
+    //   builder: (context, constraints) {
+    //     final maxWidth = min(240.w, constraints.maxWidth * 0.8); // 动态宽度限制
 
-        return SizedBox(
-          width: maxWidth,
-          height: 32.w,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                bottom: 0,
-                left: isLeft ? 0 : null,
-                right: !isLeft ? 0 : null,
-                child: Image.asset(
-                  Assets.managerUiManagerBubble,
-                  width: 12.5.w,
-                  height: 16.5.w,
-                  fit: BoxFit.fill,
-                  color: isLeft ? AppColors.cED4873 : AppColors.cFFFFFF,
-                ),
-              ),
-              Positioned(
-                top: 0,
-                bottom: 0,
-                left: isLeft ? 5.5.w : null,
-                right: !isLeft ? 5.5.w : null,
-                child: Container(
-                  constraints: BoxConstraints(
-                    minHeight: 32.w,
-                    maxWidth: maxWidth,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.w),
-                    color: isLeft ? AppColors.cED4873 : AppColors.cFFFFFF,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 10.w,
-                      right: 10.w,
-                      top: 5.w,
-                      bottom: 5.w,
-                    ),
-                    child: Text(
-                      message.dialogue,
-                      style: 14.w4(
-                        fontFamily: FontFamily.fRobotoRegular,
-                        color: isLeft ? AppColors.cFFFFFF : AppColors.cED4873,
-                      ),
-                      softWrap: true,
-                      overflow: TextOverflow.visible,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    //     return SizedBox(
+    //       width: maxWidth,
+    //       height: 32.w,
+    //       child: Stack(
+    //         clipBehavior: Clip.none,
+    //         children: [
+    //           Positioned(
+    //             bottom: 0,
+    //             left: isLeft ? 0 : null,
+    //             right: !isLeft ? 0 : null,
+    //             child: Image.asset(
+    //               Assets.managerUiManagerBubble,
+    //               width: 12.5.w,
+    //               height: 16.5.w,
+    //               fit: BoxFit.fill,
+    //               color: isLeft ? AppColors.cED4873 : AppColors.cFFFFFF,
+    //             ),
+    //           ),
+    //           Positioned(
+    //             top: 0,
+    //             bottom: 0,
+    //             left: isLeft ? 5.5.w : null,
+    //             right: !isLeft ? 5.5.w : null,
+    //             child: Container(
+    //               constraints: BoxConstraints(
+    //                 minHeight: 32.w,
+    //                 maxWidth: maxWidth,
+    //               ),
+    //               decoration: BoxDecoration(
+    //                 borderRadius: BorderRadius.circular(16.w),
+    //                 color: isLeft ? AppColors.cED4873 : AppColors.cFFFFFF,
+    //               ),
+    //               child: Padding(
+    //                 padding: EdgeInsets.only(
+    //                   left: 10.w,
+    //                   right: 10.w,
+    //                   top: 5.w,
+    //                   bottom: 5.w,
+    //                 ),
+    //                 child: Text(
+    //                   message.dialogue,
+    //                   style: 14.w4(
+    //                     fontFamily: FontFamily.fRobotoRegular,
+    //                     color: isLeft ? AppColors.cFFFFFF : AppColors.cED4873,
+    //                   ),
+    //                   softWrap: true,
+    //                   overflow: TextOverflow.visible,
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
   }
 }
 

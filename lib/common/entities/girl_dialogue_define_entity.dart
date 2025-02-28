@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-27 16:30:28
- * @LastEditTime: 2025-02-28 15:06:53
+ * @LastEditTime: 2025-02-28 17:05:21
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/girl_dialogue_define_entity.g.dart';
@@ -20,7 +20,9 @@ class GirlDialogueDefineEntity {
   late List<int> nextDialogue = [];
   late int storyLineId = 0;
   late int textType = 0;
-  late int type = 0;
+  late int type = 2;
+  late int updateTime = 0;
+  late String context = "";
 
   GirlDialogueDefineEntity();
 
