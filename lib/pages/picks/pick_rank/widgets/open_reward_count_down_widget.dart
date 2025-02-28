@@ -55,21 +55,21 @@ class _OpenRewardCountDownWidgetState extends State<OpenRewardCountDownWidget> {
     int hr = seconds % 86400 ~/ 3600;
     int day = seconds ~/ 86400;
     return NotificationListener<ScrollNotification>(
-      onNotification: (_){
+      onNotification: (_) {
         return true;
       },
       child: Row(
         children: [
-          _buildItem(day, "DAY",31),
-          _buildItem(hr, "HR",24),
-          _buildItem(min, "MIN",60),
-          _buildItem(sec, "SEC",60),
+          _buildItem(day, "DAY", 31),
+          _buildItem(hr, "HR", 24),
+          _buildItem(min, "MIN", 60),
+          _buildItem(sec, "SEC", 60),
         ],
       ),
     );
   }
 
-  Widget _buildItem(int value, String text,int step) {
+  Widget _buildItem(int value, String text, int step) {
     return Container(
       margin: EdgeInsets.only(right: 5.w),
       child: Column(
@@ -157,7 +157,8 @@ class PageViewItem extends StatefulWidget {
       {super.key,
       required this.itemBuilder,
       this.initIndex = 0,
-      required this.index,this.step = 60 });
+      required this.index,
+      this.step = 60});
 
   final Widget Function(BuildContext context, int index) itemBuilder;
   final int initIndex;
@@ -174,20 +175,22 @@ class _PageViewItemState extends State<PageViewItem> {
   @override
   void initState() {
     super.initState();
-    var initialPage = widget.initIndex==0?widget.step:widget.initIndex;
+    var initialPage = widget.initIndex == 0 ? widget.step : widget.initIndex;
     pageController = PageController(initialPage: initialPage);
   }
 
   @override
   void didUpdateWidget(covariant PageViewItem oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.index != widget.index ) {
-      pageController.animateToPage(widget.index,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut).then((_){
-            if(widget.index == 0){
-              pageController.jumpToPage(widget.step);
-            }
+    if (oldWidget.index != widget.index) {
+      pageController
+          .animateToPage(widget.index,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut)
+          .then((_) {
+        if (widget.index == 0) {
+          pageController.jumpToPage(widget.step);
+        }
       });
     }
   }
@@ -195,7 +198,8 @@ class _PageViewItemState extends State<PageViewItem> {
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-        itemCount: widget.step+1,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: widget.step + 1,
         controller: pageController,
         scrollDirection: Axis.vertical,
         reverse: true,
