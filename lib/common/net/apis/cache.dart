@@ -9,6 +9,9 @@ import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girl_chat_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girl_dialogue_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girls_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/girl_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/girl_gift_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
@@ -86,6 +89,8 @@ class CacheApi {
   static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
   static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
   static Map<int, HelpEntity> helpMap = {};
+  static List<GirlsDefineEntity> girlsDefineList = [];
+  static List<GirlDialogueDefineEntity> girlChatList = [];
 
   static Future<void> init() async {
     await Future.wait([
@@ -419,6 +424,24 @@ class CacheApi {
   static Future<List> getcLanguages() async {
     List res = await HttpUtil().post(Api.cLanguages);
     return res;
+  }
+
+  static Future<List<GirlsDefineEntity>> getGirlsDefine() async {
+    if (girlsDefineList.isNotEmpty) {
+      return girlsDefineList;
+    }
+    List list = await HttpUtil().post(Api.cGirlsDefine);
+    return girlsDefineList =
+        list.map((item) => GirlsDefineEntity.fromJson(item)).toList();
+  }
+
+  static Future<List<GirlDialogueDefineEntity>> getGirlsChat() async {
+    if (girlChatList.isNotEmpty) {
+      return girlChatList;
+    }
+    List list = await HttpUtil().post(Api.cGirlChat);
+    return girlChatList =
+        list.map((item) => GirlDialogueDefineEntity.fromJson(item)).toList();
   }
 
   /// 获取礼物表

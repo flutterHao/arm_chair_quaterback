@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-26 10:11:14
+ * @LastEditTime: 2025-02-28 12:07:56
  */
 import 'dart:math';
 
@@ -479,46 +479,9 @@ class _SlotButton extends StatelessWidget {
         builder: (controller) {
           return Obx(() {
             return InkWell(
-              onTap: controller.isPlaying.value
-                  ? null
-                  : () async {
-                      if (controller.ballNum.value <= 0) {
-                        BottomTipDialog.showWithSound(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => BuyGoBottomsheet());
-                        // BottomTipDialog.show(
-                        //     context: Get.context!,
-                        //     desc: "Automatically use Coins for training when there's a shortage of balls ",
-                        //     centerWidget: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       children: [
-                        //         Text(
-                        //           "COST:",
-                        //           style: 16.w4(fontFamily: FontFamily.fOswaldBold),
-                        //         ),
-                        //         10.hGap,
-                        //         Image.asset(
-                        //           Assets.commonUiCommonIconCurrency02,
-                        //           width: 20.w,
-                        //         ),
-                        //         5.hGap,
-                        //         Text(
-                        //           "${controller.getBallCost()}",
-                        //           style: 16.w4(fontFamily: FontFamily.fOswaldBold),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     onTap: () {
-                        //       Get.back();
-                        //       controller.buyTrainingBall(20);
-                        //       controller.startSlot();
-                        //       Utils.saveNotTip("ball");
-                        //     });
-                      } else {
-                        controller.startSlot();
-                      }
-                    },
+              onTap: () {
+                controller.onTapGoButton();
+              },
               child: AnimatedScale(
                 scale: controller.isPlaying.value ? 0.9 : 1,
                 duration: const Duration(milliseconds: 50),

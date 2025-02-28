@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-24 18:33:29
- * @LastEditTime: 2025-02-25 18:58:49
+ * @LastEditTime: 2025-02-26 21:19:28
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -127,8 +127,8 @@ class StarUpList extends StatelessWidget {
                   child: SizedBox(
                     width: 343.w,
                     child: ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
+                        // shrinkWrap: true,
+                        // physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) =>
                             _Item(item: list[index]),
                         separatorBuilder: (context, index) => 19.vGap,

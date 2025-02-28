@@ -107,13 +107,13 @@ class TrainingInfoTraining {
   @JSONField(deserialize: false, serialize: false)
   RxDouble taskProgress = 0.0.obs;
   late int todayBuyCount = 0;
+  late int eventId = 0;
   // @JSONField(deserialize: false, serialize: false)
   // late RxInt taskValue = 0.obs;
 
   TrainingInfoTraining();
 
-  int get ballRefreshTime =>
-      brt + Utils.getTimeZoneOffset().inMilliseconds;
+  int get ballRefreshTime => brt + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory TrainingInfoTraining.fromJson(Map<String, dynamic> json) =>
       $TrainingInfoTrainingFromJson(json);

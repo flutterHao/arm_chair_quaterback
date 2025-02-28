@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-15 17:48:17
+ * @LastEditTime: 2025-02-28 11:09:59
  */
 
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -24,7 +24,7 @@ class IllustratiionsPage extends GetView<IllustratiionsController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<IllustratiionsController>(
-      init: IllustratiionsController(),
+      // init: IllustratiionsController(),
       id: "list",
       builder: (_) {
         var list =

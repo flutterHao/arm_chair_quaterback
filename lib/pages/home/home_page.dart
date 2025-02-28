@@ -343,45 +343,44 @@ class NewPlayerTip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<IllustratiionsController>(
-        init: IllustratiionsController(),
+        // init: IllustratiionsController(),
         builder: (ctrl) {
-          return Obx(() {
-            return AnimatedScale(
-              duration: 300.milliseconds,
-              scale: ctrl.hasNewPlayer.value ? 1 : 0,
-              child: BubbleBox(
-                arrowOffset: 75.w,
-                color: AppColors.c000000,
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 9.w),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Get new player:  ",
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            color: AppColors.cFFFFFF,
-                            fontFamily: FontFamily.fOswaldMedium),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 1.5.w),
-                        child: AnimatedNum(
-                          milliseconds: 100,
-                          textStyle: TextStyle(
-                              fontSize: 16.sp,
-                              color: AppColors.cFFFFFF,
-                              fontFamily: FontFamily.fRobotoMedium),
-                          number: ctrl.getPlayerCards.length,
-                        ),
-                      )
-                    ],
+      return Obx(() {
+        return AnimatedScale(
+          duration: 300.milliseconds,
+          scale: ctrl.hasNewPlayer.value ? 1 : 0,
+          child: BubbleBox(
+            arrowOffset: 75.w,
+            color: AppColors.c000000,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 9.w),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Get new player:  ",
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        color: AppColors.cFFFFFF,
+                        fontFamily: FontFamily.fOswaldMedium),
                   ),
-                ),
+                  Container(
+                    margin: EdgeInsets.only(top: 1.5.w),
+                    child: AnimatedNum(
+                      milliseconds: 100,
+                      textStyle: TextStyle(
+                          fontSize: 16.sp,
+                          color: AppColors.cFFFFFF,
+                          fontFamily: FontFamily.fRobotoMedium),
+                      number: ctrl.getPlayerCards.length,
+                    ),
+                  )
+                ],
               ),
-            );
-          });
-        });
+            ),
+          ),
+        );
+      });
+    });
   }
 }

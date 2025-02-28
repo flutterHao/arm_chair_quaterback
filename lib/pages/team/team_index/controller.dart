@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-26 10:12:54
+ * @LastEditTime: 2025-02-28 11:09:19
  */
 
 import 'dart:async';
@@ -27,6 +27,7 @@ import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/card_fly_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 
@@ -161,7 +162,6 @@ class TeamIndexController extends GetxController
   @override
   void onReady() {
     super.onReady();
-
     _initData();
   }
 
@@ -176,12 +176,14 @@ class TeamIndexController extends GetxController
   _initData() {
     final trainingCtrl = Get.find<TrainingController>();
     final teamCtrl = Get.find<TeamController>();
+    final illuCtrl = Get.find<IllustratiionsController>();
     Future.wait([
       getBattleBox(),
       CacheApi.getPropDefine(),
       CacheApi.getCardPackDefine(),
       trainingCtrl.getData(),
-      teamCtrl.initData()
+      teamCtrl.initData(),
+      illuCtrl.getPlayerCollectInfo()
     ]).then((v) {
       loadDataSuccess = true;
       getTeamInfoCup();

@@ -2,12 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2025-02-25 17:06:15
+ * @LastEditTime: 2025-02-27 21:07:08
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girl_chat_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/next_massage_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/o_v_r_rank_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
@@ -32,8 +34,8 @@ class TeamApi {
   }
 
   ///球员训练
-  static Future<TrainingInfoEntity> playerTraining(String uuid) async {
-    var json = await HttpUtil().post(Api.playerTraining, data: {"uuid": uuid});
+  static Future<TrainingInfoEntity> playerTraining() async {
+    var json = await HttpUtil().post(Api.playerTraining);
     return TrainingInfoEntity.fromJson(json);
   }
 
@@ -254,5 +256,21 @@ class TeamApi {
     var json =
         await httpUtil.post(Api.getSlotStarUpEventVO, data: {"type": type});
     return StarUpPlayerEntity.fromJson(json);
+  }
+
+  static Future<GirlChatEntity> getSlotChatEventVO() {
+    return httpUtil
+        .post(Api.getSlotChatEventVO)
+        .then((value) => GirlChatEntity.fromJson(value));
+  }
+
+  static Future<NextMessageEntity> nextMessage(
+      int girlId, int nessageDefineId, int choice) async {
+    var json = await httpUtil.post(Api.nextMessage, data: {
+      "girlId": girlId,
+      "messageDefineId": nessageDefineId,
+      "choice": choice
+    });
+    return NextMessageEntity.fromJson(json);
   }
 }

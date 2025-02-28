@@ -13,7 +13,6 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/power_change_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/recover_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/line_up_tab.dart';
@@ -113,7 +112,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   @override
   void onReady() {
     super.onReady();
-    initData();
+    // initData();
   }
 
   /// 在 [onDelete] 方法之前调用。

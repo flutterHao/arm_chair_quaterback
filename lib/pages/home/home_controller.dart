@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-02-22 16:18:05
+ * @LastEditTime: 2025-02-28 11:58:50
  */
 import 'dart:async';
 
@@ -30,8 +30,12 @@ import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/view.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -98,6 +102,22 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     // auth();
+    // if (!Get.isRegistered<TeamController>()) {
+    //   Get.put(TeamController(), permanent: true);
+    // }
+    // if (!Get.isRegistered<BeautyController>()) {
+    //   Get.put(BeautyController(), permanent: true);
+    // }
+    // if (!Get.isRegistered<TrainingController>()) {
+    //   Get.put(TrainingController(), permanent: true);
+    // }
+    // if (!Get.isRegistered<IllustratiionsController>()) {
+    //   Get.put(IllustratiionsController(), permanent: true);
+    // }
+    Get.lazyPut(() => BeautyController());
+    Get.lazyPut(() => TeamController());
+    Get.lazyPut(() => TrainingController());
+    Get.lazyPut(() => IllustratiionsController());
     pageController = PageController(initialPage: 2);
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
@@ -180,13 +200,14 @@ class HomeController extends GetxController {
     await UserStore.to.setToken(v);
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
-    if (!kReleaseMode) {
+    update([GetXBuilderIds.idGlobalUserEntityRefresh]);
+
+    if (kReleaseMode) {
       /// 关联用户id
       FirebaseCrashlytics.instance
           .setUserIdentifier("${userEntiry.teamLoginInfo?.team?.teamId}");
     }
     getOngoingDailyTaskList();
-    update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 
   Future<String> getUid() async {

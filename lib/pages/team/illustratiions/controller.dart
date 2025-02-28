@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-26 10:26:12
+ * @LastEditTime: 2025-02-28 11:08:12
  */
 /*
  * @Description: 
@@ -86,7 +86,7 @@ class IllustratiionsController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    getPlayerCollectInfo();
+    // getPlayerCollectInfo();
   }
 
   void initFilter() {

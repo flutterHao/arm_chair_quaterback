@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-02-25 11:28:30
+ * @LastEditTime: 2025-02-26 16:20:32
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -234,7 +234,8 @@ class _Item extends GetView<IllustratiionsController> {
   @override
   Widget build(BuildContext context) {
     var player = Utils.getPlayBaseInfo(item.playerId);
-    return InkWell(
+    return MtInkWell(
+      minScale: 0.9,
       onTap: () async {
         await Get.toNamed(
           RouteNames.illustrationDetail,

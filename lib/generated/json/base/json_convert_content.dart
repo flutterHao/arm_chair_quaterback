@@ -24,8 +24,11 @@ import 'package:arm_chair_quaterback/common/entities/game_result_info_entity.dar
 import 'package:arm_chair_quaterback/common/entities/game_schedules_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/gilr_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girl_chat_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/girl_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girl_dialogue_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/girl_gift_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/girls_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/giving_gifts_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
@@ -56,6 +59,7 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/next_massage_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/o_v_r_rank_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
@@ -453,13 +457,29 @@ class JsonConvert {
       return data.map<GirlEntity>((Map<String, dynamic> e) =>
           GirlEntity.fromJson(e)).toList() as M;
     }
+    if (<GirlChatEntity>[] is M) {
+      return data.map<GirlChatEntity>((Map<String, dynamic> e) =>
+          GirlChatEntity.fromJson(e)).toList() as M;
+    }
+    if (<GirlChatGirl>[] is M) {
+      return data.map<GirlChatGirl>((Map<String, dynamic> e) =>
+          GirlChatGirl.fromJson(e)).toList() as M;
+    }
     if (<GirlDefineEntity>[] is M) {
       return data.map<GirlDefineEntity>((Map<String, dynamic> e) =>
           GirlDefineEntity.fromJson(e)).toList() as M;
     }
+    if (<GirlDialogueDefineEntity>[] is M) {
+      return data.map<GirlDialogueDefineEntity>((Map<String, dynamic> e) =>
+          GirlDialogueDefineEntity.fromJson(e)).toList() as M;
+    }
     if (<GirlGiftDefineEntity>[] is M) {
       return data.map<GirlGiftDefineEntity>((Map<String, dynamic> e) =>
           GirlGiftDefineEntity.fromJson(e)).toList() as M;
+    }
+    if (<GirlsDefineEntity>[] is M) {
+      return data.map<GirlsDefineEntity>((Map<String, dynamic> e) =>
+          GirlsDefineEntity.fromJson(e)).toList() as M;
     }
     if (<GivingGiftsEntity>[] is M) {
       return data.map<GivingGiftsEntity>((Map<String, dynamic> e) =>
@@ -788,6 +808,10 @@ class JsonConvert {
     if (<NewsSourceEntity>[] is M) {
       return data.map<NewsSourceEntity>((Map<String, dynamic> e) =>
           NewsSourceEntity.fromJson(e)).toList() as M;
+    }
+    if (<NextMessageEntity>[] is M) {
+      return data.map<NextMessageEntity>((Map<String, dynamic> e) =>
+          NextMessageEntity.fromJson(e)).toList() as M;
     }
     if (<NowSeasonEntity>[] is M) {
       return data.map<NowSeasonEntity>((Map<String, dynamic> e) =>
@@ -1366,8 +1390,12 @@ class JsonConvertClassCollection {
     (GameSchedulesEntity).toString(): GameSchedulesEntity.fromJson,
     (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
     (GirlEntity).toString(): GirlEntity.fromJson,
+    (GirlChatEntity).toString(): GirlChatEntity.fromJson,
+    (GirlChatGirl).toString(): GirlChatGirl.fromJson,
     (GirlDefineEntity).toString(): GirlDefineEntity.fromJson,
+    (GirlDialogueDefineEntity).toString(): GirlDialogueDefineEntity.fromJson,
     (GirlGiftDefineEntity).toString(): GirlGiftDefineEntity.fromJson,
+    (GirlsDefineEntity).toString(): GirlsDefineEntity.fromJson,
     (GivingGiftsEntity).toString(): GivingGiftsEntity.fromJson,
     (GradeInStaminaEntity).toString(): GradeInStaminaEntity.fromJson,
     (GradeInStarDefineEntity).toString(): GradeInStarDefineEntity.fromJson,
@@ -1479,6 +1507,7 @@ class JsonConvertClassCollection {
     (NewsListEntity).toString(): NewsListEntity.fromJson,
     (NewsListDetail).toString(): NewsListDetail.fromJson,
     (NewsSourceEntity).toString(): NewsSourceEntity.fromJson,
+    (NextMessageEntity).toString(): NextMessageEntity.fromJson,
     (NowSeasonEntity).toString(): NowSeasonEntity.fromJson,
     (OVRRankPlayerInfoEntity).toString(): OVRRankPlayerInfoEntity.fromJson,
     (OVRRankPlayerInfoOVRTrend).toString(): OVRRankPlayerInfoOVRTrend.fromJson,

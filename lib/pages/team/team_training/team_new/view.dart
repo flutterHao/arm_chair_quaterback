@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2025-02-25 14:10:11
+ * @LastEditTime: 2025-02-28 14:40:09
  */
 /*
  * @Description: 
@@ -25,7 +25,7 @@ class TeamMenberView extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.initData();
+    if (controller.myBagList.isEmpty) controller.initData();
     return HorizontalDragBackContainer(
       child: BlackAppWidget(
         backgroundColor: AppColors.cF2F2F2,

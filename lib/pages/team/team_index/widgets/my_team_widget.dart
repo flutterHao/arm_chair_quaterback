@@ -99,7 +99,9 @@ class MyTeamWidget extends StatelessWidget {
                                 // 填充文字
                                 Text(LangKey.gameMeanSalaryCap.tr,
                                     style: 80.w4(
-                                        fontFamily: FontFamily.fOswaldMedium, color: Colors.transparent, height: 1)),
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                        color: Colors.transparent,
+                                        height: 1)),
                               ],
                             ),
                           ),
@@ -116,21 +118,27 @@ class MyTeamWidget extends StatelessWidget {
                                   child: Text(
                                     LangKey.gameMeanSalaryCap.tr,
                                     style: 14.w4(
-                                        color: AppColors.cFFFFFF, fontFamily: FontFamily.fRobotoRegular, height: 0.8),
+                                        color: AppColors.cFFFFFF,
+                                        fontFamily: FontFamily.fRobotoRegular,
+                                        height: 0.8),
                                   ),
                                 ),
                                 AnimatedNum(
                                   number: ctrl.myTeamEntity.salary,
                                   isMoney: true,
                                   milliseconds: 1000,
-                                  textStyle: 21
-                                      .w4(height: 0.8, color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldMedium),
+                                  textStyle: 21.w4(
+                                      height: 0.8,
+                                      color: AppColors.cFFFFFF,
+                                      fontFamily: FontFamily.fOswaldMedium),
                                 ),
                                 SizedBox(height: 4.h),
                                 Text(
                                   " /${Utils.formatMoney(ctrl.myTeamEntity.salaryCap)}",
-                                  style: 16
-                                      .w4(height: 0.8, color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldRegular),
+                                  style: 16.w4(
+                                      height: 0.8,
+                                      color: AppColors.cFFFFFF,
+                                      fontFamily: FontFamily.fOswaldRegular),
                                 ),
                               ],
                             ),
@@ -152,18 +160,22 @@ class MyTeamWidget extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5.w),
                                     color: AppColors.c666666,
-                                    border: Border.all(width: 0.5, color: AppColors.cB3B3B3),
+                                    border: Border.all(
+                                        width: 0.5, color: AppColors.cB3B3B3),
                                   ),
                                 ),
                                 CustomLinearProgressBar(
                                     width: 321.w,
                                     height: 9.w,
-                                    progressColor: (ctrl.myTeamEntity.salary / ctrl.myTeamEntity.salaryCap) > 0.01
+                                    progressColor: (ctrl.myTeamEntity.salary /
+                                                ctrl.myTeamEntity.salaryCap) >
+                                            0.01
                                         ? AppColors.cE34D4D
                                         : AppColors.cFFFFFF,
                                     // border: AppColors.cFFFFFF,
                                     backgroundColor: AppColors.cTransparent,
-                                    progress: ctrl.myTeamEntity.salary / ctrl.myTeamEntity.salaryCap),
+                                    progress: ctrl.myTeamEntity.salary /
+                                        ctrl.myTeamEntity.salaryCap),
                               ],
                             ),
                           ),
@@ -183,7 +195,8 @@ class MyTeamWidget extends StatelessWidget {
                         Container(
                           width: 124.w,
                           height: 108.w,
-                          padding: EdgeInsets.only(top: 14.5.w, left: 15.w, bottom: 18.w),
+                          padding: EdgeInsets.only(
+                              top: 14.5.w, left: 15.w, bottom: 18.w),
                           decoration: BoxDecoration(
                               color: AppColors.cFFFFFF,
                               borderRadius: BorderRadius.circular(9.w),
@@ -217,7 +230,8 @@ class MyTeamWidget extends StatelessWidget {
                         Container(
                           width: 210.w,
                           height: 108.w,
-                          padding: EdgeInsets.only(top: 14.5.w, left: 15.w, right: 14.w),
+                          padding: EdgeInsets.only(
+                              top: 14.5.w, left: 15.w, right: 14.w),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(9.w),
                               color: AppColors.cFFFFFF,
@@ -226,12 +240,16 @@ class MyTeamWidget extends StatelessWidget {
                                 color: AppColors.c666666,
                               )),
                           child: GetBuilder<IllustratiionsController>(
-                              init: IllustratiionsController(),
+                              // init: IllustratiionsController(),
                               id: "list",
                               builder: (iCtrl) {
-                                int count = iCtrl.playerCollectEntity.collects.where((e) => e.isLight == 1).length;
-                                int compCount =
-                                    iCtrl.playerCollectEntity.collects.where((e) => e.fragmentNum >= e.needNum).length;
+                                int count = iCtrl.playerCollectEntity.collects
+                                    .where((e) => e.isLight == 1)
+                                    .length;
+                                int compCount = iCtrl
+                                    .playerCollectEntity.collects
+                                    .where((e) => e.fragmentNum >= e.needNum)
+                                    .length;
                                 return InkWell(
                                   onTap: () {
                                     TeamIndexController ctrl = Get.find();
@@ -242,16 +260,20 @@ class MyTeamWidget extends StatelessWidget {
                                   child: Container(
                                     margin: EdgeInsets.only(top: 2.w),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               LangKey.gameMeanPlayerDate.tr,
                                               style: 14.w4(
-                                                fontFamily: FontFamily.fRobotoRegular,
+                                                fontFamily:
+                                                    FontFamily.fRobotoRegular,
                                                 height: 0.8,
                                               ),
                                             ),
@@ -260,33 +282,45 @@ class MyTeamWidget extends StatelessWidget {
                                               Container(
                                                 height: 16.w,
                                                 // width: 24.w,
-                                                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 6.w,
+                                                    vertical: 3),
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(8.w),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.w),
                                                   color: AppColors.cE34D4D,
                                                 ),
                                                 child: Text(
                                                   "+${compCount > 99 ? 99 : compCount}",
                                                   style: 10.w4(
-                                                      fontFamily: FontFamily.fOswaldMedium,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
                                                       height: 0.75,
                                                       color: AppColors.cFFFFFF),
                                                 ),
                                               ),
                                             Expanded(
                                               child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
                                                 children: [
                                                   AnimatedNum(
                                                     number: count,
                                                     milliseconds: 1000,
-                                                    textStyle: 24.w4(height: 1, fontFamily: FontFamily.fOswaldMedium),
+                                                    textStyle: 24.w4(
+                                                        height: 1,
+                                                        fontFamily: FontFamily
+                                                            .fOswaldMedium),
                                                   ),
                                                   SizedBox(height: 4.h),
                                                   Text(
                                                     "/${CacheApi.playerBookRuleList.length}",
-                                                    style: 16.w4(height: 1, fontFamily: FontFamily.fOswaldRegular),
+                                                    style: 16.w4(
+                                                        height: 1,
+                                                        fontFamily: FontFamily
+                                                            .fOswaldRegular),
                                                   ),
                                                 ],
                                               ),
@@ -294,7 +328,8 @@ class MyTeamWidget extends StatelessWidget {
                                             19.vGap,
                                           ],
                                         ),
-                                        const Expanded(child: SizedBox.shrink()),
+                                        const Expanded(
+                                            child: SizedBox.shrink()),
                                         Container(
                                           margin: EdgeInsets.only(top: 3.w),
                                           child: Stack(
@@ -303,7 +338,8 @@ class MyTeamWidget extends StatelessWidget {
                                               Image.asset(
                                                 width: 56.w,
                                                 height: 75.5.w,
-                                                Assets.managerUiManagerIconArchive,
+                                                Assets
+                                                    .managerUiManagerIconArchive,
                                                 fit: BoxFit.fill,
                                               ),
                                               Positioned(
@@ -311,7 +347,8 @@ class MyTeamWidget extends StatelessWidget {
                                                   child: Text(
                                                     "NBA",
                                                     style: 19.w4(
-                                                      fontFamily: FontFamily.fOswaldMedium,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
                                                       height: 0.8,
                                                       color: AppColors.cE34D4D,
                                                     ),
@@ -353,27 +390,37 @@ class MyTeamWidget extends StatelessWidget {
                 children: [
                   Positioned(
                     top: 35.5.w,
-                    child: PlayerCardWidget(teamPlayers: ctrl.myTeamEntity.teamPlayers, position: 1),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 1),
                   ),
                   Positioned(
                     top: 80.5.w,
                     left: 27.w,
-                    child: PlayerCardWidget(teamPlayers: ctrl.myTeamEntity.teamPlayers, position: 2),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 2),
                   ),
                   Positioned(
                     top: 80.5.w,
                     right: 27.w,
-                    child: PlayerCardWidget(teamPlayers: ctrl.myTeamEntity.teamPlayers, position: 3),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 3),
                   ),
                   Positioned(
                     top: 213.w,
                     left: 87.w,
-                    child: PlayerCardWidget(teamPlayers: ctrl.myTeamEntity.teamPlayers, position: 4),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 4),
                   ),
                   Positioned(
                     top: 213.w,
                     right: 87.w,
-                    child: PlayerCardWidget(teamPlayers: ctrl.myTeamEntity.teamPlayers, position: 5),
+                    child: PlayerCardWidget(
+                        teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                        position: 5),
                   )
                 ],
               ),
@@ -393,11 +440,15 @@ class MyTeamWidget extends StatelessWidget {
                     Container(
                       width: 375.w,
                       height: 51.w,
-                      decoration: BoxDecoration(color: AppColors.c000000, borderRadius: BorderRadius.circular(9.w)),
+                      decoration: BoxDecoration(
+                          color: AppColors.c000000,
+                          borderRadius: BorderRadius.circular(9.w)),
                       alignment: Alignment.center,
                       child: Text(
                         LangKey.teamTabLineUp.tr,
-                        style: 23.w4(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldMedium),
+                        style: 23.w4(
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fOswaldMedium),
                       ),
                     ),
                     Positioned(
@@ -422,7 +473,8 @@ class MyTeamWidget extends StatelessWidget {
 
 class PlayerCardWidget extends GetView<TeamController> {
   // ignore: prefer_const_constructors_in_immutables
-  PlayerCardWidget({super.key, required this.teamPlayers, required this.position});
+  PlayerCardWidget(
+      {super.key, required this.teamPlayers, required this.position});
 
   final List<TeamPlayerInfoEntity> teamPlayers;
   final int position;
@@ -430,8 +482,9 @@ class PlayerCardWidget extends GetView<TeamController> {
   @override
   Widget build(BuildContext context) {
     if (teamPlayers.isEmpty) return const SizedBox();
-    TeamPlayerInfoEntity player =
-        teamPlayers.firstWhere((e) => e.position == position, orElse: () => TeamPlayerInfoEntity());
+    TeamPlayerInfoEntity player = teamPlayers.firstWhere(
+        (e) => e.position == position,
+        orElse: () => TeamPlayerInfoEntity());
     return Column(
       children: [
         PlayerCard(
@@ -439,7 +492,8 @@ class PlayerCardWidget extends GetView<TeamController> {
           score: Utils.getPlayBaseInfo(player.playerId).playerScore,
           isMyPlayer: true,
           status: player.playerStatus,
-          onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {"playerUuid": player.uuid}),
+          onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade,
+              arguments: {"playerUuid": player.uuid}),
         ),
         3.5.vGap,
         Text(
@@ -486,7 +540,9 @@ class PlayerStartWidget extends StatelessWidget {
                     ? Positioned(
                         left: 8.w * count,
                         child: Image.asset(
-                          grade >= 9 ? Assets.managerUiManagerIconStar01 : Assets.managerUiManagerIconStar02,
+                          grade >= 9
+                              ? Assets.managerUiManagerIconStar01
+                              : Assets.managerUiManagerIconStar02,
                           height: 18.5.w,
                           fit: BoxFit.fitHeight,
                         ),

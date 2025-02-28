@@ -18,7 +18,9 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
+import 'package:arm_chair_quaterback/pages/team/beauty_chat/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/buy_go_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/preparation_tip.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/star_up_list.dart';
@@ -38,7 +40,12 @@ import 'package:get/get.dart';
 class TrainingController extends GetxController
     with GetTickerProviderStateMixin {
   final random = Random();
-  RxBool isPlaying = false.obs;
+  static const int eventStarUp = 1;
+  static const eventChat = 2;
+  static const eventGift = 3;
+  static const eventStealingPlayer = 4;
+  static const eventBankRpbbery = 5;
+  RxBool isPlaying = true.obs;
   // RxInt currentIndex = 0.obs;
   var showBall = false.obs;
   var showPlayer = false.obs;
@@ -314,7 +321,7 @@ class TrainingController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    getData();
+    // getData();
     // isPlaying.addListener(rxGetx)
     ever(isPlaying, (v) {
       HomeController.to.isAbsorbPointer.value = v;
@@ -599,11 +606,6 @@ class TrainingController extends GetxController
     if (ballNum.value > 0) {
       ballNum.value = ballNum.value - 1;
     }
-    // else {
-    //   int cost = getBallCost();
-    //   bool result = HomeController.to.updateTeamProp(-cost);
-    //   if (!result) return;
-    // }
 
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
@@ -612,10 +614,11 @@ class TrainingController extends GetxController
           .scrollHideBottomBarController
           .changeHideStatus(true);
     });
-    playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
-    playerIdx = random.nextInt(playerList.length);
+    // playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
+    // if (playerList.isEmpty) return;
+    // playerIdx = random.nextInt(playerList.length);
 
-    await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
+    await TeamApi.playerTraining().then((v) {
       if (ballNum.value == 0) {
         HomeController.to.updateTeamProp();
       }
@@ -706,6 +709,10 @@ class TrainingController extends GetxController
     //   Log.d("slot 当前位置 ${element.offset}");
     // }
 
+    if (awardLength == 6) {
+      await showEvent();
+    }
+
     ///2:状态
     if (awads.contains(2)) {
       showAwardDialog();
@@ -718,14 +725,6 @@ class TrainingController extends GetxController
       //更新球员状态
       Get.find<TeamController>().updateTeamInfo();
       update(["training_page"]);
-      if (awardLength == 6) {
-        getSlotStarUpEventVO(0);
-        Get.to(
-          StarUpList(),
-          opaque: false,
-          transition: Transition.fadeIn,
-        );
-      }
     }
 
     ///3:道具自动加
@@ -774,7 +773,7 @@ class TrainingController extends GetxController
       }
     }
 
-    ///4:篮球
+    ///4:筹码
     if (awads.contains(4)) {
       await showCashAward(2, cashNum);
       // showBall.value = true;
@@ -868,10 +867,27 @@ class TrainingController extends GetxController
 
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
     updateScroller();
+  }
 
-    Future.delayed(const Duration(milliseconds: 10), () {
-      updateScroller();
-    });
+  //触发事件
+  Future showEvent() async {
+    switch (trainingInfo.training.eventId) {
+      case eventStarUp:
+        getSlotStarUpEventVO(0);
+        await Get.to(
+          StarUpList(),
+          opaque: false,
+          transition: Transition.fadeIn,
+        );
+      case eventChat:
+        await Get.to(BeautyChatPage(),
+            opaque: false, transition: Transition.fadeIn);
+      case eventGift:
+      // return showEventDialog(child: const Event3());
+      case eventStealingPlayer:
+      // return showEventDialog(child: const Event4());
+      case eventBankRpbbery:
+    }
   }
 
   Future showAwardDialog() async {
@@ -1155,5 +1171,19 @@ class TrainingController extends GetxController
       HomeController.to.updateMoney();
       update(["starUpSelect"]);
     });
+  }
+
+  void onTapGoButton() {
+    TeamIndexController ctrl = Get.find();
+    if (!ctrl.loadDataSuccess) return;
+    if (isPlaying.value) return;
+    if (ballNum.value <= 0) {
+      BottomTipDialog.showWithSound(
+          context: Get.context!,
+          isScrollControlled: true,
+          builder: (context) => BuyGoBottomsheet());
+    } else {
+      startSlot();
+    }
   }
 }

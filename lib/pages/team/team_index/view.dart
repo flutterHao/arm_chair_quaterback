@@ -2,7 +2,7 @@
  * @Description: TrainingNewWidget
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-15 11:53:41
+ * @LastEditTime: 2025-02-28 11:06:40
  */
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -26,7 +26,8 @@ class TeamIndexPage extends StatefulWidget {
   State<TeamIndexPage> createState() => _TeamIndexPageState();
 }
 
-class _TeamIndexPageState extends State<TeamIndexPage> with AutomaticKeepAliveClientMixin {
+class _TeamIndexPageState extends State<TeamIndexPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -43,15 +44,15 @@ class _TeamView extends GetView<TeamIndexController> {
   @override
   Widget build(BuildContext context) {
     // 确保控制器只初始化一次，并且设置 permanent: true
-    if (!Get.isRegistered<TeamController>()) {
-      Get.put(TeamController(), permanent: true);
-    }
-    if (!Get.isRegistered<BeautyController>()) {
-      Get.put(BeautyController(), permanent: true);
-    }
-    if (!Get.isRegistered<TrainingController>()) {
-      Get.put(TrainingController(), permanent: true);
-    }
+    // if (!Get.isRegistered<TeamController>()) {
+    //   Get.put(TeamController(), permanent: true);
+    // }
+    // if (!Get.isRegistered<BeautyController>()) {
+    //   Get.put(BeautyController(), permanent: true);
+    // }
+    // if (!Get.isRegistered<TrainingController>()) {
+    //   Get.put(TrainingController(), permanent: true);
+    // }
     // Get.lazyPut(() => BeautyController());
     // Get.lazyPut(() => TeamController());
     // Get.lazyPut(() => TrainingController());
