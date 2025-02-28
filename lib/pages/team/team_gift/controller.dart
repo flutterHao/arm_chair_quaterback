@@ -17,10 +17,12 @@ class TeamGiftController extends GetxController {
   Rx<GirlDefineEntity> gGirlDefine = GirlDefineEntity().obs;
   RxBool sendGift = false.obs;
   int giftType = 0;
-  HomeController homeController = Get.find();
+
   UserEntity userEntiry = UserEntity();
   Rx<QueryGirlsEntity> queryGirlDefine = QueryGirlsEntity().obs;
   initData() async {
+    HomeController homeController = Get.find();
+    userEntiry = homeController.userEntiry;
     girlGiftDefineList.value = await CacheApi.getGirlGiftDefine();
     List<GirlDefineEntity> girlDefineList = await CacheApi.getGirlDefine();
     List<QueryGirlsEntity> queryGirlDefineList = await GirlApi.getQueryGirls();
@@ -33,7 +35,7 @@ class TeamGiftController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    userEntiry = homeController.userEntiry;
+
     initData();
   }
 
@@ -42,13 +44,26 @@ class TeamGiftController extends GetxController {
     super.onReady();
   }
 
-  Future sendGiftClick({required int girlId, required int giftId}) async {
+  Future sendGiftClick({required int girlId, required int giftId, required List<String> costList}) async {
+    if (costList[1] == '102') {
+      if (userEntiry.teamLoginInfo!.getMoney().toInt() < int.parse(costList[2])) {
+        Get.snackbar('Tips', 'Not enough money');
+        return;
+      }
+    } else if (costList[1] == '103') {
+      if (userEntiry.teamLoginInfo!.getCoin().toInt() < int.parse(costList[2])) {
+        Get.snackbar('Tips', 'Not enough money');
+        return;
+      }
+    }
     var givingGiftsEntity = await GirlApi.getGivingGifts(girlId: girlId, giftId: giftId);
     queryGirlDefine.value.intimacyLevel = givingGiftsEntity.intimacyLevel;
+    sendGift.value = true;
+    timeCountDown(givingGiftsEntity.buffEndTime);
+    HomeController homeController = Get.find();
+    await homeController.refreshMoneyCoinWidget();
     userEntiry = homeController.userEntiry;
     update(['team_gift']);
-    timeCountDown();
-    sendGift.value = true;
   }
 
   @override
@@ -64,19 +79,20 @@ class TeamGiftController extends GetxController {
   int minute = 0;
   int second = 0;
 
-  void timeCountDown() {
+  void timeCountDown(int buffEndTime) {
     _timer?.cancel();
-    var nowDate = DateTime.now();
-    var nowMs = DateTime.now().millisecondsSinceEpoch;
+    // var nowDate = DateTime.now();
+    ///当前时间加上时区偏移
+    var nowMs = DateTime.now().add(Utils.getTimeZoneOffset()).millisecondsSinceEpoch;
 
-    // var serverMs = buffEndTime;
-    ///结束时间
-    var endDate = DateTime.now().add(Duration(seconds: gGirlDefine.value.buffTime)).add(Utils.getTimeZoneOffset());
+    var serverMs = buffEndTime;
+    // ///结束时间
+    // var endDate = DateTime.now().add(Duration(seconds: gGirlDefine.value.buffTime)).add(Utils.getTimeZoneOffset());
 
-    ///结束时间的服务器时间
-    ///注意：服务器时间是utc时间，需要加上时区偏移
-    var serverDate = endDate.add(Utils.getTimeZoneOffset());
-    var serverMs = serverDate.millisecondsSinceEpoch;
+    // ///结束时间的服务器时间
+    // ///注意：服务器时间是utc时间，需要加上时区偏移
+    // var serverDate = endDate.add(Utils.getTimeZoneOffset());
+    // var serverMs = serverDate.millisecondsSinceEpoch;
     var diff = serverMs - nowMs;
 
     if (diff <= 0) {

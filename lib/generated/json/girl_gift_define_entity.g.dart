@@ -27,7 +27,8 @@ GirlGiftDefineEntity $GirlGiftDefineEntityFromJson(Map<String, dynamic> json) {
   if (id != null) {
     girlGiftDefineEntity.id = id;
   }
-  final String? girlDesc = jsonConvert.convert<String>(json['girlDesc']);
+  final List<String>? girlDesc = (json['girlDesc'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<String>(e) as String).toList();
   if (girlDesc != null) {
     girlGiftDefineEntity.girlDesc = girlDesc;
   }
@@ -52,7 +53,7 @@ extension GirlGiftDefineEntityExtension on GirlGiftDefineEntity {
     String? cost,
     String? desc,
     String? id,
-    String? girlDesc,
+    List<String>? girlDesc,
   }) {
     return GirlGiftDefineEntity()
       ..addIntimacy = addIntimacy ?? this.addIntimacy

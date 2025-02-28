@@ -12,7 +12,7 @@ class GirlGiftDefineEntity {
   late String cost = '';
   late String desc = '';
   late String id = '';
-  late String girlDesc = '';
+  late List<String> girlDesc = [];
 
   GirlGiftDefineEntity();
 

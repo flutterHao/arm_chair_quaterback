@@ -24,7 +24,7 @@ class GirlDescWidget extends GetView<TeamGiftController> {
                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
                     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.w),
                     child: Text(
-                      '${controller.girlGiftDefineList[0].girlDesc.split('|')[controller.giftType]}',
+                      '${controller.girlGiftDefineList[0].girlDesc[controller.giftType]}',
                       style: 12.w4(fontFamily: FontFamily.fRobotoRegular),
                     ),
                   ),

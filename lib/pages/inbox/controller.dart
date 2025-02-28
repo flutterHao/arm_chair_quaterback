@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/entities/inbox_email_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -66,7 +67,30 @@ class InboxController extends GetxController {
   }
 
   void getMessageList() async {
-    messageList = await CacheApi.getInboxMessageList();
+    var resMessageList = await CacheApi.getInboxMessageList();
+    var mailVOList = await PicksApi.getMailVOList();
+    var mailTypelist = [
+      {'id': 5001, 'type': 3},
+      {'id': 4001, 'type': 2},
+      {'id': 1005, 'type': 1},
+      {'id': 1001, 'type': 4},
+    ];
+    messageList = resMessageList.where((element) {
+      var typeIndex = mailTypelist.indexWhere((e) => e['id'] == element.id);
+      if (typeIndex != -1) {
+        var res = mailVOList.firstWhere((e) => e.mailType == mailTypelist[typeIndex]['type'],
+            orElse: () => InboxEmailEntity());
+        if (res.mailList.isNotEmpty) {
+          element.userText = res.mailList[0].content;
+          element.time = DateTime.fromMillisecondsSinceEpoch(res.mailList[0].updateTime);
+        } else {
+          element.isRead = true;
+          // return false;
+        }
+        return true;
+      }
+      return false;
+    }).toList();
     loadDataSuccess = true;
     update(["inboxList"]);
   }

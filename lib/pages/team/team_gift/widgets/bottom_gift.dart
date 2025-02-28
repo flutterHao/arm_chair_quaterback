@@ -115,7 +115,7 @@ class BottomGiftWidget extends GetView<TeamGiftController> {
           int propid = int.parse(controller.girlGiftDefineList[index].id);
           return MtInkWell(
               onTap: () {
-                controller.sendGiftClick(girlId: controller.gGirlDefine.value.id, giftId: propid);
+                controller.sendGiftClick(girlId: controller.gGirlDefine.value.id, giftId: propid, costList: costList);
               },
               child: Container(
                 width: 100.h,

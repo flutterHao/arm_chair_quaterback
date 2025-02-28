@@ -77,7 +77,7 @@ class TeamGiftPage extends GetView<TeamGiftController> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      // canPop: false,
       child: GetBuilder<TeamGiftController>(
         init: TeamGiftController(),
         id: "team_gift",
