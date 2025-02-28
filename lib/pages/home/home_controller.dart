@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-02-28 11:58:50
+ * @LastEditTime: 2025-02-28 16:02:14
  */
 import 'dart:async';
 
@@ -31,6 +31,7 @@ import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
@@ -101,23 +102,12 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // auth();
-    // if (!Get.isRegistered<TeamController>()) {
-    //   Get.put(TeamController(), permanent: true);
-    // }
-    // if (!Get.isRegistered<BeautyController>()) {
-    //   Get.put(BeautyController(), permanent: true);
-    // }
-    // if (!Get.isRegistered<TrainingController>()) {
-    //   Get.put(TrainingController(), permanent: true);
-    // }
-    // if (!Get.isRegistered<IllustratiionsController>()) {
-    //   Get.put(IllustratiionsController(), permanent: true);
-    // }
     Get.lazyPut(() => BeautyController());
     Get.lazyPut(() => TeamController());
     Get.lazyPut(() => TrainingController());
     Get.lazyPut(() => IllustratiionsController());
+    Get.lazyPut(() => NbaPlayerController());
+
     pageController = PageController(initialPage: 2);
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
@@ -201,6 +191,8 @@ class HomeController extends GetxController {
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
+    TeamIndexController ctrl = Get.find();
+    ctrl.initData();
 
     if (kReleaseMode) {
       /// 关联用户id

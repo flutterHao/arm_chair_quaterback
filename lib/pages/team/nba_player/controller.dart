@@ -18,14 +18,18 @@ class NbaPlayerController extends GetxController {
 
   RxList<int> likePlayersList = RxList();
   Map<int, int> playerRankMap = {};
-  initData() async {
+  Future initData() async {
     allPlayerStrengthRank.clear();
     allPlayerStrengthRank.value = await TeamApi.getPlayerStrengthRank();
 
     ///涨跌幅都是0，取前四个,否则取前两个和最后两个展示
-    if (allPlayerStrengthRank[0].trendList[0].playerScore - allPlayerStrengthRank[0].trendList[1].playerScore != 0) {
-      nbaPlayerList.add(allPlayerStrengthRank[allPlayerStrengthRank.length - 1]);
-      nbaPlayerList.add(allPlayerStrengthRank[allPlayerStrengthRank.length - 2]);
+    if (allPlayerStrengthRank[0].trendList[0].playerScore -
+            allPlayerStrengthRank[0].trendList[1].playerScore !=
+        0) {
+      nbaPlayerList
+          .add(allPlayerStrengthRank[allPlayerStrengthRank.length - 1]);
+      nbaPlayerList
+          .add(allPlayerStrengthRank[allPlayerStrengthRank.length - 2]);
       nbaPlayerList.addAll(allPlayerStrengthRank.sublist(0, 2));
     } else {
       nbaPlayerList.addAll(allPlayerStrengthRank.sublist(0, 4));
@@ -46,7 +50,7 @@ class NbaPlayerController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    initData();
+    // initData();
     timeCountDown();
   }
 
@@ -63,7 +67,8 @@ class NbaPlayerController extends GetxController {
 
   ///球员信息详情页
   void goPlayerDetail(int playerId) {
-    Get.toNamed(RouteNames.picksPlayerDetail, arguments: PlayerDetailPageArguments(playerId));
+    Get.toNamed(RouteNames.picksPlayerDetail,
+        arguments: PlayerDetailPageArguments(playerId));
   }
 
   /// 切换ovr排行榜tab
@@ -76,32 +81,39 @@ class NbaPlayerController extends GetxController {
     switch (currentIndex.value) {
       case 0:
         {
-          allPlayerStrengthRank.sort((a, b) => a.strength.compareTo(b.strength));
+          allPlayerStrengthRank
+              .sort((a, b) => a.strength.compareTo(b.strength));
         }
       case 1:
         {
-          allPlayerStrengthRank.sort((a, b) => b.strength.compareTo(a.strength));
+          allPlayerStrengthRank
+              .sort((a, b) => b.strength.compareTo(a.strength));
         }
       case 2:
         {
           allPlayerStrengthRank.sort((a, b) {
-            var aDifferenceScore = a.trendList[0].playerScore - a.trendList[1].playerScore;
-            var bDifferenceScore = b.trendList[0].playerScore - b.trendList[1].playerScore;
+            var aDifferenceScore =
+                a.trendList[0].playerScore - a.trendList[1].playerScore;
+            var bDifferenceScore =
+                b.trendList[0].playerScore - b.trendList[1].playerScore;
             return aDifferenceScore.compareTo(bDifferenceScore);
           });
         }
       case 3:
         {
           allPlayerStrengthRank.sort((a, b) {
-            var aDifferenceScore = a.trendList[0].playerScore - a.trendList[1].playerScore;
-            var bDifferenceScore = b.trendList[0].playerScore - b.trendList[1].playerScore;
+            var aDifferenceScore =
+                a.trendList[0].playerScore - a.trendList[1].playerScore;
+            var bDifferenceScore =
+                b.trendList[0].playerScore - b.trendList[1].playerScore;
             return bDifferenceScore.compareTo(aDifferenceScore);
           });
         }
       case 4:
         {
           allPlayerStrengthRank.sort((a, b) {
-            if (likePlayersList.contains(a.playerId) == likePlayersList.contains(b.playerId)) {
+            if (likePlayersList.contains(a.playerId) ==
+                likePlayersList.contains(b.playerId)) {
               return a.rank.compareTo(b.rank);
             }
             return likePlayersList.contains(b.playerId) ? 1 : -1;
@@ -110,7 +122,8 @@ class NbaPlayerController extends GetxController {
       case 5:
         {
           allPlayerStrengthRank.sort((a, b) {
-            if (likePlayersList.contains(a.playerId) == likePlayersList.contains(b.playerId)) {
+            if (likePlayersList.contains(a.playerId) ==
+                likePlayersList.contains(b.playerId)) {
               return a.rank.compareTo(b.rank);
             }
             return likePlayersList.contains(b.playerId) ? -1 : 1;
@@ -147,7 +160,8 @@ class NbaPlayerController extends GetxController {
     var nowMs = DateTime.now().millisecondsSinceEpoch;
 
     ///结束时间
-    var endDate = DateTime(nowDate.year, nowDate.month, nowDate.day + 1, 4).add(Utils.getTimeZoneOffset());
+    var endDate = DateTime(nowDate.year, nowDate.month, nowDate.day + 1, 4)
+        .add(Utils.getTimeZoneOffset());
 
     ///结束时间的服务器时间
     ///注意：服务器时间是utc时间，需要加上时区偏移
@@ -182,5 +196,6 @@ class NbaPlayerController extends GetxController {
     return n.toString().padLeft(2, '0');
   }
 
-  String get getTime => '${twoDigits(hh)}:${twoDigits(minute)}:${twoDigits(second)}';
+  String get getTime =>
+      '${twoDigits(hh)}:${twoDigits(minute)}:${twoDigits(second)}';
 }

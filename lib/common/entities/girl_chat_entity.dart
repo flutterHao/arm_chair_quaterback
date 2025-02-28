@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2025-02-27 15:51:57
+ * @LastEditTime: 2025-02-28 15:05:05
+ */
 import 'package:arm_chair_quaterback/common/entities/girl_dialogue_define_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/girl_chat_entity.g.dart';
@@ -8,6 +14,8 @@ export 'package:arm_chair_quaterback/generated/json/girl_chat_entity.g.dart';
 class GirlChatEntity {
   late int currentMessageId = 0;
   late List<GirlDialogueDefineEntity> historicalChatRecords = [];
+  // @JSONField(deserialize: false, serialize: false)
+  // late List<GirlDialogueDefineEntity> chatList = [];
   late GirlChatGirl girl = GirlChatGirl();
 
   GirlChatEntity();

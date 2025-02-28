@@ -24,7 +24,7 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NbaPlayerController>(
-      init: NbaPlayerController(),
+      // init: NbaPlayerController(),
       id: "nba_player",
       builder: (_) {
         return Container(
@@ -69,7 +69,8 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                 height: 235.w,
                 margin: EdgeInsets.symmetric(horizontal: 17.w),
                 decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.cD9D9D9), borderRadius: BorderRadius.circular(9.w)),
+                    border: Border.all(color: AppColors.cD9D9D9),
+                    borderRadius: BorderRadius.circular(9.w)),
               )),
           SizedBox(
               height: 235.w,
@@ -93,14 +94,17 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
 
   Widget _playerItemWidget(int index) {
     return Obx(() {
-      List<PlayerStrengthRankTrendList> item = controller.nbaPlayerList[index].trendList;
+      List<PlayerStrengthRankTrendList> item =
+          controller.nbaPlayerList[index].trendList;
 
       ///开始到结束分数差值
       var differenceScore = item[0].playerScore - item[1].playerScore;
-      var player = Utils.getPlayBaseInfo(controller.nbaPlayerList[index].playerId);
+      var player =
+          Utils.getPlayBaseInfo(controller.nbaPlayerList[index].playerId);
       return MtInkWell(
         onTap: () {
-          Get.toNamed(RouteNames.ovrStandingDetailPage, arguments: controller.nbaPlayerList[index].playerId);
+          Get.toNamed(RouteNames.ovrStandingDetailPage,
+              arguments: controller.nbaPlayerList[index].playerId);
           //  Get.toNamed(RouteNames.playerTrendPage, arguments: controller.nbaPlayerList[index]);
         },
         child: Container(
@@ -120,23 +124,32 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ImageWidget(
-                      url: Utils.getPlayUrl(controller.nbaPlayerList[index].playerId),
+                      url: Utils.getPlayUrl(
+                          controller.nbaPlayerList[index].playerId),
                       imageFailedPath: Assets.iconUiDefault05,
                       width: 89,
                       height: 65,
                     ),
                     Text(
-                      Utils.getPlayBaseInfo(controller.nbaPlayerList[index].playerId).ename.toUpperCase(),
+                      Utils.getPlayBaseInfo(
+                              controller.nbaPlayerList[index].playerId)
+                          .ename
+                          .toUpperCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
                     ),
                     Text(
-                      ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}'.toUpperCase(),
-                      style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.cB3B3B3),
+                      ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}'
+                          .toUpperCase(),
+                      style: 12.w5(
+                          fontFamily: FontFamily.fRobotoRegular,
+                          color: AppColors.cB3B3B3),
                     ),
                     10.vGap,
-                    _playerchartWidget(controller.nbaPlayerList[index].trendList, differenceScore),
+                    _playerchartWidget(
+                        controller.nbaPlayerList[index].trendList,
+                        differenceScore),
                     18.vGap,
                     IntrinsicHeight(
                       child: Container(
@@ -148,16 +161,21 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                               decoration: BoxDecoration(
                                   color: AppColors.c333333,
                                   borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(6.w), bottomLeft: Radius.circular(6.w))),
+                                      topLeft: Radius.circular(6.w),
+                                      bottomLeft: Radius.circular(6.w))),
                               child: Column(
                                 children: [
                                   Text(
                                     '${item[0].playerScore}',
-                                    style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
+                                    style: 19.w5(
+                                        color: AppColors.cFFFFFF,
+                                        fontFamily: FontFamily.fOswaldBold),
                                   ),
                                   Text(
                                     'OVR',
-                                    style: 12.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldRegular),
+                                    style: 12.w5(
+                                        color: AppColors.cFFFFFF,
+                                        fontFamily: FontFamily.fOswaldRegular),
                                   ),
                                   2.vGap
                                 ],
@@ -167,19 +185,29 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                             Expanded(
                                 child: Container(
                               decoration: BoxDecoration(
-                                  color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                                  color: differenceScore >= 0
+                                      ? AppColors.c0FA76C
+                                      : AppColors.cE34D4D,
                                   borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(6.w), topRight: Radius.circular(6.w))),
+                                      bottomRight: Radius.circular(6.w),
+                                      topRight: Radius.circular(6.w))),
                               child: Column(
                                 children: [
                                   Text(
                                     '${differenceScore.abs()}',
-                                    style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
+                                    style: 19.w5(
+                                        color: AppColors.cFFFFFF,
+                                        fontFamily: FontFamily.fOswaldBold),
                                   ),
                                   Transform.rotate(
-                                    angle: differenceScore >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
+                                    angle: differenceScore >= 0
+                                        ? -pi / 180 * 90
+                                        : pi / 180 * 90,
                                     child: IconWidget(
-                                        iconWidth: 8.w, iconHeight: 12.w, icon: Assets.commonUiCommonIconSystemArrow),
+                                        iconWidth: 8.w,
+                                        iconHeight: 12.w,
+                                        icon: Assets
+                                            .commonUiCommonIconSystemArrow),
                                   )
                                 ],
                               ),
@@ -194,14 +222,20 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
               Positioned(
                 top: -2.w,
                 left: 10.w,
-                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('${index + 1}', style: 40.w5(fontFamily: FontFamily.fOswaldBold)),
-                  2.hGap,
-                  Padding(
-                      padding: EdgeInsets.only(top: 10.w),
-                      child: Text(controller.ordinalNumbers[index > 3 ? 3 : index],
-                          style: 12.w4(fontFamily: FontFamily.fOswaldMedium, color: AppColors.c010101))),
-                ]),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('${index + 1}',
+                          style: 40.w5(fontFamily: FontFamily.fOswaldBold)),
+                      2.hGap,
+                      Padding(
+                          padding: EdgeInsets.only(top: 10.w),
+                          child: Text(
+                              controller.ordinalNumbers[index > 3 ? 3 : index],
+                              style: 12.w4(
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                  color: AppColors.c010101))),
+                    ]),
               )
             ],
           ),
@@ -210,7 +244,8 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
     });
   }
 
-  Widget _playerchartWidget(List<PlayerStrengthRankTrendList> item, int differenceScore) {
+  Widget _playerchartWidget(
+      List<PlayerStrengthRankTrendList> item, int differenceScore) {
     // NbaPlayerInfosPlayerBaseInfoList player = Utils.getPlayBaseInfo(1001);
 
     List<int> scores = item.map((element) => element.playerScore).toList();
@@ -223,7 +258,8 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
       if (index == 0) {
         FlSpot(index.toDouble(), horizontalInterval);
       }
-      return FlSpot(index.toDouble(), item[item.length - index - 1].playerScore.toDouble());
+      return FlSpot(index.toDouble(),
+          item[item.length - index - 1].playerScore.toDouble());
     });
     return Stack(
       children: [
@@ -239,7 +275,9 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                 lineBarsData: [
                   LineChartBarData(
                       spots: data,
-                      color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                      color: differenceScore >= 0
+                          ? AppColors.c0FA76C
+                          : AppColors.cE34D4D,
                       dotData: FlDotData(
                         show: true,
                         getDotPainter: (spot, percent, barData, index) {
@@ -247,7 +285,9 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                           if (index == data.length - 1) {
                             return FlDotCirclePainter(
                                 radius: 1.6,
-                                color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                                color: differenceScore >= 0
+                                    ? AppColors.c0FA76C
+                                    : AppColors.cE34D4D,
                                 strokeColor: Colors.white,
                                 strokeWidth: 1.6);
                           } else {
@@ -261,14 +301,23 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
                           show: true,
                           gradient: LinearGradient(
                               colors: differenceScore >= 0
-                                  ? [AppColors.c0FA76C.withOpacity(0.3), AppColors.c0FA76C.withOpacity(0.1)]
-                                  : [AppColors.cE34D4D.withOpacity(0.3), AppColors.cE34D4D.withOpacity(0.1)])))
+                                  ? [
+                                      AppColors.c0FA76C.withOpacity(0.3),
+                                      AppColors.c0FA76C.withOpacity(0.1)
+                                    ]
+                                  : [
+                                      AppColors.cE34D4D.withOpacity(0.3),
+                                      AppColors.cE34D4D.withOpacity(0.1)
+                                    ])))
                 ],
                 gridData: FlGridData(
                     show: true,
                     drawHorizontalLine: true,
                     getDrawingHorizontalLine: (value) {
-                      return const FlLine(color: AppColors.cB3B3B3, strokeWidth: 1, dashArray: [4, 2]);
+                      return const FlLine(
+                          color: AppColors.cB3B3B3,
+                          strokeWidth: 1,
+                          dashArray: [4, 2]);
                     },
                     horizontalInterval: horizontalInterval,
                     checkToShowHorizontalLine: (value) {
@@ -295,7 +344,10 @@ class NbaPlayerPage extends GetView<NbaPlayerController> {
           children: [
             Text(
               LangKey.gameButtonSeeAll.tr,
-              style: 16.w7(color: AppColors.c262626, height: 1, fontFamily: FontFamily.fOswaldBold),
+              style: 16.w7(
+                  color: AppColors.c262626,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldBold),
             ),
             6.hGap,
             IconWidget(

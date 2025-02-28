@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-28 11:09:19
+ * @LastEditTime: 2025-02-28 16:01:51
  */
 
 import 'dart:async';
@@ -26,6 +26,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/card_fly_widget.dart';
@@ -110,12 +111,17 @@ class TeamIndexController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    // Get.lazyPut(() => BeautyController());
+    // Get.lazyPut(() => TeamController());
+    // Get.lazyPut(() => TrainingController());
+    // Get.lazyPut(() => IllustratiionsController());
+    // Get.lazyPut(() => NbaPlayerController());
     for (int i = 0; i < 4; i++) {
       cardPackInfo.card.add(CardPackInfoCard(status: -1, position: i + 1));
     }
     subscription = WSInstance.netStream.listen((_) {
       if (!loadDataSuccess) {
-        _initData();
+        initData();
       }
     });
     fallOutAnimatedCtrl = AnimationController(
@@ -162,7 +168,7 @@ class TeamIndexController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    _initData();
+    // initData();
   }
 
   @override
@@ -173,17 +179,19 @@ class TeamIndexController extends GetxController
     shakeController.dispose();
   }
 
-  _initData() {
+  initData() {
     final trainingCtrl = Get.find<TrainingController>();
     final teamCtrl = Get.find<TeamController>();
     final illuCtrl = Get.find<IllustratiionsController>();
+    final nbaPlayerCtrl = Get.find<NbaPlayerController>();
     Future.wait([
       getBattleBox(),
       CacheApi.getPropDefine(),
       CacheApi.getCardPackDefine(),
       trainingCtrl.getData(),
       teamCtrl.initData(),
-      illuCtrl.getPlayerCollectInfo()
+      illuCtrl.getPlayerCollectInfo(),
+      nbaPlayerCtrl.initData(),
     ]).then((v) {
       loadDataSuccess = true;
       getTeamInfoCup();

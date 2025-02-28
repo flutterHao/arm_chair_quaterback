@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-26 15:48:56
- * @LastEditTime: 2025-02-27 20:21:19
+ * @LastEditTime: 2025-02-28 15:18:23
  */
 import 'package:arm_chair_quaterback/common/entities/girl_chat_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/girl_dialogue_define_entity.dart';
