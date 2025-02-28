@@ -201,7 +201,8 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                     iconWidth: 5.w,
                     iconHeight: 10.w,
                     icon: Assets.commonUiCommonIconSystemArrow,
-                    iconColor: controller.currentIndex.value == 2 * tabIndex ? AppColors.cFF5D54 : AppColors.cDBDBDB,
+                    iconColor:
+                        controller.currentIndex.value == (2 * tabIndex) + 1 ? AppColors.cFF5D54 : AppColors.cDBDBDB,
                   ),
                 ),
                 Transform(
@@ -214,7 +215,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                       iconHeight: 10.w,
                       icon: Assets.commonUiCommonIconSystemArrow,
                       iconColor:
-                          controller.currentIndex.value == (2 * tabIndex) + 1 ? AppColors.cFF5D54 : AppColors.cDBDBDB),
+                          controller.currentIndex.value == (2 * tabIndex) ? AppColors.cFF5D54 : AppColors.cDBDBDB),
                 ),
                 Spacer(),
               ],
@@ -243,7 +244,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
               10.hGap,
               Expanded(child: _playerInfoWidget(index, player)),
               10.hGap,
-              _playerOvrRightWidget(index)
+              _playerOvrRightWidget(index, player)
             ],
           ),
         ),
@@ -317,7 +318,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
     ));
   }
 
-  Widget _playerOvrRightWidget(int index) {
+  Widget _playerOvrRightWidget(int index, NbaPlayerInfosPlayerBaseInfoList player) {
     List<PlayerStrengthRankTrendList> item = controller.allPlayerStrengthRank[index].trendList;
     int differenceScore = item[0].playerScore - item[1].playerScore;
     return SizedBox(
@@ -353,7 +354,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                   child: Column(
                     children: [
                       Text(
-                        '${item[0].playerScore}',
+                        '${player.playerScore}',
                         style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
                       ),
                       Text(

@@ -31,11 +31,9 @@ class NbaPlayerController extends GetxController {
       nbaPlayerList.addAll(allPlayerStrengthRank.sublist(0, 4));
     }
 
+    currentIndexChange(currentIndex.value);
     var teamLoginInfo = await UserApi.getTeamLoginInfo();
     likePlayersList.value = teamLoginInfo.team!.teamPreference!.likePlayers!;
-
-    currentIndexChange(currentIndex.value);
-    // playerRankMap = {for (var e in allPlayerStrengthRank) ...[e.playerId: e.playerId]};
   }
 
   @override
@@ -70,10 +68,10 @@ class NbaPlayerController extends GetxController {
 
   /// 切换ovr排行榜tab
   void currentIndexChange(int tabIndex) {
-    if (currentIndex.value != 2 * tabIndex) {
-      currentIndex.value = 2 * tabIndex;
-    } else {
+    if (currentIndex.value != (2 * tabIndex) + 1) {
       currentIndex.value = (2 * tabIndex) + 1;
+    } else {
+      currentIndex.value = (2 * tabIndex);
     }
     switch (currentIndex.value) {
       case 0:
