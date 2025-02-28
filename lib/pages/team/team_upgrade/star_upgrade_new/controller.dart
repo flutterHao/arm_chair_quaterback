@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:get/get.dart';
 
@@ -89,7 +90,9 @@ class StarUpgradeNewController extends GetxController {
         loadStatus.value = LoadDataStatus.success;
       }
     }, onError: (e) {
+      ErrorUtils.toast(e);
       loadStatus.value = LoadDataStatus.error;
+      Get.back();
     });
   }
 

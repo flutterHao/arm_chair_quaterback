@@ -665,10 +665,6 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
     //   Log.d("slot 当前位置 ${element.offset}");
     // }
 
-    if (awardLength == 6) {
-      await showEvent();
-    }
-
     ///2:状态
     if (awads.contains(2)) {
       showAwardDialog();
@@ -809,7 +805,9 @@ class TrainingController extends GetxController with GetTickerProviderStateMixin
       // getPlayerList();
       // update(["training_page"]);
     }
-
+    if (awardLength == 6) {
+      await showEvent();
+    }
     if (!awads.contains(1)) {
       isPlaying.value = false;
     }

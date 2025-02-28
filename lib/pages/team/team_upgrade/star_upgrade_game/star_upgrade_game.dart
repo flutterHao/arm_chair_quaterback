@@ -599,28 +599,38 @@ class StarUpgradeGame extends GetView<StarUpgradeGameController> {
                                       child: Stack(
                                         alignment: Alignment.center,
                                         children: [
+                                          /// 完成按钮
                                           Positioned(
-                                              left: 39.w,
-                                              top: 34.h,
-                                              child: Column(
-                                                children: [
-                                                  IconWidget(
-                                                    icon: Assets
-                                                        .managerUiManagerRisingstar04,
-                                                    iconWidth: 23.w,
-                                                  ),
-                                                  5.vGap,
-                                                  Text(
-                                                    "FINISH",
-                                                    style: 12.w4(
-                                                      color: AppColors.c5C5E6A,
-                                                      height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fOswaldRegular,
+                                              left: 20.w,
+                                              top: 27.h,
+                                              width: 65.w,
+                                              height: 50.h,
+                                              child: MtInkWell(
+                                                splashColor: AppColors.cTransparent,
+                                                onTap: ()=> Get.back(),
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    IconWidget(
+                                                      icon: Assets
+                                                          .managerUiManagerRisingstar04,
+                                                      iconWidth: 23.w,
                                                     ),
-                                                  )
-                                                ],
+                                                    5.vGap,
+                                                    Text(
+                                                      "FINISH",
+                                                      style: 12.w4(
+                                                        // color: AppColors.c5C5E6A,
+                                                        color: AppColors.cFFFFFF,
+                                                        height: 1,
+                                                        fontFamily: FontFamily
+                                                            .fOswaldRegular,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
                                               )),
+                                          /// 开始转动按钮
                                           Positioned(
                                               top: 13.h,
                                               left: 117.w,
