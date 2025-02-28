@@ -7,9 +7,9 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -19,8 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-
-import '../inbox_email/view.dart';
 
 class InboxList extends GetView<InboxController> {
   const InboxList({super.key});
@@ -49,17 +47,46 @@ class InboxList extends GetView<InboxController> {
                   ),
                 ),
               ),
+              Obx(() => Visibility(
+                  visible: !controller.connectivityStatus.value,
+                  child: Container(
+                    color: AppColors.cfFFE2E5,
+                    padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 24.w,
+                          width: 24.w,
+                          margin: EdgeInsets.only(left: 16.w, right: 30.w),
+                          decoration: BoxDecoration(
+                            color: AppColors.cD60D20,
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconWidget(icon: Assets.inboxUiInboxIconTips, iconWidth: 3.w),
+                        ),
+                        Flexible(
+                            child: Text(
+                          'The network is interrupted, Please check the network configuration.',
+                          style: 14.w4(fontFamily: FontFamily.fRobotoRegular, height: 1.2),
+                        )),
+                        50.hGap,
+                        IconWidget(
+                          icon: Assets.commonUiCommonIconSystemJumpto,
+                          iconWidth: 7.w,
+                          iconColor: Colors.black,
+                        )
+                      ],
+                    ),
+                  ))),
               Expanded(
                 child: ListView.separated(
                     controller: controller.scrollController,
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
-                      bool lastIndex =
-                          index == controller.messageList.length - 1;
+                      bool lastIndex = index == controller.messageList.length - 1;
                       return Container(
-                          margin: EdgeInsets.only(bottom: lastIndex ? 80.w : 0),
-                          child: _buildItem(index, context));
+                          margin: EdgeInsets.only(bottom: lastIndex ? 80.w : 0), child: _buildItem(index, context));
                     },
                     separatorBuilder: (context, index) => Container(
                           width: double.infinity,
@@ -97,6 +124,8 @@ class InboxList extends GetView<InboxController> {
     return InkWell(
       onTap: () async {
         if (item.id == 1005 || item.id == 4001 || item.id == 5001) {
+          item.isRead = true;
+          controller.update(["inboxList"]);
           return Get.toNamed(RouteNames.inboxEmail, arguments: item);
         }
         item.isRead = true;
@@ -104,23 +133,36 @@ class InboxList extends GetView<InboxController> {
         controller.update(["inboxList"]);
       },
       child: Slidable(
-        // endActionPane: ActionPane(
-        //   motion: const ScrollMotion(),
-        //   children: [
-        //     const IconSlidableAction(
-        //         backgroundColor: AppColors.cFEB942,
-        //         // onPressed: (BuildContext context) {},
-        //         icon: Assets.inboxUiInboxIconBlacklist),
-        //     IconSlidableAction(
-        //         backgroundColor: AppColors.c000000,
-        //         onPressed: (BuildContext context) {},
-        //         icon: Assets.inboxUiInboxIconInform),
-        //     IconSlidableAction(
-        //         backgroundColor: AppColors.cD60D20,
-        //         onPressed: (BuildContext context) {},
-        //         icon: Assets.iconUiIconDelete02),
-        //   ],
-        // ),
+        endActionPane: ActionPane(
+          extentRatio: 120 / 375,
+          motion: const ScrollMotion(),
+          children: [
+            IconSlidableAction(
+              backgroundColor: AppColors.cEFB400,
+              onPressed: (BuildContext context) {
+                item.isRead = true;
+                controller.update(["inboxList"]);
+              },
+              icon: Assets.inboxUiInboxIconBlacklist,
+              iconWidth: 20.w,
+            ),
+            // IconSlidableAction(
+            //   backgroundColor: AppColors.c000000,
+            //   onPressed: (BuildContext context) {},
+            //   icon: Assets.inboxUiInboxIconInform,
+            //   iconWidth: 20.w,
+            // ),
+            IconSlidableAction(
+              backgroundColor: AppColors.cD60D20,
+              onPressed: (BuildContext context) {
+                controller.messageList.remove(item);
+                controller.update(["inboxList"]);
+              },
+              icon: Assets.iconUiIconDelete02,
+              iconWidth: 20.w,
+            ),
+          ],
+        ),
         child: Container(
           width: double.infinity,
           height: 99.w,
@@ -164,8 +206,7 @@ class InboxList extends GetView<InboxController> {
                   //       alignment: Alignment.topCenter,
                   //     ),
                   //   ),
-                  if (item.userSmallIcon.isNotEmpty &&
-                      item.userSmallIcon != "0")
+                  if (item.userSmallIcon.isNotEmpty && item.userSmallIcon != "0")
                     Positioned(
                       bottom: 0,
                       right: 0,
@@ -195,17 +236,12 @@ class InboxList extends GetView<InboxController> {
                         Expanded(
                           child: Text(
                             title,
-                            style: 16.w4(
-                                fontFamily: FontFamily.fOswaldMedium,
-                                height: 0.9),
+                            style: 16.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.9),
                           ),
                         ),
                         Text(
                           time,
-                          style: 14.w4(
-                              fontFamily: FontFamily.fRobotoRegular,
-                              height: 0.9,
-                              color: AppColors.cB3B3B3),
+                          style: 14.w4(fontFamily: FontFamily.fRobotoRegular, height: 0.9, color: AppColors.cB3B3B3),
                         ),
                       ],
                     ),
@@ -223,17 +259,14 @@ class InboxList extends GetView<InboxController> {
                           child: Container(
                             constraints: BoxConstraints(minWidth: 15.w),
                             alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 4.5.w, vertical: 2.5.w),
+                            padding: EdgeInsets.symmetric(horizontal: 4.5.w, vertical: 2.5.w),
                             decoration: BoxDecoration(
                               color: AppColors.cFF7954,
                               borderRadius: BorderRadius.circular(7.5.w),
                             ),
                             child: Text(noReadNum.toString(),
-                                style: 12.w4(
-                                    fontFamily: FontFamily.fOswaldMedium,
-                                    height: 0.9,
-                                    color: AppColors.cFFFFFF)),
+                                style:
+                                    12.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.9, color: AppColors.cFFFFFF)),
                           ),
                         )
                       ],

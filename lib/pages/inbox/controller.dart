@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +30,25 @@ class InboxController extends GetxController {
     subscription = WSInstance.netStream.listen((_) {
       if (!loadDataSuccess) {
         _initData();
+      }
+    });
+    initConnectivity();
+  }
+
+  final Connectivity connectivity = Connectivity();
+  late StreamSubscription<List<ConnectivityResult>> connectivitySubscription;
+  RxBool connectivityStatus = false.obs;
+  Future<void> initConnectivity() async {
+    try {
+      await connectivity.checkConnectivity();
+    } catch (e) {
+      print("无法获取网络状态: $e");
+    }
+    connectivitySubscription = connectivity.onConnectivityChanged.listen((List<ConnectivityResult> result) {
+      if (result.contains(ConnectivityResult.none)) {
+        connectivityStatus.value = false;
+      } else {
+        connectivityStatus.value = true;
       }
     });
   }

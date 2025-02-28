@@ -17,21 +17,15 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
-import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
-
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/card_fly_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
-
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -41,8 +35,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class TeamIndexController extends GetxController
-    with GetTickerProviderStateMixin {
+class TeamIndexController extends GetxController with GetTickerProviderStateMixin {
   TeamIndexController();
 
   final runSpacing = 10.w;
@@ -90,6 +83,7 @@ class TeamIndexController extends GetxController
 
   // bool isOpen = false; //防止重复点击
   bool loadDataSuccess = false;
+  bool isLoading = true;
   bool isStartting = false;
   bool canOneMore = true;
 
@@ -120,7 +114,7 @@ class TeamIndexController extends GetxController
       cardPackInfo.card.add(CardPackInfoCard(status: -1, position: i + 1));
     }
     subscription = WSInstance.netStream.listen((_) {
-      if (!loadDataSuccess) {
+      if (!loadDataSuccess && !isLoading) {
         initData();
       }
     });
@@ -161,8 +155,7 @@ class TeamIndexController extends GetxController
       vsync: this,
     )..repeat(reverse: true);
 
-    breathAnimation =
-        Tween<double>(begin: 0.95, end: 0.9).animate(breathController);
+    breathAnimation = Tween<double>(begin: 0.95, end: 0.9).animate(breathController);
   }
 
   @override
@@ -194,9 +187,12 @@ class TeamIndexController extends GetxController
       nbaPlayerCtrl.initData(),
     ]).then((v) {
       loadDataSuccess = true;
+      isLoading = false;
       getTeamInfoCup();
       getSeasonTime();
       update(["team_index"]);
+    }).catchError((v) {
+      isLoading = false;
     });
   }
 
@@ -227,8 +223,7 @@ class TeamIndexController extends GetxController
           },
           confirmStr: "LINE UP",
           title: "SALARY CAP EXCEED",
-          desc:
-              "Salary cap over limit，please adjust the lineup  before the game can begin.");
+          desc: "Salary cap over limit，please adjust the lineup  before the game can begin.");
       return;
     }
     // SoundServices.to.playSound(Assets.soundRadaMatch);
@@ -268,8 +263,7 @@ class TeamIndexController extends GetxController
   }
 
   ///快速开启
-  void speedOpneBattleBox(
-      BuildContext ctx, CardPackInfoCard item, int cost) async {
+  void speedOpneBattleBox(BuildContext ctx, CardPackInfoCard item, int cost) async {
     // bool result = HomeController.to.updateChips(-cost);
     // if (!result) return;
     await TeamApi.speedOpneBattleBox(item.index).then((v) async {
@@ -292,22 +286,15 @@ class TeamIndexController extends GetxController
     currentCardPack = item;
     fallOutAnimatedCtrl.reset();
     // await Get.toNamed(RouteNames.openBoxPage);
-    await Get.to(() => const OpenBoxPage(),
-        opaque: false, transition: Transition.fadeIn);
+    await Get.to(() => const OpenBoxPage(), opaque: false, transition: Transition.fadeIn);
     IllustratiionsController ctrl = Get.find();
     //抽卡
-    var selectList = currentCardPack.playerCards
-        .where((e) => e.isSelect.value && e.isOpen.value)
-        .toList();
+    var selectList = currentCardPack.playerCards.where((e) => e.isSelect.value && e.isOpen.value).toList();
     // 获取新卡
     var newList = selectList
-        .where((e) => CacheApi.playerBookRuleList
-            .where((a) => a.playerId == e.playerId && a.isLight == 0)
-            .isNotEmpty)
+        .where((e) => CacheApi.playerBookRuleList.where((a) => a.playerId == e.playerId && a.isLight == 0).isNotEmpty)
         .toList();
-    ctrl.hasNewPlayer.value
-        ? ctrl.getPlayerCards.addAll(newList)
-        : ctrl.getPlayerCards = newList;
+    ctrl.hasNewPlayer.value ? ctrl.getPlayerCards.addAll(newList) : ctrl.getPlayerCards = newList;
 
     closeCard();
     Log.d("抽卡${selectList.length}");
@@ -315,9 +302,7 @@ class TeamIndexController extends GetxController
     if (ctrl.getPlayerCards.isEmpty) return;
     // ctrl.hasNewPlayer.value = true;
     ctrl.isCollect.value = false;
-    Get.find<HomeController>()
-        .scrollHideBottomBarController
-        .changeHideStatus(false);
+    Get.find<HomeController>().scrollHideBottomBarController.changeHideStatus(false);
     Overlay.of(Get.context!).insert(overlayEntry);
   }
 
@@ -385,10 +370,8 @@ class TeamIndexController extends GetxController
     }
 
     /// 免费宝箱
-    recieved = cardPackInfo.freeGiftCount == 0 &&
-        cardPackInfo.freeGiftTime > DateTime.now().millisecondsSinceEpoch;
-    Log.d(
-        "__freeGiftCount:${DateUtil.getDateTimeByMs(cardPackInfo.freeGiftTime)}---now ${DateTime.now()}");
+    recieved = cardPackInfo.freeGiftCount == 0 && cardPackInfo.freeGiftTime > DateTime.now().millisecondsSinceEpoch;
+    Log.d("__freeGiftCount:${DateUtil.getDateTimeByMs(cardPackInfo.freeGiftTime)}---now ${DateTime.now()}");
     if (recieved) {
       _startTimer(
         time: cardPackInfo.freeGiftTime,
@@ -405,11 +388,9 @@ class TeamIndexController extends GetxController
 
     /// 战斗宝箱,设置位置
     for (int i = 0; i < 4; i++) {
-      CardPackInfoCard? card =
-          cardPackInfo.card.firstWhereOrNull((e) => e.position == i + 1);
+      CardPackInfoCard? card = cardPackInfo.card.firstWhereOrNull((e) => e.position == i + 1);
       if (card == null) {
-        cardPackInfo.card
-            .insert(i, CardPackInfoCard(status: -1, position: i + 1));
+        cardPackInfo.card.insert(i, CardPackInfoCard(status: -1, position: i + 1));
       }
     }
     cardPackInfo.card.sort((a, b) => a.position.compareTo(b.position));
@@ -418,8 +399,7 @@ class TeamIndexController extends GetxController
       final now = DateTime.now();
       final endTime = DateUtil.getDateTimeByMs(item.openTime);
       final diff = endTime.difference(now).inSeconds;
-      int needTime =
-          CacheApi.cardPackDefineMap[item.cardId]?.cardPackOpenTime ?? 0;
+      int needTime = CacheApi.cardPackDefineMap[item.cardId]?.cardPackOpenTime ?? 0;
       item.totalTimeValue = needTime;
       if (needTime ~/ 3600 > 0) {
         item.totalTime = "${needTime ~/ 3600} H";
@@ -525,8 +505,7 @@ class TeamIndexController extends GetxController
   }
 
   //type=0;合拢 初始化, 1分散卡牌
-  Future setCardPosition(BuildContext ctx, int type,
-      {int duration = 80}) async {
+  Future setCardPosition(BuildContext ctx, int type, {int duration = 80}) async {
     if (type == 0) {
       double cneterX = (MediaQuery.of(ctx).size.width - cardWidth) / 2 - 44.5.w;
       double centerY = (cardHeight + runSpacing) / 2;
@@ -538,12 +517,10 @@ class TeamIndexController extends GetxController
 
       if (currentCardPack.playerCards.length > 3) {
         //第一行
-        double totalWidth =
-            (cardWidth * maxRow) + (runSpacing * (maxRow - 1)) + 89.w;
+        double totalWidth = (cardWidth * maxRow) + (runSpacing * (maxRow - 1)) + 89.w;
         double startX = (MediaQuery.of(ctx).size.width - totalWidth) / 2;
         //第二行
-        double totalWidth1 =
-            (cardWidth * (lenght - 3)) + (runSpacing * (lenght - 4)) + 89.w;
+        double totalWidth1 = (cardWidth * (lenght - 3)) + (runSpacing * (lenght - 4)) + 89.w;
         double startX1 = (MediaQuery.of(ctx).size.width - totalWidth1) / 2;
         for (int i = 0; i < lenght; i++) {
           double dx = 0;
@@ -606,11 +583,9 @@ class TeamIndexController extends GetxController
       int index = random.nextInt(len);
       var e = currentCardPack.playerCards[index];
       e.rotation.value = 0.05;
-      await Future.delayed(Duration(milliseconds: len > 3 ? 80 : 120))
-          .then((v) {
+      await Future.delayed(Duration(milliseconds: len > 3 ? 80 : 120)).then((v) {
         // 将当前卡片移到卡组末尾
-        currentCardPack.playerCards
-            .sort((a, b) => a.rotation.value.compareTo(b.rotation.value));
+        currentCardPack.playerCards.sort((a, b) => a.rotation.value.compareTo(b.rotation.value));
         update(["open_box_page"]);
       });
     }
@@ -694,9 +669,7 @@ class TeamIndexController extends GetxController
 
   void closeCard() {
     // return;
-    if (currentCardPack.playerCards
-        .where((e) => e.isSelect.value && e.isOpen.value)
-        .isNotEmpty) {
+    if (currentCardPack.playerCards.where((e) => e.isSelect.value && e.isOpen.value).isNotEmpty) {
       TeamApi.closeCard(currentCardPack.index).then((v) {
         getBattleBox();
         HomeController.to.updateMoney();

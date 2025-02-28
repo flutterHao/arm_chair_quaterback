@@ -64,12 +64,10 @@ class TrainingSlotNew extends GetView<TrainingController> {
                           Container(
                             width: 136.5.w,
                             height: 37.5.w,
-                            padding: EdgeInsets.only(
-                                left: 10.5.w, right: 10.5.w, top: 5.w),
+                            padding: EdgeInsets.only(left: 10.5.w, right: 10.5.w, top: 5.w),
                             decoration: BoxDecoration(
                                 border: Border.all(width: 0),
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(12.w)),
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(12.w)),
                                 color: AppColors.c000000),
                             child: Row(
                               children: [
@@ -77,9 +75,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                   width: 32.w,
                                   height: 32.w,
                                   decoration: BoxDecoration(
-                                      color: AppColors.cFFFFFF,
-                                      borderRadius:
-                                          BorderRadius.circular(16.w)),
+                                      color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(16.w)),
                                   child: Center(
                                     child: UserAvaterWidget(
                                       url: Utils.getAvatarUrl(1),
@@ -101,10 +97,11 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                         height: 0.8,
                                       ),
                                     ),
-                                    2.5.vGap,
+                                    // 2.5.vGap,
+                                    Expanded(child: SizedBox.shrink()),
+
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         IconWidget(
                                           // iconWidth: 23.5.w,
@@ -160,102 +157,74 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                     BottomTipDialog.showWithSound(
                                         isScrollControlled: true,
                                         context: context,
-                                        builder: (context) =>
-                                            AwardBottomsheet());
+                                        builder: (context) => AwardBottomsheet());
                                   },
                                   child: Container(
                                     // color: Colors.red,
                                     padding: EdgeInsets.only(left: 12.w),
                                     alignment: Alignment.topCenter,
                                     width: double.infinity,
-                                    child: Stack(
-                                        alignment: Alignment.topCenter,
-                                        children: [
-                                          Positioned(
-                                            top: 9.5.w,
-                                            left: 11.5.w,
-                                            right: 44.w,
-                                            child: Stack(
+                                    child: Stack(alignment: Alignment.topCenter, children: [
+                                      Positioned(
+                                        top: 9.5.w,
+                                        left: 11.5.w,
+                                        right: 44.w,
+                                        child: Stack(
+                                          alignment: Alignment.centerLeft,
+                                          children: [
+                                            Container(
+                                              width: 150.w,
+                                              height: 9.w,
+                                              clipBehavior: Clip.antiAliasWithSaveLayer,
                                               alignment: Alignment.centerLeft,
-                                              children: [
-                                                Container(
-                                                  width: 150.w,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.cTransparent,
+                                                  borderRadius: BorderRadius.circular(5.w),
+                                                  border: Border.all(width: 1.w, color: AppColors.c666666)),
+                                            ),
+                                            Obx(() {
+                                              return Positioned(
+                                                left: 0,
+                                                child: AnimatedContainer(
+                                                  duration: const Duration(milliseconds: 300),
+                                                  width:
+                                                      150.w * controller.taskValue.value / controller.currentTaskNeed,
                                                   height: 9.w,
-                                                  clipBehavior: Clip
-                                                      .antiAliasWithSaveLayer,
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  constraints: BoxConstraints(maxWidth: 290.w),
                                                   decoration: BoxDecoration(
-                                                      color: AppColors
-                                                          .cTransparent,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.w),
-                                                      border: Border.all(
-                                                          width: 1.w,
-                                                          color: AppColors
-                                                              .c666666)),
+                                                      borderRadius: BorderRadius.circular(4.5.w),
+                                                      gradient: const LinearGradient(
+                                                          colors: [AppColors.c3296F2, AppColors.c3BE1FF])),
                                                 ),
-                                                Obx(() {
-                                                  return Positioned(
-                                                    left: 0,
-                                                    child: AnimatedContainer(
-                                                      duration: const Duration(
-                                                          milliseconds: 300),
-                                                      width: 150.w *
-                                                          controller
-                                                              .taskValue.value /
-                                                          controller
-                                                              .currentTaskNeed,
-                                                      height: 9.w,
-                                                      constraints:
-                                                          BoxConstraints(
-                                                              maxWidth: 290.w),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      4.5.w),
-                                                          gradient:
-                                                              const LinearGradient(
-                                                                  colors: [
-                                                                AppColors
-                                                                    .c3296F2,
-                                                                AppColors
-                                                                    .c3BE1FF
-                                                              ])),
-                                                    ),
-                                                  );
-                                                }),
-                                              ],
-                                            ),
-                                          ),
-                                          Positioned(
-                                            top: 0.w,
-                                            left: 2.w,
-                                            child: IconWidget(
-                                              iconWidth: 19.5.w,
-                                              icon: Assets.commonUiCommonProp03,
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 69.5.w,
-                                            top: 8.w,
-                                            child: Obx(() {
-                                              return OutlinedText(
-                                                  strokeColor: Colors.black,
-                                                  strokeWidth: 1,
-                                                  text:
-                                                      "${controller.taskValue.value}/${controller.currentTaskNeed}",
-                                                  textStyle: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .fOswaldMedium,
-                                                      fontSize: 10,
-                                                      height: 1,
-                                                      color: Colors.white));
+                                              );
                                             }),
-                                          )
-                                        ]),
+                                          ],
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 0.w,
+                                        left: 2.w,
+                                        child: IconWidget(
+                                          iconWidth: 19.5.w,
+                                          icon: Assets.commonUiCommonProp03,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        left: 69.5.w,
+                                        top: 8.w,
+                                        child: Obx(() {
+                                          return OutlinedText(
+                                              strokeColor: Colors.black,
+                                              strokeWidth: 1,
+                                              text: "${controller.taskValue.value}/${controller.currentTaskNeed}",
+                                              textStyle: const TextStyle(
+                                                  fontFamily: FontFamily.fOswaldMedium,
+                                                  fontSize: 10,
+                                                  height: 1,
+                                                  color: Colors.white));
+                                        }),
+                                      )
+                                    ]),
                                   ),
                                 ),
                               )
@@ -269,9 +238,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                         child: MtInkWell(
                           onTap: () {
                             BottomTipDialog.showWithSound(
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (context) => AwardBottomsheet());
+                                isScrollControlled: true, context: context, builder: (context) => AwardBottomsheet());
                           },
                           child: Column(
                             children: [
@@ -281,8 +248,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                   scale: controller.showProp.value ? 1.5 : 1,
                                   child: Image.asset(
                                     // Assets.commonUiCommonProp05,
-                                    Utils.getPropIconUrl(
-                                        controller.getTaskAward().propId),
+                                    Utils.getPropIconUrl(controller.getTaskAward().propId),
                                     // width: 23.5.w,
                                     height: 22.w,
                                   ),
@@ -290,16 +256,10 @@ class TrainingSlotNew extends GetView<TrainingController> {
                               }),
                               Text(
                                 controller.getTaskAward().propId == 102
-                                    ? Utils.formatMoney(
-                                        controller.getTaskAward().propNum)
-                                    : controller
-                                        .getTaskAward()
-                                        .propNum
-                                        .toString(),
-                                style: 10.w4(
-                                    fontFamily: FontFamily.fOswaldMedium,
-                                    color: AppColors.cFFFFFF,
-                                    height: 0.8),
+                                    ? Utils.formatMoney(controller.getTaskAward().propNum)
+                                    : controller.getTaskAward().propNum.toString(),
+                                style:
+                                    10.w4(fontFamily: FontFamily.fOswaldMedium, color: AppColors.cFFFFFF, height: 0.8),
                               )
                             ],
                           ),
@@ -334,8 +294,7 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                   return Container(
                                       width: 54.5.w,
                                       height: 68.w,
-                                      margin: EdgeInsets.only(
-                                          right: index < 5 ? 3.w : 0),
+                                      margin: EdgeInsets.only(right: index < 5 ? 3.w : 0),
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         gradient: _linearGradient(),
@@ -344,42 +303,29 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                       child: Stack(
                                         children: [
                                           SizeTransition(
-                                            sizeFactor: controller
-                                                .sizeAnimations[index],
+                                            sizeFactor: controller.sizeAnimations[index],
                                             child: ListView.builder(
                                               reverse: true,
                                               // itemExtent: 68.w,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
+                                              physics: const NeverScrollableScrollPhysics(),
                                               padding: const EdgeInsets.all(0),
-                                              controller: controller
-                                                  .scrollerCtrlList[index],
+                                              controller: controller.scrollerCtrlList[index],
                                               itemCount: length * 10,
-                                              itemBuilder:
-                                                  (context, itemIndex) {
+                                              itemBuilder: (context, itemIndex) {
                                                 return Obx(() {
-                                                  var show = controller
-                                                      .isAwards[index].value;
+                                                  var show = controller.isAwards[index].value;
 
                                                   return AnimatedScale(
                                                     curve: Curves.linear,
-                                                    duration: Duration(
-                                                        milliseconds:
-                                                            show ? 150 : 300),
+                                                    duration: Duration(milliseconds: show ? 150 : 300),
                                                     scale: show ? 1.8 : 1,
                                                     child: SizedBox(
                                                       width: 54.5.w,
                                                       height: 68.w,
                                                       child: IconWidget(
-                                                        iconWidth: 30.w *
-                                                            controller
-                                                                .scaleAnimations[
-                                                                    index]
-                                                                .value,
+                                                        iconWidth: 30.w * controller.scaleAnimations[index].value,
                                                         icon: Utils.getSlotIconUrl(
-                                                            controller.propList[
-                                                                itemIndex %
-                                                                    length]),
+                                                            controller.propList[itemIndex % length]),
                                                       ),
                                                     ),
                                                   );
@@ -388,40 +334,24 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                             ),
                                           ),
                                           Obx(() {
-                                            var show = controller
-                                                .isShowColor[index].value;
+                                            var show = controller.isShowColor[index].value;
                                             return Visibility(
                                               visible: show,
                                               child: AnimatedBuilder(
-                                                  animation:
-                                                      controller.colorAnimation,
+                                                  animation: controller.colorAnimation,
                                                   builder: (context, child) {
                                                     return Transform.scale(
-                                                      scale: controller
-                                                              .colorAnimation
-                                                              .value +
-                                                          1,
+                                                      scale: controller.colorAnimation.value + 1,
                                                       child: Opacity(
-                                                        opacity: 1 -
-                                                            controller
-                                                                .colorAnimation
-                                                                .value,
+                                                        opacity: 1 - controller.colorAnimation.value,
                                                         child: Container(
                                                           width: 54.5.w,
                                                           height: 68.w,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            gradient:
-                                                                _linearGradient(),
-                                                            color: _getSlotColor(
-                                                                    controller
-                                                                        .awardLength)
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        9.w),
+                                                          decoration: BoxDecoration(
+                                                            gradient: _linearGradient(),
+                                                            color:
+                                                                _getSlotColor(controller.awardLength).withOpacity(0.5),
+                                                            borderRadius: BorderRadius.circular(9.w),
                                                           ),
                                                         ),
                                                       ),
@@ -431,42 +361,33 @@ class TrainingSlotNew extends GetView<TrainingController> {
                                           }),
                                           Obx(() {
                                             return Visibility(
-                                              visible: controller
-                                                  .showBoxList[index].value,
+                                              visible: controller.showBoxList[index].value,
                                               child: Container(
                                                 width: 54.5.w + 3.w,
                                                 height: 68.w + 3.w,
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      width: 2.w,
-                                                      color: _getSlotColor(
-                                                          controller
-                                                              .awardLength)),
-                                                  borderRadius:
-                                                      _borderRadius(index),
+                                                      width: 2.w, color: _getSlotColor(controller.awardLength)),
+                                                  borderRadius: _borderRadius(index),
                                                 ),
                                               ),
                                             );
                                           }),
                                           Obx(() {
                                             return Visibility(
-                                              visible: !controller
-                                                  .slotCard[index].value,
+                                              visible: !controller.slotCard[index].value,
                                               child: Container(
                                                 width: 54.5.w,
                                                 height: 68.w,
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius:
-                                                      _borderRadius(index),
+                                                  borderRadius: _borderRadius(index),
                                                 ),
                                                 child: IconWidget(
                                                   iconWidth: 16.w,
-                                                  icon: Assets
-                                                      .managerUiManagerTrainingUnknown,
-                                                  iconColor: Colors.black
-                                                      .withOpacity(0.2),
+                                                  icon: Assets.managerUiManagerTrainingUnknown,
+                                                  iconColor: Colors.black.withOpacity(0.2),
                                                 ),
                                               ),
                                             );

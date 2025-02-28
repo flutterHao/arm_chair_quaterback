@@ -7,13 +7,10 @@
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/match_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,8 +23,7 @@ class TeamIndexPage extends StatefulWidget {
   State<TeamIndexPage> createState() => _TeamIndexPageState();
 }
 
-class _TeamIndexPageState extends State<TeamIndexPage>
-    with AutomaticKeepAliveClientMixin {
+class _TeamIndexPageState extends State<TeamIndexPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -68,6 +64,11 @@ class _TeamView extends GetView<TeamIndexController> {
             controller: ctrl.scrollController,
             child: Column(
               children: [
+                // ElevatedButton(
+                //     onPressed: () {
+                //       Get.to(TeamGiftPage(), opaque: false, transition: Transition.fadeIn);
+                //     },
+                //     child: Text('Go Gift')),
                 TrainingNewWidget(),
                 BattleBoxWidget(),
                 MatchCard(),

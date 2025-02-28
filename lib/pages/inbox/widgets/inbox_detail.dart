@@ -10,20 +10,19 @@
  * @Date: 2025-01-04 16:26:49
  * @LastEditTime: 2025-01-04 17:31:55
  */
-import 'dart:math';
-
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/send_comments_view.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -52,7 +51,10 @@ class InboxDetailPage extends GetView<InboxController> {
               backgroundColor: AppColors.cFFFFFF,
               AppBarWidget(
                 title: title,
-                right: IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore),
+                right: MtInkWell(
+                    // onTap: () => BottomTipDialog.showWithSound(
+                    //     isScrollControlled: true, context: context, builder: (context) => InboxSettingDialog()),
+                    child: IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore)),
               ),
               bodyWidget: Expanded(
                   child: SingleChildScrollView(
@@ -90,8 +92,7 @@ class MeesageItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int teamLogo =
-        HomeController.to.userEntiry.teamLoginInfo?.team?.teamLogo ?? 0;
+    int teamLogo = HomeController.to.userEntiry.teamLoginInfo?.team?.teamLogo ?? 0;
     return Container(
       margin: EdgeInsets.only(top: 20.w, left: 16.w, right: 16.w),
       child: Column(
@@ -172,10 +173,7 @@ class MeesageItems extends StatelessWidget {
                     ),
                     child: Text(
                       message,
-                      style: 14.w4(
-                          fontFamily: FontFamily.fRobotoRegular,
-                          height: 1.2,
-                          color: AppColors.cFFFFFF),
+                      style: 14.w4(fontFamily: FontFamily.fRobotoRegular, height: 1.2, color: AppColors.cFFFFFF),
                     ),
                   ),
                   12.hGap,

@@ -33,15 +33,20 @@ class OvrStandingDetailPage extends StatefulWidget {
 class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
   NbaPlayerController controller = Get.find();
   int? lastPagePlayerId;
-  // late ScrollController scrollController;
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     lastPagePlayerId = Get.arguments;
     if (lastPagePlayerId != null) {
-      // scrollController = ScrollController();
-      // scrollController.jumpTo(200);
+      var scrollerIndex =
+          controller.allPlayerStrengthRank.indexWhere((element) => element.playerId == lastPagePlayerId);
+      // Future.microtask(()=>  scrollController.jumpTo(scrollerIndex * 124.w));
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        scrollController.animateTo(scrollerIndex * 124.w,
+            duration: Duration(milliseconds: scrollerIndex > 100 ? 1000 : 100), curve: Curves.linear);
+      });
     }
   }
 
@@ -72,7 +77,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                     child: ListView.separated(
                       itemCount: controller.allPlayerStrengthRank.length,
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      // controller: scrollController,
+                      controller: scrollController,
                       itemBuilder: (context, index) {
                         return _playerItemWidget(index);
                       },
@@ -234,7 +239,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
         },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 16.w),
-          height: 93.w,
+          height: 92.w,
           child: Row(
             children: [
               _playRankWidget(index),
