@@ -201,8 +201,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                     iconWidth: 5.w,
                     iconHeight: 10.w,
                     icon: Assets.commonUiCommonIconSystemArrow,
-                    iconColor:
-                        controller.currentIndex.value == (2 * tabIndex) + 1 ? AppColors.cFF5D54 : AppColors.cDBDBDB,
+                    iconColor: controller.currentIndex.value == (2 * tabIndex) ? AppColors.cFF5D54 : AppColors.cDBDBDB,
                   ),
                 ),
                 Transform(
@@ -215,7 +214,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                       iconHeight: 10.w,
                       icon: Assets.commonUiCommonIconSystemArrow,
                       iconColor:
-                          controller.currentIndex.value == (2 * tabIndex) ? AppColors.cFF5D54 : AppColors.cDBDBDB),
+                          controller.currentIndex.value == (2 * tabIndex) + 1 ? AppColors.cFF5D54 : AppColors.cDBDBDB),
                 ),
                 Spacer(),
               ],
