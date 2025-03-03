@@ -23,7 +23,7 @@ class EmailRankAwardWidget extends GetView<InboxEmailController> {
       child: Column(
         children: [
           InkWell(
-            onTap: () => print(controller.mailIdNoRead),
+            onTap: () => print(controller.readMailId),
             child: _timestamp(controller.emailList[index].createTime),
           ),
           Container(

@@ -1,14 +1,11 @@
-import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
-import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/net/apis/inbox.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/inbox/inbox_email/widget/email_rank_award.dart';
@@ -17,7 +14,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
-import 'widget/email_rank_change.dart';
 
 class InboxEmailPage extends GetView<InboxEmailController> {
   const InboxEmailPage({super.key});
@@ -28,9 +24,7 @@ class InboxEmailPage extends GetView<InboxEmailController> {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Obx(() {
           if (controller.loadingStatus.value != LoadDataStatus.success) {
-            return Center(
-                child: LoadStatusWidget(
-                    loadDataStatus: controller.loadingStatus.value));
+            return Center(child: LoadStatusWidget(loadDataStatus: controller.loadingStatus.value));
           }
           return ListView.separated(
             itemCount: controller.emailList.length,
@@ -39,6 +33,9 @@ class InboxEmailPage extends GetView<InboxEmailController> {
               // if (controller.type == 4) {
               //   return EmailRankChangeWidget(index);
               // }
+              if (controller.emailList[index].state == 0) {
+                InboxApi.readMail(controller.emailList[index].mailId);
+              }
 
               return EmailRankAwardWidget(index);
             },

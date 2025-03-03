@@ -4,7 +4,7 @@ import 'package:arm_chair_quaterback/common/entities/inbox_email_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/net/apis/inbox.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 class InboxController extends GetxController {
   InboxController();
 
-  List<InboxMessageEntity> messageList = [];
+  RxList<InboxMessageEntity> messageList = RxList();
 
   bool loadDataSuccess = false;
 
@@ -88,17 +88,18 @@ class InboxController extends GetxController {
     super.dispose();
   }
 
+  var mailTypelist = [
+    {'id': 5001, 'type': 3},
+    {'id': 4001, 'type': 2},
+    {'id': 1005, 'type': 1},
+    {'id': 1001, 'type': 4},
+  ];
   List<InboxEmailEntity> mailVOList = [];
   void getMessageList() async {
     var resMessageList = await CacheApi.getInboxMessageList();
-    mailVOList = await PicksApi.getMailVOList();
-    var mailTypelist = [
-      {'id': 5001, 'type': 3},
-      {'id': 4001, 'type': 2},
-      {'id': 1005, 'type': 1},
-      {'id': 1001, 'type': 4},
-    ];
-    messageList = resMessageList.where((element) {
+    mailVOList = await InboxApi.getMailVOList();
+
+    messageList.value = resMessageList.where((element) {
       var typeIndex = mailTypelist.indexWhere((e) => e['id'] == element.id);
       if (typeIndex != -1) {
         var res = mailVOList.firstWhere((e) => e.mailType == mailTypelist[typeIndex]['type'],
@@ -136,5 +137,18 @@ class InboxController extends GetxController {
     }
     StorageService.to.setList('locatDoNotDisturb', doNotDisturb.map((element) => element.toString()).toList());
     update(["inboxList"]);
+  }
+
+  void deteleMail(InboxMessageEntity item) async {
+    messageList.remove(item);
+    update(["inboxList"]);
+
+    var typeIndex = mailTypelist.indexWhere((e) => e['id'] == item.id);
+    var mailIds = mailVOList
+        .firstWhere((e) => e.mailType == mailTypelist[typeIndex]['type'])
+        .mailList
+        .map((item) => item.mailId.toString())
+        .join('|');
+    await InboxApi.deleteMail(mailIds);
   }
 }

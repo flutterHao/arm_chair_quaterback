@@ -1,15 +1,16 @@
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/inbox/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../common/entities/inbox_email_entity.dart';
+import '../../../common/net/apis/inbox.dart';
 
 class InboxEmailController extends GetxController {
   InboxEmailController();
@@ -37,17 +38,25 @@ class InboxEmailController extends GetxController {
     initData();
   }
 
-  late String mailIdNoRead;
-  initData() async {
+  @override
+  void onClose() async {
+    super.onClose();
+    await initData();
+    InboxController inboxController = Get.find();
+    inboxController.messageList.forEach((element) {
+      if (element.id == inboxMessageEntity.id) {
+        element.noReadNum = emailList.where((e) => e.state == 0).length;
+      }
+    });
+    inboxController.messageList.refresh();
+  }
+
+  String readMailId = '';
+  Future initData() async {
     try {
-      InboxEmailEntity res = (await PicksApi.getMailVOList()).firstWhere((element) => element.mailType == type);
+      InboxEmailEntity res = (await InboxApi.getMailVOList()).firstWhere((element) => element.mailType == type);
       emailList.value = res.mailList;
       loadingStatus.value = LoadDataStatus.success;
-      mailIdNoRead = emailList.where((e) => e.state == 0).map((item) => item.mailType.toString()).join('|');
-      if (mailIdNoRead.isNotEmpty) {
-        print(1111);
-        // await PicksApi.readMail(mailIdNoRead);
-      }
     } catch (e) {
       loadingStatus.value = LoadDataStatus.noData;
     }
@@ -55,13 +64,13 @@ class InboxEmailController extends GetxController {
 
   ///领取奖励
   void receiveMailAward(String mailIds) async {
-    await PicksApi.receiveMailAward(mailIds);
+    await InboxApi.receiveMailAward(mailIds);
     showTopToastDialog(
         needBg: false,
         child: Container(
             margin: EdgeInsets.only(top: 44.w),
             child: AwardWidget(image: Assets.managerUiManagerGift00, text: "YOU GOT 3  treasure chest".toUpperCase())));
-    InboxEmailEntity res = (await PicksApi.getMailVOList()).firstWhere((element) => element.mailType == type);
+    InboxEmailEntity res = (await InboxApi.getMailVOList()).firstWhere((element) => element.mailType == type);
     emailList.value = res.mailList;
   }
 

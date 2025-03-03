@@ -19,8 +19,7 @@ class InboxPage extends StatefulWidget {
   State<InboxPage> createState() => _InboxPageState();
 }
 
-class _InboxPageState extends State<InboxPage>
-    with AutomaticKeepAliveClientMixin {
+class _InboxPageState extends State<InboxPage> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InboxController>(

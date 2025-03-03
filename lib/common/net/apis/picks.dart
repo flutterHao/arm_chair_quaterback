@@ -32,8 +32,6 @@ import 'package:arm_chair_quaterback/common/enums/season_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 
-import '../../entities/inbox_email_entity.dart';
-
 ///
 ///@auther gejiahui
 ///created at 2024/9/20/10:42
@@ -209,17 +207,6 @@ class PicksApi {
   /// 分享竞猜
   static Future shareGuess() async {
     await httpUtil.post(Api.shareGuess);
-  }
-
-  /// 查询邮件列表
-  static Future<List<InboxEmailEntity>> getMailVOList() async {
-    List json = await httpUtil.post(Api.getMailVOList);
-    return json.map((e) => InboxEmailEntity.fromJson(e)).toList();
-  }
-
-  ///提取附件奖励
-  static Future receiveMailAward(String mailIds) async {
-    await httpUtil.post(Api.receiveMailAward, data: {"mailIds": mailIds});
   }
 
   /// 获取球员实力排行榜

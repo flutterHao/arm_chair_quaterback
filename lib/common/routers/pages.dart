@@ -11,7 +11,7 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
-import 'package:arm_chair_quaterback/pages/inbox/binding.dart';
+import 'package:arm_chair_quaterback/pages/inbox/inbox_email/binding.dart';
 import 'package:arm_chair_quaterback/pages/inbox/inbox_email/view.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_detail.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/view.dart';
@@ -79,8 +79,7 @@ class AppPages {
         },
         transitionDuration: const Duration(milliseconds: 300),
         // 进入动画时间
-        reverseTransitionDuration:
-            const Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
+        reverseTransitionDuration: const Duration(milliseconds: Constant.transitionDuration), // 退出动画时间
       );
     }
 
@@ -123,8 +122,7 @@ class AppPages {
           RankBinding().dependencies();
           return const NBARankPage();
         case RouteNames.leagueLeagueDetail:
-          return LeagueDetailV2Page(Get.arguments["item"],
-              gameId: Get.arguments["gameId"]);
+          return LeagueDetailV2Page(Get.arguments["item"], gameId: Get.arguments["gameId"]);
         case RouteNames.inboxDetail:
           return const InboxDetailPage();
         case RouteNames.picksPickRank:

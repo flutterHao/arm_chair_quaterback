@@ -7,12 +7,14 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/inbox/controller.dart';
 import 'package:flutter/material.dart';
@@ -54,23 +56,27 @@ class InboxList extends GetView<InboxController> {
               ),
               _connentivityWidget(),
               Expanded(
-                child: ListView.separated(
-                    controller: controller.scrollController,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (context, index) {
-                      bool lastIndex = index == controller.messageList.length - 1;
-                      return Container(
-                          margin: EdgeInsets.only(bottom: lastIndex ? 80.w : 0), child: _buildItem(index, context));
-                    },
-                    separatorBuilder: (context, index) => Container(
+                  child: Obx(
+                () => controller.messageList.isNotEmpty
+                    ? ListView.separated(
+                        itemCount: controller.messageList.length,
+                        controller: controller.scrollController,
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (context, index) {
+                          bool lastIndex = index == controller.messageList.length - 1;
+                          return Container(
+                              margin: EdgeInsets.only(bottom: lastIndex ? 80.w : 0), child: _buildItem(index, context));
+                        },
+                        separatorBuilder: (context, index) => Container(
                           width: double.infinity,
                           height: 0.5.w,
                           margin: EdgeInsets.symmetric(horizontal: 16.w),
                           color: AppColors.cD4D4D4,
                         ),
-                    itemCount: controller.messageList.length),
-              ),
+                      )
+                    : Center(child: LoadStatusWidget(loadDataStatus: LoadDataStatus.noData)),
+              )),
             ],
           );
         });
@@ -116,8 +122,7 @@ class InboxList extends GetView<InboxController> {
               backgroundColor: AppColors.cEFB400,
               onPressed: (BuildContext context) {
                 controller.itemDoNotDisturb(item);
-                // item.isRead = true;
-                controller.update(["inboxList"]);
+                item.isRead = true;
               },
               icon: Assets.inboxUiInboxIconBlacklist,
               iconWidth: 20.w,
@@ -131,8 +136,7 @@ class InboxList extends GetView<InboxController> {
             IconSlidableAction(
               backgroundColor: AppColors.cD60D20,
               onPressed: (BuildContext context) {
-                controller.messageList.remove(item);
-                controller.update(["inboxList"]);
+                controller.deteleMail(item);
               },
               icon: Assets.iconUiIconDelete02,
               iconWidth: 20.w,
@@ -234,7 +238,8 @@ class InboxList extends GetView<InboxController> {
                             ? IconWidget(
                                 icon: Assets.inboxUiInboxIconInform, iconWidth: 16.w, iconColor: AppColors.cB3B3B3)
                             : Visibility(
-                                visible: !item.isRead && item.noReadNum > 0,
+                                // visible: !item.isRead && item.noReadNum > 0,
+                                visible: item.noReadNum > 0,
                                 child: Container(
                                   constraints: BoxConstraints(minWidth: 15.w),
                                   alignment: Alignment.center,
