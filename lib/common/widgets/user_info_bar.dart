@@ -125,11 +125,11 @@ class UserInfoBar extends StatelessWidget {
                                   return ServerSwitchDialog(
                                     servers: servers,
                                     currentServer: current,
-                                    onServerChanged: (newServer) {
+                                    onServerChanged: (newServer) async {
                                       var indexOf = servers.indexOf(newServer);
                                       HttpUtil().setUrl(newServer);
                                       WSInstance.setUrl(wsServers[indexOf]);
-                                      WSInstance.close();
+                                      await WSInstance.close();
                                       HomeController.to.login();
                                     },
                                   );

@@ -54,12 +54,12 @@ class WSInstance {
         .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
   }
 
-  static void _readyCheck() {
+  static void _readyCheck() async {
     print('WebSocket--_readyCheck--:$_ready');
     if (_ready) {
       _readyCheckTimer?.cancel();
     } else {
-      close();
+      await close();
       init();
     }
   }
@@ -90,7 +90,7 @@ class WSInstance {
   static void _startPingTimer() {
     print('WebSocket--ping--pong--start----');
     _pingTimer?.cancel();
-    _pingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    _pingTimer = Timer.periodic(const Duration(seconds: 10), (timer) async {
       // if(_reconnectTimer?.isActive == true){
       //   //正在重连
       //   return;
@@ -102,16 +102,16 @@ class WSInstance {
       // 检查是否超时
       if (DateTime.now().difference(_lastPongTime).inSeconds > 15) {
         print('没有收到 pong 响应，尝试重连');
-        close(); // 如果 15 秒内没有收到 pong，则认为连接断开，进行重连
+        await close(); // 如果 15 秒内没有收到 pong，则认为连接断开，进行重连
         _reconnect();
       }
     });
   }
 
-  static void _onDone() {
+  static void _onDone() async {
     if (!_isClosed) {
       print('WebSocket 连接意外关闭');
-      close();
+      await close();
       _reconnect();
     }
   }
@@ -140,12 +140,12 @@ class WSInstance {
   }
 
   // 手动关闭连接
-  static void close() async {
+  static close() async {
     _isClosed = true;
     _ready = false;
     _pingTimer?.cancel();
     _readyCheckTimer?.cancel();
-    await _channel?.sink.close();
+    _channel?.sink.close();
     await _streamSubscription?.cancel();
     _channel = null;
   }
