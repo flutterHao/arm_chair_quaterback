@@ -46,10 +46,13 @@ class WSInstance {
     _readyCheckTimer = Timer(const Duration(seconds: 2), _readyCheck);
     await _channel?.ready;
     _ready = true;
+    _readyCheckTimer?.cancel();
+
     _auth();
     _startPingTimer();
     _lastPongTime = DateTime.now();
 
+    await _streamSubscription?.cancel();
     _streamSubscription = _channel?.stream
         .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
   }
