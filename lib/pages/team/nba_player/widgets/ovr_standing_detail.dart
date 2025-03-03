@@ -42,11 +42,13 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
     if (lastPagePlayerId != null) {
       var scrollerIndex =
           controller.allPlayerStrengthRank.indexWhere((element) => element.playerId == lastPagePlayerId);
-      // Future.microtask(()=>  scrollController.jumpTo(scrollerIndex * 124.w));
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        scrollController.animateTo(scrollerIndex * 124.w,
-            duration: Duration(milliseconds: scrollerIndex > 100 ? 1000 : 100), curve: Curves.linear);
-      });
+      if (scrollerIndex > 0) {
+        double offset = scrollerIndex * (124.w + 1);
+        int t = (offset * .2).ceil();
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          scrollController.animateTo(offset, duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+        });
+      }
     }
   }
 
