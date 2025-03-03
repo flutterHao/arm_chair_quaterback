@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ class InboxController extends GetxController {
 
   _initData() {
     getMessageList();
+    getStorageDoNotDisturb();
   }
 
   @override
@@ -37,7 +39,7 @@ class InboxController extends GetxController {
 
   final Connectivity connectivity = Connectivity();
   late StreamSubscription<List<ConnectivityResult>> connectivitySubscription;
-  RxBool connectivityStatus = false.obs;
+  RxBool connectivityStatus = true.obs;
   Future<void> initConnectivity() async {
     try {
       await connectivity.checkConnectivity();
@@ -86,9 +88,10 @@ class InboxController extends GetxController {
     super.dispose();
   }
 
+  List<InboxEmailEntity> mailVOList = [];
   void getMessageList() async {
     var resMessageList = await CacheApi.getInboxMessageList();
-    var mailVOList = await PicksApi.getMailVOList();
+    mailVOList = await PicksApi.getMailVOList();
     var mailTypelist = [
       {'id': 5001, 'type': 3},
       {'id': 4001, 'type': 2},
@@ -103,15 +106,35 @@ class InboxController extends GetxController {
         if (res.mailList.isNotEmpty) {
           element.userText = res.mailList[0].content;
           element.time = DateTime.fromMillisecondsSinceEpoch(res.mailList[0].updateTime);
+          element.noReadNum = res.mailList.where((e) => e.state == 0).length;
         } else {
           element.isRead = true;
-          // return false;
+          return false;
         }
         return true;
       }
       return false;
     }).toList();
     loadDataSuccess = true;
+    update(["inboxList"]);
+  }
+
+  /// 获取存储免打扰
+  void getStorageDoNotDisturb() {
+    doNotDisturb = StorageService.to.getList('locatDoNotDisturb').map((e) => int.parse(e)).toList();
+  }
+
+  ///免打扰
+  List<int> doNotDisturb = [];
+  void itemDoNotDisturb(InboxMessageEntity item) async {
+    if (doNotDisturb.contains(item.id)) {
+      //取消免打扰
+      doNotDisturb.remove(item.id);
+    } else {
+      //设置免打扰
+      doNotDisturb.add(item.id);
+    }
+    StorageService.to.setList('locatDoNotDisturb', doNotDisturb.map((element) => element.toString()).toList());
     update(["inboxList"]);
   }
 }

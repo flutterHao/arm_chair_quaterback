@@ -46,6 +46,10 @@ InboxMessageEntity $InboxMessageEntityFromJson(Map<String, dynamic> json) {
   if (messageList2 != null) {
     inboxMessageEntity.messageList2 = messageList2;
   }
+  final int? noReadNum = jsonConvert.convert<int>(json['noReadNum']);
+  if (noReadNum != null) {
+    inboxMessageEntity.noReadNum = noReadNum;
+  }
   return inboxMessageEntity;
 }
 
@@ -60,6 +64,7 @@ Map<String, dynamic> $InboxMessageEntityToJson(InboxMessageEntity entity) {
   data['time'] = entity.time.toIso8601String();
   data['messageList'] = entity.messageList;
   data['messageList2'] = entity.messageList2;
+  data['noReadNum'] = entity.noReadNum;
   return data;
 }
 
@@ -74,6 +79,7 @@ extension InboxMessageEntityExtension on InboxMessageEntity {
     DateTime? time,
     List<String>? messageList,
     List<String>? messageList2,
+    int? noReadNum,
   }) {
     return InboxMessageEntity()
       ..id = id ?? this.id
@@ -84,6 +90,7 @@ extension InboxMessageEntityExtension on InboxMessageEntity {
       ..isRead = isRead ?? this.isRead
       ..time = time ?? this.time
       ..messageList = messageList ?? this.messageList
-      ..messageList2 = messageList2 ?? this.messageList2;
+      ..messageList2 = messageList2 ?? this.messageList2
+      ..noReadNum = noReadNum ?? this.noReadNum;
   }
 }

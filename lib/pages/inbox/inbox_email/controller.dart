@@ -37,11 +37,17 @@ class InboxEmailController extends GetxController {
     initData();
   }
 
+  late String mailIdNoRead;
   initData() async {
     try {
       InboxEmailEntity res = (await PicksApi.getMailVOList()).firstWhere((element) => element.mailType == type);
       emailList.value = res.mailList;
       loadingStatus.value = LoadDataStatus.success;
+      mailIdNoRead = emailList.where((e) => e.state == 0).map((item) => item.mailType.toString()).join('|');
+      if (mailIdNoRead.isNotEmpty) {
+        print(1111);
+        // await PicksApi.readMail(mailIdNoRead);
+      }
     } catch (e) {
       loadingStatus.value = LoadDataStatus.noData;
     }
