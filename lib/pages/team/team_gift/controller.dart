@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dar
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/girl.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:get/get.dart';
@@ -47,12 +48,12 @@ class TeamGiftController extends GetxController {
   Future sendGiftClick({required int girlId, required int giftId, required List<String> costList}) async {
     if (costList[1] == '102') {
       if (userEntiry.teamLoginInfo!.getMoney().toInt() < int.parse(costList[2])) {
-        Get.snackbar('Tips', 'Not enough money');
+        LowResourcesBottomsheet.show(ResourceType.cash);
         return;
       }
     } else if (costList[1] == '103') {
       if (userEntiry.teamLoginInfo!.getCoin().toInt() < int.parse(costList[2])) {
-        Get.snackbar('Tips', 'Not enough money');
+        LowResourcesBottomsheet.show(ResourceType.coins);
         return;
       }
     }

@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
@@ -7,6 +8,9 @@ import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,19 +27,54 @@ class LowResourcesBottomsheet {
           _getResourcesWidget(
               icon: Assets.commonUiCommonTabBottom04Off,
               title: 'Make a right pick can get lots of coins. ',
-              onTap: () {}),
+              onTap: () {
+                Get.until((route) => route.isFirst); // 通过条件判断循环返回到第一个路由
+                HomeController homeController = Get.find();
+                homeController.goto(3);
+              }),
           _getResourcesWidget(
-              icon: Assets.commonUiCommonIcon01, title: 'Finish Daily Task can get coins.', onTap: () {}),
+              icon: Assets.commonUiCommonIcon01,
+              title: 'Finish Daily Task can get coins.',
+              onTap: () {
+                Get.offNamed(RouteNames.mineDailyTask);
+                final DailyTaskController dailyTaskController = Get.find();
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  dailyTaskController.scrollController.jumpTo(400.h);
+                });
+              }),
           _getResourcesWidget(
-              icon: Assets.commonUiCommonTabBottom01Off, title: 'There some coin hide in news.', onTap: () {}),
+              icon: Assets.commonUiCommonTabBottom01Off,
+              title: 'There some coin hide in news.',
+              onTap: () {
+                Get.until((route) => route.isFirst); // 通过条件判断循环返回到第一个路由
+                HomeController homeController = Get.find();
+                homeController.goto(0);
+              }),
         ],
       );
     }
     return Column(
       children: [
         _getResourcesWidget(
-            icon: Assets.commonUiCommonIcon02, title: 'Start trainning can get lots of cash. ', onTap: () {}),
-        _getResourcesWidget(icon: Assets.commonUiCommonIcon01, title: 'Finish Daily Task can get cash.', onTap: () {}),
+            icon: Assets.commonUiCommonIcon02,
+            title: 'Start trainning can get lots of cash. ',
+            onTap: () {
+              Get.until((route) => route.isFirst); // 通过条件判断循环返回到第一个路由
+              HomeController homeController = Get.find();
+              homeController.goto(2);
+              TeamIndexController teamIndexController = Get.find();
+              teamIndexController.scrollToSlot();
+            }),
+        _getResourcesWidget(
+            icon: Assets.commonUiCommonIcon01,
+            title: 'Finish Daily Task can get cash.',
+            onTap: () {
+              Get.offNamed(RouteNames.mineDailyTask);
+              final DailyTaskController dailyTaskController = Get.find();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                dailyTaskController.scrollController.jumpTo(400.h);
+              });
+            }),
       ],
     );
   }
@@ -134,7 +173,7 @@ class LowResourcesBottomsheet {
     return MtInkWell(
         onTap: () {
           onTap.call();
-          Get.back();
+          // Get.back();
         },
         child: SizedBox(
             height: 64.w + 1,
