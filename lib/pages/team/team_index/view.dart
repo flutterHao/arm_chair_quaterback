@@ -64,11 +64,6 @@ class _TeamView extends GetView<TeamIndexController> {
             controller: ctrl.scrollController,
             child: Column(
               children: [
-                // ElevatedButton(
-                //     onPressed: () {
-                //       Get.to(TeamGiftPage(), opaque: false, transition: Transition.fadeIn);
-                //     },
-                //     child: Text('Go Gift')),
                 TrainingNewWidget(),
                 BattleBoxWidget(),
                 MatchCard(),

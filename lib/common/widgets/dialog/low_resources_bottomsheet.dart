@@ -81,13 +81,13 @@ class LowResourcesBottomsheet {
     );
   }
 
-  static show(ResourceType resourceType) {
+  static Future show(ResourceType resourceType) {
     String lastPressedDate = StorageService.to.getString('lastPressedDate');
     String today = DateTime.now().toLocal().toString().split(' ')[0]; // 获取今天的日期，格式为"YYYY-MM-DD"
     noshowToday.value = (lastPressedDate == today);
     if (noshowToday.value) {
       print('已开启今天不显示');
-      return;
+      return Future.value();
     }
     return BottomTipDialog.showWithSound(
         isScrollControlled: true,
@@ -112,7 +112,7 @@ class LowResourcesBottomsheet {
                 SizedBox(height: Utils.getPaddingBottom() + 40.w)
               ]));
         }).then((v) {
-      ///今日不展示弹窗保存
+      ///判断是否不再显示弹窗，则记录今日时间
       if (noshowToday.value) {
         String today = DateTime.now().toLocal().toString().split(' ')[0];
         StorageService.to.setString('lastPressedDate', today);
