@@ -6,8 +6,8 @@ import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -18,7 +18,6 @@ import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/star_upgrade_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/player_property_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -522,7 +521,24 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
                                             BorderRadius.circular(9.w),
                                       ),
                                       child: MtInkWell(
-                                        onTap: () => onStartClick(context),
+                                        onTap: () {
+                                          if (controller
+                                              .getSelectedPlayers()
+                                              .isEmpty) {
+                                            BottomTipDialog.show(
+                                                context: context,
+                                                onTap: () {
+                                                  Get.back();
+                                                  onStartClick(context);
+                                                },
+                                                btnDirection: Axis.horizontal,
+                                                title: "ARE YOU SURE",
+                                                desc:
+                                                    "The success rete is too low.\nDo you really want to continue?");
+                                            return;
+                                          }
+                                          onStartClick(context);
+                                        },
                                         child: Center(
                                           child: Text(
                                             "START",
@@ -740,14 +756,14 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
       return;
     }
 
-    ///退出选球员升星页面
-    Get.back();
+    await Get.toNamed(RouteNames.teamStarUpGame, arguments: {
+      "playerUuid": playerUuid,
+    });
 
     ///退出选择消耗球员卡页面
     Get.back();
 
-    await Get.toNamed(RouteNames.teamStarUpGame, arguments: {
-      "playerUuid": playerUuid,
-    });
+    ///退出选球员升星页面
+    Get.back();
   }
 }

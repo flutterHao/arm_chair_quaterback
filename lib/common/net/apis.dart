@@ -68,6 +68,12 @@ class Api {
   static const String queryNBAGameSchedulesInfo = "$API_BASE_PATH/NBAData/queryNBAGameSchedulesInfo";
   static const String getNBATeamInfo = "$API_BASE_PATH/NBAData/getNBATeamInfo";
   static const String scheduleChoose = "$API_BASE_PATH/NBAData/scheduleChoose";
+  static const String getPlayerTrends =
+      "$API_BASE_PATH/NBAData/getPlayerTrends";
+  static const String getOVRRankPlayerInfo =
+      "$API_BASE_PATH/NBAData/getOVRRankPlayerInfo";
+  static const String getNBAGameSchedules =
+      "$API_BASE_PATH/NBAData/getNBAGameSchedules";
   static const String getNBAPlayerOverAllPerGameData = "$API_BASE_PATH/NBAData/getNBAPlayerOverAllPerGameData";
   static const String getNBAGameLogByTeamId = "$API_BASE_PATH/NBAData/getNBAGameLogByTeamId";
   static const String queryPlayerGameYear = "$API_BASE_PATH/NBAData/queryPlayerGameYear";
@@ -138,14 +144,14 @@ class Api {
   static const String activeBox = "$API_BASE_PATH/match/activeBox";
   static const String getFreeGift = "$API_BASE_PATH/match/getFreeGift";
   static const String openCardPack = "$API_BASE_PATH/match/openCardPack";
+  static const String getLastTimeStarUpList =
+      "/p/TeamPlayer/getLastTimeStarUpList";
   static const String speedOpenCardPack = "$API_BASE_PATH/match/speedOpenCardPack";
   static const String dismissPlayer = "$API_BASE_PATH/TeamPlayer/dismissTeamPlayerPack";
   static const String getTeamPlayerCollect = "$API_BASE_PATH/TeamPlayer/getTeamPlayerCollect";
   static const String composeTeamPlayer = "$API_BASE_PATH/TeamPlayer/composeTeamPlayer";
   static const String destroyTeamPlayer = "$API_BASE_PATH/TeamPlayer/destroyTeamPlayer";
   static const String getPlayerStrengthRank = "$API_BASE_PATH/TeamPlayer/getPlayerStrengthRank";
-  static const String getPlayerTrends = "$API_BASE_PATH/NBAData/getPlayerTrends";
-  static const String getOVRRankPlayerInfo = "$API_BASE_PATH/NBAData/getOVRRankPlayerInfo";
   static const String getSlotStarUpEventVO = "/p/TeamPlayer/getSlotStarUpEventVO";
 
   ///trade
@@ -160,8 +166,6 @@ class Api {
   static const String getNowSeason = "$API_BASE_PATH/match/getSeason";
   static const String closeCard = "$API_BASE_PATH/match/closeCard";
 
-  ///league
-  static const String getNBAGameSchedules = "$API_BASE_PATH/NBAData/getNBAGameSchedules";
 
   ///turntable
   static const String getTurntableInfo = "$API_BASE_PATH/turntable/getTurntableInfo";

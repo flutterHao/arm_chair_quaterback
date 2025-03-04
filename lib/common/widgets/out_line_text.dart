@@ -5,6 +5,7 @@ class OutlinedText extends StatelessWidget {
   final TextStyle textStyle;
   final double strokeWidth;
   final Color strokeColor;
+  final int? maxLines;
 
   const OutlinedText({
     super.key,
@@ -12,6 +13,7 @@ class OutlinedText extends StatelessWidget {
     required this.textStyle,
     this.strokeWidth = 3,
     this.strokeColor = Colors.white,
+    this.maxLines,
   });
 
   @override
@@ -21,6 +23,7 @@ class OutlinedText extends StatelessWidget {
         // 描边
         Text(
           text,
+          maxLines: maxLines,
           style: textStyle.copyWith(
             foreground: Paint()
               ..style = PaintingStyle.stroke
@@ -29,7 +32,7 @@ class OutlinedText extends StatelessWidget {
           ),
         ),
         // 填充文字
-        Text(text, style: textStyle),
+        Text(text, maxLines: maxLines, style: textStyle),
       ],
     );
   }

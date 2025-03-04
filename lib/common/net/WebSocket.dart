@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -17,9 +18,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class WSInstance {
   static WebSocketChannel? _channel;
   static int _msgCounter = 1;
-  static bool _init = false;
-  static bool _isClosed = false; // 标记手动关闭
-  static Timer? _readyCheckTimer;
   static bool _ready = false;
 
   static Timer? _pingTimer; // 心跳定时器
@@ -40,34 +38,26 @@ class WSInstance {
       return;
     }
     print('WebSocket--start--');
-    _init = true;
     final wsUrl = Uri.parse(_getUrl);
     _channel = WebSocketChannel.connect(wsUrl);
-    _readyCheckTimer = Timer(const Duration(seconds: 2), _readyCheck);
-    await _channel?.ready;
-    _ready = true;
-    _readyCheckTimer?.cancel();
-
-    _auth();
-    _startPingTimer();
-    _lastPongTime = DateTime.now();
-
-    await _streamSubscription?.cancel();
-    _streamSubscription = _channel?.stream
-        .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
-  }
-
-  static void _readyCheck() async {
-    print('WebSocket--_readyCheck--:$_ready');
-    if (_ready) {
-      _readyCheckTimer?.cancel();
-    } else {
-      await close();
-      init();
+    try {
+      await _channel?.ready;
+      print('WebSocket--ready--');
+      _ready = true;
+      await _streamSubscription?.cancel();
+      _streamSubscription = _channel?.stream
+          .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
+      await _auth();
+      _startPingTimer();
+      _lastPongTime = DateTime.now();
+    } catch (e) {
+      print('WebSocket--ready--error:$e');
+      _ready = false;
+      _onDone();
     }
   }
 
-  static void _auth() async {
+  static _auth() async {
     if (Get.find<HomeController>().userEntiry.teamLoginInfo == null) {
       try {
         await Get.find<HomeController>().login();
@@ -112,21 +102,23 @@ class WSInstance {
   }
 
   static void _onDone() async {
-    if (!_isClosed) {
-      print('WebSocket 连接意外关闭');
-      await close();
-      _reconnect();
-    }
+    print('WebSocket 连接意外关闭');
+    _ready = false;
+    await close();
+    Future.delayed(Duration(seconds: 3), _reconnect);
   }
 
   static _onError(e) {
     print('WebSocket--onError--:$e');
     _streamController.sink.addError(e);
+    _onDone();
   }
 
   static void _onMessageReceive(message) {
-    // print('WebSocket--message--:$message');
     var result = _decoder(message);
+    if(kDebugMode) {
+      print('WebSocket--message--:${result.serviceId}');
+    }
     if (result.serviceId == Api.wsHeartBeat) {
       // print('WebSocket--result--TeamService.heartBeat');
       _lastPongTime = DateTime.now();
@@ -144,10 +136,8 @@ class WSInstance {
 
   // 手动关闭连接
   static close() async {
-    _isClosed = true;
     _ready = false;
     _pingTimer?.cancel();
-    _readyCheckTimer?.cancel();
     _channel?.sink.close();
     await _streamSubscription?.cancel();
     _channel = null;
@@ -179,13 +169,13 @@ class WSInstance {
   static Stream<int> get netStream => _networkConnectedStreamController.stream;
 
   static void _sendMessage(dynamic message, {String path = ""}) {
-    if (!_init) {
-      throw ('WSInstance not init');
+    if (!_ready) {
+      throw ('WSInstance not ready');
     }
     if (_channel == null) {
       print('channel null...');
     }
-    if (path != Api.wsHeartBeat) {
+    if (path != Api.wsHeartBeat && kDebugMode) {
       print('WebSocket--sendMessage--message:$message');
       log('WebSocket--sendMessage--path:$path');
     }

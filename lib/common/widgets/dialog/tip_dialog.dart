@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -77,7 +78,7 @@ class BottomTipDialog {
         .then((v) {
       SoundServices.to.playSound(Assets.soundDelete);
       completer.complete(v);
-    },onError: (e){
+    }, onError: (e) {
       completer.complete(null);
     });
     return completer.future;
@@ -250,7 +251,7 @@ class _BottomTipDialogState extends State<_BottomTipDialog> {
 
   Widget horizontalBtnWidget() {
     return Container(
-      margin: EdgeInsets.only(bottom: 9.w),
+      margin: EdgeInsets.only(bottom: 9.w + Utils.getPaddingBottom()),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -268,7 +269,9 @@ class _BottomTipDialogState extends State<_BottomTipDialog> {
             child: MtInkWell(
               onTap: () {
                 SoundServices.to.playSound(Assets.soundClick);
-                widget.cancelTap != null ? widget.cancelTap!.call() : Get.back();
+                widget.cancelTap != null
+                    ? widget.cancelTap!.call()
+                    : Get.back();
               },
               child: Center(
                 child: Text(

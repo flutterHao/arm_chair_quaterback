@@ -7,7 +7,10 @@ import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dar
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team_player.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -46,6 +49,7 @@ class TrainingController extends GetxController
   static const eventStealingPlayer = 4;
   static const eventBankRpbbery = 5;
   RxBool isPlaying = true.obs;
+
   // RxInt currentIndex = 0.obs;
   var showBall = false.obs;
   var showPlayer = false.obs;
@@ -61,11 +65,13 @@ class TrainingController extends GetxController
   var showShield = false.obs;
   var showScaleShield = 1.0.obs;
   var shieldCount = 0.obs;
+
   //战术牌
   var showTactics = false.obs;
   List<TrainingInfoBuff> newCardList = [];
 
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
+
   // List<TeamPlayerInfoEntity> playerList = [];
   List<TrainTaskEntity> trainTaskList = [];
   TrainDefineEntity trainDefine = TrainDefineEntity();
@@ -128,6 +134,7 @@ class TrainingController extends GetxController
   List<ScrollController> statusScollerList = [];
   int playerIdx = 0;
   var showPlayerBox = false.obs;
+
   // AnimationController showBoxAnimationCtrl;
   // Animation<double>
   bool playerScrollerEnd = false;
@@ -136,10 +143,12 @@ class TrainingController extends GetxController
 
   ///战术卡牌
   RxBool showChooseDialog = false.obs;
+
   // RxBool isChange = false.obs;
   int selectTacticId = 0;
   int changeTacticId = 0;
   List<TrainingInfoBuff> tacticChooseList = [];
+
   // late AnimationController shakeController;
   // late Animation<double> shakeAnimation;
   //卡牌动画
@@ -152,11 +161,13 @@ class TrainingController extends GetxController
   // late AnimationController tacticAnimCtrl;
   late Animation<double> tacticExpAnimated;
   late Animation<double> tacticScaleAnimated;
+
   // late Animation<Offset> tacticPosAnimated;
   late Animation<double> widthAniamtion;
   String tacticType = "";
   RxBool showTacticColor = false.obs;
   List<TaticsCombineEntity> buffValueConfigList = [];
+  List<UpStarTeamPlayerV2Entity> lastTimeStarUpList = [];
   RxBool tacticFly = false.obs;
 
   //任务
@@ -167,6 +178,7 @@ class TrainingController extends GetxController
   RxDouble taskProgress = 0.0.obs;
   RxString taskCountDownString = "".obs;
   late DateTime refreshTime = DateTime.now();
+
   //奖励飞行动画
   late AnimationController flyAnimationCtrl;
   late Animation<double> flyAnimation;
@@ -185,6 +197,7 @@ class TrainingController extends GetxController
   ];
   List<double> angles = [-40.23, -23.23, -6.81, 10.76, 23.46];
   late ScrollController awardBottomScrollController;
+
 //升星球员列表
   StarUpPlayerEntity starUpPlayerEntity = StarUpPlayerEntity();
 
@@ -356,6 +369,7 @@ class TrainingController extends GetxController
       TeamApi.getTrainDefine(),
       TeamApi.getTacticCombine(),
       // getPlayerList(),
+      getLastTimeStarUpList(),
     ]).then((v) {
       // rewardList = v[0] as List<RewardGroupEntity>;
       trainingInfo = v[0] as TrainingInfoEntity;
@@ -378,6 +392,16 @@ class TrainingController extends GetxController
       ErrorUtils.toast(v);
       isPlaying.value = false;
     });
+  }
+
+  Future<List<UpStarTeamPlayerV2Entity>> getLastTimeStarUpList() {
+    Completer<List<UpStarTeamPlayerV2Entity>> completer =
+        Completer<List<UpStarTeamPlayerV2Entity>>();
+    TeamPlayerApi.getLastTimeStarUpList().then((v) {
+      completer.complete(v);
+      lastTimeStarUpList = v;
+    }, onError: (e) => completer.completeError(e));
+    return completer.future;
   }
 
   void updateProp() {
@@ -600,6 +624,14 @@ class TrainingController extends GetxController
       TeamIndexController ctrl = Get.find();
       isPlaying.value = true;
       await ctrl.matchBattle();
+      isPlaying.value = false;
+      return;
+    }
+    if (lastTimeStarUpList.isNotEmpty) {
+      isPlaying.value = true;
+      await Get.toNamed(RouteNames.teamStarUpGame,
+          arguments: {"playerUuid": lastTimeStarUpList.first.uuid});
+      await getLastTimeStarUpList();
       isPlaying.value = false;
       return;
     }

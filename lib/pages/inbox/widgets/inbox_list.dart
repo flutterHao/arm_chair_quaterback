@@ -64,9 +64,12 @@ class InboxList extends GetView<InboxController> {
                         physics: const BouncingScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (context, index) {
-                          bool lastIndex = index == controller.messageList.length - 1;
+                          bool lastIndex =
+                              index == controller.messageList.length - 1;
                           return Container(
-                              margin: EdgeInsets.only(bottom: lastIndex ? 80.w : 0), child: _buildItem(index, context));
+                              margin:
+                                  EdgeInsets.only(bottom: lastIndex ? 80.w : 0),
+                              child: _buildItem(index, context));
                         },
                         separatorBuilder: (context, index) => Container(
                           width: double.infinity,
@@ -75,7 +78,9 @@ class InboxList extends GetView<InboxController> {
                           color: AppColors.cD4D4D4,
                         ),
                       )
-                    : Center(child: LoadStatusWidget(loadDataStatus: LoadDataStatus.noData)),
+                    : Center(
+                        child: LoadStatusWidget(
+                            loadDataStatus: LoadDataStatus.noData)),
               )),
             ],
           );
@@ -186,7 +191,8 @@ class InboxList extends GetView<InboxController> {
                   //       alignment: Alignment.topCenter,
                   //     ),
                   //   ),
-                  if (item.userSmallIcon.isNotEmpty && item.userSmallIcon != "0")
+                  if (item.userSmallIcon.isNotEmpty &&
+                      item.userSmallIcon != "0")
                     Positioned(
                       bottom: 0,
                       right: 0,
@@ -216,12 +222,17 @@ class InboxList extends GetView<InboxController> {
                         Expanded(
                           child: Text(
                             title,
-                            style: 16.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.9),
+                            style: 16.w4(
+                                fontFamily: FontFamily.fOswaldMedium,
+                                height: 0.9),
                           ),
                         ),
                         Text(
                           time,
-                          style: 14.w4(fontFamily: FontFamily.fRobotoRegular, height: 0.9, color: AppColors.cB3B3B3),
+                          style: 14.w4(
+                              fontFamily: FontFamily.fRobotoRegular,
+                              height: 0.9,
+                              color: AppColors.cB3B3B3),
                         ),
                       ],
                     ),
@@ -236,21 +247,26 @@ class InboxList extends GetView<InboxController> {
                         12.5.vGap,
                         controller.doNotDisturb.contains(item.id)
                             ? IconWidget(
-                                icon: Assets.inboxUiInboxIconInform, iconWidth: 16.w, iconColor: AppColors.cB3B3B3)
+                                icon: Assets.inboxUiInboxIconInform,
+                                iconWidth: 16.w,
+                                iconColor: AppColors.cB3B3B3)
                             : Visibility(
                                 // visible: !item.isRead && item.noReadNum > 0,
                                 visible: item.noReadNum > 0,
                                 child: Container(
                                   constraints: BoxConstraints(minWidth: 15.w),
                                   alignment: Alignment.center,
-                                  padding: EdgeInsets.symmetric(horizontal: 4.5.w, vertical: 2.5.w),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 4.5.w, vertical: 2.5.w),
                                   decoration: BoxDecoration(
                                     color: AppColors.cFF7954,
                                     borderRadius: BorderRadius.circular(7.5.w),
                                   ),
                                   child: Text(item.noReadNum.toString(),
                                       style: 12.w4(
-                                          fontFamily: FontFamily.fOswaldMedium, height: 0.9, color: AppColors.cFFFFFF)),
+                                          fontFamily: FontFamily.fOswaldMedium,
+                                          height: 0.9,
+                                          color: AppColors.cFFFFFF)),
                                 ),
                               )
                       ],
@@ -269,7 +285,7 @@ class InboxList extends GetView<InboxController> {
     return Obx(() => Visibility(
         visible: !controller.connectivityStatus.value,
         child: Container(
-          color: AppColors.cfFFE2E5,
+          color: AppColors.cFFE2E5,
           padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
           child: Row(
             children: [
@@ -281,12 +297,14 @@ class InboxList extends GetView<InboxController> {
                   color: AppColors.cD60D20,
                   shape: BoxShape.circle,
                 ),
-                child: IconWidget(icon: Assets.inboxUiInboxIconTips, iconWidth: 3.w),
+                child: IconWidget(
+                    icon: Assets.inboxUiInboxIconTips, iconWidth: 3.w),
               ),
               Flexible(
                   child: Text(
                 'The network is interrupted, Please check the network configuration.',
-                style: 14.w4(fontFamily: FontFamily.fRobotoRegular, height: 1.2),
+                style:
+                    14.w4(fontFamily: FontFamily.fRobotoRegular, height: 1.2),
               )),
               50.hGap,
               IconWidget(

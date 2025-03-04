@@ -159,11 +159,11 @@ class DailyTaskController extends GetxController
   }
 
   num getMaxLuckyCoinNum() {
-    return int.parse(CacheApi.gameConstantList
+    return CacheApi.gameConstantList
             .firstWhereOrNull(
                 (e) => e.constantId == Constant.luckyCoinMaxValueId)
             ?.constantValue ??
-        "0");
+        0;
   }
 
   Future reLife() {

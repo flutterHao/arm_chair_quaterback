@@ -425,8 +425,8 @@ class SlotDialogController extends GetxController
 enum Property {
   green(1, AppColors.c67A517),
   blue(2.5, AppColors.c1F83C8),
-  purple(4.5, AppColors.c9B62B9),
-  yellow(9, AppColors.cCC3D20);
+  purple(5, AppColors.c9B62B9),
+  yellow(10, AppColors.cCC3D20);
 
   final double bet;
   final Color color;

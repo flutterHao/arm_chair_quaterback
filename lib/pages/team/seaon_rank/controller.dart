@@ -103,7 +103,7 @@ class SeaonRankController extends GetxController {
     await CacheApi.getGameConstant();
     showNumGameConstantEntity = Utils.getGameConstant(10018);
     SeasonRankInfoEntity seasonRankInfoEntity =
-        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId, pageSize: showNumGameConstantEntity!.constantValue);
+        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId, pageSize: showNumGameConstantEntity!.constantValue.toString());
     nowSeasonRankInfoEntity = seasonRankInfoEntity.obs;
     seasonEndTime = nowSeasonEntity.seasonEndTime;
     seasonRankList.add(seasonRankInfoEntity);
@@ -242,7 +242,7 @@ class SeaonRankController extends GetxController {
         rankDialogloadingStatus.value = LoadDataStatus.loading;
         SeasonRankInfoEntity seasonRankInfoEntity = await PicksApi.getSeasonRankInfo(
             seasonRankList[pageviewIndex.value].nextRank!.seasonId,
-            pageSize: showNumGameConstantEntity!.constantValue);
+            pageSize: showNumGameConstantEntity!.constantValue.toString());
         await Future.delayed(const Duration(milliseconds: 500));
         seasonRankList.add(seasonRankInfoEntity);
         rankDialogloadingStatus.value = LoadDataStatus.success;
@@ -265,7 +265,7 @@ class SeaonRankController extends GetxController {
         rankDialogloadingStatus.value = LoadDataStatus.loading;
         SeasonRankInfoEntity seasonRankInfoEntity = await PicksApi.getSeasonRankInfo(
             seasonRankList[pageviewIndex.value].lastRank!.seasonId,
-            pageSize: showNumGameConstantEntity!.constantValue);
+            pageSize: showNumGameConstantEntity!.constantValue.toString());
 
         seasonRankList.insert(0, seasonRankInfoEntity);
         rankDialogloadingStatus.value = LoadDataStatus.success;
@@ -281,7 +281,7 @@ class SeaonRankController extends GetxController {
     await PicksApi.getSeasonRankAward(cupRankId);
     teamSimpleEntity.value = await PicksApi.getTeamSimple(teamId);
     nowSeasonRankInfoEntity.value =
-        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId, pageSize: showNumGameConstantEntity!.constantValue);
+        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId, pageSize: showNumGameConstantEntity!.constantValue.toString());
     update();
     showTopToastDialog(
         needBg: false,

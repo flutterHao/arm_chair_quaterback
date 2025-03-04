@@ -7,7 +7,7 @@ export 'package:arm_chair_quaterback/generated/json/game_constant_entity.g.dart'
 class GameConstantEntity {
 	 int constantId = 0;
 	 String constantStrVal = '';
-	 String constantValue = '';
+	 double constantValue = 0;
 	 List<String> constantValues = [];
 	 String desc = '';
 

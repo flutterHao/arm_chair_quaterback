@@ -47,7 +47,7 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
       print(widget.seasonRankEntity.myRank);
 
       ///我在榜单显示范围内
-      if (widget.seasonRankEntity.myRank!.rank <= int.parse(controller.showNumGameConstantEntity!.constantValue)) {
+      if (widget.seasonRankEntity.myRank!.rank <= int.parse(controller.showNumGameConstantEntity!.constantValue.toString())) {
         activeIndex = widget.seasonRankEntity.myRank!.rank - 1;
         WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
       } else {
@@ -236,8 +236,8 @@ class _SeasonRankItemViewState extends State<SeasonRankItemView> {
             child: Row(
               children: [
                 Text(
-                  widget.seasonRankEntity.myRank!.rank > int.parse(controller.showNumGameConstantEntity!.constantValue)
-                      ? '${int.parse(controller.showNumGameConstantEntity!.constantValue)}'
+                  widget.seasonRankEntity.myRank!.rank > int.parse(controller.showNumGameConstantEntity!.constantValue.toString())
+                      ? '${int.parse(controller.showNumGameConstantEntity!.constantValue.toString())}'
                       : '${widget.seasonRankEntity.myRank!.rank}',
                   style: 19.w5(
                     fontFamily: FontFamily.fOswaldMedium,

@@ -10,23 +10,23 @@ StarUpNumDefinedEntity $StarUpNumDefinedEntityFromJson(
   if (bonusGameAward != null) {
     starUpNumDefinedEntity.bonusGameAward = bonusGameAward;
   }
-  final List<String>? bonusGameWeight = (json['BonusGameWeight'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<String>(e) as String).toList();
+  final List<int>? bonusGameWeight = (json['BonusGameWeight'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<int>(e) as int)
+      .toList();
   if (bonusGameWeight != null) {
     starUpNumDefinedEntity.bonusGameWeight = bonusGameWeight;
   }
-  final String? successRateDecays = jsonConvert.convert<String>(
+  final double? successRateDecays = jsonConvert.convert<double>(
       json['SuccessRateDecays']);
   if (successRateDecays != null) {
     starUpNumDefinedEntity.successRateDecays = successRateDecays;
   }
-  final String? starUpBaseNum = jsonConvert.convert<String>(
-      json['starUpBaseNum']);
+  final int? starUpBaseNum = jsonConvert.convert<int>(json['starUpBaseNum']);
   if (starUpBaseNum != null) {
     starUpNumDefinedEntity.starUpBaseNum = starUpBaseNum;
   }
-  final String? starUpNum = jsonConvert.convert<String>(json['starUpNum']);
+  final int? starUpNum = jsonConvert.convert<int>(json['starUpNum']);
   if (starUpNum != null) {
     starUpNumDefinedEntity.starUpNum = starUpNum;
   }
@@ -47,10 +47,10 @@ Map<String, dynamic> $StarUpNumDefinedEntityToJson(
 extension StarUpNumDefinedEntityExtension on StarUpNumDefinedEntity {
   StarUpNumDefinedEntity copyWith({
     List<String>? bonusGameAward,
-    List<String>? bonusGameWeight,
-    String? successRateDecays,
-    String? starUpBaseNum,
-    String? starUpNum,
+    List<int>? bonusGameWeight,
+    double? successRateDecays,
+    int? starUpBaseNum,
+    int? starUpNum,
   }) {
     return StarUpNumDefinedEntity()
       ..bonusGameAward = bonusGameAward ?? this.bonusGameAward

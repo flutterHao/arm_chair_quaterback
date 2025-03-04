@@ -8,11 +8,11 @@ class StarUpNumDefinedEntity {
 	@JSONField(name: "BonusGameAward")
 	late List<String> bonusGameAward = [];
 	@JSONField(name: "BonusGameWeight")
-	late List<String> bonusGameWeight = [];
+	late List<int> bonusGameWeight = [];
 	@JSONField(name: "SuccessRateDecays")
-	late String successRateDecays = '';
-	late String starUpBaseNum = '';
-	late String starUpNum = '';
+	late double successRateDecays = 0.0;
+	late int starUpBaseNum = 0;
+	late int starUpNum = 0;
 
 	StarUpNumDefinedEntity();
 

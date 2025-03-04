@@ -12,7 +12,7 @@ GameConstantEntity $GameConstantEntityFromJson(Map<String, dynamic> json) {
   if (constantStrVal != null) {
     gameConstantEntity.constantStrVal = constantStrVal;
   }
-  final String? constantValue = jsonConvert.convert<String>(
+  final double? constantValue = jsonConvert.convert<double>(
       json['constantValue']);
   if (constantValue != null) {
     gameConstantEntity.constantValue = constantValue;
@@ -44,7 +44,7 @@ extension GameConstantEntityExtension on GameConstantEntity {
   GameConstantEntity copyWith({
     int? constantId,
     String? constantStrVal,
-    String? constantValue,
+    double? constantValue,
     List<String>? constantValues,
     String? desc,
   }) {
