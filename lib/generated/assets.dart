@@ -35,6 +35,8 @@ class Assets {
   static const String commonUiCommonArrow = 'assets/images/Common/ui_common_arrow.png';
   static const String commonUiCommonCountdown = 'assets/images/Common/ui_common_countdown.png';
   static const String commonUiCommonCountdown02 = 'assets/images/Common/ui_common_countdown_02.png';
+  static const String commonUiCommonIcon01 = 'assets/images/Common/ui_common_icon_01.png';
+  static const String commonUiCommonIcon02 = 'assets/images/Common/ui_common_icon_02.png';
   static const String commonUiCommonIconCombat = 'assets/images/Common/ui_common_icon_combat.png';
   static const String commonUiCommonIconCurrency02 = 'assets/images/Common/ui_common_icon_currency_02.png';
   static const String commonUiCommonIconElevate = 'assets/images/Common/ui_common_icon_elevate.png';
