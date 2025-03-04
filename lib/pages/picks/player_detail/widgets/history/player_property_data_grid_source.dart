@@ -28,6 +28,12 @@ class PlayerPropertyDataGridSource extends DataGridSource {
         DataGridCell<Map>(columnName: 'opp', value: {
           "id": i,
           "text": items.teamEntity.shortEname,
+          "win": items.playerSeasonGameEntity.teamId ==
+                  items.playerSeasonGameEntity.homeTeamId
+              ? (items.playerSeasonGameEntity.homeTeamScore >
+                  items.playerSeasonGameEntity.awayTeamScore)
+              : (items.playerSeasonGameEntity.awayTeamScore >
+                  items.playerSeasonGameEntity.homeTeamScore)
         }),
       ];
       list.add(DataGridCell<dynamic>(
@@ -136,7 +142,8 @@ class PlayerPropertyDataGridSource extends DataGridSource {
                 : AppColors.cE6E6E6,
           ))),
           child: Text(
-            MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(value), format:DateFormats.PARAM_M_D),
+            MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(value),
+                format: DateFormats.PARAM_M_D),
             style: 10.w4(
                 color: AppColors.c000000,
                 height: 1,
@@ -160,13 +167,27 @@ class PlayerPropertyDataGridSource extends DataGridSource {
                     color: AppColors.cE6E6E6,
                     width: 1.w,
                   ))),
-          child: Text(
-            map['text'].toString(),
-            style: 10.w4(
-                color: AppColors.c000000,
-                height: 1,
-                fontFamily: FontFamily.fRobotoRegular,
-                overflow: TextOverflow.ellipsis),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                map['text'].toString(),
+                style: 10.w4(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular,
+                    overflow: TextOverflow.ellipsis),
+              ),
+              5.hGap,
+              Text(
+                map['win']?"W":"L",
+                style: 10.w4(
+                    color: map['win']?AppColors.c0FA76C:AppColors.cE71629,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular,
+                    overflow: TextOverflow.ellipsis),
+              ),
+            ],
           ),
         );
       } else {

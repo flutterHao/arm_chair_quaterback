@@ -467,55 +467,55 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
               ),
             );
           }),
-          16.vGap,
-          MtInkWell(
-            onTap: () async {
-              if (controller.getPlayer().breakThroughGrade >= 10) {
-                EasyLoading.showToast(
-                    "The player's star level is already  max");
-                return;
-              }
-              if (controller.teamPlayerUpStarVoEntity.starUpDTO != null) {
-                var result = await BottomTipDialog.showWithSound(
-                    isScrollControlled: true,
-                    enableDrag: false,
-                    backgroundColor: AppColors.cTransparent,
-                    context: context,
-                    builder: (context) {
-                      return const SlotDialogWidget(0);
-                    });
-                onResult(result);
-              } else {
-                var result = await Get.toNamed(RouteNames.teamStartUpGrade,
-                    arguments: {"player": controller.getPlayer()});
-                onResult(result);
-              }
-            },
-            child: Container(
-              height: 51.w,
-              width: 343.w,
-              decoration: BoxDecoration(
-                  color: AppColors.c000000,
-                  borderRadius: BorderRadius.circular(9.w)),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Text(
-                    LangKey.gameButtonStarUp.tr,
-                    style: 23.w5(
-                        color: AppColors.cFFFFFF,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium),
-                  ),
-                  Positioned(
-                      right: 13.w,
-                      child: IconWidget(
-                          iconWidth: 11.w,
-                          icon: Assets.commonUiCommonIconSystemJumpto))
-                ],
-              ),
-            ),
-          ),
+          // 16.vGap,
+          // MtInkWell(
+          //   onTap: () async {
+          //     if (controller.getPlayer().breakThroughGrade >= 10) {
+          //       EasyLoading.showToast(
+          //           "The player's star level is already  max");
+          //       return;
+          //     }
+          //     if (controller.teamPlayerUpStarVoEntity.starUpDTO != null) {
+          //       var result = await BottomTipDialog.showWithSound(
+          //           isScrollControlled: true,
+          //           enableDrag: false,
+          //           backgroundColor: AppColors.cTransparent,
+          //           context: context,
+          //           builder: (context) {
+          //             return const SlotDialogWidget(0);
+          //           });
+          //       onResult(result);
+          //     } else {
+          //       var result = await Get.toNamed(RouteNames.teamStartUpGrade,
+          //           arguments: {"player": controller.getPlayer()});
+          //       onResult(result);
+          //     }
+          //   },
+          //   child: Container(
+          //     height: 51.w,
+          //     width: 343.w,
+          //     decoration: BoxDecoration(
+          //         color: AppColors.c000000,
+          //         borderRadius: BorderRadius.circular(9.w)),
+          //     child: Stack(
+          //       alignment: Alignment.center,
+          //       children: [
+          //         Text(
+          //           LangKey.gameButtonStarUp.tr,
+          //           style: 23.w5(
+          //               color: AppColors.cFFFFFF,
+          //               height: 1,
+          //               fontFamily: FontFamily.fOswaldMedium),
+          //         ),
+          //         Positioned(
+          //             right: 13.w,
+          //             child: IconWidget(
+          //                 iconWidth: 11.w,
+          //                 icon: Assets.commonUiCommonIconSystemJumpto))
+          //       ],
+          //     ),
+          //   ),
+          // ),
           21.vGap,
         ],
       ),

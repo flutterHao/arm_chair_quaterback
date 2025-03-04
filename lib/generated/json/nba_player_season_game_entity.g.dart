@@ -132,10 +132,6 @@ NbaPlayerSeasonGameEntity $NbaPlayerSeasonGameEntityFromJson(
   if (pf != null) {
     nbaPlayerSeasonGameEntity.pf = pf;
   }
-  final double? teamId = jsonConvert.convert<double>(json['teamId']);
-  if (teamId != null) {
-    nbaPlayerSeasonGameEntity.teamId = teamId;
-  }
   final double? threePm = jsonConvert.convert<double>(json['threePm']);
   if (threePm != null) {
     nbaPlayerSeasonGameEntity.threePm = threePm;
@@ -144,9 +140,25 @@ NbaPlayerSeasonGameEntity $NbaPlayerSeasonGameEntityFromJson(
   if (to != null) {
     nbaPlayerSeasonGameEntity.to = to;
   }
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
+  if (teamId != null) {
+    nbaPlayerSeasonGameEntity.teamId = teamId;
+  }
   final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
   if (awayTeamId != null) {
     nbaPlayerSeasonGameEntity.awayTeamId = awayTeamId;
+  }
+  final int? homeTeamId = jsonConvert.convert<int>(json['homeTeamId']);
+  if (homeTeamId != null) {
+    nbaPlayerSeasonGameEntity.homeTeamId = homeTeamId;
+  }
+  final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
+  if (homeTeamScore != null) {
+    nbaPlayerSeasonGameEntity.homeTeamScore = homeTeamScore;
+  }
+  final int? awayTeamScore = jsonConvert.convert<int>(json['awayTeamScore']);
+  if (awayTeamScore != null) {
+    nbaPlayerSeasonGameEntity.awayTeamScore = awayTeamScore;
   }
   final int? gst = jsonConvert.convert<int>(json['gameStartTime']);
   if (gst != null) {
@@ -179,10 +191,13 @@ Map<String, dynamic> $NbaPlayerSeasonGameEntityToJson(
   data['oreb'] = entity.oreb;
   data['createTime'] = entity.createTime;
   data['pf'] = entity.pf;
-  data['teamId'] = entity.teamId;
   data['threePm'] = entity.threePm;
   data['to'] = entity.to;
+  data['teamId'] = entity.teamId;
   data['awayTeamId'] = entity.awayTeamId;
+  data['homeTeamId'] = entity.homeTeamId;
+  data['homeTeamScore'] = entity.homeTeamScore;
+  data['awayTeamScore'] = entity.awayTeamScore;
   data['gameStartTime'] = entity.gst;
   return data;
 }
@@ -210,10 +225,13 @@ extension NbaPlayerSeasonGameEntityExtension on NbaPlayerSeasonGameEntity {
     double? oreb,
     double? createTime,
     double? pf,
-    double? teamId,
     double? threePm,
     double? to,
+    int? teamId,
     int? awayTeamId,
+    int? homeTeamId,
+    int? homeTeamScore,
+    int? awayTeamScore,
     int? gst,
   }) {
     return NbaPlayerSeasonGameEntity()
@@ -238,10 +256,13 @@ extension NbaPlayerSeasonGameEntityExtension on NbaPlayerSeasonGameEntity {
       ..oreb = oreb ?? this.oreb
       ..createTime = createTime ?? this.createTime
       ..pf = pf ?? this.pf
-      ..teamId = teamId ?? this.teamId
       ..threePm = threePm ?? this.threePm
       ..to = to ?? this.to
+      ..teamId = teamId ?? this.teamId
       ..awayTeamId = awayTeamId ?? this.awayTeamId
+      ..homeTeamId = homeTeamId ?? this.homeTeamId
+      ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
+      ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
       ..gst = gst ?? this.gst;
   }
 }

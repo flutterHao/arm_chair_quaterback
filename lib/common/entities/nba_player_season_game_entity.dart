@@ -46,10 +46,13 @@ class NbaPlayerSeasonGameEntity {
   late double oreb;
   late double createTime;
   late double pf;
-  late double teamId;
   late double threePm;
   late double to;
+  late int teamId;
   late int awayTeamId;
+  late int homeTeamId;
+  late int homeTeamScore;
+  late int awayTeamScore;
   @JSONField(name: "gameStartTime")
   late int gst;
 
