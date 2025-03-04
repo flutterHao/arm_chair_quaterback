@@ -17,10 +17,12 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/inbox/controller.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class InboxList extends GetView<InboxController> {
   const InboxList({super.key});
@@ -56,31 +58,39 @@ class InboxList extends GetView<InboxController> {
               ),
               _connentivityWidget(),
               Expanded(
-                  child: Obx(
-                () => controller.messageList.isNotEmpty
-                    ? ListView.separated(
-                        itemCount: controller.messageList.length,
-                        controller: controller.scrollController,
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          bool lastIndex =
-                              index == controller.messageList.length - 1;
-                          return Container(
-                              margin:
-                                  EdgeInsets.only(bottom: lastIndex ? 80.w : 0),
-                              child: _buildItem(index, context));
-                        },
-                        separatorBuilder: (context, index) => Container(
-                          width: double.infinity,
-                          height: 0.5.w,
-                          margin: EdgeInsets.symmetric(horizontal: 16.w),
-                          color: AppColors.cD4D4D4,
-                        ),
-                      )
-                    : Center(
-                        child: LoadStatusWidget(
-                            loadDataStatus: LoadDataStatus.noData)),
+                  child: SmartRefresher(
+                controller: controller.refreshController,
+                onRefresh: () async {
+                  controller.refreshController.loadComplete();
+                  await controller.getMessageList();
+                  controller.refreshController.refreshCompleted();
+                },
+                physics: const BouncingScrollPhysics(),
+                child: Obx(
+                  () => controller.messageList.isNotEmpty
+                      ? ListView.separated(
+                          itemCount: controller.messageList.length,
+                          controller: controller.scrollController,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (context, index) {
+                            bool lastIndex =
+                                index == controller.messageList.length - 1;
+                            return Container(
+                                margin: EdgeInsets.only(
+                                    bottom: lastIndex ? 80.w : 0),
+                                child: _buildItem(index, context));
+                          },
+                          separatorBuilder: (context, index) => Container(
+                            width: double.infinity,
+                            height: 0.5.w,
+                            margin: EdgeInsets.symmetric(horizontal: 16.w),
+                            color: AppColors.cD4D4D4,
+                          ),
+                        )
+                      : Center(
+                          child: LoadStatusWidget(
+                              loadDataStatus: LoadDataStatus.noData)),
+                ),
               )),
             ],
           );
@@ -119,6 +129,7 @@ class InboxList extends GetView<InboxController> {
         controller.update(["inboxList"]);
       },
       child: Slidable(
+        dragStartBehavior: DragStartBehavior.start,
         endActionPane: ActionPane(
           extentRatio: 120 / 375,
           motion: const ScrollMotion(),

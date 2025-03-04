@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class InboxController extends GetxController {
   InboxController();
@@ -20,7 +21,7 @@ class InboxController extends GetxController {
   late StreamSubscription<int> subscription;
 
   ScrollController scrollController = ScrollController();
-
+  RefreshController refreshController = RefreshController();
   _initData() {
     getMessageList();
     getStorageDoNotDisturb();
@@ -46,7 +47,8 @@ class InboxController extends GetxController {
     } catch (e) {
       print("无法获取网络状态: $e");
     }
-    connectivitySubscription = connectivity.onConnectivityChanged.listen((List<ConnectivityResult> result) {
+    connectivitySubscription = connectivity.onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
       if (result.contains(ConnectivityResult.none)) {
         connectivityStatus.value = false;
       } else {
@@ -95,18 +97,20 @@ class InboxController extends GetxController {
     {'id': 1001, 'type': 4},
   ];
   List<InboxEmailEntity> mailVOList = [];
-  void getMessageList() async {
+  getMessageList() async {
     var resMessageList = await CacheApi.getInboxMessageList();
     mailVOList = await InboxApi.getMailVOList();
 
     messageList.value = resMessageList.where((element) {
       var typeIndex = mailTypelist.indexWhere((e) => e['id'] == element.id);
       if (typeIndex != -1) {
-        var res = mailVOList.firstWhere((e) => e.mailType == mailTypelist[typeIndex]['type'],
+        var res = mailVOList.firstWhere(
+            (e) => e.mailType == mailTypelist[typeIndex]['type'],
             orElse: () => InboxEmailEntity());
         if (res.mailList.isNotEmpty) {
           element.userText = res.mailList[0].content;
-          element.time = DateTime.fromMillisecondsSinceEpoch(res.mailList[0].updateTime);
+          element.time =
+              DateTime.fromMillisecondsSinceEpoch(res.mailList[0].updateTime);
           element.noReadNum = res.mailList.where((e) => e.state == 0).length;
         } else {
           element.isRead = true;
@@ -122,7 +126,10 @@ class InboxController extends GetxController {
 
   /// 获取存储免打扰
   void getStorageDoNotDisturb() {
-    doNotDisturb = StorageService.to.getList('locatDoNotDisturb').map((e) => int.parse(e)).toList();
+    doNotDisturb = StorageService.to
+        .getList('locatDoNotDisturb')
+        .map((e) => int.parse(e))
+        .toList();
   }
 
   ///免打扰
@@ -135,7 +142,8 @@ class InboxController extends GetxController {
       //设置免打扰
       doNotDisturb.add(item.id);
     }
-    StorageService.to.setList('locatDoNotDisturb', doNotDisturb.map((element) => element.toString()).toList());
+    StorageService.to.setList('locatDoNotDisturb',
+        doNotDisturb.map((element) => element.toString()).toList());
     update(["inboxList"]);
   }
 
