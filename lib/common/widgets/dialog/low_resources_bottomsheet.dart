@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
@@ -20,6 +21,7 @@ enum ResourceType { coins, cash }
 
 ///资源不足弹窗
 class LowResourcesBottomsheet {
+  static RxBool noshowToday = false.obs;
   static Widget _resourcesLayouBuild(ResourceType resourceType) {
     if (resourceType == ResourceType.coins) {
       return Column(
@@ -79,8 +81,14 @@ class LowResourcesBottomsheet {
     );
   }
 
-  static RxBool showTip = false.obs;
-  static Future show(ResourceType resourceType) {
+  static show(ResourceType resourceType) {
+    String lastPressedDate = StorageService.to.getString('lastPressedDate');
+    String today = DateTime.now().toLocal().toString().split(' ')[0]; // 获取今天的日期，格式为"YYYY-MM-DD"
+    noshowToday.value = (lastPressedDate == today);
+    if (noshowToday.value) {
+      print('已开启今天不显示');
+      return;
+    }
     return BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
@@ -103,7 +111,13 @@ class LowResourcesBottomsheet {
                 _bottomtipWidget(),
                 SizedBox(height: Utils.getPaddingBottom() + 40.w)
               ]));
-        });
+        }).then((v) {
+      ///今日不展示弹窗保存
+      if (noshowToday.value) {
+        String today = DateTime.now().toLocal().toString().split(' ')[0];
+        StorageService.to.setString('lastPressedDate', today);
+      }
+    });
   }
 
   static Widget _titleWidget(ResourceType resourceType) {
@@ -155,10 +169,10 @@ class LowResourcesBottomsheet {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomCheckbox(
-                value: showTip.value,
+                value: noshowToday.value,
                 size: 16.w,
                 onChanged: (value) {
-                  showTip.value = value!;
+                  noshowToday.value = value!;
                 }),
             10.hGap,
             Text(
