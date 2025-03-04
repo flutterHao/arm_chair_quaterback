@@ -1,9 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
-import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -81,15 +79,16 @@ class LowResourcesBottomsheet {
     );
   }
 
-  static Future show(ResourceType resourceType) {
-    String lastPressedDate = StorageService.to.getString('lastPressedDate');
-    String today = DateTime.now().toLocal().toString().split(' ')[0]; // 获取今天的日期，格式为"YYYY-MM-DD"
-    noshowToday.value = (lastPressedDate == today);
-    if (noshowToday.value) {
-      print('已开启今天不显示');
-      return Future.value();
-    }
-    return BottomTipDialog.showWithSound(
+  /// 显示弹窗成功为true，否则为false
+  static Future<bool> show(ResourceType resourceType) {
+    // String lastPressedDate = StorageService.to.getString('lastPressedDate');
+    // String today = DateTime.now().toLocal().toString().split(' ')[0]; // 获取今天的日期，格式为"YYYY-MM-DD"
+    // noshowToday.value = (lastPressedDate == today);
+    // if (noshowToday.value) {
+    //   print('已开启今天不显示');
+    //   return Future.value(false);
+    // }
+    BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         builder: (context) {
@@ -108,16 +107,17 @@ class LowResourcesBottomsheet {
                   child: _resourcesLayouBuild(resourceType),
                 ),
                 Spacer(),
-                _bottomtipWidget(),
-                SizedBox(height: Utils.getPaddingBottom() + 40.w)
+                // _bottomtipWidget(),
+                // SizedBox(height: Utils.getPaddingBottom() + 40.w)
               ]));
         }).then((v) {
       ///判断是否不再显示弹窗，则记录今日时间
-      if (noshowToday.value) {
-        String today = DateTime.now().toLocal().toString().split(' ')[0];
-        StorageService.to.setString('lastPressedDate', today);
-      }
+      // if (noshowToday.value) {
+      //   String today = DateTime.now().toLocal().toString().split(' ')[0];
+      //   StorageService.to.setString('lastPressedDate', today);
+      // }
     });
+    return Future.value(true);
   }
 
   static Widget _titleWidget(ResourceType resourceType) {

@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:flutter/material.dart';
@@ -127,6 +128,14 @@ class PicksIndexController extends GetxController
   }
 
   guess(int type, Function onSuccess) {
+    HomeController homeController = Get.find();
+
+    ///消耗钱币大于我的拥有钱币时
+    if (int.parse(picksDefine.betCost) >
+        homeController.userEntiry.teamLoginInfo!.getCoin().toInt()) {
+      return LowResourcesBottomsheet.show(ResourceType.coins);
+    }
+
     List params = [];
     //组装已下注的球员的参数列表
     var fold = guessGamePlayers.keys.fold([], (p, key) {
