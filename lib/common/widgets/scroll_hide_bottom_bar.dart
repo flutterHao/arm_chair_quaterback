@@ -104,6 +104,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
   @override
   void dispose() {
     _animationController.dispose();
+    widget.controller?.dispose();
     super.dispose();
   }
 
@@ -165,5 +166,9 @@ class ScrollHideBottomBarController {
 
   void changeHideStatus(bool hide) {
     _changeHideStatus?.call(hide);
+  }
+
+  dispose(){
+    _changeHideStatus = null;
   }
 }

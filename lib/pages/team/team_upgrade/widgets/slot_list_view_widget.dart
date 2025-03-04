@@ -30,7 +30,6 @@ class SlotListViewWidget extends StatefulWidget {
 class _SlotListViewWidgetState extends State<SlotListViewWidget>
     with SingleTickerProviderStateMixin {
   late PageController _pageController;
-  final Random _random = Random();
   var selectIndex = 0;
 
   @override
@@ -89,6 +88,7 @@ class _SlotListViewWidgetState extends State<SlotListViewWidget>
   @override
   void dispose() {
     _pageController.dispose();
+    widget.controller.dispose();
     super.dispose();
   }
 }
@@ -118,4 +118,8 @@ class SlotMachineController {
   }
 
   bool get isAnimating => _isAnimating;
+
+  dispose(){
+    _spinCallback = null;
+  }
 }
