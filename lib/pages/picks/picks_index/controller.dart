@@ -128,11 +128,9 @@ class PicksIndexController extends GetxController
   }
 
   guess(int type, Function onSuccess) {
-    HomeController homeController = Get.find();
-
     ///消耗钱币大于我的拥有钱币时
     if (int.parse(picksDefine.betCost) >
-        homeController.userEntiry.teamLoginInfo!.getCoin().toInt()) {
+        HomeController.to.userEntiry.teamLoginInfo!.getCoin().toInt()) {
       return LowResourcesBottomsheet.show(ResourceType.coins);
     }
 

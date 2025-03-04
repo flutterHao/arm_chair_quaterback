@@ -80,7 +80,7 @@ class LowResourcesBottomsheet {
   }
 
   /// 显示弹窗成功为true，否则为false
-  static Future<bool> show(ResourceType resourceType) {
+  static show(ResourceType resourceType) {
     // String lastPressedDate = StorageService.to.getString('lastPressedDate');
     // String today = DateTime.now().toLocal().toString().split(' ')[0]; // 获取今天的日期，格式为"YYYY-MM-DD"
     // noshowToday.value = (lastPressedDate == today);
@@ -88,7 +88,7 @@ class LowResourcesBottomsheet {
     //   print('已开启今天不显示');
     //   return Future.value(false);
     // }
-    BottomTipDialog.showWithSound(
+    return BottomTipDialog.showWithSound(
         isScrollControlled: true,
         context: Get.context!,
         builder: (context) {
@@ -96,7 +96,9 @@ class LowResourcesBottomsheet {
               width: double.infinity,
               height: 466.w,
               decoration: BoxDecoration(
-                  color: AppColors.cFFFFFF, borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
+                  color: AppColors.cFFFFFF,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(9.w))),
               child: Column(children: [
                 _topWidget(),
                 _titleWidget(resourceType),
@@ -127,16 +129,20 @@ class LowResourcesBottomsheet {
         Text(
           'Sorry,you don’t have enough ',
           textAlign: TextAlign.center,
-          style: 14.w4(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
+          style: 14.w4(
+              color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
         ),
         1.hGap,
         Text(
           resourceType == ResourceType.coins ? 'COINS' : 'CASH',
-          style: 14.w7(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
+          style: 14.w7(
+              color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
         ),
         2.hGap,
         IconWidget(
-          icon: resourceType == ResourceType.coins ? Assets.commonUiCommonIconCurrency02 : Assets.commonUiCommonProp05,
+          icon: resourceType == ResourceType.coins
+              ? Assets.commonUiCommonIconCurrency02
+              : Assets.commonUiCommonProp05,
           iconWidth: 16.w,
         )
       ],
@@ -157,7 +163,10 @@ class LowResourcesBottomsheet {
         Text(
           'Low resources',
           textAlign: TextAlign.center,
-          style: 27.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fOswaldMedium),
+          style: 27.w5(
+              color: AppColors.c000000,
+              height: 1,
+              fontFamily: FontFamily.fOswaldMedium),
         ),
         4.vGap
       ],
@@ -183,7 +192,8 @@ class LowResourcesBottomsheet {
         ));
   }
 
-  static Widget _getResourcesWidget({required String icon, required String title, required Function onTap}) {
+  static Widget _getResourcesWidget(
+      {required String icon, required String title, required Function onTap}) {
     return MtInkWell(
         onTap: () {
           onTap.call();
@@ -254,7 +264,9 @@ class CustomCheckbox extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
         ),
         alignment: Alignment.center,
-        child: value ? Icon(Icons.check, size: size * 0.7, color: checkColor) : null,
+        child: value
+            ? Icon(Icons.check, size: size * 0.7, color: checkColor)
+            : null,
       ),
     );
   }

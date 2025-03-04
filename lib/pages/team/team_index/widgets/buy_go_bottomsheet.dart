@@ -3,10 +3,12 @@ import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,8 +22,9 @@ class BuyGoBottomsheet extends StatelessWidget {
     return Container(
       height: 466.w,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      decoration:
-          BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
+      decoration: BoxDecoration(
+          color: AppColors.cFFFFFF,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
       child: Column(
         children: [
           const DialogTopBtn(),
@@ -38,7 +41,8 @@ class BuyGoBottomsheet extends StatelessWidget {
           Container(
             height: 144.w,
             width: 144.w,
-            decoration: BoxDecoration(color: AppColors.cF2F2F2, shape: BoxShape.circle),
+            decoration:
+                BoxDecoration(color: AppColors.cF2F2F2, shape: BoxShape.circle),
             child: Column(
               children: [
                 Spacer(),
@@ -76,11 +80,22 @@ class BuyGoBottomsheet extends StatelessWidget {
           Container(
             height: 51.w,
             constraints: BoxConstraints(maxWidth: 343.w),
-            decoration: BoxDecoration(color: AppColors.c000000, borderRadius: BorderRadius.circular(9.w)),
+            decoration: BoxDecoration(
+                color: AppColors.c000000,
+                borderRadius: BorderRadius.circular(9.w)),
             child: MtInkWell(
               splashColor: Colors.transparent,
               onTap: () async {
-                TrainingController controller = Get.find<TrainingController>();
+                var propNum = controller.trainDefine.trainCoinNum[
+                    controller.trainingInfo.training.todayBuyCount];
+                if (propNum >
+                    HomeController.to.userEntiry.teamLoginInfo!
+                        .getCoin()
+                        .toInt()) {
+                  LowResourcesBottomsheet.show(ResourceType.coins);
+                  return;
+                }
+
                 Get.back();
                 await controller.buySlotCount();
                 Utils.saveNotTip("ball");
@@ -88,7 +103,10 @@ class BuyGoBottomsheet extends StatelessWidget {
               child: Center(
                 child: Text(
                   'BUY',
-                  style: 23.w5(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldMedium),
+                  style: 23.w5(
+                      color: AppColors.cF2F2F2,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
                 ),
               ),
             ),
@@ -98,13 +116,17 @@ class BuyGoBottomsheet extends StatelessWidget {
             height: 51.w,
             constraints: BoxConstraints(maxWidth: 343.w),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.w), border: Border.all(color: AppColors.c000000, width: 1.w)),
+                borderRadius: BorderRadius.circular(9.w),
+                border: Border.all(color: AppColors.c000000, width: 1.w)),
             child: MtInkWell(
               onTap: () => Get.back(),
               child: Center(
                 child: Text(
                   LangKey.gameButtonCancel.tr,
-                  style: 23.w5(color: AppColors.c000000, height: 1, fontFamily: FontFamily.fOswaldMedium),
+                  style: 23.w5(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
                 ),
               ),
             ),

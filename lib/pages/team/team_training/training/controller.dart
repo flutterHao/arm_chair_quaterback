@@ -15,13 +15,12 @@ import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
-import 'package:arm_chair_quaterback/pages/team/beauty_chat/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_gift/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/buy_go_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
@@ -1197,6 +1196,23 @@ class TrainingController extends GetxController
   }
 
   Future getSlotStarUpEventVO(int type) async {
+    var list = trainDefine.refreshPlayerCost.split("_");
+    int propId = int.tryParse(list[1]) ?? 103;
+    int propNum = int.tryParse(list[2]) ?? 20;
+    if (propId == 103) {
+      if (propNum >
+          HomeController.to.userEntiry.teamLoginInfo!.getCoin().toInt()) {
+        LowResourcesBottomsheet.show(ResourceType.coins);
+        return;
+      }
+    } else if (propId == 102) {
+      if (propNum >
+          HomeController.to.userEntiry.teamLoginInfo!.getMoney().toInt()) {
+        LowResourcesBottomsheet.show(ResourceType.cash);
+        return;
+      }
+    }
+
     TeamApi.getSlotStarUpEventVO(type: type).then((value) {
       starUpPlayerEntity = value;
       HomeController.to.updateMoney();

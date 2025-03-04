@@ -6,19 +6,19 @@
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/receive_award_dilaog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -222,18 +222,32 @@ class BattleBoxDialog extends StatelessWidget {
                 ),
               9.5.vGap,
               MtInkWell(
-                onTap: () {
+                onTap: () async {
                   if (item.status == 0 && isUnlock) {
                     controller.activeBattleBox(item.index);
                   } else if (item.status == 1) {
-                    controller.speedOpneBattleBox(
-                        context,
-                        item,
-                        CacheApi.cardPackDefineMap[item.cardId]
+                    ///消耗钱币大于我的拥有钱币时
+                    if ((CacheApi.cardPackDefineMap[item.cardId]
                                 ?.cardPackOpenNow ??
-                            0);
+                            0) >
+                        HomeController.to.userEntiry.teamLoginInfo!
+                            .getCoin()
+                            .toInt()) {
+                      Navigator.pop(context);
+                      LowResourcesBottomsheet.show(ResourceType.coins);
+                      return;
+                    } else {
+                      controller.speedOpneBattleBox(
+                          context,
+                          item,
+                          CacheApi.cardPackDefineMap[item.cardId]
+                                  ?.cardPackOpenNow ??
+                              0);
+                      Navigator.pop(context);
+                    }
+                  } else {
+                    Get.back();
                   }
-                  Navigator.pop(context);
                 },
                 child: Container(
                   height: 51.w,

@@ -8,9 +8,9 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -475,7 +475,11 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                   8.vGap,
                   MtInkWell(
                     onTap: () {
-                      controller.oneMore();
+                      controller.oneMore(CacheApi
+                              .cardPackDefineMap[
+                                  controller.currentCardPack.cardId]
+                              ?.cardPackOpenMore ??
+                          0);
                     },
                     child: Container(
                       width: 146.w,
