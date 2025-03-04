@@ -179,8 +179,8 @@ class Utils {
   static String getLongName(String key) {
     return CacheApi.pickType
             ?.firstWhere((e) => e.pickTypeName == key)
-            .pickTypeFullName ??
-        "";
+            .pickTypeFullName.tr ??
+        key;
   }
 
   static Color getChartColor(value) {

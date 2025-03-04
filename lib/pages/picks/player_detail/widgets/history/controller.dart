@@ -79,7 +79,7 @@ class HistoryController extends GetxController {
         data[season.toString()]!.loadStatus.value = LoadDataStatus.noData;
       } else {
         data[season.toString()]!.seasonHistoryItems = seasons
-            .map((e) => SeasonHistoryItems(e, Utils.getTeamInfo(e.awayTeamId),
+            .map((e) => SeasonHistoryItems(e, Utils.getTeamInfo(e.teamId==e.homeTeamId?e.awayTeamId:e.homeTeamId),
                 nbaPlayerSeasonEntity.playerRank))
             .toList();
         data[season.toString()]!.loadStatus.value = LoadDataStatus.success;

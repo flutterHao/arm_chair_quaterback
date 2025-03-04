@@ -203,8 +203,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                       fit: BoxFit.scaleDown,
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        // Utils.getLongName(player.tabStr),
-                                        LangKey.pickNameTotalPoints.tr,
+                                        Utils.getLongName(player.tabStr),
+                                        // LangKey.pickNameTotalPoints.tr,
                                         style: 19.w7(
                                           color: AppColors.c262626,
                                           fontFamily: FontFamily.fOswaldMedium,
