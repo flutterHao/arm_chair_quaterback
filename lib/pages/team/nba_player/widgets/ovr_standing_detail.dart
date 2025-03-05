@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -16,6 +17,7 @@ import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/ovr_filter_dialog.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,16 +42,24 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
     super.initState();
     lastPagePlayerId = Get.arguments;
     if (lastPagePlayerId != null) {
-      var scrollerIndex =
-          controller.allPlayerStrengthRank.indexWhere((element) => element.playerId == lastPagePlayerId);
+      var scrollerIndex = controller.allPlayerStrengthRank
+          .indexWhere((element) => element.playerId == lastPagePlayerId);
       if (scrollerIndex > 0) {
         double offset = scrollerIndex * (124.w + 1);
         int t = (offset * .2).ceil();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          scrollController.animateTo(offset, duration: Duration(milliseconds: t), curve: Curves.easeInOut);
+          scrollController.animateTo(offset,
+              duration: Duration(milliseconds: t), curve: Curves.easeInOut);
         });
       }
     }
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    controller.reset();
+    controller.allPlayerStrengthRank.value = controller.onfilter();
   }
 
   @override
@@ -62,31 +72,36 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
             ),
             bodyWidget: Expanded(
                 child: Padding(
-              padding: EdgeInsets.only(top: 10.w),
-              child: NestedScrollView(
-                  headerSliverBuilder: (context, iOSHorizontalOffset) {
-                    return [
-                      SliverPersistentHeader(
-                          pinned: true,
-                          delegate: FixedHeightSliverHeaderDelegate(child: _ovrTitleWidget(), height: 100.w)),
-                      SliverPersistentHeader(
-                          pinned: true,
-                          delegate: FixedHeightSliverHeaderDelegate(child: _ovrTabWidget(), height: 28.w)),
-                    ];
-                  },
-                  body: Container(
-                    color: Colors.white,
-                    child: ListView.separated(
-                      itemCount: controller.allPlayerStrengthRank.length,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      controller: scrollController,
-                      itemBuilder: (context, index) {
-                        return _playerItemWidget(index);
+                    padding: EdgeInsets.only(top: 10.w),
+                    child: NestedScrollView(
+                      headerSliverBuilder: (context, iOSHorizontalOffset) {
+                        return [
+                          SliverPersistentHeader(
+                              pinned: true,
+                              delegate: FixedHeightSliverHeaderDelegate(
+                                  child: _ovrTitleWidget(), height: 100.w)),
+                          SliverPersistentHeader(
+                              pinned: true,
+                              delegate: FixedHeightSliverHeaderDelegate(
+                                  child: _ovrTabWidget(), height: 28.w)),
+                        ];
                       },
-                      separatorBuilder: (context, index) => Divider(height: 1, color: AppColors.cE3E3E3),
-                    ),
-                  )),
-            )));
+                      body: Container(
+                          color: Colors.white,
+                          child: Obx(
+                            () => ListView.separated(
+                              itemCount:
+                                  controller.allPlayerStrengthRank.length,
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              controller: scrollController,
+                              itemBuilder: (context, index) {
+                                return _playerItemWidget(index);
+                              },
+                              separatorBuilder: (context, index) =>
+                                  Divider(height: 1, color: AppColors.cE3E3E3),
+                            ),
+                          )),
+                    ))));
       }),
     );
   }
@@ -109,9 +124,11 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                 ),
                 Spacer(),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
                   decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.cD1D1D1), borderRadius: BorderRadius.circular(8.w)),
+                      border: Border.all(color: AppColors.cD1D1D1),
+                      borderRadius: BorderRadius.circular(8.w)),
                   child: Row(
                     children: [
                       IconWidget(
@@ -131,7 +148,8 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
             ),
             Row(
               children: [
-                IconWidget(iconWidth: 13.w, icon: Assets.commonUiCommonCountdown02),
+                IconWidget(
+                    iconWidth: 13.w, icon: Assets.commonUiCommonCountdown02),
                 6.hGap,
                 Obx(() {
                   controller.gameStartTimesCountDown.value;
@@ -162,11 +180,22 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                 30.hGap,
                 // _tabItemWidget('collect'.toUpperCase(), 2),
                 Spacer(),
-                IconWidget(
-                  iconWidth: 16.w,
-                  icon: Assets.commonUiCommonIconManager,
-                  iconColor: AppColors.c000000,
-                )
+                MtInkWell(
+                    onTap: () {
+                      BottomTipDialog.showWithSound(
+                        isScrollControlled: true,
+                        context: Get.context!,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
+                          return const OVRFilterDialog();
+                        },
+                      );
+                    },
+                    child: IconWidget(
+                      iconWidth: 16.w,
+                      icon: Assets.commonUiCommonIconManager,
+                      iconColor: AppColors.c000000,
+                    ))
               ],
             ),
           )),
@@ -188,10 +217,10 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
               title,
               style: 12.w7(
                 fontFamily: FontFamily.fRobotoMedium,
-                color:
-                    controller.currentIndex.value != 2 * tabIndex && controller.currentIndex.value != (2 * tabIndex) + 1
-                        ? AppColors.c000000
-                        : AppColors.cFF5D54,
+                color: controller.currentIndex.value != 2 * tabIndex &&
+                        controller.currentIndex.value != (2 * tabIndex) + 1
+                    ? AppColors.c000000
+                    : AppColors.cFF5D54,
               ),
             ),
             6.hGap,
@@ -208,7 +237,9 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                     iconWidth: 5.w,
                     iconHeight: 10.w,
                     icon: Assets.commonUiCommonIconSystemArrow,
-                    iconColor: controller.currentIndex.value == (2 * tabIndex) ? AppColors.cFF5D54 : AppColors.cDBDBDB,
+                    iconColor: controller.currentIndex.value == (2 * tabIndex)
+                        ? AppColors.cFF5D54
+                        : AppColors.cDBDBDB,
                   ),
                 ),
                 Transform(
@@ -221,7 +252,9 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                       iconHeight: 10.w,
                       icon: Assets.commonUiCommonIconSystemArrow,
                       iconColor:
-                          controller.currentIndex.value == (2 * tabIndex) + 1 ? AppColors.cFF5D54 : AppColors.cDBDBDB),
+                          controller.currentIndex.value == (2 * tabIndex) + 1
+                              ? AppColors.cFF5D54
+                              : AppColors.cDBDBDB),
                 ),
                 Spacer(),
               ],
@@ -234,10 +267,12 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
 
   Widget _playerItemWidget(int index) {
     return Obx(() {
-      NbaPlayerInfosPlayerBaseInfoList player = Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId);
+      NbaPlayerInfosPlayerBaseInfoList player = Utils.getPlayBaseInfo(
+          controller.allPlayerStrengthRank[index].playerId);
       return MtInkWell(
         onTap: () async {
-          Get.toNamed(RouteNames.playerTrendPage, arguments: controller.allPlayerStrengthRank[index]);
+          Get.toNamed(RouteNames.playerTrendPage,
+              arguments: controller.allPlayerStrengthRank[index]);
         },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 16.w),
@@ -259,7 +294,8 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
   }
 
   Widget _playerInfoWidget(int index, NbaPlayerInfosPlayerBaseInfoList player) {
-    List<PlayerStrengthRankTrendList> item = controller.allPlayerStrengthRank[index].trendList;
+    List<PlayerStrengthRankTrendList> item =
+        controller.allPlayerStrengthRank[index].trendList;
 
     ///最后两天分数差值
     int differenceScore = item[0].playerScore - item[1].playerScore;
@@ -272,7 +308,10 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
           children: [
             Flexible(
                 child: Text(
-              Utils.getPlayBaseInfo(controller.allPlayerStrengthRank[index].playerId).ename.toUpperCase(),
+              Utils.getPlayBaseInfo(
+                      controller.allPlayerStrengthRank[index].playerId)
+                  .ename
+                  .toUpperCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
@@ -280,11 +319,15 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
             4.hGap,
             player.injuries
                 ? Container(
-                    decoration: BoxDecoration(color: AppColors.cFF5454, borderRadius: BorderRadius.circular(4.w)),
+                    decoration: BoxDecoration(
+                        color: AppColors.cFF5454,
+                        borderRadius: BorderRadius.circular(4.w)),
                     padding: EdgeInsets.symmetric(horizontal: 4.w),
                     child: Text(
                       'INJ',
-                      style: 12.w5(fontFamily: FontFamily.fRobotoRegular, color: Colors.white),
+                      style: 12.w5(
+                          fontFamily: FontFamily.fRobotoRegular,
+                          color: Colors.white),
                     ),
                   )
                 : SizedBox()
@@ -293,10 +336,14 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
         Text(
           ' ${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position}  SAL ${Utils.formatMoney(player.salary)}'
               .toUpperCase(),
-          style: 10.w5(fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
+          style: 10.w5(
+              fontFamily: FontFamily.fRobotoRegular, color: AppColors.c8A8A8A),
         ),
         6.vGap,
-        Expanded(child: _playerchartWidget(controller.allPlayerStrengthRank[index].trendList, differenceScore)),
+        Expanded(
+            child: _playerchartWidget(
+                controller.allPlayerStrengthRank[index].trendList,
+                differenceScore)),
         Row(
           children: [
             Text(
@@ -310,7 +357,9 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                 iconWidth: 5.w,
                 iconHeight: 8.w,
                 icon: Assets.commonUiCommonIconSystemArrow,
-                iconColor: differenceStrength >= 0 ? AppColors.c0FA76C : AppColors.cFF5D54,
+                iconColor: differenceStrength >= 0
+                    ? AppColors.c0FA76C
+                    : AppColors.cFF5D54,
               ),
             ),
             4.hGap,
@@ -324,8 +373,10 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
     ));
   }
 
-  Widget _playerOvrRightWidget(int index, NbaPlayerInfosPlayerBaseInfoList player) {
-    List<PlayerStrengthRankTrendList> item = controller.allPlayerStrengthRank[index].trendList;
+  Widget _playerOvrRightWidget(
+      int index, NbaPlayerInfosPlayerBaseInfoList player) {
+    List<PlayerStrengthRankTrendList> item =
+        controller.allPlayerStrengthRank[index].trendList;
     int differenceScore = item[0].playerScore - item[1].playerScore;
     return SizedBox(
       width: 82.w,
@@ -335,13 +386,16 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
             children: [
               Spacer(),
               MtInkWell(
-                onTap: () => controller.changeLikePlayer(controller.allPlayerStrengthRank[index].playerId),
+                onTap: () => controller.changeLikePlayer(
+                    controller.allPlayerStrengthRank[index].playerId),
                 child: Obx(() => IconWidget(
                     iconWidth: 16.w,
-                    iconColor: controller.likePlayersList.contains(controller.allPlayerStrengthRank[index].playerId)
+                    iconColor: controller.likePlayersList.contains(
+                            controller.allPlayerStrengthRank[index].playerId)
                         ? Colors.yellow
                         : AppColors.c8A8A8A,
-                    icon: controller.likePlayersList.contains(controller.allPlayerStrengthRank[index].playerId)
+                    icon: controller.likePlayersList.contains(
+                            controller.allPlayerStrengthRank[index].playerId)
                         ? Assets.commonUiCommonStatusBarStar02
                         : Assets.commonUiCommonStatusBarStar01)),
               )
@@ -356,16 +410,22 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                   width: 55.w,
                   decoration: BoxDecoration(
                       color: AppColors.c333333,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(6.w), bottomLeft: Radius.circular(6.w))),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(6.w),
+                          bottomLeft: Radius.circular(6.w))),
                   child: Column(
                     children: [
                       Text(
                         '${player.playerScore}',
-                        style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
+                        style: 19.w5(
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fOswaldBold),
                       ),
                       Text(
                         'OVR',
-                        style: 12.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldRegular),
+                        style: 12.w5(
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fOswaldRegular),
                       ),
                       2.vGap
                     ],
@@ -375,18 +435,28 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                 Container(
                   width: 24.w,
                   decoration: BoxDecoration(
-                      color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
-                      borderRadius:
-                          BorderRadius.only(bottomRight: Radius.circular(6.w), topRight: Radius.circular(6.w))),
+                      color: differenceScore >= 0
+                          ? AppColors.c0FA76C
+                          : AppColors.cE34D4D,
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(6.w),
+                          topRight: Radius.circular(6.w))),
                   child: Column(
                     children: [
                       Text(
                         '${differenceScore.abs()}',
-                        style: 19.w5(color: AppColors.cFFFFFF, fontFamily: FontFamily.fOswaldBold),
+                        style: 19.w5(
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fOswaldBold),
                       ),
                       Transform.rotate(
-                        angle: differenceScore >= 0 ? -pi / 180 * 90 : pi / 180 * 90,
-                        child: IconWidget(iconWidth: 8.w, iconHeight: 12.w, icon: Assets.commonUiCommonIconSystemArrow),
+                        angle: differenceScore >= 0
+                            ? -pi / 180 * 90
+                            : pi / 180 * 90,
+                        child: IconWidget(
+                            iconWidth: 8.w,
+                            iconHeight: 12.w,
+                            icon: Assets.commonUiCommonIconSystemArrow),
                       )
                     ],
                   ),
@@ -423,7 +493,8 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                         iconWidth: 30.w,
                         icon: Assets.commonUiManagerIconMedal03,
                       )
-                    : Text("${index + 1}", style: 19.w5(fontFamily: FontFamily.fOswaldMedium)));
+                    : Text("${index + 1}",
+                        style: 19.w5(fontFamily: FontFamily.fOswaldMedium)));
   }
 
   Widget _playerCardWidget(NbaPlayerInfosPlayerBaseInfoList player) {
@@ -453,7 +524,9 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
             child: Container(
               height: 16.w,
               width: 16.w,
-              decoration: BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(4.w)),
+              decoration: BoxDecoration(
+                  color: AppColors.cFFFFFF,
+                  borderRadius: BorderRadius.circular(4.w)),
               child: IconWidget(
                 iconWidth: 9.w,
                 icon: Assets.iconUiIconRead,
@@ -464,7 +537,8 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
     );
   }
 
-  Widget _playerchartWidget(List<PlayerStrengthRankTrendList> item, int differenceScore) {
+  Widget _playerchartWidget(
+      List<PlayerStrengthRankTrendList> item, int differenceScore) {
     List<int> scores = item.map((element) => element.playerScore).toList();
     // 获取最大值
     int maxScore = scores.reduce(max);
@@ -473,7 +547,8 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
       if (index == 0) {
         FlSpot(index.toDouble(), horizontalInterval);
       }
-      return FlSpot(index.toDouble(), item[item.length - index - 1].playerScore.toDouble());
+      return FlSpot(index.toDouble(),
+          item[item.length - index - 1].playerScore.toDouble());
     });
     return Stack(
       children: [
@@ -491,7 +566,9 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                 lineBarsData: [
                   LineChartBarData(
                       spots: data,
-                      color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                      color: differenceScore >= 0
+                          ? AppColors.c0FA76C
+                          : AppColors.cE34D4D,
                       dotData: FlDotData(
                         show: true,
                         getDotPainter: (spot, percent, barData, index) {
@@ -499,7 +576,9 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                           if (index == data.length - 1) {
                             return FlDotCirclePainter(
                                 radius: 1.6,
-                                color: differenceScore >= 0 ? AppColors.c0FA76C : AppColors.cE34D4D,
+                                color: differenceScore >= 0
+                                    ? AppColors.c0FA76C
+                                    : AppColors.cE34D4D,
                                 strokeColor: Colors.white,
                                 strokeWidth: 1.6);
                           } else {
@@ -513,14 +592,23 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                           show: true,
                           gradient: LinearGradient(
                               colors: differenceScore >= 0
-                                  ? [AppColors.c0FA76C.withOpacity(0.3), AppColors.c0FA76C.withOpacity(0.1)]
-                                  : [AppColors.cE34D4D.withOpacity(0.3), AppColors.cE34D4D.withOpacity(0.1)])))
+                                  ? [
+                                      AppColors.c0FA76C.withOpacity(0.3),
+                                      AppColors.c0FA76C.withOpacity(0.1)
+                                    ]
+                                  : [
+                                      AppColors.cE34D4D.withOpacity(0.3),
+                                      AppColors.cE34D4D.withOpacity(0.1)
+                                    ])))
                 ],
                 gridData: FlGridData(
                     show: true,
                     drawHorizontalLine: true,
                     getDrawingHorizontalLine: (value) {
-                      return const FlLine(color: AppColors.cB3B3B3, strokeWidth: 1, dashArray: [4, 2]);
+                      return const FlLine(
+                          color: AppColors.cB3B3B3,
+                          strokeWidth: 1,
+                          dashArray: [4, 2]);
                     },
                     horizontalInterval: horizontalInterval,
                     checkToShowHorizontalLine: (value) {
