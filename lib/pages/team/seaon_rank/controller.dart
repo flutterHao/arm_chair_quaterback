@@ -103,7 +103,8 @@ class SeaonRankController extends GetxController {
     await CacheApi.getGameConstant();
     showNumGameConstantEntity = Utils.getGameConstant(10018);
     SeasonRankInfoEntity seasonRankInfoEntity =
-        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId, pageSize: showNumGameConstantEntity!.constantValue.toString());
+        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId,
+            pageSize: showNumGameConstantEntity!.constantValue.round());
     nowSeasonRankInfoEntity = seasonRankInfoEntity.obs;
     seasonEndTime = nowSeasonEntity.seasonEndTime;
     seasonRankList.add(seasonRankInfoEntity);
@@ -226,7 +227,8 @@ class SeaonRankController extends GetxController {
 
   /// 获取日期格式 July 01
   String getEnMMDD(int time) {
-    return MyDateUtils.getEnMMDD(DateTime.fromMillisecondsSinceEpoch(time), short: true);
+    return MyDateUtils.getEnMMDD(DateTime.fromMillisecondsSinceEpoch(time),
+        short: true);
   }
 
   /// 下一页
@@ -240,9 +242,10 @@ class SeaonRankController extends GetxController {
         pageController.jumpToPage(pageviewIndex.value);
       } else {
         rankDialogloadingStatus.value = LoadDataStatus.loading;
-        SeasonRankInfoEntity seasonRankInfoEntity = await PicksApi.getSeasonRankInfo(
-            seasonRankList[pageviewIndex.value].nextRank!.seasonId,
-            pageSize: showNumGameConstantEntity!.constantValue.toString());
+        SeasonRankInfoEntity seasonRankInfoEntity =
+            await PicksApi.getSeasonRankInfo(
+                seasonRankList[pageviewIndex.value].nextRank!.seasonId,
+                pageSize: showNumGameConstantEntity!.constantValue.round());
         await Future.delayed(const Duration(milliseconds: 500));
         seasonRankList.add(seasonRankInfoEntity);
         rankDialogloadingStatus.value = LoadDataStatus.success;
@@ -263,9 +266,10 @@ class SeaonRankController extends GetxController {
         pageController.jumpToPage(pageviewIndex.value);
       } else {
         rankDialogloadingStatus.value = LoadDataStatus.loading;
-        SeasonRankInfoEntity seasonRankInfoEntity = await PicksApi.getSeasonRankInfo(
-            seasonRankList[pageviewIndex.value].lastRank!.seasonId,
-            pageSize: showNumGameConstantEntity!.constantValue.toString());
+        SeasonRankInfoEntity seasonRankInfoEntity =
+            await PicksApi.getSeasonRankInfo(
+                seasonRankList[pageviewIndex.value].lastRank!.seasonId,
+                pageSize: showNumGameConstantEntity!.constantValue.round());
 
         seasonRankList.insert(0, seasonRankInfoEntity);
         rankDialogloadingStatus.value = LoadDataStatus.success;
@@ -280,13 +284,16 @@ class SeaonRankController extends GetxController {
   void receiveReward(int cupRankId) async {
     await PicksApi.getSeasonRankAward(cupRankId);
     teamSimpleEntity.value = await PicksApi.getTeamSimple(teamId);
-    nowSeasonRankInfoEntity.value =
-        await PicksApi.getSeasonRankInfo(nowSeasonEntity.seasonId, pageSize: showNumGameConstantEntity!.constantValue.toString());
+    nowSeasonRankInfoEntity.value = await PicksApi.getSeasonRankInfo(
+        nowSeasonEntity.seasonId,
+        pageSize: showNumGameConstantEntity!.constantValue.round());
     update();
     showTopToastDialog(
         needBg: false,
         child: Container(
             margin: EdgeInsets.only(top: 44.w),
-            child: AwardWidget(image: Assets.managerUiManagerGift00, text: "YOU GOT 3  treasure chest".toUpperCase())));
+            child: AwardWidget(
+                image: Assets.managerUiManagerGift00,
+                text: "YOU GOT 3  treasure chest".toUpperCase())));
   }
 }
