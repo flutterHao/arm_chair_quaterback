@@ -24,7 +24,6 @@ class InboxController extends GetxController {
   RefreshController refreshController = RefreshController();
   _initData() {
     getMessageList();
-    getStorageDoNotDisturb();
   }
 
   @override
@@ -98,9 +97,9 @@ class InboxController extends GetxController {
   ];
   List<InboxEmailEntity> mailVOList = [];
   getMessageList() async {
+    getStorageData();
     var resMessageList = await CacheApi.getInboxMessageList();
     mailVOList = await InboxApi.getMailVOList();
-
     messageList.value = resMessageList.where((element) {
       var typeIndex = mailTypelist.indexWhere((e) => e['id'] == element.id);
       if (typeIndex != -1) {
@@ -120,14 +119,24 @@ class InboxController extends GetxController {
       }
       return false;
     }).toList();
+    messageList.sort((a, b) => b.time.compareTo(a.time));
+    messageList.sort((a, b) {
+      print(topChatList.contains(a.id));
+      if (topChatList.contains(a.id) == topChatList.contains(b.id)) return 0;
+      return topChatList.contains(a.id) ? -1 : 1;
+    });
     loadDataSuccess = true;
     update(["inboxList"]);
   }
 
-  /// 获取存储免打扰
-  void getStorageDoNotDisturb() {
+  /// 获取存储免打扰和置顶
+  void getStorageData() {
     doNotDisturb = StorageService.to
         .getList('locatDoNotDisturb')
+        .map((e) => int.parse(e))
+        .toList();
+    topChatList = StorageService.to
+        .getList('locatTopChatList')
         .map((e) => int.parse(e))
         .toList();
   }
@@ -147,6 +156,7 @@ class InboxController extends GetxController {
     update(["inboxList"]);
   }
 
+  ///删除email
   void deteleMail(InboxMessageEntity item) async {
     messageList.remove(item);
     update(["inboxList"]);
@@ -158,5 +168,20 @@ class InboxController extends GetxController {
         .map((item) => item.mailId.toString())
         .join('|');
     await InboxApi.deleteMail(mailIds);
+  }
+
+  ///置顶
+  List<int> topChatList = [];
+  void itemTopChat(InboxMessageEntity item) async {
+    if (topChatList.contains(item.id)) {
+      //取消免打扰
+      topChatList.remove(item.id);
+    } else {
+      //设置免打扰
+      topChatList.add(item.id);
+    }
+    StorageService.to.setList('locatTopChatList',
+        topChatList.map((element) => element.toString()).toList());
+    update(["inboxList"]);
   }
 }

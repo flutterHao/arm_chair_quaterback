@@ -4,12 +4,14 @@ import 'package:arm_chair_quaterback/common/net/apis/inbox.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/inbox/inbox_email/widget/email_rank_award.dart';
+import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -25,7 +27,9 @@ class InboxEmailPage extends GetView<InboxEmailController> {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Obx(() {
           if (controller.loadingStatus.value != LoadDataStatus.success) {
-            return Center(child: LoadStatusWidget(loadDataStatus: controller.loadingStatus.value));
+            return Center(
+                child: LoadStatusWidget(
+                    loadDataStatus: controller.loadingStatus.value));
           }
           return ListView.separated(
             itemCount: controller.emailList.length,
@@ -57,9 +61,13 @@ class InboxEmailPage extends GetView<InboxEmailController> {
           AppBarWidget(
             title: controller.inboxMessageEntity.userName,
             right: MtInkWell(
-                // onTap: () => BottomTipDialog.showWithSound(
-                //     isScrollControlled: true, context: context, builder: (context) => InboxSettingDialog()),
-                child: IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore)),
+                onTap: () => BottomTipDialog.showWithSound(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) => InboxSettingDialog(
+                        inboxMessageEntity: controller.inboxMessageEntity)),
+                child:
+                    IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore)),
           ),
           bodyWidget: Expanded(child: _buildView()),
         ));
