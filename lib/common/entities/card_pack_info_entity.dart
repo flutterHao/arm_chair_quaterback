@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 17:54:17
- * @LastEditTime: 2025-01-23 12:26:54
+ * @LastEditTime: 2025-03-05 18:17:40
  */
 /*
  * @Description: 
@@ -66,6 +66,8 @@ class CardPackInfoCard {
   List<int> players = [];
   @JSONField(deserialize: false, serialize: false)
   List<PlayerCardEntity> playerCards = [];
+  @JSONField(deserialize: false, serialize: false)
+  bool isSimple = false;
 
   CardPackInfoCard({this.status = 0, this.position = 1});
 

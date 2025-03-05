@@ -50,6 +50,19 @@ GirlDialogueDefineEntity $GirlDialogueDefineEntityFromJson(
   if (context != null) {
     girlDialogueDefineEntity.context = context;
   }
+  final int? myStoryId = jsonConvert.convert<int>(json['storyId']);
+  if (myStoryId != null) {
+    girlDialogueDefineEntity.myStoryId = myStoryId;
+  }
+  final int? messageDefineId = jsonConvert.convert<int>(
+      json['messageDefineId']);
+  if (messageDefineId != null) {
+    girlDialogueDefineEntity.messageDefineId = messageDefineId;
+  }
+  final String? award = jsonConvert.convert<String>(json['award']);
+  if (award != null) {
+    girlDialogueDefineEntity.award = award;
+  }
   return girlDialogueDefineEntity;
 }
 
@@ -67,6 +80,9 @@ Map<String, dynamic> $GirlDialogueDefineEntityToJson(
   data['type'] = entity.type;
   data['updateTime'] = entity.updateTime;
   data['context'] = entity.context;
+  data['storyId'] = entity.myStoryId;
+  data['messageDefineId'] = entity.messageDefineId;
+  data['award'] = entity.award;
   return data;
 }
 
@@ -83,6 +99,9 @@ extension GirlDialogueDefineEntityExtension on GirlDialogueDefineEntity {
     int? type,
     int? updateTime,
     String? context,
+    int? myStoryId,
+    int? messageDefineId,
+    String? award,
   }) {
     return GirlDialogueDefineEntity()
       ..choices = choices ?? this.choices
@@ -95,6 +114,9 @@ extension GirlDialogueDefineEntityExtension on GirlDialogueDefineEntity {
       ..textType = textType ?? this.textType
       ..type = type ?? this.type
       ..updateTime = updateTime ?? this.updateTime
-      ..context = context ?? this.context;
+      ..context = context ?? this.context
+      ..myStoryId = myStoryId ?? this.myStoryId
+      ..messageDefineId = messageDefineId ?? this.messageDefineId
+      ..award = award ?? this.award;
   }
 }

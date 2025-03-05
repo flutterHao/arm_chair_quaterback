@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-26 18:22:37
- * @LastEditTime: 2025-02-26 18:36:15
+ * @LastEditTime: 2025-03-03 15:23:53
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/girls_define_entity.g.dart';

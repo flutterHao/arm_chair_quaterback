@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-02-28 12:07:56
+ * @LastEditTime: 2025-03-04 15:29:59
  */
 import 'dart:math';
 
@@ -405,7 +405,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "${ctrl.trainDefine.ballRecoverNum} balls ready in ",
+                            "${ctrl.trainDefine.ballRecoverNum} Go ready in ",
                             style: 12.w4(
                                 height: 1,
                                 fontFamily: FontFamily.fRobotoRegular,

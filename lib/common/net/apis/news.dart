@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2025-01-07 14:55:25
+ * @LastEditTime: 2025-03-05 09:58:17
  */
+import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -127,10 +128,10 @@ class NewsApi {
     return Future.wait(details);
   }
 
-  static Future<List<NewsListDetail>> getPlayerNews(int playerId,int page,
+  static Future<List<NewsListDetail>> getPlayerNews(int playerId, int page,
       {int limit = 10}) async {
-    List list = await HttpUtil()
-        .post(Api.getPlayerNews, data: {"playerId":playerId,"page": page, "limit": limit});
+    List list = await HttpUtil().post(Api.getPlayerNews,
+        data: {"playerId": playerId, "page": page, "limit": limit});
     var details = list.map((e) async {
       var item = NewsListDetail.fromJson(e);
       getImageWith(item);
@@ -194,5 +195,16 @@ class NewsApi {
   /// 分享新闻
   static Future shareNews() async {
     await httpUtil.post(Api.shareNews);
+  }
+
+  static Future<Map<String, List<GuessGameInfoEntity>>> getNewsGuessInfo(
+      int newsId) async {
+    Map<String, dynamic> json =
+        await HttpUtil().post(Api.getNewsGuessInfo, data: {"newsId": newsId});
+    Map<String, List<GuessGameInfoEntity>> result = json.map((k, v) {
+      return MapEntry(
+          k, (v as List).map((e) => GuessGameInfoEntity.fromJson(e)).toList());
+    });
+    return result;
   }
 }

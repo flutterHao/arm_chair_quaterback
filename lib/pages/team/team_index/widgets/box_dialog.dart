@@ -225,6 +225,7 @@ class BattleBoxDialog extends StatelessWidget {
                 onTap: () async {
                   if (item.status == 0 && isUnlock) {
                     controller.activeBattleBox(item.index);
+                    Get.back();
                   } else if (item.status == 1) {
                     ///消耗钱币大于我的拥有钱币时
                     if ((CacheApi.cardPackDefineMap[item.cardId]

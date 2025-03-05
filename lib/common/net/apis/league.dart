@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2025-01-16 15:20:53
+ * @LastEditTime: 2025-03-04 21:00:17
+ */
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/league_detail_picks_entity.dart';

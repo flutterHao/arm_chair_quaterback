@@ -2,7 +2,7 @@
  * @Description: TrainingNewWidget
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-28 11:06:40
+ * @LastEditTime: 2025-03-04 19:25:55
  */
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -23,7 +23,8 @@ class TeamIndexPage extends StatefulWidget {
   State<TeamIndexPage> createState() => _TeamIndexPageState();
 }
 
-class _TeamIndexPageState extends State<TeamIndexPage> with AutomaticKeepAliveClientMixin {
+class _TeamIndexPageState extends State<TeamIndexPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -66,7 +67,7 @@ class _TeamView extends GetView<TeamIndexController> {
               children: [
                 TrainingNewWidget(),
                 BattleBoxWidget(),
-                MatchCard(),
+                // MatchCard(),
                 // TrainingPage(),
                 NbaPlayerPage(),
                 MyTeamWidget(),

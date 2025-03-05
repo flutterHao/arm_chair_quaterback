@@ -2,15 +2,17 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 16:54:10
- * @LastEditTime: 2025-01-02 20:02:15
+ * @LastEditTime: 2025-03-04 20:24:38
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,8 +31,11 @@ class TeamRankPage extends GetView<RankController> {
         builder: (_) {
           if (controller.confRankList.isEmpty &&
               controller.divRankList.isEmpty) {
-            return Container();
+            return const Center(
+              child: LoadStatusWidget(loadDataStatus: LoadDataStatus.noData),
+            );
           }
+
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Container(

@@ -2,11 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-02-07 20:16:53
+ * @LastEditTime: 2025-03-05 11:50:04
  */
 import 'dart:async';
+import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -15,8 +18,10 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -42,6 +47,7 @@ class NewListController extends GetxController {
 
   bool loadDataSuccess = false;
   late StreamSubscription<int> subscription;
+  List<PicksPlayerV2> pickPlayerList = [];
 
   @override
   void onInit() {
@@ -103,6 +109,8 @@ class NewListController extends GetxController {
   void pageToDetail(NewsListDetail item, {Function? callBack}) async {
     state.detailList.clear();
     state.detailList.add(item);
+    pickPlayerList.clear();
+    getNewsGuessInfo(item.id);
 
     ///获取评论
     final comCtrl = Get.put(CommentController(), tag: item.id.toString());
@@ -192,9 +200,9 @@ class NewListController extends GetxController {
     //     text: newsDetail.content, subject: newsDetail.title);
   }
 
-  void scrollToTop(){
+  void scrollToTop() {
     try {
-      if(scrollController.offset == 0){
+      if (scrollController.offset == 0) {
         return;
       }
       scrollController.animateTo(
@@ -202,8 +210,58 @@ class NewListController extends GetxController {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-    }catch(e){
+    } catch (e) {
       print('NewListController--scrollToTop--error--: $e');
     }
+  }
+
+  void getNewsGuessInfo(int newsId) async {
+    NewsApi.getNewsGuessInfo(newsId).then((guessInfoMap) {
+      var choiceGuessPlayers =
+          Get.find<PicksIndexController>().guessGamePlayers;
+      pickPlayerList.clear();
+      for (int i = 0; i < guessInfoMap.keys.length; i++) {
+        List<PicksPlayerV2> data = [];
+        var key = guessInfoMap.keys.toList()[i];
+        var list = guessInfoMap[key] ?? [];
+        for (int i1 = 0; i1 < list.length; i1++) {
+          GuessGameInfoEntity item = list[i1];
+          PicksPlayerV2? p;
+          choiceGuessPlayers.forEach((k, e) {
+            var firstWhereOrNull = e.firstWhereOrNull((e) =>
+                e.tabStr == key && e.guessInfo.playerId == item.playerId);
+            if (firstWhereOrNull != null) {
+              p = firstWhereOrNull;
+            }
+          });
+          if (p != null) {
+            data.add(p!);
+            continue;
+          }
+          PicksPlayerV2 playerV2 = PicksPlayerV2();
+          playerV2.tabStr = key;
+          playerV2.baseInfoList = Utils.getPlayBaseInfo(item.playerId);
+          playerV2.dataAvgList = Utils.getPlayerDataAvg(item.playerId);
+          playerV2.awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
+          playerV2.guessInfo = item;
+          data.add(playerV2);
+        }
+
+        //排序：赛季平均得分
+        data.sort((a, b) {
+          return b.dataAvgList!.pts.compareTo(a.dataAvgList!.pts);
+        });
+
+        //排序：选过的放后面
+        // item.sort((a, b) {
+        //   if (a.guessInfo.guessData.isNotEmpty) return 1;
+        //   if (b.guessInfo.guessData.isNotEmpty) return -1;
+        //   return 0;
+        // });
+        // playerV2[key] = data;
+        pickPlayerList.addAll(data);
+      }
+      update(["newsDetail"]);
+    });
   }
 }

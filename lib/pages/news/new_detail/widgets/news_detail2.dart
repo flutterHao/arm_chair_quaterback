@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-16 21:38:30
+ * @LastEditTime: 2025-03-05 14:36:11
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -34,43 +35,46 @@ class _NewsDetailPage2State extends State<NewsDetailPage2> {
   @override
   Widget build(BuildContext context) {
     return HorizontalDragBackContainer(
-      child: GetBuilder<NewListController>(
-          id: "newsDetail",
-          builder: (_) {
-            return BlackAppWidget(
-                // backgroundColor: AppColors.c002B5C,
-                backgroundColor: AppColors.cFFFFFF,
-                const UserInfoBar(showPop: true),
-                bodyWidget: Expanded(
-                  child: GestureDetector(
-                    onTap: () => FocusScope.of(context).unfocus(),
-                    child: KeyedSubtree(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          children: [
-                            NewsDetailItem(
-                              item: widget.newsDetail,
-                              showComments: true,
-                            ),
-                            100.vGap,
-                          ],
-                        ),
+      child: BlackAppWidget(
+          // backgroundColor: AppColors.c002B5C,
+          backgroundColor: AppColors.cFFFFFF,
+          const UserInfoBar(showPop: true),
+          bodyWidget: Expanded(
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight:
+                        MediaQuery.of(context).size.height, // 设置最小高度为屏幕高度
+                  ),
+                  child: Column(
+                    children: [
+                      NewsDetailItem(
+                        item: widget.newsDetail,
+                        showComments: true,
                       ),
-                    ),
+                      100.vGap,
+                    ],
                   ),
                 ),
-                floatWidgets: [
-                  Obx(() {
-                    return AnimatedPositioned(
-                        duration: const Duration(milliseconds: 300),
-                        bottom: showCommentDialog.value ? 0 : -80.w,
-                        left: 0,
-                        right: 0,
-                        child: SendCommentWidget(detail: widget.newsDetail));
-                  })
-                ]);
-          }),
+              ),
+            ),
+          ),
+          floatWidgets: [
+            Obx(() {
+              return AnimatedPositioned(
+                  duration: const Duration(milliseconds: 300),
+                  bottom: showCommentDialog.value ? 0 : -80.w,
+                  left: 0,
+                  right: 0,
+                  child: SendCommentWidget(detail: widget.newsDetail));
+            }),
+            BottomGuessTipWidget(
+              bottomValue: 9.w,
+            ),
+          ]),
     );
   }
 }

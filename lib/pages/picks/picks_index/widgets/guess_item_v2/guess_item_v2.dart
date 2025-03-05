@@ -36,7 +36,8 @@ class GuessItemV2 extends StatefulWidget {
       required this.index,
       this.mainRoute = false,
       this.isInScoreDetail = false,
-      this.isInPlayerDetail = false})
+      this.isInPlayerDetail = false,
+      this.margin})
       : assert(!isInPlayerDetail || (isInPlayerDetail && isInScoreDetail),
             "if 'isInPlayerDetail' true,'isInScoreDetail' must be true");
 
@@ -45,6 +46,7 @@ class GuessItemV2 extends StatefulWidget {
   final bool mainRoute;
   final bool isInScoreDetail;
   final bool isInPlayerDetail;
+  final EdgeInsets? margin;
 
   @override
   State<GuessItemV2> createState() => _GuessItemV2State();
@@ -524,6 +526,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
+                      11.hGap,
                     ],
                   ),
                 ],
@@ -535,7 +538,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     }
     return Container(
       height: 150.w,
-      margin: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 9.w),
+      margin: widget.margin ??
+          EdgeInsets.only(left: 15.w, right: 15.w, bottom: 9.w),
       decoration: BoxDecoration(
         color: AppColors.cFFFFFF,
         border: Border.all(

@@ -91,6 +91,7 @@ class CacheApi {
   static Map<int, HelpEntity> helpMap = {};
   static List<GirlsDefineEntity> girlsDefineList = [];
   static List<GirlDialogueDefineEntity> girlChatList = [];
+  static Map<int, GirlDialogueDefineEntity> girlDefineMap = {};
 
   static Future<void> init() async {
     await Future.wait([
@@ -436,12 +437,14 @@ class CacheApi {
   }
 
   static Future<List<GirlDialogueDefineEntity>> getGirlsChat() async {
-    if (girlChatList.isNotEmpty) {
+    if (girlChatList.isNotEmpty && girlDefineMap.isNotEmpty) {
       return girlChatList;
     }
     List list = await HttpUtil().post(Api.cGirlChat);
-    return girlChatList =
+    var result = girlChatList =
         list.map((item) => GirlDialogueDefineEntity.fromJson(item)).toList();
+    girlDefineMap = {for (var item in girlChatList) item.id: item};
+    return result;
   }
 
   /// 获取礼物表

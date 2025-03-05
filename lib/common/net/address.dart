@@ -2,17 +2,16 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-09-12 21:40:32
- * @LastEditTime: 2025-02-19 10:45:53
+ * @LastEditTime: 2025-03-05 16:07:16
  */
 import 'package:flutter/foundation.dart';
 
 class Address {
-
   ///后台开发内网本机测试地址(-->应威)
   static const String personalDevUrl = 'http://192.168.12.46:9001';
 
   ///后台开发内网本机测试地址(-->余溪)
-  static const String personalDevUrl2 = 'http://192.168.12.74:9001';
+  // static const String personalDevUrl2 = 'http://192.168.12.74:9001';
 
   ///后台开发内网本机测试地址(-->胡川)
   static const String personalDevUrl3 = 'http://192.168.12.227:9001';
@@ -27,7 +26,8 @@ class Address {
   ///内网测试地址
   static const String privateDevUrl = 'http://10.0.3.38:7007';
 
-  static const String httpBaseUrl = kIsWeb && kProfileMode?privateDevUrl:publicDevUrl;
+  static const String httpBaseUrl =
+      kIsWeb && kProfileMode ? privateDevUrl : publicDevUrl;
 
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 
@@ -46,7 +46,8 @@ class Address {
   static const String wsPubDevUrl = 'ws://47.88.19.59:9003';
   static const String wsPrivateDevUrl = 'ws://10.0.3.38:9005';
 
-  static const String wsBaseUrl = kIsWeb && kProfileMode?wsPrivateDevUrl:wsPublicDevUrl;
+  static const String wsBaseUrl =
+      kIsWeb && kProfileMode ? wsPrivateDevUrl : wsPublicDevUrl;
 
   static const String imgBaseUrl =
       "https://seaball-1324211645.cos.ap-guangzhou.myqcloud.com/";

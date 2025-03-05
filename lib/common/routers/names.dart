@@ -50,6 +50,8 @@ class RouteNames {
   static const teamHistory = "/teamHistory";
   static const ovrStandingDetailPage = '/ovrStandingDetailPage';
   static const playerTrendPage = '/playerTrendPage';
+  static const beautyChatDtl = "/beauty_chat_detail";
+  static const beautyInfo = "/beauty_info";
   //mine
   static const mineMineAccount = '/mine_mine_account';
   static const mineMineInfo = '/mine_mine_info';

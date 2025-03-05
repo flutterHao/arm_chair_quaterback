@@ -5,9 +5,6 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_power_rate_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';

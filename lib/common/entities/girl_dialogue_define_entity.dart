@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-27 16:30:28
- * @LastEditTime: 2025-02-28 17:05:21
+ * @LastEditTime: 2025-03-03 17:44:56
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/girl_dialogue_define_entity.g.dart';
@@ -23,6 +23,10 @@ class GirlDialogueDefineEntity {
   late int type = 2;
   late int updateTime = 0;
   late String context = "";
+  @JSONField(name: 'storyId')
+  late int myStoryId = 1;
+  late int messageDefineId = 101001;
+  late String award = "1_103_4";
 
   GirlDialogueDefineEntity();
 

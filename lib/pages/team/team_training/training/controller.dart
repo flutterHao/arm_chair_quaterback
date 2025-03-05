@@ -768,6 +768,7 @@ class TrainingController extends GetxController
         showProp.value = false;
         taskValue.value = 0;
         await Future.delayed(const Duration(milliseconds: 300));
+        // update(["training_page"]);
       }
 
       //更新道具
@@ -779,24 +780,15 @@ class TrainingController extends GetxController
       int cashs = 0;
       if (trainingInfo.training.currentTaskId > currentLevel) {
         await Future.delayed(const Duration(milliseconds: 300));
-
         var item =
             trainTaskList.where((e) => e.taskLevel == currentLevel).first;
         cashs = item.propNum;
         await showCashAward(1, cashs);
         currentLevel = trainingInfo.training.currentTaskId;
         Get.back();
+        update(["training_page"]);
+
         // HomeController.to.updateMoney();
-      }
-      //护盾
-      if (awardLength == 6) {
-        showShield.value = true;
-        await showAwardDialog();
-        showScaleShield.value = 1.5;
-        await Future.delayed(const Duration(milliseconds: 200));
-        showScaleShield.value = 1;
-        showShield.value = false;
-        shieldCount.value = trainingInfo.training.shieldCount;
       }
     }
 
@@ -810,6 +802,16 @@ class TrainingController extends GetxController
       //   await Future.delayed(const Duration(milliseconds: 200));
       //   ballNum.value = trainingInfo.prop.num;
       // });
+      //护盾
+      if (awardLength == 6) {
+        showShield.value = true;
+        await showAwardDialog();
+        showScaleShield.value = 1.5;
+        await Future.delayed(const Duration(milliseconds: 200));
+        showScaleShield.value = 1;
+        showShield.value = false;
+        shieldCount.value = trainingInfo.training.shieldCount;
+      }
     }
 
     ///5:钞票
@@ -914,9 +916,9 @@ class TrainingController extends GetxController
       // case eventGift:
       //   return Get.to(TeamGiftPage(),
       //       opaque: false, transition: Transition.fadeIn);
-      case eventStealingPlayer:
-      // return showEventDialog(child: const Event4());
-      case eventBankRpbbery:
+      // case eventStealingPlayer:
+      // // return showEventDialog(child: const Event4());
+      // case eventBankRpbbery:
     }
   }
 

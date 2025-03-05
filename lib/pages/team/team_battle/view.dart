@@ -20,19 +20,19 @@ class TeamBattlePage extends StatefulWidget {
 }
 
 class _TeamBattlePageState extends State<TeamBattlePage> {
-
   late TeamBattleController controller;
+
   /// todo test code
   bool loadData = false;
   @override
   void initState() {
     super.initState();
-    if(!Get.isRegistered<TeamBattleController>()) {
+    if (!Get.isRegistered<TeamBattleController>()) {
       ///todo 测试代码，需删除
       controller = Get.put(TeamBattleController());
       controller.teamMatchV2().then((value) {
         loadData = true;
-        if(mounted) {
+        if (mounted) {
           setState(() {});
         }
       }, onError: (e) {
@@ -40,7 +40,7 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
         Get.back();
         EasyLoading.showToast("MATCH FAILED");
       });
-    }else {
+    } else {
       controller = Get.find();
       loadData = true;
     }
@@ -58,7 +58,7 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
       id: "team_battle",
       builder: (_) {
         /// todo test code
-        if(!loadData){
+        if (!loadData) {
           return Center(
             child: SizedBox(
               width: 30,
@@ -77,9 +77,11 @@ class _TeamBattlePageState extends State<TeamBattlePage> {
                 // MatchSuccess(onCompleted: () {
                 //   controller.nextStep();
                 // })
-                MatchSuccessNew(onEnd: (){
-                  controller.nextStep();
-                },)
+                MatchSuccessNew(
+                  onEnd: () {
+                    controller.nextStep();
+                  },
+                )
               else
                 // const BattleMain()
                 TeamBattleV2Page()

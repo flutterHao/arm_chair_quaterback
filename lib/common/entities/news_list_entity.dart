@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-26 18:53:41
- * @LastEditTime: 2024-12-24 17:30:39
+ * @LastEditTime: 2025-03-05 10:24:08
  */
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
@@ -97,8 +97,7 @@ class NewsListDetail {
 
   NewsListDetail();
 
-  int get createTime =>
-      ct + Utils.getTimeZoneOffset().inMilliseconds;
+  int get createTime => ct + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory NewsListDetail.fromJson(Map<String, dynamic> json) {
     NewsListDetail newsDetail = $NewsListDetailFromJson(json);

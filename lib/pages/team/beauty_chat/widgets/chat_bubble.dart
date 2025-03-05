@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-27 12:17:59
- * @LastEditTime: 2025-02-28 19:10:44
+ * @LastEditTime: 2025-03-03 16:56:19
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -10,11 +10,15 @@ import 'package:arm_chair_quaterback/common/entities/girl_dialogue_define_entity
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/beauty_chat/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-class ChatBubble extends StatelessWidget {
+class ChatBubble extends GetView<BeautyChatController> {
   const ChatBubble({super.key, required this.message});
   final GirlDialogueDefineEntity message;
 
@@ -38,7 +42,7 @@ class ChatBubble extends StatelessWidget {
         minHeight: 32.w,
         maxWidth: 240.w,
       ),
-      margin: EdgeInsets.only(top: message.type == 2 ? 3.w : 0),
+      margin: EdgeInsets.symmetric(vertical: message.type == 2 ? 3.w : 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.w),
         color: message.type == 1 ? AppColors.cED4873 : AppColors.cFFFFFF,

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
@@ -174,6 +176,13 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                         return MtInkWell(
                           minScale: 0.9,
                           onTap: () async {
+                            // CardPackInfoCard e = CardPackInfoCard();
+                            // e.playerCards = [12375]
+                            //     .map((e) =>
+                            //         PlayerCardEntity.fromJson({"playerId": e}))
+                            //     .toList();
+                            // controller.toOpenBoxPage(context, e);
+                            // return;
                             // item.status = 1;
                             if (item.status == -1) {
                               controller.scrollToSlot();

@@ -44,7 +44,8 @@ class UserInfoBar extends StatelessWidget {
     return GetBuilder<HomeController>(
         id: GetXBuilderIds.idGlobalUserEntityRefresh,
         builder: (controller) {
-          TeamLoginInfo info = controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+          TeamLoginInfo info =
+              controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
           bool hasDailyTask = controller.ongoingTaskList.isNotEmpty;
           return Stack(
             alignment: Alignment.center,
@@ -61,7 +62,9 @@ class UserInfoBar extends StatelessWidget {
                       clipper: DailyTaskBarClipper(55.w),
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
-                        color: hasDailyTask ? AppColors.cFF7954 : AppColors.c262626,
+                        color: hasDailyTask
+                            ? AppColors.cFF7954
+                            : AppColors.c262626,
                       ),
                     ),
                   ),
@@ -104,7 +107,7 @@ class UserInfoBar extends StatelessWidget {
                             onLongPress: () {
                               final List<String> servers = [
                                 Address.personalDevUrl,
-                                Address.personalDevUrl2,
+                                // Address.personalDevUrl2,
                                 Address.personalDevUrl3,
                                 Address.privateDevUrl,
                                 Address.publicDevUrl,
@@ -112,7 +115,7 @@ class UserInfoBar extends StatelessWidget {
                               ];
                               final List<String> wsServers = [
                                 Address.wsPersonalDevUrl,
-                                Address.wsPersonalDevUrl2,
+                                // Address.wsPersonalDevUrl2,
                                 Address.wsPersonalDevUrl3,
                                 Address.wsPrivateDevUrl,
                                 Address.wsPublicDevUrl,
@@ -147,13 +150,15 @@ class UserInfoBar extends StatelessWidget {
                               width: 36.w,
                               height: 36.w,
                               decoration: BoxDecoration(
-                                  border: Border.all(width: 1, color: AppColors.cFFFFFF),
+                                  border: Border.all(
+                                      width: 1, color: AppColors.cFFFFFF),
                                   borderRadius: BorderRadius.circular(18.w)),
                               child: Center(
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(18.w),
                                   child: UserAvaterWidget(
-                                    url: Utils.getAvatarUrl(info.team?.teamLogo ?? 0),
+                                    url: Utils.getAvatarUrl(
+                                        info.team?.teamLogo ?? 0),
                                     width: 36.w,
                                     height: 36.w,
                                   ),
@@ -169,7 +174,8 @@ class UserInfoBar extends StatelessWidget {
                     ),
                   ),
                   ClipRRect(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10.w)),
+                    borderRadius:
+                        BorderRadius.only(topLeft: Radius.circular(10.w)),
                     child: Builder(builder: (context) {
                       Widget child = SizedBox(
                         width: 55.w,
@@ -179,7 +185,9 @@ class UserInfoBar extends StatelessWidget {
                             IconWidget(
                               iconWidth: 20.w,
                               icon: Assets.commonUiCommonStatusBarMission01,
-                              iconColor: hasDailyTask ? AppColors.c000000 : AppColors.c686868,
+                              iconColor: hasDailyTask
+                                  ? AppColors.c000000
+                                  : AppColors.c686868,
                             ),
                             if (!hasDailyTask)
                               Positioned(
@@ -187,7 +195,8 @@ class UserInfoBar extends StatelessWidget {
                                   right: 10.w,
                                   child: IconWidget(
                                     iconWidth: 14.w,
-                                    icon: Assets.commonUiCommonStatusBarMission02,
+                                    icon:
+                                        Assets.commonUiCommonStatusBarMission02,
                                     iconColor: AppColors.c23E8A9,
                                   ))
                           ],
@@ -217,7 +226,8 @@ class UserInfoBar extends StatelessWidget {
         barrierColor: Colors.transparent,
         context: context,
         useRootNavigator: false,
-        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
           return TopDialog(title: title, routeId: routeId);
         });
   }
@@ -234,16 +244,21 @@ class MoneyAndCoinWidget extends StatelessWidget {
     return GetBuilder<HomeController>(
         id: GetXBuilderIds.idMoneyAndCoinWidget,
         builder: (controller) {
-          TeamLoginInfo info = controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+          TeamLoginInfo info =
+              controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
           Flex child;
           if (home) {
             child = Row(
               children: [
-                IconWidget(iconWidth: 17.w, icon: Assets.commonUiCommonIconCurrency02),
+                IconWidget(
+                    iconWidth: 17.w, icon: Assets.commonUiCommonIconCurrency02),
                 2.hGap,
                 AnimatedNum(
                   number: info.getCoin().toInt(),
-                  textStyle: 12.w4(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldRegular),
+                  textStyle: 12.w4(
+                      color: AppColors.cF2F2F2,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldRegular),
                 ),
                 10.hGap,
                 IconWidget(iconWidth: 20.w, icon: Assets.teamUiMoney02),
@@ -252,7 +267,10 @@ class MoneyAndCoinWidget extends StatelessWidget {
                   number: info.getMoney().toInt(),
                   isMoney: true,
                   milliseconds: 1000,
-                  textStyle: 12.w4(color: AppColors.cF2F2F2, height: 1, fontFamily: FontFamily.fOswaldRegular),
+                  textStyle: 12.w4(
+                      color: AppColors.cF2F2F2,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldRegular),
                 )
                 // Text(
                 //   Utils.formatMoney(info.getMoney()),
@@ -268,9 +286,11 @@ class MoneyAndCoinWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                iconText(Assets.commonUiCommonIconCurrency02, Utils.formatChip(info.getCoin())),
+                iconText(Assets.commonUiCommonIconCurrency02,
+                    Utils.formatChip(info.getCoin())),
                 4.vGap,
-                iconText(Assets.commonUiCommonProp05, Utils.formatMoney(info.getMoney())),
+                iconText(Assets.commonUiCommonProp05,
+                    Utils.formatMoney(info.getMoney())),
               ],
             );
           }
@@ -288,7 +308,9 @@ class MoneyAndCoinWidget extends StatelessWidget {
       alignment: Alignment.center,
       // constraints: BoxConstraints(minWidth: 66.w),
       padding: EdgeInsets.only(left: 4.w, right: 9.w),
-      decoration: BoxDecoration(color: Colors.black.withOpacity(0.5), borderRadius: BorderRadius.circular(8.w)),
+      decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(8.w)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -326,8 +348,8 @@ class ServerSwitchDialog extends StatelessWidget {
       switch (serverUrl) {
         case Address.personalDevUrl:
           return '${Address.personalDevUrl}(本地yw)';
-        case Address.personalDevUrl2:
-          return '${Address.personalDevUrl2}(本地yx)';
+        // case Address.personalDevUrl2:
+        //   return '${Address.personalDevUrl2}(本地yx)';
         case Address.personalDevUrl3:
           return '${Address.personalDevUrl3}(本地hc)';
         case Address.privateDevUrl:

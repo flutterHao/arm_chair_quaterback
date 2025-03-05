@@ -490,6 +490,7 @@ class Utils {
             .teamLoginInfo
             ?.getServerTimeOffset() ??
         0;
+
     /// 一分钟以内的时差忽略
     return Duration(milliseconds: offset < 60 * 1000 ? 0 : offset);
   }
@@ -605,6 +606,6 @@ class Utils {
 
   /// 获取底部安全距离高度
   static double getPaddingBottom() {
-    return MediaQuery.of(Get.context!).padding.bottom/2;
+    return MediaQuery.of(Get.context!).padding.bottom / 2;
   }
 }

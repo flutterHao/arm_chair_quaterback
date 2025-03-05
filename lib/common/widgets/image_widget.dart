@@ -2,15 +2,18 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2025-02-22 18:57:16
+ * @LastEditTime: 2025-03-05 14:43:14
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 ///@author lihonghao
 ///@date 2024/9/9
@@ -115,9 +118,12 @@ class ImageWidget extends StatelessWidget {
       borderRadius: borderRadius,
       shape: BoxShape.rectangle,
       colorBlendMode: colorBlendMode,
+      gaplessPlayback: true,
       color: color,
       //非服务器的图片资源缓存4天过期
-      cacheMaxAge: url.contains(sUrl) ? null : const Duration(days: Constant.defaultImageCacheTimes),
+      cacheMaxAge: url.contains(sUrl)
+          ? null
+          : const Duration(days: Constant.defaultImageCacheTimes),
 
       clearMemoryCacheWhenDispose: false,
       loadStateChanged: (ExtendedImageState state) {
@@ -205,6 +211,46 @@ class MirrorImageWidget extends StatelessWidget {
                 image,
               ],
             ),
+    );
+  }
+}
+
+class ImagePreviewPage extends StatelessWidget {
+  final List<String> imageUrls; // 图片URL列表
+  final int initialIndex; // 初始显示的图片索引
+
+  const ImagePreviewPage({
+    Key? key,
+    required this.imageUrls,
+    this.initialIndex = 0,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // return ExtendedImageGesturePageView();
+    return ExtendedImageGesturePageView.builder(
+      itemCount: imageUrls.length,
+      controller: ExtendedPageController(
+        initialPage: initialIndex,
+      ),
+      itemBuilder: (BuildContext context, int index) {
+        return ExtendedImage.network(
+          imageUrls[index],
+          fit: BoxFit.contain,
+          mode: ExtendedImageMode.gesture,
+          initGestureConfigHandler: (state) {
+            return GestureConfig(
+              minScale: 0.9, // 最小缩放比例
+              maxScale: 3.0, // 最大缩放比例
+              animationMinScale: 0.7, // 缩放动画的最小比例
+              animationMaxScale: 3.0, // 缩放动画的最大比例
+              speed: 1.0, // 缩放速度
+              inertialSpeed: 100.0, // 惯性滑动速度
+              cacheGesture: false, // 是否缓存手势
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -2,18 +2,20 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2025-02-20 18:06:47
+ * @LastEditTime: 2025-03-05 14:51:16
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -135,7 +137,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         left: 0,
                         right: 0,
                         child: SendCommentWidget(detail: widget.newsDetail));
-                  })
+                  }),
+                  BottomGuessTipWidget(
+                    bottomValue: 9.w,
+                  ),
                 ]);
           }),
     );
@@ -224,11 +229,17 @@ class NewsDetailItem extends GetView<NewListController> {
                 padding: EdgeInsets.symmetric(vertical: 10.w),
                 child: ImageWidget(
                   url: item.imgUrl,
+                  // url:
+                  //     "https://oss.ducafecat.com/ducafecat/2023/10/18/6d28b39f0a3bdae61fa2d40261bdc7d2.gif",
                   width: item.type == 1 ? 343.w : item.imamgeWidth,
                   height: item.imageHeight,
                   // fit: BoxFit.fitWidth,
                   borderRadius: BorderRadius.circular(9.w),
                 ),
+                // child: Container(
+                //   width: item.imamgeWidth,
+                //   height: item.imageHeight,
+                // ),
               )
             : 10.vGap,
         Text(
@@ -250,9 +261,16 @@ class NewsDetailItem extends GetView<NewListController> {
             separatorBuilder: (context, index) => 10.vGap,
             itemCount: item.imgList.length,
             itemBuilder: (contex, index) {
+              // return ImageWidget(
+              //   url: item.imgList[index],
+              //   width: 343.w,
+              //   // fit: BoxFit.fitWidth,
+              //   borderRadius: BorderRadius.circular(9.w),
+              // );
               return ImageWidget(
                 url: item.imgList[index],
-                width: 343.w,
+                width: item.type == 1 ? 343.w : item.imamgeWidth,
+                height: item.imageHeight,
                 // fit: BoxFit.fitWidth,
                 borderRadius: BorderRadius.circular(9.w),
               );
@@ -263,27 +281,84 @@ class NewsDetailItem extends GetView<NewListController> {
 
   @override
   Widget build(BuildContext context) {
-    int index = controller.state.detailList.indexOf(item);
     return Stack(
       children: [
         RepaintBoundary(
           key: globalKey,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 11.5.w),
+            padding: EdgeInsets.symmetric(vertical: 11.5.w),
             color: AppColors.cFFFFFF,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _head(),
-                14.vGap,
-                _buildNewsContent(),
-                20.vGap,
-                NewsBottomButton(
-                  item,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15.w,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _head(),
+                      14.vGap,
+                      _buildNewsContent(),
+                    ],
+                  ),
                 ),
-                16.vGap,
-                const EmojiWidget(),
-                if (showComments) DetailCommentWidget(item: item),
+                if (controller.pickPlayerList.isNotEmpty &&
+                    item.imgList.length <= 2)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      10.vGap,
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 15.w),
+                        child: Text(
+                          "PLAYER PICK",
+                          style: 20.w4(
+                              height: 1, fontFamily: FontFamily.fOswaldMedium),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 150.w,
+                        // width: 375.w,
+                        child: ListView.separated(
+                            padding: EdgeInsets.symmetric(horizontal: 15.w),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) => Container(
+                                  alignment: Alignment.centerLeft,
+                                  width: 300.w,
+                                  child: GuessItemV2(
+                                    margin: EdgeInsets.all(0),
+                                    playerV2: controller.pickPlayerList[index],
+                                    index: index,
+                                    mainRoute: true,
+                                    isInScoreDetail: true,
+                                  ),
+                                ),
+                            separatorBuilder: (context, index) => 10.hGap,
+                            itemCount: controller.pickPlayerList.length),
+                      )
+                    ],
+                  ),
+                20.vGap,
+
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15.w,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      NewsBottomButton(
+                        item,
+                      ),
+                      16.vGap,
+                      const EmojiWidget(),
+                      if (showComments) DetailCommentWidget(item: item),
+                    ],
+                  ),
+                )
                 // if (controller.state.detailList.length == 1) 80.vGap,
               ],
             ),

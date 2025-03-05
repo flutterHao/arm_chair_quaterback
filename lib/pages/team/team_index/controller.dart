@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-02-28 16:01:51
+ * @LastEditTime: 2025-03-05 18:19:34
  */
 
 import 'dart:async';
@@ -198,21 +198,6 @@ class TeamIndexController extends GetxController
       isLoading = false;
     });
   }
-
-  // void onRefresh() async {
-  //   final trainingCtrl = Get.find<TrainingController>();
-  //   final teamCtrl = Get.find<TeamController>();
-  //   Future.wait([
-  //     getBattleBox(),
-  //     getTeamInfoCup(),
-  //     CacheApi.getPropDefine(),
-  //     CacheApi.getCardPackDefine(),
-  //     trainingCtrl.getData(),
-  //     teamCtrl.initData()
-  //   ]).then((v) {}).whenComplete(() {
-  //     refreshController.refreshCompleted();
-  //   });
-  // }
 
   Future matchBattle() async {
     // await scroToMatch();

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-02-28 11:08:12
+ * @LastEditTime: 2025-03-04 18:11:05
  */
 /*
  * @Description: 
@@ -284,6 +284,7 @@ class IllustratiionsController extends GetxController
               if (index > 0) {
                 double offset = beginY + ((index + 1) ~/ 5) * (height + 10.w);
                 int t = ((offset - dy) * 0.5).ceil();
+                offset = min(beginY, scrollController.position.maxScrollExtent);
                 await scrollController.animateTo(offset,
                     duration: Duration(milliseconds: t),
                     curve: Curves.easeInOut);
@@ -324,31 +325,34 @@ class IllustratiionsController extends GetxController
         }
       }
 
-      currentLevel = info.grade;
-
-      updateProgress(info.grade, info.exp / info.needExp);
-      update(["list", "progress"]);
+      // int diff = currentLevel != 0 ? info.grade - currentLevel : 0;
+      if (info.grade > currentLevel) {
+        currentLevel = info.grade;
+        update(["list"]);
+      }
+      await updateProgress(info.grade, info.exp / info.needExp);
     });
   }
 
   /// 更新进度
-  void updateProgress(int newLevel, double newProgress) {
+  Future updateProgress(int newLevel, double newProgress) async {
     animationController.reset();
     progressAnimation = Tween<double>(begin: _progress, end: newProgress)
         .animate(animationController);
     _progress = newProgress;
-    animationController.forward().then((v) {
+    await animationController.forward().then((v) async {
       //升级旋转角度
       if (newLevel > currentLevel) {
         rotateDuration = 300.milliseconds;
         rotateAngle = -(newLevel - currentLevel) * 10 / 360;
-        Future.delayed(400.milliseconds, () {
+        await Future.delayed(400.milliseconds, () {
           //更新界面
           currentLevel = newLevel;
           rotateAngle = 0;
           rotateDuration = 0.milliseconds;
-          update(["progress"]);
         });
+        update(["progress"]);
+        update(["list"]);
       }
     });
   }
