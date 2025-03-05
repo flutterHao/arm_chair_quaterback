@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:collection/collection.dart';
@@ -31,20 +32,66 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
 
   late Timer _timer;
   late Duration _remaining;
+  GlobalKey globalKey = GlobalKey();
   @override
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      var currentIndex = _list.indexWhere((TrainTaskEntity e) => e.taskLevel == _currentLevel);
+      var currentIndex =
+          _list.indexWhere((TrainTaskEntity e) => e.taskLevel == _currentLevel);
       if (currentIndex > 4) {
-        controller.awardBottomScrollController.jumpTo(90.h * (currentIndex) - 360.h);
+        controller.awardBottomScrollController
+            .jumpTo(90.h * (currentIndex) - 342.h);
       } else {
-        controller.awardBottomScrollController.jumpTo(0);
+        controller.awardBottomScrollController.jumpTo(18.h);
       }
     });
     _updateRemainingTime();
     // 每秒更新一次剩余时间
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _updateRemainingTime());
+    _timer = Timer.periodic(
+        Duration(seconds: 1), (Timer t) => _updateRemainingTime());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return VerticalDragBackWidget(
+        child: Container(
+      height: 582.h + Utils.getPaddingBottom(),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+      child: Column(
+        children: [
+          const DialogTopBtn(),
+          Spacer(),
+          _awardTiTleWidget(),
+          SizedBox(height: 4.h),
+          const Divider(height: 1, color: AppColors.cD1D1D1),
+          _lastAwardItemWidget(),
+          const Divider(height: 1, color: AppColors.cD1D1D1),
+          Container(
+            height: 382.h,
+            padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: _list.length,
+              clipBehavior: Clip.antiAlias,
+              physics: NeverScrollableScrollPhysics(),
+              controller: controller.awardBottomScrollController,
+              itemBuilder: (context, index) {
+                bool isLast = index == 0;
+                if (isLast) {
+                  return SizedBox(height: 0);
+                }
+                return Stack(
+                  children: [_leftWidget(index), _awardItemWidget(index)],
+                );
+              },
+            ),
+          ),
+          SizedBox(height: Utils.getPaddingBottom())
+        ],
+      ),
+    ));
   }
 
   @override
@@ -70,44 +117,6 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return VerticalDragBackWidget(
-        child: Container(
-      height: 572.h,
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
-      child: Column(
-        children: [
-          const DialogTopBtn(),
-          Spacer(),
-          _awardTiTleWidget(),
-          SizedBox(height: 4.h),
-          const Divider(height: 1, color: AppColors.cD1D1D1),
-          _lastAwardItemWidget(),
-          const Divider(height: 1, color: AppColors.cD1D1D1),
-          Container(
-            height: 378.h,
-            child: ListView.builder(
-              padding: EdgeInsets.only(bottom: 20.h),
-              itemCount: _list.length,
-              physics: NeverScrollableScrollPhysics(),
-              controller: controller.awardBottomScrollController,
-              itemBuilder: (context, index) {
-                bool isLast = index == 0;
-                if (isLast) {
-                  return SizedBox(height: 0);
-                }
-                return Stack(
-                  children: [_leftWidget(index), _awardItemWidget(index)],
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    ));
-  }
-
   List<String> get _lastAwardRewardList {
     TrainTaskEntity taskEntity = _list[0];
     List<String> taskRewardList = taskEntity.taskReward.split("|");
@@ -115,10 +124,14 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
   }
 
   List<TrainTaskEntity> get _list {
-    TrainTaskEntity task = controller.trainTaskList.where((e) => e.taskLevel == _currentLevel).first;
+    TrainTaskEntity task = controller.trainTaskList
+        .where((e) => e.taskLevel == _currentLevel)
+        .first;
     String prefix = task.taskLevel.toString().substring(0, 2);
     var list = controller.trainTaskList
-        .where((e) => e.taskRound == task.taskRound && e.taskLevel.toString().startsWith(prefix))
+        .where((e) =>
+            e.taskRound == task.taskRound &&
+            e.taskLevel.toString().startsWith(prefix))
         .toList();
     list.sort((a, b) => b.taskLevel - a.taskLevel);
     return list;
@@ -146,11 +159,14 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                 child: Column(
                   children: [
                     Spacer(),
-                    IconWidget(iconWidth: 24.h, icon: Assets.inboxUiInboxIconAward),
+                    IconWidget(
+                        iconWidth: 24.h, icon: Assets.inboxUiInboxIconAward),
                     SizedBox(height: 6.h),
                     Text(
                       'AWARD',
-                      style: 12.w5(color: Colors.white, fontFamily: FontFamily.fOswaldRegular),
+                      style: 12.w5(
+                          color: Colors.white,
+                          fontFamily: FontFamily.fOswaldRegular),
                     ),
                     Spacer(),
                   ],
@@ -185,12 +201,14 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                       children: [
                         const Spacer(),
                         Image.asset(
-                          Utils.getPropIconUrl(int.tryParse(element.split("_")[1])),
+                          Utils.getPropIconUrl(
+                              int.tryParse(element.split("_")[1])),
                           width: 48.h,
                           height: 40.h,
                           fit: BoxFit.contain,
                           alignment: Alignment.center,
-                          errorBuilder: (context, error, stackTrace) => IconWidget(
+                          errorBuilder: (context, error, stackTrace) =>
+                              IconWidget(
                             iconWidth: 48.h,
                             icon: Assets.teamUiMoney02,
                           ),
@@ -198,7 +216,9 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                         SizedBox(height: 4.h),
                         Text(
                           element.split("_")[2],
-                          style: 14.w5(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
+                          style: 14.w5(
+                              color: AppColors.c000000,
+                              fontFamily: FontFamily.fRobotoRegular),
                         ),
                         SizedBox(height: 1.h),
                       ],
@@ -231,7 +251,10 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                 children: [
                   if (index == 1) const Spacer(),
                   Expanded(
-                    child: Container(width: 4, height: double.infinity, color: AppColors.cE6E6E),
+                    child: Container(
+                        width: 4,
+                        height: double.infinity,
+                        color: AppColors.cE6E6E),
                   ),
                   if (index == _list.length - 1) const Spacer(),
                 ],
@@ -257,7 +280,8 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                 ),
               ),
               const Spacer(),
-              IconWidget(iconWidth: 16.h, icon: Assets.commonUiCommonCountdown02),
+              IconWidget(
+                  iconWidth: 16.h, icon: Assets.commonUiCommonCountdown02),
               6.hGap,
               Text(
                 formatDuration(_remaining),
@@ -265,11 +289,16 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
               ),
               6.hGap,
               //_overlayEntry?.remove();
-              InkWell(
+              MtInkWell(
+                key: globalKey,
                 onTap: () {
+                  final RenderBox renderBox =
+                      globalKey.currentContext!.findRenderObject() as RenderBox;
+                  Offset offset = renderBox.localToGlobal(Offset.zero);
+                  print(offset);
                   _overlayEntry = OverlayEntry(
                     builder: (context) {
-                      return _taskCollectWidget(context);
+                      return _taskCollectWidget(context, offset);
                     },
                   );
                   Overlay.of(context).insert(_overlayEntry!);
@@ -281,7 +310,8 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                     color: AppColors.cB3B3B3,
                     shape: BoxShape.circle,
                   ),
-                  child: IconWidget(iconWidth: 3.h, icon: Assets.inboxUiInboxIconTips),
+                  child: IconWidget(
+                      iconWidth: 3.h, icon: Assets.inboxUiInboxIconTips),
                 ),
               )
             ],
@@ -292,10 +322,11 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
   }
 
   ///气泡框的任务图标
-  Widget _taskCollectWidget(BuildContext context) {
+  Widget _taskCollectWidget(BuildContext context, Offset offset) {
     TrainingController trainingController = Get.find();
     var taskIconNum = [0, 0, 3, 4, 5, 6];
     List<int> taskCollectList = trainingController.trainDefine.taskCollect;
+
     return InkWell(
       onTap: () {
         _overlayEntry?.remove();
@@ -305,14 +336,15 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
         child: Stack(
           children: [
             Positioned(
-                top: 136.h,
+                top: offset.dy - 140.h,
                 right: 40.w,
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
                     Container(
                         width: 308.w,
-                        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 10.h),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
@@ -340,15 +372,20 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                                   Expanded(
                                       child: Row(
                                     children: [
-                                      ...List.generate(taskIconNum[index], (int taskIconIndex) {
+                                      ...List.generate(taskIconNum[index],
+                                          (int taskIconIndex) {
                                         return Container(
                                             // height: 25.h,
-                                            margin: taskIconIndex != taskIconNum.length - 1
+                                            margin: taskIconIndex !=
+                                                    taskIconNum.length - 1
                                                 ? EdgeInsets.only(right: 8.w)
                                                 : null,
-                                            padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 1),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 4.h, horizontal: 1),
                                             decoration: BoxDecoration(
-                                                color: AppColors.cE6E6E, borderRadius: BorderRadius.circular(2.w)),
+                                                color: AppColors.cE6E6E,
+                                                borderRadius:
+                                                    BorderRadius.circular(2.w)),
                                             child: Image.asset(
                                               Assets.commonUiCommonProp03,
                                               width: 14.w,
@@ -357,14 +394,20 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                                     ],
                                   )),
                                   Text('Get ${taskIconNum[index]} icon',
-                                      style: 12.w4(fontFamily: FontFamily.fRobotoMedium)),
+                                      style: 12.w4(
+                                          fontFamily:
+                                              FontFamily.fRobotoMedium)),
                                   10.hGap,
-                                  IconWidget(iconWidth: 20.w, icon: Assets.commonUiCommonProp03),
+                                  IconWidget(
+                                      iconWidth: 20.w,
+                                      icon: Assets.commonUiCommonProp03),
                                   2.hGap,
                                   SizedBox(
                                     width: 26.w,
                                     child: Text('x ${taskCollectList[index]}',
-                                        style: 12.w4(fontFamily: FontFamily.fRobotoMedium)),
+                                        style: 12.w4(
+                                            fontFamily:
+                                                FontFamily.fRobotoMedium)),
                                   ),
                                 ],
                               ),
@@ -380,19 +423,24 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                   ],
                 )),
             Positioned(
+                top: offset.dy + 5.h,
                 right: 35.w,
-                top: 278.h,
-                child: CustomPaint(
-                  size: Size(6.w, 10.h), // 设置三角形的大小
-                  painter: TrianglePainter(color: AppColors.cFFFFFF),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    CustomPaint(
+                      size: Size(6.h, 10.h), // 设置三角形的大小
+                      painter: TrianglePainter(color: AppColors.cFFFFFF),
+                    ),
+                    Positioned(
+                        top: 2.h,
+                        left: -1,
+                        child: CustomPaint(
+                          size: Size(4.h, 6.h), // 设置三角形的大小
+                          painter: TrianglePainter(color: AppColors.cFF7954),
+                        ))
+                  ],
                 )),
-            Positioned(
-                right: 36.w,
-                top: 280.h,
-                child: CustomPaint(
-                  size: Size(4.w, 6.h), // 设置三角形的大小
-                  painter: TrianglePainter(color: AppColors.cFF7954),
-                ))
           ],
         ),
       ),
@@ -425,7 +473,9 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
               width: 23,
               height: 23,
               alignment: Alignment.center,
-              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 1, color: AppColors.cD1D1D1)),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 1, color: AppColors.cD1D1D1)),
               child: level <= _currentLevel
                   ? Container(
                       width: 11,
@@ -436,7 +486,9 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                       ))
                   : Center(
                       child: IconWidget(
-                          iconWidth: 10, iconColor: AppColors.cD1D1D1, icon: Assets.commonUiCommonIconSystemLock),
+                          iconWidth: 10,
+                          iconColor: AppColors.cD1D1D1,
+                          icon: Assets.commonUiCommonIconSystemLock),
                     ),
             ),
           ),
@@ -445,7 +497,8 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
               child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.w), border: Border.all(width: 1, color: _getColor(level))),
+                borderRadius: BorderRadius.circular(12.w),
+                border: Border.all(width: 1, color: _getColor(level))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -457,11 +510,13 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                       children: [
                         SizedBox(height: 6.h),
                         Image.asset(
-                          Utils.getPropIconUrl(int.tryParse(element.split("_")[1])),
+                          Utils.getPropIconUrl(
+                              int.tryParse(element.split("_")[1])),
                           height: 40.h,
                           width: 43.h,
                           fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) => Image.asset(
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(
                             Assets.teamUiMoney02,
                             height: 40.h,
                             fit: BoxFit.fitHeight,
@@ -470,7 +525,9 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
                         Flexible(
                           child: Text(
                             "${element.split("_")[2]}${element.split("_")[1] == "102" ? "K" : ""}",
-                            style: 14.w5(color: AppColors.c000000, fontFamily: FontFamily.fRobotoRegular),
+                            style: 14.w5(
+                                color: AppColors.c000000,
+                                fontFamily: FontFamily.fRobotoRegular),
                           ),
                         )
                       ],
