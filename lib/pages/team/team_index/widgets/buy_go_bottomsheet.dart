@@ -99,6 +99,7 @@ class BuyGoBottomsheet extends StatelessWidget {
                 Get.back();
                 await controller.buySlotCount();
                 Utils.saveNotTip("ball");
+                HomeController.to.refreshMoneyCoinWidget();
               },
               child: Center(
                 child: Text(
