@@ -80,7 +80,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     var nowDateMs = MyDateUtils.getNowDateMs();
     var gameStart =
         MyDateUtils.getDateTimeByMs(playerV2.guessInfo.gameStartTime);
-    var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
+    var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs+12*60*1000;
     if (lastTimeMs <= 15 * 60 * 1000 && lastTimeMs > 0) {
       //距离比赛开始时间小于15分钟开始倒计时
       timer?.cancel();
@@ -91,15 +91,16 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
         var nowDateMs = MyDateUtils.getNowDateMs();
         var gameStart =
             MyDateUtils.getDateTimeByMs(playerV2.guessInfo.gameStartTime);
-        var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
-        if (lastTimeMs == 0) {
+        var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs+12*60*1000;
+        if (lastTimeMs <= 0) {
           t.cancel();
           gameStartTimeStr.value =
               "In the game: ${MyDateUtils.formatHM_AM(gameStart)}";
-        }
-        gameStartTimeStr.value = MyDateUtils.formatDate(
+        }else {
+          gameStartTimeStr.value = MyDateUtils.formatDate(
             MyDateUtils.getDateTimeByMs(lastTimeMs),
             format: DateFormats.M_S);
+        }
       });
     } else if (MyDateUtils.isTomorrow(playerV2.guessInfo.gameStartTime)) {
       gameStartTimeStr.value = "Tomorrow ${MyDateUtils.formatHM_AM(gameStart)}";

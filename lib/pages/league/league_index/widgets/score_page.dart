@@ -173,12 +173,13 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget> with WidgetsBindingOb
         var nowDateMs = MyDateUtils.getNowDateMs();
         var gameStart = MyDateUtils.getDateTimeByMs(item.gameStartTime);
         var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
-        if (lastTimeMs == 0) {
+        if (lastTimeMs <= 0) {
           t.cancel();
           gameStartTimeStr.value = "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
-        }
-        gameStartTimeStr.value =
+        }else {
+          gameStartTimeStr.value =
             "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
+        }
       });
     } else if (MyDateUtils.isToday(item.gameStartTime)) {
       gameStartTimeStr.value = "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
