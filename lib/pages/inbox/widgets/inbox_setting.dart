@@ -79,23 +79,38 @@ class _InboxSettingDialogState extends State<InboxSettingDialog> {
                           color: AppColors.c262626),
                     ),
                     Spacer(),
-                    Switch(
-                        value: topChat,
-                        activeColor: AppColors.cFFFFFF,
-                        activeTrackColor: AppColors.c000000,
-                        inactiveThumbColor: Colors.white,
-                        inactiveTrackColor: AppColors.cB3B3B3,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        // splashRadius: .0,
-                        onChanged: (value) {
-                          if (widget.inboxMessageEntity != null) {
-                            inboxController
-                                .itemTopChat(widget.inboxMessageEntity!);
-                          }
-                          setState(() {
-                            topChat = value;
-                          });
-                        }),
+                    CustomSwitch(
+                      value: topChat,
+                      width: 50.w,
+                      height: 25.w,
+                      activeColor: AppColors.c000000,
+                      trackColor: AppColors.cB3B3B3,
+                      onChanged: (value) {
+                        if (widget.inboxMessageEntity != null) {
+                          inboxController
+                              .itemTopChat(widget.inboxMessageEntity!);
+                        }
+                        setState(() {
+                          topChat = value;
+                        });
+                      },
+                    ),
+                    // Switch(
+                    //     value: topChat,
+                    //     activeColor: AppColors.cFFFFFF,
+                    //     activeTrackColor: AppColors.c000000,
+                    //     inactiveThumbColor: Colors.white,
+                    //     inactiveTrackColor: AppColors.cB3B3B3,
+                    //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //     onChanged: (value) {
+                    //       if (widget.inboxMessageEntity != null) {
+                    //         inboxController
+                    //             .itemTopChat(widget.inboxMessageEntity!);
+                    //       }
+                    //       setState(() {
+                    //         topChat = value;
+                    //       });
+                    //     }),
                   ],
                 ),
               ),
@@ -111,13 +126,12 @@ class _InboxSettingDialogState extends State<InboxSettingDialog> {
                           color: AppColors.c262626),
                     ),
                     Spacer(),
-                    Switch(
+                    CustomSwitch(
                         value: doNotDisturb,
-                        activeColor: AppColors.cFFFFFF,
-                        activeTrackColor: AppColors.c000000,
-                        inactiveThumbColor: Colors.white,
-                        inactiveTrackColor: AppColors.cB3B3B3,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        width: 50.w,
+                        height: 25.w,
+                        activeColor: AppColors.c000000,
+                        trackColor: AppColors.cB3B3B3,
                         onChanged: (value) {
                           if (widget.inboxMessageEntity != null) {
                             inboxController
@@ -127,6 +141,22 @@ class _InboxSettingDialogState extends State<InboxSettingDialog> {
                             doNotDisturb = value;
                           });
                         }),
+                    // Switch(
+                    //     value: doNotDisturb,
+                    //     activeColor: AppColors.cFFFFFF,
+                    //     activeTrackColor: AppColors.c000000,
+                    //     inactiveThumbColor: Colors.white,
+                    //     inactiveTrackColor: AppColors.cB3B3B3,
+                    //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //     onChanged: (value) {
+                    //       if (widget.inboxMessageEntity != null) {
+                    //         inboxController
+                    //             .itemDoNotDisturb(widget.inboxMessageEntity!);
+                    //       }
+                    //       setState(() {
+                    //         doNotDisturb = value;
+                    //       });
+                    //     }),
                   ],
                 ),
               ),
@@ -185,5 +215,90 @@ class _InboxSettingDialogState extends State<InboxSettingDialog> {
         )
       ]),
     );
+  }
+}
+
+class CustomSwitch extends StatefulWidget {
+  final bool value; // 当前开关的状态
+  final ValueChanged<bool> onChanged; // 开关状态改变时的回调函数
+  final Color activeColor; // 开关打开时的颜色
+  final Color trackColor; // 开关关闭时的背景颜色
+  final double width; // 开关的宽度
+  final double height; // 开关的高度
+
+  const CustomSwitch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.activeColor,
+    required this.trackColor,
+    this.width = 40, // 默认宽度
+    this.height = 20, // 默认高度
+  });
+
+  @override
+  State<CustomSwitch> createState() => _CustomSwitchState();
+}
+
+class _CustomSwitchState extends State<CustomSwitch>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+      value: widget.value ? 1.0 : 0.0, // 根据初始状态设置动画进度
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant CustomSwitch oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _animationController.animateTo(widget.value ? 1.0 : 0.0); // 当状态改变时更新动画
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        widget.onChanged(!widget.value); // 切换状态
+        _animationController.animateTo(widget.value ? 1.0 : 0.0); // 切换时触发动画
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 100),
+        width: widget.width, // 使用设置的宽度
+        height: widget.height, // 使用设置的高度
+        padding: EdgeInsets.all(4.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(widget.height), // 设置圆角
+          color:
+              widget.value ? widget.activeColor : widget.trackColor, // 根据状态切换颜色
+        ),
+        child: AnimatedAlign(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut, // 滑动的动画曲线
+          alignment: widget.value
+              ? Alignment.centerRight
+              : Alignment.centerLeft, // 滑块的位置
+          child: Container(
+            width: widget.height - (widget.height / 5), // 滑块的宽度
+            height: widget.height - (widget.height / 5), // 滑块的高度
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle, // 滑块是一个圆形
+              color: Colors.white, // 滑块颜色
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose(); // 销毁动画控制器
+    super.dispose();
   }
 }

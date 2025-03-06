@@ -61,13 +61,18 @@ class InboxEmailPage extends GetView<InboxEmailController> {
           AppBarWidget(
             title: controller.inboxMessageEntity.userName,
             right: MtInkWell(
-                onTap: () => BottomTipDialog.showWithSound(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) => InboxSettingDialog(
-                        inboxMessageEntity: controller.inboxMessageEntity)),
-                child:
-                    IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconMore)),
+              splashColor: Colors.transparent,
+              onTap: () => BottomTipDialog.showWithSound(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => InboxSettingDialog(
+                      inboxMessageEntity: controller.inboxMessageEntity)),
+              child: IconWidget(
+                  iconWidth: 26.w,
+                  iconHeight: 26.w,
+                  fit: BoxFit.contain,
+                  icon: Assets.iconUiIconMore),
+            ),
           ),
           bodyWidget: Expanded(child: _buildView()),
         ));

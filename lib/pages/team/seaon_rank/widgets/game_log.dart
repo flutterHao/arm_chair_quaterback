@@ -23,7 +23,9 @@ class GameLogWidget extends GetView<SeaonRankController> {
     return Padding(
       padding: EdgeInsets.only(top: 9.w),
       child: Container(
-        decoration: BoxDecoration(color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(4.5.w)),
+        decoration: BoxDecoration(
+            color: AppColors.cFFFFFF,
+            borderRadius: BorderRadius.circular(4.5.w)),
         child: Column(
           children: [
             Container(
@@ -46,12 +48,14 @@ class GameLogWidget extends GetView<SeaonRankController> {
                     ),
                   )
                 : ListView.separated(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 0),
                     itemCount: controller.gameScheduleList.length,
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
-                      return _gameLogItem(index, controller.gameScheduleList[index]);
+                      return _gameLogItem(
+                          index, controller.gameScheduleList[index]);
                     },
                     separatorBuilder: (context, index) {
                       return const Divider(
@@ -76,16 +80,21 @@ class GameLogWidget extends GetView<SeaonRankController> {
             child: Column(
               children: [
                 21.vGap,
-                Container(
-                    width: 36.w,
-                    height: 36.w,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.c1F8FE5, width: 1.5.w),
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: NetworkImage(
-                                Utils.getAvatarUrl(gameSchedule.homeTeamLogo == 0 ? 2 : gameSchedule.homeTeamLogo))))),
+                MtInkWell(
+                    onTap: () {},
+                    child: Container(
+                        width: 36.w,
+                        height: 36.w,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: AppColors.c1F8FE5, width: 1.5.w),
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: NetworkImage(Utils.getAvatarUrl(
+                                    gameSchedule.homeTeamLogo == 0
+                                        ? 2
+                                        : gameSchedule.homeTeamLogo)))))),
                 4.vGap,
                 Text(
                   gameSchedule.homeTeamName,
@@ -111,7 +120,9 @@ class GameLogWidget extends GetView<SeaonRankController> {
                 33.vGap,
                 Text(
                   'VS',
-                  style: 18.w5(fontFamily: FontFamily.fOswaldMedium, color: AppColors.cB3B3B3),
+                  style: 18.w5(
+                      fontFamily: FontFamily.fOswaldMedium,
+                      color: AppColors.cB3B3B3),
                 ),
                 15.vGap,
                 MtInkWell(
@@ -122,7 +133,9 @@ class GameLogWidget extends GetView<SeaonRankController> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        MyDateUtils.formatDate(DateTime.fromMillisecondsSinceEpoch(gameSchedule.createTime),
+                        MyDateUtils.formatDate(
+                            DateTime.fromMillisecondsSinceEpoch(
+                                gameSchedule.createTime),
                             format: DateFormats.PARAM_M_D_H_M_S),
                         style: TextStyle(
                           fontSize: 12.sp,
@@ -161,10 +174,13 @@ class GameLogWidget extends GetView<SeaonRankController> {
                     width: 36.w,
                     height: 36.w,
                     decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.cD60D20, width: 1.5.w),
+                        border:
+                            Border.all(color: AppColors.cD60D20, width: 1.5.w),
                         image: DecorationImage(
-                          image: NetworkImage(
-                              Utils.getAvatarUrl(gameSchedule.awayTeamLogo == 0 ? 1 : gameSchedule.awayTeamLogo)),
+                          image: NetworkImage(Utils.getAvatarUrl(
+                              gameSchedule.awayTeamLogo == 0
+                                  ? 1
+                                  : gameSchedule.awayTeamLogo)),
                         ),
                         shape: BoxShape.circle)),
                 4.vGap,
