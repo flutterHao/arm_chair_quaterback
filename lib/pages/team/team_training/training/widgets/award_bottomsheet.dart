@@ -283,10 +283,12 @@ class _AwardBottomsheetState extends State<AwardBottomsheet> {
               IconWidget(
                   iconWidth: 16.h, icon: Assets.commonUiCommonCountdown02),
               6.hGap,
-              Text(
-                formatDuration(_remaining),
-                style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
-              ),
+              SizedBox(
+                  width: 54.w,
+                  child: Text(
+                    formatDuration(_remaining),
+                    style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
+                  )),
               6.hGap,
               //_overlayEntry?.remove();
               MtInkWell(
