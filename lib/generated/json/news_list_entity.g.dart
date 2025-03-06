@@ -207,6 +207,17 @@ NewsListDetail $NewsListDetailFromJson(Map<String, dynamic> json) {
   if (imgList != null) {
     newsListDetail.imgList = imgList;
   }
+  final Map<String, int>? emojis =
+  (json['emojis'] as Map<String, dynamic>).map(
+          (k, e) => MapEntry(k, jsonConvert.convert<int>(e) as int));
+  if (emojis != null) {
+    newsListDetail.emojis = emojis;
+  }
+  final List<int>? myEmoji = (json['myEmoji'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<int>(e) as int).toList();
+  if (myEmoji != null) {
+    newsListDetail.myEmoji = myEmoji;
+  }
   return newsListDetail;
 }
 
@@ -235,6 +246,8 @@ Map<String, dynamic> $NewsListDetailToJson(NewsListDetail entity) {
   data['type'] = entity.type;
   data['imageHeight'] = entity.imageHeight;
   data['imamgeWidth'] = entity.imamgeWidth;
+  data['emojis'] = entity.emojis;
+  data['myEmoji'] = entity.myEmoji;
   return data;
 }
 
@@ -265,6 +278,8 @@ extension NewsListDetailExtension on NewsListDetail {
     int? type,
     double? imageHeight,
     double? imamgeWidth,
+    Map<String, int>? emojis,
+    List<int>? myEmoji,
   }) {
     return NewsListDetail()
       ..isLikeInt = isLikeInt ?? this.isLikeInt
@@ -291,6 +306,8 @@ extension NewsListDetailExtension on NewsListDetail {
       ..imgList = imgList ?? this.imgList
       ..type = type ?? this.type
       ..imageHeight = imageHeight ?? this.imageHeight
-      ..imamgeWidth = imamgeWidth ?? this.imamgeWidth;
+      ..imamgeWidth = imamgeWidth ?? this.imamgeWidth
+      ..emojis = emojis ?? this.emojis
+      ..myEmoji = myEmoji ?? this.myEmoji;
   }
 }

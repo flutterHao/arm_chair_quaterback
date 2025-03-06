@@ -54,6 +54,17 @@ ReviewEntity $ReviewEntityFromJson(Map<String, dynamic> json) {
   if (subList != null) {
     reviewEntity.subList = subList;
   }
+  final Map<String, int>? emojis =
+  (json['emojis'] as Map<String, dynamic>?)?.map(
+          (k, e) => MapEntry(k, jsonConvert.convert<int>(e) as int));
+  if (emojis != null) {
+    reviewEntity.emojis = emojis;
+  }
+  final List<int>? myEmoji = (json['myEmoji'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<int>(e) as int).toList();
+  if (myEmoji != null) {
+    reviewEntity.myEmoji = myEmoji;
+  }
   return reviewEntity;
 }
 
@@ -71,6 +82,8 @@ Map<String, dynamic> $ReviewEntityToJson(ReviewEntity entity) {
   data['sonReviews'] = entity.sonReviews;
   data['id'] = entity.id;
   data['subList'] = entity.subList.map((v) => v.toJson()).toList();
+  data['emojis'] = entity.emojis;
+  data['myEmoji'] = entity.myEmoji;
   return data;
 }
 
@@ -93,6 +106,8 @@ extension ReviewEntityExtension on ReviewEntity {
     int? page,
     int? size,
     int? current,
+    Map<String, int>? emojis,
+    List<int>? myEmoji,
   }) {
     return ReviewEntity()
       ..parentReviewId = parentReviewId ?? this.parentReviewId
@@ -111,6 +126,8 @@ extension ReviewEntityExtension on ReviewEntity {
       ..subList = subList ?? this.subList
       ..page = page ?? this.page
       ..size = size ?? this.size
-      ..current = current ?? this.current;
+      ..current = current ?? this.current
+      ..emojis = emojis ?? this.emojis
+      ..myEmoji = myEmoji ?? this.myEmoji;
   }
 }

@@ -280,8 +280,12 @@ class NewsListItem extends GetView<NewListController> {
       child: newsDetail.reviewsList.isNotEmpty
           ? InkWell(
               onTap: () async {
-                CommentController ctrl =
-                    Get.find(tag: newsDetail.id.toString());
+                if (!Get.isRegistered<CommentController>(
+                    tag: newsDetail.id.toString())) {
+                  Get.put(CommentController(), tag: newsDetail.id.toString());
+                }
+                final ctrl =
+                    Get.find<CommentController>(tag: newsDetail.id.toString());
                 ctrl.getReviews(newsDetail.id, isRefresh: true);
                 await BottomTipDialog.showWithSound(
                   isScrollControlled: true,
@@ -318,7 +322,13 @@ class NewsListItem extends GetView<NewListController> {
           20.vGap,
           NewsBottomButton(newsDetail),
           16.vGap,
-          const EmojiWidget(),
+          EmojiWidget(
+            emojis: newsDetail.emojis!,
+            myEmojis: newsDetail.myEmoji,
+            type: 1,
+            targetId: newsDetail.id,
+            subgoal: newsDetail.id,
+          ),
           _hotComment(),
           2.vGap,
         ],

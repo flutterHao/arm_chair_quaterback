@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -176,14 +177,9 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                         return MtInkWell(
                           minScale: 0.9,
                           onTap: () async {
-                            // CardPackInfoCard e = CardPackInfoCard();
-                            // e.playerCards = [12375]
-                            //     .map((e) =>
-                            //         PlayerCardEntity.fromJson({"playerId": e}))
-                            //     .toList();
-                            // controller.toOpenBoxPage(context, e);
-                            // return;
                             // item.status = 1;
+                            // final ctrl = Get.put(OpenBoxSimpleController());
+                            // ctrl.toOpenBoxPage(context, 12375);
                             if (item.status == -1) {
                               controller.scrollToSlot();
                             } else if (item.status == 2) {

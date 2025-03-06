@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-03-04 20:56:45
+ * @LastEditTime: 2025-03-06 14:12:48
  */
 class Api {
   /// base
@@ -63,6 +63,7 @@ class Api {
   static const String shareNews = "$API_BASE_PATH/NBANews/shareNews";
   static const String getPlayerNews = "$API_BASE_PATH/NBANews/getPlayerNews";
   static const String getNewsGuessInfo = "/p/NBANews/getNewsGuessInfo";
+  static const String sendEmoji = "$API_BASE_PATH/NBANews/sendEmoji";
 
   ///NBAData
   static const String statTeamRank =

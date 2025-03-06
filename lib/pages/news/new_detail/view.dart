@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2025-03-05 14:51:16
+ * @LastEditTime: 2025-03-06 15:06:22
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -354,7 +354,13 @@ class NewsDetailItem extends GetView<NewListController> {
                         item,
                       ),
                       16.vGap,
-                      const EmojiWidget(),
+                      EmojiWidget(
+                        emojis: item.emojis,
+                        myEmojis: item.myEmoji,
+                        type: 1,
+                        targetId: item.id,
+                        subgoal: item.id,
+                      ),
                       if (showComments) DetailCommentWidget(item: item),
                     ],
                   ),

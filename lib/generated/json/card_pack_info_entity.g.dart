@@ -148,6 +148,7 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
     RxBool? isOpen,
     List<int>? players,
     List<PlayerCardEntity>? playerCards,
+    bool? isSimple,
   }) {
     return CardPackInfoCard()
       ..index = index ?? this.index
@@ -161,6 +162,7 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
       ..progress = progress ?? this.progress
       ..isOpen = isOpen ?? this.isOpen
       ..players = players ?? this.players
-      ..playerCards = playerCards ?? this.playerCards;
+      ..playerCards = playerCards ?? this.playerCards
+      ..isSimple = isSimple ?? this.isSimple;
   }
 }

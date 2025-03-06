@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2025-03-05 09:58:17
+ * @LastEditTime: 2025-03-06 15:05:18
  */
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
@@ -204,6 +204,26 @@ class NewsApi {
     Map<String, List<GuessGameInfoEntity>> result = json.map((k, v) {
       return MapEntry(
           k, (v as List).map((e) => GuessGameInfoEntity.fromJson(e)).toList());
+    });
+    return result;
+  }
+
+/*
+type 类型：1：新闻，2：评论，3：竞猜评论
+targetId 目标id，如果是新闻或者新闻评论，则是新闻id
+subgoal 子目标id，如果是新闻则是新闻id，如果是评论则是评论id
+ */
+  static Future<bool> sendEmoji(
+    int type,
+    int targetId,
+    int subgoal,
+    int emojiId,
+  ) async {
+    bool result = await httpUtil.post(Api.sendEmoji, data: {
+      "type": type,
+      "targetId": targetId,
+      "subgoal": subgoal,
+      "emojiId": emojiId
     });
     return result;
   }

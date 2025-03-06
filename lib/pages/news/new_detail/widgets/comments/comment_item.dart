@@ -168,7 +168,13 @@ class CommentItemView extends StatelessWidget {
                   ],
                 ),
                 10.vGap,
-                const EmojiWidget(),
+                EmojiWidget(
+                  emojis: item.emojis!,
+                  myEmojis: item.myEmoji,
+                  type: 2,
+                  targetId: item.newsId,
+                  subgoal: item.id,
+                ),
 
                 /// 点赞和回复
                 // Row(
@@ -343,7 +349,13 @@ class SubCommentItemView extends StatelessWidget {
               ),
 
               10.vGap,
-              const EmojiWidget()
+              EmojiWidget(
+                emojis: item.emojis!,
+                myEmojis: item.myEmoji,
+                type: 2,
+                targetId: item.newsId,
+                subgoal: item.id,
+              ),
             ],
           ),
         )

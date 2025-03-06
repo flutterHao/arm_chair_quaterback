@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2025-02-07 17:26:33
+ * @LastEditTime: 2025-03-06 16:32:11
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -127,8 +127,12 @@ class NewsBottomButton extends GetView<NewListController> {
         if (showCommentBt)
           GestureDetector(
             onTap: () async {
+              if (!Get.isRegistered<CommentController>(
+                  tag: detail.id.toString())) {
+                Get.put(CommentController(), tag: detail.id.toString());
+              }
               final ctrl =
-                  Get.put(CommentController(), tag: detail.id.toString());
+                  Get.find<CommentController>(tag: detail.id.toString());
               ctrl.getReviews(detail.id, isRefresh: true);
               // SoundServices.to.playSound(Assets.soundWindowOpen);
               await BottomTipDialog.showWithSound(

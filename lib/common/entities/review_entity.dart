@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-15 17:48:12
- * @LastEditTime: 2024-11-22 11:24:42
+ * @LastEditTime: 2025-03-06 15:58:16
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/review_entity.g.dart';
@@ -36,6 +36,8 @@ class ReviewEntity {
   int size = 10;
   @JSONField(deserialize: false, serialize: false)
   int current = 0;
+  Map<String, int>? emojis = {};
+  List<int> myEmoji = [];
 
   ReviewEntity();
 
