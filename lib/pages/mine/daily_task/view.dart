@@ -330,7 +330,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                   id: DailyTaskController.idLuckyCoin,
                   builder: (logic) {
                     return Text(
-                      "${controller.teamProp.num}/${controller.getMaxLuckyCoinNum()}",
+                      "${controller.teamProp.num}/${controller.getMaxLuckyCoinNum().toStringAsFixed(0)}",
                       style: 16.w5(
                         height: 1,
                         fontFamily: FontFamily.fOswaldMedium,

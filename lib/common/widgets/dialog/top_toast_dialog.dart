@@ -53,6 +53,8 @@ class _TopDialogState extends State<TopToastDialog>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  bool dragging = false;
+  double startY = -1,endY = -1;
 
   @override
   void initState() {
@@ -67,7 +69,9 @@ class _TopDialogState extends State<TopToastDialog>
 
     _controller.forward().then((v) async {
       await Future.delayed(widget.duration);
-      _controller.reverse();
+      if(!dragging) {
+        _controller.reverse();
+      }
     });
   }
 
@@ -81,71 +85,112 @@ class _TopDialogState extends State<TopToastDialog>
   Widget build(BuildContext context) {
     double height = widget.height ?? -130.w;
 
-    return AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Positioned(
-                left: 0,
-                right: 0,
-                top: height * (1 - _animation.value),
-                child: !widget.needBg
-                    ? widget.child
-                    : Container(
-                        width: double.infinity,
-                        height: 130.w,
-                        alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            AppColors.cFF7954,
-                            AppColors.cEE6C4D,
-                          ],
-                        )),
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Text(
-                                "congratulation".toUpperCase(),
-                                style: TextStyle(
-                                  fontSize: 53.sp,
-                                  height: 0.9,
-                                  color: AppColors.cff7c5a.withOpacity(0.67),
-                                  fontFamily: FontFamily.fOswaldMedium,
+    return GestureDetector(
+      onVerticalDragStart: (e){
+        if(_controller.isAnimating){
+          return;
+        }
+        dragging = true;
+        startY = e.localPosition.dy;
+      },
+      onVerticalDragDown: (e){
+        if(_controller.isAnimating){
+          return;
+        }
+        dragging = true;
+        startY = e.localPosition.dy;
+      },
+      onVerticalDragUpdate: (e){
+        if(_controller.isAnimating){
+          return;
+        }
+        _controller.value += -e.delta.dy/height;
+        endY = e.localPosition.dy;
+      },
+      onVerticalDragEnd: (e){
+        if(_controller.isAnimating){
+          return;
+        }
+        dragging = false;
+        var value = (endY-startY).abs()/height;
+        _controller.reverse(from: value);
+        startY = endY = -1;
+      },
+      onVerticalDragCancel: (){
+        if(_controller.isAnimating){
+          return;
+        }
+        dragging = false;
+        var value = (endY-startY).abs()/height;
+        _controller.reverse(from: value);
+        startY = endY = -1;
+      },
+      child: AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: height * (1 - _animation.value),
+                  child: !widget.needBg
+                      ? widget.child
+                      : Container(
+                          width: double.infinity,
+                          height: 130.w,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              AppColors.cFF7954,
+                              AppColors.cEE6C4D,
+                            ],
+                          )),
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Text(
+                                  "congratulation".toUpperCase(),
+                                  style: TextStyle(
+                                    fontSize: 53.sp,
+                                    height: 0.9,
+                                    color: AppColors.cff7c5a.withOpacity(0.67),
+                                    fontFamily: FontFamily.fOswaldMedium,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 16.w, top: 47.w),
-                              width: double.infinity,
-                              height: 130.w,
-                              alignment: Alignment.centerLeft,
-                              child: widget.child,
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Container(
+                              Container(
+                                padding: EdgeInsets.only(left: 16.w, top: 47.w),
                                 width: double.infinity,
-                                height: 2.w,
-                                color: AppColors.cFFFFFF,
+                                height: 130.w,
+                                alignment: Alignment.centerLeft,
+                                child: widget.child,
                               ),
-                            ),
-                          ],
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 2.w,
+                                  color: AppColors.cFFFFFF,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-              ),
-            ],
-          );
-        });
+                ),
+              ],
+            );
+          }),
+    );
   }
 }

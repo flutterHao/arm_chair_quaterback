@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_prop_list.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
@@ -13,7 +12,6 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -31,7 +29,9 @@ import 'package:get/get.dart';
 class WebsocketServices extends GetxService {
   final List<ToastItem> _queue = [];
   ToastItem? _showing;
-  StreamSubscription<ResponseMessage>? subscription;
+  late StreamSubscription<ResponseMessage> subscription;
+  late AppLifecycleListener appLifecycleListener;
+  AppLifecycleState appLifecycleState = AppLifecycleState.resumed;
 
   @override
   void onInit() {
@@ -55,6 +55,15 @@ class WebsocketServices extends GetxService {
       }
       if (result.serviceId == Api.wsTeamPlayerUpdated) {
         print('HomeController--event--wsTeamPlayerUpdated-----------');
+      }
+    });
+    appLifecycleListener =
+        AppLifecycleListener(onStateChange: (AppLifecycleState state) {
+      print('WebsocketServices App $state');
+      appLifecycleState = state;
+      if (state == AppLifecycleState.resumed) {
+        /// 页面可见状态下，激活队列
+        next();
       }
     });
   }
@@ -207,6 +216,10 @@ class WebsocketServices extends GetxService {
   }
 
   void next() {
+    ///页面非可见状态下不提示
+    if(appLifecycleState != AppLifecycleState.resumed){
+      return;
+    }
     if (_queue.isNotEmpty && _showing == null) {
       _showing = _queue.removeAt(0);
       // print('websocket-services--show-----');
@@ -262,7 +275,8 @@ class WebsocketServices extends GetxService {
 
   @override
   void onClose() {
-    subscription?.cancel();
+    subscription.cancel();
+    appLifecycleListener.dispose();
     super.onClose();
   }
 }
