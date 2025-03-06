@@ -152,7 +152,9 @@ class EmailRankAwardWidget extends GetView<InboxEmailController> {
                                       : MtInkWell(
                                           onTap: () {
                                             controller.receiveMailAward(
-                                                '${controller.emailList[index].mailId}');
+                                                '${controller.emailList[index].mailId}',
+                                                controller.emailList[index]
+                                                    .awardData.length);
                                           },
                                           child: Container(
                                               alignment: Alignment.center,

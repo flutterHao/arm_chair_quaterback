@@ -54,7 +54,8 @@ class InboxEmailController extends GetxController {
   String readMailId = '';
   Future initData() async {
     try {
-      InboxEmailEntity res = (await InboxApi.getMailVOList()).firstWhere((element) => element.mailType == type);
+      InboxEmailEntity res = (await InboxApi.getMailVOList())
+          .firstWhere((element) => element.mailType == type);
       emailList.value = res.mailList;
       loadingStatus.value = LoadDataStatus.success;
     } catch (e) {
@@ -63,14 +64,17 @@ class InboxEmailController extends GetxController {
   }
 
   ///领取奖励
-  void receiveMailAward(String mailIds) async {
+  void receiveMailAward(String mailIds, int awardNum) async {
     await InboxApi.receiveMailAward(mailIds);
     showTopToastDialog(
         needBg: false,
         child: Container(
             margin: EdgeInsets.only(top: 44.w),
-            child: AwardWidget(image: Assets.managerUiManagerGift00, text: "YOU GOT 3  treasure chest".toUpperCase())));
-    InboxEmailEntity res = (await InboxApi.getMailVOList()).firstWhere((element) => element.mailType == type);
+            child: AwardWidget(
+                image: Assets.managerUiManagerGift00,
+                text: "YOU GET $awardNum  treasure chest".toUpperCase())));
+    InboxEmailEntity res = (await InboxApi.getMailVOList())
+        .firstWhere((element) => element.mailType == type);
     emailList.value = res.mailList;
   }
 
