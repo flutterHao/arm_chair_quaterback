@@ -87,8 +87,9 @@ class PicksIndexController extends GetxController
 
       /// 现有的列表不包含此球员,刷新数据之后再加一次
       if (!hasPlayer) {
-        await _initData();
-        choiceOne(player: player, needRefreshList: needRefreshList);
+        _initData().then((v){
+          choiceOne(player: player, needRefreshList: needRefreshList);
+        });
       }
     }
     _count(needRefreshList);
@@ -211,7 +212,8 @@ class PicksIndexController extends GetxController
       return Future.delayed(Duration.zero);
     }
     loadStatusRx.value = LoadDataStatus.loading;
-    return Future.wait([
+    Completer completer = Completer();
+    Future.wait([
       PicksApi.getGuessGamesInfo(),
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getPickDefine(),
@@ -275,12 +277,14 @@ class PicksIndexController extends GetxController
         loadStatusRx.value = LoadDataStatus.success;
       }
       refreshController.refreshCompleted();
-
+      completer.complete();
       update([idMain]);
     }, onError: (e) {
       refreshController.refreshCompleted();
+      completer.completeError(e);
       loadStatusRx.value = LoadDataStatus.error;
     });
+    return completer.future;
   }
 
   /// 排序
