@@ -36,6 +36,7 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
   NbaPlayerController controller = Get.find();
   int? lastPagePlayerId;
   ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -123,25 +124,33 @@ class _OvrStandingDetailPageState extends State<OvrStandingDetailPage> {
                   ),
                 ),
                 Spacer(),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.cD1D1D1),
-                      borderRadius: BorderRadius.circular(8.w)),
-                  child: Row(
-                    children: [
-                      IconWidget(
-                        iconWidth: 16.w,
-                        icon: Assets.commonUiCommonIconSystemLikeComment,
-                        iconColor: Colors.black,
-                      ),
-                      8.hGap,
-                      Text(
-                        '329K',
-                        style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
-                      ),
-                    ],
+                MtInkWell(
+                  onTap: () {
+                    if (!Utils.canOperate()) return;
+                    Get.toNamed(RouteNames.message, arguments: {
+                      "type": 2,
+                    });
+                  },
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.cD1D1D1),
+                        borderRadius: BorderRadius.circular(8.w)),
+                    child: Row(
+                      children: [
+                        IconWidget(
+                          iconWidth: 16.w,
+                          icon: Assets.commonUiCommonIconSystemLikeComment,
+                          iconColor: Colors.black,
+                        ),
+                        8.hGap,
+                        Text(
+                          '329K',
+                          style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

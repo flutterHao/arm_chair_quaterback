@@ -57,9 +57,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
       id: TradeIndexController.idTradeIndexMain,
       builder: (controller) {
         return BlackAppWidget(
-          const UserInfoBar(
-            title: "TRADE",
-          ),
+          const UserInfoBar(),
           bodyWidget: Obx(() {
             var emptyWidget = Center(
               child: LoadStatusWidget(

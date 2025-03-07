@@ -121,7 +121,6 @@ class _TopDialogState extends State<TopDialog>
                                       top: MediaQuery.of(context).padding.top +
                                           0.w),
                                   child: UserInfoBar(
-                                    title: widget.title,
                                     enable: false,
                                   )),
                             ),
@@ -437,7 +436,6 @@ class _TopDialogState extends State<TopDialog>
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top + 0.w),
                     child: UserInfoBar(
-                      title: widget.title,
                       enable: false,
                     )),
               ],

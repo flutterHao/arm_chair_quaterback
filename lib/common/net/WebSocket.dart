@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
@@ -29,6 +30,9 @@ class WSInstance {
   static final _networkConnectedStreamController =
       StreamController<int>.broadcast();
   static StreamSubscription? _streamSubscription;
+  static int authCount = 0;
+
+  ///登录重试次数
 
   WSInstance._();
 
@@ -47,6 +51,7 @@ class WSInstance {
       await _streamSubscription?.cancel();
       _streamSubscription = _channel?.stream
           .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
+      authCount = 0;
       await _auth();
       _startPingTimer();
       _lastPongTime = DateTime.now();
@@ -58,12 +63,16 @@ class WSInstance {
   }
 
   static _auth() async {
+    if (!_ready) {
+      return;
+    }
+    authCount++;
     if (Get.find<HomeController>().userEntiry.teamLoginInfo == null) {
       try {
         await Get.find<HomeController>().login();
       } finally {
         if (Get.find<HomeController>().userEntiry.teamLoginInfo == null) {
-          await Future.delayed(const Duration(seconds: 2));
+          await Future.delayed(Duration(seconds: pow(2, authCount).toInt()));
           _auth();
         } else {
           _authAccount(Get.find<HomeController>()
@@ -116,7 +125,7 @@ class WSInstance {
 
   static void _onMessageReceive(message) {
     var result = _decoder(message);
-    if(kDebugMode) {
+    if (kDebugMode) {
       print('WebSocket--message--:${result.serviceId}');
     }
     if (result.serviceId == Api.wsHeartBeat) {
@@ -168,7 +177,7 @@ class WSInstance {
 
   static Stream<int> get netStream => _networkConnectedStreamController.stream;
 
-  static void _sendMessage(dynamic message, {String path = ""}) {
+  static void _sendMessage(List message, {String path = ""}) {
     if (!_ready) {
       throw ('WSInstance not ready');
     }
@@ -177,7 +186,7 @@ class WSInstance {
     }
     if (path != Api.wsHeartBeat && kDebugMode) {
       print('WebSocket--sendMessage--message:$message');
-      log('WebSocket--sendMessage--path:$path');
+      print('WebSocket--sendMessage--path:$path');
     }
     // print('WebSocket--_msgCounter:$_msgCounter');
     var byteData = WebSocketDataHandler.encoder(
@@ -195,15 +204,38 @@ class WSInstance {
   }
 
   static void _authAccount(int teamId) {
-    WSInstance._sendMessage(teamId, path: Api.wsAuthAccount);
+    WSInstance._sendMessage([teamId], path: Api.wsAuthAccount);
   }
 
   static void _ping() {
-    WSInstance._sendMessage("ping", path: Api.wsHeartBeat);
+    WSInstance._sendMessage(["ping"], path: Api.wsHeartBeat);
   }
 
   static Stream<ResponseMessage> teamMatch() {
-    WSInstance._sendMessage("teamMatch", path: Api.wsTeamMatch);
+    WSInstance._sendMessage(["teamMatch"], path: Api.wsTeamMatch);
     return stream;
+  }
+
+  ///进入聊天室 id: gameId或playerId
+  static Stream<ResponseMessage> enterRoom({int? gameId, int? playerId}) {
+    WSInstance._sendMessage([gameId ?? 0, playerId ?? 0],
+        path: Api.wsEnterRoom);
+    return stream;
+  }
+
+  ///离开聊天室 id: gameId或playerId
+  static void exitRoom({int? gameId, int? playerId}) {
+    WSInstance._sendMessage([gameId ?? 0, playerId ?? 0], path: Api.wsExitRoom);
+  }
+
+  ///进入ovr聊天室
+  static Stream<ResponseMessage> enterOVRRoom() {
+    WSInstance._sendMessage([], path: Api.wsEnterOVRRoom);
+    return stream;
+  }
+
+  ///离开ovr聊天室
+  static void exitOVRRoom() {
+    WSInstance._sendMessage([], path: Api.wsExitOVRRoom);
   }
 }

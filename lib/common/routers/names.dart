@@ -67,4 +67,7 @@ class RouteNames {
   /// inbox
   static const inboxDetail = '/inbox_detail';
   static const inboxEmail = '/inbox_email';
+
+
+  static const message = '/message';
 }

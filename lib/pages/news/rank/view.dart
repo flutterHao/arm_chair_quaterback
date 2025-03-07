@@ -188,7 +188,6 @@ class NBARankPage extends GetView<RankController> {
         builder: (_) {
           return BlackAppWidget(
               const UserInfoBar(
-                title: "Stars",
                 showPop: true,
               ),
               bodyWidget: Expanded(

@@ -24,7 +24,7 @@ import 'package:get/get.dart';
 class UserInfoBar extends StatelessWidget {
   const UserInfoBar({
     super.key,
-    this.title = "Title",
+    this.title,
     this.enable = true,
     this.routeId,
     this.showPop = false,
@@ -32,7 +32,7 @@ class UserInfoBar extends StatelessWidget {
     this.canTapDailyTask = true,
   });
 
-  final String title;
+  final String? title;
   final bool enable; //头像是否可点击显示弹框
   final int? routeId;
   final bool showPop;
@@ -166,10 +166,19 @@ class UserInfoBar extends StatelessWidget {
                               ),
                             ),
                           ),
-                        11.hGap,
+                        if(title == null)
+                        ...[11.hGap,
                         MoneyAndCoinWidget(
                           home: true,
-                        ),
+                        )]
+                        else
+                          Expanded(
+                            child: Center(
+                              child: Text(title!,style: 20.w5(
+                                color: AppColors.cFFFFFF
+                              ),),
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -228,7 +237,7 @@ class UserInfoBar extends StatelessWidget {
         useRootNavigator: false,
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
-          return TopDialog(title: title, routeId: routeId);
+          return TopDialog(title: title??"Title", routeId: routeId);
         });
   }
 }

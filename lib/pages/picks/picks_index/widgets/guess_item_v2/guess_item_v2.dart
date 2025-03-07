@@ -80,7 +80,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     var nowDateMs = MyDateUtils.getNowDateMs();
     var gameStart =
         MyDateUtils.getDateTimeByMs(playerV2.guessInfo.gameStartTime);
-    var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs+12*60*1000;
+    var lastTimeMs =
+        gameStart.millisecondsSinceEpoch - nowDateMs + 12 * 60 * 1000;
     if (lastTimeMs <= 15 * 60 * 1000 && lastTimeMs > 0) {
       //距离比赛开始时间小于15分钟开始倒计时
       timer?.cancel();
@@ -91,15 +92,16 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
         var nowDateMs = MyDateUtils.getNowDateMs();
         var gameStart =
             MyDateUtils.getDateTimeByMs(playerV2.guessInfo.gameStartTime);
-        var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs+12*60*1000;
+        var lastTimeMs =
+            gameStart.millisecondsSinceEpoch - nowDateMs + 12 * 60 * 1000;
         if (lastTimeMs <= 0) {
           t.cancel();
           gameStartTimeStr.value =
               "In the game: ${MyDateUtils.formatHM_AM(gameStart)}";
-        }else {
+        } else {
           gameStartTimeStr.value = MyDateUtils.formatDate(
-            MyDateUtils.getDateTimeByMs(lastTimeMs),
-            format: DateFormats.M_S);
+              MyDateUtils.getDateTimeByMs(lastTimeMs),
+              format: DateFormats.M_S);
         }
       });
     } else if (MyDateUtils.isTomorrow(playerV2.guessInfo.gameStartTime)) {
@@ -330,57 +332,69 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     ),
                   ),
                   21.vGap,
-                  ...[
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16.w),
-                      height: 1.w,
-                      width: double.infinity,
-                      color: AppColors.cE6E6E,
-                    ),
-                    11.vGap,
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.w),
-                      child: Row(
-                        children: [
-                          UserAvaterWidget(
-                            url: Utils.getAvatarUrl(
-                                player.guessTopReviews?.teamLogo),
-                            width: 26.w,
-                            height: 26.w,
-                            radius: 13.w,
+                  MtInkWell(
+                    onTap: () {
+                      if(!Utils.canOperate()) return;
+                      Get.toNamed(RouteNames.message, arguments: {
+                        "type": 1,
+                        "playerId": player.baseInfoList.playerId
+                      });
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          height: 1.w,
+                          width: double.infinity,
+                          color: AppColors.cE6E6E,
+                        ),
+                        11.vGap,
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 15.w),
+                          child: Row(
+                            children: [
+                              UserAvaterWidget(
+                                url: Utils.getAvatarUrl(
+                                    player.guessTopReviews?.teamLogo),
+                                width: 26.w,
+                                height: 26.w,
+                                radius: 13.w,
+                              ),
+                              5.hGap,
+                              Expanded(
+                                  child: Text(
+                                player.guessTopReviews?.context ??
+                                    "Add a comment about this stake about",
+                                style: 14.w4(
+                                  color: AppColors.c4D4D4D,
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )),
+                              9.hGap,
+                              IconWidget(
+                                  iconWidth: 18.w,
+                                  icon: Assets.commonUiCommonIconCurrency02),
+                              2.hGap,
+                              Text(
+                                Utils.formatChip((double.parse(
+                                        picksIndexController
+                                            .picksDefine.betCost) *
+                                    count)),
+                                style: 12.w5(
+                                  color: AppColors.c4D4D4D,
+                                  fontFamily: FontFamily.fRobotoMedium,
+                                  height: 1,
+                                ),
+                              )
+                            ],
                           ),
-                          5.hGap,
-                          Expanded(
-                              child: Text(
-                            player.guessTopReviews?.context ??
-                                "Add a comment about this stake about",
-                            style: 14.w4(
-                              color: AppColors.c4D4D4D,
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )),
-                          9.hGap,
-                          IconWidget(
-                              iconWidth: 18.w,
-                              icon: Assets.commonUiCommonIconCurrency02),
-                          2.hGap,
-                          Text(
-                            Utils.formatChip((double.parse(
-                                    picksIndexController.picksDefine.betCost) *
-                                count)),
-                            style: 12.w5(
-                              color: AppColors.c4D4D4D,
-                              fontFamily: FontFamily.fRobotoMedium,
-                              height: 1,
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                        11.vGap
+                      ],
                     ),
-                    11.vGap
-                  ]
+                  )
                 ],
               ),
             ),

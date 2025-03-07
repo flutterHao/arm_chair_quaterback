@@ -23,7 +23,6 @@ class _InboxPageState extends State<InboxPage> with AutomaticKeepAliveClientMixi
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InboxController>(
-      init: InboxController(),
       id: "inbox",
       builder: (_) {
         return Container(

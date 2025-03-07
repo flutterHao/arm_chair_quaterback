@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
+
 ///
 ///@auther gejiahui
 ///created at 2024/12/2/10:03
 
 class RequestMessage {
-  final dynamic json;
+  final List json;
   final String path;
   final int msgCounter;
 
@@ -145,7 +147,7 @@ class WebSocketDataHandler {
 
   static Uint8List encoder(RequestMessage message) {
     String si = message.path;
-    List rps = [message.json];
+    List rps = message.json;
     int ri = message.msgCounter;
     String ss = jsonEncode(rps);
     var body = Uint8List.fromList(utf8.encode(ss));
@@ -189,10 +191,12 @@ class WebSocketDataHandler {
     respons.statusMsg = socketBuf.readString(statusBytes);
 
     var decode = utf8.decode(payload);
+    if(kDebugMode) {
+      log('${respons.serviceId}---decode:$decode');
+    }
     if (decode.isEmpty) {
       respons.payload = {};
     } else {
-      // log('${respons.serviceId}---decode:$decode');
       respons.payload = jsonDecode(decode);
     }
 

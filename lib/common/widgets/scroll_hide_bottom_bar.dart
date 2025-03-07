@@ -24,7 +24,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
   late AnimationController _animationController;
   late Animation<double> _offsetAnimation;
   late Animation<double> _opacityAnimation;
-  final double _bottomBarHeight = 80.0; // 底部栏高度，根据实际调整
+  final double _bottomBarHeight = 0.0; // 底部栏高度，根据实际调整
   double startY = 0;
 
   @override
@@ -145,7 +145,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
           animation: _animationController,
           builder: (context, child) {
             return Positioned(
-              bottom: _offsetAnimation.value,
+              bottom: _offsetAnimation.value-1,///Android 有底部虚拟按键时会有分割空间，透视了背景ui
               left: 0,
               right: 0,
               child: Opacity(

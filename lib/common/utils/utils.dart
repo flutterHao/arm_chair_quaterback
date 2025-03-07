@@ -179,7 +179,8 @@ class Utils {
   static String getLongName(String key) {
     return CacheApi.pickType
             ?.firstWhere((e) => e.pickTypeName == key)
-            .pickTypeFullName.tr ??
+            .pickTypeFullName
+            .tr ??
         key;
   }
 
@@ -607,5 +608,12 @@ class Utils {
   /// 获取底部安全距离高度
   static double getPaddingBottom() {
     return MediaQuery.of(Get.context!).padding.bottom / 2;
+  }
+
+
+  /// 判断是不是自己
+  static bool isMe(teamId) {
+    return "${Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId}" ==
+        "$teamId";
   }
 }
