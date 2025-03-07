@@ -190,6 +190,7 @@ class Assets {
   static const String managerUiManagerBattleTextbase = 'assets/images/manager/ui_manager_battle_textbase.png';
   static const String managerUiManagerBattleTextbase01 = 'assets/images/manager/ui_manager_battle_textbase_01.png';
   static const String managerUiManagerBattleTextbase02 = 'assets/images/manager/ui_manager_battle_textbase_02.png';
+  static const String managerUiManagerBattltpass01 = 'assets/images/manager/ui_manager_battltpass_01.png';
   static const String managerUiManagerBlankcard = 'assets/images/manager/ui_manager_blankcard.png';
   static const String managerUiManagerBubble = 'assets/images/manager/ui_manager_bubble.png';
   static const String managerUiManagerChat01 = 'assets/images/manager/ui_manager_chat_01.png';
