@@ -29,8 +29,8 @@ class MyDateUtils {
   /// 格式化 8:05AM
   static String formatHM_AM(DateTime dateTime) {
     var hour = dateTime.hour;
-    hour = hour % 12;
-    if (hour == 0) {
+    hour = hour%12;
+    if(hour == 0){
       hour = 12;
     }
     return "$hour:${dateTime.minute.toString().padLeft(2, "0")}${dateTime.hour < 12 ? "AM" : "PM"}";
@@ -39,8 +39,8 @@ class MyDateUtils {
   /// 格式化 AM 8:05
   static String formatAM_HM(DateTime dateTime) {
     var hour = dateTime.hour;
-    hour = hour % 12;
-    if (hour == 0) {
+    hour = hour%12;
+    if(hour == 0){
       hour = 12;
     }
     return "${dateTime.hour < 12 ? "AM" : "PM"} $hour:${dateTime.minute}";
@@ -753,11 +753,6 @@ class MyDateUtils {
   /// Aug 1,2024
   static String getEnMMDDYYYY(DateTime dateTime, {bool short = false}) {
     return "${getMonthEnName(dateTime, short: short)} ${dateTime.day},${dateTime.year}";
-  }
-
-  ///1 Aug
-  static String getEnDDMM(DateTime dateTime, {bool short = false}) {
-    return "${dateTime.day} ${getMonthEnName(dateTime, short: short)}";
   }
 
   /// Aug 1

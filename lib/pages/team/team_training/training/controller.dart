@@ -685,7 +685,7 @@ class TrainingController extends GetxController
     int propIndex = propList.indexOf(trainingInfo.propArray[index]);
 
     ///在获奖的结果基础上旋转三周
-    double offset = 60.w * (propIndex + propList.length * 3);
+    double offset = 68.w * (propIndex + propList.length * 3);
     offsetList.add(offset);
     slotsAnimlList[index].forward();
     await scrollerCtrlList[index].animateTo(offset,

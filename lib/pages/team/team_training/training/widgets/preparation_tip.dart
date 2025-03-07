@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-21 20:11:25
- * @LastEditTime: 2025-03-07 17:11:47
+ * @LastEditTime: 2025-02-22 12:09:16
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -90,7 +90,7 @@ class _PreparationTipTabState extends State<PreparationTipTab>
             ),
           ),
           17.5.vGap,
-          // PreparationWidget(playerReadiness: ctrl.trainingInfo.playerReadiness),
+          PreparationWidget(playerReadiness: ctrl.trainingInfo.playerReadiness),
           34.vGap,
           Container(
             width: 323.w,

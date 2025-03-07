@@ -19,12 +19,12 @@ class NbaPlayerController extends GetxController {
 
   RxList<int> likePlayersList = RxList();
   Map<int, int> playerRankMap = {};
-  List<PlayerStrengthRankEntity> allPlayerRank = [];
+  List<PlayerStrengthRankEntity> rr = [];
   Future initData() async {
     allPlayerStrengthRank.clear();
 
     allPlayerStrengthRank.value = await TeamApi.getPlayerStrengthRank();
-    allPlayerRank = allPlayerStrengthRank.value;
+    rr = allPlayerStrengthRank.value;
     nbaPlayerList.clear();
 
     ///涨跌幅都是0，取前四个,否则取前两个和最后两个展示
@@ -279,7 +279,7 @@ class NbaPlayerController extends GetxController {
   ///根据Position,Grade,Team等条件进行筛选
   List<PlayerStrengthRankEntity> onfilter() {
     // List<PlayerCollectCollects> list = List.from(CacheApi.playerBookRuleList);
-    List<PlayerStrengthRankEntity> list = allPlayerRank;
+    List<PlayerStrengthRankEntity> list = rr;
     list = list.where((e) {
       //OVR
       bool isSelOvr = false;
