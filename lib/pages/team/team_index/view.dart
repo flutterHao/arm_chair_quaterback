@@ -8,9 +8,8 @@
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/match_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
