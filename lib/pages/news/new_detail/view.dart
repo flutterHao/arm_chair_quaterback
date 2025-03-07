@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2025-03-06 15:06:22
+ * @LastEditTime: 2025-03-06 16:58:17
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -22,9 +22,7 @@ import 'package:get/get.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';

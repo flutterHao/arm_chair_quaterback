@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 16:52:11
- * @LastEditTime: 2024-12-30 11:54:00
+ * @LastEditTime: 2025-03-06 18:08:24
  */
+import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entiry/team.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_prop_list.dart';
@@ -12,9 +13,16 @@ import 'package:arm_chair_quaterback/common/net/index.dart';
 
 class UserApi {
   static Future<String> auth(
-      {required String accountName, required int serviceId, required String userIp, required int id}) async {
-    String data = await HttpUtil()
-        .post(Api.authAccount, data: {"accountName": accountName, "serviceId": serviceId, "userIp": userIp, "id": id});
+      {required String accountName,
+      required int serviceId,
+      required String userIp,
+      required int id}) async {
+    String data = await HttpUtil().post(Api.authAccount, data: {
+      "accountName": accountName,
+      "serviceId": serviceId,
+      "userIp": userIp,
+      "id": id
+    });
     return data;
   }
 
@@ -43,13 +51,26 @@ class UserApi {
     return list.map<TeamPropList>((e) => TeamPropList.fromJson(e)).toList();
   }
 
+  static Future<List<Awards>> useTeamProp(int propId,
+      {int useNum = 1, int optionalId = 0}) async {
+    var data = await HttpUtil().post(Api.useTeamProp, data: {
+      "propId": propId,
+      "useNum": useNum,
+      "optionalId": optionalId,
+    });
+    List list = data["awardDataList"] ?? [];
+    return list.map<Awards>((e) => Awards.fromJson(e)).toList();
+  }
+
   static Future<Team> likePlayer(String likes) async {
-    var data = await HttpUtil().post(Api.likePlayer, data: {'type': 1, 'likes': likes});
+    var data = await HttpUtil()
+        .post(Api.likePlayer, data: {'type': 1, 'likes': likes});
     return Team.fromMap(data);
   }
 
   static Future<Team> cancelLikingPlayer(String likes) async {
-    var data = await HttpUtil().post(Api.cancelLikingPlayer, data: {'type': 1, 'likes': likes});
+    var data = await HttpUtil()
+        .post(Api.cancelLikingPlayer, data: {'type': 1, 'likes': likes});
     return Team.fromMap(data);
   }
 }

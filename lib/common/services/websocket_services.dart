@@ -17,6 +17,8 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,6 +57,7 @@ class WebsocketServices extends GetxService {
       }
       if (result.serviceId == Api.wsTeamPlayerUpdated) {
         print('HomeController--event--wsTeamPlayerUpdated-----------');
+        // TeamController.to.initData();
       }
     });
     appLifecycleListener =
@@ -114,13 +117,17 @@ class WebsocketServices extends GetxService {
   propUpdated(List<TeamPropList> result) async {
     await CacheApi.getPropDefine();
     TrainingController trainingCtrl = Get.find<TrainingController>();
-    if (trainingCtrl.isPlaying.value) return;
+
     for (int i = 0; i < result.length; i++) {
       TeamPropList teamProp = result[i];
       var isBall = teamProp.propId == Constant.propBallId;
       var isLuckyCoin = teamProp.propId == Constant.propLuckyCoinId;
       var isMoney = teamProp.propId == Constant.propMoneyTickId;
       var isBetCoin = teamProp.propId == Constant.propBetCoinId;
+      var isPlayer = CacheApi.propDefineMap[teamProp.propId]?.propType == 2;
+
+      ///如果在slot并且不是球员卡包，取消推送奖励表达
+      if (trainingCtrl.isPlaying.value && !isPlayer) return;
       if (isLuckyCoin) {
         try {
           var luckyCoinNum = Get.find<HomeController>()
@@ -160,6 +167,15 @@ class WebsocketServices extends GetxService {
         if (betCoin < teamProp.num!) {
           addProp(teamProp, "${teamProp.num! - betCoin}", EventType.betCoin);
         }
+      }
+
+      ///球员卡包
+      if (isPlayer && teamProp.num! > 0) {
+        if (!Get.isRegistered<OpenBoxSimpleController>()) {
+          Get.put(OpenBoxSimpleController());
+        }
+        OpenBoxSimpleController controller = Get.find();
+        await controller.toOpenBoxPage(teamProp.propId!);
       }
     }
     var hasBall =
@@ -217,7 +233,7 @@ class WebsocketServices extends GetxService {
 
   void next() {
     ///页面非可见状态下不提示
-    if(appLifecycleState != AppLifecycleState.resumed){
+    if (appLifecycleState != AppLifecycleState.resumed) {
       return;
     }
     if (_queue.isNotEmpty && _showing == null) {

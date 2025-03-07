@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-05 18:19:34
+ * @LastEditTime: 2025-03-06 18:51:16
  */
 
 import 'dart:async';
@@ -302,6 +302,9 @@ class TeamIndexController extends GetxController
     Get.find<HomeController>()
         .scrollHideBottomBarController
         .changeHideStatus(false);
+    if (overlayEntry.mounted) {
+      overlayEntry.remove();
+    }
     Overlay.of(Get.context!).insert(overlayEntry);
   }
 

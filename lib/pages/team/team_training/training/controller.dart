@@ -780,11 +780,16 @@ class TrainingController extends GetxController
       int cashs = 0;
       if (trainingInfo.training.currentTaskId > currentLevel) {
         await Future.delayed(const Duration(milliseconds: 300));
+
+        ///任务奖励
         var item =
             trainTaskList.where((e) => e.taskLevel == currentLevel).first;
-        cashs = item.propNum;
-        await showCashAward(1, cashs);
+        if (item.propId == 102 || item.propId == 103) {
+          cashs = item.propNum;
+          await showCashAward(item.propId == 103 ? 1 : 2, cashs);
+        }
         currentLevel = trainingInfo.training.currentTaskId;
+        updateProp();
         Get.back();
         update(["training_page"]);
 

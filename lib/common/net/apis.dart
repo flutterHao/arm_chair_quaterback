@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-03-06 14:12:48
+ * @LastEditTime: 2025-03-06 17:37:50
  */
 class Api {
   /// base
@@ -20,6 +20,7 @@ class Api {
   static const String getTeamInfo = "$API_BASE_PATH/team/getTeamInfo";
   static const String updateTeamInfo = "$API_BASE_PATH/team/updateTeamInfo";
   static const String getTeamProp = "$API_BASE_PATH/team/getTeamProp";
+  static const String useTeamProp = "/p/TeamProp/useTeamProp";
   static const String getSeasonRankInfo =
       '$API_BASE_PATH/team/getSeasonRankInfo';
   static const String getSeasonRankAward =

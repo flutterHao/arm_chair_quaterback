@@ -27,6 +27,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class TeamController extends GetxController with GetTickerProviderStateMixin {
+  static TeamController to = Get.find<TeamController>();
   final random = Random();
 
   late TabController tabController;
