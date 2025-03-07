@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-02-25 20:31:14
+ * @LastEditTime: 2025-03-07 17:11:39
  */
 import 'dart:math';
 
@@ -92,9 +92,9 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       left: 26.w,
                       child: Column(
                         children: [
-                          PreparationWidget(
-                            playerReadiness: ctrl.trainingInfo.playerReadiness,
-                          ),
+                          // PreparationWidget(
+                          //   playerReadiness: ctrl.trainingInfo.playerReadiness,
+                          // ),
                           3.vGap,
                           SizedBox(
                             width: 106.w,
