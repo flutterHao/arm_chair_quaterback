@@ -1,5 +1,0 @@
-
-      GetPage(
-        name: RouteNames.leagueLeagueDetailV2,
-        page: () => const LeagueDetailV2Page(),
-      ),

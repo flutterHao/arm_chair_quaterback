@@ -41,3 +41,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/lib/common/routers/names.txt
+/lib/common/routers/pages.txt
+/test/widget_test.dart
