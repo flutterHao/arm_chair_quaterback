@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/pages/battle_pass.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
   var gradesList = ['S', 'A', 'B', 'C', 'D'];
   List<PlayerStrengthRankEntity> playerRankList = [];
   final NbaPlayerController nbaController = Get.find();
+  final controller = Get.find<SeasonPassController>();
   List<PlayerStrengthRankEntity> allPlayerRank = [];
   int teamId = 101;
   @override
@@ -63,7 +65,7 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
           children: [
             Container(
               height: 198.w,
-              color: AppColors.c204794,
+              color: controller.getTeamColor(teamId),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
@@ -73,7 +75,7 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
                   Row(
                     children: [
                       ImageWidget(
-                        url: Utils.getTeamUrl(105),
+                        url: Utils.getTeamUrl(teamId),
                         width: 76.w,
                         height: 76.w,
                       ),

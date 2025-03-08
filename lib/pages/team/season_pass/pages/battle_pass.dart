@@ -41,6 +41,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
 
   List<BattlePassRewardEntity> battleRewardList = [];
   NowSeasonEntity nowSeasonEntity = NowSeasonEntity();
+  int teamId = 101;
 
   ///当前的奖励
   BattlePassRewardEntity nowReward = BattlePassRewardEntity();
@@ -101,7 +102,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
       height: 94.w + Utils.getPaddingBottom(),
       padding: EdgeInsets.only(right: 16.w),
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(color: Colors.white, blurRadius: 5, spreadRadius: 5)
+        BoxShadow(color: AppColors.cDEDEDE, blurRadius: 5, spreadRadius: 5)
       ]),
       child: Row(
         children: [
@@ -117,7 +118,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                   height: 24.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: AppColors.c3B5FA7,
+                    color: controller.getTeamColor(teamId),
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   child: Text(
@@ -255,7 +256,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
   Widget _battleTopWidget() {
     return Container(
         height: 144.w,
-        color: AppColors.c204794,
+        color: controller.getTeamColor(teamId),
         alignment: Alignment.centerLeft,
         // padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Stack(
@@ -266,7 +267,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                 child: Opacity(
                   opacity: .05,
                   child: ImageWidget(
-                    url: Utils.getTeamUrl(105),
+                    url: Utils.getTeamUrl(teamId),
                     width: 290.w,
                     height: 290.w,
                   ),
@@ -281,7 +282,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                     child: Row(
                       children: [
                         ImageWidget(
-                          url: Utils.getTeamUrl(105),
+                          url: Utils.getTeamUrl(teamId),
                           width: 124.w,
                           height: 124.w,
                         ),
@@ -407,6 +408,13 @@ class _BattlePassPageState extends State<BattlePassPage> {
 
   Widget _rightWidget(int index) {
     var rewardList = battleRewardList[index].fixReward.split('|');
+    BattleRewardType type = controller.battlePassInfo.value >=
+                battleRewardList[index].threshold &&
+            index == 0
+        ? BattleRewardType.received
+        : controller.battlePassInfo.value >= battleRewardList[index].threshold
+            ? BattleRewardType.canReceived
+            : BattleRewardType.notReceived;
     return Expanded(
         child: SizedBox(
             height: 98.w + 1,
@@ -417,7 +425,8 @@ class _BattlePassPageState extends State<BattlePassPage> {
                   children: [
                     12.hGap,
                     Expanded(
-                        child: SizedBox(
+                        child: Opacity(
+                      opacity: type == BattleRewardType.received ? .5 : 1,
                       child: Row(
                         children: rewardList
                             .map((cupItem) {
@@ -455,16 +464,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                             .toList(),
                       ),
                     )),
-                    ClaimStatusWidget(
-                      controller.battlePassInfo.value >=
-                                  battleRewardList[index].threshold &&
-                              index == 0
-                          ? BattleRewardType.received
-                          : controller.battlePassInfo.value >=
-                                  battleRewardList[index].threshold
-                              ? BattleRewardType.canReceived
-                              : BattleRewardType.notReceived,
-                    ),
+                    ClaimStatusWidget(type),
                     12.hGap,
                   ],
                 )),
