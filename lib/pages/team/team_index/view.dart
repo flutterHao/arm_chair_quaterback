@@ -7,6 +7,7 @@
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/view.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget_2.dart';
@@ -64,6 +65,11 @@ class _TeamView extends GetView<TeamIndexController> {
             controller: ctrl.scrollController,
             child: Column(
               children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Get.to(SeasonPassPage());
+                    },
+                    child: Text('data')),
                 TrainingNewWidget(),
                 BattleBoxWidget(),
                 // MatchCard(),

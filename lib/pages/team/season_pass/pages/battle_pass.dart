@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -32,247 +34,35 @@ class _BattlePassPageState extends State<BattlePassPage> {
     return currentIndex >= index ? AppColors.cFFFFFF : AppColors.cD2D2D2;
   }
 
+  List<BattlePassRewardEntity> battleRewardList = [];
+  initData() async {
+    List<BattlePassRewardEntity> res = await CacheApi.getBattlePassReward();
+    setState(() {
+      battleRewardList = res;
+    });
+  }
+
+  @override
+  initState() {
+    super.initState();
+    initData();
+    _updateRemainingTime();
+    // 每秒更新一次剩余时间
+    _timer = Timer.periodic(
+        Duration(seconds: 1), (Timer t) => _updateRemainingTime());
+  }
+
   Widget _buildView() {
     return Column(
       children: [
-        Container(
-            height: 144.w,
-            color: AppColors.c204794,
-            alignment: Alignment.centerLeft,
-            // padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Stack(
-              children: [
-                Positioned(
-                    left: -130.w,
-                    bottom: -110.w,
-                    child: Opacity(
-                      opacity: .05,
-                      child: ImageWidget(
-                        url: Utils.getTeamUrl(105),
-                        width: 290.w,
-                        height: 290.w,
-                      ),
-                    )),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      10.vGap,
-                      IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            ImageWidget(
-                              url: Utils.getTeamUrl(105),
-                              width: 124.w,
-                              height: 124.w,
-                            ),
-                            10.hGap,
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                22.vGap,
-                                Text(
-                                  'BATTLT PASS',
-                                  style: 27.w4(
-                                      height: .8,
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fOswaldBold),
-                                ),
-                                4.vGap,
-                                Text(
-                                  'Win the game and get rewards.',
-                                  style: 12.w4(
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fRobotoRegular),
-                                ),
-                                6.vGap,
-                                Row(children: [
-                                  Container(
-                                    width: 34.w,
-                                    height: 37.w,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.w),
-                                        color: Colors.white.withOpacity(.1)),
-                                    child: Text(
-                                      '$days',
-                                      style: 20.w5(
-                                          color: Colors.white,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                    child: Text(
-                                      ':',
-                                      style: 20.w5(
-                                          color: Colors.white,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 34.w,
-                                    height: 37.w,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.w),
-                                        color: Colors.white.withOpacity(.1)),
-                                    child: Text(
-                                      '$hours',
-                                      style: 20.w5(
-                                          color: Colors.white,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                    child: Text(
-                                      ':',
-                                      style: 20.w5(
-                                          color: Colors.white,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 34.w,
-                                    height: 37.w,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.w),
-                                        color: Colors.white.withOpacity(.1)),
-                                    child: Text(
-                                      '$twoDigitMinutes',
-                                      style: 20.w5(
-                                          color: Colors.white,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                    child: Text(
-                                      ':',
-                                      style: 20.w5(
-                                          color: Colors.white,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 34.w,
-                                    height: 37.w,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.w),
-                                        color: Colors.white.withOpacity(.1)),
-                                    child: Text(
-                                      '$twoDigitSeconds',
-                                      style: 20.w5(
-                                          color: Colors.white,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                  )
-                                ])
-                              ],
-                            )),
-                          ],
-                        ),
-                      ),
-                      10.vGap,
-                    ],
-                  ),
-                ),
-              ],
-            )),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
-          child: IntrinsicHeight(
-              child: Row(
-            children: [
-              Container(
-                height: 54.w,
-                width: 54.w,
-                decoration: BoxDecoration(
-                    color: AppColors.cF2F2F2,
-                    borderRadius: BorderRadius.circular(8.w)),
-                child: Column(
-                  children: [
-                    7.vGap,
-                    Text(
-                      '10',
-                      style:
-                          24.w5(fontFamily: FontFamily.fOswaldBold, height: .8),
-                    ),
-                    6.vGap,
-                    Text(
-                      'level'.toUpperCase(),
-                      style:
-                          16.w5(fontFamily: FontFamily.fOswaldBold, height: .8),
-                    )
-                  ],
-                ),
-              ),
-              14.hGap,
-              Expanded(
-                  child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'CONTESTS Win'.toUpperCase(),
-                          style: 13.w4(fontFamily: FontFamily.fRobotoRegular),
-                        ),
-                        Spacer(),
-                        Text.rich(
-                          TextSpan(children: [
-                            TextSpan(
-                                text: '51'.toUpperCase(),
-                                style: 13.w4(
-                                    fontFamily: FontFamily.fRobotoRegular,
-                                    color: AppColors.c808080)),
-                            TextSpan(
-                                text: '/100'.toUpperCase(),
-                                style: 13.w4(
-                                    fontFamily: FontFamily.fRobotoRegular,
-                                    color: AppColors.c000000)),
-                          ]),
-                        ),
-                        20.hGap
-                      ],
-                    ),
-                    OutLineProgressWidget(
-                      width: 260.w,
-                      height: 12.w,
-                      progress: .8,
-                      progressColor: AppColors.c000000,
-                      border: Border.all(color: AppColors.c000000, width: 1),
-                    ),
-                  ],
-                ),
-              )),
-            ],
-          )),
-        ),
-        Divider(
-          height: 1,
-          color: AppColors.cD1D1D1,
-        ),
+        _battleTopWidget(),
+        _levelWidget(),
+        Divider(height: 1, color: AppColors.cD1D1D1),
         Expanded(
             child: Container(
           child: ListView.builder(
               padding: EdgeInsets.only(right: 16.w),
-              itemCount: 10,
+              itemCount: battleRewardList.length,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 return Row(
@@ -280,108 +70,335 @@ class _BattlePassPageState extends State<BattlePassPage> {
                 );
               }),
         )),
-        Container(
-          height: 94.w + Utils.getPaddingBottom(),
-          padding: EdgeInsets.only(right: 16.w),
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(color: Colors.white, blurRadius: 5, spreadRadius: 5)
-          ]),
-          child: Row(
-            children: [
-              Container(
-                width: 64.w,
-                padding: EdgeInsets.only(left: 30.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    32.vGap,
-                    Container(
-                      width: 24.w,
-                      height: 24.w,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppColors.c3B5FA7,
-                        borderRadius: BorderRadius.circular(12.w),
-                      ),
-                      child: Text(
-                        '99',
-                        style: 14.w5(
-                            color: Colors.white,
-                            fontFamily: FontFamily.fOswaldRegular),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: Row(
-                children: [
-                  12.hGap,
-                  Expanded(
-                      child: SizedBox(
-                    child: Row(
-                      children: '1_101_200|1_102_200|1_102_200'
-                          .split('|')
-                          .map((cupItem) {
-                            int propId =
-                                int.tryParse(cupItem.split('_')[1]) ?? 0;
-                            int propNum =
-                                int.tryParse(cupItem.split('_')[2]) ?? 1;
-                            return Container(
-                              child: Column(
-                                children: [
-                                  26.vGap,
-                                  IconWidget(
-                                      iconWidth: 40.w,
-                                      iconHeight: 40.w,
-                                      fit: BoxFit.contain,
-                                      fieldPath: Assets.managerUiManagerGift00,
-                                      icon: Utils.getPropIconUrl(propId)),
-                                  4.vGap,
-                                  Text(
-                                      '${propId == 102 ? Utils.formatMoney(propNum) : propNum}',
-                                      style: 14.w5(
-                                          height: 1,
-                                          fontFamily:
-                                              FontFamily.fRobotoRegular)),
-                                ],
-                              ),
-                            );
-                          })
-                          .expand((Widget child) sync* {
-                            yield 20.hGap;
-                            yield child;
-                          })
-                          .skip(1)
-                          .toList(),
-                    ),
-                  )),
-                  Column(
-                    children: [
-                      Spacer(),
-                      MtInkWell(
-                          child: Container(
-                        width: 60.w,
-                        height: 40.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.w),
-                            border: Border.all(color: AppColors.cE6E6E)),
-                        child: IconWidget(
-                            iconWidth: 21.w,
-                            iconColor: AppColors.c10A86A,
-                            icon: Assets.commonUiCommonStatusBarMission02),
-                      )),
-                      Spacer()
-                    ],
-                  ),
-                  12.hGap,
-                ],
-              )),
-            ],
-          ),
-        )
+        _bottomRewardWidget()
       ],
     );
+  }
+
+  Widget _bottomRewardWidget() {
+    return Container(
+      height: 94.w + Utils.getPaddingBottom(),
+      padding: EdgeInsets.only(right: 16.w),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(color: Colors.white, blurRadius: 5, spreadRadius: 5)
+      ]),
+      child: Row(
+        children: [
+          Container(
+            width: 64.w,
+            padding: EdgeInsets.only(left: 30.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                32.vGap,
+                Container(
+                  width: 24.w,
+                  height: 24.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.c3B5FA7,
+                    borderRadius: BorderRadius.circular(12.w),
+                  ),
+                  child: Text(
+                    '${battleRewardList.length}',
+                    style: 14.w5(
+                        color: Colors.white,
+                        fontFamily: FontFamily.fOswaldRegular),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+              child: Row(
+            children: [
+              12.hGap,
+              Expanded(
+                  child: SizedBox(
+                child: Row(
+                  children: '1_101_200|1_102_200|1_102_200'
+                      .split('|')
+                      .map((cupItem) {
+                        int propId = int.tryParse(cupItem.split('_')[1]) ?? 0;
+                        int propNum = int.tryParse(cupItem.split('_')[2]) ?? 1;
+                        return Container(
+                          child: Column(
+                            children: [
+                              26.vGap,
+                              IconWidget(
+                                  iconWidth: 40.w,
+                                  iconHeight: 40.w,
+                                  fit: BoxFit.contain,
+                                  fieldPath: Assets.managerUiManagerGift00,
+                                  icon: Utils.getPropIconUrl(propId)),
+                              4.vGap,
+                              Text(
+                                  '${propId == 102 ? Utils.formatMoney(propNum) : propNum}',
+                                  style: 14.w5(
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular)),
+                            ],
+                          ),
+                        );
+                      })
+                      .expand((Widget child) sync* {
+                        yield 20.hGap;
+                        yield child;
+                      })
+                      .skip(1)
+                      .toList(),
+                ),
+              )),
+              Column(
+                children: [
+                  Spacer(),
+                  MtInkWell(
+                      child: Container(
+                    width: 60.w,
+                    height: 40.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.w),
+                        border: Border.all(color: AppColors.cE6E6E)),
+                    child: IconWidget(
+                        iconWidth: 21.w,
+                        iconColor: AppColors.c10A86A,
+                        icon: Assets.commonUiCommonStatusBarMission02),
+                  )),
+                  Spacer()
+                ],
+              ),
+              12.hGap,
+            ],
+          )),
+        ],
+      ),
+    );
+  }
+
+  Widget _levelWidget() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
+      child: IntrinsicHeight(
+          child: Row(
+        children: [
+          Container(
+            height: 54.w,
+            width: 54.w,
+            decoration: BoxDecoration(
+                color: AppColors.cF2F2F2,
+                borderRadius: BorderRadius.circular(8.w)),
+            child: Column(
+              children: [
+                7.vGap,
+                Text(
+                  '10',
+                  style: 24.w5(fontFamily: FontFamily.fOswaldBold, height: .8),
+                ),
+                6.vGap,
+                Text(
+                  'level'.toUpperCase(),
+                  style: 16.w5(fontFamily: FontFamily.fOswaldBold, height: .8),
+                )
+              ],
+            ),
+          ),
+          14.hGap,
+          Expanded(
+              child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'CONTESTS Win'.toUpperCase(),
+                      style: 13.w4(fontFamily: FontFamily.fRobotoRegular),
+                    ),
+                    Spacer(),
+                    Text.rich(
+                      TextSpan(children: [
+                        TextSpan(
+                            text: '51'.toUpperCase(),
+                            style: 13.w4(
+                                fontFamily: FontFamily.fRobotoRegular,
+                                color: AppColors.c808080)),
+                        TextSpan(
+                            text: '/100'.toUpperCase(),
+                            style: 13.w4(
+                                fontFamily: FontFamily.fRobotoRegular,
+                                color: AppColors.c000000)),
+                      ]),
+                    ),
+                    20.hGap
+                  ],
+                ),
+                OutLineProgressWidget(
+                  width: 260.w,
+                  height: 12.w,
+                  progress: .8,
+                  progressColor: AppColors.c000000,
+                  border: Border.all(color: AppColors.c000000, width: 1),
+                ),
+              ],
+            ),
+          )),
+        ],
+      )),
+    );
+  }
+
+  Widget _battleTopWidget() {
+    return Container(
+        height: 144.w,
+        color: AppColors.c204794,
+        alignment: Alignment.centerLeft,
+        // padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Stack(
+          children: [
+            Positioned(
+                left: -130.w,
+                bottom: -110.w,
+                child: Opacity(
+                  opacity: .05,
+                  child: ImageWidget(
+                    url: Utils.getTeamUrl(105),
+                    width: 290.w,
+                    height: 290.w,
+                  ),
+                )),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  10.vGap,
+                  IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        ImageWidget(
+                          url: Utils.getTeamUrl(105),
+                          width: 124.w,
+                          height: 124.w,
+                        ),
+                        10.hGap,
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            22.vGap,
+                            Text(
+                              'BATTLT PASS',
+                              style: 27.w4(
+                                  height: .8,
+                                  color: Colors.white,
+                                  fontFamily: FontFamily.fOswaldBold),
+                            ),
+                            4.vGap,
+                            Text(
+                              'Win the game and get rewards.',
+                              style: 12.w4(
+                                  color: Colors.white,
+                                  fontFamily: FontFamily.fRobotoRegular),
+                            ),
+                            6.vGap,
+                            Row(children: [
+                              Container(
+                                width: 34.w,
+                                height: 37.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.w),
+                                    color: Colors.white.withOpacity(.1)),
+                                child: Text(
+                                  '$days',
+                                  style: 20.w5(
+                                      color: Colors.white,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 8.w),
+                                child: Text(
+                                  ':',
+                                  style: 20.w5(
+                                      color: Colors.white,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ),
+                              Container(
+                                width: 34.w,
+                                height: 37.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.w),
+                                    color: Colors.white.withOpacity(.1)),
+                                child: Text(
+                                  '$hours',
+                                  style: 20.w5(
+                                      color: Colors.white,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 8.w),
+                                child: Text(
+                                  ':',
+                                  style: 20.w5(
+                                      color: Colors.white,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ),
+                              Container(
+                                width: 34.w,
+                                height: 37.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.w),
+                                    color: Colors.white.withOpacity(.1)),
+                                child: Text(
+                                  '$twoDigitMinutes',
+                                  style: 20.w5(
+                                      color: Colors.white,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 8.w),
+                                child: Text(
+                                  ':',
+                                  style: 20.w5(
+                                      color: Colors.white,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ),
+                              Container(
+                                width: 34.w,
+                                height: 37.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.w),
+                                    color: Colors.white.withOpacity(.1)),
+                                child: Text(
+                                  '$twoDigitSeconds',
+                                  style: 20.w5(
+                                      color: Colors.white,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              )
+                            ])
+                          ],
+                        )),
+                      ],
+                    ),
+                  ),
+                  10.vGap,
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget _rightWidget(int index) {
@@ -456,7 +473,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                   ],
                 )),
                 Opacity(
-                    opacity: index != 9 ? 1 : 0,
+                    opacity: index != battleRewardList.length - 1 ? 1 : 0,
                     child: Divider(height: 1, color: AppColors.cE6E6E6))
               ],
             )));
@@ -530,7 +547,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
             ),
             Spacer(),
             Opacity(
-              opacity: index == 9 ? 0 : 1,
+              opacity: index == battleRewardList.length - 1 ? 0 : 1,
               child: Container(
                 width: 5.w,
                 decoration: BoxDecoration(
@@ -583,15 +600,6 @@ class _BattlePassPageState extends State<BattlePassPage> {
     Duration remaining = midnight.difference(now);
     _remaining = remaining;
     formatDuration(_remaining);
-  }
-
-  @override
-  initState() {
-    super.initState();
-    _updateRemainingTime();
-    // 每秒更新一次剩余时间
-    _timer = Timer.periodic(
-        Duration(seconds: 1), (Timer t) => _updateRemainingTime());
   }
 
   @override
