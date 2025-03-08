@@ -4,13 +4,8 @@
  * @Date: 2024-09-28 20:33:28
  * @LastEditTime: 2025-03-03 14:30:53
  */
-// import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
-// import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
-// import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
-// import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
-// import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
-// import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/pages/home/home_page.dart';
 import 'package:arm_chair_quaterback/pages/inbox/inbox_email/binding.dart';
 import 'package:arm_chair_quaterback/pages/inbox/inbox_email/view.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_detail.dart';
@@ -57,7 +52,6 @@ import 'package:arm_chair_quaterback/pages/team/team_upgrade/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../pages/home/home_page.dart';
 import 'routes.dart';
 
 class AppPages {
