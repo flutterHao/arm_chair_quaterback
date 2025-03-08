@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -12,10 +14,12 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/widgets/claim_status.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class BattlePassPage extends StatefulWidget {
   const BattlePassPage({super.key});
@@ -25,6 +29,7 @@ class BattlePassPage extends StatefulWidget {
 }
 
 class _BattlePassPageState extends State<BattlePassPage> {
+  final SeasonPassController controller = Get.find();
   int get currentIndex => 2;
   Color currentBgColor(int index) {
     return currentIndex >= index ? AppColors.c000000 : AppColors.cFFFFFF;
@@ -35,21 +40,31 @@ class _BattlePassPageState extends State<BattlePassPage> {
   }
 
   List<BattlePassRewardEntity> battleRewardList = [];
+  NowSeasonEntity nowSeasonEntity = NowSeasonEntity();
+
+  ///当前的奖励
+  BattlePassRewardEntity nowReward = BattlePassRewardEntity();
   initData() async {
-    List<BattlePassRewardEntity> res = await CacheApi.getBattlePassReward();
-    setState(() {
-      battleRewardList = res;
+    await Future.wait(
+      [CacheApi.getBattlePassReward(), PicksApi.getNowSeason()],
+    ).then((result) {
+      battleRewardList = result[0] as List<BattlePassRewardEntity>;
+      nowSeasonEntity = result[1] as NowSeasonEntity;
     });
+
+    nowReward = battleRewardList.firstWhere(
+        (element) => element.threshold > controller.battlePassInfo.value);
+    _updateRemainingTime();
+    // 每秒更新一次剩余时间
+    _timer = Timer.periodic(
+        Duration(seconds: 1), (Timer t) => _updateRemainingTime());
+    setState(() {});
   }
 
   @override
   initState() {
     super.initState();
     initData();
-    _updateRemainingTime();
-    // 每秒更新一次剩余时间
-    _timer = Timer.periodic(
-        Duration(seconds: 1), (Timer t) => _updateRemainingTime());
   }
 
   Widget _buildView() {
@@ -179,7 +194,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
               children: [
                 7.vGap,
                 Text(
-                  '10',
+                  '${nowReward.level}',
                   style: 24.w5(fontFamily: FontFamily.fOswaldBold, height: .8),
                 ),
                 6.vGap,
@@ -207,12 +222,12 @@ class _BattlePassPageState extends State<BattlePassPage> {
                     Text.rich(
                       TextSpan(children: [
                         TextSpan(
-                            text: '51'.toUpperCase(),
+                            text: '${controller.battlePassInfo.value}',
                             style: 13.w4(
                                 fontFamily: FontFamily.fRobotoRegular,
                                 color: AppColors.c808080)),
                         TextSpan(
-                            text: '/100'.toUpperCase(),
+                            text: '/${nowReward.threshold}'.toUpperCase(),
                             style: 13.w4(
                                 fontFamily: FontFamily.fRobotoRegular,
                                 color: AppColors.c000000)),
@@ -224,7 +239,8 @@ class _BattlePassPageState extends State<BattlePassPage> {
                 OutLineProgressWidget(
                   width: 260.w,
                   height: 12.w,
-                  progress: .8,
+                  progress:
+                      controller.battlePassInfo.value / nowReward.threshold,
                   progressColor: AppColors.c000000,
                   border: Border.all(color: AppColors.c000000, width: 1),
                 ),
@@ -440,9 +456,12 @@ class _BattlePassPageState extends State<BattlePassPage> {
                       ),
                     )),
                     ClaimStatusWidget(
-                      index < 2
+                      controller.battlePassInfo.value >=
+                                  battleRewardList[index].threshold &&
+                              index == 0
                           ? BattleRewardType.received
-                          : index == 2
+                          : controller.battlePassInfo.value >=
+                                  battleRewardList[index].threshold
                               ? BattleRewardType.canReceived
                               : BattleRewardType.notReceived,
                     ),
@@ -573,7 +592,10 @@ class _BattlePassPageState extends State<BattlePassPage> {
 
   void _updateRemainingTime() {
     DateTime now = DateTime.now();
-    DateTime midnight = DateTime(now.year, now.month, now.day + 3); // 明天凌晨
+    // 结束时间
+    DateTime midnight =
+        DateTime.fromMillisecondsSinceEpoch(nowSeasonEntity.seasonEndTime)
+            .toLocal();
     Duration remaining = midnight.difference(now);
     _remaining = remaining;
     formatDuration(_remaining);

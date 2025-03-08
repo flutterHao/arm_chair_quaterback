@@ -4,7 +4,6 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -16,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/pages/battle_pass.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +34,9 @@ class PassPlayerPage extends StatefulWidget {
 class _PassPlayerPageState extends State<PassPlayerPage> {
   var gradesList = ['S', 'A', 'B', 'C', 'D'];
   List<PlayerStrengthRankEntity> playerRankList = [];
+  final NbaPlayerController nbaController = Get.find();
+  List<PlayerStrengthRankEntity> allPlayerRank = [];
+  int teamId = 101;
   @override
   void initState() {
     // TODO: implement initState
@@ -42,7 +45,12 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
   }
 
   initData() async {
-    playerRankList = await TeamApi.getPlayerStrengthRank(end: 20);
+    allPlayerRank = nbaController.allPlayerRank;
+    playerRankList = allPlayerRank.where((PlayerStrengthRankEntity e) {
+      /// 球队
+      var t = Utils.getPlayBaseInfo(e.playerId).teamId;
+      return t == teamId;
+    }).toList();
     getGrades();
     setState(() {});
   }

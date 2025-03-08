@@ -38,7 +38,7 @@ class Address {
   static const String wsPersonalDevUrl2 = 'ws://192.168.12.74:9001';
 
   ///后台开发内网本机测试地址(-->胡川)
-  static const String wsPersonalDevUrl3 = 'ws://192.168.12.227:9001';
+  static const String wsPersonalDevUrl3 = 'ws://192.168.12.227:9003';
 
   static const String wsPublicDevUrl = 'ws://seanba-te.ftxgame.com:9003';
 
