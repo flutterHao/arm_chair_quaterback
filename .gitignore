@@ -44,3 +44,5 @@ app.*.map.json
 /lib/common/routers/names.txt
 /lib/common/routers/pages.txt
 /test/widget_test.dart
+/note.json
+/pubspec.lock
