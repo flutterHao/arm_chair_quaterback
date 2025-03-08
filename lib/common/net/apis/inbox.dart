@@ -48,6 +48,9 @@ class InboxApi {
     int? gameId,
     int? parentReviewId,
 
+    ///at的人的id
+    String? atTeamId,
+
     ///targetId是回复了哪句话
     int? targetId,
   }) async {
@@ -56,6 +59,7 @@ class InboxApi {
       "playerId": playerId ?? 0,
       "gameId": gameId ?? 0,
       "parentReviewId": parentReviewId ?? 0,
+      "atTeamId": atTeamId ?? '',
       "targetId": targetId ?? 0,
     });
 
@@ -79,14 +83,14 @@ class InboxApi {
     required String context,
 
     ///at的人的id
-    int? atTeamId,
+    String? atTeamId,
 
     ///回复的评论的评论id
     int? targetId,
   }) async {
     var json = await httpUtil.post(Api.sendOVRRankMessage, data: {
       "context": context,
-      "atTeamId": atTeamId ?? 0,
+      "atTeamId": atTeamId ?? '',
       "targetId": targetId ?? 0,
     });
 

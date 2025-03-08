@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/chat_reply_review_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'dart:convert';
@@ -7,7 +8,8 @@ import 'package:arm_chair_quaterback/generated/json/send_guess_comment_entity.g.
 class ChatMessageEntity {
   String teamLogo = '';
   String teamName = '';
-  int atTeamId = 0;
+  /// 多个id用逗号隔开
+  String atTeamId = '';
   bool delete = false;
   int targetId = 0;
   @JSONField(name: "createTime")
@@ -17,6 +19,8 @@ class ChatMessageEntity {
   @JSONField(name: "updateTime")
   int ut = 0;
   int id = 0;
+  List<AtTeamSimple> atTeamSimple = [];
+  List<ChatReplyReviewEntity> replyReview = [];
 
   int gameId = 0;
   int parentReviewId = 0;
@@ -38,3 +42,23 @@ class ChatMessageEntity {
     return jsonEncode(this);
   }
 }
+
+@JsonSerializable()
+class AtTeamSimple{
+  String teamLogo = '';
+  String teamName = '';
+  int teamId = 0;
+
+  AtTeamSimple();
+
+  factory AtTeamSimple.fromJson(Map<String, dynamic> json) =>
+      $AtTeamSimpleFromJson(json);
+
+  Map<String, dynamic> toJson() => $AtTeamSimpleToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+

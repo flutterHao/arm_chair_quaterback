@@ -32,7 +32,9 @@ class MessagePage extends GetView<MessageController> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
+        MediaQuery
+            .of(context)
+            .platformBrightness == Brightness.dark;
     return HorizontalDragBackContainer(
       child: GetBuilder<MessageController>(
         tag: getTag(),
@@ -50,161 +52,115 @@ class MessagePage extends GetView<MessageController> {
                   Expanded(
                     child: Column(
                       children: [
+
                         /// 消息列表
                         Expanded(
                           child: InkWell(
                             onTap: () => controller.focusNode.unfocus(),
-                            child: Obx(() {
-                              return SmartRefresher(
-                                controller: controller.refreshController,
-                                enablePullDown: false,
-                                enablePullUp: true,
-                                reverse: true,
-                                footer: ClassicFooter(
-                                    // idleText: "Pull down Load",
-                                    // releaseText: "Release load more",
-                                    // refreshingText: "Loading...",
-                                    // completeText: "Load Completed",
-                                    // failedText: "Load Failed",
-                                    ),
-                                onLoading: () => controller.loadMoreData(),
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: MediaQuery.removePadding(
-                                    removeBottom: true,
-                                    removeTop: true,
-                                    context: context,
-                                    child: ListView.separated(
-                                      itemCount: controller.list.length,
-                                      controller: controller.scrollController,
-                                      reverse: true,
-                                      shrinkWrap: true,
-                                      physics: BouncingScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        bool isFirst = index == 0;
-                                        bool isLast =
-                                            index == controller.list.length - 1;
-                                        ChatMessageEntity item =
-                                            controller.list[index];
-                                        return Container(
-                                          padding: EdgeInsets.only(
-                                              bottom: isFirst ? 9.w : 0,
-                                              top: isLast ? 9.w : 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              10.hGap,
-                                              InkWell(
-                                                onLongPress: ()=> controller.avatarLongPress(item),
-                                                child: Container(
-                                                  width: 36.w,
-                                                  height: 36.h,
-                                                  clipBehavior: Clip.hardEdge,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              24.w)),
-                                                  child: ImageWidget(
-                                                    url: Utils.getAvatarUrl(
-                                                        item.teamLogo),
-                                                    imageFailedPath:
-                                                        Assets.teamUiHead03,
+                            child: MediaQuery.removePadding(
+                              removeBottom: true,
+                              removeTop: true,
+                              context: context,
+                              child: Obx(() {
+                                return ListView.separated(
+                                  itemCount: controller.list.length,
+                                  controller: controller.scrollController,
+                                  reverse: true,
+                                  shrinkWrap: true,
+                                  physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+                                  itemBuilder: (context, index) {
+                                    bool isFirst = index == 0;
+                                    bool isLast =
+                                        index ==
+                                            controller.list.length - 1;
+                                    ChatMessageEntity item =
+                                    controller.list[index];
+                                    return Container(
+                                      padding: EdgeInsets.only(
+                                          bottom: isFirst ? 9.w : 0,
+                                          top: isLast ? 9.w : 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          10.hGap,
+                                          InkWell(
+                                            onLongPress: () =>
+                                                controller
+                                                    .avatarLongPress(
+                                                    item),
+                                            child: Container(
+                                              width: 36.w,
+                                              height: 36.h,
+                                              clipBehavior: Clip.hardEdge,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      24.w)),
+                                              child: ImageWidget(
+                                                url: Utils.getAvatarUrl(
+                                                    item.teamLogo),
+                                                imageFailedPath:
+                                                Assets.teamUiHead03,
+                                              ),
+                                            ),
+                                          ),
+                                          6.hGap,
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              children: [
+                                                InkWell(
+                                                  onLongPress: () =>
+                                                      controller
+                                                          .avatarLongPress(
+                                                          item),
+                                                  child: Text(
+                                                    Utils.isMe(
+                                                        item.teamId)
+                                                        ? "me"
+                                                        : item.teamName,
+                                                    style: 12.w4(
+                                                      color: AppColors
+                                                          .c000000
+                                                          .withOpacity(
+                                                          0.5),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              6.hGap,
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    InkWell(
-                                                      onLongPress: ()=> controller.avatarLongPress(item),
-                                                      child: Text(
-                                                        Utils.isMe(item.teamId)
-                                                            ? "me"
-                                                            : item.teamName,
-                                                        style: 12.w4(
-                                                          color: AppColors
-                                                              .c000000
-                                                              .withOpacity(0.5),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    3.vGap,
-                                                    Row(
-                                                      children: [
-                                                        Flexible(
-                                                          child: IntrinsicWidth(
-                                                            child: Container(
-                                                              constraints:
-                                                                  BoxConstraints(
-                                                                      minHeight: 40.w,
-                                                                      minWidth: 40.w),
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      vertical: 5.w,
-                                                                      horizontal:
-                                                                          10.w),
-                                                              decoration: BoxDecoration(
-                                                                  color: Utils.isMe(
-                                                                          item.teamId)
-                                                                      ? AppColors
-                                                                          .cFF7954
-                                                                      : AppColors
-                                                                          .cFFFFFF,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              9.w)),
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                item.context,
-                                                                softWrap: true,
-                                                                style: 14.w4(
-                                                                    color: Utils.isMe(
-                                                                            item
-                                                                                .teamId)
-                                                                        ? AppColors
-                                                                            .cFFFFFF
-                                                                        : AppColors
-                                                                            .c000000),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              16.hGap,
-                                            ],
+                                                3.vGap,
+                                                _buildMessage(
+                                                    item, index),
+                                              ],
+                                            ),
                                           ),
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) {
-                                        return 14.vGap;
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
+                                          16.hGap,
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return 14.vGap;
+                                  },
+                                );
+                              }),
+                            ),
                           ),
                         ),
 
                         /// 输入框
                         Container(
-                          color: MediaQuery.of(context).viewInsets.bottom <= 0
+                          color: MediaQuery
+                              .of(context)
+                              .viewInsets
+                              .bottom <= 0
                               ? AppColors.cF2F2F2
                               : isDarkMode
-                                  ? AppColors.c262626
-                                  : AppColors.cF2F2F2,
+                              ? AppColors.c262626
+                              : AppColors.cF2F2F2,
                           padding: EdgeInsets.only(
                               top: 9.w,
                               bottom: Utils.getPaddingBottom() + 9.w,
@@ -213,11 +169,14 @@ class MessagePage extends GetView<MessageController> {
                           child: Container(
                             decoration: BoxDecoration(
                               color:
-                                  MediaQuery.of(context).viewInsets.bottom <= 0
-                                      ? AppColors.cE6E6E6
-                                      : isDarkMode
-                                          ? AppColors.c4D4D4D
-                                          : AppColors.cE6E6E6,
+                              MediaQuery
+                                  .of(context)
+                                  .viewInsets
+                                  .bottom <= 0
+                                  ? AppColors.cE6E6E6
+                                  : isDarkMode
+                                  ? AppColors.c4D4D4D
+                                  : AppColors.cE6E6E6,
                               borderRadius: BorderRadius.circular(4.w),
                             ),
                             child: TextField(
@@ -227,11 +186,14 @@ class MessagePage extends GetView<MessageController> {
                               textInputAction: TextInputAction.send,
                               // keyboardAppearance:Brightness.light,
                               cursorColor:
-                                  MediaQuery.of(context).viewInsets.bottom <= 0
-                                      ? AppColors.c262626
-                                      : isDarkMode
-                                          ? AppColors.cF2F2F2
-                                          : AppColors.c262626,
+                              MediaQuery
+                                  .of(context)
+                                  .viewInsets
+                                  .bottom <= 0
+                                  ? AppColors.c262626
+                                  : isDarkMode
+                                  ? AppColors.cF2F2F2
+                                  : AppColors.c262626,
                               scrollPadding: const EdgeInsets.all(0),
                               focusNode: controller.focusNode,
                               decoration: InputDecoration(
@@ -241,14 +203,15 @@ class MessagePage extends GetView<MessageController> {
                                 border: InputBorder.none,
                               ),
                               style: 14.w4(
-                                  color: MediaQuery.of(context)
-                                              .viewInsets
-                                              .bottom <=
-                                          0
+                                  color: MediaQuery
+                                      .of(context)
+                                      .viewInsets
+                                      .bottom <=
+                                      0
                                       ? AppColors.c262626
                                       : isDarkMode
-                                          ? AppColors.cF2F2F2
-                                          : AppColors.c262626),
+                                      ? AppColors.cF2F2F2
+                                      : AppColors.c262626),
                               onChanged: (v) {
                                 print('onChanged');
                               },
@@ -260,7 +223,10 @@ class MessagePage extends GetView<MessageController> {
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).viewInsets.bottom,
+                    height: MediaQuery
+                        .of(context)
+                        .viewInsets
+                        .bottom,
                   )
                 ],
               ),
@@ -268,6 +234,79 @@ class MessagePage extends GetView<MessageController> {
           );
         },
       ),
+    );
+  }
+
+  Row _buildMessage(ChatMessageEntity item, int index) {
+    return Row(
+      children: [
+        Flexible(
+          child: IntrinsicWidth(
+            child: Container(
+              constraints: BoxConstraints(minHeight: 40.w, minWidth: 40.w),
+              padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 10.w),
+              decoration: BoxDecoration(
+                  color: Utils.isMe(item.teamId)
+                      ? AppColors.c47AFFF.withOpacity(0.3)
+                      : AppColors.cFFFFFF,
+                  borderRadius: BorderRadius.circular(9.w)),
+              alignment: Alignment.centerLeft,
+              child: Builder(builder: (context) {
+                return Text(item.context, style: 14.w4(
+                    color: Utils.isMe(item.teamId)
+                        ? AppColors.cFFFFFF
+                        : AppColors.c000000),);
+                StringBuffer buffer = StringBuffer();
+                bool first = true;
+
+                buffer = item.atTeamSimple.fold(buffer, (p, e) {
+                  var pattern = '${RegExp("@${e.teamName}").pattern}\\b';
+                  if (!first) {
+                    buffer.write('|');
+                  }
+                  p.write('($pattern)');
+                  first = false;
+                  return p;
+                });
+                var regExp = RegExp(buffer.toString());
+                List<TextSpan> spans = [];
+                int start = 0;
+                var text = item.context;
+                var matches = regExp.allMatches(text);
+                for (final match in matches) {
+                  // 将匹配前的文本加入
+                  if (match.start > start) {
+                    spans.add(
+                        TextSpan(text: text.substring(start, match.start)));
+                  }
+                  // 将匹配的文本加入，设置蓝色字体
+                  spans.add(
+                    TextSpan(
+                      text: match.group(0),
+                      style: const TextStyle(color: Colors.blue),
+                    ),
+                  );
+                  start = match.end;
+                }
+                // 将最后剩余的文本加入
+                if (start < text.length) {
+                  spans.add(TextSpan(text: text.substring(start)));
+                }
+
+                return RichText(
+                  text: TextSpan(
+                    style: 14.w4(
+                        color: Utils.isMe(item.teamId)
+                            ? AppColors.cFFFFFF
+                            : AppColors.c000000),
+                    children: spans,
+                  ),
+                );
+              }),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
