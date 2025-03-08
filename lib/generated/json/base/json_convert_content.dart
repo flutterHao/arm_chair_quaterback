@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/app_image_version_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_pass_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
@@ -325,6 +326,15 @@ class JsonConvert {
     if (<TestDataMap>[] is M) {
       return data.map<TestDataMap>((Map<String, dynamic> e) =>
           TestDataMap.fromJson(e)).toList() as M;
+    }
+    if (<BattlePassInfoEntity>[] is M) {
+      return data.map<BattlePassInfoEntity>((Map<String, dynamic> e) =>
+          BattlePassInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<BattlePassInfoClaimedRewardMaps>[] is M) {
+      return data.map<BattlePassInfoClaimedRewardMaps>((
+          Map<String, dynamic> e) =>
+          BattlePassInfoClaimedRewardMaps.fromJson(e)).toList() as M;
     }
     if (<BattlePassRewardEntity>[] is M) {
       return data.map<BattlePassRewardEntity>((Map<String, dynamic> e) =>
@@ -1356,6 +1366,9 @@ class JsonConvertClassCollection {
     (ScoreBoard).toString(): ScoreBoard.fromJson,
     (GameSchedule).toString(): GameSchedule.fromJson,
     (TestDataMap).toString(): TestDataMap.fromJson,
+    (BattlePassInfoEntity).toString(): BattlePassInfoEntity.fromJson,
+    (BattlePassInfoClaimedRewardMaps)
+        .toString(): BattlePassInfoClaimedRewardMaps.fromJson,
     (BattlePassRewardEntity).toString(): BattlePassRewardEntity.fromJson,
     (CardPackInfoEntity).toString(): CardPackInfoEntity.fromJson,
     (CardPackInfoCard).toString(): CardPackInfoCard.fromJson,

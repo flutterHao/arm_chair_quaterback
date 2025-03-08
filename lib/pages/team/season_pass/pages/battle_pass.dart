@@ -10,9 +10,9 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/widgets/claim_status.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,6 +76,12 @@ class _BattlePassPageState extends State<BattlePassPage> {
   }
 
   Widget _bottomRewardWidget() {
+    var rewardList = [];
+    if (battleRewardList.length > 1) {
+      rewardList =
+          battleRewardList[battleRewardList.length - 1].fixReward.split('|');
+    }
+
     return Container(
       height: 94.w + Utils.getPaddingBottom(),
       padding: EdgeInsets.only(right: 16.w),
@@ -116,8 +122,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
               Expanded(
                   child: SizedBox(
                 child: Row(
-                  children: '1_101_200|1_102_200|1_102_200'
-                      .split('|')
+                  children: rewardList
                       .map((cupItem) {
                         int propId = int.tryParse(cupItem.split('_')[1]) ?? 0;
                         int propNum = int.tryParse(cupItem.split('_')[2]) ?? 1;
@@ -149,24 +154,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                       .toList(),
                 ),
               )),
-              Column(
-                children: [
-                  Spacer(),
-                  MtInkWell(
-                      child: Container(
-                    width: 60.w,
-                    height: 40.w,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.w),
-                        border: Border.all(color: AppColors.cE6E6E)),
-                    child: IconWidget(
-                        iconWidth: 21.w,
-                        iconColor: AppColors.c10A86A,
-                        icon: Assets.commonUiCommonStatusBarMission02),
-                  )),
-                  Spacer()
-                ],
-              ),
+              ClaimStatusWidget(BattleRewardType.canReceived),
               12.hGap,
             ],
           )),
@@ -402,7 +390,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
   }
 
   Widget _rightWidget(int index) {
-    var rewardList = '1_101_200|1_102_200|1_102_200'.split('|');
+    var rewardList = battleRewardList[index].fixReward.split('|');
     return Expanded(
         child: SizedBox(
             height: 98.w + 1,
@@ -451,23 +439,12 @@ class _BattlePassPageState extends State<BattlePassPage> {
                             .toList(),
                       ),
                     )),
-                    Column(
-                      children: [
-                        Spacer(),
-                        MtInkWell(
-                            child: Container(
-                          width: 60.w,
-                          height: 40.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9.w),
-                              border: Border.all(color: AppColors.cE6E6E)),
-                          child: IconWidget(
-                              iconWidth: 21.w,
-                              iconColor: AppColors.c10A86A,
-                              icon: Assets.commonUiCommonStatusBarMission02),
-                        )),
-                        Spacer()
-                      ],
+                    ClaimStatusWidget(
+                      index < 2
+                          ? BattleRewardType.received
+                          : index == 2
+                              ? BattleRewardType.canReceived
+                              : BattleRewardType.notReceived,
                     ),
                     12.hGap,
                   ],
@@ -607,4 +584,15 @@ class _BattlePassPageState extends State<BattlePassPage> {
     _timer.cancel(); // 当组件销毁时取消定时器
     super.dispose();
   }
+}
+
+enum BattleRewardType {
+  ///可领取
+  canReceived,
+
+  ///已领取
+  received,
+
+  ///未达到领取条件
+  notReceived
 }

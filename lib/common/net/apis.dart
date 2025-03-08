@@ -290,4 +290,11 @@ class Api {
   ///Girl
   static const String getGivingGifts = "$API_BASE_PATH/Girl/givingGifts";
   static const String getQueryGirls = "$API_BASE_PATH/Girl/queryGirls";
+
+  ///通行证模块
+  static const String getBattlePassInfo = "$API_BASE_PATH/BattlePass/get";
+  static const String chooseHomeTeam =
+      "$API_BASE_PATH/BattlePass/chooseHomeTeam";
+  static const String claimLevelReward =
+      "$API_BASE_PATH/BattlePass/claimLevelReward";
 }
