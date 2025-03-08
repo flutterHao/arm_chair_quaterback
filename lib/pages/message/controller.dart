@@ -96,7 +96,6 @@ class MessageController extends GetxController {
       ]);
     }
     Future.wait(futures).then((v) {
-      // print('scoresEntity:$scoresEntity');
       update();
     }, onError: (e) {
       ErrorUtils.toast(e);
