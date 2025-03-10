@@ -41,6 +41,16 @@ class _BattlePassPageState extends State<BattlePassPage> {
     battleRewardList = await CacheApi.getBattlePassReward();
     nowReward = battleRewardList.firstWhere(
         (element) => element.threshold > controller.battlePassInfo.value.value);
+    controller.nowSeasonEntity.seasonId;
+    var nowRewardList = battleRewardList.where((element) {
+      int seasonId = controller.nowSeasonEntity.seasonId;
+      if (controller.nowSeasonEntity.seasonId > 5) {
+        seasonId = 5;
+      }
+      return element.poolId == seasonId;
+    }).toList();
+
+    battleRewardList = nowRewardList;
     setState(() {});
   }
 
@@ -165,7 +175,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                       .toList(),
                 ),
               )),
-              ClaimStatusWidget(BattleRewardType.canReceived),
+              ClaimStatusWidget(BattleRewardType.notReceived),
               12.hGap,
             ],
           )),
@@ -478,7 +488,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
               child: Container(
                 width: 5.w,
                 decoration: BoxDecoration(
-                    color: type == BattleRewardType.canReceived
+                    color: type != BattleRewardType.notReceived
                         ? AppColors.c000000
                         : AppColors.cE6E6E6,
                     borderRadius: BorderRadius.only(
@@ -497,7 +507,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                   height: 24.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: type == BattleRewardType.canReceived
+                    color: type != BattleRewardType.notReceived
                         ? AppColors.c000000
                         : AppColors.cFFFFFF,
                     borderRadius: BorderRadius.circular(12.w),
@@ -528,8 +538,11 @@ class _BattlePassPageState extends State<BattlePassPage> {
                           height: 30.w,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(color: AppColors.c000000, width: 1),
+                            border: Border.all(
+                                color: type != BattleRewardType.notReceived
+                                    ? AppColors.c000000
+                                    : AppColors.cFFFFFF,
+                                width: 1),
                             borderRadius: BorderRadius.circular(28.w),
                           ),
                         ))),
@@ -541,9 +554,10 @@ class _BattlePassPageState extends State<BattlePassPage> {
               child: Container(
                 width: 5.w,
                 decoration: BoxDecoration(
-                    color: type == BattleRewardType.canReceived
-                        ? AppColors.c000000
-                        : AppColors.cE6E6E6,
+                    color: type == BattleRewardType.notReceived ||
+                            index == currentIndex()
+                        ? AppColors.cE6E6E6
+                        : AppColors.c000000,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(5.w),
                         topRight: Radius.circular(5.w))),

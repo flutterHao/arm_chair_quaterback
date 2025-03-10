@@ -20,7 +20,7 @@ class SeasonPassController extends GetxController {
 
   int teamId = 101;
   initData() async {
-    battlePassInfo.value = await BattlePassApi.getBattlePassInfo();
+    updateBattlePassInfo();
     teamId = battlePassInfo.value.hostTeam;
     await Future.wait(
       [
@@ -41,6 +41,11 @@ class SeasonPassController extends GetxController {
     teamDefine = await CacheApi.getNBATeamDefine(getList: true);
     teamDefine.removeWhere((item) => item.id == 0);
     // battleUdfRewardList = await CacheApi.getBattlePassUdfReward();
+  }
+
+  ///更新通行证信息
+  Future updateBattlePassInfo() async {
+    battlePassInfo.value = await BattlePassApi.getBattlePassInfo();
   }
 
   @override

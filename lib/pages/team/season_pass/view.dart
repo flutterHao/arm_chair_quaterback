@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/pages/battle_pass.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/pages/select_team.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,9 @@ class SeasonPassWidget extends GetView<SeasonPassController> {
           bool isselectTeam = controller.battlePassInfo.value.hostTeam != 0;
           return MtInkWell(
               onTap: () {
-                Get.to(SelectTeamPage());
-                // isselectTeam
-                //     ? Get.to(BattlePassPage(), arguments: controller.teamId)
-                //     : Get.to(SelectTeamPage());
+                isselectTeam
+                    ? Get.to(BattlePassPage(), arguments: controller.teamId)
+                    : Get.to(SelectTeamPage());
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),

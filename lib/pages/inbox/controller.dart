@@ -89,7 +89,7 @@ class InboxController extends GetxController {
     super.dispose();
   }
 
-  var mailTypelist = [
+  var mailTypeList = [
     {'id': 5001, 'type': 3},
     {'id': 4001, 'type': 2},
     {'id': 1005, 'type': 1},
@@ -101,10 +101,10 @@ class InboxController extends GetxController {
     var resMessageList = await CacheApi.getInboxMessageList();
     mailVOList = await InboxApi.getMailVOList();
     messageList.value = resMessageList.where((element) {
-      var typeIndex = mailTypelist.indexWhere((e) => e['id'] == element.id);
+      var typeIndex = mailTypeList.indexWhere((e) => e['id'] == element.id);
       if (typeIndex != -1) {
         var res = mailVOList.firstWhere(
-            (e) => e.mailType == mailTypelist[typeIndex]['type'],
+            (e) => e.mailType == mailTypeList[typeIndex]['type'],
             orElse: () => InboxEmailEntity());
         if (res.mailList.isNotEmpty) {
           element.userText = res.mailList[0].content;
@@ -161,9 +161,9 @@ class InboxController extends GetxController {
     messageList.remove(item);
     update(["inboxList"]);
 
-    var typeIndex = mailTypelist.indexWhere((e) => e['id'] == item.id);
+    var typeIndex = mailTypeList.indexWhere((e) => e['id'] == item.id);
     var mailIds = mailVOList
-        .firstWhere((e) => e.mailType == mailTypelist[typeIndex]['type'])
+        .firstWhere((e) => e.mailType == mailTypeList[typeIndex]['type'])
         .mailList
         .map((item) => item.mailId.toString())
         .join('|');
