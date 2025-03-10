@@ -4,18 +4,15 @@
  * @Date: 2024-11-13 21:12:10
  * @LastEditTime: 2025-02-21 18:43:42
  */
-import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
-import 'package:arm_chair_quaterback/common/services/sound.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
@@ -31,7 +28,7 @@ class MatchCard extends GetView<TeamIndexController> {
   Widget build(BuildContext context) {
     TeamController myTeamCtrl = Get.find();
     // double width = MediaQuery.of(context).size.width;
-    double aspectRatio = 375 / 404;
+    double aspectRatio = 375 / 526;
     return GetBuilder<TeamIndexController>(
         id: "season_info",
         builder: (controller) {
@@ -42,7 +39,7 @@ class MatchCard extends GetView<TeamIndexController> {
               scale: Utils.getMaxWidth(context) / 375.w,
               child: Container(
                 width: 375.w,
-                height: 404.5.w,
+                height: 5265.w,
                 margin: EdgeInsets.only(top: 9.w),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(9.w),
@@ -273,6 +270,11 @@ class MatchCard extends GetView<TeamIndexController> {
                         ),
                       ),
                     ),
+                    Positioned(
+                        bottom: 26.w,
+                        left: 0,
+                        right: 0,
+                        child: SeasonPassWidget())
                   ],
                 ),
               ),

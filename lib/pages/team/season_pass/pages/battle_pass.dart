@@ -30,13 +30,9 @@ class BattlePassPage extends StatefulWidget {
 
 class _BattlePassPageState extends State<BattlePassPage> {
   final SeasonPassController controller = Get.find();
-  int get currentIndex => 2;
-  Color currentBgColor(int index) {
-    return currentIndex >= index ? AppColors.c000000 : AppColors.cFFFFFF;
-  }
-
-  Color currentTextColor(int index) {
-    return currentIndex >= index ? AppColors.cFFFFFF : AppColors.cD2D2D2;
+  int currentIndex() {
+    return battleRewardList
+        .lastIndexWhere((e) => controller.battlePassInfo.value > e.threshold);
   }
 
   List<BattlePassRewardEntity> battleRewardList = [];
@@ -65,6 +61,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
   @override
   initState() {
     super.initState();
+    teamId = Get.arguments;
     initData();
   }
 
@@ -81,8 +78,20 @@ class _BattlePassPageState extends State<BattlePassPage> {
               itemCount: battleRewardList.length,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
+                BattleRewardType type = controller.battlePassInfo.value >=
+                            battleRewardList[index].threshold &&
+                        index == 0
+                    ? BattleRewardType.received
+                    : controller.battlePassInfo.value >=
+                            battleRewardList[index].threshold
+                        ? BattleRewardType.canReceived
+                        : BattleRewardType.notReceived;
+
                 return Row(
-                  children: [_leftWidget(index), _rightWidget(index)],
+                  children: [
+                    _leftWidget(index, type),
+                    _rightWidget(index, type)
+                  ],
                 );
               }),
         )),
@@ -406,15 +415,9 @@ class _BattlePassPageState extends State<BattlePassPage> {
         ));
   }
 
-  Widget _rightWidget(int index) {
+  Widget _rightWidget(int index, BattleRewardType type) {
     var rewardList = battleRewardList[index].fixReward.split('|');
-    BattleRewardType type = controller.battlePassInfo.value >=
-                battleRewardList[index].threshold &&
-            index == 0
-        ? BattleRewardType.received
-        : controller.battlePassInfo.value >= battleRewardList[index].threshold
-            ? BattleRewardType.canReceived
-            : BattleRewardType.notReceived;
+
     return Expanded(
         child: SizedBox(
             height: 98.w + 1,
@@ -475,7 +478,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
             )));
   }
 
-  Widget _leftWidget(int index) {
+  Widget _leftWidget(int index, BattleRewardType type) {
     return Container(
         width: 64.w,
         height: 98.w + 1,
@@ -488,7 +491,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
               child: Container(
                 width: 5.w,
                 decoration: BoxDecoration(
-                    color: currentIndex >= index
+                    color: type == BattleRewardType.canReceived
                         ? AppColors.c000000
                         : AppColors.cE6E6E6,
                     borderRadius: BorderRadius.only(
@@ -507,10 +510,12 @@ class _BattlePassPageState extends State<BattlePassPage> {
                   height: 24.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: currentBgColor(index),
+                    color: type == BattleRewardType.canReceived
+                        ? AppColors.c000000
+                        : AppColors.cFFFFFF,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
-                  foregroundDecoration: currentIndex < index
+                  foregroundDecoration: type == BattleRewardType.notReceived
                       ? BoxDecoration(
                           border:
                               Border.all(color: AppColors.cD1D1D1, width: 1),
@@ -520,12 +525,14 @@ class _BattlePassPageState extends State<BattlePassPage> {
                   child: Text(
                     '${index + 1}',
                     style: 14.w5(
-                        color: currentTextColor(index),
+                        color: type == BattleRewardType.canReceived
+                            ? AppColors.cFFFFFF
+                            : AppColors.cD2D2D2,
                         fontFamily: FontFamily.fOswaldRegular),
                   ),
                 ),
                 Visibility(
-                    visible: index == currentIndex,
+                    visible: index == currentIndex(),
                     child: Positioned(
                         left: -3.w,
                         top: -3.w,
@@ -547,7 +554,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
               child: Container(
                 width: 5.w,
                 decoration: BoxDecoration(
-                    color: currentIndex > index
+                    color: type == BattleRewardType.canReceived
                         ? AppColors.c000000
                         : AppColors.cE6E6E6,
                     borderRadius: BorderRadius.only(
