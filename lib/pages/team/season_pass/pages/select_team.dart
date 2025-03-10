@@ -84,9 +84,9 @@ class SelectTeamPage extends GetView<SeasonPassController> {
                   mainAxisExtent: 104.w),
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 16.w),
-              itemCount: controller.battleUdfRewardList.length,
+              itemCount: controller.teamDefine.length,
               itemBuilder: (context, index) {
-                var teamId = controller.battleUdfRewardList[index].hostTeamId;
+                var teamId = controller.teamDefine[index].id;
                 return MtInkWell(
                     onTap: () {
                       Get.to(PassPlayerPage(), arguments: teamId);

@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/entities/battle_pass_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/battle_pass_udf_reward_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/battle_pass.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -16,7 +16,8 @@ class SeasonPassController extends GetxController {
   Rx<BattlePassInfoEntity> battlePassInfo = BattlePassInfoEntity().obs;
   NowSeasonEntity nowSeasonEntity = NowSeasonEntity();
   List<BattlePassRewardEntity> battleRewardList = [];
-  List<BattlePassUdfRewardEntity> battleUdfRewardList = [];
+  List<NbaTeamEntity> teamDefine = [];
+
   int teamId = 101;
   initData() async {
     battlePassInfo.value = await BattlePassApi.getBattlePassInfo();
@@ -37,8 +38,9 @@ class SeasonPassController extends GetxController {
         Duration(seconds: 1), (Timer t) => _updateRemainingTime());
     print(battlePassInfo.value.hostTeam);
     CacheApi.getBattlePassUdfReward();
-
-    battleUdfRewardList = await CacheApi.getBattlePassUdfReward();
+    teamDefine = await CacheApi.getNBATeamDefine(getList: true);
+    teamDefine.removeWhere((item) => item.id == 0);
+    // battleUdfRewardList = await CacheApi.getBattlePassUdfReward();
   }
 
   @override
