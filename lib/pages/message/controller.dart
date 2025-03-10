@@ -47,6 +47,7 @@ class MessageController extends GetxController {
 
   List<ChatMessageEntity> atChatMessageList = [];
   var hasText = false.obs;
+  Rxn<ChatMessageEntity> replyChatMessage = Rxn();
 
   @override
   void onInit() {
@@ -168,7 +169,7 @@ class MessageController extends GetxController {
     if (refreshController.footerStatus == LoadStatus.noMore) {
       return;
     }
-    if(refreshController.isLoading){
+    if (refreshController.isLoading) {
       return;
     }
     if (type == 1) {
@@ -205,19 +206,23 @@ class MessageController extends GetxController {
         .toList()
         .join(",");
     print('atTeamIds:$atTeamIds');
+    int? targetId = replyChatMessage.value?.id;
     if (type == 1) {
-      sendGuessComment(temp, atTeamId: atTeamIds);
+      sendGuessComment(temp, atTeamId: atTeamIds, targetId: targetId);
     } else {
-      sendOVRRankMessage(temp, atTeamId: atTeamIds);
+      sendOVRRankMessage(temp, atTeamId: atTeamIds, targetId: targetId);
     }
+    replyChatMessage.value = null;
     atChatMessageList.clear();
   }
 
-  sendGuessComment(String context, {String? atTeamId, int? targetId}) {
+  sendGuessComment(String context,
+      {String? atTeamId, int? targetId, int? parentReviewId}) {
     InboxApi.sendGuessComment(
             context: context,
             gameId: gameId,
             playerId: playerId,
+            parentReviewId: parentReviewId,
             atTeamId: atTeamId,
             targetId: targetId)
         .then((result) {
@@ -227,9 +232,13 @@ class MessageController extends GetxController {
     });
   }
 
-  sendOVRRankMessage(String context, {String? atTeamId, int? targetId}) {
+  sendOVRRankMessage(String context,
+      {String? atTeamId, int? targetId, int? parentReviewId}) {
     InboxApi.sendOVRRankMessage(
-            context: context, atTeamId: atTeamId, targetId: targetId)
+            context: context,
+            parentReviewId: parentReviewId,
+            atTeamId: atTeamId,
+            targetId: targetId)
         .then((result) {
       // addChatMessage(result);
     }, onError: (e) {
@@ -275,6 +284,16 @@ class MessageController extends GetxController {
     var text = "${textEditingController.text}$tempText ";
     textEditingController.text = text;
     textEditingController.updateTargetMatches(targetMatches);
+  }
+
+  /// 删除回复
+  onDeleteReply() {
+    if (!Utils.canOperate()) return;
+    replyChatMessage.value = null;
+  }
+
+  onMessageLongPress(ChatMessageEntity item) {
+    replyChatMessage.value = item;
   }
 
   @override

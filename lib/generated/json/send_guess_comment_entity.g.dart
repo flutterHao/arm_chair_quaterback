@@ -53,14 +53,10 @@ ChatMessageEntity $ChatMessageEntityFromJson(Map<String, dynamic> json) {
   if (atTeamSimple != null) {
     chatMessageEntity.atTeamSimple = atTeamSimple;
   }
-  final List<ChatReplyReviewEntity>? replyReview = (json['replyReview'] as List<
-      dynamic>?)
-      ?.map(
-          (e) =>
-      jsonConvert.convert<ChatReplyReviewEntity>(e) as ChatReplyReviewEntity)
-      .toList();
-  if (replyReview != null) {
-    chatMessageEntity.replyReview = replyReview;
+  final ChatReplyReviewEntity? replyMessage = jsonConvert.convert<
+      ChatReplyReviewEntity>(json['replyMessage']);
+  if (replyMessage != null) {
+    chatMessageEntity.replyMessage = replyMessage;
   }
   final int? gameId = jsonConvert.convert<int>(json['gameId']);
   if (gameId != null) {
@@ -90,7 +86,7 @@ Map<String, dynamic> $ChatMessageEntityToJson(ChatMessageEntity entity) {
   data['updateTime'] = entity.ut;
   data['id'] = entity.id;
   data['atTeamSimple'] = entity.atTeamSimple.map((v) => v.toJson()).toList();
-  data['replyReview'] = entity.replyReview.map((v) => v.toJson()).toList();
+  data['replyMessage'] = entity.replyMessage?.toJson();
   data['gameId'] = entity.gameId;
   data['parentReviewId'] = entity.parentReviewId;
   data['playerId'] = entity.playerId;
@@ -110,7 +106,7 @@ extension ChatMessageEntityExtension on ChatMessageEntity {
     int? ut,
     int? id,
     List<AtTeamSimple>? atTeamSimple,
-    List<ChatReplyReviewEntity>? replyReview,
+    ChatReplyReviewEntity? replyMessage,
     int? gameId,
     int? parentReviewId,
     int? playerId,
@@ -127,7 +123,7 @@ extension ChatMessageEntityExtension on ChatMessageEntity {
       ..ut = ut ?? this.ut
       ..id = id ?? this.id
       ..atTeamSimple = atTeamSimple ?? this.atTeamSimple
-      ..replyReview = replyReview ?? this.replyReview
+      ..replyMessage = replyMessage ?? this.replyMessage
       ..gameId = gameId ?? this.gameId
       ..parentReviewId = parentReviewId ?? this.parentReviewId
       ..playerId = playerId ?? this.playerId;

@@ -58,7 +58,7 @@ class InboxApi {
       "context": context,
       "playerId": playerId ?? 0,
       "gameId": gameId ?? 0,
-      "parentReviewId": parentReviewId ?? 0,
+      "parentReviewId": parentReviewId ?? targetId ?? 0,
       "atTeamId": atTeamId ?? '',
       "targetId": targetId ?? 0,
     });
@@ -81,6 +81,7 @@ class InboxApi {
   ///发送ovr排行榜消息
   static Future<ChatMessageEntity> sendOVRRankMessage({
     required String context,
+    int? parentReviewId,
 
     ///at的人的id
     String? atTeamId,
@@ -90,6 +91,7 @@ class InboxApi {
   }) async {
     var json = await httpUtil.post(Api.sendOVRRankMessage, data: {
       "context": context,
+      "parentReviewId": parentReviewId ?? targetId ?? 0,
       "atTeamId": atTeamId ?? '',
       "targetId": targetId ?? 0,
     });

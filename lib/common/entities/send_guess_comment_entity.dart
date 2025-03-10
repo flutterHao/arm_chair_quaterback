@@ -20,7 +20,7 @@ class ChatMessageEntity {
   int ut = 0;
   int id = 0;
   List<AtTeamSimple> atTeamSimple = [];
-  List<ChatReplyReviewEntity> replyReview = [];
+  ChatReplyReviewEntity? replyMessage;
 
   int gameId = 0;
   int parentReviewId = 0;
