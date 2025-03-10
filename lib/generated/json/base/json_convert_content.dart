@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/entities/app_image_version_entity.da
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_pass_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_pass_udf_reward_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/chat_reply_review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
@@ -340,6 +341,10 @@ class JsonConvert {
     if (<BattlePassRewardEntity>[] is M) {
       return data.map<BattlePassRewardEntity>((Map<String, dynamic> e) =>
           BattlePassRewardEntity.fromJson(e)).toList() as M;
+    }
+    if (<BattlePassUdfRewardEntity>[] is M) {
+      return data.map<BattlePassUdfRewardEntity>((Map<String, dynamic> e) =>
+          BattlePassUdfRewardEntity.fromJson(e)).toList() as M;
     }
     if (<CardPackInfoEntity>[] is M) {
       return data.map<CardPackInfoEntity>((Map<String, dynamic> e) =>
@@ -1383,6 +1388,7 @@ class JsonConvertClassCollection {
     (BattlePassInfoClaimedRewardMaps)
         .toString(): BattlePassInfoClaimedRewardMaps.fromJson,
     (BattlePassRewardEntity).toString(): BattlePassRewardEntity.fromJson,
+    (BattlePassUdfRewardEntity).toString(): BattlePassUdfRewardEntity.fromJson,
     (CardPackInfoEntity).toString(): CardPackInfoEntity.fromJson,
     (CardPackInfoCard).toString(): CardPackInfoCard.fromJson,
     (ChatReplyReviewEntity).toString(): ChatReplyReviewEntity.fromJson,

@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/app_image_version_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_pass_udf_reward_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
@@ -473,5 +474,14 @@ class CacheApi {
   static Future<List<BattlePassRewardEntity>> getBattlePassReward() async {
     List list = await HttpUtil().post(Api.cBattlePassReward);
     return list.map((item) => BattlePassRewardEntity.fromJson(item)).toList();
+  }
+
+  ///赛季通行证球员表
+  static Future<List<BattlePassUdfRewardEntity>>
+      getBattlePassUdfReward() async {
+    List list = await HttpUtil().post(Api.cBattlePassUdfReward);
+    return list
+        .map((item) => BattlePassUdfRewardEntity.fromJson(item))
+        .toList();
   }
 }

@@ -84,11 +84,12 @@ class SelectTeamPage extends GetView<SeasonPassController> {
                   mainAxisExtent: 104.w),
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 16.w),
-              itemCount: 30,
+              itemCount: controller.battleUdfRewardList.length,
               itemBuilder: (context, index) {
+                var teamId = controller.battleUdfRewardList[index].hostTeamId;
                 return MtInkWell(
                     onTap: () {
-                      Get.to(PassPlayerPage(), arguments: 101 + index);
+                      Get.to(PassPlayerPage(), arguments: teamId);
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -100,13 +101,13 @@ class SelectTeamPage extends GetView<SeasonPassController> {
                         Container(
                             // color: Colors.pink.withOpacity(.1),
                             child: ImageWidget(
-                          url: Utils.getTeamUrl(101 + index),
+                          url: Utils.getTeamUrl(teamId),
                           width: 64.w,
                           height: 64.w,
                         )),
                         3.vGap,
                         Text(
-                          Utils.getTeamInfo(101 + index).shortEname,
+                          Utils.getTeamInfo(teamId).shortEname,
                           style: 12.w5(
                               height: .8,
                               color: AppColors.cB2B2B2,

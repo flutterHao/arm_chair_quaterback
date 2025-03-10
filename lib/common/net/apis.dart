@@ -159,6 +159,8 @@ class Api {
   static const String cGirlDefine = "$CONFIG_BASE_PATH/GirlDefine.json";
   static const String cBattlePassReward =
       "$CONFIG_BASE_PATH/BattlePassReward.json";
+  static const String cBattlePassUdfReward =
+      "$CONFIG_BASE_PATH/BattlePassUdfReward.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/now_season_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -31,30 +27,20 @@ class BattlePassPage extends StatefulWidget {
 class _BattlePassPageState extends State<BattlePassPage> {
   final SeasonPassController controller = Get.find();
   int currentIndex() {
-    return battleRewardList
-        .lastIndexWhere((e) => controller.battlePassInfo.value > e.threshold);
+    return battleRewardList.lastIndexWhere(
+        (e) => controller.battlePassInfo.value.value > e.threshold);
   }
 
   List<BattlePassRewardEntity> battleRewardList = [];
-  NowSeasonEntity nowSeasonEntity = NowSeasonEntity();
+
   int teamId = 101;
 
   ///当前的奖励
   BattlePassRewardEntity nowReward = BattlePassRewardEntity();
   initData() async {
-    await Future.wait(
-      [CacheApi.getBattlePassReward(), PicksApi.getNowSeason()],
-    ).then((result) {
-      battleRewardList = result[0] as List<BattlePassRewardEntity>;
-      nowSeasonEntity = result[1] as NowSeasonEntity;
-    });
-
+    battleRewardList = await CacheApi.getBattlePassReward();
     nowReward = battleRewardList.firstWhere(
-        (element) => element.threshold > controller.battlePassInfo.value);
-    _updateRemainingTime();
-    // 每秒更新一次剩余时间
-    _timer = Timer.periodic(
-        Duration(seconds: 1), (Timer t) => _updateRemainingTime());
+        (element) => element.threshold > controller.battlePassInfo.value.value);
     setState(() {});
   }
 
@@ -78,11 +64,11 @@ class _BattlePassPageState extends State<BattlePassPage> {
               itemCount: battleRewardList.length,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                BattleRewardType type = controller.battlePassInfo.value >=
+                BattleRewardType type = controller.battlePassInfo.value.value >=
                             battleRewardList[index].threshold &&
                         index == 0
                     ? BattleRewardType.received
-                    : controller.battlePassInfo.value >=
+                    : controller.battlePassInfo.value.value >=
                             battleRewardList[index].threshold
                         ? BattleRewardType.canReceived
                         : BattleRewardType.notReceived;
@@ -232,7 +218,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                     Text.rich(
                       TextSpan(children: [
                         TextSpan(
-                            text: '${controller.battlePassInfo.value}',
+                            text: '${controller.battlePassInfo.value.value}',
                             style: 13.w4(
                                 fontFamily: FontFamily.fRobotoRegular,
                                 color: AppColors.c808080)),
@@ -249,8 +235,8 @@ class _BattlePassPageState extends State<BattlePassPage> {
                 OutLineProgressWidget(
                   width: 260.w,
                   height: 12.w,
-                  progress:
-                      controller.battlePassInfo.value / nowReward.threshold,
+                  progress: controller.battlePassInfo.value.value /
+                      nowReward.threshold,
                   progressColor: AppColors.c000000,
                   border: Border.all(color: AppColors.c000000, width: 1),
                 ),
@@ -317,91 +303,7 @@ class _BattlePassPageState extends State<BattlePassPage> {
                                   fontFamily: FontFamily.fRobotoRegular),
                             ),
                             6.vGap,
-                            Row(children: [
-                              Container(
-                                width: 34.w,
-                                height: 37.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.w),
-                                    color: Colors.white.withOpacity(.1)),
-                                child: Text(
-                                  '$days',
-                                  style: 20.w5(
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 8.w),
-                                child: Text(
-                                  ':',
-                                  style: 20.w5(
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                              ),
-                              Container(
-                                width: 34.w,
-                                height: 37.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.w),
-                                    color: Colors.white.withOpacity(.1)),
-                                child: Text(
-                                  '$hours',
-                                  style: 20.w5(
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 8.w),
-                                child: Text(
-                                  ':',
-                                  style: 20.w5(
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                              ),
-                              Container(
-                                width: 34.w,
-                                height: 37.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.w),
-                                    color: Colors.white.withOpacity(.1)),
-                                child: Text(
-                                  '$twoDigitMinutes',
-                                  style: 20.w5(
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 8.w),
-                                child: Text(
-                                  ':',
-                                  style: 20.w5(
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                              ),
-                              Container(
-                                width: 34.w,
-                                height: 37.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.w),
-                                    color: Colors.white.withOpacity(.1)),
-                                child: Text(
-                                  '$twoDigitSeconds',
-                                  style: 20.w5(
-                                      color: Colors.white,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                              )
-                            ])
+                            _remainingTimeWidget()
                           ],
                         )),
                       ],
@@ -413,6 +315,91 @@ class _BattlePassPageState extends State<BattlePassPage> {
             ),
           ],
         ));
+  }
+
+  /// 赛季倒计时
+  Widget _remainingTimeWidget() {
+    return Obx(() {
+      controller.remaining.value;
+      return Row(children: [
+        Container(
+          width: 34.w,
+          height: 37.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.w),
+              color: Colors.white.withOpacity(.1)),
+          child: Text(
+            controller.days,
+            style: 20
+                .w5(color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 8.w),
+          child: Text(
+            ':',
+            style: 20
+                .w5(color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
+          ),
+        ),
+        Container(
+          width: 34.w,
+          height: 37.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.w),
+              color: Colors.white.withOpacity(.1)),
+          child: Text(
+            controller.hours,
+            style: 20
+                .w5(color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 8.w),
+          child: Text(
+            ':',
+            style: 20
+                .w5(color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
+          ),
+        ),
+        Container(
+          width: 34.w,
+          height: 37.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.w),
+              color: Colors.white.withOpacity(.1)),
+          child: Text(
+            controller.twoDigitMinutes,
+            style: 20
+                .w5(color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 8.w),
+          child: Text(
+            ':',
+            style: 20
+                .w5(color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
+          ),
+        ),
+        Container(
+          width: 34.w,
+          height: 37.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.w),
+              color: Colors.white.withOpacity(.1)),
+          child: Text(
+            controller.twoDigitSeconds,
+            style: 20
+                .w5(color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
+          ),
+        )
+      ]);
+    });
   }
 
   Widget _rightWidget(int index, BattleRewardType type) {
@@ -576,42 +563,6 @@ class _BattlePassPageState extends State<BattlePassPage> {
       backgroundColor: Colors.white,
       bodyWidget: Expanded(child: _buildView()),
     ));
-  }
-
-  late Timer _timer;
-  late Duration _remaining;
-  String days = '';
-  String hours = ''; // 获取除去整天后的小时数
-  String twoDigitMinutes = '';
-  String twoDigitSeconds = '';
-  void formatDuration(Duration d) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    setState(() {
-      // 计算天数、剩余的小时数、分钟数和秒数
-      days = twoDigits(d.inDays);
-      hours = twoDigits(d.inHours.remainder(24)); // 获取除去整天后的小时数
-      twoDigitMinutes = twoDigits(d.inMinutes.remainder(60));
-      twoDigitSeconds = twoDigits(d.inSeconds.remainder(60));
-    });
-
-    // return "${days}:${hours}:${twoDigitMinutes}:${twoDigitSeconds}";
-  }
-
-  void _updateRemainingTime() {
-    DateTime now = DateTime.now();
-    // 结束时间
-    DateTime midnight =
-        DateTime.fromMillisecondsSinceEpoch(nowSeasonEntity.seasonEndTime)
-            .toLocal();
-    Duration remaining = midnight.difference(now);
-    _remaining = remaining;
-    formatDuration(_remaining);
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel(); // 当组件销毁时取消定时器
-    super.dispose();
   }
 }
 
