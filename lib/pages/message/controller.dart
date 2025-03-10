@@ -46,6 +46,7 @@ class MessageController extends GetxController {
   StreamSubscription? subscription;
 
   List<ChatMessageEntity> atChatMessageList = [];
+  var hasText = false.obs;
 
   @override
   void onInit() {

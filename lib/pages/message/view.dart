@@ -1,13 +1,17 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/entities/send_guess_comment_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/message/controller.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -32,9 +36,7 @@ class MessagePage extends GetView<MessageController> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode =
-        MediaQuery
-            .of(context)
-            .platformBrightness == Brightness.dark;
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return HorizontalDragBackContainer(
       child: GetBuilder<MessageController>(
         tag: getTag(),
@@ -52,187 +54,199 @@ class MessagePage extends GetView<MessageController> {
                   Expanded(
                     child: Column(
                       children: [
-
                         /// 消息列表
-                        Expanded(
-                          child: InkWell(
-                            onTap: () => controller.focusNode.unfocus(),
-                            child: MediaQuery.removePadding(
-                              removeBottom: true,
-                              removeTop: true,
-                              context: context,
-                              child: Obx(() {
-                                return ListView.separated(
-                                  itemCount: controller.list.length,
-                                  controller: controller.scrollController,
-                                  reverse: true,
-                                  shrinkWrap: true,
-                                  physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-                                  itemBuilder: (context, index) {
-                                    bool isFirst = index == 0;
-                                    bool isLast =
-                                        index ==
-                                            controller.list.length - 1;
-                                    ChatMessageEntity item =
-                                    controller.list[index];
-                                    return Container(
-                                      padding: EdgeInsets.only(
-                                          bottom: isFirst ? 9.w : 0,
-                                          top: isLast ? 9.w : 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          10.hGap,
-                                          InkWell(
-                                            onLongPress: () =>
-                                                controller
-                                                    .avatarLongPress(
-                                                    item),
-                                            child: Container(
-                                              width: 36.w,
-                                              height: 36.h,
-                                              clipBehavior: Clip.hardEdge,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      24.w)),
-                                              child: ImageWidget(
-                                                url: Utils.getAvatarUrl(
-                                                    item.teamLogo),
-                                                imageFailedPath:
-                                                Assets.teamUiHead03,
-                                              ),
-                                            ),
-                                          ),
-                                          6.hGap,
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                              children: [
-                                                InkWell(
-                                                  onLongPress: () =>
-                                                      controller
-                                                          .avatarLongPress(
-                                                          item),
-                                                  child: Text(
-                                                    Utils.isMe(
-                                                        item.teamId)
-                                                        ? "me"
-                                                        : item.teamName,
-                                                    style: 12.w4(
-                                                      color: AppColors
-                                                          .c000000
-                                                          .withOpacity(
-                                                          0.5),
-                                                    ),
-                                                  ),
-                                                ),
-                                                3.vGap,
-                                                _buildMessage(
-                                                    item, index),
-                                              ],
-                                            ),
-                                          ),
-                                          16.hGap,
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return 14.vGap;
-                                  },
-                                );
-                              }),
-                            ),
-                          ),
-                        ),
+                        _buildMessageList(context),
 
                         /// 输入框
-                        Container(
-                          color: MediaQuery
-                              .of(context)
-                              .viewInsets
-                              .bottom <= 0
-                              ? AppColors.cF2F2F2
-                              : isDarkMode
-                              ? AppColors.c262626
-                              : AppColors.cF2F2F2,
-                          padding: EdgeInsets.only(
-                              top: 9.w,
-                              bottom: Utils.getPaddingBottom() + 9.w,
-                              right: 16.w,
-                              left: 16.w),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color:
-                              MediaQuery
-                                  .of(context)
-                                  .viewInsets
-                                  .bottom <= 0
-                                  ? AppColors.cE6E6E6
-                                  : isDarkMode
-                                  ? AppColors.c4D4D4D
-                                  : AppColors.cE6E6E6,
-                              borderRadius: BorderRadius.circular(4.w),
-                            ),
-                            child: TextField(
-                              controller: controller.textEditingController,
-                              minLines: 1,
-                              maxLines: 100,
-                              textInputAction: TextInputAction.send,
-                              // keyboardAppearance:Brightness.light,
-                              cursorColor:
-                              MediaQuery
-                                  .of(context)
-                                  .viewInsets
-                                  .bottom <= 0
-                                  ? AppColors.c262626
-                                  : isDarkMode
-                                  ? AppColors.cF2F2F2
-                                  : AppColors.c262626,
-                              scrollPadding: const EdgeInsets.all(0),
-                              focusNode: controller.focusNode,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10.w),
-                                hintText: "Please input text ...",
-                                hintStyle: 14.w4(color: AppColors.cB3B3B3),
-                                border: InputBorder.none,
-                              ),
-                              style: 14.w4(
-                                  color: MediaQuery
-                                      .of(context)
-                                      .viewInsets
-                                      .bottom <=
-                                      0
-                                      ? AppColors.c262626
-                                      : isDarkMode
-                                      ? AppColors.cF2F2F2
-                                      : AppColors.c262626),
-                              onChanged: (v) {
-                                print('onChanged');
-                              },
-                              onSubmitted: (str) => controller.send(str),
-                            ),
-                          ),
-                        )
+                        _buildInput(context, isDarkMode)
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery
-                        .of(context)
-                        .viewInsets
-                        .bottom,
+                    height: MediaQuery.of(context).viewInsets.bottom,
                   )
                 ],
               ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Container _buildInput(BuildContext context, bool isDarkMode) {
+    return Container(
+      color: MediaQuery.of(context).viewInsets.bottom <= 0
+          ? AppColors.cF2F2F2
+          : isDarkMode
+              ? AppColors.c262626
+              : AppColors.cF2F2F2,
+      padding: EdgeInsets.only(
+          top: 9.w,
+          bottom: Utils.getPaddingBottom() + 9.w,
+          right: 16.w,
+          left: 16.w),
+      child: Container(
+        decoration: BoxDecoration(
+          color: MediaQuery.of(context).viewInsets.bottom <= 0
+              ? AppColors.cE6E6E6
+              : isDarkMode
+                  ? AppColors.c4D4D4D
+                  : AppColors.cE6E6E6,
+          borderRadius: BorderRadius.circular(4.w),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: TextField(
+                controller: controller.textEditingController,
+                minLines: 1,
+                maxLines: 100,
+                textInputAction: TextInputAction.send,
+                // keyboardAppearance:Brightness.light,
+                cursorColor: MediaQuery.of(context).viewInsets.bottom <= 0
+                    ? AppColors.c262626
+                    : isDarkMode
+                        ? AppColors.cF2F2F2
+                        : AppColors.c262626,
+                scrollPadding: const EdgeInsets.all(0),
+                focusNode: controller.focusNode,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10.w),
+                  hintText: "Please input text ...",
+                  hintStyle: 14.w4(color: AppColors.cB3B3B3),
+                  border: InputBorder.none,
+                ),
+                style: 14.w4(
+                    color: MediaQuery.of(context).viewInsets.bottom <= 0
+                        ? AppColors.c262626
+                        : isDarkMode
+                            ? AppColors.cF2F2F2
+                            : AppColors.c262626),
+                onChanged: (v) {
+                  print('onChanged');
+                  controller.hasText.value = ObjectUtil.isNotEmpty(v);
+                },
+                onSubmitted: (str) => controller.send(str),
+              ),
+            ),
+            if (GetPlatform.isAndroid)
+              Obx(() {
+                return AnimatedOpacity(
+                  opacity: controller.hasText.value ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 200),
+                  child: IconButton(
+                    icon: Container(
+                      width: 30.w,
+                      height: 30.w,
+                      decoration: BoxDecoration(
+                          color: MediaQuery.of(context).viewInsets.bottom <= 0
+                              ? AppColors.c262626
+                              : isDarkMode
+                                  ? AppColors.cF2F2F2
+                                  : AppColors.c262626,
+                          borderRadius: BorderRadius.circular(15.w)),
+                      child: Transform.rotate(
+                        angle: 90 * (pi / 180),
+                        child: IconWidget(
+                          iconWidth: 15.w,
+                          icon: Assets.iconIconBack,
+                          iconColor:
+                              MediaQuery.of(context).viewInsets.bottom <= 0
+                                  ? AppColors.cF2F2F2
+                                  : !isDarkMode
+                                      ? AppColors.cF2F2F2
+                                      : AppColors.c262626,
+                          // iconColor: AppColors.c262626,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      controller.send(controller.textEditingController.text);
+                    },
+                  ),
+                );
+              }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Expanded _buildMessageList(BuildContext context) {
+    return Expanded(
+      child: InkWell(
+        onTap: () => controller.focusNode.unfocus(),
+        child: MediaQuery.removePadding(
+          removeBottom: true,
+          removeTop: true,
+          context: context,
+          child: Obx(() {
+            return ListView.separated(
+              itemCount: controller.list.length,
+              controller: controller.scrollController,
+              reverse: true,
+              shrinkWrap: true,
+              physics: AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics()),
+              itemBuilder: (context, index) {
+                bool isFirst = index == 0;
+                bool isLast = index == controller.list.length - 1;
+                ChatMessageEntity item = controller.list[index];
+                return Container(
+                  padding: EdgeInsets.only(
+                      bottom: isFirst ? 9.w : 0, top: isLast ? 9.w : 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      10.hGap,
+                      InkWell(
+                        onLongPress: () => controller.avatarLongPress(item),
+                        child: Container(
+                          width: 36.w,
+                          height: 36.h,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.w)),
+                          child: ImageWidget(
+                            url: Utils.getAvatarUrl(item.teamLogo),
+                            imageFailedPath: Assets.teamUiHead03,
+                          ),
+                        ),
+                      ),
+                      6.hGap,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onLongPress: () =>
+                                  controller.avatarLongPress(item),
+                              child: Text(
+                                Utils.isMe(item.teamId) ? "me" : item.teamName,
+                                style: 12.w4(
+                                  color: AppColors.c000000.withOpacity(0.5),
+                                ),
+                              ),
+                            ),
+                            3.vGap,
+                            _buildMessage(item, index),
+                          ],
+                        ),
+                      ),
+                      16.hGap,
+                    ],
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return 14.vGap;
+              },
+            );
+          }),
+        ),
       ),
     );
   }
@@ -252,10 +266,13 @@ class MessagePage extends GetView<MessageController> {
                   borderRadius: BorderRadius.circular(9.w)),
               alignment: Alignment.centerLeft,
               child: Builder(builder: (context) {
-                return Text(item.context, style: 14.w4(
-                    color: Utils.isMe(item.teamId)
-                        ? AppColors.cFFFFFF
-                        : AppColors.c000000),);
+                return Text(
+                  item.context,
+                  style: 14.w4(
+                      color: Utils.isMe(item.teamId)
+                          ? AppColors.cFFFFFF
+                          : AppColors.c000000),
+                );
                 StringBuffer buffer = StringBuffer();
                 bool first = true;
 
