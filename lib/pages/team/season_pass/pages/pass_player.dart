@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/net/apis/battle_pass.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -98,8 +99,10 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
               top: 7.w,
               bottom: 14.w + Utils.getPaddingBottom()),
           child: MtInkWell(
-              onTap: () {
-                Get.to(BattlePassPage(), arguments: teamId);
+              onTap: () async {
+                await BattlePassApi.chooseHomeTeam(teamId);
+                Get.to(BattlePassPage());
+                controller.teamId = teamId;
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 6.w),
@@ -422,9 +425,6 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
   }
 
   Widget _playRankWidget(int index) {
-    var playerId = playerRankList[index].playerId;
-    NbaPlayerInfosPlayerBaseInfoList playerBaseInfoList =
-        Utils.getPlayBaseInfo(playerRankList[index].playerId);
     return Container(
         width: 30.w,
         height: 30.w,

@@ -26,7 +26,6 @@ class SeasonPassWidget extends GetView<SeasonPassController> {
       id: "season_pass",
       builder: (_) {
         return Obx(() {
-          controller.battlePassInfo.value.hostTeam;
           bool isselectTeam = controller.battlePassInfo.value.hostTeam != 0;
           return MtInkWell(
               onTap: () {
@@ -51,7 +50,7 @@ class SeasonPassWidget extends GetView<SeasonPassController> {
                           borderRadius: BorderRadius.circular(9.w)),
                       child: Row(
                         children: [
-                          seasonLogoWidget(isselectTeam),
+                          _seasonLogoWidget(isselectTeam),
                           Expanded(
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +81,9 @@ class SeasonPassWidget extends GetView<SeasonPassController> {
                               OutLineProgressWidget(
                                 width: 120.w,
                                 height: 5.w,
-                                progress: .5,
+                                progress:
+                                    controller.battlePassInfo.value.value /
+                                        controller.nowReward.value.threshold,
                                 progressColor: isselectTeam
                                     ? AppColors.cFFFFFF
                                     : AppColors.c000000,
@@ -99,19 +100,7 @@ class SeasonPassWidget extends GetView<SeasonPassController> {
                         ],
                       ),
                     ),
-                    isselectTeam
-                        ? Positioned(
-                            bottom: -60.w,
-                            right: -40.w,
-                            child: Opacity(
-                              opacity: .05,
-                              child: ImageWidget(
-                                url: Utils.getTeamUrl(controller.teamId),
-                                width: 146.w,
-                                height: 146.w,
-                              ),
-                            ))
-                        : SizedBox()
+                    _bgIconWidget(isselectTeam)
                   ],
                 ),
               ));
@@ -120,7 +109,23 @@ class SeasonPassWidget extends GetView<SeasonPassController> {
     );
   }
 
-  Widget seasonLogoWidget(bool isselectTeam) {
+  Widget _bgIconWidget(bool isselectTeam) {
+    return isselectTeam
+        ? Positioned(
+            bottom: -60.w,
+            right: -40.w,
+            child: Opacity(
+              opacity: .05,
+              child: ImageWidget(
+                url: Utils.getTeamUrl(controller.teamId),
+                width: 146.w,
+                height: 146.w,
+              ),
+            ))
+        : SizedBox();
+  }
+
+  Widget _seasonLogoWidget(bool isselectTeam) {
     return isselectTeam
         ? ImageWidget(
             url: Utils.getTeamUrl(controller.teamId),

@@ -15,13 +15,18 @@ class SeasonPassController extends GetxController {
   SeasonPassController();
   Rx<BattlePassInfoEntity> battlePassInfo = BattlePassInfoEntity().obs;
   NowSeasonEntity nowSeasonEntity = NowSeasonEntity();
+
+  ///所有赛季奖励
   List<BattlePassRewardEntity> battleRewardList = [];
+  // 当前赛季奖励
+  RxList<BattlePassRewardEntity> nowbattleRewardList = RxList();
   List<NbaTeamEntity> teamDefine = [];
 
+  ///当前等级奖励
+  Rx<BattlePassRewardEntity> nowReward = BattlePassRewardEntity().obs;
   int teamId = 101;
   initData() async {
     updateBattlePassInfo();
-    teamId = battlePassInfo.value.hostTeam;
     await Future.wait(
       [
         CacheApi.getBattlePassReward(),
@@ -32,20 +37,33 @@ class SeasonPassController extends GetxController {
       nowSeasonEntity = result[1] as NowSeasonEntity;
     });
 
-    _updateRemainingTime();
+    ///最大赛季id
+    int maxSeasonId = battleRewardList[battleRewardList.length - 1].poolId;
+    nowbattleRewardList.value = battleRewardList.where((element) {
+      int seasonId = nowSeasonEntity.seasonId;
+      if (nowSeasonEntity.seasonId > maxSeasonId) {
+        seasonId = maxSeasonId;
+      }
+      return element.poolId == seasonId;
+    }).toList();
+    nowReward.value = nowbattleRewardList.firstWhere(
+        (element) => element.threshold > battlePassInfo.value.value);
+
     // 每秒更新一次剩余时间
     _timer = Timer.periodic(
         Duration(seconds: 1), (Timer t) => _updateRemainingTime());
-    print(battlePassInfo.value.hostTeam);
-    CacheApi.getBattlePassUdfReward();
     teamDefine = await CacheApi.getNBATeamDefine(getList: true);
     teamDefine.removeWhere((item) => item.id == 0);
-    // battleUdfRewardList = await CacheApi.getBattlePassUdfReward();
   }
 
   ///更新通行证信息
   Future updateBattlePassInfo() async {
     battlePassInfo.value = await BattlePassApi.getBattlePassInfo();
+    teamId = battlePassInfo.value.hostTeam;
+    if (nowbattleRewardList.isNotEmpty) {
+      nowReward.value = nowbattleRewardList.firstWhere(
+          (element) => element.threshold > battlePassInfo.value.value);
+    }
   }
 
   @override

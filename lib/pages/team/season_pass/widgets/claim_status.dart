@@ -8,11 +8,16 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/pages/battle_pass.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-///领取状态按钮
+import '../controller.dart';
+
+///通行证领取状态按钮
 class ClaimStatusWidget extends StatelessWidget {
-  ClaimStatusWidget(this.type, {super.key});
+  ClaimStatusWidget(this.type, this.level, {super.key});
   late BattleRewardType type;
+  late int level;
+  final SeasonPassController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,8 +40,9 @@ class ClaimStatusWidget extends StatelessWidget {
         Visibility(
             visible: type == BattleRewardType.canReceived,
             child: MtInkWell(
-                onTap: () {
-                  BattlePassApi.claimLevelReward(1);
+                onTap: () async {
+                  await BattlePassApi.claimLevelReward(level);
+                  controller.updateBattlePassInfo();
                 },
                 child: Container(
                   width: 59.w,

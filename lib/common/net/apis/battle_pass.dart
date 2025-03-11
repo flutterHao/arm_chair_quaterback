@@ -15,7 +15,7 @@ class BattlePassApi {
         await httpUtil.post(Api.chooseHomeTeam, data: {'hostTeam': hostTeam});
   }
 
-  /// 通行证选择主队
+  /// 通行证领取奖励
   static Future claimLevelReward(int level) async {
     var json =
         await httpUtil.post(Api.claimLevelReward, data: {'level': level});
