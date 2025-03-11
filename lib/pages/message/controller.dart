@@ -148,13 +148,13 @@ class MessageController extends GetxController {
   Future<List<ChatMessageEntity>> getOVRRankChatMessages() {
     Completer<List<ChatMessageEntity>> completer = Completer();
     InboxApi.getOVRRankChatMessages(page: page, limit: limit).then((result) {
-      if (result.isEmpty) {
+      if (result.length < limit) {
         refreshController.loadNoData();
       } else {
-        list.addAll(result);
         refreshController.loadComplete();
         page++;
       }
+      list.addAll(result);
       completer.complete(result);
     }, onError: (e) {
       ErrorUtils.toast(e);

@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/chat_room_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_email_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/send_guess_comment_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
@@ -97,5 +98,37 @@ class InboxApi {
     });
 
     return ChatMessageEntity.fromJson(json);
+  }
+
+  ///获取聊天列表
+  static Future<List<ChatRoomEntity>> getChatRoomList({
+    int page = 0,
+    int limit = 10,
+  }) async {
+    List list = await httpUtil.post(Api.getChatRoomList, data: {
+      "page": page,
+      "limit": limit,
+    });
+    return list.map((e) => ChatRoomEntity.fromJson(e)).toList();
+  }
+
+  ///聊天置顶
+  static Future setPinned({
+    required int chatId,
+    required bool isPinned,
+  }) async {
+    await httpUtil.post(Api.setPinned, data: {
+      "chatId": chatId,
+      "isPinned": isPinned,
+    });
+  }
+
+  /// 退出群聊
+  static Future delChatRoom({
+    required int chatId,
+  }) async {
+    await httpUtil.post(Api.delChatRoom, data: {
+      "chatId": chatId,
+    });
   }
 }

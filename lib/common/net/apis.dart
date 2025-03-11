@@ -279,6 +279,10 @@ class Api {
       "$API_BASE_PATH/ChatMessage/getOVRRankChatMessages";
   static const String sendOVRRankMessage =
       "$API_BASE_PATH/ChatMessage/sendOVRRankMessage";
+  static const String getChatRoomList =
+      "$API_BASE_PATH/ChatMessage/getChatRoomList";
+  static const String setPinned = "$API_BASE_PATH/ChatMessage/setPinned";
+  static const String delChatRoom = "$API_BASE_PATH/ChatMessage/delChatRoom";
   static const String getGuessComment =
       "$API_BASE_PATH/NBANews/getGuessComment";
   static const String sendGuessComment =
