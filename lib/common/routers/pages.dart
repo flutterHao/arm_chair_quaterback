@@ -41,6 +41,9 @@ import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/ovr_standing_
 import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/player_trend.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/binding.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/view.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/pages/battle_pass.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/pages/pass_player.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/pages/select_team.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/index.dart';
@@ -173,6 +176,12 @@ class AppPages {
             playerId: Get.arguments["playerId"],
             gameId: Get.arguments["gameId"],
           );
+        case RouteNames.battlePassReward:
+          return BattlePassPage();
+        case RouteNames.battlePassPlayer:
+          return PassPlayerPage();
+        case RouteNames.selectTeam:
+          return SelectTeamPage();
         default:
           return const SizedBox.shrink();
       }

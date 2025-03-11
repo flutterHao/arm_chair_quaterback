@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -10,7 +11,6 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/season_pass/pages/pass_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -89,7 +89,8 @@ class SelectTeamPage extends GetView<SeasonPassController> {
                 var teamId = controller.teamDefine[index].id;
                 return MtInkWell(
                     onTap: () {
-                      Get.to(PassPlayerPage(), arguments: teamId);
+                      Get.toNamed(RouteNames.battlePassPlayer,
+                          arguments: teamId);
                     },
                     child: Container(
                       decoration: BoxDecoration(

@@ -68,6 +68,8 @@ class RouteNames {
   static const inboxDetail = '/inbox_detail';
   static const inboxEmail = '/inbox_email';
 
-
   static const message = '/message';
+  static const selectTeam = '/selectTeam';
+  static const battlePassPlayer = '/battlePassPlayer';
+  static const battlePassReward = '/battlePassReward';
 }
