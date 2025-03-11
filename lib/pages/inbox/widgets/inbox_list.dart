@@ -61,40 +61,217 @@ class InboxList extends GetView<InboxController> {
                   child: SmartRefresher(
                 controller: controller.refreshController,
                 onRefresh: () async {
-                  controller.refreshController.loadComplete();
                   await controller.getMessageList();
                   controller.refreshController.refreshCompleted();
                 },
-                physics: const BouncingScrollPhysics(),
-                child: Obx(
-                  () => controller.messageList.isNotEmpty
-                      ? ListView.separated(
-                          itemCount: controller.messageList.length,
-                          controller: controller.scrollController,
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (context, index) {
-                            bool lastIndex =
-                                index == controller.messageList.length - 1;
-                            return Container(
-                                margin: EdgeInsets.only(
-                                    bottom: lastIndex ? 80.w : 0),
-                                child: _buildItem(index, context));
-                          },
-                          separatorBuilder: (context, index) => Container(
-                            width: double.infinity,
-                            height: 0.5.w,
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            color: AppColors.cD4D4D4,
-                          ),
-                        )
-                      : Center(
-                          child: LoadStatusWidget(
-                              loadDataStatus: LoadDataStatus.noData)),
-                ),
+                enablePullUp: true,
+                onLoading: () => controller.getChatRoomList(),
+                // physics: const BouncingScrollPhysics(),
+                child: Obx(() {
+                  if (controller.messageList.isEmpty &&
+                      controller.chatRoomList.isEmpty) {
+                    return Center(
+                        child: LoadStatusWidget(
+                            loadDataStatus: LoadDataStatus.noData));
+                  }
+                  return CustomScrollView(
+                    slivers: [
+                      /// 邮件
+                      SliverList.separated(
+                        itemCount: controller.messageList.length,
+                        itemBuilder: (context, index) {
+                          return _buildItem(index, context);
+                        },
+                        separatorBuilder: (context, index) => Container(
+                          width: double.infinity,
+                          height: 0.5.w,
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          color: AppColors.cD4D4D4,
+                        ),
+                      ),
+
+                      /// 聊天记录
+                      SliverList.separated(
+                        itemCount: controller.chatRoomList.length,
+                        // padding: EdgeInsets.zero,
+                        itemBuilder: (context, index) {
+                          return _buildChatItem(index, context);
+                        },
+                        separatorBuilder: (context, index) => Container(
+                          width: double.infinity,
+                          height: 0.5.w,
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          color: AppColors.cD4D4D4,
+                        ),
+                      ),
+                      SliverPadding(padding: EdgeInsets.only(bottom: 80.w))
+                    ],
+                  );
+                }),
               )),
             ],
           );
         });
+  }
+
+  Widget _buildChatItem(index, context) {
+    var item = controller.chatRoomList[index];
+    int type = item.type;
+    var id = int.parse(item.categoryId);
+    String icon = type == 1 ? Utils.getPlayUrl(id) : Assets.testTestTeamLogo;
+    String title = type == 1 ? Utils.getPlayBaseInfo(id).elname : "OVR RANK";
+    String content = item.lastMessage;
+    String time = Utils.timeAgo(item.createTime);
+
+    return InkWell(
+      onTap: () async {
+        if (!Utils.canOperate()) return;
+        var arguments = {
+          "type": type == 3 ? 2 : 1,
+        };
+        if (type == 1) {
+          arguments['playerId'] = id;
+        }
+        Get.toNamed(RouteNames.message, arguments: arguments);
+      },
+      child: Slidable(
+        dragStartBehavior: DragStartBehavior.start,
+        endActionPane: ActionPane(
+          extentRatio: 120 / 375,
+          motion: const ScrollMotion(),
+          children: [
+            Expanded(
+              child: Builder(
+                builder: (context) {
+                  return InkWell(
+                    onTap: () {
+                      if (Utils.canOperate()) {
+                        controller.setPinned(item.id, !item.pinnedStatus);
+                        Slidable.of(context)?.close();
+                      }
+                    },
+                    child: Container(
+                      color: AppColors.cEFB400,
+                      child: IconWidget(
+                        iconWidth: 25.w,
+                        icon: Assets.managerUiManagerTacticsArrow,
+                        rotateAngle: item.pinnedStatus ? 180 : 0,
+                      ),
+                    ),
+                  );
+                }
+              ),
+            ),
+            IconSlidableAction(
+              backgroundColor: AppColors.cD60D20,
+              onPressed: (BuildContext context) {
+                if (Utils.canOperate()) {
+                  controller.delChatRoom(item.id);
+                }
+              },
+              icon: Assets.iconUiIconDelete02,
+              iconWidth: 20.w,
+            ),
+          ],
+        ),
+        child: Container(
+          width: double.infinity,
+          color: item.pinnedStatus ? AppColors.cF2F2F2 : AppColors.cTransparent,
+          padding:
+              EdgeInsets.only(left: 22.5, right: 16.w, top: 10.w, bottom: 10.w),
+          child: Row(
+            children: [
+              Stack(
+                children: [
+                  if (type == 3)
+                    Container(
+                      width: 48.w,
+                      height: 48.w,
+                      clipBehavior: Clip.antiAlias,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.w),
+                        border: Border.all(color: AppColors.cE1E1E1),
+                      ),
+                      child: ImageWidget(width: 30.w, url: icon),
+                    )
+                  else
+                    ImageWidget(
+                      url: icon,
+                      width: 48.w,
+                      height: 48.w,
+                      borderRadius: BorderRadius.circular(24.w),
+                    ),
+                ],
+              ),
+              18.hGap,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            title,
+                            style: 16.w4(
+                                fontFamily: FontFamily.fOswaldMedium,
+                                height: 0.9),
+                          ),
+                        ),
+                        Text(
+                          time,
+                          style: 14.w4(
+                              fontFamily: FontFamily.fRobotoRegular,
+                              height: 0.9,
+                              color: AppColors.cB3B3B3),
+                        ),
+                      ],
+                    ),
+                    8.5.vGap,
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          content,
+                          style: 14.w4(fontFamily: FontFamily.fRobotoRegular),
+                        )),
+                        12.5.vGap,
+                        controller.doNotDisturb.contains(item.id)
+                            ? IconWidget(
+                                icon: Assets.inboxUiInboxIconInform,
+                                iconWidth: 16.w,
+                                iconColor: AppColors.cB3B3B3)
+                            : Visibility(
+                                // visible: !item.isRead && item.noReadNum > 0,
+                                visible: item.unreadMessageCount > 0,
+                                child: Container(
+                                  constraints: BoxConstraints(minWidth: 15.w),
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 4.5.w, vertical: 2.5.w),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.cFF7954,
+                                    borderRadius: BorderRadius.circular(7.5.w),
+                                  ),
+                                  child: Text(
+                                      item.unreadMessageCount.toString(),
+                                      style: 12.w4(
+                                          fontFamily: FontFamily.fOswaldMedium,
+                                          height: 0.9,
+                                          color: AppColors.cFFFFFF)),
+                                ),
+                              )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildItem(index, context) {

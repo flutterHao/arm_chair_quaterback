@@ -179,10 +179,12 @@ class WSInstance {
 
   static void _sendMessage(List message, {String path = ""}) {
     if (!_ready) {
-      throw ('WSInstance not ready');
+      print ('WSInstance not ready');
+      return;
     }
     if (_channel == null) {
       print('channel null...');
+      return;
     }
     if (path != Api.wsHeartBeat && kDebugMode) {
       print('WebSocket--sendMessage--message:$message');

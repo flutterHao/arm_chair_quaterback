@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/send_guess_comment_entity.dart';
@@ -11,7 +10,7 @@ import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/message/widgets/RichTextController.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:arm_chair_quaterback/pages/message/widgets/match_target_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -25,10 +24,17 @@ class MessageController extends GetxController {
   final int? gameId;
 
   RefreshController refreshController = RefreshController();
-  RichTextController textEditingController =
-      RichTextController(patternMatchMap: {
-    RegExp("@*x*asdfasldfjlasjfsafekkkgakfeaja"): TextStyle(color: Colors.blue)
-  });
+  RichTextController textEditingController = RichTextController(
+      targetMatches: [
+        MatchTargetItem(
+            style: TextStyle(color: Colors.red),
+            text: "aljflajfongajf;elaegaejh89i3io021lf12365+3p01"),
+      ],
+      onMatch: (List<String> match) {
+        print('onMatch:$match');
+      },
+      regExpMultiLine: true);
+
   final FocusNode focusNode = FocusNode();
   ScrollController scrollController = ScrollController();
 
@@ -39,7 +45,9 @@ class MessageController extends GetxController {
   ScoresEntity? scoresEntity;
   StreamSubscription? subscription;
 
-  ChatMessageEntity? atChatMessage;
+  List<ChatMessageEntity> atChatMessageList = [];
+  var hasText = false.obs;
+  Rxn<ChatMessageEntity> replyChatMessage = Rxn();
 
   @override
   void onInit() {
@@ -98,7 +106,6 @@ class MessageController extends GetxController {
       ]);
     }
     Future.wait(futures).then((v) {
-      // print('scoresEntity:$scoresEntity');
       update();
     }, onError: (e) {
       ErrorUtils.toast(e);
@@ -141,13 +148,13 @@ class MessageController extends GetxController {
   Future<List<ChatMessageEntity>> getOVRRankChatMessages() {
     Completer<List<ChatMessageEntity>> completer = Completer();
     InboxApi.getOVRRankChatMessages(page: page, limit: limit).then((result) {
-      if (result.isEmpty) {
+      if (result.length < limit) {
         refreshController.loadNoData();
       } else {
-        list.addAll(result);
         refreshController.loadComplete();
         page++;
       }
+      list.addAll(result);
       completer.complete(result);
     }, onError: (e) {
       ErrorUtils.toast(e);
@@ -160,6 +167,9 @@ class MessageController extends GetxController {
   loadMoreData() {
     print('loadMoreData------');
     if (refreshController.footerStatus == LoadStatus.noMore) {
+      return;
+    }
+    if (refreshController.isLoading) {
       return;
     }
     if (type == 1) {
@@ -178,21 +188,42 @@ class MessageController extends GetxController {
     textEditingController.clear();
     // list.insertAll(0, [str]);
     String temp = str;
-    if (atChatMessage != null) {
-      temp = temp.replaceFirst("@${atChatMessage!.teamName}", "");
+    List<ChatMessageEntity> containsList = [];
+    if (atChatMessageList.isNotEmpty) {
+      containsList = atChatMessageList
+          .where((e) => temp.contains("@${e.teamName}"))
+          .toList();
+      // temp = containsList.fold(temp, (p, e) {
+      //   var r = p.replaceAll("@${e.teamName} ", "");
+      //   return r;
+      // });
     }
+    String? atTeamIds = containsList
+        .fold([], (p, e) {
+          p.add(e.teamId);
+          return p;
+        })
+        .toList()
+        .join(",");
+    print('atTeamIds:$atTeamIds');
+    int? targetId = replyChatMessage.value?.id;
     if (type == 1) {
-      sendGuessComment(temp);
+      sendGuessComment(temp, atTeamId: atTeamIds, targetId: targetId);
     } else {
-      sendOVRRankMessage(temp);
+      sendOVRRankMessage(temp, atTeamId: atTeamIds, targetId: targetId);
     }
+    replyChatMessage.value = null;
+    atChatMessageList.clear();
   }
 
-  sendGuessComment(String context, {int? targetId}) {
+  sendGuessComment(String context,
+      {String? atTeamId, int? targetId, int? parentReviewId}) {
     InboxApi.sendGuessComment(
             context: context,
             gameId: gameId,
             playerId: playerId,
+            parentReviewId: parentReviewId,
+            atTeamId: atTeamId,
             targetId: targetId)
         .then((result) {
       // addChatMessage(result);
@@ -201,9 +232,13 @@ class MessageController extends GetxController {
     });
   }
 
-  sendOVRRankMessage(String context, {int? atTeamId, int? targetId}) {
+  sendOVRRankMessage(String context,
+      {String? atTeamId, int? targetId, int? parentReviewId}) {
     InboxApi.sendOVRRankMessage(
-            context: context, atTeamId: atTeamId, targetId: targetId)
+            context: context,
+            parentReviewId: parentReviewId,
+            atTeamId: atTeamId,
+            targetId: targetId)
         .then((result) {
       // addChatMessage(result);
     }, onError: (e) {
@@ -229,15 +264,36 @@ class MessageController extends GetxController {
     }
   }
 
+  /// @他人
   avatarLongPress(ChatMessageEntity chatMessage) {
-    if(Utils.isMe(chatMessage.teamId)) return;
-    atChatMessage = chatMessage;
+    if (Utils.isMe(chatMessage.teamId)) return;
+    focusNode.requestFocus();
+    atChatMessageList.add(chatMessage);
     String tempText = "@${chatMessage.teamName}";
-    textEditingController.patternMatchMap = {
-      RegExp(tempText): TextStyle(color: Colors.blue)
-    };
-    textEditingController.text = "${textEditingController.text}$tempText";
-    textEditingController.selection = TextSelection(baseOffset: tempText.length, extentOffset: tempText.length);
+    List<MatchTargetItem> targetMatches =
+        List.from(textEditingController.targetMatches);
+    var firstWhereOrNull =
+        targetMatches.firstWhereOrNull((e) => e.text == tempText);
+    if (firstWhereOrNull == null) {
+      targetMatches.add(MatchTargetItem(
+          style: TextStyle(color: Colors.blue),
+          // text: tempText,
+          regex: RegExp(RegExp.escape(tempText)),
+          deleteOnBack: true));
+    }
+    var text = "${textEditingController.text}$tempText ";
+    textEditingController.text = text;
+    textEditingController.updateTargetMatches(targetMatches);
+  }
+
+  /// 删除回复
+  onDeleteReply() {
+    if (!Utils.canOperate()) return;
+    replyChatMessage.value = null;
+  }
+
+  onMessageLongPress(ChatMessageEntity item) {
+    replyChatMessage.value = item;
   }
 
   @override
@@ -252,5 +308,4 @@ class MessageController extends GetxController {
     scrollController.dispose();
     super.onClose();
   }
-
 }

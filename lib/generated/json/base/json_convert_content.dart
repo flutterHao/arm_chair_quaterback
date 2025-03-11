@@ -9,7 +9,12 @@ import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/app_image_version_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_pass_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_pass_udf_reward_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/chat_reply_review_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/chat_room_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
@@ -325,6 +330,23 @@ class JsonConvert {
       return data.map<TestDataMap>((Map<String, dynamic> e) =>
           TestDataMap.fromJson(e)).toList() as M;
     }
+    if (<BattlePassInfoEntity>[] is M) {
+      return data.map<BattlePassInfoEntity>((Map<String, dynamic> e) =>
+          BattlePassInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<BattlePassInfoClaimedRewardMaps>[] is M) {
+      return data.map<BattlePassInfoClaimedRewardMaps>((
+          Map<String, dynamic> e) =>
+          BattlePassInfoClaimedRewardMaps.fromJson(e)).toList() as M;
+    }
+    if (<BattlePassRewardEntity>[] is M) {
+      return data.map<BattlePassRewardEntity>((Map<String, dynamic> e) =>
+          BattlePassRewardEntity.fromJson(e)).toList() as M;
+    }
+    if (<BattlePassUdfRewardEntity>[] is M) {
+      return data.map<BattlePassUdfRewardEntity>((Map<String, dynamic> e) =>
+          BattlePassUdfRewardEntity.fromJson(e)).toList() as M;
+    }
     if (<CardPackInfoEntity>[] is M) {
       return data.map<CardPackInfoEntity>((Map<String, dynamic> e) =>
           CardPackInfoEntity.fromJson(e)).toList() as M;
@@ -332,6 +354,18 @@ class JsonConvert {
     if (<CardPackInfoCard>[] is M) {
       return data.map<CardPackInfoCard>((Map<String, dynamic> e) =>
           CardPackInfoCard.fromJson(e)).toList() as M;
+    }
+    if (<ChatReplyReviewEntity>[] is M) {
+      return data.map<ChatReplyReviewEntity>((Map<String, dynamic> e) =>
+          ChatReplyReviewEntity.fromJson(e)).toList() as M;
+    }
+    if (<ChatReplyReviewEmojis>[] is M) {
+      return data.map<ChatReplyReviewEmojis>((Map<String, dynamic> e) =>
+          ChatReplyReviewEmojis.fromJson(e)).toList() as M;
+    }
+    if (<ChatRoomEntity>[] is M) {
+      return data.map<ChatRoomEntity>((Map<String, dynamic> e) =>
+          ChatRoomEntity.fromJson(e)).toList() as M;
     }
     if (<CompetitionVenueEntity>[] is M) {
       return data.map<CompetitionVenueEntity>((Map<String, dynamic> e) =>
@@ -1063,6 +1097,10 @@ class JsonConvert {
       return data.map<ChatMessageEntity>((Map<String, dynamic> e) =>
           ChatMessageEntity.fromJson(e)).toList() as M;
     }
+    if (<AtTeamSimple>[] is M) {
+      return data.map<AtTeamSimple>((Map<String, dynamic> e) =>
+          AtTeamSimple.fromJson(e)).toList() as M;
+    }
     if (<StarUpDefineEntity>[] is M) {
       return data.map<StarUpDefineEntity>((Map<String, dynamic> e) =>
           StarUpDefineEntity.fromJson(e)).toList() as M;
@@ -1351,8 +1389,16 @@ class JsonConvertClassCollection {
     (ScoreBoard).toString(): ScoreBoard.fromJson,
     (GameSchedule).toString(): GameSchedule.fromJson,
     (TestDataMap).toString(): TestDataMap.fromJson,
+    (BattlePassInfoEntity).toString(): BattlePassInfoEntity.fromJson,
+    (BattlePassInfoClaimedRewardMaps)
+        .toString(): BattlePassInfoClaimedRewardMaps.fromJson,
+    (BattlePassRewardEntity).toString(): BattlePassRewardEntity.fromJson,
+    (BattlePassUdfRewardEntity).toString(): BattlePassUdfRewardEntity.fromJson,
     (CardPackInfoEntity).toString(): CardPackInfoEntity.fromJson,
     (CardPackInfoCard).toString(): CardPackInfoCard.fromJson,
+    (ChatReplyReviewEntity).toString(): ChatReplyReviewEntity.fromJson,
+    (ChatReplyReviewEmojis).toString(): ChatReplyReviewEmojis.fromJson,
+    (ChatRoomEntity).toString(): ChatRoomEntity.fromJson,
     (CompetitionVenueEntity).toString(): CompetitionVenueEntity.fromJson,
     (CardPackDefineEntity).toString(): CardPackDefineEntity.fromJson,
     (GameConstantEntity).toString(): GameConstantEntity.fromJson,
@@ -1586,6 +1632,7 @@ class JsonConvertClassCollection {
     (SeasonRankInfoMyRank).toString(): SeasonRankInfoMyRank.fromJson,
     (SeasonRankInfoNextRank).toString(): SeasonRankInfoNextRank.fromJson,
     (ChatMessageEntity).toString(): ChatMessageEntity.fromJson,
+    (AtTeamSimple).toString(): AtTeamSimple.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
     (StarUpDoneEntity).toString(): StarUpDoneEntity.fromJson,
     (StarUpDoneAddPotential).toString(): StarUpDoneAddPotential.fromJson,

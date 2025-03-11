@@ -4,7 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/net/apis/battle_pass.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -16,6 +16,8 @@ import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/season_pass/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/pages/battle_pass.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -34,15 +36,25 @@ class PassPlayerPage extends StatefulWidget {
 class _PassPlayerPageState extends State<PassPlayerPage> {
   var gradesList = ['S', 'A', 'B', 'C', 'D'];
   List<PlayerStrengthRankEntity> playerRankList = [];
+  final NbaPlayerController nbaController = Get.find();
+  final controller = Get.find<SeasonPassController>();
+  List<PlayerStrengthRankEntity> allPlayerRank = [];
+  int teamId = 101;
   @override
   void initState() {
     // TODO: implement initState
+    teamId = Get.arguments;
     super.initState();
     initData();
   }
 
   initData() async {
-    playerRankList = await TeamApi.getPlayerStrengthRank(end: 20);
+    allPlayerRank = nbaController.allPlayerRank;
+    playerRankList = allPlayerRank.where((PlayerStrengthRankEntity e) {
+      /// 球队
+      var t = Utils.getPlayBaseInfo(e.playerId).teamId;
+      return t == teamId;
+    }).toList();
     getGrades();
     setState(() {});
   }
@@ -51,11 +63,82 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
   Widget _buildView() {
     return Column(
       children: [
-        Stack(
+        _topPlayerGradeWidget(),
+        Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Player Information'.toUpperCase(),
+              style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
+            )),
+        Divider(
+          color: Colors.grey,
+          height: 1,
+        ),
+        Expanded(
+            child: Container(
+                color: Colors.white,
+                child: ListView.separated(
+                  itemCount: playerRankList.length,
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16.w),
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return _playerItemWidget(index);
+                  },
+                  separatorBuilder: (context, index) => Divider(
+                    height: 1,
+                    color: AppColors.ce5e5e5,
+                  ),
+                ))),
+        Container(
+          color: Colors.white,
+          padding: EdgeInsets.only(
+              left: 16.w,
+              right: 16.w,
+              top: 7.w,
+              bottom: 14.w + Utils.getPaddingBottom()),
+          child: MtInkWell(
+              onTap: () async {
+                await BattlePassApi.chooseHomeTeam(teamId);
+                Get.to(BattlePassPage());
+                controller.teamId = teamId;
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 6.w),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(8.w)),
+                alignment: Alignment.center,
+                child: Text(
+                  'CONFIRM',
+                  style: 24.w5(
+                      color: Colors.white,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
+              )),
+        )
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return HorizontalDragBackContainer(
+        child: BlackAppWidget(
+      UserInfoBar(showPop: true),
+      bodyWidget: Expanded(child: _buildView()),
+    ));
+  }
+
+  Widget _topPlayerGradeWidget() {
+    return InkWell(
+        onTap: () => Get.toNamed(RouteNames.teamDetailPage, arguments: teamId),
+        child: Stack(
           children: [
             Container(
               height: 198.w,
-              color: AppColors.c204794,
+              color: controller.getTeamColor(teamId),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
@@ -65,7 +148,7 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
                   Row(
                     children: [
                       ImageWidget(
-                        url: Utils.getTeamUrl(105),
+                        url: Utils.getTeamUrl(teamId),
                         width: 76.w,
                         height: 76.w,
                       ),
@@ -152,76 +235,13 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
                 child: Opacity(
                   opacity: .05,
                   child: ImageWidget(
-                    url: Utils.getTeamUrl(110),
+                    url: Utils.getTeamUrl(teamId),
                     width: 230.w,
                     height: 230.w,
                   ),
                 ))
           ],
-        ),
-        Container(
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Player Information'.toUpperCase(),
-              style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
-            )),
-        Divider(
-          color: Colors.grey,
-          height: 1,
-        ),
-        Expanded(
-            child: Container(
-                color: Colors.white,
-                child: ListView.separated(
-                  itemCount: playerRankList.length,
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16.w),
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return _playerItemWidget(index);
-                  },
-                  separatorBuilder: (context, index) => Divider(
-                    height: 1,
-                    color: AppColors.ce5e5e5,
-                  ),
-                ))),
-        Container(
-          color: Colors.white,
-          padding: EdgeInsets.only(
-              left: 16.w,
-              right: 16.w,
-              top: 7.w,
-              bottom: 14.w + Utils.getPaddingBottom()),
-          child: MtInkWell(
-              onTap: () {
-                Get.to(BattlePassPage());
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 6.w),
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(8.w)),
-                alignment: Alignment.center,
-                child: Text(
-                  'CONFIRM',
-                  style: 24.w5(
-                      color: Colors.white,
-                      fontFamily: FontFamily.fOswaldMedium),
-                ),
-              )),
-        )
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return HorizontalDragBackContainer(
-        child: BlackAppWidget(
-      UserInfoBar(showPop: true),
-      bodyWidget: Expanded(child: _buildView()),
-    ));
+        ));
   }
 
   Widget _playerItemWidget(int index) {
@@ -405,9 +425,6 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
   }
 
   Widget _playRankWidget(int index) {
-    var playerId = playerRankList[index].playerId;
-    NbaPlayerInfosPlayerBaseInfoList playerBaseInfoList =
-        Utils.getPlayBaseInfo(playerRankList[index].playerId);
     return Container(
         width: 30.w,
         height: 30.w,

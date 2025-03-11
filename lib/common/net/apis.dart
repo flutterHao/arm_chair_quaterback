@@ -157,6 +157,10 @@ class Api {
   static const String cStarUpNumDefine =
       "$CONFIG_BASE_PATH/StarUpNumDefine.json";
   static const String cGirlDefine = "$CONFIG_BASE_PATH/GirlDefine.json";
+  static const String cBattlePassReward =
+      "$CONFIG_BASE_PATH/BattlePassReward.json";
+  static const String cBattlePassUdfReward =
+      "$CONFIG_BASE_PATH/BattlePassUdfReward.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -254,25 +258,35 @@ class Api {
   static const String wsTeamPlayerBatchUpdated =
       "PushService.teamPlayerBatchUpdated"; //球员批量更新
   static const String wsMissionUpdate = "PushService.missionUpdate"; //任务更新
-  static const String wsTeamMatch = "PKService.teamMatch";//战斗匹配
-  static const String wsExitRoom = "ChatService.exitRoom";//退出聊天室
-  static const String wsEnterRoom = "ChatService.enterRoom";//进入聊天室
-  static const String wsGuessChatRoomUpdated = "PushService.guessChatRoomUpdated";//竞猜消息推送
-  static const String wsEnterOVRRoom = "ChatService.enterOVRRoom";//进入OVR聊天室
-  static const String wsExitOVRRoom = "ChatService.exitOVRRoom";//退出OVR聊天室
-  static const String wsOVRChatRoomUpdated = "PushService.OVRChatRoomUpdated";//OVR消息推送
+  static const String wsTeamMatch = "PKService.teamMatch"; //战斗匹配
+  static const String wsExitRoom = "ChatService.exitRoom"; //退出聊天室
+  static const String wsEnterRoom = "ChatService.enterRoom"; //进入聊天室
+  static const String wsGuessChatRoomUpdated =
+      "PushService.guessChatRoomUpdated"; //竞猜消息推送
+  static const String wsEnterOVRRoom = "ChatService.enterOVRRoom"; //进入OVR聊天室
+  static const String wsExitOVRRoom = "ChatService.exitOVRRoom"; //退出OVR聊天室
+  static const String wsOVRChatRoomUpdated =
+      "PushService.OVRChatRoomUpdated"; //OVR消息推送
 
   ///InboxMail
   static const String getMailVOList = "$API_BASE_PATH/Mail/getMailVOList";
   static const String receiveMailAward = "$API_BASE_PATH/Mail/receiveMailAward";
   static const String readMail = "$API_BASE_PATH/Mail/readMail";
   static const String deleteMail = "$API_BASE_PATH/Mail/deleteMail";
-  ///ChatMessage
-  static const String getOVRRankChatMessages = "$API_BASE_PATH/ChatMessage/getOVRRankChatMessages";
-  static const String sendOVRRankMessage = "$API_BASE_PATH/ChatMessage/sendOVRRankMessage";
-  static const String getGuessComment = "$API_BASE_PATH/NBANews/getGuessComment";
-  static const String sendGuessComment = "$API_BASE_PATH/NBANews/sendGuessComment";
 
+  ///ChatMessage
+  static const String getOVRRankChatMessages =
+      "$API_BASE_PATH/ChatMessage/getOVRRankChatMessages";
+  static const String sendOVRRankMessage =
+      "$API_BASE_PATH/ChatMessage/sendOVRRankMessage";
+  static const String getChatRoomList =
+      "$API_BASE_PATH/ChatMessage/getChatRoomList";
+  static const String setPinned = "$API_BASE_PATH/ChatMessage/setPinned";
+  static const String delChatRoom = "$API_BASE_PATH/ChatMessage/delChatRoom";
+  static const String getGuessComment =
+      "$API_BASE_PATH/NBANews/getGuessComment";
+  static const String sendGuessComment =
+      "$API_BASE_PATH/NBANews/sendGuessComment";
 
   ///Girl
   static const String getSlotChatEventVO =
@@ -283,5 +297,10 @@ class Api {
   static const String getGivingGifts = "$API_BASE_PATH/Girl/givingGifts";
   static const String getQueryGirls = "$API_BASE_PATH/Girl/queryGirls";
 
-
+  ///通行证模块
+  static const String getBattlePassInfo = "$API_BASE_PATH/BattlePass/get";
+  static const String chooseHomeTeam =
+      "$API_BASE_PATH/BattlePass/chooseHomeTeam";
+  static const String claimLevelReward =
+      "$API_BASE_PATH/BattlePass/claimLevelReward";
 }

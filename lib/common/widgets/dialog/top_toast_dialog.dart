@@ -112,8 +112,10 @@ class _TopDialogState extends State<TopToastDialog>
           return;
         }
         dragging = false;
-        var value = (endY-startY).abs()/height;
-        _controller.reverse(from: value);
+        var value = ((endY-startY)/height).abs();
+        if(value>0.1) {
+          _controller.reverse(from: value);
+        }
         startY = endY = -1;
       },
       onVerticalDragCancel: (){
@@ -121,8 +123,10 @@ class _TopDialogState extends State<TopToastDialog>
           return;
         }
         dragging = false;
-        var value = (endY-startY).abs()/height;
-        _controller.reverse(from: value);
+        var value = ((endY-startY)/height).abs();
+        if(value>0.1) {
+          _controller.reverse(from: value);
+        }
         startY = endY = -1;
       },
       child: AnimatedBuilder(
