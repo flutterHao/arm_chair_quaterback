@@ -1,6 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/net/apis/battle_pass.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -13,6 +12,7 @@ import 'package:get/get.dart';
 import '../controller.dart';
 
 ///通行证领取状态按钮
+// ignore: must_be_immutable
 class ClaimStatusWidget extends StatelessWidget {
   ClaimStatusWidget(this.type, this.level, {super.key});
   late BattleRewardType type;
@@ -40,10 +40,7 @@ class ClaimStatusWidget extends StatelessWidget {
         Visibility(
             visible: type == BattleRewardType.canReceived,
             child: MtInkWell(
-                onTap: () async {
-                  await BattlePassApi.claimLevelReward(level);
-                  controller.updateBattlePassInfo();
-                },
+                onTap: () => controller.claimLevelReward(level),
                 child: Container(
                   width: 59.w,
                   height: 40.w,

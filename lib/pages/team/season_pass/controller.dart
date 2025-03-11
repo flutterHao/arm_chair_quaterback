@@ -47,7 +47,8 @@ class SeasonPassController extends GetxController {
       return element.poolId == seasonId;
     }).toList();
     nowReward.value = nowbattleRewardList.firstWhere(
-        (element) => element.threshold > battlePassInfo.value.value);
+        (element) => element.threshold > battlePassInfo.value.value,
+        orElse: () => nowbattleRewardList[nowbattleRewardList.length - 1]);
 
     // 每秒更新一次剩余时间
     _timer = Timer.periodic(
@@ -62,8 +63,15 @@ class SeasonPassController extends GetxController {
     teamId = battlePassInfo.value.hostTeam;
     if (nowbattleRewardList.isNotEmpty) {
       nowReward.value = nowbattleRewardList.firstWhere(
-          (element) => element.threshold > battlePassInfo.value.value);
+          (element) => element.threshold > battlePassInfo.value.value,
+          orElse: () => nowbattleRewardList[nowbattleRewardList.length - 1]);
     }
+  }
+
+  ///领取等级礼物
+  Future claimLevelReward(int level) async {
+    await BattlePassApi.claimLevelReward(level);
+    updateBattlePassInfo();
   }
 
   @override

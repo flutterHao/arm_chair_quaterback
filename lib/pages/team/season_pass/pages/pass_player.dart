@@ -101,7 +101,8 @@ class _PassPlayerPageState extends State<PassPlayerPage> {
           child: MtInkWell(
               onTap: () async {
                 await BattlePassApi.chooseHomeTeam(teamId);
-                Get.to(BattlePassPage());
+                Get.back();
+                Get.off(BattlePassPage());
                 controller.teamId = teamId;
               },
               child: Container(
