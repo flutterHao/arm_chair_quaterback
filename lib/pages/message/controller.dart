@@ -300,6 +300,8 @@ class MessageController extends GetxController {
   void onClose() {
     if (type == 1) {
       WSInstance.exitRoom(playerId: playerId, gameId: gameId);
+    }else{
+      WSInstance.exitOVRRoom();
     }
     subscription?.cancel();
     refreshController.dispose();

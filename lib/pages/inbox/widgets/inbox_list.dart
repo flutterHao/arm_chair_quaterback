@@ -57,58 +57,73 @@ class InboxList extends GetView<InboxController> {
                 ),
               ),
               _connentivityWidget(),
-              Expanded(
-                  child: SmartRefresher(
-                controller: controller.refreshController,
-                onRefresh: () async {
-                  await controller.getMessageList();
-                  controller.refreshController.refreshCompleted();
-                },
-                enablePullUp: true,
-                onLoading: () => controller.getChatRoomList(),
-                // physics: const BouncingScrollPhysics(),
-                child: Obx(() {
-                  if (controller.messageList.isEmpty &&
-                      controller.chatRoomList.isEmpty) {
-                    return Center(
-                        child: LoadStatusWidget(
-                            loadDataStatus: LoadDataStatus.noData));
-                  }
-                  return CustomScrollView(
-                    slivers: [
-                      /// 邮件
-                      SliverList.separated(
-                        itemCount: controller.messageList.length,
-                        itemBuilder: (context, index) {
-                          return _buildItem(index, context);
-                        },
-                        separatorBuilder: (context, index) => Container(
-                          width: double.infinity,
-                          height: 0.5.w,
-                          margin: EdgeInsets.symmetric(horizontal: 16.w),
-                          color: AppColors.cD4D4D4,
-                        ),
-                      ),
-
-                      /// 聊天记录
-                      SliverList.separated(
-                        itemCount: controller.chatRoomList.length,
-                        // padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          return _buildChatItem(index, context);
-                        },
-                        separatorBuilder: (context, index) => Container(
-                          width: double.infinity,
-                          height: 0.5.w,
-                          margin: EdgeInsets.symmetric(horizontal: 16.w),
-                          color: AppColors.cD4D4D4,
-                        ),
-                      ),
-                      SliverPadding(padding: EdgeInsets.only(bottom: 80.w))
-                    ],
+              Expanded(child: Builder(builder: (_) {
+                if (controller.messageList.isEmpty &&
+                    controller.chatRoomList.isEmpty) {
+                  return SmartRefresher(
+                    controller: controller.refreshControllerDefault,
+                    enablePullDown: true,
+                    onRefresh: () async {
+                      await controller.getMessageList(refresh: true);
+                      controller.refreshController.refreshCompleted();
+                    },
+                    child: Obx(() {
+                      return Center(
+                          child: LoadStatusWidget(
+                              loadDataStatus: controller.loadStatus.value));
+                    }),
                   );
-                }),
-              )),
+                }
+                return Obx(() {
+                  return SmartRefresher(
+                    controller: controller.refreshController,
+                    enablePullUp: true,
+                    enablePullDown: true,
+                    onRefresh: () async {
+                      await controller.getMessageList(refresh: true);
+                      controller.refreshController.refreshCompleted();
+                    },
+                    footer: ClassicFooter(
+                      noDataText: "",
+                    ),
+                    onLoading: () => controller.getChatRoomList(),
+                    child: CustomScrollView(
+                      controller: controller.scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      slivers: [
+                        /// 邮件
+                        SliverList.separated(
+                          itemCount: controller.messageList.length,
+                          itemBuilder: (context, index) {
+                            return _buildItem(index, context);
+                          },
+                          separatorBuilder: (context, index) => Container(
+                            width: double.infinity,
+                            height: 0.5.w,
+                            margin: EdgeInsets.symmetric(horizontal: 16.w),
+                            color: AppColors.cD4D4D4,
+                          ),
+                        ),
+
+                        /// 聊天记录
+                        SliverList.separated(
+                          itemCount: controller.chatRoomList.length,
+                          itemBuilder: (context, index) {
+                            return _buildChatItem(index, context);
+                          },
+                          separatorBuilder: (context, index) => Container(
+                            width: double.infinity,
+                            height: 0.5.w,
+                            margin: EdgeInsets.symmetric(horizontal: 16.w),
+                            color: AppColors.cD4D4D4,
+                          ),
+                        ),
+                        SliverPadding(padding: EdgeInsets.only(bottom: 80.w))
+                      ],
+                    ),
+                  );
+                });
+              })),
             ],
           );
         });
@@ -117,11 +132,11 @@ class InboxList extends GetView<InboxController> {
   Widget _buildChatItem(index, context) {
     var item = controller.chatRoomList[index];
     int type = item.type;
-    var id = int.parse(item.categoryId);
+    var id = type == 1 ? int.parse(item.categoryId) : -1;
     String icon = type == 1 ? Utils.getPlayUrl(id) : Assets.testTestTeamLogo;
     String title = type == 1 ? Utils.getPlayBaseInfo(id).elname : "OVR RANK";
     String content = item.lastMessage;
-    String time = Utils.timeAgo(item.createTime);
+    String time = Utils.timeAgo(item.lastMessageSendTime);
 
     return InkWell(
       onTap: () async {
@@ -132,7 +147,7 @@ class InboxList extends GetView<InboxController> {
         if (type == 1) {
           arguments['playerId'] = id;
         }
-        Get.toNamed(RouteNames.message, arguments: arguments);
+        controller.onChatTap(item, arguments);
       },
       child: Slidable(
         dragStartBehavior: DragStartBehavior.start,
@@ -141,26 +156,24 @@ class InboxList extends GetView<InboxController> {
           motion: const ScrollMotion(),
           children: [
             Expanded(
-              child: Builder(
-                builder: (context) {
-                  return InkWell(
-                    onTap: () {
-                      if (Utils.canOperate()) {
-                        controller.setPinned(item.id, !item.pinnedStatus);
-                        Slidable.of(context)?.close();
-                      }
-                    },
-                    child: Container(
-                      color: AppColors.cEFB400,
-                      child: IconWidget(
-                        iconWidth: 25.w,
-                        icon: Assets.managerUiManagerTacticsArrow,
-                        rotateAngle: item.pinnedStatus ? 180 : 0,
-                      ),
+              child: Builder(builder: (context) {
+                return InkWell(
+                  onTap: () {
+                    if (Utils.canOperate()) {
+                      controller.setPinned(item.id, !item.pinnedStatus);
+                      Slidable.of(context)?.close();
+                    }
+                  },
+                  child: Container(
+                    color: AppColors.cEFB400,
+                    child: IconWidget(
+                      iconWidth: 25.w,
+                      icon: Assets.managerUiManagerTacticsArrow,
+                      rotateAngle: item.pinnedStatus ? 180 : 0,
                     ),
-                  );
-                }
-              ),
+                  ),
+                );
+              }),
             ),
             IconSlidableAction(
               backgroundColor: AppColors.cD60D20,
@@ -234,34 +247,31 @@ class InboxList extends GetView<InboxController> {
                         Expanded(
                             child: Text(
                           content,
-                          style: 14.w4(fontFamily: FontFamily.fRobotoRegular),
+                          maxLines: 2,
+                          style: 14.w4(
+                              fontFamily: FontFamily.fRobotoRegular,
+                              overflow: TextOverflow.ellipsis),
                         )),
-                        12.5.vGap,
-                        controller.doNotDisturb.contains(item.id)
-                            ? IconWidget(
-                                icon: Assets.inboxUiInboxIconInform,
-                                iconWidth: 16.w,
-                                iconColor: AppColors.cB3B3B3)
-                            : Visibility(
-                                // visible: !item.isRead && item.noReadNum > 0,
-                                visible: item.unreadMessageCount > 0,
-                                child: Container(
-                                  constraints: BoxConstraints(minWidth: 15.w),
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 4.5.w, vertical: 2.5.w),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.cFF7954,
-                                    borderRadius: BorderRadius.circular(7.5.w),
-                                  ),
-                                  child: Text(
-                                      item.unreadMessageCount.toString(),
-                                      style: 12.w4(
-                                          fontFamily: FontFamily.fOswaldMedium,
-                                          height: 0.9,
-                                          color: AppColors.cFFFFFF)),
-                                ),
-                              )
+                        12.5.hGap,
+                        Visibility(
+                          // visible: !item.isRead && item.noReadNum > 0,
+                          visible: item.unreadMessageCount > 0,
+                          child: Container(
+                            constraints: BoxConstraints(minWidth: 15.w),
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 4.5.w, vertical: 2.5.w),
+                            decoration: BoxDecoration(
+                              color: AppColors.cFF7954,
+                              borderRadius: BorderRadius.circular(7.5.w),
+                            ),
+                            child: Text(item.unreadMessageCount.toString(),
+                                style: 12.w4(
+                                    fontFamily: FontFamily.fOswaldMedium,
+                                    height: 0.9,
+                                    color: AppColors.cFFFFFF)),
+                          ),
+                        )
                       ],
                     )
                   ],
@@ -430,9 +440,12 @@ class InboxList extends GetView<InboxController> {
                         Expanded(
                             child: Text(
                           content,
-                          style: 14.w4(fontFamily: FontFamily.fRobotoRegular),
+                          maxLines: 2,
+                          style: 14.w4(
+                              fontFamily: FontFamily.fRobotoRegular,
+                              overflow: TextOverflow.ellipsis),
                         )),
-                        12.5.vGap,
+                        12.5.hGap,
                         controller.doNotDisturb.contains(item.id)
                             ? IconWidget(
                                 icon: Assets.inboxUiInboxIconInform,

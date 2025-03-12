@@ -267,6 +267,8 @@ class Api {
   static const String wsExitOVRRoom = "ChatService.exitOVRRoom"; //退出OVR聊天室
   static const String wsOVRChatRoomUpdated =
       "PushService.OVRChatRoomUpdated"; //OVR消息推送
+  static const String wsSimpleMessagePush =
+      "PushService.simpleMessagePush"; //OVR消息推送
 
   ///InboxMail
   static const String getMailVOList = "$API_BASE_PATH/Mail/getMailVOList";

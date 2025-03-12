@@ -97,6 +97,7 @@ import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/season_rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/send_guess_comment_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/simple_message_push_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_num_defined_entity.dart';
@@ -1101,6 +1102,10 @@ class JsonConvert {
       return data.map<AtTeamSimple>((Map<String, dynamic> e) =>
           AtTeamSimple.fromJson(e)).toList() as M;
     }
+    if (<SimpleMessagePushEntity>[] is M) {
+      return data.map<SimpleMessagePushEntity>((Map<String, dynamic> e) =>
+          SimpleMessagePushEntity.fromJson(e)).toList() as M;
+    }
     if (<StarUpDefineEntity>[] is M) {
       return data.map<StarUpDefineEntity>((Map<String, dynamic> e) =>
           StarUpDefineEntity.fromJson(e)).toList() as M;
@@ -1633,6 +1638,7 @@ class JsonConvertClassCollection {
     (SeasonRankInfoNextRank).toString(): SeasonRankInfoNextRank.fromJson,
     (ChatMessageEntity).toString(): ChatMessageEntity.fromJson,
     (AtTeamSimple).toString(): AtTeamSimple.fromJson,
+    (SimpleMessagePushEntity).toString(): SimpleMessagePushEntity.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
     (StarUpDoneEntity).toString(): StarUpDoneEntity.fromJson,
     (StarUpDoneAddPotential).toString(): StarUpDoneAddPotential.fromJson,

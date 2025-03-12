@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/chat_room_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_email_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/simple_message_push_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
+import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/inbox.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -22,17 +25,22 @@ class InboxController extends GetxController {
   bool loadDataSuccess = false;
 
   late StreamSubscription<int> subscription;
+  late StreamSubscription wsSubscription;
 
   ScrollController scrollController = ScrollController();
   RefreshController refreshController = RefreshController();
+  RefreshController refreshControllerDefault = RefreshController();
 
-  int page = 0,limit = 50;
+  int page = 0, limit = 50;
   RxList<ChatRoomEntity> chatRoomList = RxList();
 
-  var loadStatus = LoadDataStatus.loading.obs;
+  var loadStatus = LoadDataStatus.noData.obs;
 
   _initData() {
-    getMessageList();
+    if (loadStatus.value == LoadDataStatus.loading) {
+      return;
+    }
+    getMessageList(refresh: true);
   }
 
   @override
@@ -41,6 +49,22 @@ class InboxController extends GetxController {
     subscription = WSInstance.netStream.listen((_) {
       if (!loadDataSuccess) {
         _initData();
+      }
+    });
+    wsSubscription = WSInstance.stream.listen((res) {
+      if (res.serviceId == Api.wsSimpleMessagePush) {
+        SimpleMessagePushEntity simpleMessagePushEntity =
+            SimpleMessagePushEntity.fromJson(res.payload);
+        var indexWhere = chatRoomList
+            .indexWhere((e) => e.roomId == simpleMessagePushEntity.roomId);
+        if (indexWhere < 0) {
+          chatRoomList.add(ChatRoomEntity().copyWith(simpleMessagePushEntity));
+          chatRoomListSort();
+          return;
+        }
+        chatRoomList[indexWhere] =
+            chatRoomList[indexWhere].copyWith(simpleMessagePushEntity);
+        chatRoomListSort();
       }
     });
     initConnectivity();
@@ -96,6 +120,7 @@ class InboxController extends GetxController {
   @override
   void dispose() {
     subscription.cancel();
+    wsSubscription.cancel();
     super.dispose();
   }
 
@@ -108,6 +133,7 @@ class InboxController extends GetxController {
   List<InboxEmailEntity> mailVOList = [];
 
   Future getMessageList({bool refresh = false}) async {
+    loadStatus.value = LoadDataStatus.loading;
     getStorageData();
     Completer completer = Completer();
     Future.wait([
@@ -118,10 +144,10 @@ class InboxController extends GetxController {
       var resMessageList = result[0] as List<InboxMessageEntity>;
       mailVOList = result[1] as List<InboxEmailEntity>;
       messageList.value = resMessageList.where((element) {
-      var typeIndex = mailTypeList.indexWhere((e) => e['id'] == element.id);
+        var typeIndex = mailTypeList.indexWhere((e) => e['id'] == element.id);
         if (typeIndex != -1) {
           var res = mailVOList.firstWhere(
-            (e) => e.mailType == mailTypeList[typeIndex]['type'],
+              (e) => e.mailType == mailTypeList[typeIndex]['type'],
               orElse: () => InboxEmailEntity());
           if (res.mailList.isNotEmpty) {
             element.userText = res.mailList[0].content;
@@ -143,64 +169,76 @@ class InboxController extends GetxController {
         return topChatList.contains(a.id) ? -1 : 1;
       });
       loadDataSuccess = true;
+      loadStatus.value = LoadDataStatus.success;
       update(["inboxList"]);
       completer.complete();
     }, onError: (e) {
       ErrorUtils.toast(e);
+      loadStatus.value = LoadDataStatus.error;
       completer.completeError(e);
     });
     return completer.future;
   }
 
-  Future<List<ChatRoomEntity>> getChatRoomList ({bool refresh=false}){
+  Future<List<ChatRoomEntity>> getChatRoomList({bool refresh = false}) {
     Completer<List<ChatRoomEntity>> completer = Completer();
-    InboxApi.getChatRoomList(page: page,limit: limit).then((result){
-      if(result.length< limit){
+    if(refresh){
+      page = 0;
+    }
+    InboxApi.getChatRoomList(page: page, limit: limit).then((result) {
+      if (refresh) {
+        chatRoomList.clear();
+      }
+      if (result.length < limit) {
         refreshController.loadNoData();
-      }else{
-        page ++;
+      } else {
+        page++;
         refreshController.loadComplete();
       }
-      if(refresh) {
-        chatRoomList.clear();
-        chatRoomList.addAll(result);
-      }else{
-        chatRoomList.addAll(result);
-      }
-      chatRoomList.sort((a,b){
-        if(a.pinnedStatus){
-          return -1;
-        }
-        if(b.pinnedStatus){
-          return 1;
-        }
-        return 0;
-      });
+      chatRoomList.addAll(result);
+      chatRoomListSort();
       completer.complete(result);
-    },onError: (e){
+    }, onError: (e) {
       refreshController.loadFailed();
       completer.completeError(e);
     });
     return completer.future;
   }
 
-  setPinned(int chatId,bool isPinned){
-    InboxApi.setPinned(chatId: chatId, isPinned: isPinned).then((res){
-      page = 0;
-      getChatRoomList(refresh: true);
-    },onError: (e){
+  /// 聊天排序
+  void chatRoomListSort() {
+    chatRoomList.sort((a, b) {
+      if (a.pinnedStatus) {
+        return -1;
+      }
+      if (b.pinnedStatus) {
+        return 1;
+      }
+      return b.lastMessageSendTime.compareTo(a.lastMessageSendTime);
+    });
+  }
+
+  setPinned(int chatId, bool isPinned) {
+    InboxApi.setPinned(chatId: chatId, isPinned: isPinned).then((res) {
+      var indexWhere = chatRoomList.indexWhere((e) => e.id == chatId);
+      if (indexWhere != -1) {
+        chatRoomList[indexWhere].pinnedStatus = isPinned;
+        chatRoomListSort();
+      }
+    }, onError: (e) {
       ErrorUtils.toast(e);
     });
   }
 
-  delChatRoom(int chatId){
-    InboxApi.delChatRoom(chatId: chatId).then((res){
-      var firstWhereOrNull = chatRoomList.firstWhereOrNull((e)=> e.id == chatId);
-      if(firstWhereOrNull != null){
+  delChatRoom(int chatId) {
+    InboxApi.delChatRoom(chatId: chatId).then((res) {
+      var firstWhereOrNull =
+          chatRoomList.firstWhereOrNull((e) => e.id == chatId);
+      if (firstWhereOrNull != null) {
         chatRoomList.remove(firstWhereOrNull);
         chatRoomList.refresh();
       }
-    },onError: (e){
+    }, onError: (e) {
       ErrorUtils.toast(e);
     });
   }
@@ -261,5 +299,17 @@ class InboxController extends GetxController {
     StorageService.to.setList('locatTopChatList',
         topChatList.map((element) => element.toString()).toList());
     update(["inboxList"]);
+  }
+
+  void onChatTap(ChatRoomEntity item, Map<String, int> arguments) {
+    clearUnReadMessageCount(item);
+    Get.toNamed(RouteNames.message, arguments: arguments);
+  }
+
+  /// 清空未读消息
+  void clearUnReadMessageCount(ChatRoomEntity item) {
+    var indexWhere = chatRoomList.indexWhere((e) => e.id == item.id);
+    chatRoomList[indexWhere].unreadMessageCount = 0;
+    chatRoomList.refresh();
   }
 }
