@@ -12,3 +12,6 @@ const String STORAGE_INDEX_NEWS_CACHE_KEY = 'cache_index_news';
 
 /// 多语言
 const String STORAGE_LANGUAGE_CODE = 'language_code';
+
+/// 使用过的表情包列表
+const String STORAGE_USED_EMOJI = 'used_emoji';

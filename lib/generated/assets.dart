@@ -143,6 +143,10 @@ class Assets {
   static const String communityEmojiU1f641 = 'assets/images/community/emoji_u1f641.png';
   static const String communityUiCommunityIcon = 'assets/images/community/ui_community_icon.png';
   static const String communityUiCommunityIcon01 = 'assets/images/community/ui_community_icon_01.png';
+  static const String communityUiCommunityIcon02 = 'assets/images/community/ui_community_icon_02.png';
+  static const String communityUiCommunityIcon03 = 'assets/images/community/ui_community_icon_03.png';
+  static const String communityUiCommunityIcon04 = 'assets/images/community/ui_community_icon_04.png';
+  static const String communityUiCommunityIcon05 = 'assets/images/community/ui_community_icon_05.png';
   static const String communityUiCommunityIconSystemCreatepost = 'assets/images/community/ui_community_icon_system_createpost.png';
   static const String fontsCalcioDemo = 'assets/fonts/Calcio-Demo.ttf';
   static const String fontsOswaldBold = 'assets/fonts/Oswald-Bold.ttf';
