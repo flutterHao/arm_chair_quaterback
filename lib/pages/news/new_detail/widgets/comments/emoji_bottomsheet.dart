@@ -12,8 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class EmojiBottomsheet extends StatefulWidget {
-  const EmojiBottomsheet({super.key});
-
+  const EmojiBottomsheet({super.key, required this.sendEmoji});
+  final void Function(String) sendEmoji;
   @override
   State<EmojiBottomsheet> createState() => _EmojiBottomsheetState();
 }
@@ -27,6 +27,18 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
     setState(() {
       usedEmojiList = storageEmojy;
     });
+  }
+
+  void _sendEmoji(String key) {
+    if (usedEmojiList.contains(key)) {
+      usedEmojiList.remove(key);
+      usedEmojiList.insert(0, key);
+    } else {
+      usedEmojiList.insert(0, key);
+    }
+    widget.sendEmoji(key);
+    StorageService.to.setList(STORAGE_USED_EMOJI, usedEmojiList);
+    Get.back();
   }
 
   @override
@@ -67,18 +79,7 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
                       var item = Constant.emojis.entries.elementAt(index);
                       return MtInkWell(
                         onTap: () {
-                          if (usedEmojiList.contains(item.key)) {
-                            usedEmojiList.remove(item.key);
-                            usedEmojiList.insert(0, item.key);
-                          } else {
-                            usedEmojiList.insert(0, item.key);
-                          }
-
-                          StorageService.to
-                              .setList(STORAGE_USED_EMOJI, usedEmojiList);
-                          setState(() {});
-                          // _sendEmoji(item.key);
-                          // Get.back();
+                          _sendEmoji(item.key);
                         },
                         child: Image.asset(item.value,
                             width: 30.w, height: 30.w, fit: BoxFit.fitWidth),
@@ -120,8 +121,7 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
                     (element) => element.key == usedEmojiList[index]);
                 return MtInkWell(
                   onTap: () {
-                    // _sendEmoji(item.key);
-                    Get.back();
+                    _sendEmoji(item.key);
                   },
                   child: Image.asset(item.value,
                       width: 30.w, height: 30.w, fit: BoxFit.fitWidth),

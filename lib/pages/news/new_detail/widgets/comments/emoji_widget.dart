@@ -104,7 +104,8 @@ class _EmojiWidgetState extends State<EmojiWidget> {
 
         MtInkWell(
           onTap: () {
-            Get.bottomSheet(EmojiBottomsheet(), isScrollControlled: true);
+            Get.bottomSheet(EmojiBottomsheet(sendEmoji: _sendEmoji),
+                isScrollControlled: true);
           },
           child: Container(
             height: 24.w,
