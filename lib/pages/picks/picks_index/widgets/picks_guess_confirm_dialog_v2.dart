@@ -112,96 +112,107 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                             return AnimatedCrossFade(
                                                 duration: const Duration(
                                                     milliseconds: 300),
-                                                firstChild: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        //批量删除
-                                                        Navigator.pop(context);
-                                                        picksIndexController
-                                                            .clearAll();
-                                                        leagueController
-                                                            .clearAll();
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 8.w),
-                                                        child: Text(
-                                                          LangKey
-                                                              .pickButtonClear
-                                                              .tr,
-                                                          style: TextStyle(
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .underline,
-                                                            fontSize: 16.w,
-                                                            decorationColor:
-                                                                AppColors
-                                                                    .cCB1842,
-                                                            color: AppColors
-                                                                .cCB1842,
-                                                            fontFamily: FontFamily
-                                                                .fOswaldRegular,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    30.hGap,
-                                                    InkWell(
-                                                      onTap: () =>
+                                                firstChild: SizedBox(
+                                                  width: 150.w,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          //批量删除
+                                                          Navigator.pop(
+                                                              context);
                                                           picksIndexController
-                                                              .batchDeleteOpen
-                                                              .value = false,
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 8.w),
-                                                        child: Text(
-                                                          LangKey.pickButtonDone
-                                                              .tr,
-                                                          style: TextStyle(
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .underline,
-                                                            fontSize: 16.w,
-                                                            decorationColor:
-                                                                AppColors
-                                                                    .c000000,
-                                                            color: AppColors
-                                                                .c000000,
-                                                            fontFamily: FontFamily
-                                                                .fOswaldRegular,
+                                                              .clearAll();
+                                                          leagueController
+                                                              .clearAll();
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 8.w),
+                                                          child: Text(
+                                                            LangKey
+                                                                .pickButtonClear
+                                                                .tr,
+                                                            style: TextStyle(
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .underline,
+                                                              fontSize: 16.w,
+                                                              decorationColor:
+                                                                  AppColors
+                                                                      .cCB1842,
+                                                              color: AppColors
+                                                                  .cCB1842,
+                                                              fontFamily: FontFamily
+                                                                  .fOswaldRegular,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    )
-                                                  ],
+                                                      30.hGap,
+                                                      InkWell(
+                                                        onTap: () =>
+                                                            picksIndexController
+                                                                .batchDeleteOpen
+                                                                .value = false,
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 8.w),
+                                                          child: Text(
+                                                            LangKey
+                                                                .pickButtonDone
+                                                                .tr,
+                                                            style: TextStyle(
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .underline,
+                                                              fontSize: 16.w,
+                                                              decorationColor:
+                                                                  AppColors
+                                                                      .c000000,
+                                                              color: AppColors
+                                                                  .c000000,
+                                                              fontFamily: FontFamily
+                                                                  .fOswaldRegular,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                                secondChild: InkWell(
-                                                  onTap: () =>
-                                                      picksIndexController
-                                                          .batchDeleteOpen
-                                                          .value = true,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 8.w),
-                                                    child: Text(
-                                                      LangKey.pickButtonEdit.tr,
-                                                      style: TextStyle(
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        fontSize: 16.w,
-                                                        decorationColor:
-                                                            AppColors.c000000,
-                                                        color:
-                                                            AppColors.c000000,
-                                                        fontFamily: FontFamily
-                                                            .fOswaldRegular,
-                                                        // height: 1,
+                                                secondChild: Container(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  width: 150.w,
+                                                  child: InkWell(
+                                                    onTap: () =>
+                                                        picksIndexController
+                                                            .batchDeleteOpen
+                                                            .value = true,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 8.w),
+                                                      child: Text(
+                                                        LangKey
+                                                            .pickButtonEdit.tr,
+                                                        style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          fontSize: 16.w,
+                                                          decorationColor:
+                                                              AppColors.c000000,
+                                                          color:
+                                                              AppColors.c000000,
+                                                          fontFamily: FontFamily
+                                                              .fOswaldRegular,
+                                                          // height: 1,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
