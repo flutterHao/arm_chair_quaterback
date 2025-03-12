@@ -24,7 +24,7 @@ class _ScrollHideBottomBarState extends State<ScrollHideBottomBar>
   late AnimationController _animationController;
   late Animation<double> _offsetAnimation;
   late Animation<double> _opacityAnimation;
-  final double _bottomBarHeight = 0.0; // 底部栏高度，根据实际调整
+  final double _bottomBarHeight = 80.0; // 底部栏高度，根据实际调整
   double startY = 0;
 
   @override
