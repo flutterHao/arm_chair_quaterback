@@ -4,6 +4,7 @@
  * @Date: 2024-12-16 21:17:39
  * @LastEditTime: 2025-02-28 11:54:11
  */
+import 'package:arm_chair_quaterback/common/helper/web_helper.dart';
 import 'package:arm_chair_quaterback/common/utils/remove_cache_image_manager.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
@@ -18,11 +19,11 @@ import 'package:arm_chair_quaterback/common/store/store.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:spine_flutter/spine_flutter.dart';
-
 /// 全局静态数据
 class Global {
   /// 初始化
   static Future init() async {
+    resetUrl();
     EasyLoading.init();
     EasyLoading.instance
       ..displayDuration = const Duration(milliseconds: 2000)
