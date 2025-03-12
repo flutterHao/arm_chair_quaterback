@@ -46,3 +46,9 @@ app.*.map.json
 /test/widget_test.dart
 /note.json
 /pubspec.lock
+
+# FVM Version Cache
+.fvm/
+.vscode/settings.json
+.fvmrc
+
