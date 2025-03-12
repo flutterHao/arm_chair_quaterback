@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-03-06 19:07:54
+ * @LastEditTime: 2025-03-12 10:35:24
  */
 /*
  * @Description: 
@@ -184,7 +184,9 @@ class IllustratiionsController extends GetxController
               if (index > 0) {
                 double offset = beginY + ((index + 1) ~/ 5) * (height + 10.w);
                 int t = ((offset - dy) * 0.5).ceil();
-                offset = min(beginY, scrollController.position.maxScrollExtent);
+                double maxOffset = scrollController.position.maxScrollExtent -
+                    (height + vSpace) * 6;
+                offset = min(beginY, maxOffset);
                 await scrollController.animateTo(offset,
                     duration: Duration(milliseconds: t),
                     curve: Curves.easeInOut);
@@ -207,7 +209,7 @@ class IllustratiionsController extends GetxController
           item.isLightRx.value = myPlayer.isLight;
         }
       }
-      // update(["list"]);
+      update(["list"]);
       // await scrollController.animateTo(beginY,
       //     duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
 

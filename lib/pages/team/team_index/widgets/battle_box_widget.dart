@@ -46,7 +46,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
             height: 157.5.w,
             child: Column(
               children: [
-                SemiCircleList(),
+                // SemiCircleList(),
                 Container(
                   margin: EdgeInsets.only(top: 16.w),
                   height: 112.w,

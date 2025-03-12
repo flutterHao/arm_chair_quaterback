@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:47:53
- * @LastEditTime: 2025-02-25 17:23:49
+ * @LastEditTime: 2025-03-12 10:29:46
  */
 import 'dart:convert';
 
@@ -14,7 +14,7 @@ export 'package:arm_chair_quaterback/generated/json/train_define_entity.g.dart';
 @JsonSerializable()
 class TrainDefineEntity {
   late int coinBuySlot = 0;
-  late int ballMaxNum = 0;
+  late int ballMaxNum = 50;
   late int ballRecoverNum = 0;
   late int ballRecoverTime = 0;
   late int coinChangeBall = 0;

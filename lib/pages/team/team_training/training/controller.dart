@@ -87,37 +87,18 @@ class TrainingController extends GetxController
   List<double> offsetList = [];
   final List<ScrollController> scrollerCtrlList =
       List.generate(6, (_) => ScrollController());
+  final List<RxBool> isScrollList = List.generate(6, (_) => false.obs);
 
   List<AnimationController> slotsAnimlList = [];
   List<Animation<double>> sizeAnimations = [];
   List<Animation<double>> scaleAnimations = [];
   int awardLength = 3;
-  List<RxBool> isAwards = [
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs
-  ];
+  List<RxBool> isAwards = List.generate(6, (_) => false.obs);
 
-  List<RxBool> showBoxList = [
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs
-  ];
+  ///选中边框
+  List<RxBool> showBoxList = List.generate(6, (_) => false.obs);
 
-  List<RxBool> isShowColor = [
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs
-  ];
+  List<RxBool> isShowColor = List.generate(6, (_) => false.obs);
   late AnimationController colorAnimatedCtrl;
   late Animation<double> colorAnimation;
 
@@ -199,6 +180,7 @@ class TrainingController extends GetxController
 
 //升星球员列表
   StarUpPlayerEntity starUpPlayerEntity = StarUpPlayerEntity();
+  bool isScrollEnd = false;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -680,6 +662,7 @@ class TrainingController extends GetxController
   }
 
   void _scrollColumn(int index) async {
+    isScrollList[index].value = true;
     slotCard[index].value = true;
     if (trainingInfo.propArray.isEmpty) return;
     int propIndex = propList.indexOf(trainingInfo.propArray[index]);
@@ -691,7 +674,7 @@ class TrainingController extends GetxController
     await scrollerCtrlList[index].animateTo(offset,
         duration: const Duration(milliseconds: 600),
         curve: const Cubic(0.27, 0.59, 0.19, 1.1));
-
+    isScrollList[index].value = false;
     if (index == 5) {
       ///最后一个旋转结束
       showAward();

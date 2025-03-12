@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-11 16:05:49
- * @LastEditTime: 2025-03-07 19:05:26
+ * @LastEditTime: 2025-03-12 10:36:53
  */
 import 'dart:math';
 
@@ -15,26 +15,20 @@ import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/buy_go_bottomsheet.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/free_box_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot_new.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_bottomsheet.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/task_arc_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot_new_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:spine_flutter/spine_widget.dart';
 
 class TrainingNewWidget extends GetView<TrainingController> {
   const TrainingNewWidget({super.key});
@@ -45,10 +39,16 @@ class TrainingNewWidget extends GetView<TrainingController> {
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (ctrl) {
+          var team = HomeController.to.userEntiry.teamLoginInfo?.team;
           return Container(
-              color: AppColors.cFFFFFF,
+              decoration: BoxDecoration(
+                color: AppColors.cFFFFFF,
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(9.w),
+                ),
+              ),
               width: double.infinity,
-              height: 607.w,
+              height: 580.w,
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
@@ -57,7 +57,7 @@ class TrainingNewWidget extends GetView<TrainingController> {
                     top: 20.w,
                     left: 16.w,
                     child: Text(
-                      "Hello uesername",
+                      team?.teamName ?? "",
                       style: 14.w4(fontFamily: FontFamily.fRobotoRegular),
                     ),
                   ),
@@ -170,34 +170,59 @@ class TrainingNewWidget extends GetView<TrainingController> {
                   //   }),
                   // ),
 
+                  //背景
                   Positioned(
                     top: 417.w,
-                    child: Container(
-                      width: 343.w,
-                      height: 142.5.w,
-                      padding: EdgeInsets.all(5.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.c262626,
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(9.w),
-                          )),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1,
-                              color: AppColors.cD9D9D9.withOpacity(0.1)),
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(5.w),
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 343.w,
+                          height: 142.5.w,
+                          decoration: BoxDecoration(
+                            gradient: RadialGradient(
+                              colors: [
+                                AppColors.c4D4D4D,
+                                AppColors.c4D4D4D,
+                                AppColors.c262626,
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                        Container(
+                          width: 343.w,
+                          height: 142.5.w,
+                          padding: EdgeInsets.all(5.w),
+                          decoration: BoxDecoration(
+                              color: AppColors.c3e3e3e,
+                              // color: AppColors.c262626.withOpacity(0.1),
+                              borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(9.w),
+                              )),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1,
+                                  color: AppColors.cD9D9D9.withOpacity(0.1)),
+                              borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(5.w),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
                   Positioned(
                     top: 436.w,
                     left: 35.5.w,
-                    child: CollectWidget(),
+                    child: const CollectWidget(),
+                  ),
+
+                  Positioned(
+                    top: 436.w,
+                    right: 35.5.w,
+                    child: const TrainingTaskWidget(),
                   ),
 
                   ///训练slot
@@ -210,93 +235,41 @@ class TrainingNewWidget extends GetView<TrainingController> {
 
                   //开始按钮
                   Positioned(
-                    top: 443.5.w,
+                    top: 430.5.w,
                     child: const _SlotButton(),
                   ),
 
                   ///恢复倒计时
-                  if (ctrl.trainingInfo.prop.num < ctrl.trainDefine.ballMaxNum)
-                    Positioned(
-                      // bottom: 12.w,
-                      top: 587.w,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "${ctrl.trainDefine.ballRecoverNum} Go ready in ",
-                            style: 12.w4(
-                                height: 1,
-                                fontFamily: FontFamily.fRobotoRegular,
-                                color: AppColors.c000000),
-                          ),
-                          Obx(() {
-                            return Text(
-                              ctrl.recoverTimeStr.value,
-                              style: 12.w4(
-                                height: 1,
-                                color: AppColors.c10A86A,
-                                fontFamily: FontFamily.fRobotoRegular,
-                              ),
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
+                  // if (ctrl.trainingInfo.prop.num < ctrl.trainDefine.ballMaxNum)
+                  //   Positioned(
+                  //     // bottom: 12.w,
+                  //     top: 560.w,
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.end,
+                  //       children: [
+                  //         Text(
+                  //           "${ctrl.trainDefine.ballRecoverNum} Go ready in ",
+                  //           style: 12.w4(
+                  //               height: 1,
+                  //               fontFamily: FontFamily.fRobotoRegular,
+                  //               color: AppColors.c000000),
+                  //         ),
+                  //         Obx(() {
+                  //           return Text(
+                  //             ctrl.recoverTimeStr.value,
+                  //             style: 12.w4(
+                  //               height: 1,
+                  //               color: AppColors.c10A86A,
+                  //               fontFamily: FontFamily.fRobotoRegular,
+                  //             ),
+                  //           );
+                  //         }),
+                  //       ],
+                  //     ),
+                  //   ),
                 ],
               ));
         });
-  }
-}
-
-class CollectWidget extends StatelessWidget {
-  const CollectWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MtInkWell(
-      onTap: () {},
-      child: Container(
-        width: 74.w,
-        height: 103.w,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(9.w),
-          color: AppColors.c515151,
-        ),
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Positioned(
-              top: 15.w,
-              child: Container(
-                width: 57.w,
-                height: 57.w,
-                decoration: BoxDecoration(
-                    color: AppColors.c666666,
-                    borderRadius: BorderRadius.circular(28.5.w)),
-              ),
-            ),
-            Positioned(
-              top: 31.w,
-              child: Image.asset(
-                Assets.managerUiNewManger07,
-                height: 27.5.w,
-                width: 28.w,
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-            Positioned(
-                top: 83.w,
-                child: Text(
-                  "Collect",
-                  style: 12.w4(
-                      fontFamily: FontFamily.fRobotoRegular,
-                      color: AppColors.cFFFFFF,
-                      height: 0.8),
-                ))
-          ],
-        ),
-      ),
-    );
   }
 }
 
@@ -458,102 +431,272 @@ class _SlotButton extends StatelessWidget {
               onTap: () {
                 controller.onTapGoButton();
               },
-              child: AnimatedScale(
-                scale: controller.isPlaying.value ? 0.9 : 1,
-                duration: const Duration(milliseconds: 50),
-                child: Container(
-                  width: 114.w + 6.w,
-                  height: 85.w + 6.w,
-                  alignment: Alignment.center,
-                  child: Opacity(
-                    opacity: controller.isPlaying.value ? 0.5 : 1,
-                    child: Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        Image.asset(
-                          Assets.managerUiManagerIconButton,
-                          width: 104.5.w,
-                          height: 104.5.w,
-                          fit: BoxFit.fill,
-                        ),
-                        Positioned(
-                          top: 12.5.w,
-                          child: AnimationArcWidget(
-                            42.w,
-                            progressWidth: 5.w,
-                            progressColor: AppColors.cFFFFFF,
-                            borderColor: Colors.black.withOpacity(0.3),
-                            progressSweepAngle: 180 *
-                                controller.ballNum.value /
-                                controller.trainDefine.ballMaxNum,
-                            borderWidth: 5.w,
-                          ),
-                        ),
-                        Positioned(
-                          // bottom: 16.w,
-                          top: 74.w,
-                          child: Container(
-                            // height: 72.5.w,
-                            width: 75.w,
-                            alignment: Alignment.bottomCenter,
-                            child: Obx(() {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                children: [
+                  AnimatedScale(
+                    scale: controller.isPlaying.value ? 0.9 : 1,
+                    duration: const Duration(milliseconds: 50),
+                    child: Container(
+                      width: 120.w,
+                      height: 91.w,
+                      alignment: Alignment.center,
+                      child: Opacity(
+                        opacity: controller.isPlaying.value ? 0.5 : 1,
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            SizedBox(
+                              width: 120.w,
+                              height: 91.w,
+                              child: Stack(
+                                alignment: Alignment.center,
                                 children: [
-                                  AnimatedScale(
-                                    duration: 150.milliseconds,
-                                    scale: controller.showBall.value ? 1.5 : 1,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Obx(() {
-                                          int v = controller.ballNum.value;
-                                          return AnimatedNum(
-                                            milliseconds: 100,
-                                            number: v,
-                                            textStyle: 14.w4(
-                                                color: AppColors.cFFFFFF,
-                                                fontFamily:
-                                                    FontFamily.fOswaldRegular,
-                                                height: 0.8),
-                                          );
-                                        }),
-                                        if (controller.showBall.value)
-                                          Text(
-                                            "+${controller.trainingInfo.prop.num - controller.ballNum.value}",
-                                            style: 14.w4(
-                                                color: AppColors.c31E99E,
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium,
-                                                height: 0.8),
-                                          )
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    Assets.managerUiNewManger09,
+                                    width: 120.w,
+                                    height: 91.w,
+                                    fit: BoxFit.fill,
                                   ),
-                                  AnimatedScale(
-                                    duration: 150.milliseconds,
-                                    scale: controller.showBall.value ? 0 : 1,
-                                    child: Text(
-                                      "/${controller.trainDefine.ballMaxNum}",
-                                      style: 14.w4(
-                                          color: AppColors.cFFFFFF,
-                                          fontFamily: FontFamily.fOswaldRegular,
-                                          height: 0.8),
+                                  Image.asset(
+                                    Assets.managerUiNewManger10,
+                                    width: 104.w,
+                                    height: 75.w,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  Positioned(
+                                    top: 25.w,
+                                    left: 35.w,
+                                    child: Image.asset(
+                                      Assets.managerUiNewManger11,
+                                      width: 45.w + 35.w,
+                                      fit: BoxFit.fitWidth,
                                     ),
                                   ),
                                 ],
-                              );
-                            }),
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  5.vGap,
+                  Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      Container(
+                        // height: 72.5.w,
+                        width: 104.w,
+                        height: 14.w,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7.w),
+                            color: AppColors.c7E7E7E),
+                      ),
+                      Positioned(
+                        left: 0,
+                        child: AnimatedContainer(
+                          // height: 72.5.w,
+                          width: 104.w *
+                              controller.ballNum.value /
+                              controller.trainDefine.ballMaxNum,
+                          height: 14.w,
+                          duration: 300.milliseconds,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7.w),
+                              gradient: LinearGradient(colors: [
+                                AppColors.ccccccc,
+                                AppColors.cFFFFFF,
+                              ])),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Obx(() {
+                              int v = controller.ballNum.value;
+                              return AnimatedNum(
+                                milliseconds: 100,
+                                number: v,
+                                textStyle: 12.w4(
+                                    fontFamily: FontFamily.fOswaldRegular,
+                                    height: 0.8),
+                              );
+                            }),
+                            Text(
+                              "/${controller.trainDefine.ballMaxNum}",
+                              style: 12.w4(
+                                  fontFamily: FontFamily.fOswaldRegular,
+                                  height: 0.8),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
             );
           });
         });
+  }
+}
+
+class CollectWidget extends StatelessWidget {
+  const CollectWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MtInkWell(
+      splashColor: Colors.transparent,
+      onTap: () {
+        TeamIndexController ctrl = Get.find();
+        ctrl.goToIllustraction();
+      },
+      child: Container(
+        width: 74.w,
+        height: 103.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(9.w),
+          color: AppColors.c515151,
+        ),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Positioned(
+              top: 15.w,
+              child: Container(
+                width: 57.w,
+                height: 57.w,
+                decoration: BoxDecoration(
+                    color: AppColors.c666666,
+                    borderRadius: BorderRadius.circular(28.5.w)),
+              ),
+            ),
+            Positioned(
+              top: 31.w,
+              child: Image.asset(
+                Assets.managerUiNewManger07,
+                height: 27.5.w,
+                width: 28.w,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+            Positioned(
+                top: 83.w,
+                child: Text(
+                  "Collect",
+                  style: 12.w4(
+                      fontFamily: FontFamily.fRobotoRegular,
+                      color: AppColors.cFFFFFF,
+                      height: 0.8),
+                )),
+            Positioned(
+              top: 8.5.w,
+              child: Container(
+                width: 44.w,
+                height: 16.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.cE34D4D,
+                  borderRadius: BorderRadius.circular(8.w),
+                ),
+                child: Text(
+                  "14:59",
+                  style: 12.w4(
+                      fontFamily: FontFamily.fOswaldMedium,
+                      color: AppColors.cFFFFFF,
+                      height: 0.8),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TrainingTaskWidget extends GetView<TrainingController> {
+  const TrainingTaskWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MtInkWell(
+      splashColor: Colors.transparent,
+      onTap: () {
+        showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            barrierColor: Colors.transparent,
+            context: context,
+            builder: (context) {
+              return const AwardBottomsheet();
+            });
+      },
+      child: Container(
+        width: 74.w,
+        height: 103.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(9.w),
+          color: AppColors.c515151,
+        ),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Positioned(
+              top: 15.w,
+              child: Obx(() {
+                // return AnimationArcWidget(
+                //   29.w,
+                //   startAngle: 135,
+                //   progressWidth: 4.w,
+                //   progressColor: AppColors.c34BAFE,
+                //   borderColor: AppColors.c666666,
+                //   progressSweepAngle: 270 * 1 / controller.currentTaskNeed,
+                //   borderSweepAngle: 270,
+                //   // progressSweepAngle: 50,
+                //   borderWidth: 4.w,
+                // );
+                return AnimatedArcWidget(
+                  29.w,
+                  progressWidth: 4.w,
+                  progressColor: AppColors.c34BAFE,
+                  startAngle: 135,
+                  progressSweepAngle: 270 *
+                      (controller.taskValue.value) /
+                      controller.currentTaskNeed,
+                  borderWidth: 4.w,
+                  borderColor: AppColors.c666666,
+                  borderSweepAngle: 270,
+                  duration: const Duration(milliseconds: 300),
+                  showIndicatorDot: true,
+                );
+              }),
+            ),
+            Positioned(
+              top: 27.w,
+              child: Image.asset(
+                Assets.managerUiNewManger08,
+                height: 28.w,
+                width: 28.w,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+            Positioned(
+                top: 83.w,
+                child: Text(
+                  "Task",
+                  style: 12.w4(
+                      fontFamily: FontFamily.fRobotoRegular,
+                      color: AppColors.cFFFFFF,
+                      height: 0.8),
+                ))
+          ],
+        ),
+      ),
+    );
   }
 }

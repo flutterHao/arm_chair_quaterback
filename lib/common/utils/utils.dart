@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2025-02-25 20:02:28
+ * @LastEditTime: 2025-03-12 10:43:21
  */
 import 'dart:async';
 import 'dart:io';
@@ -63,12 +63,49 @@ class Utils {
   }
 
   ///道具
+  // static String getSlotIconUrl(id) {
+  //   if (id == 4) {
+  //     return Assets.commonUiCommonIconCurrency02;
+  //   }
+  //   return "assets/images/Common/ui_common_prop_0$id${Constant.imageSuffix}";
+  // }
+
+  ///道具
   static String getSlotIconUrl(id) {
     if (id == 4) {
       return Assets.commonUiCommonIconCurrency02;
     }
     return "assets/images/Common/ui_common_prop_0$id${Constant.imageSuffix}";
+    // if (id == 1) {
+    //   return Assets.commonUiCommonProp051;
+    // } else if (id == 2) {
+    //   return Assets.commonUiCommonProp011;
+    // } else if (id == id) {
+    //   return Assets.commonUiCommonProp041;
+    // } else if (id == 4) {
+    //   return Assets.commonUiCommonProp031;
+    // } else if (id == 5) {
+    //   return Assets.commonUiCommonProp021;
+    // } else {
+    //   return "";
+    // }
   }
+
+  // static String getSlotIconUrlWithShadow(id) {
+  //   if (id == 1) {
+  //     return Assets.commonUiCommonProp051;
+  //   } else if (id == 2) {
+  //     return Assets.commonUiCommonProp01;
+  //   } else if (id == id) {
+  //     return Assets.commonUiCommonProp04;
+  //   } else if (id == 4) {
+  //     return Assets.commonUiCommonProp03;
+  //   } else if (id == 5) {
+  //     return Assets.commonUiCommonProp02;
+  //   } else {
+  //     return "";
+  //   }
+  // }
 
   static String getPropIconUrl(id) {
     if (CacheApi.propDefineMap[id] != null) {
@@ -609,7 +646,6 @@ class Utils {
   static double getPaddingBottom() {
     return MediaQuery.of(Get.context!).padding.bottom / 2;
   }
-
 
   /// 判断是不是自己
   static bool isMe(teamId) {

@@ -62,7 +62,7 @@ class Team {
   int? teamGradeAwardState;
   int? teamId;
   int? teamLogo;
-  String? teamName;
+  String? teamName = "";
   TeamPreference? teamPreference;
   int? teamRapportGrade;
   TencentBlue? tencentBlue;
@@ -154,11 +154,9 @@ class Team {
     this.wearNicknameId,
   });
 
-  int get createTime =>
-      (ct??0) + Utils.getTimeZoneOffset().inMilliseconds;
+  int get createTime => (ct ?? 0) + Utils.getTimeZoneOffset().inMilliseconds;
 
-  int get updateTime =>
-      (ut??0) + Utils.getTimeZoneOffset().inMilliseconds;
+  int get updateTime => (ut ?? 0) + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory Team.fromMap(Map<String, dynamic> data) => Team(
         accountId: data['accountId'] as int?,
@@ -220,17 +218,21 @@ class Team {
         teamName: data['teamName'] as String?,
         teamPreference: data['teamPreference'] == null
             ? null
-            : TeamPreference.fromMap(data['teamPreference'] as Map<String, dynamic>),
+            : TeamPreference.fromMap(
+                data['teamPreference'] as Map<String, dynamic>),
         teamRapportGrade: data['teamRapportGrade'] as int?,
-        tencentBlue:
-            data['tencentBlue'] == null ? null : TencentBlue.fromMap(data['tencentBlue'] as Map<String, dynamic>),
+        tencentBlue: data['tencentBlue'] == null
+            ? null
+            : TencentBlue.fromMap(data['tencentBlue'] as Map<String, dynamic>),
         totalChargeNum: data['totalChargeNum'] as int?,
         totalLoginDays: data['totalLoginDays'] as int?,
         totalOnlineTime: data['totalOnlineTime'] as int?,
         totalTourMatchStar: data['totalTourMatchStar'] as int?,
-        totalTourMatchStarAwardStatus: data['totalTourMatchStarAwardStatus'] as int?,
+        totalTourMatchStarAwardStatus:
+            data['totalTourMatchStarAwardStatus'] as int?,
         tourMatchCopyAwardState: data['tourMatchCopyAwardState'] as String?,
-        tourMatchCopyUnlockAwardState: data['tourMatchCopyUnlockAwardState'] as String?,
+        tourMatchCopyUnlockAwardState:
+            data['tourMatchCopyUnlockAwardState'] as String?,
         tourMatchStarAwardState: data['tourMatchStarAwardState'] as String?,
         unforBidTime: data['unforBidTime'] as int?,
         ut: data['updateTime'] as int?,
