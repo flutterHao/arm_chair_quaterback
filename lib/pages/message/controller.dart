@@ -44,6 +44,7 @@ class MessageController extends GetxController {
 
   ScoresEntity? scoresEntity;
   StreamSubscription? subscription;
+  StreamSubscription? wsSubscription;
 
   List<ChatMessageEntity> atChatMessageList = [];
   var hasText = false.obs;
@@ -60,7 +61,10 @@ class MessageController extends GetxController {
         loadMoreData();
       }
     });
-
+    wsSubscription = WSInstance.netStream.listen((v){
+      subscription?.cancel();
+      listenMessage();
+    });
     listenMessage();
     initData();
   }
@@ -304,6 +308,7 @@ class MessageController extends GetxController {
       WSInstance.exitOVRRoom();
     }
     subscription?.cancel();
+    wsSubscription?.cancel();
     refreshController.dispose();
     textEditingController.dispose();
     focusNode.dispose();

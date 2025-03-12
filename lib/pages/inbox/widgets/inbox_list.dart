@@ -64,8 +64,9 @@ class InboxList extends GetView<InboxController> {
                     controller: controller.refreshControllerDefault,
                     enablePullDown: true,
                     onRefresh: () async {
+                      print('refreshControllerDefault----onRefresh');
                       await controller.getMessageList(refresh: true);
-                      controller.refreshController.refreshCompleted();
+                      controller.refreshControllerDefault.refreshCompleted();
                     },
                     child: Obx(() {
                       return Center(
