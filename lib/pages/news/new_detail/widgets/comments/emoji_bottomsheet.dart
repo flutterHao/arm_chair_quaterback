@@ -45,7 +45,7 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
   Widget build(BuildContext context) {
     return VerticalDragBackWidget(
         child: Container(
-      height: 384.h + Utils.getPaddingBottom(),
+      height: 384.w + Utils.getPaddingBottom(),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
