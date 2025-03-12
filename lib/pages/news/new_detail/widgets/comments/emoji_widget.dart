@@ -10,9 +10,11 @@ import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/values/values.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/emoji_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +53,8 @@ class _EmojiWidgetState extends State<EmojiWidget> {
         widget.emojis[key] = 1;
       }
       setState(() {});
-      EmojiAnimationWidget.show(context: context, emojiImg: _emojis[key]!);
+      EmojiAnimationWidget.show(
+          context: context, emojiImg: Constant.emojis[key]!);
     }
   }
 
@@ -81,7 +84,7 @@ class _EmojiWidgetState extends State<EmojiWidget> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconWidget(iconWidth: 16.w, icon: _emojis[e.key]!),
+                  IconWidget(iconWidth: 16.w, icon: Constant.emojis[e.key]!),
                   5.hGap,
                   Text(
                     "${e.value}",
@@ -101,43 +104,8 @@ class _EmojiWidgetState extends State<EmojiWidget> {
 
         MtInkWell(
           onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return Align(
-                    child: Container(
-                      width: 200.w,
-                      height: 140.w,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.w),
-                          color: AppColors.c262626),
-                      child: GridView.builder(
-                          padding: EdgeInsets.all(20.w),
-                          shrinkWrap: true,
-                          // physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisSpacing: 20.w,
-                                  mainAxisSpacing: 20.w,
-                                  crossAxisCount: 3),
-                          itemCount: _emojis.length,
-                          itemBuilder: (context, index) {
-                            var item = _emojis.entries.elementAt(index);
-                            return MtInkWell(
-                              onTap: () {
-                                _sendEmoji(item.key);
-                                Get.back();
-                              },
-                              child: Image.asset(item.value,
-                                  width: 46.w,
-                                  height: 46.w,
-                                  fit: BoxFit.fitWidth),
-                            );
-                          }),
-                    ),
-                  );
-                });
+            Get.bottomSheet(EmojiBottomsheet(sendEmoji: _sendEmoji),
+                isScrollControlled: true);
           },
           child: Container(
             height: 24.w,
@@ -160,50 +128,40 @@ class _EmojiWidgetState extends State<EmojiWidget> {
     );
   }
 }
-
-Map<String, String> _emojis = {
-  "1": Assets.communityEmojiIconAgree,
-  "2": Assets.communityEmojiIconAngel,
-  "3": Assets.communityEmojiIconAngry,
-  "4": Assets.communityEmojiIconAwkwardsmile,
-  "5": Assets.communityEmojiIconBlink,
-  "6": Assets.communityEmojiIconClown,
-  "7": Assets.communityEmojiIconCold,
-  "8": Assets.communityEmojiIconCrying,
-  "9": Assets.communityEmojiIconDemon,
-  "10": Assets.communityEmojiIconDisgust,
-  "11": Assets.communityEmojiIconDistressed,
-  "12": Assets.communityEmojiIconEyeroll,
-  "13": Assets.communityEmojiIconFaint,
-  "14": Assets.communityEmojiIconFear,
-  "15": Assets.communityEmojiIconFire,
-  "16": Assets.communityEmojiIconFirework,
-  "17": Assets.communityEmojiIconFrozen,
-  "18": Assets.communityEmojiIconFunny,
-  "19": Assets.communityEmojiIconGame,
-  "20": Assets.communityEmojiIconGrin,
-  "21": Assets.communityEmojiIconHush,
-  "22": Assets.communityEmojiIconInsidious,
-  "23": Assets.communityEmojiIconKiss,
-  "24": Assets.communityEmojiIconLaugh,
-  "25": Assets.communityEmojiIconLaughing,
-  "26": Assets.communityEmojiIconMask,
-  "27": Assets.communityEmojiIconObserve,
-  "28": Assets.communityEmojiIconRainbow,
-  "29": Assets.communityEmojiIconRealize,
-  "30": Assets.communityEmojiIconRelaxed,
-  "31": Assets.communityEmojiIconRespect,
-  "32": Assets.communityEmojiIconShakehand,
-  "33": Assets.communityEmojiIconShit,
-  "34": Assets.communityEmojiIconSign,
-  "35": Assets.communityEmojiIconSnoring,
-  "36": Assets.communityEmojiIconSpeechless,
-  "37": Assets.communityEmojiIconStay,
-  "38": Assets.communityEmojiIconSweat,
-  "39": Assets.communityEmojiIconThink,
-  "40": Assets.communityEmojiIconTongueout,
-  "41": Assets.communityEmojiIconUncomfortable,
-  "42": Assets.communityEmojiIconUnconvinced,
-  "43": Assets.communityEmojiIconVomiting,
-  "44": Assets.communityEmojiU1f641,
-};
+//  showDialog(
+//                 context: context,
+//                 builder: (context) {
+//                   return Align(
+//                     child: Container(
+//                       width: 200.w,
+//                       height: 140.w,
+//                       alignment: Alignment.center,
+//                       decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(16.w),
+//                           color: AppColors.c262626),
+//                       child: GridView.builder(
+//                           padding: EdgeInsets.all(20.w),
+//                           shrinkWrap: true,
+//                           // physics: const NeverScrollableScrollPhysics(),
+//                           gridDelegate:
+//                               SliverGridDelegateWithFixedCrossAxisCount(
+//                                   crossAxisSpacing: 20.w,
+//                                   mainAxisSpacing: 20.w,
+//                                   crossAxisCount: 3),
+//                           itemCount: Constant.emojis.length,
+//                           itemBuilder: (context, index) {
+//                             var item = Constant.emojis.entries.elementAt(index);
+//                             return MtInkWell(
+//                               onTap: () {
+//                                 _sendEmoji(item.key);
+//                                 Get.back();
+//                               },
+//                               child: Image.asset(item.value,
+//                                   width: 46.w,
+//                                   height: 46.w,
+//                                   fit: BoxFit.fitWidth),
+//                             );
+//                           }),
+//                     ),
+//                   );
+//                 });
