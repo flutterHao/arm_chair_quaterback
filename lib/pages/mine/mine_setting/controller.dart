@@ -28,7 +28,7 @@ class MineSettingController extends GetxController {
   }
 
   void getCurrentLanguage() {
-    var langCode = StorageService.to.getString(Constant.languge);
+    var langCode = StorageService.to.getString(Constant.language);
     if (langCode.isNotEmpty) {
       currentLanguageIndex.value = languages.indexWhere((element) {
         return element.locale.languageCode == langCode;

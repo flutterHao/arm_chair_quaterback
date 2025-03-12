@@ -16,7 +16,7 @@ class Constant {
   static const String firstOpen = 'device_first_open';
 
   /// 多语言
-  static const String languge = 'language_code';
+  static const String language = 'language_code';
 
   static const String deviceId = "device_id";
 
@@ -181,4 +181,7 @@ class Constant {
     "43": Assets.communityEmojiIconVomiting,
     "44": Assets.communityEmojiU1f641,
   };
+
+  static const resourcesShowToday = "resources_show_today";
+
 }

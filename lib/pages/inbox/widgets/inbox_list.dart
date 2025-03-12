@@ -7,7 +7,6 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -134,7 +133,9 @@ class InboxList extends GetView<InboxController> {
     var item = controller.chatRoomList[index];
     int type = item.type;
     var id = type == 1 ? int.parse(item.categoryId) : -1;
-    String icon = type == 1 ? Utils.getPlayUrl(id) : Assets.testTestTeamLogo;
+    String icon = type == 1
+        ? Utils.getPlayUrl(id)
+        : Assets.managerUiManagerIconCurrency04;
     String title = type == 1 ? Utils.getPlayBaseInfo(id).elname : "OVR RANK";
     String content = item.lastMessage;
     String time = Utils.timeAgo(item.lastMessageSendTime);
@@ -207,7 +208,7 @@ class InboxList extends GetView<InboxController> {
                         borderRadius: BorderRadius.circular(24.w),
                         border: Border.all(color: AppColors.cE1E1E1),
                       ),
-                      child: ImageWidget(width: 30.w, url: icon),
+                      child: IconWidget(iconWidth: 30.w, icon: icon),
                     )
                   else
                     ImageWidget(

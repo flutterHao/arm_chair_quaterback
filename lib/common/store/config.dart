@@ -49,7 +49,7 @@ class ConfigStore extends GetxController {
   }
 
   void onInitLocale() {
-    var langCode = StorageService.to.getString(Constant.languge);
+    var langCode = StorageService.to.getString(Constant.language);
     if (langCode.isEmpty) return;
     var index = languages.indexWhere((element) {
       return element.languageCode == langCode;
@@ -61,7 +61,7 @@ class ConfigStore extends GetxController {
   void onLocaleUpdate(Locale value) {
     locale = value;
     Get.updateLocale(value);
-    StorageService.to.setString(Constant.languge, value.languageCode);
+    StorageService.to.setString(Constant.language, value.languageCode);
   }
 
   void setServiceUrl(String url) {
@@ -96,5 +96,13 @@ class ConfigStore extends GetxController {
       en_US[element['key']] = element['en_US'];
     });
     Get.updateLocale(locale);
+  }
+
+  void setResourceAlert(int ms) {
+    StorageService.to.setInt(Constant.resourcesShowToday, ms);
+  }
+
+  int getResourceAlert() {
+    return StorageService.to.getInt(Constant.resourcesShowToday,defaultValue: 0);
   }
 }

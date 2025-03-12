@@ -5,6 +5,9 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
+import 'package:arm_chair_quaterback/common/store/config.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/resources_alert.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -633,18 +636,27 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                   0;
               if (coin <
                   double.parse(picksIndexController.picksDefine.betCost)) {
-                return Container(
-                  height: 51.w,
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      color: AppColors.cEEEEEE),
-                  child: Text(
-                    "NOT SUFFICIENT FUNDS",
-                    style: 23.w5(
-                        color: AppColors.ccccccc,
-                        fontFamily: FontFamily.fOswaldMedium),
+                return MtInkWell(
+                  onTap: () {
+                    var time = ConfigStore.to.getResourceAlert();
+                    if (!MyDateUtils.isSameDay(
+                        MyDateUtils.getDateTimeByMs(time), DateTime.now())) {
+                      ResourcesAlert.show(type: 1);
+                    }
+                  },
+                  child: Container(
+                    height: 51.w,
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.w),
+                        color: AppColors.cEEEEEE),
+                    child: Text(
+                      "NOT SUFFICIENT FUNDS",
+                      style: 23.w5(
+                          color: AppColors.ccccccc,
+                          fontFamily: FontFamily.fOswaldMedium),
+                    ),
                   ),
                 );
               }
