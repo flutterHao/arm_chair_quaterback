@@ -6,13 +6,13 @@
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/emoji_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -98,6 +98,7 @@ class _EmojiWidgetState extends State<EmojiWidget> {
           );
         }),
         // if (emojis.isNotEmpty) 30.hGap,
+
         MtInkWell(
           onTap: () {
             showDialog(
@@ -114,7 +115,7 @@ class _EmojiWidgetState extends State<EmojiWidget> {
                       child: GridView.builder(
                           padding: EdgeInsets.all(20.w),
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          // physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisSpacing: 20.w,
@@ -161,7 +162,48 @@ class _EmojiWidgetState extends State<EmojiWidget> {
 }
 
 Map<String, String> _emojis = {
-  "1": Assets.newsUiEmojiJoker,
-  "2": Assets.newsUiEmojiArrogance,
-  "3": Assets.newsUiEmojiLaugh,
+  "1": Assets.communityEmojiIconAgree,
+  "2": Assets.communityEmojiIconAngel,
+  "3": Assets.communityEmojiIconAngry,
+  "4": Assets.communityEmojiIconAwkwardsmile,
+  "5": Assets.communityEmojiIconBlink,
+  "6": Assets.communityEmojiIconClown,
+  "7": Assets.communityEmojiIconCold,
+  "8": Assets.communityEmojiIconCrying,
+  "9": Assets.communityEmojiIconDemon,
+  "10": Assets.communityEmojiIconDisgust,
+  "11": Assets.communityEmojiIconDistressed,
+  "12": Assets.communityEmojiIconEyeroll,
+  "13": Assets.communityEmojiIconFaint,
+  "14": Assets.communityEmojiIconFear,
+  "15": Assets.communityEmojiIconFire,
+  "16": Assets.communityEmojiIconFirework,
+  "17": Assets.communityEmojiIconFrozen,
+  "18": Assets.communityEmojiIconFunny,
+  "19": Assets.communityEmojiIconGame,
+  "20": Assets.communityEmojiIconGrin,
+  "21": Assets.communityEmojiIconHush,
+  "22": Assets.communityEmojiIconInsidious,
+  "23": Assets.communityEmojiIconKiss,
+  "24": Assets.communityEmojiIconLaugh,
+  "25": Assets.communityEmojiIconLaughing,
+  "26": Assets.communityEmojiIconMask,
+  "27": Assets.communityEmojiIconObserve,
+  "28": Assets.communityEmojiIconRainbow,
+  "29": Assets.communityEmojiIconRealize,
+  "30": Assets.communityEmojiIconRelaxed,
+  "31": Assets.communityEmojiIconRespect,
+  "32": Assets.communityEmojiIconShakehand,
+  "33": Assets.communityEmojiIconShit,
+  "34": Assets.communityEmojiIconSign,
+  "35": Assets.communityEmojiIconSnoring,
+  "36": Assets.communityEmojiIconSpeechless,
+  "37": Assets.communityEmojiIconStay,
+  "38": Assets.communityEmojiIconSweat,
+  "39": Assets.communityEmojiIconThink,
+  "40": Assets.communityEmojiIconTongueout,
+  "41": Assets.communityEmojiIconUncomfortable,
+  "42": Assets.communityEmojiIconUnconvinced,
+  "43": Assets.communityEmojiIconVomiting,
+  "44": Assets.communityEmojiU1f641,
 };
