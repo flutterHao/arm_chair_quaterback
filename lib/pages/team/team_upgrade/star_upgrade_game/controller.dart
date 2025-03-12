@@ -83,29 +83,26 @@ class StarUpgradeGameController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    repeatAnimationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300))
-          ..addListener(() {
-            print('addStatusListener');
-            var width = 319.w;
-            if ((repeatAnimation.value == 0 ||
-                    repeatAnimation.value == width) &&
-                repeatAtEdge) {
-              repeatAnimationController.stop();
-              double end = 0;
-              if(successRate.value!=0){
-                end = width / 2;
-              }else{
-                end = Random().nextDouble() * width;
-              }
-              endAnimation = Tween<double>(
-                      begin: repeatAnimation.value == width ? width : 0,
-                      end: end)
-                  .animate(CurvedAnimation(
-                      parent: endAnimationController, curve: Curves.easeOutBack));
-              endAnimationController.forward();
-            }
-          });
+    repeatAnimationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 300))
+      ..addListener(() {
+        var width = 319.w;
+        if ((repeatAnimationController.value == 0 || repeatAnimationController.value == 1) &&
+            repeatAtEdge) {
+          repeatAnimationController.stop();
+          double end = 0;
+          if (successRate.value != 0) {
+            end = width / 2;
+          } else {
+            end = Random().nextDouble() * width;
+          }
+          endAnimation = Tween<double>(
+                  begin: repeatAnimation.value == width ? width : 0, end: end)
+              .animate(CurvedAnimation(
+                  parent: endAnimationController, curve: Curves.easeOutBack));
+          endAnimationController.forward();
+        }
+      });
     repeatAnimation = Tween<double>(begin: 0.0, end: 319.w)
         .animate(repeatAnimationController);
     endAnimationController =
@@ -711,7 +708,9 @@ class StarUpgradeGameController extends GetxController
 
   @override
   void onClose() {
-    // TODO: implement onClose
+    repeatAnimationController.dispose();
+    endAnimationController.dispose();
+    slotMachineControllers.map((e) => e.dispose());
     super.onClose();
   }
 }
