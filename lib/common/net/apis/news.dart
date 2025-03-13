@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2025-03-06 15:05:18
+ * @LastEditTime: 2025-03-13 10:59:22
  */
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
@@ -33,7 +33,7 @@ class NewsApi {
 
   static Future<NewsListDetail> getNewsDetail(id) async {
     var json = await HttpUtil().post(Api.getNewsDetail, data: {"newsId": id});
-    return NewsListDetail.fromJson(json["newsContent"]);
+    return NewsListDetail.fromJson(json);
   }
 
   static Future<bool> newsLike(int id) async {

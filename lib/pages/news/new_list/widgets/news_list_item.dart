@@ -286,7 +286,7 @@ class NewsListItem extends GetView<NewListController> {
                 }
                 final ctrl =
                     Get.find<CommentController>(tag: newsDetail.id.toString());
-                ctrl.getReviews(newsDetail.id, isRefresh: true);
+                ctrl.getReviews(newsDetail, isRefresh: true);
                 await BottomTipDialog.showWithSound(
                   isScrollControlled: true,
                   context: Get.context!,
@@ -323,12 +323,11 @@ class NewsListItem extends GetView<NewListController> {
           NewsBottomButton(newsDetail),
           16.vGap,
           EmojiWidget(
-            emojis: newsDetail.emojis!,
-            myEmojis: newsDetail.myEmoji,
-            type: 1,
-            targetId: newsDetail.id,
-            subgoal: newsDetail.id,
-          ),
+              emojis: newsDetail.emojis!,
+              myEmojis: newsDetail.myEmoji,
+              type: 1,
+              targetId: newsDetail.id,
+              subgoal: newsDetail.id),
           _hotComment(),
           2.vGap,
         ],

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2025-02-20 18:23:38
+ * @LastEditTime: 2025-03-13 19:22:06
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -90,13 +90,13 @@ class CommentsList extends StatelessWidget {
         builder: (_) {
           var list =
               controller.mainList.where((e) => e.parentReviewId == 0).toList();
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
+          return Material(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 12.w),
+                  margin:
+                      EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.w),
                   child: Obx(() {
                     return Text(
                       "Comments (${detail.reviewsCount.value})",
@@ -112,18 +112,20 @@ class CommentsList extends StatelessWidget {
                   controller: controller.refhreshCtrl,
                   enablePullUp: true,
                   enablePullDown: false,
+                  // onRefresh: () =>
+                  //     controller.getReviews(detail.id, isRefresh: true),
                   onLoading: () =>
-                      controller.getReviews(detail.id, isRefresh: false),
+                      controller.getReviews(detail, isRefresh: false),
                   child: list.isNotEmpty
-                      ? ListView.separated(
+                      ? ListView.builder(
                           controller: ScrollController(),
                           shrinkWrap: false,
                           physics: const ClampingScrollPhysics(),
-                          padding: EdgeInsets.symmetric(vertical: 12.w),
+                          padding: EdgeInsets.only(top: 12.w),
                           itemCount: list.length,
-                          separatorBuilder: (context, index) {
-                            return 24.vGap;
-                          },
+                          // separatorBuilder: (context, index) {
+                          //   return 24.vGap;
+                          // },
                           itemBuilder: (context, index) {
                             // var subList = controller.subList
                             //     .where((e) =>
@@ -131,23 +133,20 @@ class CommentsList extends StatelessWidget {
                             //         list[index].id)
                             //     .toList();
                             return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CommentItemView(
                                     detail: detail, item: list[index]),
                                 if (list[index].sonReviews > 0 ||
                                     list[index].subList.isNotEmpty)
-                                  Container(
-                                    // width: 295.w,
-                                    margin: EdgeInsets.only(left: 42.w),
-                                    child:
-                                        SubComentsListView(list[index], detail),
-                                  )
+                                  SubComentsListView(list[index], detail)
                               ],
                             );
                           })
-                      : const Center(
+                      : Center(
                           child: LoadStatusWidget(
-                          text: "No Comment",
+                          text: controller.loadDataStatus.value.desc,
+                          loadDataStatus: controller.loadDataStatus.value,
                         )),
                 )),
               ],
@@ -184,12 +183,12 @@ class SubComentsListView extends GetView<CommentController> {
     return AnimatedSize(
       duration: const Duration(milliseconds: 200),
       curve: Curves.linear,
-      child: ListView.separated(
-          padding: EdgeInsets.only(top: 23.w),
+      child: ListView.builder(
+          padding: EdgeInsets.only(top: 0.w),
           physics: const NeverScrollableScrollPhysics(),
           itemCount: mainReviews.current + 1,
           shrinkWrap: true,
-          separatorBuilder: (context, index) => 23.vGap,
+          // separatorBuilder: (context, index) => 23.vGap,
           itemBuilder: (context, index) {
             return index < mainReviews.current
                 ? SubCommentItemView(
@@ -198,7 +197,8 @@ class SubComentsListView extends GetView<CommentController> {
                   )
                 : Container(
                     // color: Colors.red,
-                    // padding: EdgeInsets.symmetric(vertical: 6.w),
+                    padding: EdgeInsets.only(left: 60.w, bottom: 10.w),
+                    // margin: EdgeInsets.symmetric(vertical: 10.w),
                     child: Row(
                       children: [
                         InkWell(
@@ -287,69 +287,67 @@ class DetailCommentWidget extends StatelessWidget {
           var list =
               comCtrl.mainList.where((e) => e.parentReviewId == 0).toList();
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 1.w,
-                margin: EdgeInsets.symmetric(vertical: 25.w),
-                width: double.infinity,
-                color: AppColors.cE6E6E,
-              ),
-              Text(
-                "Comments",
-                style: 19.w7(height: 1),
-              ),
-              12.vGap,
-              list.isNotEmpty
-                  ? ListView.separated(
-                      controller: ScrollController(),
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(vertical: 12.w),
-                      itemCount: list.length,
-                      separatorBuilder: (context, index) {
-                        return 30.vGap;
-                      },
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            CommentItemView(
-                              item: list[index],
-                              detail: item,
-                            ),
-                            if (list[index].sonReviews > 0 ||
-                                list[index].subList.isNotEmpty)
-                              Container(
-                                // width: 295.w,
-                                margin: EdgeInsets.only(left: 48.w),
-                                child: SubComentsListView(list[index], item),
-                              )
-                          ],
-                        );
-                      })
-                  : const SizedBox.shrink(),
-              if (item.reviewsCount.value > getReviewCount(list))
+          return Material(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Container(
-                  margin: const EdgeInsets.only(bottom: 100),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MtInkWell(
-                        onTap: () => comCtrl.getReviews(item.id),
-                        child: Container(
-                          padding: EdgeInsets.all(10.w),
-                          child: Text(
-                            "Show more comments",
-                            textAlign: TextAlign.center,
-                            style: 12.w4(color: AppColors.cB3B3B3),
-                          ),
-                        ),
-                      )
-                    ],
+                  height: 1.w,
+                  margin: EdgeInsets.symmetric(vertical: 25.w),
+                  width: double.infinity,
+                  color: AppColors.cE6E6E,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.w),
+                  child: Text(
+                    "Comments(${item.reviewsCount})".toUpperCase(),
+                    style: 19.w7(height: 1),
                   ),
-                )
-            ],
+                ),
+                list.isNotEmpty
+                    ? ListView.builder(
+                        controller: ScrollController(),
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        padding: EdgeInsets.symmetric(vertical: 12.w),
+                        itemCount: list.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CommentItemView(
+                                item: list[index],
+                                detail: item,
+                              ),
+                              if (list[index].sonReviews > 0 ||
+                                  list[index].subList.isNotEmpty)
+                                SubComentsListView(list[index], item)
+                            ],
+                          );
+                        })
+                    : const SizedBox.shrink(),
+                if (item.reviewsCount.value > getReviewCount(list))
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 100),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MtInkWell(
+                          onTap: () => comCtrl.getReviews(item),
+                          child: Container(
+                            padding: EdgeInsets.all(10.w),
+                            child: Text(
+                              "Show more comments",
+                              textAlign: TextAlign.center,
+                              style: 12.w4(color: AppColors.cB3B3B3),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+              ],
+            ),
           );
         });
   }

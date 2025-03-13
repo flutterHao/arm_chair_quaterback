@@ -2,13 +2,16 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2025-02-20 18:15:20
+ * @LastEditTime: 2025-03-13 19:17:23
  */
+
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -30,6 +33,7 @@ class CommentController extends GetxController {
   late TeamLoginInfo userEntity;
 
   RefreshController refhreshCtrl = RefreshController();
+  Rx<LoadDataStatus> loadDataStatus = LoadDataStatus.loading.obs;
   // RefreshController detailRefhreshCtrl = RefreshController();
 
   // @override
@@ -61,33 +65,39 @@ class CommentController extends GetxController {
   }
 
   ///获取主要评论列表
-  void getReviews(id, {bool isRefresh = false}) {
+  Future getReviews(NewsListDetail detail, {bool isRefresh = false}) async {
     userEntity =
         Get.find<HomeController>().userEntiry.teamLoginInfo ?? TeamLoginInfo();
-    const pageSize = 5;
+    const pageSize = 10;
     if (isRefresh) {
+      if (refhreshCtrl.footerStatus == LoadStatus.noMore) return;
       mainList.clear();
       mainPage = 0;
     } else {
       mainPage++;
     }
-    NewsApi.getReviewsByNewsId(id, mainPage, pageSize).then((v) async {
+    loadDataStatus.value = LoadDataStatus.loading;
+    await NewsApi.getReviewsByNewsId(detail.id, mainPage, pageSize)
+        .then((v) async {
       await Future.wait(v.map((e) => getSubReviews(e)));
       mainList.addAll(v);
-      update();
+      detail.reviewsCount.value =
+          max(detail.reviewsCount.value, getCommentCount());
       isRefresh
           ? refhreshCtrl.refreshCompleted()
           : (v.isEmpty
               ? refhreshCtrl.loadNoData()
               : refhreshCtrl.loadComplete());
+      loadDataStatus.value = LoadDataStatus.success;
+
+      update();
     }).whenComplete(() {});
   }
 
   ///获取二级评论,将它添加到主要item下面
   Future getSubReviews(ReviewEntity mainItem) async {
     if (mainItem.sonReviews == 0) return;
-    await NewsApi.getSonReviews(
-            mainItem.newsId, mainItem.id!, mainItem.page, 10)
+    await NewsApi.getSonReviews(mainItem.newsId, mainItem.id, mainItem.page, 10)
         .then((v) {
       mainItem.subList.addAll(v);
       int show = mainItem.current == 0
@@ -103,6 +113,14 @@ class CommentController extends GetxController {
     }).whenComplete(() {
       refhreshCtrl.refreshCompleted();
     });
+  }
+
+  int getCommentCount() {
+    int count = 0;
+    for (var element in mainList) {
+      count += element.subList.length + 1;
+    }
+    return count;
   }
 
   //直接发送、回复mianList，回复subLIst
