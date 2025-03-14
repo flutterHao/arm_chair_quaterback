@@ -13,6 +13,7 @@ class SimpleMessagePushEntity {
 	late String teamLogo = '';
 	late String teamName = '';
 	late int type = 0;
+	int unReadCount = 0;
 
 	SimpleMessagePushEntity();
 

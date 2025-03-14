@@ -42,6 +42,7 @@ class ChatRoomEntity {
 		lMST = s.sendTime;
 		teamId = s.teamId;
 		type = s.type;
+		unreadMessageCount = s.unReadCount;
 		return this;
 	}
 

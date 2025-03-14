@@ -59,11 +59,10 @@ class InboxController extends GetxController {
             .indexWhere((e) => e.roomId == simpleMessagePushEntity.roomId);
         if (indexWhere < 0) {
           chatRoomList.add(ChatRoomEntity().copyWith(simpleMessagePushEntity));
-          chatRoomListSort();
-          return;
+        }else {
+          chatRoomList[indexWhere] =
+              chatRoomList[indexWhere].copyWith(simpleMessagePushEntity);
         }
-        chatRoomList[indexWhere] =
-            chatRoomList[indexWhere].copyWith(simpleMessagePushEntity);
         chatRoomListSort();
       }
     });

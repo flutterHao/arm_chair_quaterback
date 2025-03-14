@@ -36,6 +36,10 @@ SimpleMessagePushEntity $SimpleMessagePushEntityFromJson(
   if (type != null) {
     simpleMessagePushEntity.type = type;
   }
+  final int? unReadCount = jsonConvert.convert<int>(json['unReadCount']);
+  if (unReadCount != null) {
+    simpleMessagePushEntity.unReadCount = unReadCount;
+  }
   return simpleMessagePushEntity;
 }
 
@@ -50,6 +54,7 @@ Map<String, dynamic> $SimpleMessagePushEntityToJson(
   data['teamLogo'] = entity.teamLogo;
   data['teamName'] = entity.teamName;
   data['type'] = entity.type;
+  data['unReadCount'] = entity.unReadCount;
   return data;
 }
 
@@ -63,6 +68,7 @@ extension SimpleMessagePushEntityExtension on SimpleMessagePushEntity {
     String? teamLogo,
     String? teamName,
     int? type,
+    int? unReadCount,
   }) {
     return SimpleMessagePushEntity()
       ..message = message ?? this.message
@@ -72,6 +78,7 @@ extension SimpleMessagePushEntityExtension on SimpleMessagePushEntity {
       ..teamId = teamId ?? this.teamId
       ..teamLogo = teamLogo ?? this.teamLogo
       ..teamName = teamName ?? this.teamName
-      ..type = type ?? this.type;
+      ..type = type ?? this.type
+      ..unReadCount = unReadCount ?? this.unReadCount;
   }
 }

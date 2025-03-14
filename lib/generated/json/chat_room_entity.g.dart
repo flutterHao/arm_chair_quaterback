@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/chat_room_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/simple_message_push_entity.dart';
+
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 
 
