@@ -138,7 +138,7 @@ class InboxController extends GetxController {
     Future.wait([
       CacheApi.getInboxMessageList(),
       InboxApi.getMailVOList(),
-      getChatRoomList(refresh: refresh),
+      // getChatRoomList(refresh: refresh),
     ]).then((result) {
       var resMessageList = result[0] as List<InboxMessageEntity>;
       mailVOList = result[1] as List<InboxEmailEntity>;

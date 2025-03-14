@@ -78,7 +78,7 @@ class InboxList extends GetView<InboxController> {
                   return SmartRefresher(
                     controller: controller.refreshController,
                     enablePullUp: true,
-                    enablePullDown: true,
+                    // enablePullDown: true,
                     onRefresh: () async {
                       await controller.getMessageList(refresh: true);
                       controller.refreshController.refreshCompleted();
