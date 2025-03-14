@@ -49,7 +49,7 @@ class HomeController extends GetxController {
   late PageController pageController;
   ScrollHideBottomBarController scrollHideBottomBarController =
       ScrollHideBottomBarController();
-  RxInt tabIndex = 2.obs;
+  RxInt tabIndex = 1.obs;
   RxBool isAbsorbPointer = false.obs;
 
   UserEntity userEntiry = UserEntity();
@@ -66,15 +66,9 @@ class HomeController extends GetxController {
   List<TabItemInfo> tabItems = [
     TabItemInfo(
       LangKey.gameTabNews,
-      Assets.commonUiCommonTabBottom01Off,
-      Assets.commonUiCommonTabBottom01On,
+      Assets.commonUiCommonTabBottom06On,
+      Assets.commonUiCommonTabBottom06On,
       const NewsPage(),
-    ),
-    TabItemInfo(
-      LangKey.gametabScores,
-      Assets.commonUiCommonTabBottom02Off,
-      Assets.commonUiCommonTabBottom02On,
-      const LeaguePage(),
     ),
     TabItemInfo(
       LangKey.gameTabManager,
@@ -83,16 +77,10 @@ class HomeController extends GetxController {
       const TeamIndexPage(),
     ),
     TabItemInfo(
-      LangKey.gametabPicks,
-      Assets.commonUiCommonTabBottom04Off,
-      Assets.commonUiCommonTabBottom04On,
-      const PicksIndex(),
-    ),
-    TabItemInfo(
-      LangKey.gameTabInbox,
-      Assets.commonUiCommonTabBottom05Off,
-      Assets.commonUiCommonTabBottom05On,
-      const InboxPage(),
+      LangKey.gametabScores,
+      Assets.commonUiCommonTabBottom02Off,
+      Assets.commonUiCommonTabBottom02Off,
+      const LeaguePage(),
     ),
   ];
 
@@ -109,7 +97,7 @@ class HomeController extends GetxController {
     Get.lazyPut(() => IllustratiionsController());
     Get.lazyPut(() => NbaPlayerController());
 
-    pageController = PageController(initialPage: 2);
+    pageController = PageController(initialPage: 1);
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
     //   tabIndex.value = tabController.index;
@@ -146,10 +134,6 @@ class HomeController extends GetxController {
   }
 
   void onTap(v) {
-    if(v== 3){
-      EasyLoading.showToast("COME SOON");
-      return;
-    }
     if (v == tabIndex.value) {
       onSameItemTap();
       return;
@@ -163,9 +147,9 @@ class HomeController extends GetxController {
     if (tabIndex.value == 0) {
       Get.find<NewListController>().scrollToTop();
     } else if (tabIndex.value == 1) {
-      Get.find<LeagueController>().scrollToTop();
-    } else if (tabIndex.value == 2) {
       Get.find<TeamIndexController>().scrollToTop();
+    } else if (tabIndex.value == 2) {
+      Get.find<LeagueController>().scrollToTop();
     } else if (tabIndex.value == 3) {
       Get.find<PicksIndexController>().scrollToTop();
     } else {

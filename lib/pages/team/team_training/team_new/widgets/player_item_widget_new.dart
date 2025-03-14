@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-02-25 19:22:49
+ * @LastEditTime: 2025-03-14 17:09:35
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -94,14 +94,14 @@ class PlayerItemBlack extends GetView<TeamController> {
                     color: AppColors.cD9D9D9),
               ),
               9.hGap,
-              if (CacheApi.playerStatusMap[item.playerStatus]?.statsId != null)
-                IconWidget(
-                  iconWidth: 20.w,
-                  iconHeight: 20.w,
-                  icon: Utils.getStatusUrl(
-                      CacheApi.playerStatusMap[item.playerStatus]?.statsId),
-                ),
-              4.hGap,
+              // if (CacheApi.playerStatusMap[item.playerStatus]?.statsId != null)
+              //   IconWidget(
+              //     iconWidth: 20.w,
+              //     iconHeight: 20.w,
+              //     icon: Utils.getStatusUrl(
+              //         CacheApi.playerStatusMap[item.playerStatus]?.statsId),
+              //   ),
+              // 4.hGap,
               Visibility(
                 visible: Utils.getPlayBaseInfo(item.playerId).injuries,
                 child: IconWidget(

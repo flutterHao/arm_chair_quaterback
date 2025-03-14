@@ -142,8 +142,7 @@ class UserInfoBar extends StatelessWidget {
                                 servers: servers,
                                 currentServer: current,
                                 onServerChanged: (newServer) async {
-                                  var indexOf =
-                                      servers.indexOf(newServer);
+                                  var indexOf = servers.indexOf(newServer);
                                   HttpUtil().setUrl(newServer);
                                   WSInstance.setUrl(wsServers[indexOf]);
                                   await WSInstance.close();
@@ -164,6 +163,7 @@ class UserInfoBar extends StatelessWidget {
                           width: 36.w,
                           height: 36.w,
                           decoration: BoxDecoration(
+                              color: AppColors.cFFFFFF,
                               border: Border.all(
                                   width: 1, color: AppColors.cFFFFFF),
                               borderRadius: BorderRadius.circular(18.w)),
@@ -183,7 +183,6 @@ class UserInfoBar extends StatelessWidget {
                     ],
                   ),
                 16.hGap,
-
               ],
             ),
           );

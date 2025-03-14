@@ -94,58 +94,57 @@ class _HomePageState extends State<HomePage>
                                 int index = controller.tabItems.indexOf(e);
                                 bool select =
                                     index == controller.tabIndex.value;
-                                if (index == 2) {
-                                  return Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: AppColors.cFFFFFF,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(9.w))),
-                                      child: MtInkWell(
-                                        onTap: () {
-                                          IllustratiionsController illuCtrl =
+                                if (index == 1) {
+                                  return Container(
+                                    width: 74.w,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.cFFFFFF,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(9.w))),
+                                    child: MtInkWell(
+                                      onTap: () {
+                                        IllustratiionsController illuCtrl =
+                                            Get.find();
+                                        if (index == 1 &&
+                                            illuCtrl.hasNewPlayer.value) {
+                                          TeamIndexController ctrl =
                                               Get.find();
-                                          if (index == 2 &&
-                                              illuCtrl.hasNewPlayer.value) {
-                                            TeamIndexController ctrl =
-                                                Get.find();
-                                            ctrl.goToIllustraction();
-                                          } else {
-                                            controller.onTap(2);
-                                          }
-                                        },
-                                        child: Container(
-                                            height: 66.w,
-                                            padding: EdgeInsets.all(4.w),
-                                            decoration: BoxDecoration(
-                                                color: select
-                                                    ? AppColors.cFFFFFF
-                                                    : AppColors.cFFFFFF,
-                                                borderRadius:
-                                                    BorderRadius.circular(9.w)),
-                                            margin:
-                                                EdgeInsets.only(bottom: 9.w),
-                                            child: Container(
-                                                height: 58.w,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.w),
-                                                    border: Border.all(
-                                                        color:
-                                                            AppColors.cE6E6E6,
-                                                        width: 1)),
-                                                child: ClipRRect(
+                                          ctrl.goToIllustraction();
+                                        } else {
+                                          controller.onTap(1);
+                                        }
+                                      },
+                                      child: Container(
+                                          height: 66.w,
+                                          padding: EdgeInsets.all(4.w),
+                                          decoration: BoxDecoration(
+                                              color: select
+                                                  ? AppColors.cFFFFFF
+                                                  : AppColors.cFFFFFF,
+                                              borderRadius:
+                                                  BorderRadius.circular(9.w)),
+                                          margin:
+                                              EdgeInsets.only(bottom: 9.w),
+                                          child: Container(
+                                              height: 58.w,
+                                              decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          4.w),
-                                                  child: _barItem(
-                                                      controller.tabItems[2],
-                                                      select,
-                                                      58.w,
-                                                      isCenter: true),
-                                                ))),
-                                      ),
+                                                          5.w),
+                                                  border: Border.all(
+                                                      color:
+                                                          AppColors.cE6E6E6,
+                                                      width: 1)),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        4.w),
+                                                child: _barItem(
+                                                    controller.tabItems[1],
+                                                    select,
+                                                    58.w,
+                                                    isCenter: true),
+                                              ))),
                                     ),
                                   );
                                 }

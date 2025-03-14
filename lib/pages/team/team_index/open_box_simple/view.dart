@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-05 20:56:11
+ * @LastEditTime: 2025-03-14 11:36:26
  */
 import 'dart:math';
 
@@ -392,56 +392,56 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Column(
-                children: [
-                  Row(children: [
-                    Text("COST:",
-                        style: 16.w4(
-                            fontFamily: FontFamily.fOswaldMedium,
-                            color: AppColors.cFFFFFF)),
-                    3.hGap,
-                    IconWidget(
-                      iconWidth: 20.w,
-                      icon: Assets.commonUiCommonIconCurrency02,
-                    ),
-                    4.hGap,
-                    Text(
-                        "${CacheApi.cardPackDefineMap[controller.currentCardPack.cardId]?.cardPackOpenMore ?? 0}",
-                        style: 16.w4(
-                            fontFamily: FontFamily.fOswaldMedium,
-                            color: AppColors.cFFFFFF)),
-                  ]),
-                  8.vGap,
-                  MtInkWell(
-                    onTap: () {
-                      controller.oneMore(CacheApi
-                              .cardPackDefineMap[
-                                  controller.currentCardPack.cardId]
-                              ?.cardPackOpenMore ??
-                          0);
-                    },
-                    child: Container(
-                      width: 146.w,
-                      height: 41.w,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.w),
-                        border:
-                            Border.all(color: AppColors.c666666, width: 1.w),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "ONE MORE".toUpperCase(),
-                          style: 19.w4(
-                              color: AppColors.cFFFFFF,
-                              fontFamily: FontFamily.fOswaldMedium),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              9.hGap,
+              // Column(
+              //   children: [
+              //     Row(children: [
+              //       Text("COST:",
+              //           style: 16.w4(
+              //               fontFamily: FontFamily.fOswaldMedium,
+              //               color: AppColors.cFFFFFF)),
+              //       3.hGap,
+              //       IconWidget(
+              //         iconWidth: 20.w,
+              //         icon: Assets.commonUiCommonIconCurrency02,
+              //       ),
+              //       4.hGap,
+              //       Text(
+              //           "${CacheApi.cardPackDefineMap[controller.currentCardPack.cardId]?.cardPackOpenMore ?? 0}",
+              //           style: 16.w4(
+              //               fontFamily: FontFamily.fOswaldMedium,
+              //               color: AppColors.cFFFFFF)),
+              //     ]),
+              //     8.vGap,
+              //     MtInkWell(
+              //       onTap: () {
+              //         controller.oneMore(CacheApi
+              //                 .cardPackDefineMap[
+              //                     controller.currentCardPack.cardId]
+              //                 ?.cardPackOpenMore ??
+              //             0);
+              //       },
+              //       child: Container(
+              //         width: 146.w,
+              //         height: 41.w,
+              //         alignment: Alignment.center,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(9.w),
+              //           border:
+              //               Border.all(color: AppColors.c666666, width: 1.w),
+              //         ),
+              //         child: Center(
+              //           child: Text(
+              //             "ONE MORE".toUpperCase(),
+              //             style: 19.w4(
+              //                 color: AppColors.cFFFFFF,
+              //                 fontFamily: FontFamily.fOswaldMedium),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // 9.hGap,
               MtInkWell(
                 onTap: () => controller.gotIt(),
                 child: Container(

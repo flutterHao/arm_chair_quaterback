@@ -2,7 +2,7 @@
  * @Description: 球员头像卡片
  * @Author: lihonghao
  * @Date: 2024-11-18 12:23:44
- * @LastEditTime: 2025-02-21 18:45:32
+ * @LastEditTime: 2025-03-14 16:17:38
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -43,6 +43,7 @@ class PlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double scale = 58 / 74;
     return MtInkWell(
       onTap: () =>
           onTap?.call() ??
@@ -50,8 +51,8 @@ class PlayerCard extends StatelessWidget {
               arguments:
                   PlayerDetailPageArguments(playerId, isMyPlayer: isMyPlayer)),
       child: Container(
-        width: 74.w,
-        height: 93.w,
+        width: 74.w * scale,
+        height: 93.w * scale,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.w),
@@ -61,8 +62,8 @@ class PlayerCard extends StatelessWidget {
           alignment: Alignment.topCenter,
           children: [
             ImageWidget(
-              width: 74.w,
-              height: 93.w,
+              width: 74.w * scale,
+              height: 93.w * scale,
               url: Utils.getPlayUrl(playerId),
               imageFailedPath: Assets.iconUiDefault04,
             ),
@@ -72,7 +73,7 @@ class PlayerCard extends StatelessWidget {
                 top: 4.w,
                 child: OutlinedText(
                   text: Utils.getPlayBaseInfo(playerId).playerScore.toString(),
-                  textStyle: 19.w4(
+                  textStyle: (19 * scale).w4(
                     color: AppColors.c262626,
                     height: 0.8,
                     fontFamily: FontFamily.fOswaldBold,
@@ -86,39 +87,41 @@ class PlayerCard extends StatelessWidget {
                 //       color: AppColors.c262626),
                 // ),
               ),
-            // Positioned(
-            //   top: 4.w,
-            //   right: 4.w,
-            //   child: Container(
-            //     width: 16.w,
-            //     height: 16.w,
-            //     alignment: Alignment.center,
-            //     decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(4.w),
-            //         color: AppColors.cF2F2F2),
-            //     child: IconWidget(
-            //       iconWidth: 10.w,
-            //       icon: Assets.iconUiIconRead,
-            //       iconColor: AppColors.c262626,
-            //     ),
-            //   ),
-            // ),
-            if (!ObjectUtil.isEmpty(status))
-              Positioned(
-                  top: 2.5.w,
-                  right: 2.5.w,
-                  child: Column(
-                    children: [
-                      IconWidget(
-                          iconWidth: 13.5.w, icon: Utils.getStatusUrl(status)),
-                      2.vGap,
-                      if (Utils.getPlayBaseInfo(playerId).injuries)
-                        IconWidget(
-                          iconWidth: 11.w,
-                          icon: Assets.commonUiCommonIconInjury,
-                        )
-                    ],
-                  )),
+            Positioned(
+              top: 4.w,
+              right: 4.w,
+              child: Container(
+                width: 16.w * scale,
+                height: 16.w * scale,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.w * scale),
+                    color: AppColors.cF2F2F2),
+                child: Image.asset(
+                  width: 10.w * scale,
+                  height: 12.w * scale,
+                  Assets.iconUiIconRead,
+                  color: AppColors.c262626,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+            // if (!ObjectUtil.isEmpty(status))
+            //   Positioned(
+            //       top: 2.5.w,
+            //       right: 2.5.w,
+            //       child: Column(
+            //         children: [
+            //           IconWidget(
+            //               iconWidth: 13.5.w, icon: Utils.getStatusUrl(status)),
+            //           2.vGap,
+            //           if (Utils.getPlayBaseInfo(playerId).injuries)
+            //             IconWidget(
+            //               iconWidth: 11.w,
+            //               icon: Assets.commonUiCommonIconInjury,
+            //             )
+            //         ],
+            //       )),
             // if (Utils.getPlayBaseInfo(playerId).injuries)
           ],
         ),

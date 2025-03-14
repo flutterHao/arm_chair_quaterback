@@ -94,6 +94,7 @@ class Assets {
   static const String commonUiCommonTabBottom04On = 'assets/images/Common/ui_common_tab_bottom_04_on.png';
   static const String commonUiCommonTabBottom05Off = 'assets/images/Common/ui_common_tab_bottom_05_off.png';
   static const String commonUiCommonTabBottom05On = 'assets/images/Common/ui_common_tab_bottom_05_on.png';
+  static const String commonUiCommonTabBottom06On = 'assets/images/Common/ui_common_tab_bottom_06_on.png';
   static const String commonUiManagerIconMedal01 = 'assets/images/Common/ui_manager_icon_medal_01.png';
   static const String commonUiManagerIconMedal02 = 'assets/images/Common/ui_manager_icon_medal_02.png';
   static const String commonUiManagerIconMedal03 = 'assets/images/Common/ui_manager_icon_medal_03.png';
@@ -235,6 +236,7 @@ class Assets {
   static const String inboxUiInboxIconMessage = 'assets/images/inbox/ui_inbox_icon_message.png';
   static const String inboxUiInboxIconSend = 'assets/images/inbox/ui_inbox_icon_send.png';
   static const String inboxUiInboxIconTips = 'assets/images/inbox/ui_inbox_icon_tips.png';
+  static const String loadingLoading = 'assets/spine/loading/loading.png';
   static const String managerUiManagerArchiveAtlas = 'assets/images/manager/ui_manager_archive_atlas.png';
   static const String managerUiManagerArchiveDebris = 'assets/images/manager/ui_manager_archive_debris.png';
   static const String managerUiManagerBackground = 'assets/images/manager/ui_manager_background.png';
@@ -423,6 +425,8 @@ class Assets {
   static const String managerUiManagerWheelBg02 = 'assets/images/manager/ui_manager_wheel_bg_02.png';
   static const String managerUiManagerWheelCalendar = 'assets/images/manager/ui_manager_wheel_calendar.png';
   static const String managerUiManagerWheelGift = 'assets/images/manager/ui_manager_wheel_gift.png';
+  static const String managerUiMangerNew21 = 'assets/images/manager/ui_manger_new2_1.png';
+  static const String managerUiMangerNew22 = 'assets/images/manager/ui_manger_new2_2.png';
   static const String managerUiNewManger01 = 'assets/images/manager/ui_new_manger_01.png';
   static const String managerUiNewManger02 = 'assets/images/manager/ui_new_manger_02.png';
   static const String managerUiNewManger03 = 'assets/images/manager/ui_new_manger_03.png';
@@ -545,6 +549,7 @@ class Assets {
   static const String soundWhistle = 'assets/sound/Whistle.mp3';
   static const String soundWindowClose = 'assets/sound/WindowClose.mp3';
   static const String soundWindowOpen = 'assets/sound/WindowOpen.mp3';
+  static const String spineLoadingLoading = 'assets/spine/loading/loading.atlas';
   static const String spineNv1 = 'assets/spine/nv_1.png';
   static const String teamUICommonGrain = 'assets/images/team/UI_common_grain.png';
   static const String teamUICommonTCBg3 = 'assets/images/team/UI_common_TC_bg3.png';

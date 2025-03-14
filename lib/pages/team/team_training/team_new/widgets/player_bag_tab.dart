@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2024-12-16 11:37:37
+ * @LastEditTime: 2025-03-14 17:31:50
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -66,9 +66,10 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // ignore: prefer_const_constructors
-                          16.hGap, StarSort(),
+                          16.hGap,
+                          // StarSort(),
 
-                          5.hGap,
+                          // 5.hGap,
                           // ignore: prefer_const_constructors
                           GradeSort(),
                           const Expanded(child: SizedBox.shrink()),
@@ -253,6 +254,7 @@ class GradeSort extends GetView<TeamController> {
       child: Container(
         height: 28.w,
         width: 82.w,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
             color: AppColors.cEEEEEE,
             borderRadius: BorderRadius.circular(14.w)),
@@ -262,6 +264,7 @@ class GradeSort extends GetView<TeamController> {
             const SizedBox.shrink(),
             Text(LangKey.gameLittleNameGrade.tr,
                 style: 16.w4(
+                    height: 1,
                     fontFamily: controller.sortType.abs() == 2
                         ? FontFamily.fOswaldMedium
                         : FontFamily.fOswaldRegular)),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-06 18:51:16
+ * @LastEditTime: 2025-03-14 16:46:11
  */
 
 import 'dart:async';
@@ -202,19 +202,19 @@ class TeamIndexController extends GetxController
   Future matchBattle() async {
     // await scroToMatch();
     final teamCtrl = Get.find<TeamController>();
-    if (teamCtrl.myTeamEntity.salary >= teamCtrl.myTeamEntity.salaryCap) {
-      BottomTipDialog.show(
-          context: Get.context!,
-          onTap: () {
-            Get.back();
-            Get.toNamed(RouteNames.teamMemberPage);
-          },
-          confirmStr: "LINE UP",
-          title: "SALARY CAP EXCEED",
-          desc:
-              "Salary cap over limit，please adjust the lineup  before the game can begin.");
-      return;
-    }
+    // if (teamCtrl.myTeamEntity.salary >= teamCtrl.myTeamEntity.salaryCap) {
+    //   BottomTipDialog.show(
+    //       context: Get.context!,
+    //       onTap: () {
+    //         Get.back();
+    //         Get.toNamed(RouteNames.teamMemberPage);
+    //       },
+    //       confirmStr: "LINE UP",
+    //       title: "SALARY CAP EXCEED",
+    //       desc:
+    //           "Salary cap over limit，please adjust the lineup  before the game can begin.");
+    //   return;
+    // }
     // SoundServices.to.playSound(Assets.soundRadaMatch);
     await Get.put(TeamBattleController()).teamMatchV2().then((v) async {
       await Get.toNamed(RouteNames.teamTeamBattle);
