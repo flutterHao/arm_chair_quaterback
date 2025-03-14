@@ -7,9 +7,9 @@
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/login/index.dart';
+import 'package:arm_chair_quaterback/pages/team/select_player/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/slecet_player.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,7 +67,7 @@ class _TeamView extends GetView<TeamIndexController> {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      Get.to(SlecetPlayerPage());
+                      Get.to(SelectPlayerPage());
                     },
                     child: Text('SlecetPlayerPage')),
                 ElevatedButton(

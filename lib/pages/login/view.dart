@@ -61,7 +61,7 @@ class LoginPage extends GetView<LoginController> {
                     Text('login2'),
                     Text('enter the code'),
                     PinCodeTextField(
-                      controller: TextEditingController(),
+                      // controller: TextEditingController(),
                       appContext: context,
                       length: 6,
                       enableActiveFill: true,
@@ -93,7 +93,6 @@ class LoginPage extends GetView<LoginController> {
                   ],
                 ),
               ),
-              Center(child: Text('login3'))
             ],
           ),
         ))
