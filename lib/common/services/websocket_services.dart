@@ -46,6 +46,7 @@ class WebsocketServices extends GetxService {
         propUpdated(list);
       }
       if (result.serviceId == Api.wsMissionUpdate) {
+        return;
         print('HomeController--event--wsMissionUpdate-----------');
         TeamMissionEntity teamMissionEntity =
             TeamMissionEntity.fromJson(result.payload);
@@ -127,20 +128,20 @@ class WebsocketServices extends GetxService {
 
       ///如果在slot并且不是球员卡包，取消推送奖励表达
       if (trainingCtrl.isPlaying.value && !isPlayer) return;
-      if (isLuckyCoin) {
-        try {
-          var luckyCoinNum = Get.find<HomeController>()
-              .userEntiry
-              .teamLoginInfo!
-              .getLuckyCoin();
-          if (luckyCoinNum < teamProp.num!) {
-            addProp(teamProp, "${teamProp.num! - luckyCoinNum}",
-                EventType.luckyCoin);
-          }
-        } catch (e) {
-          print('TrainingController not init');
-        }
-      }
+      // if (isLuckyCoin) {
+      //   try {
+      //     var luckyCoinNum = Get.find<HomeController>()
+      //         .userEntiry
+      //         .teamLoginInfo!
+      //         .getLuckyCoin();
+      //     if (luckyCoinNum < teamProp.num!) {
+      //       addProp(teamProp, "${teamProp.num! - luckyCoinNum}",
+      //           EventType.luckyCoin);
+      //     }
+      //   } catch (e) {
+      //     print('TrainingController not init');
+      //   }
+      // }
       if (isBall) {
         try {
           var ballNum =
@@ -160,13 +161,13 @@ class WebsocketServices extends GetxService {
           addProp(teamProp, "${teamProp.num! - money}k", EventType.moneyTick);
         }
       }
-      if (isBetCoin) {
-        var betCoin =
-            Get.find<HomeController>().userEntiry.teamLoginInfo!.getCoin();
-        if (betCoin < teamProp.num!) {
-          addProp(teamProp, "${teamProp.num! - betCoin}", EventType.betCoin);
-        }
-      }
+      // if (isBetCoin) {
+      //   var betCoin =
+      //       Get.find<HomeController>().userEntiry.teamLoginInfo!.getCoin();
+      //   if (betCoin < teamProp.num!) {
+      //     addProp(teamProp, "${teamProp.num! - betCoin}", EventType.betCoin);
+      //   }
+      // }
 
       ///球员卡包
       if (isPlayer && teamProp.num! > 0) {
