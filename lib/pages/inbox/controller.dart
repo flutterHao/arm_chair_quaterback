@@ -52,6 +52,7 @@ class InboxController extends GetxController {
       }
     });
     wsSubscription = WSInstance.stream.listen((res) {
+      return;
       if (res.serviceId == Api.wsSimpleMessagePush) {
         SimpleMessagePushEntity simpleMessagePushEntity =
             SimpleMessagePushEntity.fromJson(res.payload);

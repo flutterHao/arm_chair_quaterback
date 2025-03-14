@@ -6,7 +6,6 @@ import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
-import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -19,7 +18,6 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_page_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -31,7 +29,6 @@ import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_pag
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
-import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -127,6 +124,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                               _gameStartAndMvpWidget(),
                               /// 赛程竞猜
                               Builder(builder: (context) {
+                                return SizedBox.shrink();
                                 var nowDateTime = MyDateUtils.getNowDateTime();
                                 var nextDay = MyDateUtils.nextDay(nowDateTime);
                                 var dayStartTimeMS =
@@ -561,17 +559,17 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       icon: Assets.scoresUiScoresBattleBg),
                 ],
               ),
-              Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 15.w,
-                    decoration: BoxDecoration(
-                        color: AppColors.cFFFFFF,
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(9.w))),
-                  )),
+              // Positioned(
+              //     bottom: 0,
+              //     left: 0,
+              //     right: 0,
+              //     child: Container(
+              //       height: 15.w,
+              //       decoration: BoxDecoration(
+              //           color: AppColors.cFFFFFF,
+              //           borderRadius:
+              //               BorderRadius.vertical(top: Radius.circular(9.w))),
+              //     )),
               Column(
                 children: [
                   Text(
@@ -677,256 +675,256 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
           ),
 
           ///mvp竞猜
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
-            child: Column(
-              children: [
-                14.vGap,
-                Text(
-                  controller.getGuessStr(),
-                  style: 16.w5(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldMedium),
-                ),
-                Builder(builder: (context) {
-                  if (controller.scoresNotStartGameEntity!.chooses.isNotEmpty) {
-                    /// 已经预测过了mvp，显示支持率
-                    return Column(
-                      children: [
-                        7.vGap,
-                        Container(
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: Divider(
-                              height: 1.w,
-                              color: AppColors.cD1D1D1,
-                            )),
-                        9.vGap,
-                        ...List.generate(
-                            controller.scoresNotStartGameEntity!.questions.length,
-                            (index) {
-                          Question item = controller
-                              .scoresNotStartGameEntity!.questions[index];
-                          var baseInfo = Utils.getPlayBaseInfo(item.playerId);
-                          var supportPercent = (item.supportCount /
-                                  controller.getMVPTotalSupportCount())
-                              .handlerNaNInfinity();
-                          bool isNotChoose = controller
-                              .scoresNotStartGameEntity!.chooses
-                              .where((e) => e.playerId != item.playerId)
-                              .isNotEmpty;
-                          return Container(
-                            height: 39.w,
-                            width: 263.w,
-                            padding: EdgeInsets.symmetric(horizontal: 9.w),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                              color: AppColors.cE6E6E6,
-                              width: 1.w,
-                            ))),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ImageWidget(
-                                      url: Utils.getPlayUrl(item.playerId),
-                                      width: 35.w,
-                                      height: 29.w,
-                                      imageFailedPath: Assets.iconUiDefault05,
-                                    ),
-                                    9.hGap,
-                                    Text(
-                                      baseInfo.ename,
-                                      style: 12.w4(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fOswaldRegular,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(5.w),
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            width: 70.w,
-                                            height: 9.w,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.cD1D1D1,
-                                                width: 1.w,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.w),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: -70.w + supportPercent * 70.w,
-                                            top: 0,
-                                            bottom: 0,
-                                            child: Container(
-                                              width: 70.w,
-                                              decoration: BoxDecoration(
-                                                color: isNotChoose
-                                                    ? AppColors.cD5D5D5
-                                                    : AppColors.c000000,
-                                                border: Border.all(
-                                                  color: isNotChoose
-                                                      ? AppColors.cD5D5D5
-                                                      : AppColors.c000000,
-                                                  width: 1.w,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.horizontal(
-                                                        left:
-                                                            Radius.circular(5.w)),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    5.hGap,
-                                    Container(
-                                        height: 29.w,
-                                        width: 35.w,
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "${(supportPercent * 100).format()}%",
-                                          style: 14.w4(
-                                            color: isNotChoose
-                                                ? AppColors.cB3B3B3
-                                                : AppColors.c000000,
-                                            height: 1,
-                                            fontFamily: FontFamily.fOswaldRegular,
-                                          ),
-                                        ))
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        }),
-                        25.vGap,
-                        Container(
-                          width: 343.w,
-                          height: 36.w,
-                          padding: EdgeInsets.only(left: 5.w, right: 12.w),
-                          decoration: BoxDecoration(
-                            color: AppColors.cF2F2F2,
-                            borderRadius: BorderRadius.circular(6.w),
-                          ),
-                          child: Row(
-                            children: [
-                              UserAvaterWidget(
-                                url: Utils.getAvatarUrl(""),
-                                width: 26.w,
-                                height: 26.w,
-                                radius: 13.w,
-                              ),
-                              6.hGap,
-                              Expanded(
-                                  child: Text(
-                                "Add a comment about this stake about ...",
-                                style: 14.w4(
-                                  color: AppColors.c4D4D4D,
-                                  height: 1,
-                                  fontFamily: FontFamily.fRobotoRegular,
-                                ),
-                              )),
-                              20.hGap,
-                              IconWidget(
-                                iconWidth: 17.w,
-                                icon: Assets.commonUiCommonIconSystemLikeComment,
-                                iconColor: AppColors.c000000,
-                              )
-                            ],
-                          ),
-                        ),
-                        21.vGap,
-                      ],
-                    );
-                  }
-
-                  /// 预测mvp
-                  return Column(
-                    children: [
-                      17.vGap,
-                      ...List.generate(
-                          controller.scoresNotStartGameEntity!.questions.length,
-                          (index) {
-                        Question item =
-                            controller.scoresNotStartGameEntity!.questions[index];
-                        var baseInfo = Utils.getPlayBaseInfo(item.playerId);
-                        return MtInkWell(
-                          onTap: () => controller.scheduleChoose(item),
-                          child: Container(
-                            height: 46.w,
-                            width: 259.w,
-                            margin: EdgeInsets.only(bottom: 9.w),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6.w),
-                              border: Border.all(
-                                color: AppColors.cD1D1D1,
-                                width: 1.w,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                12.hGap,
-                                ImageWidget(
-                                  url: Utils.getPlayUrl(item.playerId),
-                                  width: 47.w,
-                                  height: 41.w,
-                                  imageFailedPath: Assets.iconUiDefault05,
-                                ),
-                                8.hGap,
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      baseInfo.ename,
-                                      style: 14.w4(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fOswaldRegular,
-                                      ),
-                                    ),
-                                    5.vGap,
-                                    Text(
-                                      "${Utils.getTeamInfo(baseInfo.teamId).shortEname} · ${baseInfo.position}",
-                                      style: 10.w4(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fOswaldRegular,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                      21.vGap,
-                    ],
-                  );
-                })
-              ],
-            ),
-          ),
+          // Container(
+          //   width: double.infinity,
+          //   decoration: BoxDecoration(
+          //       color: AppColors.cFFFFFF,
+          //       borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
+          //   child: Column(
+          //     children: [
+          //       14.vGap,
+          //       Text(
+          //         controller.getGuessStr(),
+          //         style: 16.w5(
+          //             color: AppColors.c000000,
+          //             height: 1,
+          //             fontFamily: FontFamily.fOswaldMedium),
+          //       ),
+          //       Builder(builder: (context) {
+          //         if (controller.scoresNotStartGameEntity!.chooses.isNotEmpty) {
+          //           /// 已经预测过了mvp，显示支持率
+          //           return Column(
+          //             children: [
+          //               7.vGap,
+          //               Container(
+          //                   margin: EdgeInsets.symmetric(horizontal: 16.w),
+          //                   child: Divider(
+          //                     height: 1.w,
+          //                     color: AppColors.cD1D1D1,
+          //                   )),
+          //               9.vGap,
+          //               ...List.generate(
+          //                   controller.scoresNotStartGameEntity!.questions.length,
+          //                   (index) {
+          //                 Question item = controller
+          //                     .scoresNotStartGameEntity!.questions[index];
+          //                 var baseInfo = Utils.getPlayBaseInfo(item.playerId);
+          //                 var supportPercent = (item.supportCount /
+          //                         controller.getMVPTotalSupportCount())
+          //                     .handlerNaNInfinity();
+          //                 bool isNotChoose = controller
+          //                     .scoresNotStartGameEntity!.chooses
+          //                     .where((e) => e.playerId != item.playerId)
+          //                     .isNotEmpty;
+          //                 return Container(
+          //                   height: 39.w,
+          //                   width: 263.w,
+          //                   padding: EdgeInsets.symmetric(horizontal: 9.w),
+          //                   decoration: BoxDecoration(
+          //                       border: Border(
+          //                           bottom: BorderSide(
+          //                     color: AppColors.cE6E6E6,
+          //                     width: 1.w,
+          //                   ))),
+          //                   child: Row(
+          //                     crossAxisAlignment: CrossAxisAlignment.end,
+          //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                     children: [
+          //                       Row(
+          //                         crossAxisAlignment: CrossAxisAlignment.center,
+          //                         children: [
+          //                           ImageWidget(
+          //                             url: Utils.getPlayUrl(item.playerId),
+          //                             width: 35.w,
+          //                             height: 29.w,
+          //                             imageFailedPath: Assets.iconUiDefault05,
+          //                           ),
+          //                           9.hGap,
+          //                           Text(
+          //                             baseInfo.ename,
+          //                             style: 12.w4(
+          //                               color: AppColors.c000000,
+          //                               height: 1,
+          //                               fontFamily: FontFamily.fOswaldRegular,
+          //                             ),
+          //                           )
+          //                         ],
+          //                       ),
+          //                       Row(
+          //                         crossAxisAlignment: CrossAxisAlignment.center,
+          //                         children: [
+          //                           ClipRRect(
+          //                             borderRadius: BorderRadius.circular(5.w),
+          //                             child: Stack(
+          //                               children: [
+          //                                 Container(
+          //                                   width: 70.w,
+          //                                   height: 9.w,
+          //                                   decoration: BoxDecoration(
+          //                                     border: Border.all(
+          //                                       color: AppColors.cD1D1D1,
+          //                                       width: 1.w,
+          //                                     ),
+          //                                     borderRadius:
+          //                                         BorderRadius.circular(5.w),
+          //                                   ),
+          //                                 ),
+          //                                 Positioned(
+          //                                   left: -70.w + supportPercent * 70.w,
+          //                                   top: 0,
+          //                                   bottom: 0,
+          //                                   child: Container(
+          //                                     width: 70.w,
+          //                                     decoration: BoxDecoration(
+          //                                       color: isNotChoose
+          //                                           ? AppColors.cD5D5D5
+          //                                           : AppColors.c000000,
+          //                                       border: Border.all(
+          //                                         color: isNotChoose
+          //                                             ? AppColors.cD5D5D5
+          //                                             : AppColors.c000000,
+          //                                         width: 1.w,
+          //                                       ),
+          //                                       borderRadius:
+          //                                           BorderRadius.horizontal(
+          //                                               left:
+          //                                                   Radius.circular(5.w)),
+          //                                     ),
+          //                                   ),
+          //                                 ),
+          //                               ],
+          //                             ),
+          //                           ),
+          //                           5.hGap,
+          //                           Container(
+          //                               height: 29.w,
+          //                               width: 35.w,
+          //                               alignment: Alignment.centerLeft,
+          //                               child: Text(
+          //                                 "${(supportPercent * 100).format()}%",
+          //                                 style: 14.w4(
+          //                                   color: isNotChoose
+          //                                       ? AppColors.cB3B3B3
+          //                                       : AppColors.c000000,
+          //                                   height: 1,
+          //                                   fontFamily: FontFamily.fOswaldRegular,
+          //                                 ),
+          //                               ))
+          //                         ],
+          //                       )
+          //                     ],
+          //                   ),
+          //                 );
+          //               }),
+          //               25.vGap,
+          //               Container(
+          //                 width: 343.w,
+          //                 height: 36.w,
+          //                 padding: EdgeInsets.only(left: 5.w, right: 12.w),
+          //                 decoration: BoxDecoration(
+          //                   color: AppColors.cF2F2F2,
+          //                   borderRadius: BorderRadius.circular(6.w),
+          //                 ),
+          //                 child: Row(
+          //                   children: [
+          //                     UserAvaterWidget(
+          //                       url: Utils.getAvatarUrl(""),
+          //                       width: 26.w,
+          //                       height: 26.w,
+          //                       radius: 13.w,
+          //                     ),
+          //                     6.hGap,
+          //                     Expanded(
+          //                         child: Text(
+          //                       "Add a comment about this stake about ...",
+          //                       style: 14.w4(
+          //                         color: AppColors.c4D4D4D,
+          //                         height: 1,
+          //                         fontFamily: FontFamily.fRobotoRegular,
+          //                       ),
+          //                     )),
+          //                     20.hGap,
+          //                     IconWidget(
+          //                       iconWidth: 17.w,
+          //                       icon: Assets.commonUiCommonIconSystemLikeComment,
+          //                       iconColor: AppColors.c000000,
+          //                     )
+          //                   ],
+          //                 ),
+          //               ),
+          //               21.vGap,
+          //             ],
+          //           );
+          //         }
+          //
+          //         /// 预测mvp
+          //         return Column(
+          //           children: [
+          //             17.vGap,
+          //             ...List.generate(
+          //                 controller.scoresNotStartGameEntity!.questions.length,
+          //                 (index) {
+          //               Question item =
+          //                   controller.scoresNotStartGameEntity!.questions[index];
+          //               var baseInfo = Utils.getPlayBaseInfo(item.playerId);
+          //               return MtInkWell(
+          //                 onTap: () => controller.scheduleChoose(item),
+          //                 child: Container(
+          //                   height: 46.w,
+          //                   width: 259.w,
+          //                   margin: EdgeInsets.only(bottom: 9.w),
+          //                   decoration: BoxDecoration(
+          //                     borderRadius: BorderRadius.circular(6.w),
+          //                     border: Border.all(
+          //                       color: AppColors.cD1D1D1,
+          //                       width: 1.w,
+          //                     ),
+          //                   ),
+          //                   child: Row(
+          //                     children: [
+          //                       12.hGap,
+          //                       ImageWidget(
+          //                         url: Utils.getPlayUrl(item.playerId),
+          //                         width: 47.w,
+          //                         height: 41.w,
+          //                         imageFailedPath: Assets.iconUiDefault05,
+          //                       ),
+          //                       8.hGap,
+          //                       Column(
+          //                         mainAxisAlignment: MainAxisAlignment.center,
+          //                         crossAxisAlignment: CrossAxisAlignment.start,
+          //                         children: [
+          //                           Text(
+          //                             baseInfo.ename,
+          //                             style: 14.w4(
+          //                               color: AppColors.c000000,
+          //                               height: 1,
+          //                               fontFamily: FontFamily.fOswaldRegular,
+          //                             ),
+          //                           ),
+          //                           5.vGap,
+          //                           Text(
+          //                             "${Utils.getTeamInfo(baseInfo.teamId).shortEname} · ${baseInfo.position}",
+          //                             style: 10.w4(
+          //                               color: AppColors.c000000,
+          //                               height: 1,
+          //                               fontFamily: FontFamily.fOswaldRegular,
+          //                             ),
+          //                           ),
+          //                         ],
+          //                       )
+          //                     ],
+          //                   ),
+          //                 ),
+          //               );
+          //             }),
+          //             21.vGap,
+          //           ],
+          //         );
+          //       })
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

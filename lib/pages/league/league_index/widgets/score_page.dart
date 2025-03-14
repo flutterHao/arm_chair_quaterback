@@ -647,6 +647,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
 
   /// 不能竞猜判断
   bool cantGuess() {
+    return true;
     var nextCanGuessScoreDate =
         Get.find<LeagueController>().getNextCanGuessScoreDate();
     bool nextBool = nextCanGuessScoreDate != null;

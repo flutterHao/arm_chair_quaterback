@@ -41,6 +41,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -145,6 +146,10 @@ class HomeController extends GetxController {
   }
 
   void onTap(v) {
+    if(v== 3){
+      EasyLoading.showToast("COME SOON");
+      return;
+    }
     if (v == tabIndex.value) {
       onSameItemTap();
       return;

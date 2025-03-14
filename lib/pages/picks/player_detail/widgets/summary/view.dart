@@ -493,6 +493,7 @@ class SummaryPage extends GetView<SummaryController> {
                               id: SummaryController.idRecentPickTabContent,
                               tag: getTag(),
                               builder: (_) {
+                                return SizedBox.shrink();
                                 if (controller.getPickInfo() == null) {
                                   return const SizedBox.shrink();
                                 }
@@ -969,6 +970,7 @@ class SummaryPage extends GetView<SummaryController> {
                           //   );
                           // }),
                           Builder(builder: (_) {
+                            return const SizedBox.shrink();
                             if (controller.getOutComeWithTab().isEmpty) {
                               return const SizedBox.shrink();
                             }
