@@ -301,43 +301,43 @@ class NewsDetailItem extends GetView<NewListController> {
                     ],
                   ),
                 ),
-                if (controller.pickPlayerList.isNotEmpty &&
-                    item.imgList.length <= 2)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      10.vGap,
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15.w),
-                        child: Text(
-                          "PLAYER PICK",
-                          style: 20.w4(
-                              height: 1, fontFamily: FontFamily.fOswaldMedium),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 150.w,
-                        // width: 375.w,
-                        child: ListView.separated(
-                            padding: EdgeInsets.symmetric(horizontal: 15.w),
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Container(
-                                  alignment: Alignment.centerLeft,
-                                  width: 300.w,
-                                  child: GuessItemV2(
-                                    margin: EdgeInsets.all(0),
-                                    playerV2: controller.pickPlayerList[index],
-                                    index: index,
-                                    mainRoute: true,
-                                    isInScoreDetail: true,
-                                  ),
-                                ),
-                            separatorBuilder: (context, index) => 10.hGap,
-                            itemCount: controller.pickPlayerList.length),
-                      )
-                    ],
-                  ),
+                // if (controller.pickPlayerList.isNotEmpty &&
+                //     item.imgList.length <= 2)
+                //   Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       10.vGap,
+                //       Container(
+                //         margin: EdgeInsets.symmetric(
+                //             vertical: 10, horizontal: 15.w),
+                //         child: Text(
+                //           "PLAYER PICK",
+                //           style: 20.w4(
+                //               height: 1, fontFamily: FontFamily.fOswaldMedium),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         height: 150.w,
+                //         // width: 375.w,
+                //         child: ListView.separated(
+                //             padding: EdgeInsets.symmetric(horizontal: 15.w),
+                //             scrollDirection: Axis.horizontal,
+                //             itemBuilder: (context, index) => Container(
+                //                   alignment: Alignment.centerLeft,
+                //                   width: 300.w,
+                //                   child: GuessItemV2(
+                //                     margin: EdgeInsets.all(0),
+                //                     playerV2: controller.pickPlayerList[index],
+                //                     index: index,
+                //                     mainRoute: true,
+                //                     isInScoreDetail: true,
+                //                   ),
+                //                 ),
+                //             separatorBuilder: (context, index) => 10.hGap,
+                //             itemCount: controller.pickPlayerList.length),
+                //       )
+                //     ],
+                //   ),
                 20.vGap,
 
                 Padding(

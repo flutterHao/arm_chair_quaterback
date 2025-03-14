@@ -25,8 +25,9 @@ class CommentItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CommentController controller = Get.find(tag: item.newsId.toString());
+    bool canReply = item.teamId != (controller.userEntity.team?.teamId ?? 0);
     void reply() async {
-      if (item.teamId != (controller.userEntity.team?.teamId ?? 0)) {
+      if (canReply) {
         String name = "@${item.teamName}";
         await showCommentBottomSheet(context,
             detail: detail,
@@ -48,11 +49,12 @@ class CommentItemView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             builder: (context) {
               return ReplyMoreBottomsheet(
-                sendEmoji: (key) {
-                  sendEmoji(key, item.myEmoji, item.emojis ?? {}, 2, item.id,
-                      item.id);
+                sendEmoji: (key) async {
+                  await sendEmoji(key, item.myEmoji, item.emojis ?? {}, 2,
+                      item.id, item.id);
+                  controller.update();
                 },
-                onReply: () => reply(),
+                onReply: canReply ? () => reply() : null,
                 text: item.context,
               );
             });
@@ -255,8 +257,9 @@ class SubCommentItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CommentController controller = Get.find(tag: item.newsId.toString());
+    bool canReply = item.teamId != (controller.userEntity.team?.teamId ?? 0);
     void reply() async {
-      if (item.teamId != (controller.userEntity.team?.teamId ?? 0)) {
+      if (canReply) {
         String name = "@${item.teamName}";
         await showCommentBottomSheet(context,
             detail: detail,
@@ -277,28 +280,17 @@ class SubCommentItemView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             builder: (context) {
               return ReplyMoreBottomsheet(
-                sendEmoji: (key) {
-                  sendEmoji(key, item.myEmoji, item.emojis ?? {}, 2, item.id,
-                      item.id);
+                sendEmoji: (key) async {
+                  await sendEmoji(key, item.myEmoji, item.emojis ?? {}, 2,
+                      item.id, item.id);
+                  controller.update();
                 },
-                onReply: () => reply(),
+                onReply: canReply ? () => reply() : null,
                 text: item.context,
               );
             });
       },
-      onTap: () async {
-        if (item.teamId != (controller.userEntity.team?.teamId ?? 0)) {
-          String name = "@${item.teamName}";
-          await showCommentBottomSheet(context,
-              detail: detail,
-              reviewsItem: item,
-              // targetId: item.id ?? 0,
-              hintText: name);
-          if (context.mounted) {
-            FocusScope.of(context).unfocus();
-          }
-        }
-      },
+      onTap: () => reply(),
       child: Container(
         padding: EdgeInsets.only(left: 60.w, top: 10.w, bottom: 10.w),
         child: Column(

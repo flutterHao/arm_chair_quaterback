@@ -112,7 +112,11 @@ class ReplyMoreBottomsheet extends StatelessWidget {
         child: Container(
       height: 384.w + Utils.getPaddingBottom(),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(9.w),
+        ),
+      ),
       child: Column(
         children: [
           const DialogTopBtn(),

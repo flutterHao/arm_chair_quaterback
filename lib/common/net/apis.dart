@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-03-06 17:37:50
+ * @LastEditTime: 2025-03-13 16:04:26
  */
 class Api {
   /// base
@@ -38,33 +38,42 @@ class Api {
   static const String deleteReviews = "$API_BASE_PATH/NBANews/deleteReviews";
   static const String likeReviews = "$API_BASE_PATH/NBANews/likeReviews";
   static const String newsFlow = "$API_BASE_PATH/NBANews/newsFlow";
-  static const String newsGuess = "$API_BASE_PATH//NBANews/getNewsGuess";
   static const String getReviewsByNewsId =
       "$API_BASE_PATH//NBANews/getReviewsByNewsId";
   static const String getSonReviews = "$API_BASE_PATH//NBANews/getSonReviews";
-  static const String getGuessInfos =
-      "$API_BASE_PATH/NBANews/getGuessInfos"; //历史竞猜记录
-  static const String getGuessGamesInfo =
-      "$API_BASE_PATH/NBANews/getGuessGamesInfo"; //picks首页竞猜列表
-  static const String guess = "$API_BASE_PATH/NBANews/guess";
+
   static const String getRedisRankInfo =
       "$API_BASE_PATH/NBANews/getRedisRankInfo";
-  static const String getGuessAward = "$API_BASE_PATH/NBANews/getGuessAward";
-  static const String getGuessAllAward =
-      "$API_BASE_PATH/NBANews/getGuessAllAward";
+
   static const String getRankRewards = "$API_BASE_PATH/NBANews/getRankRewards";
   static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
-  static const String getGuessTopReviews =
-      "$API_BASE_PATH/NBANews/getGuessTopReviews";
+
   static const String getRelevantNews =
       "$API_BASE_PATH/NBANews/getRelevantNews";
-  static const String getGuessRankByCycle =
-      "$API_BASE_PATH/NBANews/getGuessRankByCycle";
-  static const String shareGuess = "$API_BASE_PATH/NBANews/shareGuess";
+
   static const String shareNews = "$API_BASE_PATH/NBANews/shareNews";
   static const String getPlayerNews = "$API_BASE_PATH/NBANews/getPlayerNews";
-  static const String getNewsGuessInfo = "/p/NBANews/getNewsGuessInfo";
   static const String sendEmoji = "$API_BASE_PATH/NBANews/sendEmoji";
+
+  //Guess
+  static const String newsGuess = "$API_BASE_PATH//Guess/getNewsGuess";
+  static const String getNewsGuessInfo = "/p/Guess/getNewsGuessInfo";
+  static const String getGuessInfos =
+      "$API_BASE_PATH/Guess/getGuessInfos"; //历史竞猜记录
+  static const String getGuessGamesInfo =
+      "$API_BASE_PATH/Guess/getGuessGamesInfo"; //picks首页竞猜列表
+  static const String getGuessTopReviews =
+      "$API_BASE_PATH/Guess/getGuessTopReviews";
+  static const String getGuessComment = "$API_BASE_PATH/Guess/getGuessComment";
+  static const String sendGuessComment =
+      "$API_BASE_PATH/Guess/sendGuessComment";
+  static const String guess = "$API_BASE_PATH/Guess/guess";
+  static const String getGuessAllAward =
+      "$API_BASE_PATH/Guess/getGuessAllAward";
+  static const String getGuessAward = "$API_BASE_PATH/Guess/getGuessAward";
+  static const String shareGuess = "$API_BASE_PATH/Guess/shareGuess";
+  static const String getGuessRankByCycle =
+      "$API_BASE_PATH/Guess/getGuessRankByCycle";
 
   ///NBAData
   static const String statTeamRank =
@@ -285,10 +294,6 @@ class Api {
       "$API_BASE_PATH/ChatMessage/getChatRoomList";
   static const String setPinned = "$API_BASE_PATH/ChatMessage/setPinned";
   static const String delChatRoom = "$API_BASE_PATH/ChatMessage/delChatRoom";
-  static const String getGuessComment =
-      "$API_BASE_PATH/NBANews/getGuessComment";
-  static const String sendGuessComment =
-      "$API_BASE_PATH/NBANews/sendGuessComment";
 
   ///Girl
   static const String getSlotChatEventVO =
