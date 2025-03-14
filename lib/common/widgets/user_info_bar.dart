@@ -46,186 +46,146 @@ class UserInfoBar extends StatelessWidget {
         builder: (controller) {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-          bool hasDailyTask = controller.ongoingTaskList.isNotEmpty;
-          return Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                height: 47.w,
-                width: double.infinity,
-                color: AppColors.c000000,
-                child: ClipPath(
-                  clipper: TitleBarClipper(55.w),
-                  child: Container(
-                    color: AppColors.c262626,
-                    child: ClipPath(
-                      clipper: DailyTaskBarClipper(55.w),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        color: hasDailyTask
-                            ? AppColors.cFF7954
-                            : AppColors.c262626,
-                      ),
-                    ),
+          return Container(
+            height: 47.w,
+            width: double.infinity,
+            color: AppColors.c000000,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                showPop ? 0.hGap : 16.hGap,
+                if (showPop) ...[
+                  InkWell(
+                    onTap: onClickPop ??
+                        () {
+                          Navigator.pop(context);
+                        },
+                    child: Container(
+                        width: 36.w,
+                        height: 36.w,
+                        margin: EdgeInsets.only(left: 15.w),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(36.w),
+                          border: Border.all(
+                            color: AppColors.cFFFFFF.withOpacity(0.3),
+                          ),
+                        ),
+                        child: IconWidget(
+                          iconWidth: 21.5.w,
+                          iconHeight: 18.5.w,
+                          icon: Assets.iconIconBack,
+                          iconColor: AppColors.cFFFFFF,
+                        )),
                   ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   Expanded(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        showPop ? 0.hGap : 16.hGap,
-                        if (showPop)
-                          InkWell(
-                            onTap: onClickPop ??
-                                () {
-                                  Navigator.pop(context);
-                                },
-                            child: Container(
-                                width: 36.w,
-                                height: 36.w,
-                                margin: EdgeInsets.only(left: 15.w),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(36.w),
-                                  border: Border.all(
-                                    color: AppColors.cFFFFFF.withOpacity(0.3),
-                                  ),
-                                ),
-                                child: IconWidget(
-                                  iconWidth: 21.5.w,
-                                  iconHeight: 18.5.w,
-                                  icon: Assets.iconIconBack,
-                                  iconColor: AppColors.cFFFFFF,
-                                )),
-                          )
-                        else
-                          InkWell(
-                            onLongPress: () {
-                              final List<String> servers = [
-                                Address.personalDevUrl,
-                                // Address.personalDevUrl2,
-                                Address.personalDevUrl3,
-                                Address.privateDevUrl,
-                                Address.publicDevUrl,
-                                Address.pubDevUrl,
-                              ];
-                              final List<String> wsServers = [
-                                Address.wsPersonalDevUrl,
-                                // Address.wsPersonalDevUrl2,
-                                Address.wsPersonalDevUrl3,
-                                Address.wsPrivateDevUrl,
-                                Address.wsPublicDevUrl,
-                                Address.wsPubDevUrl,
-                              ];
-                              String current = HttpUtil().getUrl;
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return ServerSwitchDialog(
-                                    servers: servers,
-                                    currentServer: current,
-                                    onServerChanged: (newServer) async {
-                                      var indexOf = servers.indexOf(newServer);
-                                      HttpUtil().setUrl(newServer);
-                                      WSInstance.setUrl(wsServers[indexOf]);
-                                      await WSInstance.close();
-                                      HomeController.to.login();
-                                    },
-                                  );
+                        Container(
+                          height: 26.w,
+                          padding: EdgeInsets.only(left: 11.w, right: 14.w),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(13.w),
+                              border: Border.all(
+                                color: AppColors.c4D4D4D,
+                                width: 1.w,
+                              )),
+                          child: MoneyAndCoinWidget(
+                            home: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ] else
+                  Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 12.w),
+                        height: 26.w,
+                        padding: EdgeInsets.only(left: 36.w, right: 14.w),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(13.w),
+                            border: Border.all(
+                              color: AppColors.c4D4D4D,
+                              width: 1.w,
+                            )),
+                        child: MoneyAndCoinWidget(
+                          home: true,
+                        ),
+                      ),
+                      InkWell(
+                        onLongPress: () {
+                          final List<String> servers = [
+                            Address.personalDevUrl,
+                            // Address.personalDevUrl2,
+                            Address.personalDevUrl3,
+                            Address.privateDevUrl,
+                            Address.publicDevUrl,
+                            Address.pubDevUrl,
+                          ];
+                          final List<String> wsServers = [
+                            Address.wsPersonalDevUrl,
+                            // Address.wsPersonalDevUrl2,
+                            Address.wsPersonalDevUrl3,
+                            Address.wsPrivateDevUrl,
+                            Address.wsPublicDevUrl,
+                            Address.wsPubDevUrl,
+                          ];
+                          String current = HttpUtil().getUrl;
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ServerSwitchDialog(
+                                servers: servers,
+                                currentServer: current,
+                                onServerChanged: (newServer) async {
+                                  var indexOf =
+                                      servers.indexOf(newServer);
+                                  HttpUtil().setUrl(newServer);
+                                  WSInstance.setUrl(wsServers[indexOf]);
+                                  await WSInstance.close();
+                                  HomeController.to.login();
                                 },
                               );
                             },
-                            onTap: () {
-                              if (!enable) {
-                                Navigator.pop(context);
-                                return;
-                              }
-                              _showDialog(context, routeId);
-                            },
-                            child: Container(
-                              width: 36.w,
-                              height: 36.w,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1, color: AppColors.cFFFFFF),
-                                  borderRadius: BorderRadius.circular(18.w)),
-                              child: Center(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(18.w),
-                                  child: UserAvaterWidget(
-                                    url: Utils.getAvatarUrl(
-                                        info.team?.teamLogo ?? 0),
-                                    width: 36.w,
-                                    height: 36.w,
-                                  ),
-                                ),
+                          );
+                        },
+                        onTap: () {
+                          if (!enable) {
+                            Navigator.pop(context);
+                            return;
+                          }
+                          _showDialog(context, routeId);
+                        },
+                        child: Container(
+                          width: 36.w,
+                          height: 36.w,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1, color: AppColors.cFFFFFF),
+                              borderRadius: BorderRadius.circular(18.w)),
+                          child: Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(18.w),
+                              child: UserAvaterWidget(
+                                url: Utils.getAvatarUrl(
+                                    info.team?.teamLogo ?? 0),
+                                width: 36.w,
+                                height: 36.w,
                               ),
                             ),
                           ),
-                        if(title == null)
-                        ...[11.hGap,
-                        MoneyAndCoinWidget(
-                          home: true,
-                        )]
-                        else
-                          Expanded(
-                            child: Center(
-                              child: Text(title!,style: 20.w5(
-                                color: AppColors.cFFFFFF
-                              ),),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  ClipRRect(
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(10.w)),
-                    child: Builder(builder: (context) {
-                      Widget child = SizedBox(
-                        width: 55.w,
-                        height: 43.w,
-                        child: Stack(
-                          children: [
-                            IconWidget(
-                              iconWidth: 20.w,
-                              icon: Assets.commonUiCommonStatusBarMission01,
-                              iconColor: hasDailyTask
-                                  ? AppColors.c000000
-                                  : AppColors.c686868,
-                            ),
-                            if (!hasDailyTask)
-                              Positioned(
-                                  bottom: 9.w,
-                                  right: 10.w,
-                                  child: IconWidget(
-                                    iconWidth: 14.w,
-                                    icon:
-                                        Assets.commonUiCommonStatusBarMission02,
-                                    iconColor: AppColors.c23E8A9,
-                                  ))
-                          ],
                         ),
-                      );
-                      if (canTapDailyTask) {
-                        child = MtInkWell(
-                          onTap: () {
-                            // Get.toNamed(RouteNames.teamTeamBattle);
-                            Get.toNamed(RouteNames.mineDailyTask);
-                          },
-                          child: child,
-                        );
-                      }
-                      return child;
-                    }),
-                  )
-                ],
-              )
-            ],
+                      ),
+                    ],
+                  ),
+                16.hGap,
+
+              ],
+            ),
           );
         });
   }
@@ -237,7 +197,7 @@ class UserInfoBar extends StatelessWidget {
         useRootNavigator: false,
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
-          return TopDialog(title: title??"Title", routeId: routeId);
+          return TopDialog(title: title ?? "Title", routeId: routeId);
         });
   }
 }
@@ -255,57 +215,20 @@ class MoneyAndCoinWidget extends StatelessWidget {
         builder: (controller) {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-          Flex child;
-          if (home) {
-            child = Row(
-              children: [
-                IconWidget(
-                    iconWidth: 17.w, icon: Assets.commonUiCommonIconCurrency02),
-                2.hGap,
-                AnimatedNum(
-                  number: info.getCoin().toInt(),
-                  textStyle: 12.w4(
-                      color: AppColors.cF2F2F2,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldRegular),
-                ),
-                10.hGap,
-                IconWidget(iconWidth: 20.w, icon: Assets.teamUiMoney02),
-                2.hGap,
-                AnimatedNum(
-                  number: info.getMoney().toInt(),
-                  isMoney: true,
-                  milliseconds: 1000,
-                  textStyle: 12.w4(
-                      color: AppColors.cF2F2F2,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldRegular),
-                )
-                // Text(
-                //   Utils.formatMoney(info.getMoney()),
-                //   style: 12.w4(
-                //       color: AppColors.cF2F2F2,
-                //       height: 1,
-                //       fontFamily: FontFamily.fOswaldRegular),
-                // ),
-              ],
-            );
-          } else {
-            child = Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                iconText(Assets.commonUiCommonIconCurrency02,
-                    Utils.formatChip(info.getCoin())),
-                4.vGap,
-                iconText(Assets.commonUiCommonProp05,
-                    Utils.formatMoney(info.getMoney())),
-              ],
-            );
-          }
-          return Container(
-            alignment: Alignment.centerRight,
-            child: child,
+          return Row(
+            children: [
+              IconWidget(iconWidth: 20.w, icon: Assets.teamUiMoney02),
+              2.hGap,
+              AnimatedNum(
+                number: info.getMoney().toInt(),
+                isMoney: true,
+                milliseconds: 1000,
+                textStyle: 12.w4(
+                    color: AppColors.cF2F2F2,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldRegular),
+              )
+            ],
           );
         });
   }
