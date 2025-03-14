@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-30 16:51:48
+ * @LastEditTime: 2025-03-14 17:34:04
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -109,14 +109,14 @@ class PlayerItem extends GetView<TeamController> {
                 ),
               ),
               9.hGap,
-              if (CacheApi.playerStatusMap[item.playerStatus]?.statsId != null)
-                IconWidget(
-                  iconWidth: 20.w,
-                  iconHeight: 20.w,
-                  icon: Utils.getStatusUrl(
-                      CacheApi.playerStatusMap[item.playerStatus]?.statsId),
-                ),
-              4.hGap,
+              // if (CacheApi.playerStatusMap[item.playerStatus]?.statsId != null)
+              //   IconWidget(
+              //     iconWidth: 20.w,
+              //     iconHeight: 20.w,
+              //     icon: Utils.getStatusUrl(
+              //         CacheApi.playerStatusMap[item.playerStatus]?.statsId),
+              //   ),
+              // 4.hGap,
               Visibility(
                 visible: Utils.getPlayBaseInfo(item.playerId).injuries,
                 child: IconWidget(
@@ -156,84 +156,84 @@ class PlayerItem extends GetView<TeamController> {
                   ],
                 ),
               ),
-              4.hGap,
-              Container(
-                width: 45.w,
-                height: 29.w,
-                padding: EdgeInsets.only(left: 5.w),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.w),
-                  border: Border.all(width: 1.w, color: AppColors.cE6E6E),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      LangKey.playerNameSalary.tr,
-                      style: 8.w4(
-                          height: 0.8, fontFamily: FontFamily.fRobotoRegular),
-                    ),
-                    3.5.vGap,
-                    Text(
-                      Utils.formatMoney(palyer.salary),
-                      style: 12.w4(
-                          height: 0.8, fontFamily: FontFamily.fOswaldMedium),
-                    ),
-                  ],
-                ),
-              ),
-              4.hGap,
-              MtInkWell(
-                showScale: showArrow,
-                // minScale: showArrow ? 0.9 : 1,
-                onTap: () {
-                  // controller.recoverPower(type: 1, uuid: item.uuid);
-                  if (!showArrow) return;
-                  controller.recove();
-                },
-                child: Container(
-                  // width: 73.w,
-                  height: 29.w,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 5.5.w, right: 8.5.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4.w),
-                    border: Border.all(width: 1.w, color: AppColors.cE6E6E),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconWidget(
-                        icon: Assets.managerUiManagerIconRecover,
-                        iconWidth: 12.5.w,
-                      ),
-                      3.5.hGap,
-                      AnimatedNum(
-                        number: item.power * 100 ~/ 100,
-                        textStyle: 16.w4(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium),
-                      ),
-                      Text(
-                        "%",
-                        style: 16.w4(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium),
-                      ),
-                      if (showArrow) 3.hGap,
-                      if (showArrow)
-                        IconWidget(
-                          icon: Assets.commonUiCommonIconSystemJumpto,
-                          iconWidth: 5.w,
-                          iconColor: AppColors.c000000,
-                        ),
-                    ],
-                  ),
-                ),
-              ),
+              // 4.hGap,
+              // Container(
+              //   width: 45.w,
+              //   height: 29.w,
+              //   padding: EdgeInsets.only(left: 5.w),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(4.w),
+              //     border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+              //   ),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         LangKey.playerNameSalary.tr,
+              //         style: 8.w4(
+              //             height: 0.8, fontFamily: FontFamily.fRobotoRegular),
+              //       ),
+              //       3.5.vGap,
+              //       Text(
+              //         Utils.formatMoney(palyer.salary),
+              //         style: 12.w4(
+              //             height: 0.8, fontFamily: FontFamily.fOswaldMedium),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // 4.hGap,
+              // MtInkWell(
+              //   showScale: showArrow,
+              //   // minScale: showArrow ? 0.9 : 1,
+              //   onTap: () {
+              //     // controller.recoverPower(type: 1, uuid: item.uuid);
+              //     if (!showArrow) return;
+              //     controller.recove();
+              //   },
+              //   child: Container(
+              //     // width: 73.w,
+              //     height: 29.w,
+              //     alignment: Alignment.center,
+              //     padding: EdgeInsets.only(left: 5.5.w, right: 8.5.w),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(4.w),
+              //       border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+              //     ),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         IconWidget(
+              //           icon: Assets.managerUiManagerIconRecover,
+              //           iconWidth: 12.5.w,
+              //         ),
+              //         3.5.hGap,
+              //         AnimatedNum(
+              //           number: item.power * 100 ~/ 100,
+              //           textStyle: 16.w4(
+              //               color: AppColors.c000000,
+              //               height: 1,
+              //               fontFamily: FontFamily.fOswaldMedium),
+              //         ),
+              //         Text(
+              //           "%",
+              //           style: 16.w4(
+              //               color: AppColors.c000000,
+              //               height: 1,
+              //               fontFamily: FontFamily.fOswaldMedium),
+              //         ),
+              //         if (showArrow) 3.hGap,
+              //         if (showArrow)
+              //           IconWidget(
+              //             icon: Assets.commonUiCommonIconSystemJumpto,
+              //             iconWidth: 5.w,
+              //             iconColor: AppColors.c000000,
+              //           ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           )
         ],
@@ -486,37 +486,38 @@ class PlayerCard extends StatelessWidget {
             top: 5.5.w,
             left: 5.w,
             child: OutlinedText(
-              text: Utils.formatGrade(grade ?? 'S'),
+              // text: Utils.formatGrade(grade ?? 'S'),
+              text: "${Utils.getPlayBaseInfo(playerId).playerScore}",
               textStyle:
-                  26.w4(height: 0.75, fontFamily: FontFamily.fRobotoBlack),
+                  26.w4(height: 0.75, fontFamily: FontFamily.fOswaldBold),
             ),
           ),
 
         ///升星等级
-        if (ObjectUtil.isNotEmpty(level))
-          Positioned(
-            bottom: -2.w,
-            left: 0.w,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                IconWidget(
-                  iconWidth: 22.5.w,
-                  icon: Assets.managerUiManagerPlayerstar,
-                ),
-                Positioned(
-                  // top: 7.w,
-                  child: Text(
-                    "$level",
-                    style: 12.w4(
-                        color: AppColors.cFFFFFF,
-                        height: 0.75,
-                        fontFamily: FontFamily.fRobotoMedium),
-                  ),
-                ),
-              ],
-            ),
-          ),
+        // if (ObjectUtil.isNotEmpty(level))
+        //   Positioned(
+        //     bottom: -2.w,
+        //     left: 0.w,
+        //     child: Stack(
+        //       alignment: Alignment.center,
+        //       children: [
+        //         IconWidget(
+        //           iconWidth: 22.5.w,
+        //           icon: Assets.managerUiManagerPlayerstar,
+        //         ),
+        //         Positioned(
+        //           // top: 7.w,
+        //           child: Text(
+        //             "$level",
+        //             style: 12.w4(
+        //                 color: AppColors.cFFFFFF,
+        //                 height: 0.75,
+        //                 fontFamily: FontFamily.fRobotoMedium),
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
 
         Positioned(
             right: 4.w,
@@ -535,69 +536,69 @@ class PlayerCard extends StatelessWidget {
                 color: AppColors.c000000,
               ),
             )),
-        Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              width: 41.w,
-              height: 18.w,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.c000000,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(9.w),
-                    bottomRight: Radius.circular(9.w)),
-              ),
-              child: RichText(
-                  text: TextSpan(children: [
-                TextSpan(
-                  text: "OVR",
-                  style: 9.w4(
-                      color: AppColors.cFFFFFF,
-                      height: 1,
-                      fontFamily: FontFamily.fRobotoRegular),
-                ),
-                TextSpan(
-                  text: " ${Utils.getPlayBaseInfo(playerId).playerScore}",
-                  style: 12.w4(
-                      color: AppColors.cFFFFFF,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldBold),
-                )
-              ])),
+        // Positioned(
+        //     bottom: 0,
+        //     right: 0,
+        //     child: Container(
+        //       width: 41.w,
+        //       height: 18.w,
+        //       alignment: Alignment.center,
+        //       decoration: BoxDecoration(
+        //         color: AppColors.c000000,
+        //         borderRadius: BorderRadius.only(
+        //             topLeft: Radius.circular(9.w),
+        //             bottomRight: Radius.circular(9.w)),
+        //       ),
+        //       child: RichText(
+        //           text: TextSpan(children: [
+        //         TextSpan(
+        //           text: "OVR",
+        //           style: 9.w4(
+        //               color: AppColors.cFFFFFF,
+        //               height: 1,
+        //               fontFamily: FontFamily.fRobotoRegular),
+        //         ),
+        //         TextSpan(
+        //           text: " ${Utils.getPlayBaseInfo(playerId).playerScore}",
+        //           style: 12.w4(
+        //               color: AppColors.cFFFFFF,
+        //               height: 1,
+        //               fontFamily: FontFamily.fOswaldBold),
+        //         )
+        //       ])),
 
-              // child: Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-              //     Container(
-              //       color: Colors.red,
-              //       alignment: Alignment.center,
-              //       // height: 7.w,
-              //       child: Text(
-              //         "OVR",
-              //         style: 9.w4(
-              //             color: AppColors.cFFFFFF,
-              //             // height: 0.75,
-              //             fontFamily: FontFamily.fRobotoRegular),
-              //       ),
-              //     ),
-              //     2.hGap,
-              //     Container(
-              //       alignment: Alignment.center,
-              //       color: Colors.red,
-              //       // height: 10.5.w,
-              //       child: Text(
-              //         "${Utils.getPlayBaseInfo(playerId).playerScore}",
-              //         style: 12.w4(
-              //             color: AppColors.cFFFFFF,
-              //             // height: 0.75,
-              //             fontFamily: FontFamily.fOswaldBold),
-              //       ),
-              //     )
-              //   ],
-              // ),
-            ))
+        //       // child: Row(
+        //       //   mainAxisAlignment: MainAxisAlignment.center,
+        //       //   crossAxisAlignment: CrossAxisAlignment.center,
+        //       //   children: [
+        //       //     Container(
+        //       //       color: Colors.red,
+        //       //       alignment: Alignment.center,
+        //       //       // height: 7.w,
+        //       //       child: Text(
+        //       //         "OVR",
+        //       //         style: 9.w4(
+        //       //             color: AppColors.cFFFFFF,
+        //       //             // height: 0.75,
+        //       //             fontFamily: FontFamily.fRobotoRegular),
+        //       //       ),
+        //       //     ),
+        //       //     2.hGap,
+        //       //     Container(
+        //       //       alignment: Alignment.center,
+        //       //       color: Colors.red,
+        //       //       // height: 10.5.w,
+        //       //       child: Text(
+        //       //         "${Utils.getPlayBaseInfo(playerId).playerScore}",
+        //       //         style: 12.w4(
+        //       //             color: AppColors.cFFFFFF,
+        //       //             // height: 0.75,
+        //       //             fontFamily: FontFamily.fOswaldBold),
+        //       //       ),
+        //       //     )
+        //       //   ],
+        //       // ),
+        //     ))
       ],
     );
     if (canTap && player != null) {
