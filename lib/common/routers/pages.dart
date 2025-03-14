@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-03-03 14:30:53
+ * @LastEditTime: 2025-03-13 12:08:42
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/pages/home/home_page.dart';
@@ -103,7 +103,7 @@ class AppPages {
           MineInfoBinding().dependencies();
           return const MineInfoPage();
         case RouteNames.newsDetail:
-          return NewsDetailPage(newsDetail: Get.arguments);
+          return NewsDetailPage();
         case RouteNames.newsDetail2:
           return NewsDetailPage2(newsDetail: Get.arguments);
         case RouteNames.teamMemberPage:

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2025-03-06 16:58:17
+ * @LastEditTime: 2025-03-13 15:21:17
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -30,9 +30,7 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_b
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewsDetailPage extends StatefulWidget {
-  const NewsDetailPage({super.key, required this.newsDetail});
-
-  final NewsListDetail newsDetail;
+  const NewsDetailPage({super.key});
 
   @override
   State<NewsDetailPage> createState() => _NewsDetailPageState();
@@ -99,8 +97,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       final comCtrl = Get.put(
                                           CommentController(),
                                           tag: item.id.toString());
-                                      comCtrl.getReviews(item.id,
-                                          isRefresh: true);
+                                      comCtrl.getReviews(item, isRefresh: true);
                                       Get.toNamed(RouteNames.newsDetail2,
                                           arguments: item);
                                       // CommentController commentController =
@@ -128,14 +125,16 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   ),
                 ),
                 floatWidgets: [
-                  Obx(() {
-                    return AnimatedPositioned(
-                        duration: const Duration(milliseconds: 300),
-                        bottom: showCommentDialog.value ? 0 : -80.w,
-                        left: 0,
-                        right: 0,
-                        child: SendCommentWidget(detail: widget.newsDetail));
-                  }),
+                  if (controller.state.detailList.isNotEmpty)
+                    Obx(() {
+                      return AnimatedPositioned(
+                          duration: const Duration(milliseconds: 300),
+                          bottom: showCommentDialog.value ? 0 : -80.w,
+                          left: 0,
+                          right: 0,
+                          child: SendCommentWidget(
+                              detail: controller.state.detailList.first));
+                    }),
                   BottomGuessTipWidget(
                     bottomValue: 9.w,
                   ),
@@ -359,11 +358,11 @@ class NewsDetailItem extends GetView<NewListController> {
                         targetId: item.id,
                         subgoal: item.id,
                       ),
-                      if (showComments) DetailCommentWidget(item: item),
                     ],
                   ),
-                )
+                ),
                 // if (controller.state.detailList.length == 1) 80.vGap,
+                if (showComments) DetailCommentWidget(item: item),
               ],
             ),
           ),

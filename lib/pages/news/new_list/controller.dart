@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-05 11:50:04
+ * @LastEditTime: 2025-03-13 16:29:12
  */
 import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
@@ -21,6 +22,7 @@ import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/emoji_animation.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -106,29 +108,31 @@ class NewListController extends GetxController {
     });
   }
 
-  void pageToDetail(NewsListDetail item, {Function? callBack}) async {
+  void pageToDetail(NewsListDetail item) async {
     state.detailList.clear();
-    state.detailList.add(item);
     pickPlayerList.clear();
-    getNewsGuessInfo(item.id);
+    state.detailList.add(item);
 
     ///获取评论
     final comCtrl = Get.put(CommentController(), tag: item.id.toString());
-    comCtrl.getReviews(item.id, isRefresh: true);
 
-    ///获取相关新闻
-    if (item.reviewsCount <= 2) {
-      NewsApi.getRelevantNews(item.id).then((value) {
-        state.detailList.addAll(value);
-        update(["newsDetail"]);
-      });
-    }
+    Future.wait([
+      NewsApi.getNewsDetail(item.id),
+      getNewsGuessInfo(item.id),
+      comCtrl.getReviews(item, isRefresh: true),
+      if (item.reviewsCount <= 2) NewsApi.getRelevantNews(item.id),
+    ]).then((v) {
+      state.detailList.clear();
+      item = v[0] as NewsListDetail;
+      state.detailList.add(item);
+      if (v.length > 3) state.detailList.addAll(v[3] as List<NewsListDetail>);
+      update(["newsDetail"]);
+    });
+
     await Get.toNamed(RouteNames.newsDetail, arguments: item);
-    if (callBack != null) {
-      callBack();
-    }
-    CommentController commentController = Get.find(tag: item.id.toString());
-    item.reviewsList = commentController.mainList.value;
+
+    // CommentController commentController = Get.find(tag: item.id.toString());
+    // item.reviewsList = commentController.mainList.value;
     update(["newsList"]);
   }
 
@@ -215,8 +219,8 @@ class NewListController extends GetxController {
     }
   }
 
-  void getNewsGuessInfo(int newsId) async {
-    NewsApi.getNewsGuessInfo(newsId).then((guessInfoMap) {
+  Future getNewsGuessInfo(int newsId) async {
+    await NewsApi.getNewsGuessInfo(newsId).then((guessInfoMap) {
       var choiceGuessPlayers =
           Get.find<PicksIndexController>().guessGamePlayers;
       pickPlayerList.clear();
@@ -261,7 +265,7 @@ class NewListController extends GetxController {
         // playerV2[key] = data;
         pickPlayerList.addAll(data);
       }
-      update(["newsDetail"]);
+      // update(["newsDetail"]);
     });
   }
 }

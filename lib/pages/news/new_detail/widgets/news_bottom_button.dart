@@ -2,8 +2,10 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2025-03-06 16:32:11
+ * @LastEditTime: 2025-03-13 16:24:55
  */
+
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -133,7 +135,7 @@ class NewsBottomButton extends GetView<NewListController> {
               }
               final ctrl =
                   Get.find<CommentController>(tag: detail.id.toString());
-              ctrl.getReviews(detail.id, isRefresh: true);
+              ctrl.getReviews(detail, isRefresh: true);
               // SoundServices.to.playSound(Assets.soundWindowOpen);
               await BottomTipDialog.showWithSound(
                 isScrollControlled: true,
