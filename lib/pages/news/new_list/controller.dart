@@ -220,52 +220,52 @@ class NewListController extends GetxController {
   }
 
   Future getNewsGuessInfo(int newsId) async {
-    await NewsApi.getNewsGuessInfo(newsId).then((guessInfoMap) {
-      var choiceGuessPlayers =
-          Get.find<PicksIndexController>().guessGamePlayers;
-      pickPlayerList.clear();
-      for (int i = 0; i < guessInfoMap.keys.length; i++) {
-        List<PicksPlayerV2> data = [];
-        var key = guessInfoMap.keys.toList()[i];
-        var list = guessInfoMap[key] ?? [];
-        for (int i1 = 0; i1 < list.length; i1++) {
-          GuessGameInfoEntity item = list[i1];
-          PicksPlayerV2? p;
-          choiceGuessPlayers.forEach((k, e) {
-            var firstWhereOrNull = e.firstWhereOrNull((e) =>
-                e.tabStr == key && e.guessInfo.playerId == item.playerId);
-            if (firstWhereOrNull != null) {
-              p = firstWhereOrNull;
-            }
-          });
-          if (p != null) {
-            data.add(p!);
-            continue;
-          }
-          PicksPlayerV2 playerV2 = PicksPlayerV2();
-          playerV2.tabStr = key;
-          playerV2.baseInfoList = Utils.getPlayBaseInfo(item.playerId);
-          playerV2.dataAvgList = Utils.getPlayerDataAvg(item.playerId);
-          playerV2.awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
-          playerV2.guessInfo = item;
-          data.add(playerV2);
-        }
+    // await NewsApi.getNewsGuessInfo(newsId).then((guessInfoMap) {
+    //   var choiceGuessPlayers =
+    //       Get.find<PicksIndexController>().guessGamePlayers;
+    //   pickPlayerList.clear();
+    //   for (int i = 0; i < guessInfoMap.keys.length; i++) {
+    //     List<PicksPlayerV2> data = [];
+    //     var key = guessInfoMap.keys.toList()[i];
+    //     var list = guessInfoMap[key] ?? [];
+    //     for (int i1 = 0; i1 < list.length; i1++) {
+    //       GuessGameInfoEntity item = list[i1];
+    //       PicksPlayerV2? p;
+    //       choiceGuessPlayers.forEach((k, e) {
+    //         var firstWhereOrNull = e.firstWhereOrNull((e) =>
+    //             e.tabStr == key && e.guessInfo.playerId == item.playerId);
+    //         if (firstWhereOrNull != null) {
+    //           p = firstWhereOrNull;
+    //         }
+    //       });
+    //       if (p != null) {
+    //         data.add(p!);
+    //         continue;
+    //       }
+    //       PicksPlayerV2 playerV2 = PicksPlayerV2();
+    //       playerV2.tabStr = key;
+    //       playerV2.baseInfoList = Utils.getPlayBaseInfo(item.playerId);
+    //       playerV2.dataAvgList = Utils.getPlayerDataAvg(item.playerId);
+    //       playerV2.awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
+    //       playerV2.guessInfo = item;
+    //       data.add(playerV2);
+    //     }
 
-        //排序：赛季平均得分
-        data.sort((a, b) {
-          return b.dataAvgList!.pts.compareTo(a.dataAvgList!.pts);
-        });
+    //     //排序：赛季平均得分
+    //     data.sort((a, b) {
+    //       return b.dataAvgList!.pts.compareTo(a.dataAvgList!.pts);
+    //     });
 
-        //排序：选过的放后面
-        // item.sort((a, b) {
-        //   if (a.guessInfo.guessData.isNotEmpty) return 1;
-        //   if (b.guessInfo.guessData.isNotEmpty) return -1;
-        //   return 0;
-        // });
-        // playerV2[key] = data;
-        pickPlayerList.addAll(data);
-      }
-      // update(["newsDetail"]);
-    });
+    //     //排序：选过的放后面
+    //     // item.sort((a, b) {
+    //     //   if (a.guessInfo.guessData.isNotEmpty) return 1;
+    //     //   if (b.guessInfo.guessData.isNotEmpty) return -1;
+    //     //   return 0;
+    //     // });
+    //     // playerV2[key] = data;
+    //     pickPlayerList.addAll(data);
+    //   }
+    //   // update(["newsDetail"]);
+    // });
   }
 }
