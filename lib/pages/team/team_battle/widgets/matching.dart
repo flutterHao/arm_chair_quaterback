@@ -374,6 +374,8 @@ class MatchingV2 extends GetView<TeamBattleController> {
                                 );
                               }
                               return Container(
+                                  height: 78.w,
+                                  width: 78.w,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(39.w),
                                     border: Border.all(

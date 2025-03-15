@@ -316,7 +316,7 @@ class TeamBattleV2Controller extends GetxController
           toastPosition: EasyLoadingToastPosition.center,
           maskType: EasyLoadingMaskType.clear);
 
-      Future.delayed(Duration(milliseconds: (3 * 1000 / gameSpeed).toInt()),
+      Future.delayed(Duration(milliseconds: (max(1200,3 * 1000 / gameSpeed)).toInt()),
           () {
         startGame();
       });
@@ -480,8 +480,10 @@ class TeamBattleV2Controller extends GetxController
     if (gameEvent.headLine != "0") {
       /// 高光时刻
       // highLightBarrageWallController.send([generateHighBullet(event)]);
-      highLightEvent = event;
-      update([idHighLightEvent]);
+      if(!superSpeedMan) {
+        highLightEvent = event;
+        update([idHighLightEvent]);
+      }
     } else {
       /// 普通弹幕
       // normalBarrageWallController.send([
@@ -1200,6 +1202,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   void jumpGame() {
+    if(superSpeedMan) return;
     if (!isGameStart.value) return;
     if (isGameOver.value) {
       Get.back();
