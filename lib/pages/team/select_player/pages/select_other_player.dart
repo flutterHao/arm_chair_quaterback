@@ -55,67 +55,14 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
                   'OTHER player'.toUpperCase(),
                   style: 24.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
                 ),
-                Container(
-                  height: 218.w,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.cD9D9D9),
-                      borderRadius: BorderRadius.circular(9.w)),
-                  child: Column(
-                    children: [
-                      28.vGap,
-                      Container(
-                        height: 120.w,
-                        child: ListView.separated(
-                          itemCount: 4,
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(horizontal: 18.w),
-                          itemBuilder: (context, index) {
-                            NbaPlayerInfosPlayerBaseInfoList player =
-                                Utils.getPlayBaseInfo(playerId);
-                            return Container(
-                                width: 58.w,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 58.w,
-                                      height: 77.w,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(9.w),
-                                          border: Border.all(
-                                              color: AppColors.cD9D9D9)),
-                                    ),
-                                    Text(
-                                        Utils.getPlayBaseInfo(playerId)
-                                            .ename
-                                            .toUpperCase(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: 12.w5(
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium)),
-                                    Text(
-                                        '${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position} ',
-                                        style: 10.w4(
-                                            height: 1,
-                                            color: AppColors.cB2B2B2,
-                                            fontFamily:
-                                                FontFamily.fRobotoRegular)),
-                                  ],
-                                ));
-                          },
-                          separatorBuilder: (context, index) => 24.hGap,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                10.vGap,
+                _randomPlayerItem(),
+                10.vGap,
                 Text(
-                  'The team is formed, the opponent is matched, and  the game is p',
-                  style: 14.w5(fontFamily: FontFamily.fRobotoRegular),
+                  'The team is formed, the opponent is matched, and  the game is played',
+                  style: 14.w5(
+                      fontFamily: FontFamily.fRobotoRegular,
+                      color: AppColors.cB3B3B3),
                 ),
               ],
             ),
@@ -138,5 +85,70 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
         )
       ],
     ));
+  }
+
+  Widget _randomPlayerItem() {
+    return Container(
+      height: 218.w,
+      decoration: BoxDecoration(
+          border: Border.all(color: AppColors.cD9D9D9),
+          borderRadius: BorderRadius.circular(9.w)),
+      child: Column(
+        children: [
+          28.vGap,
+          Container(
+            height: 120.w,
+            child: ListView.separated(
+              itemCount: 4,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.symmetric(horizontal: 18.w),
+              itemBuilder: (context, index) {
+                NbaPlayerInfosPlayerBaseInfoList player =
+                    Utils.getPlayBaseInfo(playerId);
+                return Container(
+                    width: 58.w,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 58.w,
+                          height: 77.w,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(9.w),
+                              border: Border.all(color: AppColors.cD9D9D9)),
+                        ),
+                        Text(
+                            Utils.getPlayBaseInfo(playerId).ename.toUpperCase(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: 12.w5(
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium)),
+                        Text(
+                            '${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position} ',
+                            style: 10.w4(
+                                height: 1,
+                                color: AppColors.cB2B2B2,
+                                fontFamily: FontFamily.fRobotoRegular)),
+                      ],
+                    ));
+              },
+              separatorBuilder: (context, index) => 24.hGap,
+            ),
+          ),
+          MtInkWell(
+              onTap: () {},
+              child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.w),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      border: Border.all(color: AppColors.c666666)),
+                  child: Text('random'.toUpperCase(),
+                      style: 23.w5(
+                          fontFamily: FontFamily.fOswaldMedium, height: 1))))
+        ],
+      ),
+    );
   }
 }
