@@ -58,10 +58,10 @@ class SelectPlayerPage extends GetView<SelectPlayerController> {
               padding: EdgeInsets.symmetric(vertical: 20.w),
               child: MtInkWell(
                   onTap: () {
-                    Get.to(SelectOtherPlayerPage(), arguments: 1155);
-                    // Get.to(SelectOtherPlayerPage(),
-                    //     arguments: int.parse(controller
-                    //         .playerList[controller.selectIndex.value],));
+                    Get.to(SelectOtherPlayerPage(),
+                        arguments: int.parse(
+                          controller.playerList[controller.selectIndex.value],
+                        ));
                   },
                   child: Container(
                     decoration: BoxDecoration(
