@@ -1,9 +1,12 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/random_other_players_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/pages/team/select_player/widgets/select_bg.dart';
 import 'package:arm_chair_quaterback/pages/team/select_player/widgets/select_player_item.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +22,19 @@ class SelectOtherPlayerPage extends StatefulWidget {
 
 class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
   int playerId = 1155;
-
+  List<RandomOtherPlayersEntity> randomOtherPlayers = [];
   @override
   void initState() {
     super.initState();
     playerId = Get.arguments;
+    getRandomPlayerItem();
+  }
+
+  Future getRandomPlayerItem() async {
+    var res = await TeamApi.randomOtherPlayers();
+    setState(() {
+      randomOtherPlayers = res;
+    });
   }
 
   @override
@@ -32,18 +43,20 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 300.w,
-          child: Text('select other  player'.toUpperCase(),
-              style: 35.w5(fontFamily: FontFamily.fOswaldMedium)),
-        ),
         Expanded(
             child: Container(
-          padding: EdgeInsets.only(top: 20.w),
+          padding: EdgeInsets.only(top: 10.w),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  width: 300.w,
+                  child: Text('select other  player'.toUpperCase(),
+                      style: 35.w5(
+                          height: 1.1, fontFamily: FontFamily.fOswaldMedium)),
+                ),
+                20.vGap,
                 Text(
                   'KEY player'.toUpperCase(),
                   style: 24.w5(fontFamily: FontFamily.fOswaldMedium, height: 1),
@@ -70,6 +83,7 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
         )),
         Container(
           padding: EdgeInsets.symmetric(vertical: 20.w),
+          margin: EdgeInsets.only(bottom: 20.w),
           child: MtInkWell(
               child: Container(
             decoration: BoxDecoration(
@@ -99,45 +113,48 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
           Container(
             height: 120.w,
             child: ListView.separated(
-              itemCount: 4,
+              itemCount: randomOtherPlayers.length,
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.symmetric(horizontal: 18.w),
               itemBuilder: (context, index) {
                 NbaPlayerInfosPlayerBaseInfoList player =
-                    Utils.getPlayBaseInfo(playerId);
-                return Container(
-                    width: 58.w,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 58.w,
-                          height: 77.w,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(9.w),
-                              border: Border.all(color: AppColors.cD9D9D9)),
-                        ),
-                        Text(
-                            Utils.getPlayBaseInfo(playerId).ename.toUpperCase(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: 12.w5(
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldMedium)),
-                        Text(
-                            '${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position} ',
-                            style: 10.w4(
-                                height: 1,
-                                color: AppColors.cB2B2B2,
-                                fontFamily: FontFamily.fRobotoRegular)),
-                      ],
-                    ));
+                    Utils.getPlayBaseInfo(randomOtherPlayers[index].playerId);
+                int playerId = randomOtherPlayers[index].playerId;
+                return SizedBox(
+                  width: 58.w,
+                  child: Column(
+                    children: [
+                      PlayerCard(
+                        playerId: player.playerId,
+                        score:
+                            Utils.getPlayBaseInfo(player.playerId).playerScore,
+                        isMyPlayer: true,
+                        // status: player.playerStatus,
+                        // onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade,
+                        //     arguments: {"playerUuid": player.uuid}),
+                      ),
+                      Text(Utils.getPlayBaseInfo(playerId).ename.toUpperCase(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: 12.w5(
+                              height: 1, fontFamily: FontFamily.fOswaldMedium)),
+                      Text(
+                          '${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position} ',
+                          style: 10.w4(
+                              height: 1,
+                              color: AppColors.cB2B2B2,
+                              fontFamily: FontFamily.fRobotoRegular)),
+                    ],
+                  ),
+                );
               },
               separatorBuilder: (context, index) => 24.hGap,
             ),
           ),
           MtInkWell(
-              onTap: () {},
+              onTap: () {
+                getRandomPlayerItem();
+              },
               child: Container(
                   padding:
                       EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.w),
