@@ -52,7 +52,8 @@ class CustomButton extends StatelessWidget {
       onTap: () {
         type == ButtonType.disabled ? null : onPressed();
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
         width: width.w,
         height: height.w,
         alignment: Alignment.center,

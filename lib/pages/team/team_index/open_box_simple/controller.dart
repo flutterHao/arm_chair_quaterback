@@ -43,6 +43,7 @@ class OpenBoxSimpleController extends GetxController
   RxBool showBackground3 = false.obs;
   Duration showBgDuration = const Duration(milliseconds: 200);
   RxBool showChangeText = false.obs;
+  RxBool showCollect = false.obs;
 
   // bool isOpen = false; //防止重复点击
   bool loadDataSuccess = false;
@@ -97,6 +98,7 @@ class OpenBoxSimpleController extends GetxController
     showBackground1.value = false;
     showBackground2.value = false;
     showBackground3.value = false;
+    showCollect.value = false;
 
     CardPackInfoCard item = CardPackInfoCard();
     item.playerCards = [PlayerCardEntity(playerId: playerId)];
@@ -122,14 +124,17 @@ class OpenBoxSimpleController extends GetxController
 
   Future clickkBox() async {
     //如果只有一张牌跳过第一步选牌
+    showCollect.value = false;
     if (currentCardPack.playerCards.length == 1) {
       step = 2;
       var player = currentCardPack.playerCards.first;
+      player.isOpen.value = true;
       player.isSelect.value = true;
       update(["open_box_simple"]);
-      await Future.delayed(const Duration(milliseconds: 500));
-
-      showBigCard(player);
+      await Future.delayed(const Duration(milliseconds: 800)).then((v) {
+        showCollect.value = true;
+        update(["open_box_simple"]);
+      });
     } else {
       step = 1;
     }
@@ -234,37 +239,16 @@ class OpenBoxSimpleController extends GetxController
     }
   }
 
-  void selectCard(PlayerCardEntity player) async {
-    if (!isStartting) return;
-    if (step != 1 || player.isOpen.value) return;
-    if (!player.isSelect.value) {
-      // 如果还没有选择先选牌
-      for (var element in currentCardPack.playerCards) {
-        if (player.playerId == element.playerId) {
-          player.isSelect.value = true;
-          selectIndex = currentCardPack.playerCards.indexOf(element);
-        } else {
-          if (!element.isOpen.value) element.isSelect.value = false;
-        }
-      }
-      update(["open_box_simple"]);
-    } else {
-      showBigCard(player);
-    }
-  }
-
   Future showBigCard(PlayerCardEntity card) async {
-    update(["open_box_simple"]);
-    showBackground1.value = true;
-    await Future.delayed(showBgDuration);
-    showBackground2.value = true;
-    await Future.delayed(showBgDuration);
-    showBackground3.value = true;
+    // update(["open_box_simple"]);
+    // showBackground1.value = true;
+    // await Future.delayed(showBgDuration);
+    // showBackground2.value = true;
+    // await Future.delayed(showBgDuration);
+    // showBackground3.value = true;
     step = 2;
-    await Future.delayed(showBgDuration);
-    await Future.delayed(showBgDuration);
-    card.isOpen.value = true;
-    update(["open_box_simple"]);
+    // await Future.delayed(showBgDuration);
+    // await Future.delayed(showBgDuration);
   }
 
   //展示打卡后继续

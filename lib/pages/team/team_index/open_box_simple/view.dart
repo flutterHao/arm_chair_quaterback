@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-15 17:45:07
+ * @LastEditTime: 2025-03-15 18:09:59
  */
 import 'dart:math';
 
@@ -287,18 +287,18 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
   Widget _collectBt() {
     return Positioned(
       bottom: 35.5.w,
-      child: AnimatedScale(
-        duration: 300.milliseconds,
-        scale: controller.step == 2 ? 1 : 0,
-        child: CustomButton(
-            width: 343.w,
+      child: Obx(() {
+        return CustomButton(
+            width: controller.showCollect.value && controller.step == 2
+                ? 343.w
+                : 0,
             height: 51.w,
             text: "COLLECT",
             fontSize: 23.sp,
             onPressed: () {
               Get.back();
-            }),
-      ),
+            });
+      }),
     );
   }
 
@@ -389,43 +389,38 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.step = 0;
     return GetBuilder<OpenBoxSimpleController>(
         init: OpenBoxSimpleController(),
         id: "open_box_simple",
         builder: (_) {
           // item.playerCards.shuffle();
           return Builder(builder: (context) {
-            return GestureDetector(
-              onTap: controller.step == 2 || controller.step == 4
-                  ? () => controller.toContinue(context)
-                  : null,
-              // onTap: () => controller.back(context),
-              child: Container(
-                width: 375.w,
-                height: 812.h,
-                color: AppColors.cF2F2F2,
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    _backgroud(),
+            return Container(
+              width: 375.w,
+              height: 812.h,
+              color: AppColors.cF2F2F2,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  _backgroud(),
 
-                    ///返回
-                    _goBackButton(),
+                  ///返回
+                  _goBackButton(),
 
-                    ///获得展示
-                    // _continueText(context),
-                    _bigCard(),
-                    _collectBt(),
+                  ///获得展示
+                  // _continueText(context),
+                  _bigCard(),
+                  _collectBt(),
 
-                    ///抽卡
-                    _cardWidget(context),
+                  ///抽卡
+                  _cardWidget(context),
 
-                    /// 开宝箱
-                    _openTitle(),
-                    _rightBottom(),
-                    _boxWidget(),
-                  ],
-                ),
+                  /// 开宝箱
+                  _openTitle(),
+                  _rightBottom(),
+                  _boxWidget(),
+                ],
               ),
             );
           });
