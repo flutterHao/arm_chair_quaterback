@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-03-15 11:12:40
+ * @LastEditTime: 2025-03-15 18:39:16
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/slide_transition_x.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/fire_dialog.dart';
 import 'package:flutter/material.dart';
@@ -605,8 +606,8 @@ class PlayerCard extends StatelessWidget {
       child = InkWell(
         onTap: () {
           if (canTap && player != null) {
-            Get.toNamed(RouteNames.teamTeamUpgrade,
-                arguments: {"playerUuid": player?.uuid});
+            Get.toNamed(RouteNames.picksPlayerDetail,
+                arguments: PlayerDetailPageArguments(playerId));
           }
         },
         child: child,

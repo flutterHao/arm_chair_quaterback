@@ -78,8 +78,8 @@ class _OverviewTabState extends State<OverviewTab>
                       _RecentMatch(controller
                           .teamDetailEntity.last5GameSchedule.schedule),
                       // 9.vGap,
-                      if (!cantPick(controller.teamDetailEntity.recentPick))
-                        _RecentPick(controller.teamDetailEntity.recentPick),
+                      // if (!cantPick(controller.teamDetailEntity.recentPick))
+                      //   _RecentPick(controller.teamDetailEntity.recentPick),
                       _OutCome(controller.teamDetailEntity.outcome),
                       9.vGap,
                       const _Stats(),

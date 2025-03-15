@@ -347,10 +347,10 @@ class PlayerChoose extends GetView<StealPlayerController> {
             right: 0,
             child: Column(
               children: [
-                PlayerStartWidget(
-                  grade: player.breakThroughGrade,
-                  height: 15,
-                ),
+                // PlayerStartWidget(
+                //   grade: player.breakThroughGrade,
+                //   height: 15,
+                // ),
                 2.vGap,
                 Text(
                   playBaseInfo.ename,

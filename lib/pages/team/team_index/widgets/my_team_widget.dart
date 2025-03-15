@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-15 15:13:35
+ * @LastEditTime: 2025-03-15 18:34:31
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -329,10 +329,7 @@ class PlayerCardWidget extends GetView<TeamController> {
         PlayerCard(
           playerId: player.playerId,
           score: Utils.getPlayBaseInfo(player.playerId).playerScore,
-          isMyPlayer: true,
           status: player.playerStatus,
-          onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade,
-              arguments: {"playerUuid": player.uuid}),
         ),
         3.5.vGap,
         Text(
@@ -352,49 +349,45 @@ class PlayerCardWidget extends GetView<TeamController> {
 }
 
 class PlayerStartWidget extends StatelessWidget {
-  const PlayerStartWidget({super.key, required this.grade, this.height});
-
+  const PlayerStartWidget({super.key, required this.grade});
   final int grade;
-  final double? height;
 
   @override
   Widget build(BuildContext context) {
     int count = grade ~/ 2;
     int half = grade % 2;
-    var h = height ?? 18.5.w;
-    double rate = h / 18.5.w;
     return SizedBox(
-      width: 55.w * rate,
-      height: h,
+      width: 55.w,
+      height: 18.5.w,
       child: Stack(
         alignment: Alignment.center,
         children: [
           for (int i = 0; i < 5; i++)
             count > i
                 ? Positioned(
-                    left: 8.5.w * rate * i,
+                    left: 8.5.w * i,
                     child: Image.asset(
                       Assets.managerUiManagerIconStar,
-                      height: h,
+                      height: 18.5.w,
                       fit: BoxFit.fitHeight,
                     ),
                   )
                 : (grade > i * 2)
                     ? Positioned(
-                        left: 8.w * rate * count,
+                        left: 8.w * count,
                         child: Image.asset(
                           grade >= 9
                               ? Assets.managerUiManagerIconStar01
                               : Assets.managerUiManagerIconStar02,
-                          height: h,
+                          height: 18.5.w,
                           fit: BoxFit.fitHeight,
                         ),
                       )
                     : Positioned(
-                        left: 8.5.w * rate * i,
+                        left: 8.5.w * i,
                         child: Image.asset(
                           Assets.managerUiManagerIconAshstar,
-                          height: h,
+                          height: 18.5.w,
                           fit: BoxFit.fitHeight,
                         ),
                       ),

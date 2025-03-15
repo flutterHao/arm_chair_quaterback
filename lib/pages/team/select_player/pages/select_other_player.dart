@@ -140,7 +140,6 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
                         playerId: player.playerId,
                         score:
                             Utils.getPlayBaseInfo(player.playerId).playerScore,
-                        isMyPlayer: true,
                       ),
                       6.vGap,
                       Text(Utils.getPlayBaseInfo(playerId).ename.toUpperCase(),

@@ -2,7 +2,7 @@
  * @Description: 球员头像卡片
  * @Author: lihonghao
  * @Date: 2024-11-18 12:23:44
- * @LastEditTime: 2025-03-14 16:17:38
+ * @LastEditTime: 2025-03-15 18:38:08
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -28,7 +28,6 @@ class PlayerCard extends StatelessWidget {
     this.score,
     this.bgColor,
     this.iconBgColor,
-    required this.isMyPlayer,
     this.onTap,
     this.status,
   });
@@ -37,7 +36,6 @@ class PlayerCard extends StatelessWidget {
   final int? score;
   final Color? bgColor;
   final Color? iconBgColor;
-  final bool isMyPlayer;
   final Function? onTap;
   final int? status;
 
@@ -49,7 +47,7 @@ class PlayerCard extends StatelessWidget {
           onTap?.call() ??
           Get.toNamed(RouteNames.picksPlayerDetail,
               arguments:
-                  PlayerDetailPageArguments(playerId, isMyPlayer: isMyPlayer)),
+                  PlayerDetailPageArguments(playerId, isMyPlayer: false)),
       child: Container(
         width: 74.w * scale,
         height: 93.w * scale,
