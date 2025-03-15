@@ -44,6 +44,7 @@ import 'package:arm_chair_quaterback/pages/team/seaon_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/pages/battle_pass.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/pages/pass_player.dart';
 import 'package:arm_chair_quaterback/pages/team/season_pass/pages/select_team.dart';
+import 'package:arm_chair_quaterback/pages/team/select_player/index.dart';
 import 'package:arm_chair_quaterback/pages/team/steal_player/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
@@ -185,6 +186,8 @@ class AppPages {
           return SelectTeamPage();
         case RouteNames.stealPlayer:
           return StealPlayer();
+        case RouteNames.selectPlayer:
+          return SelectPlayerPage();
         default:
           return const SizedBox.shrink();
       }

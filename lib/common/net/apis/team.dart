@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2025-02-27 21:07:08
+ * @LastEditTime: 2025-03-15 16:04:48
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -22,11 +22,14 @@ import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
+
+import '../../entities/card_pack_player_entity.dart';
 
 class TeamApi {
   ///获取球员训练信息
@@ -135,6 +138,12 @@ class TeamApi {
   static Future<List<TrainingInfoAward>> openFreeGift() async {
     List list = await HttpUtil().post(Api.getFreeGift);
     return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
+  }
+
+  ///购买宝箱
+  static Future<CardPackPlayerEntity> buyCardPack() async {
+    var json = await HttpUtil().post(Api.buyCardPack);
+    return CardPackPlayerEntity.fromJson(json);
   }
 
   static Future<int> buyTrainingBall(count) async {
@@ -291,8 +300,10 @@ class TeamApi {
     });
   }
 
-  static Future<List<RandomOtherPlayersEntity>> randomOtherPlayers() async {
-    List json = await httpUtil.post(Api.randomOtherPlayers);
+  static Future<List<RandomOtherPlayersEntity>> randomOtherPlayers(
+      int playerId) async {
+    List json = await httpUtil
+        .post(Api.randomOtherPlayers, data: {"playerId": playerId});
     return json.map((e) => RandomOtherPlayersEntity.fromJson(e)).toList();
   }
 }

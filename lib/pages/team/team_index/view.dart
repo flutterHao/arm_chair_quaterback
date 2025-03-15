@@ -8,9 +8,11 @@
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/player_chest.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'index.dart';
 
@@ -55,27 +57,30 @@ class _TeamView extends GetView<TeamIndexController> {
       init: TeamIndexController(),
       id: "team_index",
       builder: (ctrl) {
-        return SizedBox(
-          // onRefresh: () => ctrl.onRefresh(),
-          // controller: ctrl.refreshController,
+        return SmartRefresher(
+          onRefresh: () => ctrl.initData(),
+          controller: ctrl.refreshController,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             controller: ctrl.scrollController,
             child: Column(
               children: [
-                // ElevatedButton(
-                //     onPressed: () {
-                //       Get.to(SelectPlayerPage());
-                //       //  Get.to(LoginPage());
-                //     },
-                //     child: Text('SlecetPlayerPage')),
-                TrainingNewWidget(),
-                BattleBoxWidget(),
-                // MatchCard(),
+                // TrainingNewWidget(),
+                // BattleBoxWidget(),
+                // // MatchCard(),
+                // Container(
+                //   margin: EdgeInsets.only(top: 9.w),
+                //   padding: EdgeInsets.symmetric(vertical: 26.w),
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(9.w),
+                //     color: AppColors.cFFFFFF,
+                //   ),
+                //   child: SeasonPassWidget(),
+                // ),
                 // TrainingPage(),
-                // NbaPlayerPage(),
-
                 MyTeamWidget(),
+                PlayerChestWidget(),
+                // NbaPlayerPage(),
                 80.vGap,
               ],
             ),

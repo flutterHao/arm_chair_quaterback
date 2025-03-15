@@ -73,4 +73,14 @@ class UserApi {
         .post(Api.cancelLikingPlayer, data: {'type': 1, 'likes': likes});
     return Team.fromMap(data);
   }
+
+  ///检查玩家是否注册
+  static Future<bool> getTeamByAccountId() async {
+    List data = await HttpUtil().post(Api.getTeamByAccountId);
+    if (data.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -169,14 +169,14 @@ class WebsocketServices extends GetxService {
       //   }
       // }
 
-      ///球员卡包
-      if (isPlayer && teamProp.num! > 0) {
-        if (!Get.isRegistered<OpenBoxSimpleController>()) {
-          Get.put(OpenBoxSimpleController());
-        }
-        OpenBoxSimpleController controller = Get.find();
-        await controller.toOpenBoxPage(teamProp.propId!);
-      }
+      ///球员卡包 暂时去掉
+      // if (isPlayer && teamProp.num! > 0) {
+      //   if (!Get.isRegistered<OpenBoxSimpleController>()) {
+      //     Get.put(OpenBoxSimpleController());
+      //   }
+      //   OpenBoxSimpleController controller = Get.find();
+      //   await controller.toOpenBoxPage(teamProp.propId!);
+      // }
     }
     var hasBall =
         result.where((e) => e.propId == Constant.propBallId).isNotEmpty;

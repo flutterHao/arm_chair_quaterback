@@ -71,6 +71,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   late int oVROld = 0;
   int changeDuration = 300;
   bool showReserve = false;
+  bool showExChange = false;
 
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 

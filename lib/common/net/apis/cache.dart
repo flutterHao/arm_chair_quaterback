@@ -104,6 +104,7 @@ class CacheApi {
       // getNewsDefine(),
       getPropDefine(),
       getGameRankAwardRule(),
+      getGameConstant()
     ]).then((v) {
       Log.d("获取配置数据成功");
     });
