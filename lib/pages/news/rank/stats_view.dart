@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/rank_card.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -147,6 +148,12 @@ class StatsPlayerRankCard extends GetView<RankController> {
         name: first.playerName,
         shortTeamName: Utils.getTeamInfo(player.teamId).shortEname,
         rankValue: controller.getRankValue(rankType, first),
+        onHeadOnTap: () {
+          Get.toNamed(
+            RouteNames.picksPlayerDetail,
+            arguments: PlayerDetailPageArguments(first.playerId),
+          );
+        },
         onTap: () {
           BottomTipDialog.showWithSound(
               context: Get.context!,
