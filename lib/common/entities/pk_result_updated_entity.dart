@@ -95,13 +95,8 @@ class ScoreBoardDetailList {
   late int threePa = 0;
   late int threePm = 0;
   late int to = 0;
-  @JSONField(name: 'updateTime')
-  late int ut;
 
   ScoreBoardDetailList();
-
-  int get updateTime =>
-      ut + Utils.getTimeZoneOffset().inMilliseconds;
 
   int get createTime =>
       ct + Utils.getTimeZoneOffset().inMilliseconds;
@@ -150,7 +145,6 @@ class ScoreBoardDetailList {
     threePa += other.threePa;
     threePm += other.threePm;
     to += other.to;
-    ut += other.ut;
   }
 }
 

@@ -316,7 +316,7 @@ class TeamBattleV2Controller extends GetxController
           toastPosition: EasyLoadingToastPosition.center,
           maskType: EasyLoadingMaskType.clear);
 
-      Future.delayed(Duration(milliseconds: (max(1200,3 * 1000 / gameSpeed)).toInt()),
+      Future.delayed(Duration(milliseconds: (max(1000,3 * 1000 / gameSpeed)).toInt()),
           () {
         startGame();
       });

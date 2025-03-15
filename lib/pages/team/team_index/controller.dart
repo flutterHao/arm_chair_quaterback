@@ -203,8 +203,15 @@ class TeamIndexController extends GetxController
   }
 
   Future matchBattle() async {
-    // await scroToMatch();
     final teamCtrl = Get.find<TeamController>();
+    await Get.toNamed(RouteNames.teamTeamBattle);
+    // getBattleBox();
+    // getTeamInfoCup();
+    final ctrl = Get.find<TrainingController>();
+    ctrl.trainingInfo = await TeamApi.getTrainingInfo();
+    ctrl.update(["training_page"]);
+    teamCtrl.updateTeamInfo();
+    // await scroToMatch();
     // if (teamCtrl.myTeamEntity.salary >= teamCtrl.myTeamEntity.salaryCap) {
     //   BottomTipDialog.show(
     //       context: Get.context!,
@@ -219,16 +226,16 @@ class TeamIndexController extends GetxController
     //   return;
     // }
     // SoundServices.to.playSound(Assets.soundRadaMatch);
-    await Get.put(TeamBattleController()).teamMatchV2().then((v) async {
-      await Get.toNamed(RouteNames.teamTeamBattle);
-      // getBattleBox();
-      // getTeamInfoCup();
-      final ctrl = Get.find<TrainingController>();
-      ctrl.trainingInfo = await TeamApi.getTrainingInfo();
-      ctrl.update(["training_page"]);
-      teamCtrl.updateTeamInfo();
-    }).catchError((e) {});
-    Get.delete<TeamBattleController>();
+    // await Get.put(TeamBattleController()).teamMatchV2().then((v) async {
+    //   await Get.toNamed(RouteNames.teamTeamBattle);
+    //   // getBattleBox();
+    //   // getTeamInfoCup();
+    //   final ctrl = Get.find<TrainingController>();
+    //   ctrl.trainingInfo = await TeamApi.getTrainingInfo();
+    //   ctrl.update(["training_page"]);
+    //   teamCtrl.updateTeamInfo();
+    // }).catchError((e) {});
+    // Get.delete<TeamBattleController>();
   }
 
   ///获取战斗宝箱信息

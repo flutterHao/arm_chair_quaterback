@@ -371,10 +371,6 @@ ScoreBoardDetailList $ScoreBoardDetailListFromJson(Map<String, dynamic> json) {
   if (to != null) {
     scoreBoardDetailList.to = to;
   }
-  final int? ut = jsonConvert.convert<int>(json['updateTime']);
-  if (ut != null) {
-    scoreBoardDetailList.ut = ut;
-  }
   return scoreBoardDetailList;
 }
 
@@ -411,7 +407,6 @@ Map<String, dynamic> $ScoreBoardDetailListToJson(ScoreBoardDetailList entity) {
   data['threePa'] = entity.threePa;
   data['threePm'] = entity.threePm;
   data['to'] = entity.to;
-  data['updateTime'] = entity.ut;
   return data;
 }
 
@@ -448,7 +443,6 @@ extension ScoreBoardDetailListExtension on ScoreBoardDetailList {
     int? threePa,
     int? threePm,
     int? to,
-    int? ut,
   }) {
     return ScoreBoardDetailList()
       ..ast = ast ?? this.ast
@@ -481,8 +475,7 @@ extension ScoreBoardDetailListExtension on ScoreBoardDetailList {
       ..tech = tech ?? this.tech
       ..threePa = threePa ?? this.threePa
       ..threePm = threePm ?? this.threePm
-      ..to = to ?? this.to
-      ..ut = ut ?? this.ut;
+      ..to = to ?? this.to;
   }
 }
 
