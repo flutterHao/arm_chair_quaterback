@@ -66,6 +66,9 @@ class Assets {
   static const String commonUiCommonIconSystemLock = 'assets/images/Common/ui_common_icon_system_lock.png';
   static const String commonUiCommonIconSystemShare = 'assets/images/Common/ui_common_icon_system_share.png';
   static const String commonUiCommonIconTask = 'assets/images/Common/ui_common_icon_task.png';
+  static const String commonUiCommonLoginIcon = 'assets/images/Common/ui_common_login_icon.png';
+  static const String commonUiCommonLoginIcon01 = 'assets/images/Common/ui_common_login_icon_01.png';
+  static const String commonUiCommonLoginIcon02 = 'assets/images/Common/ui_common_login_icon_02.png';
   static const String commonUiCommonPlayerState01 = 'assets/images/Common/ui_common_player_state_01.png';
   static const String commonUiCommonPlayerState02 = 'assets/images/Common/ui_common_player_state_02.png';
   static const String commonUiCommonPlayerState04 = 'assets/images/Common/ui_common_player_state_04.png';
@@ -430,6 +433,7 @@ class Assets {
   static const String managerUiMangerNew25 = 'assets/images/manager/ui_manger_new2_5.png';
   static const String managerUiMangerNew26 = 'assets/images/manager/ui_manger_new2_6.png';
   static const String managerUiMangerNew27 = 'assets/images/manager/ui_manger_new2_7.png';
+  static const String managerUiMangerNew28 = 'assets/images/manager/ui_manger_new2_8.png';
   static const String managerUiNewManger01 = 'assets/images/manager/ui_new_manger_01.png';
   static const String managerUiNewManger02 = 'assets/images/manager/ui_new_manger_02.png';
   static const String managerUiNewManger03 = 'assets/images/manager/ui_new_manger_03.png';

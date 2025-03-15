@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2024-12-30 16:56:21
+ * @LastEditTime: 2025-03-14 17:05:53
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
@@ -84,188 +84,187 @@ class TeamTabbar extends GetView<TeamController> {
           Positioned(
             top: 16.w,
             right: 16.w,
-            child: Obx(() {
-              int length =
-                  controller.myBagList.where((e) => e.position == -1).length;
-              return Stack(
-                children: [
-                  Container(
-                    width: 195.w,
-                    height: 51.w,
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.w),
-                        color: AppColors.c000000.withOpacity(0.5)),
-                    child: controller.current.value == 0
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              8.5.vGap,
-                              Row(
-                                children: [
-                                  Text(
-                                    LangKey.gameMeanSalaryCap.tr,
-                                    style: 12.w4(
-                                        color: AppColors.cFFFFFF,
-                                        fontFamily: FontFamily.fRobotoRegular,
-                                        height: 0.75),
-                                  ),
-                                  6.hGap,
-                                  Expanded(
-                                    child: Container(),
-                                  ),
-                                  Image.asset(
-                                    Assets.iconUiIconRead,
-                                    height: 12.w,
-                                  )
-                                ],
-                              ),
-                              // 7.5.vGap,
-                              const Expanded(child: SizedBox.shrink()),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 100.w,
-                                    height: 16.w,
-                                    child: FittedBox(
-                                      fit: BoxFit.none,
-                                      alignment: Alignment.centerLeft,
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          AnimatedNum(
-                                            number:
-                                                controller.myTeamEntity.salary,
-                                            isMoney: true,
-                                            milliseconds: 1000,
-                                            textStyle: 21.w4(
-                                                color: AppColors.cFFFFFF,
-                                                height: 0.75,
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium),
-                                          ),
-                                          SizedBox(height: 4.h),
-                                          Text(
-                                            "/${Utils.formatMoney(controller.myTeamEntity.salaryCap)}",
-                                            style: 16.w4(
-                                                color: AppColors.cFFFFFF,
-                                                height: 0.75,
-                                                fontFamily:
-                                                    FontFamily.fOswaldRegular),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(child: Container()),
-                                  SizedBox(
-                                    width: 71.w,
-                                    child: CustomLinearProgressBar(
-                                        width: 71.w,
-                                        height: 6.w,
-                                        progressColor:
-                                            controller.myTeamEntity.salary >
-                                                    controller
-                                                        .myTeamEntity.salaryCap
-                                                ? AppColors.cD60D20
-                                                : AppColors.cFFFFFF,
-                                        backgroundColor: AppColors.c4D4D4D,
-                                        progress: controller
-                                                .myTeamEntity.salary /
-                                            controller.myTeamEntity.salaryCap),
-                                  ),
-                                ],
-                              ),
-                              10.vGap,
-                            ],
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              8.5.vGap,
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      LangKey.teamTabPlayerBag.tr,
-                                      style: 12.w4(
-                                          color: AppColors.cFFFFFF,
-                                          fontFamily: FontFamily.fRobotoRegular,
-                                          height: 0.75),
-                                    ),
-                                  ),
-                                  Image.asset(
-                                    Assets.iconUiIconRead,
-                                    height: 12.w,
-                                  )
-                                ],
-                              ),
-                              // 8.5.vGap,
-                              const Expanded(child: SizedBox.shrink()),
+            child: Stack(
+              children: [
+                Container(
+                  width: 195.w,
+                  height: 51.w,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      color: AppColors.c000000.withOpacity(0.5)),
+                  child:
+                      // controller.current.value == 0
+                      // ?
 
-                              SizedBox(
-                                // height: 16.w,
-                                child: Row(
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "$length",
-                                          style: 21.w4(
-                                              color: AppColors.cFFFFFF,
-                                              height: 0.75,
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium),
-                                        ),
-                                        SizedBox(height: 4.h),
-                                        Text(
-                                          "/${controller.myTeamEntity.playerBackpackNum}",
-                                          style: 16.w4(
-                                              color: AppColors.cFFFFFF,
-                                              height: 0.75,
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              10.vGap,
-                            ],
+                      // Column(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       8.5.vGap,
+                      //       Row(
+                      //         children: [
+                      //           Text(
+                      //             LangKey.gameMeanSalaryCap.tr,
+                      //             style: 12.w4(
+                      //                 color: AppColors.cFFFFFF,
+                      //                 fontFamily: FontFamily.fRobotoRegular,
+                      //                 height: 0.75),
+                      //           ),
+                      //           6.hGap,
+                      //           Expanded(
+                      //             child: Container(),
+                      //           ),
+                      //           Image.asset(
+                      //             Assets.iconUiIconRead,
+                      //             height: 12.w,
+                      //           )
+                      //         ],
+                      //       ),
+                      //       // 7.5.vGap,
+                      //       const Expanded(child: SizedBox.shrink()),
+                      //       Row(
+                      //         children: [
+                      //           SizedBox(
+                      //             width: 100.w,
+                      //             height: 16.w,
+                      //             child: FittedBox(
+                      //               fit: BoxFit.none,
+                      //               alignment: Alignment.centerLeft,
+                      //               child: Row(
+                      //                 crossAxisAlignment:
+                      //                     CrossAxisAlignment.end,
+                      //                 children: [
+                      //                   AnimatedNum(
+                      //                     number:
+                      //                         controller.myTeamEntity.salary,
+                      //                     isMoney: true,
+                      //                     milliseconds: 1000,
+                      //                     textStyle: 21.w4(
+                      //                         color: AppColors.cFFFFFF,
+                      //                         height: 0.75,
+                      //                         fontFamily:
+                      //                             FontFamily.fOswaldMedium),
+                      //                   ),
+                      //                   SizedBox(height: 4.h),
+                      //                   Text(
+                      //                     "/${Utils.formatMoney(controller.myTeamEntity.salaryCap)}",
+                      //                     style: 16.w4(
+                      //                         color: AppColors.cFFFFFF,
+                      //                         height: 0.75,
+                      //                         fontFamily:
+                      //                             FontFamily.fOswaldRegular),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Expanded(child: Container()),
+                      //           SizedBox(
+                      //             width: 71.w,
+                      //             child: CustomLinearProgressBar(
+                      //                 width: 71.w,
+                      //                 height: 6.w,
+                      //                 progressColor:
+                      //                     controller.myTeamEntity.salary >
+                      //                             controller
+                      //                                 .myTeamEntity.salaryCap
+                      //                         ? AppColors.cD60D20
+                      //                         : AppColors.cFFFFFF,
+                      //                 backgroundColor: AppColors.c4D4D4D,
+                      //                 progress: controller
+                      //                         .myTeamEntity.salary /
+                      //                     controller.myTeamEntity.salaryCap),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       10.vGap,
+                      //     ],
+                      //   )
+
+                      // :
+
+                      Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      8.5.vGap,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              LangKey.teamTabPlayerBag.tr,
+                              style: 12.w4(
+                                  color: AppColors.cFFFFFF,
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                  height: 0.75),
+                            ),
                           ),
-                  ),
-                  if (controller.myTeamEntity.salary >
-                          controller.myTeamEntity.salaryCap &&
-                      controller.current.value == 0)
-                    Positioned(
-                      top: 6.5.w,
-                      left: 90.w,
-                      child: Container(
-                        width: 32.w,
-                        // height: 16.5.w,
-                        padding: EdgeInsets.symmetric(vertical: 2.w),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: AppColors.cD60D20,
-                            borderRadius: BorderRadius.circular(4.w)),
-                        child: Text(
-                          "MAX",
-                          style: 12.w4(
-                              color: AppColors.cFFFFFF,
-                              fontFamily: FontFamily.fOswaldMedium,
-                              height: 1),
+                          Image.asset(
+                            Assets.iconUiIconRead,
+                            height: 12.w,
+                          )
+                        ],
+                      ),
+                      // 8.5.vGap,
+                      const Expanded(child: SizedBox.shrink()),
+
+                      SizedBox(
+                        // height: 16.w,
+                        child: Row(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "${controller.myBagList.where((e) => e.position == -1).length}",
+                                  style: 21.w4(
+                                      color: AppColors.cFFFFFF,
+                                      height: 0.75,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  "/${controller.myTeamEntity.playerBackpackNum}",
+                                  style: 16.w4(
+                                      color: AppColors.cFFFFFF,
+                                      height: 0.75,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                    )
-                ],
-              );
-            }),
+                      10.vGap,
+                    ],
+                  ),
+                ),
+                if (controller.myTeamEntity.salary >
+                        controller.myTeamEntity.salaryCap &&
+                    controller.current.value == 0)
+                  Positioned(
+                    top: 6.5.w,
+                    left: 90.w,
+                    child: Container(
+                      width: 32.w,
+                      // height: 16.5.w,
+                      padding: EdgeInsets.symmetric(vertical: 2.w),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: AppColors.cD60D20,
+                          borderRadius: BorderRadius.circular(4.w)),
+                      child: Text(
+                        "MAX",
+                        style: 12.w4(
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fOswaldMedium,
+                            height: 1),
+                      ),
+                    ),
+                  )
+              ],
+            ),
           ),
           Positioned(
               bottom: 0,
