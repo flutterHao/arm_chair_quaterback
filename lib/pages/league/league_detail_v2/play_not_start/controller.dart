@@ -286,10 +286,10 @@ class PlayNotStartController extends GetxController
   scheduleChoose(Question question) {
     LeagueApi.scheduleChoose(question.playerId, question.gameId).then((result) {
       initData();
-      try {
-        /// 获得篮球，刷新篮球数量
-        Get.find<TrainingController>().getData();
-      } finally {}
+      // try {
+      //   /// 获得篮球，刷新篮球数量
+      //   Get.find<TrainingController>().getData();
+      // } finally {}
     }, onError: (e) {
       ErrorUtils.toast(e);
     });
