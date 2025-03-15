@@ -83,6 +83,7 @@ import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/query_girls_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/random_other_players_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
@@ -1001,6 +1002,10 @@ class JsonConvert {
       return data.map<QueryGirlsEntity>((Map<String, dynamic> e) =>
           QueryGirlsEntity.fromJson(e)).toList() as M;
     }
+    if (<RandomOtherPlayersEntity>[] is M) {
+      return data.map<RandomOtherPlayersEntity>((Map<String, dynamic> e) =>
+          RandomOtherPlayersEntity.fromJson(e)).toList() as M;
+    }
     if (<RankAwardEntity>[] is M) {
       return data.map<RankAwardEntity>((Map<String, dynamic> e) =>
           RankAwardEntity.fromJson(e)).toList() as M;
@@ -1612,6 +1617,7 @@ class JsonConvertClassCollection {
     (PlayerStrengthRankTrendList).toString(): PlayerStrengthRankTrendList
         .fromJson,
     (QueryGirlsEntity).toString(): QueryGirlsEntity.fromJson,
+    (RandomOtherPlayersEntity).toString(): RandomOtherPlayersEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,
     (RankListEntity).toString(): RankListEntity.fromJson,

@@ -6,8 +6,6 @@
  */
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/pages/login/index.dart';
-import 'package:arm_chair_quaterback/pages/team/select_player/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget_2.dart';
@@ -65,28 +63,15 @@ class _TeamView extends GetView<TeamIndexController> {
             controller: ctrl.scrollController,
             child: Column(
               children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Get.to(SelectPlayerPage());
-                    },
-                    child: Text('SlecetPlayerPage')),
-                ElevatedButton(
-                    onPressed: () {
-                      Get.to(LoginPage());
-                    },
-                    child: Text('login')),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       Get.to(SelectPlayerPage());
+                //       //  Get.to(LoginPage());
+                //     },
+                //     child: Text('SlecetPlayerPage')),
                 TrainingNewWidget(),
                 BattleBoxWidget(),
                 // MatchCard(),
-                // Container(
-                //   margin: EdgeInsets.only(top: 9.w),
-                //   padding: EdgeInsets.symmetric(vertical: 26.w),
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(9.w),
-                //     color: AppColors.cFFFFFF,
-                //   ),
-                //   child: SeasonPassWidget(),
-                // ),
                 // TrainingPage(),
                 // NbaPlayerPage(),
 
