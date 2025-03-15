@@ -103,6 +103,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_num_defined_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_player_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/steal_player_rete_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/steal_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
@@ -1136,6 +1137,10 @@ class JsonConvert {
       return data.map<StarUpPlayerEntity>((Map<String, dynamic> e) =>
           StarUpPlayerEntity.fromJson(e)).toList() as M;
     }
+    if (<StealPlayerReteEntity>[] is M) {
+      return data.map<StealPlayerReteEntity>((Map<String, dynamic> e) =>
+          StealPlayerReteEntity.fromJson(e)).toList() as M;
+    }
     if (<StealTeamEntity>[] is M) {
       return data.map<StealTeamEntity>((Map<String, dynamic> e) =>
           StealTeamEntity.fromJson(e)).toList() as M;
@@ -1668,6 +1673,7 @@ class JsonConvertClassCollection {
     (StarUpDoneRandomCount).toString(): StarUpDoneRandomCount.fromJson,
     (StarUpNumDefinedEntity).toString(): StarUpNumDefinedEntity.fromJson,
     (StarUpPlayerEntity).toString(): StarUpPlayerEntity.fromJson,
+    (StealPlayerReteEntity).toString(): StealPlayerReteEntity.fromJson,
     (StealTeamEntity).toString(): StealTeamEntity.fromJson,
     (StealTeamPlayers).toString(): StealTeamPlayers.fromJson,
     (StealTeamPlayersPotential).toString(): StealTeamPlayersPotential.fromJson,

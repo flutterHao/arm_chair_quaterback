@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/top_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -153,9 +154,11 @@ class UserInfoBar extends StatelessWidget {
                           );
                         },
                         onTap: () {
-                          Get.toNamed(RouteNames.teamTeamBattle);
-                          // Get.toNamed(RouteNames.stealPlayer);
-                          return;
+                          if (kDebugMode) {
+                            // Get.toNamed(RouteNames.teamTeamBattle);
+                            Get.toNamed(RouteNames.stealPlayer);
+                            return;
+                          }
                           if (!enable) {
                             Navigator.pop(context);
                             return;

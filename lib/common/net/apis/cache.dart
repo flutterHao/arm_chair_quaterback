@@ -34,6 +34,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_num_defined_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/steal_player_rete_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/wheel_reward_type_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
@@ -86,6 +87,7 @@ class CacheApi {
   static List<WheelRandomRewardEntity> wheelRandomRewardList = [];
   static List<JumpDefinedEntity> jumpDefinedList = [];
   static List<StarUpNumDefinedEntity> starUpNumDefinedList = [];
+  static List<StealPlayerReteEntity> stealPlayerRateList = [];
 
   static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
   static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
@@ -483,5 +485,15 @@ class CacheApi {
     return list
         .map((item) => BattlePassUdfRewardEntity.fromJson(item))
         .toList();
+  }
+
+  /// 球员升星数值
+  static Future<List<StealPlayerReteEntity>> getStealPlayerRate() async {
+    if (stealPlayerRateList.isNotEmpty) {
+      return stealPlayerRateList;
+    }
+    List list = await HttpUtil().post(Api.cStealPlayerRate);
+    return stealPlayerRateList =
+        list.map((item) => StealPlayerReteEntity.fromJson(item)).toList();
   }
 }

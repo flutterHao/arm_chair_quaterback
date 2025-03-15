@@ -3,7 +3,9 @@ import 'package:arm_chair_quaterback/common/entities/steal_team_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 ///
@@ -27,6 +29,7 @@ class StealPlayerController extends GetxController {
       TeamApi.getStealTeam(),
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getNBATeamDefine(),
+      CacheApi.getStealPlayerRate(),
     ]).then((result) {
       stealTeamEntity = result[0] as StealTeamEntity;
       loadStatus.value = LoadDataStatus.success;
@@ -45,5 +48,28 @@ class StealPlayerController extends GetxController {
     },onError: (e){
       ErrorUtils.toast(e);
     });
+  }
+
+  String getTextByGrade(String grade){
+    print('grade:$grade');
+    var firstWhereOrNull = CacheApi.stealPlayerRateList.firstWhereOrNull((e)=> e.quality==grade);
+    if(firstWhereOrNull != null){
+      return firstWhereOrNull.difficulty.tr;
+    }
+    return "prop";
+  }
+
+  Color getColorByGrade(String grade){
+    var firstWhereOrNull = CacheApi.stealPlayerRateList.firstWhereOrNull((e)=> e.quality==grade);
+    if(firstWhereOrNull != null){
+      if(firstWhereOrNull.difficulty.contains("easy")){
+        return AppColors.c10A86A;
+      }else if(firstWhereOrNull.difficulty.contains("normal")){
+        return AppColors.cDEA325;
+      }else{
+        return AppColors.cD60D20;
+      }
+    }
+    return AppColors.c10A86A;
   }
 }

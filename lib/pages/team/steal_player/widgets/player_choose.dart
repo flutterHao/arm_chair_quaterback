@@ -50,7 +50,8 @@ class PlayerChoose extends GetView<StealPlayerController> {
     return Expanded(
       child: Container(
         color: AppColors.cFFFFFF,
-        child: _buildSuccess(),
+        child: _buildPlayers(),
+        // child: _buildSuccess(),
       ),
     );
   }
@@ -278,9 +279,9 @@ class PlayerChoose extends GetView<StealPlayerController> {
           ),
           alignment: Alignment.center,
           child: Text(
-            "Middle prop",
+            controller.getTextByGrade(playBaseInfo.grade),
             style: 12.w5(
-              color: AppColors.c000000,
+              color: controller.getColorByGrade(playBaseInfo.grade),
               height: 1,
               fontFamily: FontFamily.fOswaldMedium,
             ),
@@ -290,120 +291,118 @@ class PlayerChoose extends GetView<StealPlayerController> {
     );
   }
 
-  Container _buildCard(
+  Widget _buildCard(
       NbaPlayerInfosPlayerBaseInfoList playBaseInfo, StealTeamPlayers player) {
-    return Container(
-      width: 106.w,
-      height: 164.w,
-      decoration: BoxDecoration(
-          color: AppColors.cE6E6E6,
-          borderRadius: BorderRadius.circular(13.w),
-          image: DecorationImage(
-              image: AssetImage(getBigCardImage(playBaseInfo.grade)))),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            height: 94.w,
-            left: 0,
-            right: 0,
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ImageWidget(
-                  url: Utils.getPlayUrl(player.playerId),
-                  width: 73.w,
-                  height: 73.w,
-                )),
-          ),
-          Positioned(
-              top: 10.w,
-              left: 10.w,
-              child: Column(
-                children: [
-                  OutlinedText(
-                      text: "${playBaseInfo.playerScore}",
-                      strokeWidth: 1.5.w,
-                      strokeColor: AppColors.cFFFFFF,
-                      textStyle: 16.w7(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldBold,
-                      )),
-                  2.vGap,
-                  OutlinedText(
-                      text: "OVR",
-                      strokeWidth: 2.w,
-                      strokeColor: AppColors.cFFFFFF,
-                      textStyle: 10.w4(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular,
-                      )),
-                ],
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          height: 98.w,
+          left: 0,
+          right: 0,
+          child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ImageWidget(
+                url: Utils.getPlayUrl(player.playerId),
               )),
-          Positioned(
-              top: 101.w,
-              left: 0,
-              right: 0,
-              child: Column(
-                children: [
-                  PlayerStartWidget(
-                    grade: player.breakThroughGrade,
-                    height: 15,
-                  ),
-                  2.vGap,
-                  Text(
-                    playBaseInfo.ename,
-                    style: 11.w7(
+        ),
+        Positioned(
+            child: Container(
+          width: 106.w,
+          height: 164.w,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(13.w),
+              image: DecorationImage(
+                  image: AssetImage(getBigCardImage(playBaseInfo.grade)))),
+        )),
+        Positioned(
+            top: 10.w,
+            left: 10.w,
+            child: Column(
+              children: [
+                OutlinedText(
+                    text: "${playBaseInfo.playerScore}",
+                    strokeWidth: 1.5.w,
+                    strokeColor: AppColors.cFFFFFF,
+                    textStyle: 16.w7(
                       color: AppColors.c000000,
                       height: 1,
                       fontFamily: FontFamily.fOswaldBold,
-                    ),
+                    )),
+                2.vGap,
+                OutlinedText(
+                    text: "OVR",
+                    strokeWidth: 2.w,
+                    strokeColor: AppColors.cFFFFFF,
+                    textStyle: 10.w4(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular,
+                    )),
+              ],
+            )),
+        Positioned(
+            top: 101.w,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                PlayerStartWidget(
+                  grade: player.breakThroughGrade,
+                  height: 15,
+                ),
+                2.vGap,
+                Text(
+                  playBaseInfo.ename,
+                  style: 11.w7(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldBold,
                   ),
-                  4.vGap,
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ImageWidget(
-                            url: Utils.getTeamUrl(playBaseInfo.teamId),
-                            width: 11.w,
-                            height: 11.w,
+                ),
+                4.vGap,
+                Row(
+                  children: [
+                    Expanded(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ImageWidget(
+                          url: Utils.getTeamUrl(playBaseInfo.teamId),
+                          width: 11.w,
+                          height: 11.w,
+                        ),
+                        Text(
+                          "#${playBaseInfo.number}",
+                          style: 10.w4(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fRobotoRegular,
                           ),
-                          Text(
-                            "#${playBaseInfo.number}",
-                            style: 10.w4(
-                              color: AppColors.c000000,
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular,
-                            ),
+                        ),
+                        5.hGap,
+                      ],
+                    )),
+                    Expanded(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        5.hGap,
+                        Text(
+                          playBaseInfo.position,
+                          style: 10.w4(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fRobotoRegular,
                           ),
-                          5.hGap,
-                        ],
-                      )),
-                      Expanded(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          5.hGap,
-                          Text(
-                            "${playBaseInfo.position}",
-                            style: 10.w4(
-                              color: AppColors.c000000,
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular,
-                            ),
-                          )
-                        ],
-                      ))
-                    ],
-                  )
-                ],
-              ))
-        ],
-      ),
+                        )
+                      ],
+                    ))
+                  ],
+                )
+              ],
+            ))
+      ],
     );
   }
 

@@ -172,6 +172,8 @@ class Api {
       "$CONFIG_BASE_PATH/BattlePassReward.json";
   static const String cBattlePassUdfReward =
       "$CONFIG_BASE_PATH/BattlePassUdfReward.json";
+  static const String cStealPlayerRate =
+      "$CONFIG_BASE_PATH/StealPlayerRate.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
