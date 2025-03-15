@@ -2,19 +2,15 @@
  * @Description: TrainingNewWidget
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-15 16:16:56
+ * @LastEditTime: 2025-03-15 17:49:03
  */
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/pages/team/nba_player/view.dart';
-import 'package:arm_chair_quaterback/pages/team/season_pass/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/player_chest.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget_2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -56,21 +57,18 @@ class TeamBattleController extends GetxController
 
   Timer? _timer;
 
+  var loadStatus = LoadDataStatus.loading;
   // late TeamInfoEntity teamInfoEntity;
   @override
   void onInit() {
     super.onInit();
-    step.value = 2;
+    step.value = 1;
     _canPop = false;
     meAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
     totalAvatars.remove(meAvatar);
     opponentAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
 
-    ///todo 测试代码
-    // Future.delayed(const Duration(milliseconds: 3000), () {
-    //   nextStep();
-    // });
-    // teamMatch();
+    teamMatch();
   }
 
   Future<bool> teamMatchV2() {
@@ -118,8 +116,9 @@ class TeamBattleController extends GetxController
   }
 
   teamMatch() async {
+    loadStatus = LoadDataStatus.loading;
     var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
-    var minMatchTimeMs = 2000;
+    var minMatchTimeMs = 3000;
     await Future.wait([
       CacheApi.getGameEvent(),
       CacheApi.getCompetitionVenue(),
@@ -142,23 +141,25 @@ class TeamBattleController extends GetxController
           Get.back();
           return;
         }
-        var str = jsonEncode(result.payload["homeTeamCup"]);
         if (result.serviceId == Api.wsPkStartUpdated) {
           pkStartUpdatedEntity = PkStartUpdatedEntity.fromJson(result.payload);
         }
         if (result.serviceId == Api.wsTeamMatch) {
           _timer?.cancel();
+          loadStatus = LoadDataStatus.success;
           battleEntity = BattleEntity.fromJson(result.payload);
-          _initBattleController();
+          update([idMatching]);
           var currentMs = DateTime.now().millisecondsSinceEpoch;
           var diff = currentMs - startMatchTimeMs;
           if (diff >= minMatchTimeMs) {
-            nextStep();
+            nextAutoNext();
           } else {
             Future.delayed(Duration(milliseconds: minMatchTimeMs - diff), () {
-              nextStep();
+              nextAutoNext();
             });
           }
+          _initBattleController();
+
         }
       });
     }, onError: (e) {
@@ -184,6 +185,8 @@ class TeamBattleController extends GetxController
     //   Get.back();
     // });
   }
+
+  static String get idMatching => "id_matching";
 
   void timeout() {
     print('timeout------');
@@ -216,6 +219,11 @@ class TeamBattleController extends GetxController
       _canPop = true;
       update(['team_battle']);
     }
+  }
+
+  void nextAutoNext(){
+    nextStep();
+    Future.delayed(Duration(seconds: 2),()=> nextStep());
   }
 
   static get canPop => _canPop;

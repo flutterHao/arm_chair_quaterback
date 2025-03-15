@@ -224,6 +224,7 @@ class GameLeaderWidget extends StatelessWidget {
                                         width: 73.w,
                                         height: 93.w,
                                         playerId: item.playerInfo.playerId,
+                                        canTap: false,
                                         player: item.teamId ==
                                                 Get.find<
                                                         TeamBattleV2Controller>()

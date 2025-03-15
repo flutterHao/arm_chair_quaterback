@@ -84,6 +84,7 @@ import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/query_girls_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/random_other_players_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
@@ -103,6 +104,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_num_defined_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_player_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/steal_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
@@ -1006,6 +1008,10 @@ class JsonConvert {
       return data.map<QueryGirlsEntity>((Map<String, dynamic> e) =>
           QueryGirlsEntity.fromJson(e)).toList() as M;
     }
+    if (<RandomOtherPlayersEntity>[] is M) {
+      return data.map<RandomOtherPlayersEntity>((Map<String, dynamic> e) =>
+          RandomOtherPlayersEntity.fromJson(e)).toList() as M;
+    }
     if (<RankAwardEntity>[] is M) {
       return data.map<RankAwardEntity>((Map<String, dynamic> e) =>
           RankAwardEntity.fromJson(e)).toList() as M;
@@ -1134,6 +1140,22 @@ class JsonConvert {
     if (<StarUpPlayerEntity>[] is M) {
       return data.map<StarUpPlayerEntity>((Map<String, dynamic> e) =>
           StarUpPlayerEntity.fromJson(e)).toList() as M;
+    }
+    if (<StealTeamEntity>[] is M) {
+      return data.map<StealTeamEntity>((Map<String, dynamic> e) =>
+          StealTeamEntity.fromJson(e)).toList() as M;
+    }
+    if (<StealTeamPlayers>[] is M) {
+      return data.map<StealTeamPlayers>((Map<String, dynamic> e) =>
+          StealTeamPlayers.fromJson(e)).toList() as M;
+    }
+    if (<StealTeamPlayersPotential>[] is M) {
+      return data.map<StealTeamPlayersPotential>((Map<String, dynamic> e) =>
+          StealTeamPlayersPotential.fromJson(e)).toList() as M;
+    }
+    if (<StealTeamPlayersUpStarBase>[] is M) {
+      return data.map<StealTeamPlayersUpStarBase>((Map<String, dynamic> e) =>
+          StealTeamPlayersUpStarBase.fromJson(e)).toList() as M;
     }
     if (<TacticGradeEntity>[] is M) {
       return data.map<TacticGradeEntity>((Map<String, dynamic> e) =>
@@ -1618,6 +1640,7 @@ class JsonConvertClassCollection {
     (PlayerStrengthRankTrendList).toString(): PlayerStrengthRankTrendList
         .fromJson,
     (QueryGirlsEntity).toString(): QueryGirlsEntity.fromJson,
+    (RandomOtherPlayersEntity).toString(): RandomOtherPlayersEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,
     (RankListEntity).toString(): RankListEntity.fromJson,
@@ -1651,6 +1674,11 @@ class JsonConvertClassCollection {
     (StarUpDoneRandomCount).toString(): StarUpDoneRandomCount.fromJson,
     (StarUpNumDefinedEntity).toString(): StarUpNumDefinedEntity.fromJson,
     (StarUpPlayerEntity).toString(): StarUpPlayerEntity.fromJson,
+    (StealTeamEntity).toString(): StealTeamEntity.fromJson,
+    (StealTeamPlayers).toString(): StealTeamPlayers.fromJson,
+    (StealTeamPlayersPotential).toString(): StealTeamPlayersPotential.fromJson,
+    (StealTeamPlayersUpStarBase).toString(): StealTeamPlayersUpStarBase
+        .fromJson,
     (TacticGradeEntity).toString(): TacticGradeEntity.fromJson,
     (TacticGradeCards).toString(): TacticGradeCards.fromJson,
     (TacticsDefineEntity).toString(): TacticsDefineEntity.fromJson,

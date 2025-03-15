@@ -28,6 +28,8 @@ class Api {
   static const String likePlayer = '$API_BASE_PATH/team/likePlayer';
   static const String cancelLikingPlayer =
       '$API_BASE_PATH/team/cancelLikingPlayer';
+  static const String randomOtherPlayers =
+      '$API_BASE_PATH/team/randomOtherPlayers';
 
   ///NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
@@ -311,4 +313,8 @@ class Api {
       "$API_BASE_PATH/BattlePass/chooseHomeTeam";
   static const String claimLevelReward =
       "$API_BASE_PATH/BattlePass/claimLevelReward";
+
+  ///偷球员
+  static const String getStealTeam = "$API_BASE_PATH/StealPlayer/getStealTeam";
+  static const String steal = "$API_BASE_PATH/StealPlayer/steal";
 }

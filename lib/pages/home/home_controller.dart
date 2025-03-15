@@ -102,7 +102,7 @@ class HomeController extends GetxController {
     pageController = PageController(initialPage: 1);
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
-    //   tabIndex.value = tabController.index;
+    //   tabIndex.value = tabContro ller.index;
     //   tabController.animateTo(tabController.index);
     //   update();
     // });

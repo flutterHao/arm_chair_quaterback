@@ -233,7 +233,7 @@ class WinRateWidget extends StatelessWidget {
                                                 controller.getHeight()),
                                             painter: ChartPainter(
                                                 controller.chartPoints.value,
-                                                controller.getHeight()),
+                                                controller.getHeight().format().toDouble()),
                                           )
                                         ],
                                       );
