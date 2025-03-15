@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-03-13 16:04:26
+ * @LastEditTime: 2025-03-14 19:57:43
  */
 class Api {
   /// base
@@ -235,6 +235,7 @@ class Api {
       "$API_BASE_PATH/match/getGameResultInfo";
   static const String getNowSeason = "$API_BASE_PATH/match/getSeason";
   static const String closeCard = "$API_BASE_PATH/match/closeCard";
+  static const String buyCardPack = "$API_BASE_PATH/match/buyCardPack";
 
   ///turntable
   static const String getTurntableInfo =

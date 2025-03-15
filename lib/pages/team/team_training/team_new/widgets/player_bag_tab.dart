@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2025-03-14 17:31:50
+ * @LastEditTime: 2025-03-15 11:35:59
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -262,7 +262,7 @@ class GradeSort extends GetView<TeamController> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const SizedBox.shrink(),
-            Text(LangKey.gameLittleNameGrade.tr,
+            Text("OVR",
                 style: 16.w4(
                     height: 1,
                     fontFamily: controller.sortType.abs() == 2

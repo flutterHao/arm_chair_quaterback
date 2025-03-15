@@ -4,20 +4,20 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/card_fly_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../../../../common/entities/card_pack_player_entity.dart';
 
 class OpenBoxSimpleController extends GetxController
     with GetTickerProviderStateMixin {
@@ -54,6 +54,7 @@ class OpenBoxSimpleController extends GetxController
   late Animation<double> fallOutAnimation;
 
   var heartCountDownStr = "00:00:00".obs;
+  CardPackPlayerEntity cardPackPlayerEntity = CardPackPlayerEntity();
 
   //获取球员
   // var getPlayerCount = 0.obs;
@@ -92,68 +93,31 @@ class OpenBoxSimpleController extends GetxController
     super.dispose();
   }
 
-  Future toOpenBoxPage(int propId) async {
-    List<Awards> players = await UserApi.useTeamProp(propId);
-    for (var element in players) {
-      showBackground1.value = false;
-      showBackground2.value = false;
-      showBackground3.value = false;
+  Future toOpenBoxPage(int playerId) async {
+    showBackground1.value = false;
+    showBackground2.value = false;
+    showBackground3.value = false;
 
-      CardPackInfoCard item = CardPackInfoCard();
-      item.playerCards =
-          [element.id].map((e) => PlayerCardEntity(playerId: e)).toList();
-      isStartting = false;
-      step = 0;
-      for (var e in item.playerCards) {
-        e.isOpen.value = false;
-        e.isSelect.value = false;
-      }
-      setCardPosition(Get.context!, 0);
-      currentCardPack = item;
-      selectIndex = 0;
-      fallOutAnimatedCtrl.reset();
-      // await Get.toNamed(RouteNames.openBoxPage);
+    CardPackInfoCard item = CardPackInfoCard();
+    item.playerCards = [PlayerCardEntity(playerId: playerId)];
+    isStartting = false;
+    step = 0;
+    for (var e in item.playerCards) {
+      e.isOpen.value = false;
+      e.isSelect.value = false;
     }
+    setCardPosition(Get.context!, 0);
+    currentCardPack = item;
+    selectIndex = 0;
+    fallOutAnimatedCtrl.reset();
 
     await Get.to(() => const OpenBoxSimplePage(),
         opaque: false, transition: Transition.fadeIn);
 
-    IllustratiionsController ctrl = Get.find();
-    //抽卡
-    var selectList = currentCardPack.playerCards
-        .where((e) => e.isSelect.value && e.isOpen.value)
-        .toList();
-    // 获取新卡
-    var newList = selectList
-        .where((e) => CacheApi.playerBookRuleList
-            .where((a) => a.playerId == e.playerId && a.isLight == 0)
-            .isNotEmpty)
-        .toList();
-    ctrl.hasNewPlayer.value
-        ? ctrl.getPlayerCards.addAll(newList)
-        : ctrl.getPlayerCards = newList;
-
-    Log.d("抽卡${selectList.length}");
-    Log.d("抽卡新卡${ctrl.getPlayerCards.length}");
-    if (ctrl.getPlayerCards.isEmpty) return;
-    // ctrl.hasNewPlayer.value = true;
-    ctrl.isCollect.value = false;
-    Get.find<HomeController>()
-        .scrollHideBottomBarController
-        .changeHideStatus(false);
-    if (overlayEntry.mounted) {
-      overlayEntry.remove();
-    }
-    Overlay.of(Get.context!).insert(overlayEntry);
-  }
-
-  void goToIllustraction() {
-    if (overlayEntry.mounted) {
-      overlayEntry.remove();
-      // Get.to(() => const IllustratiionsPage(),
-      //     opaque: false, transition: Transition.fadeIn);
-    }
-    Get.toNamed(RouteNames.illustrationPage);
+    ///判断球员位置ovr是否大于当前值
+    TeamController teamCtrl = Get.find();
+    teamCtrl.showExChange = true;
+    teamCtrl.update();
   }
 
   Future clickkBox() async {
@@ -361,6 +325,15 @@ class OpenBoxSimpleController extends GetxController
     await Future.delayed(100.milliseconds);
     showBackground3.value = false;
     await Future.delayed(showBgDuration);
+  }
+
+  Future buyCardPack() async {
+    await TeamApi.buyCardPack().then((v) async {
+      HomeController.to.updateMoney();
+      OpenBoxSimpleController controller = Get.find();
+      await controller.toOpenBoxPage(v.playerId);
+      cardPackPlayerEntity = v;
+    });
   }
 }
 

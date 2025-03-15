@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2025-03-14 17:05:53
+ * @LastEditTime: 2025-03-15 11:25:00
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
@@ -23,6 +23,29 @@ class TeamTabbar extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      width: 375.w,
+      height: 40.w,
+      color: AppColors.c404040,
+      child: TabBar(
+          controller: controller.tabController,
+          labelStyle: 16.w4(height: 1, fontFamily: FontFamily.fOswaldMedium),
+          // labelStyle:
+          //     16.w7(height: 1, fontFamily: FontFamily.fOswaldRegular),
+          labelColor: AppColors.cFFFFFF,
+          unselectedLabelStyle:
+              16.w4(height: 1, fontFamily: FontFamily.fOswaldRegular),
+          unselectedLabelColor: AppColors.cB3B3B3,
+          indicatorColor: AppColors.cFF7954,
+          dividerColor: AppColors.cD1D1D1,
+          indicatorWeight: 3.w,
+          indicatorSize: TabBarIndicatorSize.tab,
+          tabs: controller.tabs
+              .map((e) => Text(
+                    e.tr,
+                  ))
+              .toList()),
+    );
     return SizedBox(
       width: 375.w,
       height: 109.w,

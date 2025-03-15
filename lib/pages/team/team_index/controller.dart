@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-14 16:46:11
+ * @LastEditTime: 2025-03-15 16:16:37
  */
 
 import 'dart:async';
@@ -182,6 +182,7 @@ class TeamIndexController extends GetxController
     final nbaPlayerCtrl = Get.find<NbaPlayerController>();
     Future.wait([
       getBattleBox(),
+      CacheApi.getGameConstant(),
       CacheApi.getPropDefine(),
       CacheApi.getCardPackDefine(),
       trainingCtrl.getData(),
@@ -191,11 +192,13 @@ class TeamIndexController extends GetxController
     ]).then((v) {
       loadDataSuccess = true;
       isLoading = false;
-      getTeamInfoCup();
+      // getTeamInfoCup();
       getSeasonTime();
       update(["team_index"]);
     }).catchError((v) {
       isLoading = false;
+    }).whenComplete(() {
+      refreshController.refreshCompleted();
     });
   }
 
@@ -218,8 +221,8 @@ class TeamIndexController extends GetxController
     // SoundServices.to.playSound(Assets.soundRadaMatch);
     await Get.put(TeamBattleController()).teamMatchV2().then((v) async {
       await Get.toNamed(RouteNames.teamTeamBattle);
-      getBattleBox();
-      getTeamInfoCup();
+      // getBattleBox();
+      // getTeamInfoCup();
       final ctrl = Get.find<TrainingController>();
       ctrl.trainingInfo = await TeamApi.getTrainingInfo();
       ctrl.update(["training_page"]);

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-14 11:36:26
+ * @LastEditTime: 2025-03-15 17:45:07
  */
 import 'dart:math';
 
@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/custom_buttom.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -31,15 +32,6 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
   });
 
   Widget _backgroud() {
-    if (controller.step == 2) {
-      return Positioned(
-        top: 80.h,
-        child: CustomPaint(
-          size: Size(574.h, 574.h), // 设
-          painter: CircleWithLinePainter(),
-        ),
-      );
-    }
     return Positioned(
       top: 0,
       right: 0,
@@ -47,7 +39,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
       child: Image.asset(
         Assets.managerUiManagerLineupBg,
         height: 370.h,
-        color: AppColors.c2f2f2f,
+        color: AppColors.cE6E6E6,
         alignment: Alignment.topRight,
         fit: BoxFit.fitHeight,
       ),
@@ -58,69 +50,54 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
     var duration = 300.milliseconds;
     return AnimatedPositioned(
       duration: duration,
-      top: 44.h,
-      left: controller.step == 0 ? 29.w : 15.w,
+      top: controller.step == 2 ? 56.h : 84.h,
+      // left: controller.step == 0 ? 29.w : 15.w,
       child: AnimatedOpacity(
         duration: duration,
-        opacity: controller.step == 0 ? 1 : 0,
+        opacity: 1,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "OPEN",
-              style: 44.w4(
-                  color: AppColors.cFFFFFF,
-                  fontFamily: FontFamily.fOswaldMedium,
-                  height: 0.8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(color: AppColors.cD7283B, width: 4.w),
+                    ),
+                  ),
+                  child: Text(
+                    "GET",
+                    style: 33.w4(
+                        color: AppColors.cD7283B,
+                        fontFamily: FontFamily.fOswaldMedium,
+                        height: 1.2),
+                  ),
+                ),
+                13.hGap,
+                Text(
+                  "player".toUpperCase(),
+                  style: 45.w4(
+                      color: AppColors.c000000,
+                      fontFamily: FontFamily.fOswaldMedium,
+                      height: 1),
+                )
+              ],
             ),
-            10.vGap,
+            8.vGap,
             Text(
-              "the package".toUpperCase(),
-              style: 25.w4(
-                  color: AppColors.cFFFFFF,
-                  fontFamily: FontFamily.fOswaldMedium,
+              "cardpack".toUpperCase(),
+              style: 54.w4(
+                  color: AppColors.c000000,
+                  fontFamily: FontFamily.fOswaldBold,
                   height: 0.8),
             ),
           ],
         ),
       ),
     );
-  }
-
-  Widget _changeTitle() {
-    var duration = 300.milliseconds;
-    return Obx(() {
-      var visible = controller.showChangeText.value && controller.step == 1;
-      return AnimatedPositioned(
-        duration: duration,
-        top: 44.h,
-        left: visible ? 29.w : 35.w,
-        child: AnimatedOpacity(
-          duration: duration,
-          opacity: visible ? 1 : 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "CHOOSE",
-                style: 44.w4(
-                    color: AppColors.cFFFFFF,
-                    fontFamily: FontFamily.fOswaldMedium,
-                    height: 0.8),
-              ),
-              10.vGap,
-              Text(
-                "the one you want".toUpperCase(),
-                style: 25.w4(
-                    color: AppColors.cFFFFFF,
-                    fontFamily: FontFamily.fOswaldMedium,
-                    height: 0.8),
-              ),
-            ],
-          ),
-        ),
-      );
-    });
   }
 
   Widget _boxWidget() {
@@ -130,7 +107,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
         animation: controller.fallOutAnimation,
         builder: (context, child) {
           return Positioned(
-            top: 214.h * controller.fallOutAnimation.value + 100.h,
+            top: 362.h * controller.fallOutAnimation.value + 100.h,
             left: 0,
             right: 0,
             child: Visibility(
@@ -145,12 +122,12 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                       },
                       child: Image.asset(
                         Utils.getBoxImageUrl(item.cardId),
-                        width: 199.h * 1.2,
+                        width: 150.h * 1.2,
                         fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),
-                  25.vGap,
+                  // 25.vGap,
                   if (controller.fallOutAnimation.value == 1)
                     AnimatedArrow(
                       end: -5.w,
@@ -166,7 +143,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                     Text(
                       "Click to open".toUpperCase(),
                       style: 21.w4(
-                          color: AppColors.cFFFFFF,
+                          color: AppColors.c000000,
                           fontFamily: FontFamily.fOswaldMedium,
                           height: 0.8),
                     ),
@@ -188,7 +165,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
             height: 280.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(140.h),
-              border: Border.all(color: AppColors.c2f2f2f, width: 10.h),
+              border: Border.all(color: AppColors.cE6E6E6, width: 10.h),
             ),
           )),
     );
@@ -268,86 +245,6 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
     );
   }
 
-  Widget _congratulation() {
-    var item = controller.currentCardPack;
-    var player = item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
-    return Obx(() {
-      return AnimatedPositioned(
-        duration: 200.milliseconds,
-        left: -28.w,
-        bottom: controller.showBackground1.value ? 284.h : 815.w,
-        child: Transform.rotate(
-          angle: -pi / 2,
-          // origin: Offset(0, 0),
-          alignment: Alignment.topLeft,
-          child: player != null && controller.showBackground1.value
-              ? Stack(
-                  children: [
-                    // Border
-                    Text(
-                      "congratulation".toUpperCase(),
-                      style: TextStyle(
-                        letterSpacing: 0,
-                        height: 0.8,
-                        fontSize: 100.h,
-                        fontFamily: FontFamily.fOswaldMedium,
-                        foreground: Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth = 1.5.w
-                          ..color = getCardColor(
-                              Utils.getPlayBaseInfo(player!.playerId).grade),
-                      ),
-                    ),
-                    // Gradient Text
-                    ShaderMask(
-                      shaderCallback: (Rect bounds) {
-                        return const LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [Colors.black, Colors.transparent],
-                        ).createShader(bounds);
-                      },
-                      child: Text(
-                        "congratulation".toUpperCase(),
-                        style: TextStyle(
-                          letterSpacing: 0,
-                          height: 0.8,
-                          fontSize: 100.h,
-                          fontFamily: FontFamily.fOswaldMedium,
-                          color: AppColors.c1A1A1A,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : const SizedBox.shrink(),
-        ),
-      );
-    });
-  }
-
-  Widget _rightBottomImage() {
-    var item = controller.currentCardPack;
-    PlayerCardEntity? player =
-        item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
-    return Obx(() {
-      return AnimatedPositioned(
-        duration: 200.milliseconds,
-        left: controller.showBackground2.value ? 336.w : 375.w,
-        bottom: 162.w,
-        child: player != null && controller.showBackground2.value
-            ? Image.asset(
-                Assets.managerUiManagerPlayercard01,
-                height: 198.5.h,
-                fit: BoxFit.fitHeight,
-                color:
-                    getCardColor(Utils.getPlayBaseInfo(player!.playerId).grade),
-              )
-            : const SizedBox.shrink(),
-      );
-    });
-  }
-
   Widget _bigCard() {
     var item = controller.currentCardPack;
     PlayerCardEntity? player = item.playerCards.firstWhereOrNull(
@@ -355,31 +252,54 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
     return Positioned(
         top: 250.h,
         child: player != null && controller.step == 2
-            ? BoxCardWidget(
-                isSmall: false,
-                isFlipped: player.isOpen.value,
-                onFlip: () {},
-                player: player,
+            ? Transform.scale(
+                alignment: Alignment.bottomCenter,
+                scale: 0.85,
+                child: BoxCardWidget(
+                  isSmall: false,
+                  isFlipped: player.isOpen.value,
+                  onFlip: () {},
+                  player: player,
+                ),
               )
             : const SizedBox.shrink());
   }
 
   Widget _continueText(BuildContext context) {
     return Positioned(
-        bottom: 160.h,
-        child: AnimatedOpacity(
-          duration: (controller.step == 2 || controller.step == 4)
-              ? 1000.milliseconds
-              : 200.milliseconds,
-          opacity: (controller.step == 2 || controller.step == 4) ? 1 : 0,
-          child: Text(
-            "Tap to proceed".toUpperCase(),
-            style: 19.w4(
-              color: AppColors.c666666,
-              fontFamily: FontFamily.fOswaldMedium,
-            ),
+      bottom: 160.h,
+      child: AnimatedOpacity(
+        duration: (controller.step == 2 || controller.step == 4)
+            ? 1000.milliseconds
+            : 200.milliseconds,
+        opacity: (controller.step == 2 || controller.step == 4) ? 1 : 0,
+        child: Text(
+          "Tap to proceed".toUpperCase(),
+          style: 19.w4(
+            color: AppColors.c666666,
+            fontFamily: FontFamily.fOswaldMedium,
           ),
-        ));
+        ),
+      ),
+    );
+  }
+
+  Widget _collectBt() {
+    return Positioned(
+      bottom: 35.5.w,
+      child: AnimatedScale(
+        duration: 300.milliseconds,
+        scale: controller.step == 2 ? 1 : 0,
+        child: CustomButton(
+            width: 343.w,
+            height: 51.w,
+            text: "COLLECT",
+            fontSize: 23.sp,
+            onPressed: () {
+              Get.back();
+            }),
+      ),
+    );
   }
 
   Widget _goBackButton() {
@@ -467,66 +387,6 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
         ));
   }
 
-//颜色背景
-  Widget _colorBackgroud() {
-    var item = controller.currentCardPack;
-    PlayerCardEntity? player = item.playerCards.firstWhereOrNull(
-        (e) => item.playerCards.indexOf(e) == controller.selectIndex);
-    // var item = controller.currentCardPack;
-    // var player = item.playerCards.firstWhereOrNull((e) => e.isSelect.value);
-    if (player == null && controller.step != 2) {
-      return Container();
-    }
-    double angle = -pi / 4;
-    return Obx(() {
-      var show = controller.showBackground3.value;
-      return AnimatedPositioned(
-          curve: show ? Curves.easeIn : Curves.easeOut,
-          duration: 200.milliseconds,
-          left: show ? 0.w : 375.w,
-          bottom: show ? 162.h : 500.h,
-          child: SizedBox(
-            width: 800.w,
-            height: 800.w,
-            child: Stack(
-              alignment: Alignment.bottomLeft,
-              children: [
-                Positioned(
-                  left: 0,
-                  bottom: 0,
-                  child: Transform.rotate(
-                    alignment: Alignment.bottomLeft,
-                    angle: angle,
-                    child: CustomPaint(
-                      painter: ParallelgramPainter(
-                        base: 800.w,
-                        height: 100.w,
-                        rotateAngle: -angle,
-                        color: getCardColor(
-                            Utils.getPlayBaseInfo(player!.playerId).grade),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 100.w,
-                  bottom: 80.w,
-                  child: CustomPaint(
-                    painter: ParallelgramPainter(
-                      base: 20.h,
-                      height: 600.h,
-                      rotateAngle: -angle,
-                      color: getCardColor(
-                          Utils.getPlayBaseInfo(player!.playerId).grade),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ));
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OpenBoxSimpleController>(
@@ -543,7 +403,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
               child: Container(
                 width: 375.w,
                 height: 812.h,
-                decoration: const BoxDecoration(color: AppColors.c1A1A1A),
+                color: AppColors.cF2F2F2,
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
@@ -553,18 +413,15 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                     _goBackButton(),
 
                     ///获得展示
-                    _colorBackgroud(),
-                    _continueText(context),
-                    _congratulation(),
+                    // _continueText(context),
                     _bigCard(),
+                    _collectBt(),
 
                     ///抽卡
                     _cardWidget(context),
-                    _rightBottomImage(),
 
                     /// 开宝箱
                     _openTitle(),
-                    _changeTitle(),
                     _rightBottom(),
                     _boxWidget(),
                   ],

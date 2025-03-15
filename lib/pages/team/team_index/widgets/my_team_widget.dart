@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-14 16:50:57
+ * @LastEditTime: 2025-03-15 15:13:35
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -20,8 +20,10 @@ import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/player_exchange_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_item_widget_new.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -134,102 +136,159 @@ class MyTeamWidget extends StatelessWidget {
                   ),
                 ),
                 child: Stack(
-                  alignment: Alignment.topCenter,
                   children: [
                     Positioned(
-                      top: 48.5.w,
-                      child: PlayerCardWidget(
-                          teamPlayers: ctrl.myTeamEntity.teamPlayers,
-                          position: 1),
-                    ),
-                    Positioned(
-                      top: 48.5.w,
-                      left: 36.w,
-                      child: PlayerCardWidget(
-                          teamPlayers: ctrl.myTeamEntity.teamPlayers,
-                          position: 2),
-                    ),
-                    Positioned(
-                      top: 48.5.w,
-                      right: 36.w,
-                      child: PlayerCardWidget(
-                          teamPlayers: ctrl.myTeamEntity.teamPlayers,
-                          position: 3),
-                    ),
-                    Positioned(
-                      top: 179.w,
-                      left: 91.w,
-                      child: PlayerCardWidget(
-                          teamPlayers: ctrl.myTeamEntity.teamPlayers,
-                          position: 4),
-                    ),
-                    Positioned(
-                      top: 179.w,
-                      right: 91.w,
-                      child: PlayerCardWidget(
-                          teamPlayers: ctrl.myTeamEntity.teamPlayers,
-                          position: 5),
-                    ),
-                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
                       bottom: 0,
-                      child: MtInkWell(
-                        vibrate: true,
-                        minScale: 0.8,
-                        onTap: () {
-                          // Get.toNamed(RouteNames.teamMemberPage);
-                          TeamIndexController ctrl = Get.find();
-                          ctrl.matchBattle();
-                        },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: Stack(
-                            alignment: Alignment.centerRight,
-                            children: [
-                              Container(
-                                width: 343.w,
-                                height: 49.w,
-                                decoration: BoxDecoration(
-                                    color: AppColors.c000000,
-                                    borderRadius: BorderRadius.circular(9.w)),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "MATCH",
-                                  style: 23.w4(
-                                      color: AppColors.cFFFFFF,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                              ),
-                              Positioned(
-                                right: 10.w,
-                                child: GetBuilder<TrainingController>(
-                                    id: "training_page",
-                                    builder: (controller) {
-                                      return Obx(() {
-                                        return Row(
+                      child: Opacity(
+                        opacity: ctrl.showExChange ? 0 : 1,
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Positioned(
+                              top: 48.5.w,
+                              child: PlayerCardWidget(
+                                  teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                                  position: 1),
+                            ),
+                            Positioned(
+                              top: 48.5.w,
+                              left: 36.w,
+                              child: PlayerCardWidget(
+                                  teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                                  position: 2),
+                            ),
+                            Positioned(
+                              top: 48.5.w,
+                              right: 36.w,
+                              child: PlayerCardWidget(
+                                  teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                                  position: 3),
+                            ),
+                            Positioned(
+                              top: 179.w,
+                              left: 91.w,
+                              child: PlayerCardWidget(
+                                  teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                                  position: 4),
+                            ),
+                            Positioned(
+                              top: 179.w,
+                              right: 91.w,
+                              child: PlayerCardWidget(
+                                  teamPlayers: ctrl.myTeamEntity.teamPlayers,
+                                  position: 5),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              child: GetBuilder<TrainingController>(
+                                  id: "training_page",
+                                  builder: (controller) {
+                                    bool eable = controller.ballNum.value > 0;
+                                    return MtInkWell(
+                                      vibrate: true,
+                                      minScale: 0.8,
+                                      onTap: () {
+                                        // Get.toNamed(RouteNames.teamMemberPage);
+                                        if (eable) {
+                                          TeamIndexController ctrl = Get.find();
+                                          ctrl.matchBattle();
+                                        }
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 16.w),
+                                        child: Stack(
+                                          alignment: Alignment.centerRight,
                                           children: [
-                                            Image.asset(
-                                              Assets.teamUiTrainingBall,
-                                              width: 22.5.w,
-                                            ),
-                                            5.hGap,
-                                            Text(
-                                              "${controller.ballNum.value}/${controller.trainDefine.ballMaxNum} ",
-                                              style: 16.w4(
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium,
-                                                color: AppColors.cFFFFFF,
+                                            Container(
+                                              width: 343.w,
+                                              height: 49.w,
+                                              decoration: BoxDecoration(
+                                                  color: eable
+                                                      ? AppColors.c000000
+                                                      : AppColors.cE6E6E,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          9.w)),
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "MATCH",
+                                                style: 23.w4(
+                                                    color: eable
+                                                        ? AppColors.cFFFFFF
+                                                        : AppColors.cBFBFBF,
+                                                    fontFamily: FontFamily
+                                                        .fOswaldMedium),
                                               ),
+                                            ),
+                                            Positioned(
+                                              right: 10.w,
+                                              child: Obx(() {
+                                                return Row(
+                                                  children: [
+                                                    Image.asset(
+                                                      Assets.teamUiTrainingBall,
+                                                      width: 22.5.w,
+                                                    ),
+                                                    5.hGap,
+                                                    Text(
+                                                      "${controller.ballNum.value}/${controller.trainDefine.ballMaxNum} ",
+                                                      style: 16.w4(
+                                                        fontFamily: FontFamily
+                                                            .fOswaldMedium,
+                                                        color: eable
+                                                            ? AppColors.cFFFFFF
+                                                            : AppColors.cBFBFBF,
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              }),
                                             )
                                           ],
-                                        );
-                                      });
-                                    }),
-                              )
-                            ],
-                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
                         ),
                       ),
-                    )
+                    ),
+                    if (ctrl.showExChange)
+                      Positioned(
+                        top: 13.w,
+                        left: 14.w,
+                        right: 14.w,
+                        child: Column(
+                          children: [
+                            PlayerExchangeCard(
+                              playerId: 1402,
+                              isNew: false,
+                            ),
+                            Container(
+                              width: 36.w,
+                              height: 36.w,
+                              margin: EdgeInsets.symmetric(vertical: 6.5.w),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18.w),
+                                  color: AppColors.c262626),
+                              child: IconWidget(
+                                icon: Assets.commonUiCommonIconSystemExchange,
+                                iconWidth: 18.w,
+                                rotateAngle: 90,
+                              ),
+                            ),
+                            PlayerExchangeCard(
+                              playerId: 1402,
+                            ),
+                          ],
+                        ),
+                      )
                   ],
                 ),
               ),
@@ -239,6 +298,15 @@ class MyTeamWidget extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class ExchangePlayerCard extends StatelessWidget {
+  const ExchangePlayerCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
 

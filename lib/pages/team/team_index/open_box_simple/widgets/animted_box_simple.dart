@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-02-11 10:50:21
+ * @LastEditTime: 2025-03-15 17:44:16
  */
 import 'dart:math';
 
@@ -171,52 +171,6 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
                       child: Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
-                          if (showLight)
-                            Positioned(
-                              bottom: -50.h,
-                              child: AnimatedBuilder(
-                                animation: _lightController,
-                                builder: (context, child) {
-                                  return Transform(
-                                    alignment: Alignment.center,
-                                    transform: Matrix4.identity()
-                                      ..scale(0.4 + lightAnimation.value * 0.8)
-                                      ..setEntry(3, 2, 0.001)
-                                      ..rotateX(pi / 2.4)
-                                      ..rotateZ(pi / 4.5),
-                                    child: Opacity(
-                                      opacity: 1 -
-                                          lightAnimation.value *
-                                              lightAnimation.value,
-                                      child: Container(
-                                        width: 210.h,
-                                        height: 210.h,
-                                        decoration: BoxDecoration(
-                                            color: AppColors.c1F83C8
-                                                .withOpacity(0.2),
-                                            gradient: RadialGradient(colors: [
-                                              AppColors.c1F83C8
-                                                  .withOpacity(0.0),
-                                              AppColors.c1F83C8
-                                                  .withOpacity(0.0),
-                                              AppColors.c1F83C8
-                                                  .withOpacity(0.0),
-                                              AppColors.c1F83C8
-                                                  .withOpacity(0.0),
-                                              AppColors.c1F83C8
-                                                  .withOpacity(0.6),
-                                              AppColors.c1F83C8.withOpacity(0.8)
-                                            ]),
-                                            border: Border.all(
-                                                color: AppColors.c1F83C8
-                                                    .withOpacity(0.6),
-                                                width: 8.h)),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
                           widget.child,
                           // if (showLight)
                           //   AnimatedBuilder(

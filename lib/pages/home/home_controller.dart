@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-02-28 16:02:14
+ * @LastEditTime: 2025-03-15 15:44:07
  */
 import 'dart:async';
 
@@ -34,6 +34,7 @@ import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -96,6 +97,7 @@ class HomeController extends GetxController {
     Get.lazyPut(() => TrainingController());
     Get.lazyPut(() => IllustratiionsController());
     Get.lazyPut(() => NbaPlayerController());
+    Get.lazyPut(() => OpenBoxSimpleController());
 
     pageController = PageController(initialPage: 1);
     // 监听 TabController 的页面改变，更新 tabIndex

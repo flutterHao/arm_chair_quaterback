@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-03-14 17:34:04
+ * @LastEditTime: 2025-03-15 11:12:40
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -97,7 +97,7 @@ class PlayerItem extends GetView<TeamController> {
                   overflow: TextOverflow.ellipsis),
             ),
           ),
-          7.vGap,
+          10.5.vGap,
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -127,115 +127,115 @@ class PlayerItem extends GetView<TeamController> {
               )
             ],
           ),
-          14.5.vGap,
-          Row(
-            children: [
-              Container(
-                width: 45.w,
-                height: 29.w,
-                padding: EdgeInsets.only(left: 5.w),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.w),
-                  border: Border.all(width: 1.w, color: AppColors.cE6E6E),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      LangKey.gameNamePow.tr,
-                      style: 8.w4(
-                          height: 0.8, fontFamily: FontFamily.fRobotoRegular),
-                    ),
-                    3.5.vGap,
-                    Text(
-                      "${palyer.playerStrength}",
-                      style: 12.w4(
-                          height: 0.8, fontFamily: FontFamily.fOswaldMedium),
-                    ),
-                  ],
-                ),
-              ),
-              // 4.hGap,
-              // Container(
-              //   width: 45.w,
-              //   height: 29.w,
-              //   padding: EdgeInsets.only(left: 5.w),
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(4.w),
-              //     border: Border.all(width: 1.w, color: AppColors.cE6E6E),
-              //   ),
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         LangKey.playerNameSalary.tr,
-              //         style: 8.w4(
-              //             height: 0.8, fontFamily: FontFamily.fRobotoRegular),
-              //       ),
-              //       3.5.vGap,
-              //       Text(
-              //         Utils.formatMoney(palyer.salary),
-              //         style: 12.w4(
-              //             height: 0.8, fontFamily: FontFamily.fOswaldMedium),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // 4.hGap,
-              // MtInkWell(
-              //   showScale: showArrow,
-              //   // minScale: showArrow ? 0.9 : 1,
-              //   onTap: () {
-              //     // controller.recoverPower(type: 1, uuid: item.uuid);
-              //     if (!showArrow) return;
-              //     controller.recove();
-              //   },
-              //   child: Container(
-              //     // width: 73.w,
-              //     height: 29.w,
-              //     alignment: Alignment.center,
-              //     padding: EdgeInsets.only(left: 5.5.w, right: 8.5.w),
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(4.w),
-              //       border: Border.all(width: 1.w, color: AppColors.cE6E6E),
-              //     ),
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         IconWidget(
-              //           icon: Assets.managerUiManagerIconRecover,
-              //           iconWidth: 12.5.w,
-              //         ),
-              //         3.5.hGap,
-              //         AnimatedNum(
-              //           number: item.power * 100 ~/ 100,
-              //           textStyle: 16.w4(
-              //               color: AppColors.c000000,
-              //               height: 1,
-              //               fontFamily: FontFamily.fOswaldMedium),
-              //         ),
-              //         Text(
-              //           "%",
-              //           style: 16.w4(
-              //               color: AppColors.c000000,
-              //               height: 1,
-              //               fontFamily: FontFamily.fOswaldMedium),
-              //         ),
-              //         if (showArrow) 3.hGap,
-              //         if (showArrow)
-              //           IconWidget(
-              //             icon: Assets.commonUiCommonIconSystemJumpto,
-              //             iconWidth: 5.w,
-              //             iconColor: AppColors.c000000,
-              //           ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-            ],
-          )
+          // 14.5.vGap,
+          // Row(
+          //   children: [
+          //     Container(
+          //       width: 45.w,
+          //       height: 29.w,
+          //       padding: EdgeInsets.only(left: 5.w),
+          //       decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(4.w),
+          //         border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+          //       ),
+          //       child: Column(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Text(
+          //             LangKey.gameNamePow.tr,
+          //             style: 8.w4(
+          //                 height: 0.8, fontFamily: FontFamily.fRobotoRegular),
+          //           ),
+          //           3.5.vGap,
+          //           Text(
+          //             "${palyer.playerStrength}",
+          //             style: 12.w4(
+          //                 height: 0.8, fontFamily: FontFamily.fOswaldMedium),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //     // 4.hGap,
+          //     // Container(
+          //     //   width: 45.w,
+          //     //   height: 29.w,
+          //     //   padding: EdgeInsets.only(left: 5.w),
+          //     //   decoration: BoxDecoration(
+          //     //     borderRadius: BorderRadius.circular(4.w),
+          //     //     border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+          //     //   ),
+          //     //   child: Column(
+          //     //     mainAxisAlignment: MainAxisAlignment.center,
+          //     //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     //     children: [
+          //     //       Text(
+          //     //         LangKey.playerNameSalary.tr,
+          //     //         style: 8.w4(
+          //     //             height: 0.8, fontFamily: FontFamily.fRobotoRegular),
+          //     //       ),
+          //     //       3.5.vGap,
+          //     //       Text(
+          //     //         Utils.formatMoney(palyer.salary),
+          //     //         style: 12.w4(
+          //     //             height: 0.8, fontFamily: FontFamily.fOswaldMedium),
+          //     //       ),
+          //     //     ],
+          //     //   ),
+          //     // ),
+          //     // 4.hGap,
+          //     // MtInkWell(
+          //     //   showScale: showArrow,
+          //     //   // minScale: showArrow ? 0.9 : 1,
+          //     //   onTap: () {
+          //     //     // controller.recoverPower(type: 1, uuid: item.uuid);
+          //     //     if (!showArrow) return;
+          //     //     controller.recove();
+          //     //   },
+          //     //   child: Container(
+          //     //     // width: 73.w,
+          //     //     height: 29.w,
+          //     //     alignment: Alignment.center,
+          //     //     padding: EdgeInsets.only(left: 5.5.w, right: 8.5.w),
+          //     //     decoration: BoxDecoration(
+          //     //       borderRadius: BorderRadius.circular(4.w),
+          //     //       border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+          //     //     ),
+          //     //     child: Row(
+          //     //       mainAxisAlignment: MainAxisAlignment.center,
+          //     //       children: [
+          //     //         IconWidget(
+          //     //           icon: Assets.managerUiManagerIconRecover,
+          //     //           iconWidth: 12.5.w,
+          //     //         ),
+          //     //         3.5.hGap,
+          //     //         AnimatedNum(
+          //     //           number: item.power * 100 ~/ 100,
+          //     //           textStyle: 16.w4(
+          //     //               color: AppColors.c000000,
+          //     //               height: 1,
+          //     //               fontFamily: FontFamily.fOswaldMedium),
+          //     //         ),
+          //     //         Text(
+          //     //           "%",
+          //     //           style: 16.w4(
+          //     //               color: AppColors.c000000,
+          //     //               height: 1,
+          //     //               fontFamily: FontFamily.fOswaldMedium),
+          //     //         ),
+          //     //         if (showArrow) 3.hGap,
+          //     //         if (showArrow)
+          //     //           IconWidget(
+          //     //             icon: Assets.commonUiCommonIconSystemJumpto,
+          //     //             iconWidth: 5.w,
+          //     //             iconColor: AppColors.c000000,
+          //     //           ),
+          //     //       ],
+          //     //     ),
+          //     //   ),
+          //     // ),
+          //   ],
+          // )
         ],
       ),
     );
