@@ -2,7 +2,7 @@
  * @Description: TrainingNewWidget
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-15 17:49:03
+ * @LastEditTime: 2025-03-04 19:25:55
  */
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';

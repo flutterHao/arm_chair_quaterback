@@ -300,8 +300,10 @@ class TeamApi {
     });
   }
 
-  static Future<List<RandomOtherPlayersEntity>> randomOtherPlayers() async {
-    List json = await httpUtil.post(Api.randomOtherPlayers);
+  static Future<List<RandomOtherPlayersEntity>> randomOtherPlayers(
+      int playerId) async {
+    List json = await httpUtil
+        .post(Api.randomOtherPlayers, data: {"playerId": playerId});
     return json.map((e) => RandomOtherPlayersEntity.fromJson(e)).toList();
   }
 }

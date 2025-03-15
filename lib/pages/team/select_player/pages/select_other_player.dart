@@ -3,10 +3,12 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/random_other_players_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/select_player/widgets/select_bg.dart';
 import 'package:arm_chair_quaterback/pages/team/select_player/widgets/select_player_item.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +33,15 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
   }
 
   Future getRandomPlayerItem() async {
-    var res = await TeamApi.randomOtherPlayers();
+    var res = await TeamApi.randomOtherPlayers(playerId);
     setState(() {
       randomOtherPlayers = res;
     });
+  }
+
+  onLogin() async {
+    print(await UserApi.getTeamByAccountId());
+    HomeController.to.login();
   }
 
   @override
@@ -85,17 +92,22 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
           padding: EdgeInsets.symmetric(vertical: 20.w),
           margin: EdgeInsets.only(bottom: 20.w),
           child: MtInkWell(
+              onTap: () {
+                onLogin();
+              },
               child: Container(
-            decoration: BoxDecoration(
-                color: Colors.black, borderRadius: BorderRadius.circular(10.w)),
-            height: 50.w,
-            alignment: Alignment.center,
-            child: Text(
-              'GO',
-              style: 23.w5(
-                  color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
-            ),
-          )),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10.w)),
+                height: 50.w,
+                alignment: Alignment.center,
+                child: Text(
+                  'GO',
+                  style: 23.w5(
+                      color: Colors.white,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
+              )),
         )
       ],
     ));
@@ -129,17 +141,15 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
                         score:
                             Utils.getPlayBaseInfo(player.playerId).playerScore,
                         isMyPlayer: true,
-                        // status: player.playerStatus,
-                        // onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade,
-                        //     arguments: {"playerUuid": player.uuid}),
                       ),
+                      6.vGap,
                       Text(Utils.getPlayBaseInfo(playerId).ename.toUpperCase(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: 12.w5(
                               height: 1, fontFamily: FontFamily.fOswaldMedium)),
-                      Text(
-                          '${Utils.getTeamInfo(player.teamId).shortEname} · ${player.position} ',
+                      2.vGap,
+                      Text(player.position,
                           style: 10.w4(
                               height: 1,
                               color: AppColors.cB2B2B2,

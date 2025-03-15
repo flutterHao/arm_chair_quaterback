@@ -73,4 +73,5 @@ class RouteNames {
   static const battlePassPlayer = '/battlePassPlayer';
   static const battlePassReward = '/battlePassReward';
   static const stealPlayer = "/team_steal_player";
+  static const selectPlayer = '/select_player';
 }

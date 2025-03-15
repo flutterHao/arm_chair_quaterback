@@ -30,6 +30,8 @@ class Api {
       '$API_BASE_PATH/team/cancelLikingPlayer';
   static const String randomOtherPlayers =
       '$API_BASE_PATH/team/randomOtherPlayers';
+  static const String getTeamByAccountId =
+      '$API_BASE_PATH/team/getTeamByAccountId';
 
   ///NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
