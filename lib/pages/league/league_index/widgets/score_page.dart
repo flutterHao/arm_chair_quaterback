@@ -447,7 +447,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                           margin: EdgeInsets.symmetric(horizontal: 15.w),
                           child: Row(
                             children: [
-                              UserAvaterWidget(
+                              UserAvatarWidget(
                                 url: Utils.getAvatarUrl(
                                     item.guessTopReviews?.teamLogo),
                                 width: 26.w,

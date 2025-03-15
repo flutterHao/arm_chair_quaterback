@@ -295,7 +295,7 @@ class PreparationCard extends GetView<TrainingController> {
             children: [
               Column(
                 children: [
-                  UserAvaterWidget(
+                  UserAvatarWidget(
                     url: Utils.getAvatarUrl(team?.teamLogo ?? 0),
                     radius: 16.w,
                     width: 32.w,

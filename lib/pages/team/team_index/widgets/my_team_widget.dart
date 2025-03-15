@@ -284,45 +284,49 @@ class PlayerCardWidget extends GetView<TeamController> {
 }
 
 class PlayerStartWidget extends StatelessWidget {
-  const PlayerStartWidget({super.key, required this.grade});
+  const PlayerStartWidget({super.key, required this.grade, this.height});
+
   final int grade;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     int count = grade ~/ 2;
     int half = grade % 2;
+    var h = height ?? 18.5.w;
+    double rate = h / 18.5.w;
     return SizedBox(
-      width: 55.w,
-      height: 18.5.w,
+      width: 55.w * rate,
+      height: h,
       child: Stack(
         alignment: Alignment.center,
         children: [
           for (int i = 0; i < 5; i++)
             count > i
                 ? Positioned(
-                    left: 8.5.w * i,
+                    left: 8.5.w * rate * i,
                     child: Image.asset(
                       Assets.managerUiManagerIconStar,
-                      height: 18.5.w,
+                      height: h,
                       fit: BoxFit.fitHeight,
                     ),
                   )
                 : (grade > i * 2)
                     ? Positioned(
-                        left: 8.w * count,
+                        left: 8.w * rate * count,
                         child: Image.asset(
                           grade >= 9
                               ? Assets.managerUiManagerIconStar01
                               : Assets.managerUiManagerIconStar02,
-                          height: 18.5.w,
+                          height: h,
                           fit: BoxFit.fitHeight,
                         ),
                       )
                     : Positioned(
-                        left: 8.5.w * i,
+                        left: 8.5.w * rate * i,
                         child: Image.asset(
                           Assets.managerUiManagerIconAshstar,
-                          height: 18.5.w,
+                          height: h,
                           fit: BoxFit.fitHeight,
                         ),
                       ),

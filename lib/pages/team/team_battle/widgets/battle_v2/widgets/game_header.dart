@@ -46,27 +46,27 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
             ),
           ),
         ),
-        10.vGap,
-        SizedBox(
-          width: 118.w,
-          child: Center(
-            child: SizedBox(
-              width: 76.w,
-              child: GetBuilder<TeamBattleV2Controller>(
-                  id: TeamBattleV2Controller.idReadiness,
-                  builder: (logic) {
-                    var events = controller.getQuarterEvents();
-                    GameEvent? event = events.isEmpty ? null : events.last;
-
-                    double value = event == null
-                        ? teamBattleController
-                            .pkStartUpdatedEntity!.homeTeamStrength
-                        : event.pkEventUpdatedEntity.homeCurrentStrength;
-                    return PreparationWidget(playerReadiness: value);
-                  }),
-            ),
-          ),
-        ),
+        // 10.vGap,
+        // SizedBox(
+        //   width: 118.w,
+        //   child: Center(
+        //     child: SizedBox(
+        //       width: 76.w,
+        //       child: GetBuilder<TeamBattleV2Controller>(
+        //           id: TeamBattleV2Controller.idReadiness,
+        //           builder: (logic) {
+        //             var events = controller.getQuarterEvents();
+        //             GameEvent? event = events.isEmpty ? null : events.last;
+        //
+        //             double value = event == null
+        //                 ? teamBattleController
+        //                     .pkStartUpdatedEntity!.homeTeamStrength
+        //                 : event.pkEventUpdatedEntity.homeCurrentStrength;
+        //             return PreparationWidget(playerReadiness: value);
+        //           }),
+        //     ),
+        //   ),
+        // ),
         // ClipRRect(
         //   borderRadius: BorderRadius.circular(4.5.w),
         //   child: SizedBox(
@@ -89,23 +89,23 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
         //     ),
         //   ),
         // ),
-        7.vGap,
-        SizedBox(
-          width: 118.w,
-          child: Center(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                "POWER ${teamBattleController.battleEntity.homeTeam.currTeamStrength}",
-                style: 12.w4(
-                  color: AppColors.c000000,
-                  height: 1,
-                  fontFamily: FontFamily.fOswaldRegular,
-                ),
-              ),
-            ),
-          ),
-        )
+        // 7.vGap,
+        // SizedBox(
+        //   width: 118.w,
+        //   child: Center(
+        //     child: FittedBox(
+        //       fit: BoxFit.scaleDown,
+        //       child: Text(
+        //         "POWER ${teamBattleController.battleEntity.homeTeam.currTeamStrength}",
+        //         style: 12.w4(
+        //           color: AppColors.c000000,
+        //           height: 1,
+        //           fontFamily: FontFamily.fOswaldRegular,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // )
         // SizedBox(
         //   width: 118.w,
         //   child: Obx(() {
@@ -152,7 +152,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
       ],
     );
     return Container(
-      height: 121.w,
+      height: 90.w,
       margin: EdgeInsets.only(bottom: 1.w),
       decoration: BoxDecoration(color: AppColors.cFFFFFF, boxShadow: [
         BoxShadow(
@@ -162,8 +162,8 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
             spreadRadius: -5.w)
       ]),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          12.vGap,
           Container(
             margin: EdgeInsets.symmetric(horizontal: 50.w),
             child: Row(
@@ -280,7 +280,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
               ],
             ),
           ),
-          5.vGap,
+          10.vGap,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -344,29 +344,29 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       ),
                     ),
                   ),
-                  10.vGap,
-                  SizedBox(
-                    width: 118.w,
-                    child: Center(
-                      child: SizedBox(
-                        width: 76.w,
-                        child: GetBuilder<TeamBattleV2Controller>(
-                            id: TeamBattleV2Controller.idReadiness,
-                            builder: (logic) {
-                              var events = controller.getQuarterEvents();
-                              GameEvent? event =
-                                  events.isEmpty ? null : events.last;
-
-                              double value = event == null
-                                  ? teamBattleController
-                                      .pkStartUpdatedEntity!.awayTeamStrength
-                                  : event
-                                      .pkEventUpdatedEntity.awayCurrentStrength;
-                              return PreparationWidget(playerReadiness: value);
-                            }),
-                      ),
-                    ),
-                  ),
+                  // 10.vGap,
+                  // SizedBox(
+                  //   width: 118.w,
+                  //   child: Center(
+                  //     child: SizedBox(
+                  //       width: 76.w,
+                  //       child: GetBuilder<TeamBattleV2Controller>(
+                  //           id: TeamBattleV2Controller.idReadiness,
+                  //           builder: (logic) {
+                  //             var events = controller.getQuarterEvents();
+                  //             GameEvent? event =
+                  //                 events.isEmpty ? null : events.last;
+                  //
+                  //             double value = event == null
+                  //                 ? teamBattleController
+                  //                     .pkStartUpdatedEntity!.awayTeamStrength
+                  //                 : event
+                  //                     .pkEventUpdatedEntity.awayCurrentStrength;
+                  //             return PreparationWidget(playerReadiness: value);
+                  //           }),
+                  //     ),
+                  //   ),
+                  // ),
                   // ClipRRect(
                   //   borderRadius: BorderRadius.circular(4.5.w),
                   //   child: SizedBox(
@@ -388,23 +388,23 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                   //         }),
                   //   ),
                   // ),
-                  7.vGap,
-                  SizedBox(
-                    width: 118.w,
-                    child: Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          "POWER ${teamBattleController.battleEntity.awayTeam.currTeamStrength}",
-                          style: 12.w4(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldRegular,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
+                  // 7.vGap,
+                  // SizedBox(
+                  //   width: 118.w,
+                  //   child: Center(
+                  //     child: FittedBox(
+                  //       fit: BoxFit.scaleDown,
+                  //       child: Text(
+                  //         "POWER ${teamBattleController.battleEntity.awayTeam.currTeamStrength}",
+                  //         style: 12.w4(
+                  //           color: AppColors.c000000,
+                  //           height: 1,
+                  //           fontFamily: FontFamily.fOswaldRegular,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                   // SizedBox(
                   //   width: 118.w,
                   //   child: Obx(() {

@@ -353,7 +353,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                           margin: EdgeInsets.symmetric(horizontal: 15.w),
                           child: Row(
                             children: [
-                              UserAvaterWidget(
+                              UserAvatarWidget(
                                 url: Utils.getAvatarUrl(
                                     player.guessTopReviews?.teamLogo),
                                 width: 26.w,

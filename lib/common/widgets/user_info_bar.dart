@@ -153,6 +153,9 @@ class UserInfoBar extends StatelessWidget {
                           );
                         },
                         onTap: () {
+                          Get.toNamed(RouteNames.teamTeamBattle);
+                          // Get.toNamed(RouteNames.stealPlayer);
+                          return;
                           if (!enable) {
                             Navigator.pop(context);
                             return;
@@ -170,7 +173,7 @@ class UserInfoBar extends StatelessWidget {
                           child: Center(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(18.w),
-                              child: UserAvaterWidget(
+                              child: UserAvatarWidget(
                                 url: Utils.getAvatarUrl(
                                     info.team?.teamLogo ?? 0),
                                 width: 36.w,

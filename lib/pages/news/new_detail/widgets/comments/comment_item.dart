@@ -65,7 +65,7 @@ class CommentItemView extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UserAvaterWidget(
+            UserAvatarWidget(
               url: Utils.getAvatarUrl(item.teamLogo),
               width: 36.w,
               height: 36.w,
@@ -299,7 +299,7 @@ class SubCommentItemView extends StatelessWidget {
             /// 用户信息
             Row(
               children: [
-                UserAvaterWidget(
+                UserAvatarWidget(
                   url: Utils.getAvatarUrl(item.teamLogo),
                   width: 18.w,
                   height: 18.w,
@@ -429,7 +429,7 @@ class HotComment extends StatelessWidget {
           ),
           Row(
             children: [
-              UserAvaterWidget(
+              UserAvatarWidget(
                   url: Utils.getAvatarUrl(item.teamLogo),
                   width: 26.w,
                   height: 26.w,
