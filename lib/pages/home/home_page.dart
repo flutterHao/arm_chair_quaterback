@@ -308,13 +308,13 @@ class _HomePageState extends State<HomePage>
                     ? 12.w5(
                         color: isCenter ? AppColors.cFFFFFF : AppColors.c000000,
                         height: 1,
-                        fontFamily: FontFamily.fRobotoRegular)
+                        fontFamily: FontFamily.fRobotoMedium)
                     : 12.w4(
                         color: isCenter && select
                             ? AppColors.cFFFFFF
                             : AppColors.c000000.withOpacity(0.3),
                         height: 1,
-                        fontFamily: FontFamily.fRobotoMedium),
+                        fontFamily: FontFamily.fRobotoRegular),
               )
             ],
           ),

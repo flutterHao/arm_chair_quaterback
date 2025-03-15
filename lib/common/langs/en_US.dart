@@ -17,7 +17,7 @@ Map<String, String> en_US = {
   LangKey.gameNameFoul: "FOUL",
   LangKey.gameNameTo: "TO",
   LangKey.gameNamePts: "PTS",
-  LangKey.gameTabNews: "Home",
+  LangKey.gameTabNews: "News",
   LangKey.gametabPicks: "Picks",
   LangKey.gametabStocks: "Stocks",
   LangKey.gametabTeam: "MY TEAM",

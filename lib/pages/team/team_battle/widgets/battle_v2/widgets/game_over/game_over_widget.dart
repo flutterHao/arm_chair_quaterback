@@ -73,7 +73,7 @@ class GameOverWidget extends GetView<GameOverController> {
                         color: AppColors.cF2F2F2, borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
                     child: Column(
                       children: [
-                        PlayerStatusWidget(teamBattleV2Controller),
+                        // PlayerStatusWidget(teamBattleV2Controller),
                         _buildMvpWidget(),
                         GameLeaderWidget(
                           controller: teamBattleV2Controller.gameLeaderController,
@@ -136,13 +136,13 @@ class GameOverWidget extends GetView<GameOverController> {
       Widget parent({required Widget child}) {
         return InkWell(
           onTap: () {
-            if (pkResultUpdatedPlayer.teamId == Get.find<TeamBattleV2Controller>().battleEntity.homeTeam.teamId) {
-              Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
-                "playerUuid": controller
-                    .getTeamPlayerInfoEntityByPlayerId(pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId)
-                    .uuid
-              });
-            }
+            // if (pkResultUpdatedPlayer.teamId == Get.find<TeamBattleV2Controller>().battleEntity.homeTeam.teamId) {
+            //   Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
+            //     "playerUuid": controller
+            //         .getTeamPlayerInfoEntityByPlayerId(pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId)
+            //         .uuid
+            //   });
+            // }
           },
           child: Container(
             height: 165.w,

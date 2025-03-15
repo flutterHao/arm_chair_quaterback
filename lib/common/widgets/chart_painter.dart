@@ -20,11 +20,11 @@ class ChartPainter extends CustomPainter {
     _list2 = [];
     // print('------------height:${height/2}');
     for (int i = 0; i < list.length; i++) {
-      var next = list[i + 1 >= list.length ? i : i + 1];
+      var next = list[((i + 1 >= list.length) ? i : (i + 1))];
       var current = list[i];
-      if(_list2.length > 1){
+      if (_list2.length > 1) {
         var preview = _list2.last;
-        if(current.dx<preview.dx){
+        if (current.dx < preview.dx) {
           // 处理往回跳的问题
           // print('current:$current');
           continue;
@@ -33,8 +33,8 @@ class ChartPainter extends CustomPainter {
       _list2.add(current);
       if ((current.dy > height / 2 && next.dy < height / 2) ||
           (current.dy < height / 2 && next.dy > height / 2)) {
-        // print('current:$current,$next');
-        var addItem = Offset(((current + next) / 2).dx, height / 2.0);
+        // print('current:$current,$next,${height/2}');
+        var addItem = Offset(((current + next) / 2).dx, height / 2);
         // print('addItem:$addItem');
         _list2.add(addItem);
       }
@@ -53,8 +53,14 @@ class ChartPainter extends CustomPainter {
     for (int i = 0; i < _list2.length; i++) {
       var next = _list2[i + 1 >= _list2.length ? i : i + 1];
       var current = _list2[i];
-      if (_list2[i].dy > size.height / 2) {
+      if (current.dy > height / 2) {
         linePaint.color = AppColors.cD60D20;
+      } else if (current.dy == height / 2) {
+        if (next.dy > height / 2) {
+          linePaint.color = AppColors.cD60D20;
+        } else {
+          linePaint.color = AppColors.c1F8FE5;
+        }
       } else {
         linePaint.color = AppColors.c1F8FE5;
       }

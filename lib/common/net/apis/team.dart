@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_player_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/steal_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
@@ -272,5 +273,20 @@ class TeamApi {
       "choice": choice
     });
     return NextMessageEntity.fromJson(json);
+  }
+
+  /// 获取被偷取人数据
+  static Future<StealTeamEntity> getStealTeam() async {
+    var json = await httpUtil.post(
+      Api.getStealTeam,
+    );
+    return StealTeamEntity.fromJson(json);
+  }
+
+  /// 偷球员
+  static Future<void> steal(int playerId) async {
+    await httpUtil.post(Api.steal, data: {
+      "playerId": playerId,
+    });
   }
 }

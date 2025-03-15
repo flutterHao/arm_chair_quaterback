@@ -120,6 +120,7 @@ flutter:
     - assets/images/Common/
     - assets/images/scores/
     - assets/spine/
+    - assets/spine/loading/
     - assets/images/inbox/
     - assets/images/cheerleaders/
     - assets/sound/

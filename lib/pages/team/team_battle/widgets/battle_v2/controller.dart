@@ -53,7 +53,7 @@ class TeamBattleV2Controller extends GetxController
 
   late AnimationController shootAnimationController;
   Animation? shootAnimation;
-  var shootOffset = Offset(-1000,-1000).obs;
+  var shootOffset = Offset(-1000, -1000).obs;
   var shootPathOffsets = <Offset>[].obs;
   var shootPathColor = AppColors.cTransparent;
 
@@ -88,6 +88,9 @@ class TeamBattleV2Controller extends GetxController
 
   //游戏速度 默认 1
   double gameSpeed = 1;
+
+  /// 是否开启超级加速
+  bool superSpeedMan = true;
 
   List<PkPlayerUpdatedPlayers> homeTeamPlayerList = [];
   List<PkPlayerUpdatedPlayers> awayTeamPlayerList = [];
@@ -127,6 +130,9 @@ class TeamBattleV2Controller extends GetxController
   @override
   void onInit() {
     super.onInit();
+    if (superSpeedMan) {
+      gameSpeed = 80;
+    }
     WidgetsBinding.instance.addObserver(this);
     battleEntity = Get.find<TeamBattleController>().battleEntity;
     winRateController = Get.put(WinRateController());
@@ -240,6 +246,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   changeGameSpeed(double speed) {
+    if (superSpeedMan) return;
     if (!isGameStart.value) return;
     if (isGameOver.value) return;
 
@@ -364,6 +371,11 @@ class TeamBattleV2Controller extends GetxController
     /// 开启常驻弹幕计时器
     startForeverNormalDanMaKu();
     quarter.value = quarter.value + 1;
+    /// 前3节开始超级加速，最后一节普通速度
+    if (superSpeedMan && quarter.value == 4) {
+      superSpeedMan = false;
+      gameSpeed = 1;
+    }
     liveTextTabIndex.value = quarter.value - 1;
     update([idLiveText]);
     liveTextScrollController.jumpTo(0);
@@ -561,7 +573,6 @@ class TeamBattleV2Controller extends GetxController
     var result = WinInfo(
         homeValue > awayValue ? homeValue : -awayValue, homeValue > awayValue);
     return result;
-
   }
 
   double generateRandomValue(double t) {
@@ -577,13 +588,14 @@ class TeamBattleV2Controller extends GetxController
     return random.nextDouble() * 2 * range - range;
   }
 
-  double getR(){
-    var r = (Utils.getMaxWidth(Get.context!)-18.w)/357.w;
+  double getR() {
+    var r = (Utils.getMaxWidth(Get.context!) - 18.w) / 357.w;
     return r;
   }
 
   /// 投篮动画
   shoot(GameEvent event) {
+    if(superSpeedMan) return;
     if (shootAnimationController.isAnimating) {
       return;
     }
@@ -603,7 +615,8 @@ class TeamBattleV2Controller extends GetxController
     update([idPlayersLocation]);
     end = isAway
         ? Offset(22.w, 49.w * getR())
-        : Offset(Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w, 49.w * getR());
+        : Offset(
+            Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w, 49.w * getR());
     // 随机生成最高点
     // peak = Offset(
     //     (start.dx + end.dx) / 2, Random().nextDouble() * min(start.dy, end.dy));
@@ -662,13 +675,13 @@ class TeamBattleV2Controller extends GetxController
       //     Offset(Random().nextDouble() * 50 + end.dx + 10, end.dy + end.dy / 2);
       // end = isAway ? Offset(22.w, 49.w) : Offset(375.w - 22.w - 18.w - 6.w, 49.w);
 
-      end = Offset(10.w, 35.w*getR());
+      end = Offset(10.w, 35.w * getR());
     } else {
       //左边投篮
       // end =
       //     Offset(end.dx - Random().nextDouble() * 50 - 10, end.dy + end.dy / 2);
-      end = Offset(
-          Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w + 12.w, 35.w*getR());
+      end = Offset(Utils.getMaxWidth(Get.context!) - 22.w - 18.w - 6.w + 12.w,
+          35.w * getR());
     }
     // 随机生成最高点
     peak = Offset((start.dx + end.dx) / 2, peak.dy - 5);

@@ -10,8 +10,8 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class UserAvaterWidget extends StatelessWidget {
-  const UserAvaterWidget({
+class UserAvatarWidget extends StatelessWidget {
+  const UserAvatarWidget({
     super.key,
     required this.url,
     required this.width,

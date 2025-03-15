@@ -102,6 +102,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_num_defined_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_player_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/steal_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
@@ -1130,6 +1131,22 @@ class JsonConvert {
       return data.map<StarUpPlayerEntity>((Map<String, dynamic> e) =>
           StarUpPlayerEntity.fromJson(e)).toList() as M;
     }
+    if (<StealTeamEntity>[] is M) {
+      return data.map<StealTeamEntity>((Map<String, dynamic> e) =>
+          StealTeamEntity.fromJson(e)).toList() as M;
+    }
+    if (<StealTeamPlayers>[] is M) {
+      return data.map<StealTeamPlayers>((Map<String, dynamic> e) =>
+          StealTeamPlayers.fromJson(e)).toList() as M;
+    }
+    if (<StealTeamPlayersPotential>[] is M) {
+      return data.map<StealTeamPlayersPotential>((Map<String, dynamic> e) =>
+          StealTeamPlayersPotential.fromJson(e)).toList() as M;
+    }
+    if (<StealTeamPlayersUpStarBase>[] is M) {
+      return data.map<StealTeamPlayersUpStarBase>((Map<String, dynamic> e) =>
+          StealTeamPlayersUpStarBase.fromJson(e)).toList() as M;
+    }
     if (<TacticGradeEntity>[] is M) {
       return data.map<TacticGradeEntity>((Map<String, dynamic> e) =>
           TacticGradeEntity.fromJson(e)).toList() as M;
@@ -1645,6 +1662,11 @@ class JsonConvertClassCollection {
     (StarUpDoneRandomCount).toString(): StarUpDoneRandomCount.fromJson,
     (StarUpNumDefinedEntity).toString(): StarUpNumDefinedEntity.fromJson,
     (StarUpPlayerEntity).toString(): StarUpPlayerEntity.fromJson,
+    (StealTeamEntity).toString(): StealTeamEntity.fromJson,
+    (StealTeamPlayers).toString(): StealTeamPlayers.fromJson,
+    (StealTeamPlayersPotential).toString(): StealTeamPlayersPotential.fromJson,
+    (StealTeamPlayersUpStarBase).toString(): StealTeamPlayersUpStarBase
+        .fromJson,
     (TacticGradeEntity).toString(): TacticGradeEntity.fromJson,
     (TacticGradeCards).toString(): TacticGradeCards.fromJson,
     (TacticsDefineEntity).toString(): TacticsDefineEntity.fromJson,
