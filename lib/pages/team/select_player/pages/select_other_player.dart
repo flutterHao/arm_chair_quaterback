@@ -38,8 +38,9 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
   }
 
   onLogin() async {
-    Get.back();
-    Get.back();
+    Get.until((route) => route.isFirst);
+    // TeamIndexController ctrl = Get.find();
+    // ctrl.matchBattle();
   }
 
   @override

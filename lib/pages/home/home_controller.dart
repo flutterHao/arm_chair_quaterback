@@ -6,32 +6,32 @@
  */
 import 'dart:async';
 
-import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
-import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
-import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
-import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
-import 'package:arm_chair_quaterback/common/widgets/scroll_hide_bottom_bar.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
+import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/common/widgets/scroll_hide_bottom_bar.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/inbox/index.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
-import 'package:arm_chair_quaterback/pages/picks/picks_index/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/select_player/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/controller.dart';
@@ -42,7 +42,6 @@ import 'package:common_utils/common_utils.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -52,8 +51,12 @@ class HomeController extends GetxController {
       ScrollHideBottomBarController();
   RxInt tabIndex = 1.obs;
   RxBool isAbsorbPointer = false.obs;
+  bool isLoading = true;
 
   UserEntity userEntiry = UserEntity();
+
+  /// 是否创建球员
+  bool toSelectPlayer = false;
 
   /// 未完成任务列表(进行中的任务)
   List<TeamMissionEntity> ongoingTaskList = [];
@@ -180,10 +183,24 @@ class HomeController extends GetxController {
     );
     await UserStore.to.setToken(v);
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
+
+    ///检查后端注册状态
+    bool isRegister = await UserApi.getTeamByAccountId();
+    if (!isRegister) {
+      toSelectPlayer = true;
+      await Get.to(SelectPlayerPage(), transition: Transition.noTransition);
+    }
+
     userEntiry = await UserApi.visitorLogin();
+
+    isLoading = false;
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
     TeamIndexController ctrl = Get.find();
-    ctrl.initData();
+    await ctrl.initData();
+    if (toSelectPlayer) {
+      toSelectPlayer = false;
+      ctrl.matchBattle();
+    }
 
     if (kReleaseMode) {
       /// 关联用户id
