@@ -85,8 +85,8 @@ class StatsController extends GetxController with GetTickerProviderStateMixin {
       String shortName = shortNames[i];
       String keyName = keys[i];
       if (json != null && json.containsKey(keyName)) {
-        var value = json[keyName];
-        var rank = json["${keyName}_RANK"];
+        var value = json[keyName]??0.0;
+        var rank = json["${keyName}_RANK"]??0;
         list.add(StatsItem(
           name,
           value,
