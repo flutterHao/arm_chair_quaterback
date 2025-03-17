@@ -182,49 +182,6 @@ class PlayerChoose extends GetView<StealPlayerController> {
     );
   }
 
-  Widget _buildSuccess() {
-    return Column(
-      children: [
-        Container(
-          height: 90.w,
-          width: double.infinity,
-          color: AppColors.cFFFFFF,
-          alignment: Alignment.bottomCenter,
-          padding: EdgeInsets.only(bottom: 17.w),
-          child: Text(
-            "SUCCESS",
-            style: 40.w5(
-              color: AppColors.c000000,
-              height: 1,
-              fontFamily: FontFamily.fOswaldMedium,
-            ),
-          ),
-        ),
-        21.vGap,
-
-        /// todo 球员卡和球员交易折线图
-        Expanded(
-            child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-                bottom: 35.w,
-                child: Container(
-                  height: 51.w,
-                  width: 343.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      border: Border.all(
-                        color: AppColors.c000000,
-                        width: 1.w,
-                      )),
-                  child: _buildContinue(),
-                ))
-          ],
-        ))
-      ],
-    );
-  }
 
   Widget _buildContinue() {
     return MtInkWell(
