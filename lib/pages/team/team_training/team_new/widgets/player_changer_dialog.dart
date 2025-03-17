@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-30 14:17:55
+ * @LastEditTime: 2025-03-17 17:14:55
  */
 import 'dart:math';
 
@@ -305,7 +305,7 @@ class _Substitute extends GetView<TeamController> {
                       : InkWell(
                           onTap: () {
                             controller.isAdd = true;
-                            controller.changeTeamPlayer(context);
+                            controller.changeTeamPlayer();
                           },
                           child: EmptyPlayer());
                 },
@@ -387,8 +387,8 @@ class _Stash extends GetView<TeamController> {
                         height: 1),
                   ),
                 ),
-                StarSort(),
-                5.hGap,
+                // StarSort(),
+                // 5.hGap,
                 // ignore: prefer_const_constructors
                 GradeSort(),
               ],

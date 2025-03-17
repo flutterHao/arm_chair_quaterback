@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/inerceptor/net_interceptor.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
@@ -87,6 +87,7 @@ class HttpUtil {
 
   String get getUrl {
     String url = ConfigStore.to.getServiceUrl();
+
     /// 把美服的都转到国服
     if (url == Address.pubDevUrl) {
       url = Address.publicDevUrl;

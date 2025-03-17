@@ -147,7 +147,7 @@ class TrainingController extends GetxController
   String tacticType = "";
   RxBool showTacticColor = false.obs;
   List<TaticsCombineEntity> buffValueConfigList = [];
-  List<UpStarTeamPlayerV2Entity> lastTimeStarUpList = [];
+  // List<UpStarTeamPlayerV2Entity> lastTimeStarUpList = [];
   RxBool tacticFly = false.obs;
 
   //任务
@@ -350,7 +350,7 @@ class TrainingController extends GetxController
       TeamApi.getTrainDefine(),
       TeamApi.getTacticCombine(),
       // getPlayerList(),
-      getLastTimeStarUpList(),
+      // getLastTimeStarUpList(),
     ]).then((v) {
       // rewardList = v[0] as List<RewardGroupEntity>;
       trainingInfo = v[0] as TrainingInfoEntity;
@@ -362,9 +362,9 @@ class TrainingController extends GetxController
       updateProp();
       taskValue.value = trainingInfo.training.taskItemCount;
       currentLevel = trainingInfo.training.currentTaskId;
-      if (_timer == null) {
-        recoverBallCountDown();
-      }
+      // if (_timer == null) {
+      //   recoverBallCountDown();
+      // }
       // taskCountDownTime();
       isPlaying.value = false;
 
@@ -375,15 +375,15 @@ class TrainingController extends GetxController
     });
   }
 
-  Future<List<UpStarTeamPlayerV2Entity>> getLastTimeStarUpList() {
-    Completer<List<UpStarTeamPlayerV2Entity>> completer =
-        Completer<List<UpStarTeamPlayerV2Entity>>();
-    TeamPlayerApi.getLastTimeStarUpList().then((v) {
-      completer.complete(v);
-      lastTimeStarUpList = v;
-    }, onError: (e) => completer.completeError(e));
-    return completer.future;
-  }
+  // Future<List<UpStarTeamPlayerV2Entity>> getLastTimeStarUpList() {
+  //   Completer<List<UpStarTeamPlayerV2Entity>> completer =
+  //       Completer<List<UpStarTeamPlayerV2Entity>>();
+  //   TeamPlayerApi.getLastTimeStarUpList().then((v) {
+  //     completer.complete(v);
+  //     lastTimeStarUpList = v;
+  //   }, onError: (e) => completer.completeError(e));
+  //   return completer.future;
+  // }
 
   void updateProp() {
     for (int i = 0; i < trainTaskList.length; i++) {
@@ -405,39 +405,39 @@ class TrainingController extends GetxController
   // }
 
   ///获取配置数据计算倒计时
-  void recoverBallCountDown() {
-    if (trainingInfo.prop.num >= trainDefine.ballMaxNum) {
-      _timer?.cancel();
-      return;
-    }
-    int recover = trainDefine.ballRecoverTime;
-    DateTime now = DateTime.now();
-    DateTime recoverTime =
-        DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
-            .add(Duration(seconds: recover));
-    int recoverSeconds = recoverTime.difference(now).inSeconds;
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
-      recoverSeconds--;
+  // void recoverBallCountDown() {
+  //   if (trainingInfo.prop.num >= trainDefine.ballMaxNum) {
+  //     _timer?.cancel();
+  //     return;
+  //   }
+  //   int recover = trainDefine.ballRecoverTime;
+  //   DateTime now = DateTime.now();
+  //   DateTime recoverTime =
+  //       DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
+  //           .add(Duration(seconds: recover));
+  //   int recoverSeconds = recoverTime.difference(now).inSeconds;
+  //   _timer?.cancel();
+  //   _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
+  //     recoverSeconds--;
 
-      ///获取回复篮球与当前时间倒计时，转换成mm:ss
-      final minutes = recoverSeconds ~/ 60;
-      final remainingSeconds = recoverSeconds % 60;
-      recoverTimeStr.value =
-          '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-      if (recoverSeconds <= 0) {
-        _timer?.cancel();
-        // 重新获取新的恢复时间进行倒计时
-        TeamApi.getTrainingInfo().then((v) {
-          trainingInfo.prop = v.prop;
-          ballNum.value = trainingInfo.prop.num;
-          trainingInfo.training = v.training;
-          update(["training_page"]);
-          recoverBallCountDown();
-        });
-      }
-    });
-  }
+  //     ///获取回复篮球与当前时间倒计时，转换成mm:ss
+  //     final minutes = recoverSeconds ~/ 60;
+  //     final remainingSeconds = recoverSeconds % 60;
+  //     recoverTimeStr.value =
+  //         '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+  //     if (recoverSeconds <= 0) {
+  //       _timer?.cancel();
+  //       // 重新获取新的恢复时间进行倒计时
+  //       TeamApi.getTrainingInfo().then((v) {
+  //         trainingInfo.prop = v.prop;
+  //         ballNum.value = trainingInfo.prop.num;
+  //         trainingInfo.training = v.training;
+  //         update(["training_page"]);
+  //         recoverBallCountDown();
+  //       });
+  //     }
+  //   });
+  // }
 
   ///任务倒计时
   // void taskCountDownTime() async {
@@ -608,14 +608,14 @@ class TrainingController extends GetxController
       isPlaying.value = false;
       return;
     }
-    if (lastTimeStarUpList.isNotEmpty) {
-      isPlaying.value = true;
-      await Get.toNamed(RouteNames.teamStarUpGame,
-          arguments: {"playerUuid": lastTimeStarUpList.first.uuid});
-      await getLastTimeStarUpList();
-      isPlaying.value = false;
-      return;
-    }
+    // if (lastTimeStarUpList.isNotEmpty) {
+    //   isPlaying.value = true;
+    //   await Get.toNamed(RouteNames.teamStarUpGame,
+    //       arguments: {"playerUuid": lastTimeStarUpList.first.uuid});
+    //   await getLastTimeStarUpList();
+    //   isPlaying.value = false;
+    //   return;
+    // }
     if (ballNum.value > 0) {
       ballNum.value = ballNum.value - 1;
     }
@@ -637,7 +637,7 @@ class TrainingController extends GetxController
       }
       trainingInfo = v;
       trainingInfo.propArray.shuffle();
-      recoverBallCountDown();
+      // recoverBallCountDown();
       startScroller();
     }).catchError((v) {
       isPlaying.value = false;

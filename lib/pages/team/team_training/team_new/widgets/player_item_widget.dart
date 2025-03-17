@@ -2,17 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-03-15 18:39:16
+ * @LastEditTime: 2025-03-17 14:41:32
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
-import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
@@ -80,7 +77,6 @@ class PlayerItem extends GetView<TeamController> {
 
   ///球员操作
   Widget _playerInfo() {
-    var showArrow = item.position >= 0 && !controller.isShowDialog.value;
     NbaPlayerInfosPlayerBaseInfoList palyer =
         Utils.getPlayBaseInfo(item.playerId);
     return Expanded(
@@ -248,7 +244,6 @@ class PlayerItem extends GetView<TeamController> {
       children: [
         13.hGap,
         PlayerCard(
-          backgroundColor: AppColors.cE1E1E1,
           playerId: item.playerId,
           player: item,
           width: 73.w,
@@ -365,8 +360,9 @@ class PlayerItem extends GetView<TeamController> {
           Row(
             children: [
               // _playerPosition(),
+
               SizedBox(
-                width: 16.w,
+                width: item.position >= 0 ? 16.w : 3.w,
               ),
 
               Expanded(
@@ -396,7 +392,7 @@ class PlayerItem extends GetView<TeamController> {
                     controller.item1.isChange.value = false;
                     controller.item2.isChange.value = false;
                     controller.isAdd = false;
-                    await controller.changeTeamPlayer(context, isDown: true);
+                    await controller.changeTeamPlayer(isDown: true);
                     if (onDownCallBack != null) {
                       onDownCallBack!();
                     }
@@ -433,7 +429,6 @@ class PlayerCard extends StatelessWidget {
     required this.height,
     required this.playerId,
     this.player,
-    this.backgroundColor = AppColors.cD9D9D9,
     this.radius,
     this.fontSize = 14,
     this.fontColor = AppColors.c000000,
@@ -451,7 +446,6 @@ class PlayerCard extends StatelessWidget {
   final TeamPlayerInfoEntity? player;
   final String? grade;
   final int? level;
-  final Color? backgroundColor;
   final double? radius;
   final double fontSize;
   final Color fontColor;
@@ -470,7 +464,7 @@ class PlayerCard extends StatelessWidget {
           height: height,
           width: width,
           decoration: BoxDecoration(
-            color: backgroundColor,
+            color: AppColors.cF1F1F1,
             borderRadius: BorderRadius.circular(9.w),
           ),
           child: ImageWidget(
@@ -486,11 +480,10 @@ class PlayerCard extends StatelessWidget {
           Positioned(
             top: 5.5.w,
             left: 5.w,
-            child: OutlinedText(
+            child: Text(
               // text: Utils.formatGrade(grade ?? 'S'),
-              text: "${Utils.getPlayBaseInfo(playerId).playerScore}",
-              textStyle:
-                  26.w4(height: 0.75, fontFamily: FontFamily.fOswaldBold),
+              "${Utils.getPlayBaseInfo(playerId).playerScore}",
+              style: 16.w4(height: 0.75, fontFamily: FontFamily.fOswaldBold),
             ),
           ),
 

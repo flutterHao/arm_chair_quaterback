@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-12 20:02:41
- * @LastEditTime: 2024-12-13 10:01:00
+ * @LastEditTime: 2025-03-17 17:11:37
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -63,7 +63,7 @@ class PowerChangeDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "power boost".toUpperCase(),
+              "Team OVR".toUpperCase(),
               style: 19.w4(
                   color: AppColors.c000000,
                   height: 1,

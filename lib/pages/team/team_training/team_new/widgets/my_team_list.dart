@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2025-03-15 11:15:42
+ * @LastEditTime: 2025-03-17 11:20:01
  */
 /*
  * @Description: 
@@ -74,20 +74,15 @@ class SubPlayerList extends GetView<TeamController> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return Container(
-                color: Colors.white,
-                height: 121.w,
-                width: double.infinity,
-              );
-              // return index < list.length
-              //     ? Container(
-              //         color: Colors.white,
-              //         height: 121.w,
-              //         width: double.infinity,
-              //       )
-              //     : (index < controller.myTeamEntity.benchCount
-              //         ? const EmptyPlayer()
-              //         : lock());
+              return index < list.length
+                  ? Container(
+                      color: Colors.white,
+                      height: 121.w,
+                      width: double.infinity,
+                    )
+                  : (index < controller.myTeamEntity.benchCount
+                      ? const EmptyPlayer()
+                      : lock());
             },
             separatorBuilder: (context, index) => Container(
               width: double.infinity,

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-05 17:46:56
- * @LastEditTime: 2024-12-14 18:55:20
+ * @LastEditTime: 2025-03-17 14:23:21
  */
 /*
  * @Description: 
@@ -103,8 +103,8 @@ class _FireDialogState extends State<FireDialog>
               Navigator.pop(context);
               await ctrl.dismissPlayer(context, widget.item.uuid);
               await Future.delayed(const Duration(milliseconds: 500));
-              await showTopToastDialog(
-                  child: FireSuccessDialog(item: widget.item));
+              // await showTopToastDialog(
+              //     child: FireSuccessDialog(item: widget.item));
               // await showDialog(
               //     barrierColor: Colors.transparent,
               //     context: Get.context!,

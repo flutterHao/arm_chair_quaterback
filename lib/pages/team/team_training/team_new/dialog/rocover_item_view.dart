@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-01-08 19:32:03
+ * @LastEditTime: 2025-03-17 14:39:46
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -61,7 +61,7 @@ class RecoverItem extends GetView<TeamController> {
       child: RotatedBox(
         quarterTurns: -1,
         child: Text(
-          Utils.getPosition(item.position,getKey: false).tr,
+          Utils.getPosition(item.position, getKey: false).tr,
           style: 14.w4(
               color: item.position > 0 ? AppColors.cFFFFFF : AppColors.c000000,
               height: 1,
@@ -178,7 +178,6 @@ class RecoverItem extends GetView<TeamController> {
                   children: [
                     13.hGap,
                     PlayerCard(
-                      backgroundColor: AppColors.cE1E1E1,
                       playerId: item.playerId,
                       width: 73.w,
                       height: 93.w,
