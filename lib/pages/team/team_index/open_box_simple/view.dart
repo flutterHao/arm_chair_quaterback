@@ -2,14 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-15 18:09:59
+ * @LastEditTime: 2025-03-17 16:44:16
  */
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/custom_buttom.dart';
@@ -18,7 +16,6 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/animated_arrow.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/box_card_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/ripper_animation.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/widgets/animted_box_simple.dart';
@@ -154,7 +151,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
         });
   }
 
-  Widget _rightBottom() {
+  Widget _rightBottomBackgroud() {
     return Visibility(
       visible: controller.step != 2,
       child: Positioned(
@@ -251,18 +248,17 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
         (e) => item.playerCards.indexOf(e) == controller.selectIndex);
     return Positioned(
         top: 250.h,
-        child: player != null && controller.step == 2
-            ? Transform.scale(
-                alignment: Alignment.bottomCenter,
-                scale: 0.85,
-                child: BoxCardWidget(
-                  isSmall: false,
-                  isFlipped: player.isOpen.value,
-                  onFlip: () {},
-                  player: player,
-                ),
-              )
-            : const SizedBox.shrink());
+        child: AnimatedScale(
+          duration: 200.milliseconds,
+          alignment: Alignment.bottomCenter,
+          scale: controller.step == 2 ? 0.9 : 0,
+          child: BoxCardWidget(
+            isSmall: false,
+            isFlipped: player!.isOpen.value,
+            onFlip: () {},
+            player: player,
+          ),
+        ));
   }
 
   Widget _continueText(BuildContext context) {
@@ -287,6 +283,8 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
   Widget _collectBt() {
     return Positioned(
       bottom: 35.5.w,
+      // left: 16.w,
+      // right: 16.w,
       child: Obx(() {
         return CustomButton(
             width: controller.showCollect.value && controller.step == 2
@@ -389,7 +387,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.step = 0;
+    // controller.step = 0;
     return GetBuilder<OpenBoxSimpleController>(
         init: OpenBoxSimpleController(),
         id: "open_box_simple",
@@ -404,6 +402,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                 alignment: Alignment.topCenter,
                 children: [
                   _backgroud(),
+                  _rightBottomBackgroud(),
 
                   ///返回
                   _goBackButton(),
@@ -418,7 +417,6 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
 
                   /// 开宝箱
                   _openTitle(),
-                  _rightBottom(),
                   _boxWidget(),
                 ],
               ),

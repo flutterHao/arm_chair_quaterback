@@ -54,7 +54,7 @@ class _TopDialogState extends State<TopToastDialog>
   late AnimationController _controller;
   late Animation<double> _animation;
   bool dragging = false;
-  double startY = -1,endY = -1;
+  double startY = -1, endY = -1;
 
   @override
   void initState() {
@@ -69,7 +69,7 @@ class _TopDialogState extends State<TopToastDialog>
 
     _controller.forward().then((v) async {
       await Future.delayed(widget.duration);
-      if(!dragging) {
+      if (!dragging) {
         _controller.reverse();
       }
     });
@@ -86,45 +86,45 @@ class _TopDialogState extends State<TopToastDialog>
     double height = widget.height ?? -130.w;
 
     return GestureDetector(
-      onVerticalDragStart: (e){
-        if(_controller.isAnimating){
+      onVerticalDragStart: (e) {
+        if (_controller.isAnimating) {
           return;
         }
         dragging = true;
         startY = e.localPosition.dy;
       },
-      onVerticalDragDown: (e){
-        if(_controller.isAnimating){
+      onVerticalDragDown: (e) {
+        if (_controller.isAnimating) {
           return;
         }
         dragging = true;
         startY = e.localPosition.dy;
       },
-      onVerticalDragUpdate: (e){
-        if(_controller.isAnimating){
+      onVerticalDragUpdate: (e) {
+        if (_controller.isAnimating) {
           return;
         }
-        _controller.value += -e.delta.dy/height;
+        _controller.value += -e.delta.dy / height;
         endY = e.localPosition.dy;
       },
-      onVerticalDragEnd: (e){
-        if(_controller.isAnimating){
+      onVerticalDragEnd: (e) {
+        if (_controller.isAnimating) {
           return;
         }
         dragging = false;
-        var value = ((endY-startY)/height).abs();
-        if(value>0.1) {
+        var value = ((endY - startY) / height).abs();
+        if (value > 0.1) {
           _controller.reverse(from: value);
         }
         startY = endY = -1;
       },
-      onVerticalDragCancel: (){
-        if(_controller.isAnimating){
+      onVerticalDragCancel: () {
+        if (_controller.isAnimating) {
           return;
         }
         dragging = false;
-        var value = ((endY-startY)/height).abs();
-        if(value>0.1) {
+        var value = ((endY - startY) / height).abs();
+        if (value > 0.1) {
           _controller.reverse(from: value);
         }
         startY = endY = -1;

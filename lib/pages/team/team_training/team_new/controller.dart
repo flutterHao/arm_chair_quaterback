@@ -62,7 +62,6 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   double offset = 0;
   RxBool hideSort = false.obs;
   var isShowDialog = false.obs;
-  List<StarUpDefineEntity> starUpDefineList = [];
 
   ///换人页面打开关闭动画
   late AnimationController animationCtrl;
@@ -72,6 +71,9 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   int changeDuration = 300;
   bool showReserve = false;
   bool showExChange = false;
+  int playerIdOld = 0;
+  int playerIdNew = 0;
+  int ovrChange = 0;
 
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
@@ -139,7 +141,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
     await Future.wait([
       TeamApi.getMyTeamPlayer(teamId),
-      TeamApi.getMyBagPlayers(),
+      getBagPlayers(),
       CacheApi.getPlayerStatusConfig(),
       CacheApi.getStarUpDefine(),
       CacheApi.getGradeInStamina(),
@@ -147,14 +149,18 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       CacheApi.getNBAPlayerInfo(),
     ]).then((v) {
       myTeamEntity = v[0] as MyTeamEntity;
-      myBagList = v[1] as List<TeamPlayerInfoEntity>;
-      starUpDefineList = v[3] as List<StarUpDefineEntity>;
       subList = myTeamEntity.teamPlayers.where((e) => e.position == 0).toList();
-      recoverTimeAndCountDown();
-      myBagList.sort(comparePlayers);
-      oVROld = myTeamEntity.oVR;
+      oVROld = getTeamOvr();
       update();
     });
+  }
+
+  Future<List<TeamPlayerInfoEntity>> getBagPlayers() async {
+    await TeamApi.getMyBagPlayers().then((v) {
+      myBagList = v;
+      myBagList.sort(comparePlayers);
+    });
+    return myBagList;
   }
 
   ///单个：type=1，2全员
@@ -206,7 +212,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     if (item2.isChange.value) {
       ///选了获取背包已经选择的直接添加
       item1.uuid = "";
-      changeTeamPlayer(context);
+      changeTeamPlayer();
     } else {
       ///如果之前没选跳转到背包选择
       isAdd = true;
@@ -237,11 +243,11 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       isShowDialog.value = false;
       isAdd = false;
       //战力变化弹窗
-      if (oVROld != myTeamEntity.oVR) {
-        await Future.delayed(const Duration(milliseconds: 1500));
-        await showTopToastDialog(
-            child: PowerChangeDialog(myTeamEntity.oVR, oVROld));
-        oVROld = myTeamEntity.oVR;
+      var newOvr = getTeamOvr();
+      if (oVROld != newOvr) {
+        await Future.delayed(const Duration(milliseconds: 600));
+        await showTopToastDialog(child: PowerChangeDialog(newOvr, oVROld));
+        oVROld = getTeamOvr();
       }
 
       // animationCtrl.reset();
@@ -265,7 +271,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
       if (item2.isChange.value == true && isShowDialog.value) {
         ///已经选择了背包直接替换
-        await changeTeamPlayer(context);
+        await changeTeamPlayer();
       } else {
         await showChangeDialog(item);
       }
@@ -280,7 +286,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         addPlay(context);
       } else if (item1.isChange.value == true) {
         ///已经选择了上阵直接替换
-        await changeTeamPlayer(context);
+        await changeTeamPlayer();
       } else {
         await showChangeDialog(item);
       }
@@ -288,7 +294,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     // Log.d("球员${item.uuid}\n ${item1.uuid} \n ${item2.uuid}");
   }
 
-  Future changeTeamPlayer(BuildContext context, {bool isDown = false}) async {
+  Future changeTeamPlayer({bool isDown = false}) async {
     MyTeamEntity result = await TeamApi.changeTeamPlayer(
         isAdd ? null : item1.uuid, isDown ? null : item2.uuid);
     if (tabController.index == 1) {
@@ -475,7 +481,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
   int getFireMoney(TeamPlayerInfoEntity player) {
     int salary = 0;
-    for (var e in starUpDefineList) {
+    for (var e in CacheApi.starUpDefines ?? []) {
       if (e.starUp == player.breakThroughGrade) {
         return Utils.getPlayBaseInfo(player.playerId).salary *
             (1 + e.starRatingCoefficient).round();
@@ -551,5 +557,31 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       }
     }
     return cup.ceil();
+  }
+
+  int getTeamOvr() {
+    int ovr = 0;
+    for (var e in myTeamEntity.teamPlayers) {
+      ovr += Utils.getPlayBaseInfo(e.playerId).playerScore;
+    }
+    return ovr;
+  }
+
+  ///开卡包换球员
+  void playerChangeByCardPack() {
+    var newPlayer =
+        myBagList.firstWhereOrNull((e) => e.playerId == playerIdNew);
+    var oldPlayer = myTeamEntity.teamPlayers
+        .firstWhereOrNull((e) => e.playerId == playerIdOld);
+    if (newPlayer != null && oldPlayer != null) {
+      item1 = newPlayer;
+      item2 = oldPlayer;
+      TeamApi.changeTeamPlayer(item1.uuid, item2.uuid).then((v) {
+        showExChange = false;
+        initData();
+
+        // update();
+      });
+    }
   }
 }

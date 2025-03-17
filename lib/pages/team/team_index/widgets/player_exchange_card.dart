@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-03-15 15:12:58
+ * @LastEditTime: 2025-03-17 19:48:57
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -163,20 +163,26 @@ class PlayerExchangeCard extends GetView<TeamController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "+21",
+                              "+${controller.ovrChange}",
                               style: 26.w4(
                                 height: 0.8,
-                                color: AppColors.c0FA76C,
+                                color: controller.ovrChange == 0
+                                    ? AppColors.c666666
+                                    : AppColors.c0FA76C,
                                 fontFamily: FontFamily.fOswaldMedium,
                               ),
                             ),
-                            5.5.hGap,
-                            IconWidget(
-                              icon: Assets.commonUiCommonIconSystemArrow,
-                              iconWidth: 5.5.w,
-                              fit: BoxFit.fitWidth,
-                              iconColor: AppColors.c0FA76C,
-                              rotateAngle: -90,
+                            Container(
+                              margin: EdgeInsets.only(left: 5.5.w, right: 3.w),
+                              child: IconWidget(
+                                icon: Assets.commonUiCommonIconSystemArrow,
+                                iconWidth: 5.5.w,
+                                fit: BoxFit.fitWidth,
+                                iconColor: controller.ovrChange == 0
+                                    ? AppColors.c666666
+                                    : AppColors.c0FA76C,
+                                rotateAngle: -90,
+                              ),
                             ),
                             5.hGap
                           ],
@@ -211,8 +217,7 @@ class PlayerExchangeCard extends GetView<TeamController> {
                     text: 'Substitute'.toUpperCase(),
                     type: ButtonType.confirm,
                     onPressed: () {
-                      controller.showExChange = false;
-                      controller.update();
+                      controller.playerChangeByCardPack();
                     },
                   ),
                 ],

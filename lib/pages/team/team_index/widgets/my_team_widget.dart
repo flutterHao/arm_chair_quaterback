@@ -2,28 +2,23 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-15 18:34:31
+ * @LastEditTime: 2025-03-17 18:05:15
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/player_exchange_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_item_widget_new.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,10 +48,11 @@ class MyTeamWidget extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 25.w),
+                margin: EdgeInsets.symmetric(vertical: 25.w),
                 alignment: Alignment.centerLeft,
                 child: Row(
                   children: [
+                    16.hGap,
                     Expanded(
                       child: Text(
                         LangKey.gametabTeam.tr,
@@ -70,37 +66,41 @@ class MyTeamWidget extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(RouteNames.teamMemberPage);
                       },
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                  color: AppColors.c000000, // 下划线颜色
-                                  width: 0.5, // 下划线粗细
-                                ))),
-                                child: Text(
-                                  "LINE-UP",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    height: 1,
-                                    color: AppColors.c262626,
-                                    fontFamily: FontFamily.fRobotoMedium,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 5.w),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                    color: AppColors.c000000, // 下划线颜色
+                                    width: 0.5, // 下划线粗细
+                                  ))),
+                                  child: Text(
+                                    "LINE-UP",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      height: 1,
+                                      color: AppColors.c262626,
+                                      fontFamily: FontFamily.fRobotoMedium,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          6.5.hGap,
-                          IconWidget(
-                            icon: Assets.iconUiIconArrows04,
-                            iconWidth: 9.w,
-                            iconColor: AppColors.c000000,
-                            rotateAngle: -90,
-                          )
-                        ],
+                              ],
+                            ),
+                            6.5.hGap,
+                            IconWidget(
+                              icon: Assets.iconUiIconArrows04,
+                              iconWidth: 9.w,
+                              iconColor: AppColors.c000000,
+                              rotateAngle: -90,
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -266,7 +266,7 @@ class MyTeamWidget extends StatelessWidget {
                         child: Column(
                           children: [
                             PlayerExchangeCard(
-                              playerId: 1402,
+                              playerId: ctrl.playerIdOld,
                               isNew: false,
                             ),
                             Container(
@@ -284,7 +284,7 @@ class MyTeamWidget extends StatelessWidget {
                               ),
                             ),
                             PlayerExchangeCard(
-                              playerId: 1402,
+                              playerId: ctrl.playerIdNew,
                             ),
                           ],
                         ),
@@ -298,15 +298,6 @@ class MyTeamWidget extends StatelessWidget {
         ),
       );
     });
-  }
-}
-
-class ExchangePlayerCard extends StatelessWidget {
-  const ExchangePlayerCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
 

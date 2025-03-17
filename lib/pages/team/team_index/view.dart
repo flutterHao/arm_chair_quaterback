@@ -2,7 +2,7 @@
  * @Description: TrainingNewWidget
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-04 19:25:55
+ * @LastEditTime: 2025-03-17 16:17:49
  */
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -56,10 +56,11 @@ class _TeamView extends GetView<TeamIndexController> {
       id: "team_index",
       builder: (ctrl) {
         return SmartRefresher(
+          physics: const BouncingScrollPhysics(),
           onRefresh: () => ctrl.initData(),
           controller: ctrl.refreshController,
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            // physics: const BouncingScrollPhysics(),
             controller: ctrl.scrollController,
             child: Column(
               children: [

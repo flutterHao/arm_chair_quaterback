@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-19 18:24:20
+ * @LastEditTime: 2025-03-17 18:40:43
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -66,7 +66,7 @@ class PlayerItem extends GetView<TeamController> {
       child: RotatedBox(
         quarterTurns: -1,
         child: Text(
-          Utils.getPosition(item.position,getKey: false).tr,
+          Utils.getPosition(item.position, getKey: false).tr,
           style: 14.w4(
               color: item.position > 0 ? AppColors.cFFFFFF : AppColors.c000000,
               height: 1,
@@ -364,7 +364,7 @@ class PlayerItem extends GetView<TeamController> {
                     controller.item1.isChange.value = false;
                     controller.item2.isChange.value = false;
                     controller.isAdd = false;
-                    await controller.changeTeamPlayer(context, isDown: true);
+                    await controller.changeTeamPlayer(isDown: true);
                     if (onDownCallBack != null) {
                       onDownCallBack!();
                     }

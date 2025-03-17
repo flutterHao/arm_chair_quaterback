@@ -87,7 +87,7 @@ class PicksIndexController extends GetxController
 
       /// 现有的列表不包含此球员,刷新数据之后再加一次
       if (!hasPlayer) {
-        _initData().then((v){
+        _initData().then((v) {
           choiceOne(player: player, needRefreshList: needRefreshList);
         });
       }

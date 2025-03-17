@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
-import 'package:arm_chair_quaterback/common/net/apis/user.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 
@@ -38,33 +36,13 @@ class OpenBoxSimpleController extends GetxController
   int selectIndex = -1;
 
   //背景入场动画
-  RxBool showBackground1 = false.obs;
-  RxBool showBackground2 = false.obs;
-  RxBool showBackground3 = false.obs;
-  Duration showBgDuration = const Duration(milliseconds: 200);
-  RxBool showChangeText = false.obs;
   RxBool showCollect = false.obs;
 
   // bool isOpen = false; //防止重复点击
-  bool loadDataSuccess = false;
-  bool isLoading = true;
   bool isStartting = false;
 
-  late StreamSubscription<int> subscription;
   late AnimationController fallOutAnimatedCtrl;
   late Animation<double> fallOutAnimation;
-
-  var heartCountDownStr = "00:00:00".obs;
-  CardPackPlayerEntity cardPackPlayerEntity = CardPackPlayerEntity();
-
-  //获取球员
-  // var getPlayerCount = 0.obs;
-  // var showGetPlayerTip = false.obs;
-  final overlayEntry = OverlayEntry(
-    builder: (context) {
-      return CardFlyWidget(duration: 800.milliseconds);
-    },
-  );
 
   @override
   void onInit() {
@@ -88,16 +66,7 @@ class OpenBoxSimpleController extends GetxController
   //   // initData();
   // }
 
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
-
   Future toOpenBoxPage(int playerId) async {
-    showBackground1.value = false;
-    showBackground2.value = false;
-    showBackground3.value = false;
     showCollect.value = false;
 
     CardPackInfoCard item = CardPackInfoCard();
@@ -118,8 +87,45 @@ class OpenBoxSimpleController extends GetxController
 
     ///判断球员位置ovr是否大于当前值
     TeamController teamCtrl = Get.find();
-    teamCtrl.showExChange = true;
-    teamCtrl.update();
+    teamCtrl.ovrChange = 0;
+    teamCtrl.playerIdOld = 0;
+    teamCtrl.playerIdNew = playerId;
+    var teamPlayers = teamCtrl.myTeamEntity.teamPlayers;
+    var lineList = teamPlayers.where((e) => e.position > 0).toList();
+    // var subList = teamPlayers.where((e) => e.position == 0).toList();
+    // teamCtrl.
+    var newNbaInfo = Utils.getPlayBaseInfo(playerId);
+
+    ///找出ovr最小的球员
+    for (var myPlayer in lineList) {
+      var oldNbaInfo = Utils.getPlayBaseInfo(myPlayer.playerId);
+      String position = Utils.getPosition(myPlayer.position);
+      //新的球员ovr大于队伍中的球员
+      if (newNbaInfo.position.contains(position)) {
+        if (newNbaInfo.playerScore > oldNbaInfo.playerScore) {
+          teamCtrl.playerIdOld = myPlayer.playerId;
+          teamCtrl.ovrChange = newNbaInfo.playerScore - oldNbaInfo.playerScore;
+          break;
+        }
+      }
+    }
+    //如果没有找到，从替补中找
+    // if (teamCtrl.playerIdOld == 0) {
+    //   for (var myPlayer in subList) {
+    //     var oldNbaInfo = Utils.getPlayBaseInfo(myPlayer.playerId);
+    //     var positions = oldNbaInfo.position.split("/");
+    //     if (newNbaInfo.position.contains(positions.first)) {
+    //       if (newNbaInfo.playerScore > oldNbaInfo.playerScore) {
+    //         teamCtrl.playerIdOld = myPlayer.playerId;
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
+    if (teamCtrl.playerIdOld != 0) {
+      teamCtrl.showExChange = true;
+      teamCtrl.update();
+    }
   }
 
   Future clickkBox() async {
@@ -127,6 +133,8 @@ class OpenBoxSimpleController extends GetxController
     showCollect.value = false;
     if (currentCardPack.playerCards.length == 1) {
       step = 2;
+      update(["open_box_simple"]);
+      await Future.delayed(const Duration(milliseconds: 500));
       var player = currentCardPack.playerCards.first;
       player.isOpen.value = true;
       player.isSelect.value = true;
@@ -139,12 +147,8 @@ class OpenBoxSimpleController extends GetxController
       step = 1;
     }
 
-    showChangeText.value = false;
     update(["open_box_simple"]);
     setCardPosition(Get.context!, 1, duration: 10);
-    Future.delayed(1000.milliseconds).then((v) {
-      showChangeText.value = true;
-    });
   }
 
   //type=0;合拢 初始化, 1分散卡牌
@@ -239,48 +243,6 @@ class OpenBoxSimpleController extends GetxController
     }
   }
 
-  Future showBigCard(PlayerCardEntity card) async {
-    // update(["open_box_simple"]);
-    // showBackground1.value = true;
-    // await Future.delayed(showBgDuration);
-    // showBackground2.value = true;
-    // await Future.delayed(showBgDuration);
-    // showBackground3.value = true;
-    step = 2;
-    // await Future.delayed(showBgDuration);
-    // await Future.delayed(showBgDuration);
-  }
-
-  //展示打卡后继续
-  void toContinue(
-    BuildContext ctx,
-  ) async {
-    //下一步显示小卡或者one more
-    if (step == 2) {
-      if (currentCardPack.playerCards.length == 1) {
-        await closeBigBox();
-        back(ctx);
-      } else {
-        await closeBigBox();
-        gotIt();
-        update(["open_box_simple"]);
-      }
-    } else if (step == 4) {
-      back(ctx);
-    }
-  }
-
-  void back(context) {
-    // TeamApi.closeCard(currentCardPack.index).then((v) {
-    //   getBattleBox();
-    //   IllustratiionsController ctrl = Get.find();
-    //   ctrl.getPlayerCollectInfo();
-    //   HomeController.to.updateMoney();
-    // });
-
-    Get.back();
-  }
-
   //one more，返回到第一步
   Future oneMore(int coinNum) async {
     if (coinNum >
@@ -302,39 +264,13 @@ class OpenBoxSimpleController extends GetxController
     }
   }
 
-  Future closeBigBox() async {
-    showBackground1.value = false;
-    await Future.delayed(showBgDuration);
-    showBackground2.value = false;
-    await Future.delayed(100.milliseconds);
-    showBackground3.value = false;
-    await Future.delayed(showBgDuration);
-  }
-
   Future buyCardPack() async {
     await TeamApi.buyCardPack().then((v) async {
       HomeController.to.updateMoney();
       OpenBoxSimpleController controller = Get.find();
       await controller.toOpenBoxPage(v.playerId);
-      cardPackPlayerEntity = v;
+      TeamController teamCtrl = Get.find();
+      teamCtrl.getBagPlayers();
     });
   }
 }
-
-Map<String, int> _gradeMap = {
-  "S+": 0,
-  "S": 1,
-  "S-": 2,
-  "A+": 3,
-  "A": 4,
-  "A-": 5,
-  "B+": 6,
-  "B": 7,
-  "B-": 8,
-  "C+": 9,
-  "C": 10,
-  "C-": 11,
-  "D+": 12,
-  "D": 13,
-  "D-": 14,
-};
