@@ -16,9 +16,9 @@ StealPlayerReteEntity $StealPlayerReteEntityFromJson(
   if (permyriad != null) {
     stealPlayerReteEntity.permyriad = permyriad;
   }
-  final String? quality = jsonConvert.convert<String>(json['quality']);
-  if (quality != null) {
-    stealPlayerReteEntity.quality = quality;
+  final String? grade = jsonConvert.convert<String>(json['grade']);
+  if (grade != null) {
+    stealPlayerReteEntity.grade = grade;
   }
   final int? star = jsonConvert.convert<int>(json['star']);
   if (star != null) {
@@ -33,7 +33,7 @@ Map<String, dynamic> $StealPlayerReteEntityToJson(
   data['difficulty'] = entity.difficulty;
   data['id'] = entity.id;
   data['permyriad'] = entity.permyriad;
-  data['quality'] = entity.quality;
+  data['grade'] = entity.grade;
   data['star'] = entity.star;
   return data;
 }
@@ -43,14 +43,14 @@ extension StealPlayerReteEntityExtension on StealPlayerReteEntity {
     String? difficulty,
     int? id,
     int? permyriad,
-    String? quality,
+    String? grade,
     int? star,
   }) {
     return StealPlayerReteEntity()
       ..difficulty = difficulty ?? this.difficulty
       ..id = id ?? this.id
       ..permyriad = permyriad ?? this.permyriad
-      ..quality = quality ?? this.quality
+      ..grade = grade ?? this.grade
       ..star = star ?? this.star;
   }
 }

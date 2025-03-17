@@ -8,7 +8,7 @@ class StealPlayerReteEntity {
 	late String difficulty = '';
 	late int id = 0;
 	late int permyriad = 0;
-	late String quality = '';
+	late String grade = '';
 	late int star = 0;
 
 	StealPlayerReteEntity();
