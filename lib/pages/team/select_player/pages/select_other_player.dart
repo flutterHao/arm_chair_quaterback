@@ -3,12 +3,10 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/random_other_players_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
-import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/select_player/widgets/select_bg.dart';
 import 'package:arm_chair_quaterback/pages/team/select_player/widgets/select_player_item.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +38,8 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
   }
 
   onLogin() async {
-    print(await UserApi.getTeamByAccountId());
-    HomeController.to.login();
+    Get.back();
+    Get.back();
   }
 
   @override

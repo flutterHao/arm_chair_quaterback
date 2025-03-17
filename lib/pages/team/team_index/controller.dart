@@ -175,12 +175,12 @@ class TeamIndexController extends GetxController
     shakeController.dispose();
   }
 
-  initData() {
+  Future initData() async {
     final trainingCtrl = Get.find<TrainingController>();
     final teamCtrl = Get.find<TeamController>();
     final illuCtrl = Get.find<IllustratiionsController>();
     final nbaPlayerCtrl = Get.find<NbaPlayerController>();
-    Future.wait([
+    await Future.wait([
       getBattleBox(),
       CacheApi.getGameConstant(),
       CacheApi.getPropDefine(),

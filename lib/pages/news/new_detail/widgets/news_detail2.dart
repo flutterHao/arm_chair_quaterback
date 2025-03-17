@@ -5,20 +5,17 @@
  * @LastEditTime: 2025-03-05 14:36:11
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class NewsDetailPage2 extends StatefulWidget {
   const NewsDetailPage2({super.key, required this.newsDetail});
@@ -71,9 +68,9 @@ class _NewsDetailPage2State extends State<NewsDetailPage2> {
                   right: 0,
                   child: SendCommentWidget(detail: widget.newsDetail));
             }),
-            BottomGuessTipWidget(
-              bottomValue: 9.w,
-            ),
+            // BottomGuessTipWidget(
+            //   bottomValue: 9.w,
+            // ),
           ]),
     );
   }

@@ -2,21 +2,20 @@ import 'dart:ui';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/scroll_hide_bottom_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/foundation.dart';
@@ -107,8 +106,7 @@ class _HomePageState extends State<HomePage>
                                             Get.find();
                                         if (index == 1 &&
                                             illuCtrl.hasNewPlayer.value) {
-                                          TeamIndexController ctrl =
-                                              Get.find();
+                                          TeamIndexController ctrl = Get.find();
                                           ctrl.goToIllustraction();
                                         } else {
                                           controller.onTap(1);
@@ -123,8 +121,7 @@ class _HomePageState extends State<HomePage>
                                                   : AppColors.cFFFFFF,
                                               borderRadius:
                                                   BorderRadius.circular(9.w)),
-                                          margin:
-                                              EdgeInsets.only(bottom: 9.w),
+                                          margin: EdgeInsets.only(bottom: 9.w),
                                           child: Container(
                                               height: 58.w,
                                               decoration: BoxDecoration(
@@ -132,13 +129,11 @@ class _HomePageState extends State<HomePage>
                                                       BorderRadius.circular(
                                                           5.w),
                                                   border: Border.all(
-                                                      color:
-                                                          AppColors.cE6E6E6,
+                                                      color: AppColors.cE6E6E6,
                                                       width: 1)),
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        4.w),
+                                                    BorderRadius.circular(4.w),
                                                 child: _barItem(
                                                     controller.tabItems[1],
                                                     select,
@@ -196,9 +191,9 @@ class _HomePageState extends State<HomePage>
                             ],
                           ),
                           // 竞猜选择结果底部弹框
-                          const BottomGuessTipWidget(
-                            needCheckHomeTab: true,
-                          ),
+                          // const BottomGuessTipWidget(
+                          //   needCheckHomeTab: true,
+                          // ),
                           // 底部tabBar
                         ],
                       ),
