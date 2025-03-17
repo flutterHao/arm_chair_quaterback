@@ -5,14 +5,13 @@ import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
-import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -109,7 +108,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                 Positioned(
                                     top: 14.w,
                                     right: 10.w,
-                                    child: ShareWidget(globalKey: controller.headerKey))
+                                    child: ShareWidget(
+                                        globalKey: controller.headerKey))
                               ],
                             ),
                           ),
@@ -122,6 +122,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                           child: Column(
                             children: [
                               _gameStartAndMvpWidget(),
+
                               /// 赛程竞猜
                               Builder(builder: (context) {
                                 return SizedBox.shrink();
@@ -172,7 +173,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
 
                               /// 球员竞猜
                               if (controller.getPlayerV2().isNotEmpty &&
-                                  controller.getPlayerMaxLength() != 0 && false) ...[
+                                  controller.getPlayerMaxLength() != 0 &&
+                                  false) ...[
                                 Container(
                                   margin: EdgeInsets.only(top: 9.w),
                                   height: 114.w +
@@ -523,9 +525,9 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                           ),
                         ),
                         // 竞猜选择确认弹框
-                        BottomGuessTipWidget(
-                          bottomValue: 9.w,
-                        ),
+                        // BottomGuessTipWidget(
+                        //   bottomValue: 9.w,
+                        // ),
                       ],
                     ),
                   )
@@ -704,8 +706,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                             )),
                         9.vGap,
                         ...List.generate(
-                            controller.scoresNotStartGameEntity!.questions.length,
-                            (index) {
+                            controller.scoresNotStartGameEntity!.questions
+                                .length, (index) {
                           Question item = controller
                               .scoresNotStartGameEntity!.questions[index];
                           var baseInfo = Utils.getPlayBaseInfo(item.playerId);
@@ -787,8 +789,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.horizontal(
-                                                        left:
-                                                            Radius.circular(5.w)),
+                                                        left: Radius.circular(
+                                                            5.w)),
                                               ),
                                             ),
                                           ),
@@ -807,7 +809,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                                 ? AppColors.cB3B3B3
                                                 : AppColors.c000000,
                                             height: 1,
-                                            fontFamily: FontFamily.fOswaldRegular,
+                                            fontFamily:
+                                                FontFamily.fOswaldRegular,
                                           ),
                                         ))
                                   ],
@@ -846,7 +849,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                               20.hGap,
                               IconWidget(
                                 iconWidth: 17.w,
-                                icon: Assets.commonUiCommonIconSystemLikeComment,
+                                icon:
+                                    Assets.commonUiCommonIconSystemLikeComment,
                                 iconColor: AppColors.c000000,
                               )
                             ],
@@ -864,8 +868,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       ...List.generate(
                           controller.scoresNotStartGameEntity!.questions.length,
                           (index) {
-                        Question item =
-                            controller.scoresNotStartGameEntity!.questions[index];
+                        Question item = controller
+                            .scoresNotStartGameEntity!.questions[index];
                         var baseInfo = Utils.getPlayBaseInfo(item.playerId);
                         return MtInkWell(
                           onTap: () => controller.scheduleChoose(item),

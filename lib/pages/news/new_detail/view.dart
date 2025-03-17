@@ -4,30 +4,28 @@
  * @Date: 2024-11-14 11:11:48
  * @LastEditTime: 2025-03-13 15:21:17
  */
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
-import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
-import 'package:common_utils/common_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
+import 'package:common_utils/common_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class NewsDetailPage extends StatefulWidget {
   const NewsDetailPage({super.key});
@@ -135,9 +133,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           child: SendCommentWidget(
                               detail: controller.state.detailList.first));
                     }),
-                  BottomGuessTipWidget(
-                    bottomValue: 9.w,
-                  ),
+                  // BottomGuessTipWidget(
+                  //   bottomValue: 9.w,
+                  // ),
                 ]);
           }),
     );

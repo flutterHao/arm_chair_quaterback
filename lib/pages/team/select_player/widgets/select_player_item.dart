@@ -1,11 +1,15 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class SelectPlayerItemWidget extends StatelessWidget {
   const SelectPlayerItemWidget(
@@ -27,22 +31,25 @@ class SelectPlayerItemWidget extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: Row(
             children: [
-              Container(
-                width: 106.w,
-                decoration: BoxDecoration(
-                  color: Utils.getTeamColor(
-                      Utils.getPlayBaseInfo(playerId).teamId),
-                ),
-                child: Center(
-                  child: ImageWidget(
-                    url: Utils.getPlayUrl(playerId),
+              MtInkWell(
+                  onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
+                      arguments: PlayerDetailPageArguments(playerId)),
+                  child: Container(
                     width: 106.w,
-                    height: 106.w,
-                    // loadingWidget: const SizedBox.shrink(),
-                    errorWidget: const SizedBox.shrink(),
-                  ),
-                ),
-              ),
+                    decoration: BoxDecoration(
+                      color: Utils.getTeamColor(
+                          Utils.getPlayBaseInfo(playerId).teamId),
+                    ),
+                    child: Center(
+                      child: ImageWidget(
+                        url: Utils.getPlayUrl(playerId),
+                        width: 106.w,
+                        height: 106.w,
+                        // loadingWidget: const SizedBox.shrink(),
+                        errorWidget: const SizedBox.shrink(),
+                      ),
+                    ),
+                  )),
               18.hGap,
               Expanded(
                   child: Column(
