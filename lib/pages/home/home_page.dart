@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/scroll_hide_bottom_bar.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/common/splash_page.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/foundation.dart';
@@ -23,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../common/constant/getx_builder_ids.dart';
 import 'index.dart';
 
 class HomePage extends StatefulWidget {
@@ -45,6 +47,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (pop, result) async {
@@ -59,7 +62,11 @@ class _HomePageState extends State<HomePage>
       child: HorizontalDragBackParentWidget(
         child: GetBuilder<HomeController>(
           assignId: true,
+          id: GetXBuilderIds.idGlobalUserEntityRefresh,
           builder: (logic) {
+            if (controller.isLoading) {
+              return SplashPage();
+            }
             return ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(
                 dragDevices: {

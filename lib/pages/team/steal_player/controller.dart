@@ -48,15 +48,15 @@ class StealPlayerController extends GetxController
     super.onInit();
     _initData();
     failedAnimationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     flipAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: failedAnimationController, curve: Interval(0.0, 300 / 500)));
+        parent: failedAnimationController, curve: Interval(0.0, 100 / 300)));
     failedScaleAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: failedAnimationController,
-        curve: Interval(300 / 500, 400 / 500)));
+        curve: Interval(100 / 500, 300 / 300)));
     failedShowAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: failedAnimationController,
-        curve: Interval(300 / 500, 500 / 500)));
+        curve: Interval(100 / 500, 300 / 300)));
 
     animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: milliseconds));
@@ -74,17 +74,17 @@ class StealPlayerController extends GetxController
             curve: Interval(0.0, 100 / milliseconds)));
     scaleAnimation = TweenSequence([
       TweenSequenceItem(
-          tween: Tween(begin: 1.0, end: 148 / 108 + 0.2), weight: 700 / 900),
+          tween: Tween(begin: 1.0, end: 148 / 108 + 0.5), weight: 800 / 900),
       TweenSequenceItem(
-          tween: Tween(begin: 148 / 108 + 0.2, end: 148 / 108),
-          weight: 200 / 900),
+          tween: Tween(begin: 148 / 108 + 0.5, end: 148 / 108),
+          weight: 100 / 900),
     ]).animate(CurvedAnimation(
         parent: animationController,
         curve: Interval(100 / milliseconds, 1000 / milliseconds)));
     shakeAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
           parent: animationController,
-          curve: Interval(200 / milliseconds, 800 / milliseconds)),
+          curve: Interval(200 / milliseconds, 700 / milliseconds)),
     );
     showAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: animationController,

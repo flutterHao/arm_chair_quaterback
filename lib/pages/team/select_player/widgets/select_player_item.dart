@@ -4,8 +4,10 @@ import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,11 +83,8 @@ class SelectPlayerItemWidget extends StatelessWidget {
                   color: isSelect ? AppColors.c10A86A : AppColors.cB3B3B3,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  Icons.check_rounded,
-                  color: Colors.white,
-                  size: 26.w,
-                ),
+                child:
+                    IconWidget(icon: Assets.iconUiIconConfirm, iconWidth: 18.w),
               ),
             ))
       ],
