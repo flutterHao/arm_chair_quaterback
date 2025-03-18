@@ -308,4 +308,8 @@ class TeamApi {
         .post(Api.randomOtherPlayers, data: {"playerId": playerId});
     return json.map((e) => RandomOtherPlayersEntity.fromJson(e)).toList();
   }
+
+  static Future<void> getNewsEventAward() async {
+    await httpUtil.post(Api.getNewsEventAward);
+  }
 }

@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2025-03-13 19:22:06
+ * @LastEditTime: 2025-03-18 16:42:57
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
@@ -48,15 +49,16 @@ class CommentsDialog extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 8.w),
-                  width: 44.w,
-                  height: 4.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.cB2B2B2,
-                    borderRadius: BorderRadius.circular(2.w),
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(vertical: 8.w),
+                //   width: 44.w,
+                //   height: 4.w,
+                //   decoration: BoxDecoration(
+                //     color: AppColors.cB2B2B2,
+                //     borderRadius: BorderRadius.circular(2.w),
+                //   ),
+                // ),
+                DialogTopBtn(),
                 Expanded(child: CommentsList(detail: detail)),
                 30.vGap,
               ],

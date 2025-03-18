@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/wi
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_header.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/game_leader_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/game_over_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_v2/game_over_v2.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_players.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
@@ -100,7 +101,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                                   bottom: 0,
                                   left: 0,
                                   right: 0,
-                                  child: GameOverWidget()),
+                                  child: GameOverV2()),
                           ],
                         );
                       }),

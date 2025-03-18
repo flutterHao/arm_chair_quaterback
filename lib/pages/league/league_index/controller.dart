@@ -143,7 +143,7 @@ class LeagueController extends GetxController with GetTickerProviderStateMixin {
       }
     });
     tabSubscription = Get.find<HomeController>().tabIndex.listen((value) {
-      if (value == 1) {
+      if (value == 2) {
         getScoreDateTime();
       }
     });

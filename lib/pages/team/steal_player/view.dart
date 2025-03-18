@@ -25,8 +25,10 @@ class StealPlayer extends GetView<StealPlayerController> {
                 height: double.infinity,
                 width: double.infinity,
                 child: Builder(builder: (_) {
-                  return PlayerChoose();
-                  return TranslationPage();
+                  if(controller.ready) {
+                    return PlayerChoose();
+                  }
+                  return TranslationPage(onEnd: ()=>controller.translationPageEnd());
                 }),
               );
             }));

@@ -10,9 +10,11 @@ import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -46,6 +48,8 @@ class GameOverController extends GetxController {
   var leftCupNum = -1;
   var rightCupNum = -1;
 
+  bool alreadyGetNewsEventAward = false;
+
   @override
   void onReady() {
     super.onReady();
@@ -53,14 +57,17 @@ class GameOverController extends GetxController {
     SoundServices.to
         .playSound(isLeftWin() ? Assets.soundGamewin : Assets.soundGameFail);
     print('=========onReady');
-    showRewardDialog();
+    // showRewardDialog();
   }
 
-  showRewardDialog(){
-    showDialog(context: context, builder: (c){
-      return RewardDialog();
-    });
+  showRewardDialog() {
+    showDialog(
+        context: context,
+        builder: (c) {
+          return RewardDialog();
+        });
   }
+
   PkResultUpdatedPlayerResults? getMvpInfo() {
     var teamBattleV2Controller = Get.find<TeamBattleV2Controller>();
     return teamBattleV2Controller.pkResultUpdatedEntity?.playerResults
@@ -348,5 +355,17 @@ class GameOverController extends GetxController {
             .cup ??
         0;
     return currentCup;
+  }
+
+  void getNewsEventAward() {
+    if (alreadyGetNewsEventAward) return;
+    alreadyGetNewsEventAward = true;
+    TeamApi.getNewsEventAward().then((_) {
+      update();
+    }, onError: (e) {
+      alreadyGetNewsEventAward = false;
+      update();
+      ErrorUtils.toast(e);
+    });
   }
 }

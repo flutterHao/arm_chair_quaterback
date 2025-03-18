@@ -85,6 +85,8 @@ dependencies:
   # just_audio: ^0.9.46
   connectivity_plus: ^6.1.3
   pin_code_fields: ^8.0.1
+  # showcaseview: ^4.0.1
+
   flutter_holo_date_picker: ^2.0.0
 dev_dependencies:
   flutter_test:

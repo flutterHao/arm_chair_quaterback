@@ -94,75 +94,80 @@ class _HomePageState extends State<HomePage>
                         ),
                         child: Column(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: controller.tabItems.map((e) {
-                                int index = controller.tabItems.indexOf(e);
-                                bool select =
-                                    index == controller.tabIndex.value;
-                                if (index == 1) {
-                                  return Container(
-                                    width: 74.w,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.cFFFFFF,
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(9.w))),
-                                    child: MtInkWell(
-                                      onTap: () {
-                                        IllustratiionsController illuCtrl =
-                                            Get.find();
-                                        if (index == 1 &&
-                                            illuCtrl.hasNewPlayer.value) {
-                                          TeamIndexController ctrl = Get.find();
-                                          ctrl.goToIllustraction();
-                                        } else {
-                                          controller.onTap(1);
-                                        }
-                                      },
-                                      child: Container(
-                                          height: 66.w,
-                                          padding: EdgeInsets.all(4.w),
-                                          decoration: BoxDecoration(
-                                              color: select
-                                                  ? AppColors.cFFFFFF
-                                                  : AppColors.cFFFFFF,
-                                              borderRadius:
-                                                  BorderRadius.circular(9.w)),
-                                          margin: EdgeInsets.only(bottom: 9.w),
-                                          child: Container(
-                                              height: 58.w,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.w),
-                                                  border: Border.all(
-                                                      color: AppColors.cE6E6E6,
-                                                      width: 1)),
-                                              child: ClipRRect(
+                            Obx(() {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: controller.tabItems.map((e) {
+                                  int index = controller.tabItems.indexOf(e);
+                                  bool select =
+                                      index == controller.tabIndex.value;
+                                  if (index == 1) {
+                                    return Container(
+                                      width: 74.w,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.cFFFFFF,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(9.w))),
+                                      child: MtInkWell(
+                                        onTap: () {
+                                          IllustratiionsController illuCtrl =
+                                          Get.find();
+                                          if (index == 1 &&
+                                              illuCtrl.hasNewPlayer.value) {
+                                            TeamIndexController ctrl = Get
+                                                .find();
+                                            ctrl.goToIllustraction();
+                                          } else {
+                                            controller.onTap(1);
+                                          }
+                                        },
+                                        child: Container(
+                                            height: 66.w,
+                                            padding: EdgeInsets.all(4.w),
+                                            decoration: BoxDecoration(
+                                                color: select
+                                                    ? AppColors.cFFFFFF
+                                                    : AppColors.cFFFFFF,
                                                 borderRadius:
-                                                    BorderRadius.circular(4.w),
-                                                child: _barItem(
-                                                    controller.tabItems[1],
-                                                    select,
-                                                    58.w,
-                                                    isCenter: true),
-                                              ))),
+                                                BorderRadius.circular(9.w)),
+                                            margin: EdgeInsets.only(
+                                                bottom: 9.w),
+                                            child: Container(
+                                                height: 58.w,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        5.w),
+                                                    border: Border.all(
+                                                        color: AppColors
+                                                            .cE6E6E6,
+                                                        width: 1)),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                  BorderRadius.circular(4.w),
+                                                  child: _barItem(
+                                                      controller.tabItems[1],
+                                                      select,
+                                                      58.w,
+                                                      isCenter: true),
+                                                ))),
+                                      ),
+                                    );
+                                  }
+                                  return Flexible(
+                                    flex: 1,
+                                    child: Container(
+                                      color: AppColors.cFFFFFF,
+                                      child: MtInkWell(
+                                        onTap: () => controller.onTap(index),
+                                        child: _barItem(e, select, 66.w,
+                                            showMessageCount: index == 4),
+                                      ),
                                     ),
                                   );
-                                }
-                                return Flexible(
-                                  flex: 1,
-                                  child: Container(
-                                    color: AppColors.cFFFFFF,
-                                    child: MtInkWell(
-                                      onTap: () => controller.onTap(index),
-                                      child: _barItem(e, select, 66.w,
-                                          showMessageCount: index == 4),
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
+                                }).toList(),
+                              );
+                            }),
                             Container(
                               height: Utils.getPaddingBottom(),
                               width: double.infinity,
@@ -237,8 +242,8 @@ class _HomePageState extends State<HomePage>
                   if (isCenter && select && false) //二期功能
                     Expanded(
                         child: SizedBox(
-                      width: 4.w,
-                    )),
+                          width: 4.w,
+                        )),
                   Stack(
                     children: [
                       Container(
@@ -254,7 +259,7 @@ class _HomePageState extends State<HomePage>
                       ),
                       if (showMessageCount && false)
 
-                        /// 消息数量
+                      /// 消息数量
                         Positioned(
                           top: 0.w,
                           right: 0,
@@ -308,15 +313,15 @@ class _HomePageState extends State<HomePage>
                 e.label.tr,
                 style: select
                     ? 12.w5(
-                        color: isCenter ? AppColors.cFFFFFF : AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoMedium)
+                    color: isCenter ? AppColors.cFFFFFF : AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoMedium)
                     : 12.w4(
-                        color: isCenter && select
-                            ? AppColors.cFFFFFF
-                            : AppColors.c000000.withOpacity(0.3),
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
+                    color: isCenter && select
+                        ? AppColors.cFFFFFF
+                        : AppColors.c000000.withOpacity(0.3),
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular),
               )
             ],
           ),
@@ -344,44 +349,45 @@ class NewPlayerTip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<IllustratiionsController>(
-        // init: IllustratiionsController(),
+      // init: IllustratiionsController(),
         builder: (ctrl) {
-      return Obx(() {
-        return AnimatedScale(
-          duration: 300.milliseconds,
-          scale: ctrl.hasNewPlayer.value ? 1 : 0,
-          child: BubbleBox(
-            arrowOffset: 75.w,
-            color: AppColors.c000000,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 9.w),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Get new player:  ",
-                    style: TextStyle(
-                        fontSize: 16.sp,
-                        color: AppColors.cFFFFFF,
-                        fontFamily: FontFamily.fOswaldMedium),
+          return Obx(() {
+            return AnimatedScale(
+              duration: 300.milliseconds,
+              scale: ctrl.hasNewPlayer.value ? 1 : 0,
+              child: BubbleBox(
+                arrowOffset: 75.w,
+                color: AppColors.c000000,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 20.w, vertical: 9.w),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Get new player:  ",
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 1.5.w),
+                        child: AnimatedNum(
+                          milliseconds: 100,
+                          textStyle: TextStyle(
+                              fontSize: 16.sp,
+                              color: AppColors.cFFFFFF,
+                              fontFamily: FontFamily.fRobotoMedium),
+                          number: ctrl.getPlayerCards.length,
+                        ),
+                      )
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 1.5.w),
-                    child: AnimatedNum(
-                      milliseconds: 100,
-                      textStyle: TextStyle(
-                          fontSize: 16.sp,
-                          color: AppColors.cFFFFFF,
-                          fontFamily: FontFamily.fRobotoMedium),
-                      number: ctrl.getPlayerCards.length,
-                    ),
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
-        );
-      });
-    });
+            );
+          });
+        });
   }
 }

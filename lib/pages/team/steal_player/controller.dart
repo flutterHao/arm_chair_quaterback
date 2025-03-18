@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/steal_response_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/steal_team_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -20,6 +21,8 @@ class StealPlayerController extends GetxController
     with GetTickerProviderStateMixin {
   late StealTeamEntity stealTeamEntity;
   var loadStatus = LoadDataStatus.loading.obs;
+  ScrollController scrollController = ScrollController();
+  bool ready = false;
 
   /// 偷球员状态：0 未选择 1 成功 2 失败
   var stealStatus = 0.obs;
@@ -94,6 +97,11 @@ class StealPlayerController extends GetxController
         curve: Interval(1100 / milliseconds, 1300 / milliseconds)));
   }
 
+  translationPageEnd() {
+    ready = true;
+    update();
+  }
+
   _initData() {
     loadStatus.value = LoadDataStatus.loading;
     Future.wait([
@@ -117,9 +125,10 @@ class StealPlayerController extends GetxController
       NbaPlayerInfosPlayerBaseInfoList playBaseInfo,
       int index,
       GlobalKey<State<StatefulWidget>> itemKey,
-      BuildContext context) {
+      Size screenSize) async {
     if (!Utils.canOperate()) return;
-    final screenSize = MediaQuery.of(context).size;
+    await scrollController.animateTo(0,
+        duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
     //点击之后不看再次点击
     if (chooseIndex != -1) {
       return;
@@ -148,7 +157,8 @@ class StealPlayerController extends GetxController
       translateAnimation = Tween<Offset>(
               begin: Offset.zero,
               end: Offset((screenCenter.dx - size.width / 2), screenCenter.dy) -
-                  tappedItemRect.topLeft)
+                  tappedItemRect.topLeft -
+                  Offset(0, -70))
           .animate(
         CurvedAnimation(
             parent: animationController,
@@ -189,6 +199,7 @@ class StealPlayerController extends GetxController
   void onClose() {
     animationController.dispose();
     failedAnimationController.dispose();
+    scrollController.dispose();
     super.onClose();
   }
 }

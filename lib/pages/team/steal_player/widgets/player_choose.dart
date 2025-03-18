@@ -42,7 +42,10 @@ class PlayerChoose extends GetView<StealPlayerController> {
           });
         }
         return Column(
-          children: [buildHeader(), _buildContent()],
+          children: [
+            buildHeader(),
+            _buildContent(),
+          ],
         );
       },
     );
@@ -133,28 +136,28 @@ class PlayerChoose extends GetView<StealPlayerController> {
               ),
             ),
           ),
-          24.vGap,
-          Opacity(
-            opacity: controller.failedShowAnimation.value,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconWidget(
-                  icon: Assets.commonUiCommonProp05,
-                  iconWidth: 27.w,
-                ),
-                6.hGap,
-                Text(
-                  "+${Utils.formatMoney(controller.stealResponseEntity.awardData[0].num)}",
-                  style: 19.w5(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium,
-                  ),
-                )
-              ],
-            ),
-          ),
+          // 24.vGap,
+          // Opacity(
+          //   opacity: controller.failedShowAnimation.value,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       IconWidget(
+          //         icon: Assets.commonUiCommonProp05,
+          //         iconWidth: 27.w,
+          //       ),
+          //       6.hGap,
+          //       Text(
+          //         "+${Utils.formatMoney(controller.stealResponseEntity.awardData[0].num)}",
+          //         style: 19.w5(
+          //           color: AppColors.c000000,
+          //           height: 1,
+          //           fontFamily: FontFamily.fOswaldMedium,
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           Expanded(
               child: Stack(
             alignment: Alignment.center,
@@ -182,10 +185,13 @@ class PlayerChoose extends GetView<StealPlayerController> {
     );
   }
 
-
   Widget _buildContinue() {
     return MtInkWell(
-      onTap: () => Get.back(),
+      onTap: () {
+        print('controller.chooseIndex:${controller.chooseIndex}');
+        if (controller.chooseIndex == -1) return;
+        Get.back();
+      },
       child: Center(
         child: Text(
           "CONTINUE",
@@ -262,6 +268,7 @@ class PlayerChoose extends GetView<StealPlayerController> {
                 right: 0,
                 left: 0,
                 child: GridView.builder(
+                    controller: controller.scrollController,
                     padding:
                         EdgeInsets.symmetric(vertical: 18.w, horizontal: 16.w),
                     itemCount: controller.stealTeamEntity.players.length,
@@ -295,7 +302,7 @@ class PlayerChoose extends GetView<StealPlayerController> {
                           )),
                       child: _buildContinue(),
                     ),
-                  ))
+                  )),
             ],
           ),
         )
@@ -312,11 +319,12 @@ class PlayerChoose extends GetView<StealPlayerController> {
   Widget _buildItem(NbaPlayerInfosPlayerBaseInfoList playBaseInfo,
       StealTeamPlayers player, int index, BuildContext context) {
     GlobalKey itemKey = GlobalKey();
+    final screenSize = MediaQuery.of(context).size;
     Widget normalWidget = Column(
       children: [
         MtInkWell(
           onTap: () => controller.onItemTap(
-              player, playBaseInfo, index, itemKey, context),
+              player, playBaseInfo, index, itemKey, screenSize),
           child: _buildCard(playBaseInfo, player),
         ),
         5.vGap,

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/chart_painter.dart';
@@ -10,6 +11,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/ball_path_painter.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/high_light_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/loading.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/round_transform_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/start_game_count_down_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +27,8 @@ import 'mark_animation_widget.dart';
 ///created at 2024/12/12/17:28
 
 class GameCourtWidget extends GetView<TeamBattleV2Controller> {
-  const GameCourtWidget({required this.height,this.needCountDown = false, super.key});
+  const GameCourtWidget(
+      {required this.height, this.needCountDown = false, super.key});
 
   final bool needCountDown;
   final double height;
@@ -56,8 +59,9 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                     builder: (_) {
                       return Container(
                         margin: EdgeInsets.only(top: 38.w),
-                        width: Utils.getMaxWidth(context)-18.w,
-                        height: ((Utils.getMaxWidth(context)-18.w)*89.w)/357.w,
+                        width: Utils.getMaxWidth(context) - 18.w,
+                        height: ((Utils.getMaxWidth(context) - 18.w) * 89.w) /
+                            357.w,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
@@ -94,6 +98,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                                 onDown: () {
                                   /// 倒计时结束，开始比赛
                                   controller.isGameStart.value = true;
+                                  controller.update([TeamBattleV2Controller.idFastForward]);
                                   controller.startGame();
                                 },
                               ),
@@ -111,8 +116,9 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                       }
                       return Container(
                           margin: EdgeInsets.only(top: 38.w),
-                          width: Utils.getMaxWidth(context)-18.w,
-                          height: ((Utils.getMaxWidth(context)-18.w)*89.w)/357.w,
+                          width: Utils.getMaxWidth(context) - 18.w,
+                          height: ((Utils.getMaxWidth(context) - 18.w) * 89.w) /
+                              357.w,
                           child: RoundTransformWidget(
                             isLeftToRight: !controller.leftRound!,
                           ));
@@ -181,11 +187,11 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                 GetBuilder<TeamBattleV2Controller>(
                     id: TeamBattleV2Controller.idPlayersLocation,
                     builder: (_) {
-                      var r = (Utils.getMaxWidth(context)-18.w)/357.w;
-                      var jHeight = r*89.w;
+                      var r = (Utils.getMaxWidth(context) - 18.w) / 357.w;
+                      var jHeight = r * 89.w;
                       return Container(
                         margin: EdgeInsets.only(top: 38.w),
-                        width: Utils.getMaxWidth(context)-18.w,
+                        width: Utils.getMaxWidth(context) - 18.w,
                         height: jHeight,
                         child: Stack(
                           alignment: Alignment.center,
@@ -193,7 +199,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                             /// 左边篮球架
                             Positioned(
                                 left: 3.w,
-                                top: jHeight/2-38.w,
+                                top: jHeight / 2 - 38.w,
                                 width: 26.w,
                                 height: 38.w,
                                 child: Center(
@@ -204,7 +210,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                             /// 右边篮球架
                             Positioned(
                                 right: 3.w,
-                                top: jHeight/2-38.w,
+                                top: jHeight / 2 - 38.w,
                                 width: 26.w,
                                 height: 38.w,
                                 child: Transform(
@@ -257,6 +263,58 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                         return const SizedBox.shrink();
                       }
                       return HighLightWidget(event: event!);
+                    }),
+              ],
+            ),
+          ),
+
+          /// 快进提示框
+          Positioned(
+            top: 0.w,
+            left: 9.w,
+            right: 9.w,
+            bottom: -90.w,
+            child: Stack(
+              children: [
+                GetBuilder<TeamBattleV2Controller>(
+                    id: TeamBattleV2Controller.idFastForward,
+                    builder: (logic) {
+                      bool superSpeedMan = controller.superSpeedMan;
+                      if (!superSpeedMan || !controller.isGameStart.value) {
+                        return const SizedBox.shrink();
+                      }
+                      return Center(
+                        child: Container(
+                          height: 38.w,
+                          width: 184.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.cFFFFFF,
+                            borderRadius: BorderRadius.circular(9.w),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.c000000.withOpacity(0.2),
+                                offset: Offset(5.w, 9.w),
+                                blurRadius: 5.w,
+                              )
+                            ]
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              LoadingWidget(),
+                              18.hGap,
+                              Text(
+                                "Fast Forwarding...",
+                                style: 12.w5(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoMedium,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
                     }),
               ],
             ),

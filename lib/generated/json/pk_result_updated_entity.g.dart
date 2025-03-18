@@ -29,6 +29,22 @@ PkResultUpdatedEntity $PkResultUpdatedEntityFromJson(
   if (playerResults != null) {
     pkResultUpdatedEntity.playerResults = playerResults;
   }
+  final String? newsTitle = jsonConvert.convert<String>(json['news_title']);
+  if (newsTitle != null) {
+    pkResultUpdatedEntity.newsTitle = newsTitle;
+  }
+  final String? newsContent = jsonConvert.convert<String>(json['news_content']);
+  if (newsContent != null) {
+    pkResultUpdatedEntity.newsContent = newsContent;
+  }
+  final int? eventType = jsonConvert.convert<int>(json['event_type']);
+  if (eventType != null) {
+    pkResultUpdatedEntity.eventType = eventType;
+  }
+  final String? eventValue = jsonConvert.convert<String>(json['event_value']);
+  if (eventValue != null) {
+    pkResultUpdatedEntity.eventValue = eventValue;
+  }
   return pkResultUpdatedEntity;
 }
 
@@ -39,6 +55,10 @@ Map<String, dynamic> $PkResultUpdatedEntityToJson(
   data['gameType'] = entity.gameType;
   data['homeTeamResult'] = entity.homeTeamResult.toJson();
   data['playerResults'] = entity.playerResults.map((v) => v.toJson()).toList();
+  data['news_title'] = entity.newsTitle;
+  data['news_content'] = entity.newsContent;
+  data['event_type'] = entity.eventType;
+  data['event_value'] = entity.eventValue;
   return data;
 }
 
@@ -48,12 +68,20 @@ extension PkResultUpdatedEntityExtension on PkResultUpdatedEntity {
     int? gameType,
     PkResultUpdatedTeamResult? homeTeamResult,
     List<PkResultUpdatedPlayerResults>? playerResults,
+    String? newsTitle,
+    String? newsContent,
+    int? eventType,
+    String? eventValue,
   }) {
     return PkResultUpdatedEntity()
       ..awayTeamResult = awayTeamResult ?? this.awayTeamResult
       ..gameType = gameType ?? this.gameType
       ..homeTeamResult = homeTeamResult ?? this.homeTeamResult
-      ..playerResults = playerResults ?? this.playerResults;
+      ..playerResults = playerResults ?? this.playerResults
+      ..newsTitle = newsTitle ?? this.newsTitle
+      ..newsContent = newsContent ?? this.newsContent
+      ..eventType = eventType ?? this.eventType
+      ..eventValue = eventValue ?? this.eventValue;
   }
 }
 

@@ -58,6 +58,7 @@ class Api {
   static const String shareNews = "$API_BASE_PATH/NBANews/shareNews";
   static const String getPlayerNews = "$API_BASE_PATH/NBANews/getPlayerNews";
   static const String sendEmoji = "$API_BASE_PATH/NBANews/sendEmoji";
+  static const String getNewsEventAward = "$API_BASE_PATH/NBANews/getNewsEventAward";
 
   //Guess
   static const String newsGuess = "$API_BASE_PATH//Guess/getNewsGuess";
