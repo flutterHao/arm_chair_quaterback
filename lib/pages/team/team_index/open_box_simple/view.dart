@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-17 20:40:55
+ * @LastEditTime: 2025-03-18 20:50:30
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -49,9 +49,12 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
       duration: duration,
       top: controller.step == 2 ? 56.h : 84.h,
       // left: controller.step == 0 ? 29.w : 15.w,
+      onEnd: () {
+        controller.showClick.value = true;
+      },
       child: AnimatedOpacity(
         duration: duration,
-        opacity: 1,
+        opacity: controller.fallOutAnimation.value == 1 ? 1 : 0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

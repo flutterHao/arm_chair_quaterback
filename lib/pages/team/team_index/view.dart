@@ -2,10 +2,11 @@
  * @Description: TrainingNewWidget
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-17 16:17:49
+ * @LastEditTime: 2025-03-18 19:42:11
  */
 
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/pages/team/nba_player/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/player_chest.dart';
 import 'package:flutter/material.dart';
