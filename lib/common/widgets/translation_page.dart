@@ -35,12 +35,12 @@ class _TranslationPageState extends State<TranslationPage>
     animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: milliseconds));
     topLeftAnimation = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-        parent: animationController, curve: Interval(100 / milliseconds, 500 / milliseconds)));
+        parent: animationController, curve: Interval(100 / milliseconds, 350 / milliseconds)));
     bottomRightAnimation = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-        parent: animationController, curve: Interval(800 / milliseconds, 1200 / milliseconds)));
+        parent: animationController, curve: Interval(800 / milliseconds, 1100 / milliseconds)));
     opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: animationController,
-        curve: Interval(1400 / milliseconds, 1800 / milliseconds)));
+        curve: Interval(1400 / milliseconds, 1700 / milliseconds)));
     Future.delayed(Duration.zero, () {
       animationController.forward().then((_){
         widget.onEnd?.call();

@@ -46,86 +46,107 @@ class GameOverV2 extends GetView<GameOverController> {
                         /// 有奖励
                         return MtInkWell(
                           onTap: () {
-                            Get.offNamed(RouteNames.stealPlayer);
+                            if (teamBattleV2Controller
+                                    .pkResultUpdatedEntity?.eventType ==
+                                2) {
+                              Get.offNamed(RouteNames.stealPlayer);
+                            } else {
+                              controller.getNewsEventAward();
+                            }
                           },
-                          child: SizedBox(
-                            height: 118.w,
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 105.w,
-                                  height: 71.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(9.w),
-                                      color: AppColors.c000000),
-                                  clipBehavior: Clip.hardEdge,
-                                  child: Stack(
-                                    alignment: Alignment.center,
+                          child: Opacity(
+                            opacity:
+                                controller.alreadyGetNewsEventAward ? 0.5 : 1.0,
+                            child: SizedBox(
+                              height: 118.w,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 105.w,
+                                    height: 71.w,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(9.w),
+                                        color: AppColors.c000000),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        OutlinedText(
+                                          text: "EVENT",
+                                          textStyle: 42.w5(
+                                              color: AppColors.c000000,
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium),
+                                          strokeColor: AppColors.c4c4c4c,
+                                          strokeWidth: 1.w,
+                                        ),
+                                        Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: IconWidget(
+                                              icon: Assets.managerUiMangerNew22,
+                                              iconWidth: 33.w,
+                                            )),
+                                        Positioned(
+                                            bottom: 0,
+                                            left: 0,
+                                            child: IconWidget(
+                                              icon: Assets.managerUiMangerNew21,
+                                              iconWidth: 33.w,
+                                            )),
+                                        IconWidget(
+                                          icon: teamBattleV2Controller
+                                                      .pkResultUpdatedEntity
+                                                      ?.eventType ==
+                                                  1
+                                              ? Assets.commonUiCommonProp05
+                                              : Assets
+                                                  .managerUiManagerFreegift01,
+                                          iconWidth: 58.w,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  12.hGap,
+                                  Expanded(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      OutlinedText(
-                                        text: "EVENT",
-                                        textStyle: 42.w5(
-                                            color: AppColors.c000000,
-                                            fontFamily: FontFamily.fOswaldMedium),
-                                        strokeColor: AppColors.c4c4c4c,
-                                        strokeWidth: 1.w,
+                                      Text(
+                                        "FEATURED UPCOMING EVENTS",
+                                        style: 16.w5(
+                                          color: AppColors.c000000,
+                                          height: 1,
+                                          fontFamily: FontFamily.fOswaldMedium,
+                                        ),
                                       ),
-                                      Positioned(
-                                          top: 0,
-                                          right: 0,
-                                          child: IconWidget(
-                                            icon: Assets.managerUiMangerNew22,
-                                            iconWidth: 33.w,
-                                          )),
-                                      Positioned(
-                                          bottom: 0,
-                                          left: 0,
-                                          child: IconWidget(
-                                            icon: Assets.managerUiMangerNew21,
-                                            iconWidth: 33.w,
-                                          )),
-                                      IconWidget(
-                                        icon: Assets.managerUiManagerFreegift01,
-                                        iconWidth: 58.w,
+                                      7.vGap,
+                                      Text(
+                                        "Click trigger",
+                                        style: 14.w4(
+                                          color: AppColors.c000000
+                                              .withOpacity(0.5),
+                                          height: 1,
+                                          fontFamily: FontFamily.fRobotoRegular,
+                                        ),
                                       )
                                     ],
-                                  ),
-                                ),
-                                12.hGap,
-                                Expanded(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "FEATURED UPCOMING EVENTS",
-                                      style: 16.w5(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fOswaldMedium,
-                                      ),
-                                    ),
-                                    7.vGap,
-                                    Text(
-                                      "Click trigger",
-                                      style: 14.w4(
-                                        color: AppColors.c000000.withOpacity(0.5),
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoRegular,
-                                      ),
-                                    )
-                                  ],
-                                )),
-                                IconWidget(
-                                  iconWidth: 8.w,
-                                  icon: Assets.commonUiCommonIconSystemJumpto,
-                                  iconColor: AppColors.c000000,
-                                )
-                              ],
+                                  )),
+                                  IconWidget(
+                                    iconWidth: 8.w,
+                                    icon: Assets.commonUiCommonIconSystemJumpto,
+                                    iconColor: AppColors.c000000,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );
                       }
+
                       /// 无奖励
                       return SizedBox(
                         height: 118.w,
