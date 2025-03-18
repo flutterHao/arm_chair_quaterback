@@ -8,14 +8,11 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 
-import 'package:arm_chair_quaterback/pages/team/team_index/open_box/card_fly_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../../../common/entities/card_pack_player_entity.dart';
 
 class OpenBoxSimpleController extends GetxController
     with GetTickerProviderStateMixin {
@@ -40,6 +37,7 @@ class OpenBoxSimpleController extends GetxController
 
   // bool isOpen = false; //防止重复点击
   bool isStartting = false;
+  var showClick = false.obs;
 
   late AnimationController fallOutAnimatedCtrl;
   late Animation<double> fallOutAnimation;
@@ -68,6 +66,7 @@ class OpenBoxSimpleController extends GetxController
 
   Future toOpenBoxPage(int playerId) async {
     showCollect.value = false;
+    showClick.value = false;
 
     CardPackInfoCard item = CardPackInfoCard();
     item.playerCards = [PlayerCardEntity(playerId: playerId)];

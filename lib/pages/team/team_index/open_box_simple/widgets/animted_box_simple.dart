@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-03-15 17:44:16
+ * @LastEditTime: 2025-03-18 20:41:14
  */
 import 'dart:math';
 
@@ -123,6 +123,7 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
             }
           });
         });
+        ctrl.update(["open_box_simple"]);
       });
     });
   }
