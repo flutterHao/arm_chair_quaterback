@@ -71,25 +71,6 @@ class CommentItemView extends StatelessWidget {
               height: 36.w,
               radius: 18.w,
             ),
-            // ImageWidget(
-            //   url: Utils.getAvaterUrl(item.teamLogo),
-            //   width: 36.w,
-            //   height: 36.w,
-            //   borderRadius: BorderRadius.circular(12.w),
-            //   errorWidget: Container(
-            //     width: 36.w,
-            //     height: 36.w,
-            //     alignment: Alignment.bottomCenter,
-            //     decoration: BoxDecoration(
-            //         color: AppColors.cD9D9D9,
-            //         borderRadius: BorderRadius.circular(4.w)),
-            //     child: Image.asset(
-            //       Assets.uiDefault_03Png,
-            //       width: 30.w,
-            //       fit: BoxFit.fitWidth,
-            //     ),
-            //   ),
-            // ),
             8.5.hGap,
             Expanded(
               child: Column(
@@ -105,20 +86,7 @@ class CommentItemView extends StatelessWidget {
                             height: 1,
                             fontFamily: FontFamily.fRobotoRegular),
                       ),
-                      // 6.hGap,
-                      // Container(
-                      //   width: 36.w,
-                      //   height: 14.w,
-                      //   alignment: Alignment.center,
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(7.w),
-                      //       color: AppColors.cE7B6DF),
-                      //   child: Text(
-                      //     "KOI",
-                      //     style: 10.w4(color: Colors.white),
-                      //   ),
-                      // ),
-                      // 13.hGap,
+
                       if (item.targetId != 0)
                         Container(
                           margin: EdgeInsets.only(left: 6.w),
@@ -309,7 +277,7 @@ class SubCommentItemView extends StatelessWidget {
                 item.teamId != (controller.userEntity.team?.teamId ?? 0)
                     ? Text(
                         item.teamName,
-                        style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                        style: 12.w4(color: AppColors.c4D4D4D, height: 1),
                       )
                     : Container(
                         width: 27.w,
@@ -331,16 +299,16 @@ class SubCommentItemView extends StatelessWidget {
                     margin: EdgeInsets.only(left: 6.w),
                     child: Text(
                       " ${controller.getReplayTeamName(item)}",
-                      style: 12.w4(color: AppColors.cB3B3B3),
+                      style: 12.w4(color: AppColors.cB3B3B3, height: 1),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 10.hGap,
                 Text(
                   controller.timeAgo(item.updateTime ?? 0),
-                  style: 12.w4(color: AppColors.cB3B3B3),
+                  style: 12.w4(color: AppColors.cB3B3B3, height: 1),
                 ),
-                Expanded(child: Container()),
+                // Expanded(child: Container()),
                 // if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
                 //   InkWell(
                 //     onTap: () {
