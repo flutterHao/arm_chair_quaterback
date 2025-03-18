@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2025-03-13 19:17:23
+ * @LastEditTime: 2025-03-18 17:19:17
  */
 
 import 'dart:math';
@@ -99,7 +99,14 @@ class CommentController extends GetxController {
     if (mainItem.sonReviews == 0) return;
     await NewsApi.getSonReviews(mainItem.newsId, mainItem.id, mainItem.page, 10)
         .then((v) {
-      mainItem.subList.addAll(v);
+      Set<int> subListIds = mainItem.subList.map((e) => e.id).toSet();
+      for (var e in v) {
+        if (!subListIds.contains(e.id)) {
+          mainItem.subList.add(e);
+          subListIds.add(e.id);
+        }
+      }
+      // mainItem.subList.addAll(v);
       int show = mainItem.current == 0
           ? (mainItem.subList.length < 3 ? mainItem.subList.length : 3)
           : 10;

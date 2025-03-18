@@ -68,20 +68,21 @@ class NewsListItem extends GetView<NewListController> {
           ),
         ),
         9.hGap,
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: AppColors.c000000,
-              borderRadius: BorderRadius.circular(4.w)),
-          child: Text(
-            "OFFICIAL",
-            style: 12.w4(
-              color: AppColors.cFFFFFF,
-              fontFamily: FontFamily.fOswaldMedium,
+        if (newsDetail.source.toLowerCase() == "reddit")
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: AppColors.c000000,
+                borderRadius: BorderRadius.circular(4.w)),
+            child: Text(
+              "OFFICIAL",
+              style: 12.w4(
+                color: AppColors.cFFFFFF,
+                fontFamily: FontFamily.fOswaldMedium,
+              ),
             ),
           ),
-        ),
         const Expanded(child: SizedBox.shrink()),
         Text(
           Utils.timeAgo(newsDetail.postTime),
