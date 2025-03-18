@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-03-15 15:44:07
+ * @LastEditTime: 2025-03-18 09:56:03
  */
 import 'dart:async';
 
@@ -92,7 +92,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Get.lazyPut(() => BeautyController());
+    // Get.lazyPut(() => BeautyController());
     Get.lazyPut(() => TeamController());
     Get.lazyPut(() => TrainingController());
     Get.lazyPut(() => IllustratiionsController());

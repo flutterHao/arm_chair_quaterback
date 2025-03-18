@@ -191,9 +191,10 @@ class StarUpgradeGame extends GetView<StarUpgradeGameController> {
                                           List<Property> list =
                                               controller.slotResult[property] ??
                                                   [];
-                                          var totalBet = list.fold(0.0, (p,e){
-                                            return p+e.bet;
-                                          })*(controller
+                                          var totalBet = list.fold(0.0, (p, e) {
+                                                return p + e.bet;
+                                              }) *
+                                              (controller
                                                       .upStarTeamPlayerV2Entity
                                                       ?.addRate ??
                                                   0);
@@ -206,9 +207,7 @@ class StarUpgradeGame extends GetView<StarUpgradeGameController> {
                                               children: [
                                                 Opacity(
                                                   opacity:
-                                                  totalBet == 0
-                                                          ? 0.4
-                                                          : 1,
+                                                      totalBet == 0 ? 0.4 : 1,
                                                   child: Column(
                                                     children: [
                                                       FittedBox(
@@ -228,8 +227,11 @@ class StarUpgradeGame extends GetView<StarUpgradeGameController> {
                                                       FittedBox(
                                                         fit: BoxFit.scaleDown,
                                                         child: Text(
-                                                          (item.baseValue+item.baseValue*totalBet)
-                                                              .toStringAsFixed(0),
+                                                          (item.baseValue +
+                                                                  item.baseValue *
+                                                                      totalBet)
+                                                              .toStringAsFixed(
+                                                                  0),
                                                           style: 14.w5(
                                                             color: AppColors
                                                                 .c000000,
@@ -255,7 +257,8 @@ class StarUpgradeGame extends GetView<StarUpgradeGameController> {
                                                     var has = list.length - 1 >=
                                                         realIndex;
                                                     return AnimatedContainer(
-                                                      duration: Duration(milliseconds: 300),
+                                                      duration: Duration(
+                                                          milliseconds: 300),
                                                       height: 14.h,
                                                       width: 28.w,
                                                       decoration: BoxDecoration(
@@ -636,7 +639,8 @@ class StarUpgradeGame extends GetView<StarUpgradeGameController> {
                                                               .repeatAnimationController
                                                               .isAnimating
                                                           ? controller
-                                                              .endAnimation.value
+                                                              .endAnimation
+                                                              .value
                                                           : controller
                                                               .repeatAnimation
                                                               .value,
@@ -803,8 +807,7 @@ class StarUpgradeGame extends GetView<StarUpgradeGameController> {
                                                 child: Stack(
                                                   children: [
                                                     IconWidget(
-                                                      icon: Assets
-                                                          .managerUiManagerRisingstarButton,
+                                                      icon: "",
                                                       iconHeight: 100.h,
                                                     ),
                                                     Positioned(

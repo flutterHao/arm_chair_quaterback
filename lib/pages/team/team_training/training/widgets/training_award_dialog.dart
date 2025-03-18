@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2025-03-07 17:11:39
+ * @LastEditTime: 2025-03-18 10:32:38
  */
 import 'dart:math';
 
@@ -265,7 +265,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                               ),
                               child: Image.asset(
                                 height: 139.w,
-                                Assets.managerUiManagerBattleTextbase01,
+                                "",
                                 fit: BoxFit.fitHeight,
                               ),
                             ),

@@ -585,7 +585,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
     List<Widget> randomWidgetList = [
       IconWidget(
           iconWidth: 26.w * scale, icon: Assets.commonUiCommonIconCurrency02),
-      IconWidget(iconWidth: 32.w * scale, icon: Assets.managerUiManagerGift03),
+      IconWidget(iconWidth: 32.w * scale, icon: Assets.managerUiManagerGift00),
       IconWidget(iconWidth: 30.w * scale, icon: Assets.commonUiCommonProp05),
       IconWidget(
         iconWidth: 27.w * scale,

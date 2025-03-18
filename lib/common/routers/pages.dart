@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-03-13 12:08:42
+ * @LastEditTime: 2025-03-18 10:33:26
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/pages/home/home_page.dart';
@@ -141,8 +141,8 @@ class AppPages {
         case RouteNames.picksReciveRward:
           ReciveRwardBinding().dependencies();
           return const ReceiveRewardPage();
-        case RouteNames.teamBeautyPage:
-          return const BeautyPage();
+        // case RouteNames.teamBeautyPage:
+        //   return const BeautyPage();
         case RouteNames.mineDailyTask:
           DailyTaskBinding().dependencies();
           return const DailyTaskPage();
@@ -167,10 +167,10 @@ class AppPages {
           return StarUpgradeNew(Get.arguments["playerUuid"]);
         case RouteNames.teamStarUpGame:
           return StarUpgradeGame(Get.arguments["playerUuid"]);
-        case RouteNames.beautyChatDtl:
-          return ChatDetailPage();
-        case RouteNames.beautyInfo:
-          return BeautyInfoWidget();
+        // case RouteNames.beautyChatDtl:
+        //   return ChatDetailPage();
+        // case RouteNames.beautyInfo:
+        //   return BeautyInfoWidget();
         case RouteNames.message:
           return MessagePage(
             ///type: 1 赛程和球员 2 赛季ovr排行榜

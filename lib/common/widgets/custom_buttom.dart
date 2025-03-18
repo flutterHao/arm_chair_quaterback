@@ -10,6 +10,9 @@ class CustomButton extends StatelessWidget {
   final double width; // 按钮宽度
   final double height; // 按钮高度
   final double? fontSize;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final Color? borderColor;
   final VoidCallback onPressed; // 点击回调
 
   const CustomButton({
@@ -20,6 +23,9 @@ class CustomButton extends StatelessWidget {
     this.type = ButtonType.confirm,
     required this.onPressed,
     this.fontSize,
+    this.backgroundColor,
+    this.textColor,
+    this.borderColor,
   });
 
   @override
@@ -54,19 +60,19 @@ class CustomButton extends StatelessWidget {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: width.w,
-        height: height.w,
+        width: width,
+        height: height,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: backgroundColor,
+          color: this.backgroundColor ?? backgroundColor,
           borderRadius: BorderRadius.circular(9.w),
-          border: Border.all(color: borderColor, width: 1),
+          border: Border.all(color: this.borderColor ?? borderColor, width: 1),
         ),
         child: Text(
           text,
           style: TextStyle(
             fontSize: fontSize ?? 16.sp,
-            color: textColor,
+            color: this.textColor ?? textColor,
             height: 1,
             fontFamily: FontFamily.fOswaldMedium,
           ),

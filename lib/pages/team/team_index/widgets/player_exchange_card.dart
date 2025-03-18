@@ -2,14 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-03-17 19:48:57
+ * @LastEditTime: 2025-03-18 09:34:06
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/custom_buttom.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:flutter/material.dart';
@@ -123,107 +122,74 @@ class PlayerExchangeCard extends GetView<TeamController> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.cFFFFFF,
-          borderRadius: BorderRadius.circular(9.r),
-          border: Border.all(color: AppColors.cB3B3B3, width: 1)),
-      child: Column(
-        children: [
-          SizedBox(
-            width: 314.w,
-            height: 107.w,
-            child: Row(
-              children: [
-                _playerPosition(),
-                10.hGap,
-                PlayerCardNew(
-                  playerId: playerId,
-                  width: 67.w,
-                  height: 83.w,
-                  isMyPlayer: true,
-                ),
-                14.5.hGap,
-                _playerInfo(),
-                if (isNew)
-                  Container(
-                    width: 64.w,
-                    height: 64.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      color: AppColors.cF2F2F2,
-                    ),
-                    child: Column(
-                      children: [
-                        11.vGap,
-                        Text(
-                          "OVR",
-                          style: 12.w4(color: AppColors.c000000, height: 0.8),
-                        ),
-                        7.vGap,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "+${controller.ovrChange}",
-                              style: 26.w4(
-                                height: 0.8,
-                                color: controller.ovrChange == 0
-                                    ? AppColors.c666666
-                                    : AppColors.c0FA76C,
-                                fontFamily: FontFamily.fOswaldMedium,
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 5.5.w, right: 3.w),
-                              child: IconWidget(
-                                icon: Assets.commonUiCommonIconSystemArrow,
-                                iconWidth: 5.5.w,
-                                fit: BoxFit.fitWidth,
-                                iconColor: controller.ovrChange == 0
-                                    ? AppColors.c666666
-                                    : AppColors.c0FA76C,
-                                rotateAngle: -90,
-                              ),
-                            ),
-                            5.hGap
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                21.hGap,
-              ],
+        color: AppColors.cFFFFFF,
+        borderRadius: BorderRadius.circular(9.r),
+      ),
+      child: SizedBox(
+        width: 314.w,
+        height: 107.w,
+        child: Row(
+          children: [
+            _playerPosition(),
+            10.hGap,
+            PlayerCardNew(
+              playerId: playerId,
+              width: 67.w,
+              height: 83.w,
+              isMyPlayer: true,
             ),
-          ),
-          if (isNew)
-            Container(
-              margin: EdgeInsets.only(bottom: 17.5.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomButton(
-                    width: 127.w,
-                    height: 40.w,
-                    text: 'CANCEL',
-                    type: ButtonType.cancel,
-                    onPressed: () {
-                      controller.showExChange = false;
-                      controller.update();
-                    },
-                  ),
-                  9.hGap,
-                  CustomButton(
-                    width: 127.w,
-                    height: 40.w,
-                    text: 'Substitute'.toUpperCase(),
-                    type: ButtonType.confirm,
-                    onPressed: () {
-                      controller.playerChangeByCardPack();
-                    },
-                  ),
-                ],
+            14.5.hGap,
+            _playerInfo(),
+            if (isNew)
+              Container(
+                width: 64.w,
+                height: 64.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(9.w),
+                  color: AppColors.cF2F2F2,
+                ),
+                child: Column(
+                  children: [
+                    11.vGap,
+                    Text(
+                      "OVR",
+                      style: 12.w4(color: AppColors.c000000, height: 0.8),
+                    ),
+                    7.vGap,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "+${controller.ovrChange}",
+                          style: 26.w4(
+                            height: 0.8,
+                            color: controller.ovrChange == 0
+                                ? AppColors.c666666
+                                : AppColors.c0FA76C,
+                            fontFamily: FontFamily.fOswaldMedium,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 5.5.w, right: 3.w),
+                          child: IconWidget(
+                            icon: Assets.commonUiCommonIconSystemArrow,
+                            iconWidth: 5.5.w,
+                            fit: BoxFit.fitWidth,
+                            iconColor: controller.ovrChange == 0
+                                ? AppColors.c666666
+                                : AppColors.c0FA76C,
+                            rotateAngle: -90,
+                          ),
+                        ),
+                        5.hGap
+                      ],
+                    )
+                  ],
+                ),
               ),
-            )
-        ],
+            21.hGap,
+          ],
+        ),
       ),
     );
   }

@@ -55,7 +55,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   TeamPlayerInfoEntity item2 = TeamPlayerInfoEntity();
   bool isAdd = false;
 
-  int sortType = 1;
+  int sortType = 2;
   // int sortType2 = 0;
   bool isFire = false;
   ScrollController scrollController = ScrollController();

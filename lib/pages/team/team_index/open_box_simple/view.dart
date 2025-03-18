@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-17 16:44:16
+ * @LastEditTime: 2025-03-17 20:40:55
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -132,7 +132,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                         iconWidth: 12.h,
                         icon: Assets.commonUiCommonIconSystemArrow,
                         rotateAngle: -90,
-                        iconColor: AppColors.cFF7954,
+                        iconColor: AppColors.cD7283B,
                       ),
                     ),
                   16.vGap,
