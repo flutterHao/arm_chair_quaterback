@@ -134,14 +134,14 @@ class PickRankPage extends GetView<PickRankController> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     // todo 未定义
-                                    _buildRewardItem(
-                                        Assets.managerUiManagerGift03,
-                                        "PLAYER",
-                                        "1TH"),
-                                    _buildRewardItem(
-                                        Assets.managerUiManagerGift02,
-                                        "BELLE",
-                                        "1TH-3TH"),
+                                    // _buildRewardItem(
+                                    //     Assets.managerUiManagerGift03,
+                                    //     "PLAYER",
+                                    //     "1TH"),
+                                    // _buildRewardItem(
+                                    //     Assets.managerUiManagerGift02,
+                                    //     "BELLE",
+                                    //     "1TH-3TH"),
                                     _buildRewardItem(Assets.picksUiPickGift01,
                                         "JETTON", "1TH-50TH"),
                                   ],

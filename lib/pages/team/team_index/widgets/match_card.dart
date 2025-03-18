@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2025-02-21 18:43:42
+ * @LastEditTime: 2025-03-18 15:02:40
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -98,16 +98,16 @@ class MatchCard extends GetView<TeamIndexController> {
                                         color: AppColors.cD9D9D9,
                                       )),
                                 )),
-                            Positioned(
-                              top: 0,
-                              left: 0,
-                              // right: 36.w,
-                              child: Image.asset(
-                                Assets.managerUiManagerIconBg,
-                                width: 339.w,
-                                // height: 168.5.w,
-                              ),
-                            ),
+                            // Positioned(
+                            //   top: 0,
+                            //   left: 0,
+                            //   // right: 36.w,
+                            //   child: Image.asset(
+                            //     Assets.managerUiManagerIconBg,
+                            //     width: 339.w,
+                            //     // height: 168.5.w,
+                            //   ),
+                            // ),
                             Positioned(
                               top: 11.w,
                               left: 16.w,

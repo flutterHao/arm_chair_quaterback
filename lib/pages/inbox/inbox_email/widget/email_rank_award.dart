@@ -95,7 +95,7 @@ class EmailRankAwardWidget extends GetView<InboxEmailController> {
                                       fit: BoxFit.contain,
                                       iconWidth: 35.w,
                                       iconHeight: 33.w,
-                                      fieldPath: Assets.managerUiManagerGift05),
+                                      fieldPath: Assets.managerUiManagerGift00),
                                   4.hGap,
                                   Text(
                                     '×${element.num}${element.id == 102 ? 'k' : ''}',

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-17 18:05:15
+ * @LastEditTime: 2025-03-18 16:11:57
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -11,6 +11,8 @@ import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/custom_buttom.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
@@ -18,6 +20,7 @@ import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/player_exchange_card.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/training_new_widget_2.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +37,7 @@ class MyTeamWidget extends StatelessWidget {
         builder: (ctrl) {
       return Container(
         width: 375.w,
-        height: 498.w,
+        height: 503.w,
         margin: EdgeInsets.symmetric(vertical: 9.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.w),
@@ -44,223 +47,248 @@ class MyTeamWidget extends StatelessWidget {
           alignment: Alignment.topCenter,
           children: [
             Positioned(
-              top: 0,
+              top: 25,
               left: 0,
               right: 0,
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 25.w),
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
                 alignment: Alignment.centerLeft,
-                child: Row(
-                  children: [
-                    16.hGap,
-                    Expanded(
-                      child: Text(
-                        LangKey.gametabTeam.tr,
-                        style: 30.w7(
-                          fontFamily: FontFamily.fOswaldBold,
-                          height: 0.75,
-                        ),
-                      ),
-                    ),
-                    MtInkWell(
-                      onTap: () {
-                        Get.toNamed(RouteNames.teamMemberPage);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 5.w),
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                    color: AppColors.c000000, // 下划线颜色
-                                    width: 0.5, // 下划线粗细
-                                  ))),
-                                  child: Text(
-                                    "LINE-UP",
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      height: 1,
-                                      color: AppColors.c262626,
-                                      fontFamily: FontFamily.fRobotoMedium,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            6.5.hGap,
-                            IconWidget(
-                              icon: Assets.iconUiIconArrows04,
-                              iconWidth: 9.w,
-                              iconColor: AppColors.c000000,
-                              rotateAngle: -90,
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+                child: Text(
+                  LangKey.gametabTeam.tr,
+                  style: 24.w7(
+                    fontFamily: FontFamily.fOswaldBold,
+                    height: 0.75,
+                  ),
                 ),
               ),
             ),
 
             Positioned(
-                top: 71.5.w,
-                child: OutlinedText(
-                  strokeColor: AppColors.ccccccc,
-                  text: "career match".toUpperCase(),
-                  textStyle: TextStyle(
-                      fontSize: 54.5.sp,
-                      height: 0.8,
-                      fontFamily: FontFamily.fOswaldBold,
-                      color: Colors.white
-                      // color: AppColors.c5A5A5A,
-                      ),
-                )),
-            Positioned(
-              top: 102.w,
+              top: 63.w,
               child: Container(
                 width: 342.w,
-                height: 369.w,
-                decoration: const BoxDecoration(
-                  border:
-                      Border(top: BorderSide(width: 3, color: Colors.white)),
+                height: 419.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(9.w),
                   image: DecorationImage(
                     alignment: Alignment.topCenter,
-                    image: AssetImage(Assets.managerUiManagerMyteamBg),
+                    image: AssetImage(Assets.managerUiMangerNew29),
                     fit: BoxFit.fitWidth,
                   ),
                 ),
                 child: Stack(
+                  alignment: Alignment.topCenter,
                   children: [
                     Positioned(
                       top: 0,
                       left: 0,
                       right: 0,
-                      bottom: 0,
+                      bottom: 100,
                       child: Opacity(
                         opacity: ctrl.showExChange ? 0 : 1,
                         child: Stack(
                           alignment: Alignment.topCenter,
                           children: [
                             Positioned(
-                              top: 48.5.w,
+                                top: 18.w,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 200.w,
+                                      height: 37.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(6.w),
+                                        color:
+                                            AppColors.c000000.withOpacity(0.5),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                left: 4.5.w, right: 9.w),
+                                            width: 3.w,
+                                            height: 21.w,
+                                            color: AppColors.cD7283B,
+                                          ),
+                                          Text(
+                                            "OVR ",
+                                            style: 16.w4(
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium,
+                                              color: AppColors.cFFFFFF,
+                                            ),
+                                          ),
+                                          // 10.hGap,
+                                          AnimatedNum(
+                                              number: ctrl.getTeamOvr(),
+                                              textStyle: 16.w4(
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium,
+                                                color: AppColors.cFFFFFF,
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                    9.hGap,
+                                    MtInkWell(
+                                      onTap: () {
+                                        Get.toNamed(RouteNames.teamMemberPage);
+                                      },
+                                      child: Container(
+                                        width: 105.w,
+                                        height: 37.w,
+                                        padding: EdgeInsets.only(
+                                            left: 11.5.w, right: 9.w),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.cFFFFFF,
+                                            borderRadius:
+                                                BorderRadius.circular(6.w)),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                "LINE-UP",
+                                                style: TextStyle(
+                                                  fontSize: 16.sp,
+                                                  height: 1,
+                                                  color: AppColors.c262626,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
+                                                ),
+                                              ),
+                                            ),
+                                            IconWidget(
+                                              icon: Assets
+                                                  .commonUiCommonIconSystemJumpto,
+                                              iconWidth: 8.w,
+                                              iconColor: AppColors.c000000,
+                                              // rotateAngle: -90,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )),
+                            Positioned(
+                              top: 86.w,
                               child: PlayerCardWidget(
                                   teamPlayers: ctrl.myTeamEntity.teamPlayers,
                                   position: 1),
                             ),
                             Positioned(
-                              top: 48.5.w,
+                              top: 86.w,
                               left: 36.w,
                               child: PlayerCardWidget(
                                   teamPlayers: ctrl.myTeamEntity.teamPlayers,
                                   position: 2),
                             ),
                             Positioned(
-                              top: 48.5.w,
+                              top: 86.w,
                               right: 36.w,
                               child: PlayerCardWidget(
                                   teamPlayers: ctrl.myTeamEntity.teamPlayers,
                                   position: 3),
                             ),
                             Positioned(
-                              top: 179.w,
+                              top: 196.w,
                               left: 91.w,
                               child: PlayerCardWidget(
                                   teamPlayers: ctrl.myTeamEntity.teamPlayers,
                                   position: 4),
                             ),
                             Positioned(
-                              top: 179.w,
+                              top: 196.w,
                               right: 91.w,
                               child: PlayerCardWidget(
                                   teamPlayers: ctrl.myTeamEntity.teamPlayers,
                                   position: 5),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              child: GetBuilder<TrainingController>(
-                                  id: "training_page",
-                                  builder: (controller) {
-                                    bool eable = controller.ballNum.value > 0;
-                                    return MtInkWell(
-                                      vibrate: true,
-                                      minScale: 0.8,
-                                      onTap: () {
-                                        // Get.toNamed(RouteNames.teamMemberPage);
-                                        if (eable) {
-                                          TeamIndexController ctrl = Get.find();
-                                          ctrl.matchBattle();
-                                        }
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 16.w),
-                                        child: Stack(
-                                          alignment: Alignment.centerRight,
-                                          children: [
-                                            Container(
-                                              width: 343.w,
-                                              height: 49.w,
-                                              decoration: BoxDecoration(
-                                                  color: eable
-                                                      ? AppColors.c000000
-                                                      : AppColors.cE6E6E,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          9.w)),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "MATCH",
-                                                style: 23.w4(
-                                                    color: eable
-                                                        ? AppColors.cFFFFFF
-                                                        : AppColors.cBFBFBF,
-                                                    fontFamily: FontFamily
-                                                        .fOswaldMedium),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              right: 10.w,
-                                              child: Obx(() {
-                                                return Row(
-                                                  children: [
-                                                    Image.asset(
-                                                      Assets.teamUiTrainingBall,
-                                                      width: 22.5.w,
-                                                    ),
-                                                    5.hGap,
-                                                    Text(
-                                                      "${controller.ballNum.value}/${controller.trainDefine.ballMaxNum} ",
-                                                      style: 16.w4(
-                                                        fontFamily: FontFamily
-                                                            .fOswaldMedium,
-                                                        color: eable
-                                                            ? AppColors.cFFFFFF
-                                                            : AppColors.cBFBFBF,
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                              }),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                            ),
                           ],
                         ),
                       ),
                     ),
+                    Positioned(
+                      bottom: 0.w,
+                      child: Container(
+                        width: 343.w,
+                        height: 100.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(9.w)),
+                          gradient: RadialGradient(
+                            radius: 5.w,
+                            colors: [
+                              AppColors.c333333,
+                              AppColors.c262626,
+                            ],
+                          ),
+                        ),
+                        // child:  SlotButton(),
+                        child: ctrl.showExChange
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CustomButton(
+                                    width: 137.w,
+                                    height: 44.w,
+                                    text: 'CANCEL',
+                                    backgroundColor: Colors.transparent,
+                                    borderColor: AppColors.cB3B3B3,
+                                    textColor: Colors.white,
+                                    type: ButtonType.cancel,
+                                    fontSize: 19.sp,
+                                    onPressed: () {
+                                      ctrl.showExChange = false;
+                                      ctrl.update();
+                                    },
+                                  ),
+                                  19.hGap,
+                                  CustomButton(
+                                    width: 137.w,
+                                    height: 44.w,
+                                    fontSize: 19.sp,
+                                    text: 'Substitute'.toUpperCase(),
+                                    backgroundColor: AppColors.cDF2A3D,
+                                    borderColor: AppColors.cDF2A3D,
+                                    textColor: AppColors.cFFFFFF,
+                                    type: ButtonType.cancel,
+                                    onPressed: () {
+                                      ctrl.playerChangeByCardPack();
+                                    },
+                                  ),
+                                ],
+                              )
+                            : Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Image.asset(
+                                    Assets.managerUiMangerNew211,
+                                    width: 375.w,
+                                    height: 41.w,
+                                  ),
+                                  MtInkWell(
+                                    splashColor: Colors.transparent,
+                                    onTap: () {
+                                      TeamIndexController ctrl = Get.find();
+                                      ctrl.matchBattle();
+                                    },
+                                    child: Image.asset(
+                                      Assets.managerUiMangerNew210,
+                                      width: 120.w,
+                                      height: 76.w,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ),
                     if (ctrl.showExChange)
                       Positioned(
-                        top: 13.w,
+                        top: 30.w,
                         left: 14.w,
                         right: 14.w,
                         child: Column(
@@ -288,7 +316,7 @@ class MyTeamWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                   ],
                 ),
               ),
@@ -320,19 +348,26 @@ class PlayerCardWidget extends GetView<TeamController> {
         PlayerCard(
           playerId: player.playerId,
           score: Utils.getPlayBaseInfo(player.playerId).playerScore,
-          status: player.playerStatus,
         ),
         3.5.vGap,
         Text(
           Utils.getPlayBaseInfo(player.playerId).ename,
-          style: 12.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.75),
+          style: 12.w4(
+            fontFamily: FontFamily.fOswaldMedium,
+            height: 0.8,
+            color: AppColors.cFFFFFF,
+          ),
         ),
         // 2.5.vGap,
         // PlayerStartWidget(grade: player.breakThroughGrade),
-        4.vGap,
+        4.5.vGap,
         Text(
           Utils.getPlayBaseInfo(player.playerId).position,
-          style: 10.w4(fontFamily: FontFamily.fRobotoRegular, height: 0.75),
+          style: 10.w4(
+            fontFamily: FontFamily.fRobotoRegular,
+            height: 0.8,
+            color: AppColors.cFFFFFF,
+          ),
         ),
       ],
     );

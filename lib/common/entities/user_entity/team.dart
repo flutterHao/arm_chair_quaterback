@@ -41,7 +41,8 @@ class Team {
   int? ut;
   int? vipGrade;
   int? wearNicknameId;
-
+  String? signature;
+  int? birthday;
   Team({
     this.accountId,
     this.accountName,
@@ -83,11 +84,9 @@ class Team {
     this.wearNicknameId,
   });
 
-  int get createTime =>
-      (ct??0) + Utils.getTimeZoneOffset().inMilliseconds;
+  int get createTime => (ct ?? 0) + Utils.getTimeZoneOffset().inMilliseconds;
 
-  int get updateTime =>
-      (ut??0) + Utils.getTimeZoneOffset().inMilliseconds;
+  int get updateTime => (ut ?? 0) + Utils.getTimeZoneOffset().inMilliseconds;
 
   factory Team.fromJson(Map<String, dynamic> json) => Team(
         accountId: json['accountId'] as int?,

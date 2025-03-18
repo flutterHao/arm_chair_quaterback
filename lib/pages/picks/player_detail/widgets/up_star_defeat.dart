@@ -49,10 +49,10 @@ class UpStarDefeat extends StatelessWidget {
                     ]),
               ),
             ),
-            Positioned(
-                top: 20.w,
-                child: IconWidget(
-                    iconWidth: 111.w, icon: Assets.teamUiWindowsLose)),
+            // Positioned(
+            //     top: 20.w,
+            //     child: IconWidget(
+            //         iconWidth: 111.w, icon: Assets.teamUiWindowsLose)),
             Container(
               margin: EdgeInsets.only(top: 99.w),
               child: DialogBackground(
@@ -125,8 +125,8 @@ class UpStarDefeat extends StatelessWidget {
                                                   top: 5.5.w,
                                                   child: IconWidget(
                                                     iconWidth: 17.w,
-                                                    icon:
-                                                        Assets.iconUiIconConfirm,
+                                                    icon: Assets
+                                                        .iconUiIconConfirm,
                                                     iconColor:
                                                         AppColors.c31E99E,
                                                   ))

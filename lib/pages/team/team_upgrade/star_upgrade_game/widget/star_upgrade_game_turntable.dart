@@ -78,8 +78,7 @@ class _StarUpgradeGameTurntableState extends State<StarUpgradeGameTurntable>
     // }
 
     // 额外增加 1 圈，确保动画至少旋转一圈
-    targetRotation += 360.0*2;
-
+    targetRotation += 360.0 * 2;
 
     // 将目标角度转换为弧度，动画需要使用弧度
     targetRotation = targetRotation * pi / 180.0;
@@ -93,9 +92,7 @@ class _StarUpgradeGameTurntableState extends State<StarUpgradeGameTurntable>
     _controller.forward(from: 0.0).then((_) {
       currentAngle = targetRotation % (2 * pi); // **存储最新角度**
       double angle = getAngle();
-      _pointerAnimation =
-          Tween<double>(begin: angle, end: 0)
-              .animate(
+      _pointerAnimation = Tween<double>(begin: angle, end: 0).animate(
         CurvedAnimation(parent: _pointerController, curve: Curves.easeOut),
       );
       _pointerController.forward(from: 0);
@@ -103,11 +100,10 @@ class _StarUpgradeGameTurntableState extends State<StarUpgradeGameTurntable>
   }
 
   double getAngle() {
-     var i = _animation.value ~/ (pi / 180 * 30);
+    var i = _animation.value ~/ (pi / 180 * 30);
     var angle = (i % 2 == 0
         ? -(_animation.value % (pi / 180 * 30))
-        : -((pi / 180 * 30) -
-        _animation.value % (pi / 180 * 30)));
+        : -((pi / 180 * 30) - _animation.value % (pi / 180 * 30)));
     return angle;
   }
 
@@ -177,9 +173,10 @@ class _StarUpgradeGameTurntableState extends State<StarUpgradeGameTurntable>
                           angle: _animation.value,
                           child: Container(
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        Assets.managerUiManagerRisingstar07))),
+                                // image: DecorationImage(
+                                //     image: AssetImage(
+                                //         Assets.managerUiManagerRisingstar07)),
+                                ),
                             child: CustomPaint(
                               size: Size(375.w, 375.w),
                               painter: SpinningWheelPainter(
@@ -202,9 +199,7 @@ class _StarUpgradeGameTurntableState extends State<StarUpgradeGameTurntable>
                       width: 100.w,
                       height: 100.w,
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  Assets.managerUiManagerRisingstar11))),
+                          image: DecorationImage(image: AssetImage(""))),
                       child: Center(
                         child: Text(
                           "ROLL",
@@ -232,7 +227,7 @@ class _StarUpgradeGameTurntableState extends State<StarUpgradeGameTurntable>
                         animation: _pointerController,
                         builder: (context, _) {
                           double angle = getAngle();
-                          if(_controller.isCompleted){
+                          if (_controller.isCompleted) {
                             angle = _pointerAnimation.value;
                           }
                           return Transform.rotate(

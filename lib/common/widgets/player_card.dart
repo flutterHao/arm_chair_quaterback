@@ -2,7 +2,7 @@
  * @Description: 球员头像卡片
  * @Author: lihonghao
  * @Date: 2024-11-18 12:23:44
- * @LastEditTime: 2025-03-15 18:38:08
+ * @LastEditTime: 2025-03-18 10:59:41
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -29,7 +29,6 @@ class PlayerCard extends StatelessWidget {
     this.bgColor,
     this.iconBgColor,
     this.onTap,
-    this.status,
   });
 
   final int playerId;
@@ -37,7 +36,6 @@ class PlayerCard extends StatelessWidget {
   final Color? bgColor;
   final Color? iconBgColor;
   final Function? onTap;
-  final int? status;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +51,7 @@ class PlayerCard extends StatelessWidget {
         height: 93.w * scale,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(9.w),
+          borderRadius: BorderRadius.circular(scale * 9.w),
           color: bgColor ?? AppColors.cFFFFFF,
         ),
         child: Stack(
@@ -69,9 +67,9 @@ class PlayerCard extends StatelessWidget {
               Positioned(
                 left: 3.5.w,
                 top: 4.w,
-                child: OutlinedText(
-                  text: Utils.getPlayBaseInfo(playerId).playerScore.toString(),
-                  textStyle: (19 * scale).w4(
+                child: Text(
+                  Utils.getPlayBaseInfo(playerId).playerScore.toString(),
+                  style: (19 * scale).w4(
                     color: AppColors.c262626,
                     height: 0.8,
                     fontFamily: FontFamily.fOswaldBold,
