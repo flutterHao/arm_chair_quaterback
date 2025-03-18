@@ -10,6 +10,15 @@ class PkResultUpdatedEntity {
   late int gameType = 0;
   late PkResultUpdatedTeamResult homeTeamResult;
   late List<PkResultUpdatedPlayerResults> playerResults = [];
+  @JSONField(name: "news_title")
+  String newsTitle = "";
+  @JSONField(name: "news_content")
+  String newsContent = "";
+  /// eventType : 1 偷钱 2 偷球员
+  @JSONField(name: "event_type")
+  int eventType = 0;
+  @JSONField(name: "event_value")
+  String eventValue = "";
 
   PkResultUpdatedEntity();
 

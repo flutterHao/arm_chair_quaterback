@@ -53,7 +53,7 @@ class GameOverController extends GetxController {
     SoundServices.to
         .playSound(isLeftWin() ? Assets.soundGamewin : Assets.soundGameFail);
     print('=========onReady');
-    showRewardDialog();
+    // showRewardDialog();
   }
 
   showRewardDialog(){

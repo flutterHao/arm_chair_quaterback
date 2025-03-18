@@ -149,7 +149,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     subscription = Get.find<HomeController>().tabIndex.listen((value) {
-      if (value == 1) {
+      if (value == 2) {
         setGameStartTimeStr();
       }
     });
@@ -166,7 +166,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     var value = Get.find<HomeController>().tabIndex.value;
-    if (state == AppLifecycleState.resumed && value == 1) {
+    if (state == AppLifecycleState.resumed && value == 2) {
       setGameStartTimeStr();
     }
     super.didChangeAppLifecycleState(state);

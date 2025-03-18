@@ -189,13 +189,21 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       id: TeamBattleV2Controller.idGameScore,
                       builder: (_) {
                         int score = 0;
-                        if (controller.getQuarterEvents().isNotEmpty) {
-                          score = controller.getQuarterEvents().last.homeScore;
+                        if (controller
+                            .getQuarterEvents()
+                            .isNotEmpty) {
+                          score = controller
+                              .getQuarterEvents()
+                              .last
+                              .homeScore;
                         }
                         if (controller.isGameOver.value) {
                           score = controller.pkResultUpdatedEntity
-                                  ?.homeTeamResult.score ??
-                              controller.getQuarterEvents().last.homeScore;
+                              ?.homeTeamResult.score ??
+                              controller
+                                  .getQuarterEvents()
+                                  .last
+                                  .homeScore;
                         }
                         return AnimatedNum(
                           number: score,
@@ -209,8 +217,6 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                 ),
                 Expanded(child: Center(
                   child: Obx(() {
-                    var text =
-                        "${Utils.getSortWithInt(controller.quarter.value)} ${MyDateUtils.formatMS((controller.quarterGameCountDown.value / 40 * 12 * 60).toInt())}";
                     if (!controller.isGameStart.value) {
                       return Text(
                         "VS",
@@ -229,13 +235,62 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                             fontFamily: FontFamily.fRobotoRegular),
                       );
                     }
-                    return Text(
-                      text,
-                      style: 12.w4(
-                          color: AppColors.c10A86A,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular),
-                    );
+                    return AnimatedBuilder(
+                        animation:
+                        controller.fourQuarterStartAnimationController,
+                        builder: (context, child) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+
+                              /// 小节
+                              Opacity(
+                                opacity:
+                                controller.quarterOpacityAnimation.value,
+                                child: Transform.scale(
+                                  scale: controller.quarterScaleAnimation.value,
+                                  child: Text(
+                                    Utils.getSortWithInt(
+                                        controller.quarter.value),
+                                    style: 12.w4(
+                                        color: AppColors.c10A86A,
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoRegular),
+                                  ),
+                                ),
+                              ),
+
+                              5.hGap,
+
+                              /// 比赛倒计时
+                              Opacity(
+                                opacity: controller.timeOpacityAnimation.value,
+                                child: Obx(() {
+                                  return SizedBox(
+                                    width: controller.timeScaleAnimation.value*32.w,
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        MyDateUtils.formatMS(
+                                            (controller.quarterGameCountDown
+                                                .value /
+                                                40 *
+                                                12 *
+                                                60)
+                                                .toInt()),
+                                        style: 12.w4(
+                                            color: AppColors.c10A86A,
+                                            height: 1,
+                                            fontFamily: FontFamily
+                                                .fRobotoRegular),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              )
+                            ],
+                          );
+                        });
                   }),
                 )),
                 Container(
@@ -245,13 +300,21 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       id: TeamBattleV2Controller.idGameScore,
                       builder: (_) {
                         int score = 0;
-                        if (controller.getQuarterEvents().isNotEmpty) {
-                          score = controller.getQuarterEvents().last.awayScore;
+                        if (controller
+                            .getQuarterEvents()
+                            .isNotEmpty) {
+                          score = controller
+                              .getQuarterEvents()
+                              .last
+                              .awayScore;
                         }
                         if (controller.isGameOver.value) {
                           score = controller.pkResultUpdatedEntity
-                                  ?.awayTeamResult.score ??
-                              controller.getQuarterEvents().last.awayScore;
+                              ?.awayTeamResult.score ??
+                              controller
+                                  .getQuarterEvents()
+                                  .last
+                                  .awayScore;
                         }
                         return AnimatedNum(
                           number: score,
@@ -302,27 +365,49 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                             onTap: () {
                               controller.jumpGame();
                             },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  LangKey.gameButtonSkip.tr,
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: AppColors.c000000,
-                                      fontSize: 12.sp,
-                                      height: 1,
-                                      fontFamily: FontFamily.fRobotoRegular),
-                                ),
-                                5.hGap,
-                                IconWidget(
-                                  iconWidth: 5.w,
-                                  icon: Assets.commonUiCommonIconSystemJumpto,
-                                  iconColor: AppColors.c000000,
-                                )
-                              ],
-                            ),
+                            child: AnimatedBuilder(
+                                animation: Listenable.merge([
+                                  controller.skipOpacityAnimation,
+                                  controller.skipTranslateAnimation
+                                ]),
+                                builder: (context, child) {
+                                  return Opacity(
+                                    opacity:
+                                    controller.skipOpacityAnimation.value,
+                                    child: Transform.translate(
+                                      offset: Offset(
+                                          0,
+                                          controller
+                                              .skipTranslateAnimation.value),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            LangKey.gameButtonSkip.tr,
+                                            style: TextStyle(
+                                                decoration:
+                                                TextDecoration.underline,
+                                                color: AppColors.c000000,
+                                                fontSize: 12.sp,
+                                                height: 1,
+                                                fontFamily:
+                                                FontFamily.fRobotoRegular),
+                                          ),
+                                          5.hGap,
+                                          IconWidget(
+                                            iconWidth: 5.w,
+                                            icon: Assets
+                                                .commonUiCommonIconSystemJumpto,
+                                            iconColor: AppColors.c000000,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }),
                           );
                         })),
                   ],
@@ -482,7 +567,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
               height: 7.w,
               decoration: BoxDecoration(
                   borderRadius:
-                      BorderRadius.horizontal(left: Radius.circular(3.5.w)),
+                  BorderRadius.horizontal(left: Radius.circular(3.5.w)),
                   gradient: const LinearGradient(
                       colors: [AppColors.cB3B3B3, AppColors.c000000])),
             ),
@@ -503,7 +588,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                   height: 7.w,
                   decoration: BoxDecoration(
                     borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(3.5.w)),
+                    BorderRadius.horizontal(left: Radius.circular(3.5.w)),
                     color: AppColors.c10A86A,
                   ),
                 ),

@@ -126,6 +126,15 @@ class TeamBattleV2Controller extends GetxController
   ///上个时间比分占比(比分随时间占比)
   double lastHomeScoreDiff = 0, lastAwayScoreDiff = 0;
 
+  ///第四节开始动画
+  late AnimationController fourQuarterStartAnimationController;
+  late Animation quarterOpacityAnimation;
+  late Animation quarterScaleAnimation;
+  late Animation timeOpacityAnimation;
+  late Animation timeScaleAnimation;
+  late Animation skipOpacityAnimation;
+  late Animation skipTranslateAnimation;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
@@ -133,6 +142,7 @@ class TeamBattleV2Controller extends GetxController
     if (superSpeedMan) {
       gameSpeed = 80;
     }
+    init4QuarterAnimation();
     WidgetsBinding.instance.addObserver(this);
     battleEntity = Get.find<TeamBattleController>().battleEntity;
     winRateController = Get.put(WinRateController());
@@ -204,6 +214,35 @@ class TeamBattleV2Controller extends GetxController
         addEvent(event);
       }
     });
+  }
+
+  /// 初始化第四节动画
+  init4QuarterAnimation() {
+    int milliseconds = 2200;
+    fourQuarterStartAnimationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: milliseconds));
+    quarterOpacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(
+            parent: fourQuarterStartAnimationController,
+            curve: Interval(0, 200 / milliseconds)));
+    quarterScaleAnimation = Tween(begin: 5.0, end: 1.0).animate(CurvedAnimation(
+        parent: fourQuarterStartAnimationController,
+        curve: Interval(0, 500 / milliseconds)));
+
+    timeOpacityAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        parent: fourQuarterStartAnimationController,
+        curve: Interval(1000 / milliseconds, 1100 / milliseconds)));
+    timeScaleAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        parent: fourQuarterStartAnimationController,
+        curve: Interval(1000 / milliseconds, 1300 / milliseconds)));
+
+    skipOpacityAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        parent: fourQuarterStartAnimationController,
+        curve: Interval(1800 / milliseconds, 2000 / milliseconds)));
+    skipTranslateAnimation = Tween(begin: 10.0, end: 0.0).animate(
+        CurvedAnimation(
+            parent: fourQuarterStartAnimationController,
+            curve: Interval(1800 / milliseconds, 2200 / milliseconds)));
   }
 
   Map<String, Offset> getPositions(CompetitionVenueEntity competitionVenue) {
@@ -310,11 +349,13 @@ class TeamBattleV2Controller extends GetxController
             'cache length: ${eventCacheMap.values.fold(0, (p, e) => p + e.length)}');
         return;
       }
-      SoundServices.to.playSound(Assets.soundTimeOut);
-      Future.delayed(const Duration(milliseconds: 300));
-      EasyLoading.showToast("Next Quarter",
-          toastPosition: EasyLoadingToastPosition.center,
-          maskType: EasyLoadingMaskType.clear);
+      if (!superSpeedMan) {
+        SoundServices.to.playSound(Assets.soundTimeOut);
+        Future.delayed(const Duration(milliseconds: 300));
+        EasyLoading.showToast("Next Quarter",
+            toastPosition: EasyLoadingToastPosition.center,
+            maskType: EasyLoadingMaskType.clear);
+      }
 
       Future.delayed(Duration(milliseconds: (max(1000,3 * 1000 / gameSpeed)).toInt()),
           () {
@@ -346,7 +387,7 @@ class TeamBattleV2Controller extends GetxController
     return count;
   }
 
-  startGame() {
+  startGame() async {
     SoundServices.to.stopAllSounds();
     if (eventCacheMap.keys.isEmpty) {
       /// 直到开始比赛都没有收到一条数据,则可能出现异常，让用户可以退出
@@ -369,15 +410,23 @@ class TeamBattleV2Controller extends GetxController
     });
 
     /// 开启常驻弹幕计时器
-    startForeverNormalDanMaKu();
+    if (!superSpeedMan) {
+      startForeverNormalDanMaKu();
+    }
     quarter.value = quarter.value + 1;
+
     /// 前3节开始超级加速，最后一节普通速度
     if (superSpeedMan && quarter.value == 4) {
       superSpeedMan = false;
+      update([idFastForward]);
       gameSpeed = 1;
     }
     liveTextTabIndex.value = quarter.value - 1;
-    update([idLiveText]);
+    // update([idLiveText]);
+    if (quarter.value == 4) {
+      quarterGameCountDown.value = 40.0;
+      await fourQuarterStartAnimationController.forward();
+    }
     liveTextScrollController.jumpTo(0);
     quarterTimeCountDownAnimationController.controller
         .removeStatusListener(quarterStatusListener);
@@ -480,7 +529,7 @@ class TeamBattleV2Controller extends GetxController
     if (gameEvent.headLine != "0") {
       /// 高光时刻
       // highLightBarrageWallController.send([generateHighBullet(event)]);
-      if(!superSpeedMan) {
+      if (!superSpeedMan) {
         highLightEvent = event;
         update([idHighLightEvent]);
       }
@@ -492,7 +541,7 @@ class TeamBattleV2Controller extends GetxController
       // ]);
     }
 
-    if (event.mainOffset != null) {
+    if (event.mainOffset != null && !superSpeedMan) {
       if (event.shooting) {
         shoot(event);
       } else {
@@ -505,15 +554,19 @@ class TeamBattleV2Controller extends GetxController
     teamStatsController.setEvent(event);
 
     handlerDanMaKu(event);
-    update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
-    Future.delayed(Duration.zero, () {
-      if (!isClosed && (liveTextTabIndex.value + 1) == quarter.value) {
-        liveTextScrollController.animateTo(
-            ((eventOnScreenMap[key] ?? []).length * 44.w),
-            duration: Duration(milliseconds: (800 / gameSpeed).toInt()),
-            curve: Curves.easeInOut);
-      }
-    });
+    if (superSpeedMan) {
+      update([idGameScore]);
+    } else {
+      update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
+      Future.delayed(Duration.zero, () {
+        if (!isClosed && (liveTextTabIndex.value + 1) == quarter.value) {
+          liveTextScrollController.animateTo(
+              ((eventOnScreenMap[key] ?? []).length * 44.w),
+              duration: Duration(milliseconds: (800 / gameSpeed).toInt()),
+              curve: Curves.easeInOut);
+        }
+      });
+    }
     eventCount++;
   }
 
@@ -597,7 +650,7 @@ class TeamBattleV2Controller extends GetxController
 
   /// 投篮动画
   shoot(GameEvent event) {
-    if(superSpeedMan) return;
+    if (superSpeedMan) return;
     if (shootAnimationController.isAnimating) {
       return;
     }
@@ -1067,6 +1120,8 @@ class TeamBattleV2Controller extends GetxController
 
   static String get idHighLightEvent => "id_high_light_event";
 
+  static String get idFastForward => "id_fast_forward";
+
   List<GameEvent> getQuarterEvents({int? quarterValue}) {
     return eventOnScreenMap[
             Utils.getSortWithInt(quarterValue ?? quarter.value)] ??
@@ -1202,7 +1257,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   void jumpGame() {
-    if(superSpeedMan) return;
+    if (superSpeedMan) return;
     if (!isGameStart.value) return;
     if (isGameOver.value) {
       Get.back();

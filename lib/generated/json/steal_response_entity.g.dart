@@ -2,8 +2,6 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/steal_response_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/steal_team_entity.dart';
 
-import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
-
 
 StealResponseEntity $StealResponseEntityFromJson(Map<String, dynamic> json) {
   final StealResponseEntity stealResponseEntity = StealResponseEntity();

@@ -430,6 +430,7 @@ class Assets {
   static const String managerUiManagerWheelGift = 'assets/images/manager/ui_manager_wheel_gift.png';
   static const String managerUiMangerNew02 = 'assets/images/manager/ui_manger_new_02.png';
   static const String managerUiMangerNew21 = 'assets/images/manager/ui_manger_new2_1.png';
+  static const String managerUiMangerNew214 = 'assets/images/manager/ui_manger_new2_14.png';
   static const String managerUiMangerNew22 = 'assets/images/manager/ui_manger_new2_2.png';
   static const String managerUiMangerNew24 = 'assets/images/manager/ui_manger_new2_4.png';
   static const String managerUiMangerNew25 = 'assets/images/manager/ui_manger_new2_5.png';
