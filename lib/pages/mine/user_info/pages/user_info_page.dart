@@ -6,12 +6,13 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/widgets/avatar_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,68 +56,7 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
       bodyWidget: Expanded(
           child: Column(
         children: [
-          Container(
-            color: AppColors.cF2F2F2,
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                34.vGap,
-                Container(
-                  width: 96.w,
-                  height: 96.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: ClipOval(
-                      child: UserAvatarWidget(
-                        url: Utils.getAvatarUrl(HomeController
-                                .to.userEntiry.teamLoginInfo!.team?.teamLogo ??
-                            0),
-                        width: 96.w,
-                        height: 96.w,
-                      ),
-                    ),
-                  ),
-                ),
-                16.vGap,
-                // Row(
-                //   children: [
-                //     Container(
-                //       color: Colors.pink,
-                //       // width: 220.w,
-                //       child: TextField(
-                //           controller: TextEditingController(text: teamName),
-                //           decoration: InputDecoration(
-                //             border: InputBorder.none, // 设置边框为 none
-                //             hintText: "请输入文本",
-                //           ),
-                //           style: 20.w5(
-                //               fontFamily: FontFamily.fOswaldRegular, height: 1),
-                //           onChanged: (value) => teamName = value),
-                //     ),
-                //     8.hGap,
-                //     IconWidget(
-                //       icon: Assets.managerUiMangerNew213,
-                //       iconColor: AppColors.c666666.withOpacity(.4),
-                //       iconWidth: 15.w,
-                //     ),
-                //   ],
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${HomeController.to.userEntiry.teamLoginInfo!.team!.teamName}',
-                      style: 20
-                          .w5(fontFamily: FontFamily.fOswaldRegular, height: 1),
-                    ),
-                  ],
-                ),
-                34.vGap
-              ],
-            ),
-          ),
+          _avatarWidget(),
           Expanded(
               child: Column(
             children: [
@@ -132,13 +72,25 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                           style: 14.w5(fontFamily: FontFamily.fOswaldRegular),
                         ),
                       ),
-                      Flexible(
-                          child: Text(
-                        '${HomeController.to.userEntiry.teamLoginInfo!.team!.accountId}',
-                        style: 12.w5(
-                            color: AppColors.cA1A1A1,
-                            fontFamily: FontFamily.fRobotoRegular),
-                      ))
+                      Expanded(
+                          child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          '${HomeController.to.userEntiry.teamLoginInfo!.team!.accountId}',
+                          style: 12.w5(
+                              color: AppColors.cA1A1A1,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        ),
+                      )),
+                      Container(
+                          width: 15.w,
+                          margin: EdgeInsets.only(left: 15.w),
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            Assets.managerUiMangerNew213,
+                            width: 15.w,
+                            color: AppColors.c666666,
+                          ))
                     ],
                   )),
               Divider(color: AppColors.cD1D1D1, height: 1),
@@ -159,17 +111,24 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                           ),
                         ),
                         Expanded(
-                            child: Text(
-                          '${HomeController.to.userEntiry.teamLoginInfo!.team!.joinLeagueTime}',
-                          style: 12.w5(
-                              color: AppColors.cA1A1A1,
-                              fontFamily: FontFamily.fRobotoRegular),
+                            child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            '${HomeController.to.userEntiry.teamLoginInfo!.team!.joinLeagueTime}',
+                            style: 12.w5(
+                                color: AppColors.cA1A1A1,
+                                fontFamily: FontFamily.fRobotoRegular),
+                          ),
                         )),
-                        IconWidget(
-                          icon: Assets.commonUiCommonIconSystemJumpto,
-                          iconColor: AppColors.c666666,
-                          iconWidth: 7.w,
-                        )
+                        Container(
+                            width: 15.w,
+                            margin: EdgeInsets.only(left: 15.w),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              Assets.commonUiCommonIconSystemJumpto,
+                              width: 8.w,
+                              color: AppColors.c666666,
+                            ))
                       ],
                     )),
               ),
@@ -187,30 +146,84 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                         ),
                       ),
                       Expanded(
-                          child: Text(
-                        'l have had my invitation to this world’s festival and thus my l',
-                        style: 12.w5(
-                            color: AppColors.cA1A1A1,
-                            fontFamily: FontFamily.fRobotoRegular),
+                          child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'l have had my invitation to this world’s festival and thus my l',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: 12.w5(
+                              color: AppColors.cA1A1A1,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        ),
                       )),
-                      20.hGap,
-                      IconWidget(
-                        icon: Assets.managerUiMangerNew213,
-                        iconColor: AppColors.c666666.withOpacity(.4),
-                        iconWidth: 15.w,
-                      )
+                      Container(
+                          width: 15.w,
+                          margin: EdgeInsets.only(left: 15.w),
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            Assets.commonUiCommonIconSystemJumpto,
+                            width: 8.w,
+                            color: AppColors.c666666,
+                          ))
                     ],
                   )),
               Divider(color: AppColors.cD1D1D1, height: 1),
-              42.vGap,
+              Spacer(),
               _saveButtonWidget(),
-              24.vGap,
-              _bottomUserInfoWidget(),
+              (30 + Utils.getPaddingBottom()).vGap,
             ],
           ))
         ],
       )),
     ));
+  }
+
+  Widget _avatarWidget() {
+    return Container(
+        color: AppColors.cF2F2F2,
+        alignment: Alignment.center,
+        padding: EdgeInsets.only(top: 34.w, bottom: 24.w),
+        child: MtInkWell(
+            onTap: () {
+              Get.bottomSheet(AvatarBottomsheet(), isScrollControlled: true);
+            },
+            child: Container(
+              width: 96.w,
+              height: 96.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              child: Stack(
+                children: [
+                  ClipOval(
+                    child: ImageWidget(
+                      url: Utils.getAvatarUrl(HomeController
+                              .to.userEntiry.teamLoginInfo!.team?.teamLogo ??
+                          0),
+                      width: 96.w,
+                      height: 96.w,
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        width: 20.w,
+                        height: 20.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconWidget(
+                          icon: Assets.managerUiMangerNew212,
+                          iconWidth: 12.w,
+                          iconColor: AppColors.c666666,
+                        ),
+                      ))
+                ],
+              ),
+            )));
   }
 
   Widget _saveButtonWidget() {
@@ -229,54 +242,6 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                   color: Colors.white, fontFamily: FontFamily.fOswaldMedium),
             ),
           )),
-    );
-  }
-
-  Widget _bottomUserInfoWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        MtInkWell(
-            child: Text(
-          'CONNECT US',
-          style: TextStyle(
-              fontSize: 10.sp,
-              decoration: TextDecoration.underline,
-              decorationColor: AppColors.c0A66D7,
-              color: AppColors.c0A66D7,
-              fontFamily: FontFamily.fRobotoRegular),
-        )),
-        Container(
-            color: AppColors.cD1D1D1,
-            margin: EdgeInsets.symmetric(horizontal: 18.w),
-            width: 1,
-            height: 10.w),
-        MtInkWell(
-            child: Text(
-          'PRIVACY POLICY',
-          style: TextStyle(
-              fontSize: 10.sp,
-              decoration: TextDecoration.underline,
-              decorationColor: AppColors.c0A66D7,
-              color: AppColors.c0A66D7,
-              fontFamily: FontFamily.fRobotoRegular),
-        )),
-        Container(
-            color: AppColors.cD1D1D1,
-            margin: EdgeInsets.symmetric(horizontal: 18.w),
-            width: 1,
-            height: 10.w),
-        MtInkWell(
-            child: Text(
-          'TEAM OF USE',
-          style: TextStyle(
-              fontSize: 10.sp,
-              decoration: TextDecoration.underline,
-              decorationColor: AppColors.c0A66D7,
-              color: AppColors.c0A66D7,
-              fontFamily: FontFamily.fRobotoRegular),
-        )),
-      ],
     );
   }
 }

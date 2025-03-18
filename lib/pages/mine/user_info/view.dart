@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
@@ -23,8 +24,15 @@ class UserInfoPage extends GetView<UserInfoController> {
         id: "user_info",
         builder: (_) {
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
-              children: [16.vGap, UserTopWidget(), 10.vGap, AboutMoreWidget()],
+              children: [
+                16.vGap,
+                UserTopWidget(),
+                10.vGap,
+                AboutMoreWidget(),
+                (60 + Utils.getPaddingBottom()).vGap
+              ],
             ),
           );
         },
