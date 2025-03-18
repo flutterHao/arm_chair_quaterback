@@ -58,6 +58,7 @@ class TeamBattleController extends GetxController
   Timer? _timer;
 
   var loadStatus = LoadDataStatus.loading;
+
   // late TeamInfoEntity teamInfoEntity;
   @override
   void onInit() {
@@ -83,7 +84,7 @@ class TeamBattleController extends GetxController
       CacheApi.getDanMaKu(),
     ]).then((result) {
       _timer?.cancel();
-      _timer = Timer(const Duration(seconds: 3), (){
+      _timer = Timer(const Duration(seconds: 3), () {
         completer.completeError("MATCH FAILED");
         _timer?.cancel();
       });
@@ -118,7 +119,7 @@ class TeamBattleController extends GetxController
   teamMatch() async {
     loadStatus = LoadDataStatus.loading;
     var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
-    var minMatchTimeMs = 3000;
+    var minMatchTimeMs = 1500;
     await Future.wait([
       CacheApi.getGameEvent(),
       CacheApi.getCompetitionVenue(),
@@ -152,14 +153,13 @@ class TeamBattleController extends GetxController
           var currentMs = DateTime.now().millisecondsSinceEpoch;
           var diff = currentMs - startMatchTimeMs;
           if (diff >= minMatchTimeMs) {
-            nextAutoNext();
+            nextStep();
           } else {
             Future.delayed(Duration(milliseconds: minMatchTimeMs - diff), () {
-              nextAutoNext();
+              nextStep();
             });
           }
           _initBattleController();
-
         }
       });
     }, onError: (e) {
@@ -221,9 +221,13 @@ class TeamBattleController extends GetxController
     }
   }
 
-  void nextAutoNext(){
+  translationPageEnd() {
     nextStep();
-    Future.delayed(Duration(seconds: 2),()=> nextStep());
+  }
+
+  void nextAutoNext() {
+    nextStep();
+    Future.delayed(Duration(seconds: 2), () => nextStep());
   }
 
   static get canPop => _canPop;

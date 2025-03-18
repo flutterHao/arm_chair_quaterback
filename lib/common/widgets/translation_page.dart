@@ -11,10 +11,42 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///@auther gejiahui
 ///created at 2025/3/14/17:58
 
-class TranslationPage extends StatelessWidget {
-  const TranslationPage({super.key, this.child});
+class TranslationPage extends StatefulWidget {
+  const TranslationPage({super.key, this.child, this.onEnd});
 
   final Widget? child;
+  final Function? onEnd;
+
+  @override
+  State<TranslationPage> createState() => _TranslationPageState();
+}
+
+class _TranslationPageState extends State<TranslationPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation topLeftAnimation;
+  late Animation bottomRightAnimation;
+  late Animation opacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    var milliseconds = 2100;
+    animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: milliseconds));
+    topLeftAnimation = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+        parent: animationController, curve: Interval(100 / milliseconds, 500 / milliseconds)));
+    bottomRightAnimation = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+        parent: animationController, curve: Interval(800 / milliseconds, 1200 / milliseconds)));
+    opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        parent: animationController,
+        curve: Interval(1400 / milliseconds, 1800 / milliseconds)));
+    Future.delayed(Duration.zero, () {
+      animationController.forward().then((_){
+        widget.onEnd?.call();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +55,28 @@ class TranslationPage extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Positioned(
-              top: 0,
-              right: 0,
-              child: IconWidget(
-                icon: Assets.managerUiMangerNew22,
-                iconWidth: 204.w,
-              )),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              child: IconWidget(
-                icon: Assets.managerUiMangerNew21,
-                iconWidth: 204.w,
-              )),
+          AnimatedBuilder(
+              animation: topLeftAnimation,
+              builder: (context, child) {
+                return Positioned(
+                    top: topLeftAnimation.value * -169.w,
+                    right: topLeftAnimation.value * 169.w,
+                    child: IconWidget(
+                      icon: Assets.managerUiMangerNew22,
+                      iconWidth: 169.w,
+                    ));
+              }),
+          AnimatedBuilder(
+              animation: bottomRightAnimation,
+              builder: (context, child) {
+                return Positioned(
+                    bottom: bottomRightAnimation.value * -204.w,
+                    left: bottomRightAnimation.value * 204.w,
+                    child: IconWidget(
+                      icon: Assets.managerUiMangerNew21,
+                      iconWidth: 204.w,
+                    ));
+              }),
           Positioned(
               top: 259.h,
               child: OutlinedText(
@@ -50,29 +90,42 @@ class TranslationPage extends StatelessWidget {
                   ))),
           Positioned(
               top: 305.h,
-              child: child ??
-                  Column(
-                    children: [
-                      Text(
-                        "PLAYER",
-                        style: 45.w5(
-                          color: AppColors.cFFFFFF,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldMedium,
-                        ),
-                      ),
-                      Text(
-                        "POACHING",
-                        style: 54.w7(
-                          color: AppColors.cFFFFFF,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldBold,
-                        ),
-                      ),
-                    ],
-                  ))
+              child: AnimatedBuilder(
+                  animation: opacityAnimation,
+                  builder: (context, child) {
+                    return Opacity(
+                      opacity: opacityAnimation.value,
+                      child: widget.child ??
+                          Column(
+                            children: [
+                              Text(
+                                "PLAYER",
+                                style: 45.w5(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              ),
+                              Text(
+                                "POACHING",
+                                style: 54.w7(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldBold,
+                                ),
+                              ),
+                            ],
+                          ),
+                    );
+                  }))
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }

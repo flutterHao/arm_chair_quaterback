@@ -28,7 +28,7 @@ class StealPlayer extends GetView<StealPlayerController> {
                   if(controller.ready) {
                     return PlayerChoose();
                   }
-                  return TranslationPage();
+                  return TranslationPage(onEnd: ()=>controller.translationPageEnd());
                 }),
               );
             }));

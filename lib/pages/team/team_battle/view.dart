@@ -89,6 +89,7 @@ class TeamBattlePage extends GetView<TeamBattleController> {
                 //   },
                 // )
                 TranslationPage(
+                  onEnd: () => controller.translationPageEnd(),
                   child: Column(
                     children: [
                       Text(

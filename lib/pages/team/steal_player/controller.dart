@@ -23,6 +23,7 @@ class StealPlayerController extends GetxController
   var loadStatus = LoadDataStatus.loading.obs;
   ScrollController scrollController = ScrollController();
   bool ready = false;
+
   /// 偷球员状态：0 未选择 1 成功 2 失败
   var stealStatus = 0.obs;
 
@@ -96,13 +97,9 @@ class StealPlayerController extends GetxController
         curve: Interval(1100 / milliseconds, 1300 / milliseconds)));
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-    Future.delayed(Duration(seconds: 1),(){
-      ready = true;
-      update();
-    });
+  translationPageEnd() {
+    ready = true;
+    update();
   }
 
   _initData() {
@@ -160,7 +157,8 @@ class StealPlayerController extends GetxController
       translateAnimation = Tween<Offset>(
               begin: Offset.zero,
               end: Offset((screenCenter.dx - size.width / 2), screenCenter.dy) -
-                  tappedItemRect.topLeft-Offset(0,-70))
+                  tappedItemRect.topLeft -
+                  Offset(0, -70))
           .animate(
         CurvedAnimation(
             parent: animationController,
