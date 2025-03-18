@@ -136,28 +136,28 @@ class PlayerChoose extends GetView<StealPlayerController> {
               ),
             ),
           ),
-          24.vGap,
-          Opacity(
-            opacity: controller.failedShowAnimation.value,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconWidget(
-                  icon: Assets.commonUiCommonProp05,
-                  iconWidth: 27.w,
-                ),
-                6.hGap,
-                Text(
-                  "+${Utils.formatMoney(controller.stealResponseEntity.awardData[0].num)}",
-                  style: 19.w5(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium,
-                  ),
-                )
-              ],
-            ),
-          ),
+          // 24.vGap,
+          // Opacity(
+          //   opacity: controller.failedShowAnimation.value,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       IconWidget(
+          //         icon: Assets.commonUiCommonProp05,
+          //         iconWidth: 27.w,
+          //       ),
+          //       6.hGap,
+          //       Text(
+          //         "+${Utils.formatMoney(controller.stealResponseEntity.awardData[0].num)}",
+          //         style: 19.w5(
+          //           color: AppColors.c000000,
+          //           height: 1,
+          //           fontFamily: FontFamily.fOswaldMedium,
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           Expanded(
               child: Stack(
             alignment: Alignment.center,
