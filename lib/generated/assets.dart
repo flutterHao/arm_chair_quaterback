@@ -351,6 +351,7 @@ class Assets {
   static const String managerUiMangerNew211 = 'assets/images/manager/ui_manger_new2_11.png';
   static const String managerUiMangerNew212 = 'assets/images/manager/ui_manger_new2_12.png';
   static const String managerUiMangerNew213 = 'assets/images/manager/ui_manger_new2_13.png';
+  static const String managerUiMangerNew214 = 'assets/images/manager/ui_manger_new2_14.png';
   static const String managerUiMangerNew22 = 'assets/images/manager/ui_manger_new2_2.png';
   static const String managerUiMangerNew24 = 'assets/images/manager/ui_manger_new2_4.png';
   static const String managerUiMangerNew25 = 'assets/images/manager/ui_manger_new2_5.png';
