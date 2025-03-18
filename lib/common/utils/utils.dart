@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2025-03-12 10:43:21
+ * @LastEditTime: 2025-03-18 15:59:51
  */
 import 'dart:async';
 import 'dart:io';
@@ -474,10 +474,10 @@ class Utils {
 
   static String getBoxImageUrl(int cardId,
       {String defaultImage = Assets.managerUiManagerGift00}) {
-    if (CacheApi.cardPackDefineMap[cardId] != null) {
-      String cardName = CacheApi.cardPackDefineMap[cardId]!.cardPackIcon;
-      return getImageByPath(cardName);
-    }
+    // if (CacheApi.cardPackDefineMap[cardId] != null) {
+    //   String cardName = CacheApi.cardPackDefineMap[cardId]!.cardPackIcon;
+    //   return getImageByPath(cardName);
+    // }
     return defaultImage;
   }
 

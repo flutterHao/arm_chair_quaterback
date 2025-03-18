@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-03-18 09:34:06
+ * @LastEditTime: 2025-03-18 16:04:27
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -49,24 +49,24 @@ class PlayerExchangeCard extends GetView<TeamController> {
                     fontFamily: FontFamily.fOswaldMedium,
                     overflow: TextOverflow.ellipsis),
               ),
-              10.5.hGap,
-              if (Utils.getPlayBaseInfo(playerId).injuries)
-                Container(
-                  width: 29.w,
-                  height: 19.w,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4.w),
-                    color: AppColors.cE34D4D,
-                  ),
-                  child: Text(
-                    "INJ",
-                    style: 12.w4(
-                      fontFamily: FontFamily.fRobotoMedium,
-                      color: AppColors.cFFFFFF,
-                    ),
-                  ),
-                )
+              // 10.5.hGap,
+              // if (Utils.getPlayBaseInfo(playerId).injuries)
+              //   Container(
+              //     width: 29.w,
+              //     height: 19.w,
+              //     alignment: Alignment.center,
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(4.w),
+              //       color: AppColors.cE34D4D,
+              //     ),
+              //     child: Text(
+              //       "INJ",
+              //       style: 12.w4(
+              //         fontFamily: FontFamily.fRobotoMedium,
+              //         color: AppColors.cFFFFFF,
+              //       ),
+              //     ),
+              //   )
             ],
           ),
           7.vGap,

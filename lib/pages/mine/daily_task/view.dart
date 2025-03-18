@@ -1067,7 +1067,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                       children: [
                         ImageWidget(
                           url: "",
-                          imageFailedPath: Assets.testTestTeamLogo,
+                          // imageFailedPath: Assets.testTestTeamLogo,
                           width: 40.w,
                           borderRadius: BorderRadius.circular(20.w),
                         ),

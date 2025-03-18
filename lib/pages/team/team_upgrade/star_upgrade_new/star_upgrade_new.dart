@@ -52,17 +52,17 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
                 return Stack(
                   children: [
                     /// 背景
-                    Positioned(
-                      top: 0.w,
-                      left: 0,
-                      right: 0,
-                      child: Image.asset(
-                        Assets.managerUiManagerStar06,
-                        width: 205.5.w,
-                        fit: BoxFit.fitWidth,
-                        alignment: Alignment.topCenter,
-                      ),
-                    ),
+                    // Positioned(
+                    //   top: 0.w,
+                    //   left: 0,
+                    //   right: 0,
+                    //   child: Image.asset(
+                    //     Assets.managerUiManagerStar06,
+                    //     width: 205.5.w,
+                    //     fit: BoxFit.fitWidth,
+                    //     alignment: Alignment.topCenter,
+                    //   ),
+                    // ),
 
                     /// sparring
                     Positioned(

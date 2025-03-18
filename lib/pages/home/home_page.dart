@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage>
       child: HorizontalDragBackParentWidget(
         child: GetBuilder<HomeController>(
           assignId: true,
-          id: GetXBuilderIds.idGlobalUserEntityRefresh,
+          // id: GetXBuilderIds.idGlobalUserEntityRefresh,
           builder: (logic) {
             if (controller.isLoading) {
               return SplashPage();

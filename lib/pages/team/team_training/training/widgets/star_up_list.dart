@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-02-24 18:33:29
- * @LastEditTime: 2025-02-26 21:19:28
+ * @LastEditTime: 2025-03-18 15:03:18
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -61,17 +61,17 @@ class StarUpList extends StatelessWidget {
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
-                Positioned(
-                  top: 0.w,
-                  left: 0,
-                  right: 0,
-                  child: Image.asset(
-                    Assets.managerUiManagerStar06,
-                    width: 205.5.w,
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.topCenter,
-                  ),
-                ),
+                // Positioned(
+                //   top: 0.w,
+                //   left: 0,
+                //   right: 0,
+                //   child: Image.asset(
+                //     Assets.managerUiManagerStar06,
+                //     width: 205.5.w,
+                //     fit: BoxFit.fitWidth,
+                //     alignment: Alignment.topCenter,
+                //   ),
+                // ),
                 Positioned(
                     top: 58.w,
                     right: 15.5.w,

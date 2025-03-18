@@ -173,9 +173,10 @@ class _StarUpgradeGameTurntableState extends State<StarUpgradeGameTurntable>
                           angle: _animation.value,
                           child: Container(
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        Assets.managerUiManagerRisingstar07))),
+                                // image: DecorationImage(
+                                //     image: AssetImage(
+                                //         Assets.managerUiManagerRisingstar07)),
+                                ),
                             child: CustomPaint(
                               size: Size(375.w, 375.w),
                               painter: SpinningWheelPainter(

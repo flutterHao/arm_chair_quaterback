@@ -194,7 +194,7 @@ class HomeController extends GetxController {
     userEntiry = await UserApi.visitorLogin();
 
     isLoading = false;
-    update([GetXBuilderIds.idGlobalUserEntityRefresh]);
+    update();
     TeamIndexController ctrl = Get.find();
     await ctrl.initData();
     if (toSelectPlayer) {

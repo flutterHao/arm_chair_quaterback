@@ -24,12 +24,12 @@ class SelectTeamPage extends GetView<SeasonPassController> {
       children: [
         Stack(
           children: [
-            Positioned(
-              bottom: -0,
-              right: 0,
-              left: 0,
-              child: IconWidget(icon: Assets.managerUiManagerBattltpass01),
-            ),
+            // Positioned(
+            //   bottom: -0,
+            //   right: 0,
+            //   left: 0,
+            //   child: IconWidget(icon: Assets.managerUiManagerBattltpass01),
+            // ),
             Container(
               height: 126.w,
               // color: AppColors.c163569,

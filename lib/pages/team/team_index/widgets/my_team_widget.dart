@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-18 11:05:58
+ * @LastEditTime: 2025-03-18 16:11:57
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -126,7 +126,7 @@ class MyTeamWidget extends StatelessWidget {
                                                 fontFamily:
                                                     FontFamily.fOswaldMedium,
                                                 color: AppColors.cFFFFFF,
-                                              ))
+                                              )),
                                         ],
                                       ),
                                     ),
