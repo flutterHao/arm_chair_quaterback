@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,8 @@ class AvatarBottomsheet extends StatefulWidget {
 }
 
 class _AvatarBottomsheetState extends State<AvatarBottomsheet> {
+  final UserInfoController controller = Get.find();
+
   ///默认头像id
   int defaultLogoId = 1;
   int currentLogoId = -1;
@@ -45,8 +48,6 @@ class _AvatarBottomsheetState extends State<AvatarBottomsheet> {
           10.vGap,
           Expanded(
               child: SizedBox(
-                  // color: Colors.pink.withOpacity(.2),
-                  // padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: GridView.builder(
                       padding: EdgeInsets.symmetric(
                           horizontal: 16.w, vertical: 16.w),
@@ -116,7 +117,7 @@ class _AvatarBottomsheetState extends State<AvatarBottomsheet> {
                     await UserApi.getupdateTeamLogo(teamLogo: currentLogoId);
                     HomeController.to.userEntiry.teamLoginInfo!.team!.teamLogo =
                         currentLogoId;
-
+                    controller.teamLogo.value = currentLogoId;
                     HomeController.to
                         .update([GetXBuilderIds.idGlobalUserEntityRefresh]);
                   }
