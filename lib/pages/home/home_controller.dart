@@ -32,7 +32,6 @@ import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/select_player/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
@@ -187,7 +186,6 @@ class HomeController extends GetxController {
     ///检查后端注册状态
     bool isRegister = await UserApi.getTeamByAccountId();
     if (!isRegister) {
-      toSelectPlayer = true;
       await Get.to(SelectPlayerPage(), transition: Transition.noTransition);
     }
 
