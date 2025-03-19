@@ -19,6 +19,7 @@ class EditNameBottomsheet extends StatefulWidget {
 
 class _EditNameBottomsheetState extends State<EditNameBottomsheet> {
   TextEditingController textEditingController = TextEditingController();
+  bool isEdit = false;
   @override
   Widget build(BuildContext context) {
     return VerticalDragBackWidget(
@@ -47,18 +48,20 @@ class _EditNameBottomsheetState extends State<EditNameBottomsheet> {
                 right: 16.w,
                 child: MtInkWell(
                     onTap: () {
-                      final UserInfoController controller = Get.find();
-                      controller.editTeamName.value =
-                          textEditingController.text;
+                      if (isEdit) {
+                        final UserInfoController controller = Get.find();
+                        controller.editTeamName.value =
+                            textEditingController.text;
+                      }
                       Get.back();
                     },
-                    child: Text(
-                      'Save',
-                      style: 16.w5(
-                          fontFamily: FontFamily.fOswaldRegular,
-                          height: 1,
-                          color: AppColors.cAEAEAE),
-                    )),
+                    child: Text('Save',
+                        style: 16.w5(
+                            fontFamily: FontFamily.fOswaldRegular,
+                            height: 1,
+                            color: isEdit
+                                ? AppColors.c10A86A
+                                : AppColors.cAEAEAE))),
               )
             ],
           ),
@@ -72,6 +75,11 @@ class _EditNameBottomsheetState extends State<EditNameBottomsheet> {
                   maxLines: 9,
                   maxLength: 150,
                   style: 14.w5(fontFamily: FontFamily.fRobotoRegular),
+                  onChanged: (value) {
+                    setState(() {
+                      isEdit = value.isNotEmpty;
+                    });
+                  },
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Fill in your personal name.',

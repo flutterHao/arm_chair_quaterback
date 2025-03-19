@@ -20,7 +20,9 @@ class EditSignatureBottomsheet extends StatefulWidget {
 }
 
 class _EditSignatureBottomsheetState extends State<EditSignatureBottomsheet> {
+  final UserInfoController controller = Get.find();
   TextEditingController textEditingController = TextEditingController();
+  bool isEdit = false;
   @override
   Widget build(BuildContext context) {
     return VerticalDragBackWidget(
@@ -49,9 +51,10 @@ class _EditSignatureBottomsheetState extends State<EditSignatureBottomsheet> {
                 right: 16.w,
                 child: MtInkWell(
                     onTap: () {
-                      final UserInfoController controller = Get.find();
-                      controller.editSignature.value =
-                          textEditingController.text;
+                      if (isEdit) {
+                        controller.editSignature.value =
+                            textEditingController.text;
+                      }
                       Get.back();
                     },
                     child: Text(
@@ -59,7 +62,8 @@ class _EditSignatureBottomsheetState extends State<EditSignatureBottomsheet> {
                       style: 16.w5(
                           fontFamily: FontFamily.fOswaldRegular,
                           height: 1,
-                          color: AppColors.cAEAEAE),
+                          color:
+                              isEdit ? AppColors.c10A86A : AppColors.cAEAEAE),
                     )),
               )
             ],
@@ -73,7 +77,14 @@ class _EditSignatureBottomsheetState extends State<EditSignatureBottomsheet> {
                   cursorColor: Colors.black,
                   maxLines: 9,
                   maxLength: 150,
-                  style: 14.w5(fontFamily: FontFamily.fRobotoRegular),
+                  style: 14.w5(
+                    fontFamily: FontFamily.fRobotoRegular,
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      isEdit = value.isNotEmpty;
+                    });
+                  },
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Fill in your personal signature.',
