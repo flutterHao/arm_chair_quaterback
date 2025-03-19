@@ -12,9 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class UserTopWidget extends StatelessWidget {
+class UserTopWidget extends StatefulWidget {
   const UserTopWidget({super.key});
 
+  @override
+  State<UserTopWidget> createState() => _UserTopWidgetState();
+}
+
+class _UserTopWidgetState extends State<UserTopWidget> {
   @override
   Widget build(BuildContext context) {
     var team = HomeController.to.userEntiry.teamLoginInfo!.team;
@@ -126,8 +131,9 @@ class UserTopWidget extends StatelessWidget {
               top: 16.w,
               right: 0,
               child: MtInkWell(
-                onTap: () {
-                  Get.to(UserInfoDetailPage());
+                onTap: () async {
+                  await Get.to(UserInfoDetailPage());
+                  setState(() {});
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

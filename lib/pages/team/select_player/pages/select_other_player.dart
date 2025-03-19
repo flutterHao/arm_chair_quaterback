@@ -133,6 +133,9 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
                 NbaPlayerInfosPlayerBaseInfoList player =
                     Utils.getPlayBaseInfo(randomOtherPlayers[index].playerId);
                 int playerId = randomOtherPlayers[index].playerId;
+                if (index == 0) {
+                  return SizedBox();
+                }
                 return SizedBox(
                   width: 58.w,
                   child: Column(
@@ -158,7 +161,8 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
                   ),
                 );
               },
-              separatorBuilder: (context, index) => 24.hGap,
+              separatorBuilder: (context, index) =>
+                  index == 0 ? SizedBox() : 24.hGap,
             ),
           ),
           MtInkWell(

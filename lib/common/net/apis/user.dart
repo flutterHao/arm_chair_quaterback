@@ -83,4 +83,12 @@ class UserApi {
       return false;
     }
   }
+
+  ///更新用户头像
+  static Future getupdateTeamLogo({required int teamLogo}) async {
+    var json = await HttpUtil().post(Api.getUpdateTeamLogo, data: {
+      "teamLogo": teamLogo,
+    });
+    return json;
+  }
 }
