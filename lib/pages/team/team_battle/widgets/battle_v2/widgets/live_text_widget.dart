@@ -198,7 +198,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                               }
                               if (["505", "506"]
                                   .contains(gameEvent?.gameEventType)) {
-                                time = 12 * 60;
+                                time = 0;
                               }
                             }
                             return Container(
