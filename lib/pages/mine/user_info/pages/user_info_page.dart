@@ -185,8 +185,11 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
         alignment: Alignment.center,
         padding: EdgeInsets.only(top: 34.w, bottom: 24.w),
         child: MtInkWell(
-            onTap: () {
-              Get.bottomSheet(AvatarBottomsheet(), isScrollControlled: true);
+            onTap: () async {
+              await Get.bottomSheet(AvatarBottomsheet(),
+                  isScrollControlled: true);
+
+              setState(() {});
             },
             child: Container(
               width: 96.w,

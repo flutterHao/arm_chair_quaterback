@@ -188,10 +188,9 @@ class HomeController extends GetxController {
     if (!isRegister) {
       await Get.to(SelectPlayerPage(), transition: Transition.noTransition);
     }
-
+    isLoading = false;
     userEntiry = await UserApi.visitorLogin();
 
-    isLoading = false;
     update();
     TeamIndexController ctrl = Get.find();
     await ctrl.initData();

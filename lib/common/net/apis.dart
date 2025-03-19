@@ -32,6 +32,7 @@ class Api {
       '$API_BASE_PATH/team/randomOtherPlayers';
   static const String getTeamByAccountId =
       '$API_BASE_PATH/team/getTeamByAccountId';
+  static const String getUpdateTeamLogo = '$API_BASE_PATH/team/updateTeamLogo';
 
   ///NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
@@ -58,7 +59,8 @@ class Api {
   static const String shareNews = "$API_BASE_PATH/NBANews/shareNews";
   static const String getPlayerNews = "$API_BASE_PATH/NBANews/getPlayerNews";
   static const String sendEmoji = "$API_BASE_PATH/NBANews/sendEmoji";
-  static const String getNewsEventAward = "$API_BASE_PATH/NBANews/getNewsEventAward";
+  static const String getNewsEventAward =
+      "$API_BASE_PATH/NBANews/getNewsEventAward";
 
   //Guess
   static const String newsGuess = "$API_BASE_PATH//Guess/getNewsGuess";
