@@ -51,7 +51,9 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
                     children: [
                       _editItemWidget(
                           title: 'Name',
-                          value: controller.editTeamName.value,
+                          value: controller.editTeamName.value != ''
+                              ? controller.editTeamName.value
+                              : controller.teamName.value,
                           onTap: () {
                             Get.bottomSheet(
                               EditNameBottomsheet(),
