@@ -6,7 +6,6 @@ import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -49,6 +48,7 @@ class GameOverController extends GetxController {
   var rightCupNum = -1;
 
   bool alreadyGetNewsEventAward = false;
+  var seeAllFlag = false.obs;
 
   @override
   void onReady() {
@@ -367,5 +367,9 @@ class GameOverController extends GetxController {
       update();
       ErrorUtils.toast(e);
     });
+  }
+
+  seeAll() {
+    seeAllFlag.value = true;
   }
 }

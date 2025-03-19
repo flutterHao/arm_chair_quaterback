@@ -27,92 +27,45 @@ class GameOverDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     teamBattleV2Controller = Get.find();
     teamBattleController = Get.find();
-    return Container(
-      height: 700.h,
-      decoration: BoxDecoration(
-          color: AppColors.cFFFFFF,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
-      clipBehavior: Clip.hardEdge,
-      child: Column(
-        children: [
-          DialogTopBtn(),
-          9.vGap,
-          Expanded(
-            child: Container(
-              color: AppColors.cF2F2F2,
-              child: SingleChildScrollView(
-                child: Column(
+    return Column(
+      children: [
+        GameLeaderWidget(
+          controller: teamBattleV2Controller.gameLeaderController,
+          title: LangKey.gameTabGameLeader.tr,
+        ),
+        TeamStatsWidget(
+          controller: teamBattleV2Controller.teamStatsController,
+        ),
+        9.vGap,
+        Container(
+          decoration: BoxDecoration(
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.circular(9.w)),
+          child: Column(
+            children: [
+              25.vGap,
+              Container(
+                margin: EdgeInsets.only(left: 16.w, right: 10.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      color: AppColors.cFFFFFF,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: Column(
-                        children: [
-                          24.vGap,
-                          Text(
-                            "${teamBattleV2Controller.pkResultUpdatedEntity?.newsTitle}",
-                            style: 21.w5(
-                              color: AppColors.c000000,
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldMedium,
-                            ),
-                          ),
-                          15.vGap,
-                          Text(
-                            "${teamBattleV2Controller.pkResultUpdatedEntity?.newsContent}",
-                            style: 14.w4(
-                              color: AppColors.c000000,
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular,
-                            ),
-                          ),
-                          15.vGap,
-                        ],
-                      ),
+                    Text(
+                      "PLAY BY PLAY",
+                      style: 30.w7(
+                          color: AppColors.c000000,
+                          fontFamily: FontFamily.fOswaldBold),
                     ),
-                    GameLeaderWidget(
-                      controller: teamBattleV2Controller.gameLeaderController,
-                      title: LangKey.gameTabGameLeader.tr,
-                    ),
-                    TeamStatsWidget(
-                      controller: teamBattleV2Controller.teamStatsController,
-                    ),
-                    9.vGap,
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColors.cFFFFFF,
-                          borderRadius: BorderRadius.circular(9.w)),
-                      child: Column(
-                        children: [
-                          25.vGap,
-                          Container(
-                            margin: EdgeInsets.only(left: 16.w, right: 10.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "PLAY BY PLAY",
-                                  style: 30.w7(
-                                      color: AppColors.c000000,
-                                      fontFamily: FontFamily.fOswaldBold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const LiveTextWidget(
-                            isGameOverStatus: true,
-                          ),
-                        ],
-                      ),
-                    ),
-                    9.vGap,
                   ],
                 ),
               ),
-            ),
+              const LiveTextWidget(
+                isGameOverStatus: true,
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        9.vGap,
+      ],
     );
   }
 }

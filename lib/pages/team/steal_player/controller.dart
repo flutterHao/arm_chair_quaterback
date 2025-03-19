@@ -152,13 +152,11 @@ class StealPlayerController extends GetxController
 
       // 屏幕中心坐标
       final screenCenter = Offset(screenSize.width / 2, screenSize.height / 2);
-      // item 的中心
       // 计算需要平移的偏移量：目标中心 - 当前中心
       translateAnimation = Tween<Offset>(
               begin: Offset.zero,
               end: Offset((screenCenter.dx - size.width / 2), screenCenter.dy) -
-                  tappedItemRect.topLeft -
-                  Offset(0, -70))
+                  tappedItemRect.topLeft)
           .animate(
         CurvedAnimation(
             parent: animationController,

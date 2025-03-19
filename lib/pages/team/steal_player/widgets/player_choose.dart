@@ -15,8 +15,6 @@ import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/steal_player/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/open_box/big_player_card.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -268,6 +266,7 @@ class PlayerChoose extends GetView<StealPlayerController> {
                 right: 0,
                 left: 0,
                 child: GridView.builder(
+                    clipBehavior: Clip.none,
                     controller: controller.scrollController,
                     padding:
                         EdgeInsets.symmetric(vertical: 18.w, horizontal: 16.w),
