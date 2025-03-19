@@ -46,6 +46,8 @@ class StealPlayerController extends GetxController
 
   late StealResponseEntity stealResponseEntity;
 
+  bool showMatch = false;
+
   @override
   void onInit() {
     super.onInit();
@@ -98,8 +100,12 @@ class StealPlayerController extends GetxController
   }
 
   translationPageEnd() {
-    ready = true;
+    showMatch = true;
     update();
+    Future.delayed(Duration(milliseconds: 3000),(){
+      ready = true;
+      update();
+    });
   }
 
   _initData() {

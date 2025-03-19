@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizon
 import 'package:arm_chair_quaterback/common/widgets/translation_page.dart';
 import 'package:arm_chair_quaterback/pages/team/steal_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/steal_player/widgets/player_choose.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,10 +26,19 @@ class StealPlayer extends GetView<StealPlayerController> {
                 height: double.infinity,
                 width: double.infinity,
                 child: Builder(builder: (_) {
-                  if(controller.ready) {
+                  if (controller.ready) {
                     return PlayerChoose();
                   }
-                  return TranslationPage(onEnd: ()=>controller.translationPageEnd());
+                  return Stack(
+                    children: [
+                      TranslationPage(
+                          onEnd: () => controller.translationPageEnd()),
+                      AnimatedOpacity(
+                          opacity: controller.showMatch ? 1 : 0,
+                          duration: Duration(milliseconds: 300),
+                          child: Matching()),
+                    ],
+                  );
                 }),
               );
             }));

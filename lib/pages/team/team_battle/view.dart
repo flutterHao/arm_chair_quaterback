@@ -10,10 +10,8 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/translation_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/match_success_new/match_success_new.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching_v2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class TeamBattlePage extends GetView<TeamBattleController> {
