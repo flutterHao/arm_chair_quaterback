@@ -10,14 +10,14 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/avatar_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/birthday_picker_bottomsheet.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/edit_signature_bottomsheet.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../../../common/entities/user_entity/team.dart';
 
 class UserInfoEditPage extends StatefulWidget {
   const UserInfoEditPage({super.key});
@@ -27,21 +27,17 @@ class UserInfoEditPage extends StatefulWidget {
 }
 
 class _UserInfoEditPageState extends State<UserInfoEditPage> {
-  String signature = '';
-  int birthday = 0;
-  String teamName = '';
+  final UserInfoController controller = Get.find();
+
   @override
   initState() {
     super.initState();
-    Team? team = HomeController.to.userEntiry!.teamLoginInfo!.team!;
-    signature = team.signature ?? '';
-    birthday = team.birthday ?? 0;
-    teamName = team.teamName ?? '-';
+    controller.getEditInfoData();
   }
 
   void _showBirthdayPicker() {
     Get.bottomSheet(
-      BirthdayPickerBottomsheet(),
+      BirthdayPickerBottomsheet(controller.editBirthday.value),
       isScrollControlled: true,
     );
   }
@@ -57,124 +53,135 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
         children: [
           _avatarWidget(),
           Expanded(
-              child: Column(
-            children: [
-              Container(
-                  height: 66.w,
-                  padding: EdgeInsets.symmetric(horizontal: 22.w),
-                  child: Row(
+              child: Obx(() => Column(
                     children: [
-                      SizedBox(
-                        width: 66.w,
-                        child: Text(
-                          'Name',
-                          style: 14.w5(fontFamily: FontFamily.fOswaldRegular),
-                        ),
-                      ),
-                      Expanded(
-                          child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          '${teamName}',
-                          style: 12.w5(
-                              color: AppColors.cA1A1A1,
-                              fontFamily: FontFamily.fRobotoRegular),
-                        ),
-                      )),
                       Container(
-                          width: 15.w,
-                          margin: EdgeInsets.only(left: 15.w),
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            Assets.managerUiMangerNew213,
-                            width: 15.w,
-                            color: AppColors.c666666,
-                          ))
-                    ],
-                  )),
-              Divider(color: AppColors.cD1D1D1, height: 1),
-              InkWell(
-                onTap: () {
-                  _showBirthdayPicker();
-                },
-                child: Container(
-                    height: 66.w,
-                    padding: EdgeInsets.symmetric(horizontal: 22.w),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 66.w,
-                          child: Text(
-                            'Birthday',
-                            style: 14.w5(fontFamily: FontFamily.fOswaldRegular),
-                          ),
-                        ),
-                        Expanded(
-                            child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            DateUtil.formatDate(
-                                DateTime.fromMillisecondsSinceEpoch(birthday),
-                                format: 'yyyy-MM-dd'),
-                            style: 12.w5(
-                                color: AppColors.cA1A1A1,
-                                fontFamily: FontFamily.fRobotoRegular),
-                          ),
-                        )),
-                        Container(
-                            width: 15.w,
-                            margin: EdgeInsets.only(left: 15.w),
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              Assets.commonUiCommonIconSystemJumpto,
-                              width: 8.w,
-                              color: AppColors.c666666,
-                            ))
-                      ],
-                    )),
-              ),
-              Divider(color: AppColors.cD1D1D1, height: 1),
-              Container(
-                  height: 66.w,
-                  padding: EdgeInsets.symmetric(horizontal: 22.w),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 66.w,
-                        child: Text(
-                          'Signature',
-                          style: 14.w5(fontFamily: FontFamily.fOswaldRegular),
-                        ),
+                          height: 66.w,
+                          padding: EdgeInsets.symmetric(horizontal: 22.w),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 66.w,
+                                child: Text(
+                                  'Name',
+                                  style: 14.w5(
+                                      fontFamily: FontFamily.fOswaldRegular),
+                                ),
+                              ),
+                              Expanded(
+                                  child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  controller.editTeamName.value,
+                                  style: 12.w5(
+                                      color: AppColors.cA1A1A1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                ),
+                              )),
+                              Container(
+                                  width: 15.w,
+                                  margin: EdgeInsets.only(left: 15.w),
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    Assets.managerUiMangerNew213,
+                                    width: 15.w,
+                                    color: AppColors.c666666,
+                                  ))
+                            ],
+                          )),
+                      Divider(color: AppColors.cD1D1D1, height: 1),
+                      InkWell(
+                        onTap: () {
+                          _showBirthdayPicker();
+                        },
+                        child: Container(
+                            height: 66.w,
+                            padding: EdgeInsets.symmetric(horizontal: 22.w),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 66.w,
+                                  child: Text(
+                                    'Birthday',
+                                    style: 14.w5(
+                                        fontFamily: FontFamily.fOswaldRegular),
+                                  ),
+                                ),
+                                Expanded(
+                                    child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    DateUtil.formatDate(
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                            controller.editBirthday.value),
+                                        format: 'yyyy-MM-dd'),
+                                    style: 12.w5(
+                                        color: AppColors.cA1A1A1,
+                                        fontFamily: FontFamily.fRobotoRegular),
+                                  ),
+                                )),
+                                Container(
+                                    width: 15.w,
+                                    margin: EdgeInsets.only(left: 15.w),
+                                    alignment: Alignment.center,
+                                    child: Image.asset(
+                                      Assets.commonUiCommonIconSystemJumpto,
+                                      width: 8.w,
+                                      color: AppColors.c666666,
+                                    ))
+                              ],
+                            )),
                       ),
-                      Expanded(
-                          child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          signature,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: 12.w5(
-                              color: AppColors.cA1A1A1,
-                              fontFamily: FontFamily.fRobotoRegular),
-                        ),
-                      )),
-                      Container(
-                          width: 15.w,
-                          margin: EdgeInsets.only(left: 15.w),
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            Assets.commonUiCommonIconSystemJumpto,
-                            width: 8.w,
-                            color: AppColors.c666666,
-                          ))
+                      Divider(color: AppColors.cD1D1D1, height: 1),
+                      InkWell(
+                          onTap: () {
+                            Get.bottomSheet(EditSignatureBottomsheet(),
+                                isScrollControlled: true);
+                          },
+                          child: Container(
+                              height: 66.w,
+                              padding: EdgeInsets.symmetric(horizontal: 22.w),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 66.w,
+                                    child: Text(
+                                      'Signature',
+                                      style: 14.w5(
+                                          fontFamily:
+                                              FontFamily.fOswaldRegular),
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      controller.signature.value,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: 12.w5(
+                                          color: AppColors.cA1A1A1,
+                                          fontFamily:
+                                              FontFamily.fRobotoRegular),
+                                    ),
+                                  )),
+                                  Container(
+                                      width: 15.w,
+                                      margin: EdgeInsets.only(left: 15.w),
+                                      alignment: Alignment.center,
+                                      child: Image.asset(
+                                        Assets.commonUiCommonIconSystemJumpto,
+                                        width: 8.w,
+                                        color: AppColors.c666666,
+                                      ))
+                                ],
+                              ))),
+                      Divider(color: AppColors.cD1D1D1, height: 1),
+                      Spacer(),
+                      _saveButtonWidget(),
+                      (30 + Utils.getPaddingBottom()).vGap,
                     ],
-                  )),
-              Divider(color: AppColors.cD1D1D1, height: 1),
-              Spacer(),
-              _saveButtonWidget(),
-              (30 + Utils.getPaddingBottom()).vGap,
-            ],
-          ))
+                  )))
         ],
       )),
     ));

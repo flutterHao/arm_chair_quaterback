@@ -8,6 +8,9 @@ class UserInfoController extends GetxController {
   RxString teamName = "".obs;
   RxInt birthday = 0.obs;
   RxString signature = "".obs;
+  RxString editTeamName = "".obs;
+  RxInt editBirthday = 0.obs;
+  RxString editSignature = "".obs;
   _initData() {
     update(["user_info"]);
     var team = HomeController.to.userEntiry.teamLoginInfo!.team;
@@ -15,9 +18,14 @@ class UserInfoController extends GetxController {
       teamLogo.value = team.teamLogo ?? 1;
       teamName.value = team.teamName ?? "";
       birthday.value = team.birthday ?? 0;
-      // birthday.value = team.birthday ?? 1742356465000;
       signature.value = team.signature ?? "";
     }
+  }
+
+  void getEditInfoData() {
+    editTeamName.value = teamName.value;
+    editBirthday.value = birthday.value;
+    editSignature.value = signature.value;
   }
 
   @override
