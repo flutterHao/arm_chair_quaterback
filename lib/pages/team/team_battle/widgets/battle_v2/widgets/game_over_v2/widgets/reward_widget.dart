@@ -12,10 +12,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2025/3/19/14:58
 
 class RewardWidget extends StatefulWidget {
-  const RewardWidget({super.key, required this.type});
+  const RewardWidget({super.key, required this.type, this.onEnd});
 
   /// eventType : 1 偷钱 2 偷球员
   final int type;
+  final Function? onEnd;
 
   @override
   State<RewardWidget> createState() => _RewardWidgetState();
@@ -68,6 +69,7 @@ class _RewardWidgetState extends State<RewardWidget>
                     if (!res) {
                       return;
                     }
+                    widget.onEnd?.call();
                     await Future.delayed(Duration(milliseconds: 300));
                     animationController.forward();
                   },

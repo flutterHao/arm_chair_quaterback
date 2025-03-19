@@ -30,12 +30,17 @@ class GameOverV2 extends GetView<GameOverController> {
 
   late RewardWidget rewardWidget;
 
+  bool awardAlreadyGet = false;
+
   @override
   Widget build(BuildContext context) {
     teamBattleV2Controller = Get.find();
     var type = teamBattleV2Controller.pkResultUpdatedEntity!.eventType;
     rewardWidget = RewardWidget(
       type: type,
+      onEnd: (){
+        awardAlreadyGet = true;
+      },
     );
     return GetBuilder<GameOverController>(
         init: GameOverController(context),
@@ -339,7 +344,10 @@ class GameOverV2 extends GetView<GameOverController> {
     );
   }
 
-  RewardWidget _buildReward() {
+  Widget _buildReward() {
+    if(awardAlreadyGet){
+      return SizedBox.shrink();
+    }
     return rewardWidget;
   }
 }
