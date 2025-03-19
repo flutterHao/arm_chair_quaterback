@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-19 17:18:05
+ * @LastEditTime: 2025-03-19 18:20:37
  */
 import 'dart:async';
 import 'dart:math';
@@ -271,10 +271,11 @@ class NewListController extends GetxController {
   }
 
   void newsEventOntap(NewsListDetail item) {
+    if (item.hasRecieve) return;
     if (item.eventType == 2) {
-      Get.offNamed(RouteNames.stealPlayer);
+      item.hasRecieve = true;
+      Get.toNamed(RouteNames.stealPlayer);
     } else {
-      if (item.hasRecieve) return;
       TeamApi.getNewsEventAward().then((_) {
         item.hasRecieve = true;
         update(["newsList"]);

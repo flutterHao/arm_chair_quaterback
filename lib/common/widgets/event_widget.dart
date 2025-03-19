@@ -23,6 +23,7 @@ class NewsEventWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MtInkWell(
+      minScale: 0.95,
       onTap: () {
         onTap();
       },
@@ -42,13 +43,16 @@ class NewsEventWidget extends StatelessWidget {
               Row(
                 children: [
                   Container(
+                    width: 32.w,
+                    height: 32.w,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.w),
                         color: AppColors.c262626),
                     child: Image.asset(
-                      Assets.managerUiMangerNew216,
-                      width: 32.w,
-                      height: 32.w,
+                      Assets.newsUiMangerNew216,
+                      width: 19.w,
+                      height: 19.w,
                     ),
                   ),
                   6.5.hGap,
