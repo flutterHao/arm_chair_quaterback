@@ -164,7 +164,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                             if (i == 0 &&
                                 currentTabIsLast &&
                                 !controller.isGameOver.value) {
-                              if (itemCount == 0) {
+                              if (itemCount == 0 || controller.superSpeedMan) {
                                 return SizedBox(
                                   height: 44.w * 5,
                                   child: const Center(
