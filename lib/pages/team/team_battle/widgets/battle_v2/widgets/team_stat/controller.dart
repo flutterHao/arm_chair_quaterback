@@ -33,7 +33,7 @@ class TeamStatsController extends GetxController {
     list.add(
         TeamStats("Block Shot ", homeDetail?.blk ?? 0, awayDetail?.blk ?? 0));
     list.add(TeamStats(
-        "Free Throw Make", homeDetail?.fta ?? 0, awayDetail?.ftm ?? 0));
+        "Free Throw Make", homeDetail?.fta ?? 0, awayDetail?.fta ?? 0));
     list.add(TeamStats(
         "3 Points Make", homeDetail?.threePm ?? 0, awayDetail?.threePm ?? 0));
     list.add(TeamStats("Turn over", homeDetail?.to ?? 0, awayDetail?.to ?? 0));

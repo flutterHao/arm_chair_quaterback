@@ -47,7 +47,6 @@ class GameOverController extends GetxController {
   var leftCupNum = -1;
   var rightCupNum = -1;
 
-  bool alreadyGetNewsEventAward = false;
   var seeAllFlag = false.obs;
 
   @override
@@ -355,18 +354,6 @@ class GameOverController extends GetxController {
             .cup ??
         0;
     return currentCup;
-  }
-
-  void getNewsEventAward() {
-    if (alreadyGetNewsEventAward) return;
-    alreadyGetNewsEventAward = true;
-    TeamApi.getNewsEventAward().then((_) {
-      update();
-    }, onError: (e) {
-      alreadyGetNewsEventAward = false;
-      update();
-      ErrorUtils.toast(e);
-    });
   }
 
   seeAll() {

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -83,22 +84,22 @@ class _MoneyIncomeAnimationState extends State<MoneyIncomeAnimation> {
           ...positions.map((position) {
             return Obx(() {
               return AnimatedPositioned(
-                duration: Duration(milliseconds: random.nextInt(500) + 100),
+                duration: Duration(milliseconds: random.nextInt(200) + 400),
+                curve: Curves.easeIn,
                 onEnd: () {
                   if (animationStatus.value == 2) {
-                    Future.delayed(const Duration(milliseconds: 300),(){
-                      if(mounted){
-                        widget.onEnd?.call();
-
-                      }
-                    });
+                    if (!Utils.canOperate()) return;
+                    // Future.delayed(const Duration(milliseconds: 300),(){
+                    if (mounted) {
+                      widget.onEnd?.call();
+                    }
+                    // });
                   } else if (animationStatus.value == 1) {
-                    Future.delayed(const Duration(milliseconds: 300), () {
+                    Future.delayed(const Duration(milliseconds: 150), () {
                       animationStatus.value = 2;
                     });
                   }
                 },
-                curve: Curves.easeInOut,
                 left: animationStatus.value == 1
                     ? (position.dx + widget.randRect.left)
                     : animationStatus.value == 2

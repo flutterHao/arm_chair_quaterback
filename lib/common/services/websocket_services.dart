@@ -28,11 +28,12 @@ import 'package:get/get.dart';
 ///created at 2025/2/7/17:16
 
 class WebsocketServices extends GetxService {
-  final List<ToastItem> _queue = [];
-  ToastItem? _showing;
+  static final List<ToastItem> _queue = [];
+  static ToastItem? _showing;
   late StreamSubscription<ResponseMessage> subscription;
-  late AppLifecycleListener appLifecycleListener;
-  AppLifecycleState appLifecycleState = AppLifecycleState.resumed;
+  static late AppLifecycleListener appLifecycleListener;
+  static AppLifecycleState appLifecycleState = AppLifecycleState.resumed;
+  static bool _resumed = true;
 
   @override
   void onInit() {
@@ -66,7 +67,7 @@ class WebsocketServices extends GetxService {
       appLifecycleState = state;
       if (state == AppLifecycleState.resumed) {
         /// 页面可见状态下，激活队列
-        next();
+        _next();
       }
     });
   }
@@ -198,7 +199,7 @@ class WebsocketServices extends GetxService {
     }
 
     if (hasMoney || hasBetCoin || hasLuckyCoin || hasBall) {
-      Get.find<HomeController>().refreshMoneyCoinWidget();
+      // Get.find<HomeController>().refreshMoneyCoinWidget();
     }
   }
 
@@ -225,21 +226,24 @@ class WebsocketServices extends GetxService {
         type: type));
   }
 
-  onEnd() {
+  static void _onEnd() {
     // print('websocket-services--onEnd-----');
     _showing = null;
-    next();
+    _next();
   }
 
-  void next() {
+  static void _next() {
     ///页面非可见状态下不提示
     if (appLifecycleState != AppLifecycleState.resumed) {
+      return;
+    }
+    if (!_resumed) {
       return;
     }
     if (_queue.isNotEmpty && _showing == null) {
       _showing = _queue.removeAt(0);
       // print('websocket-services--show-----');
-      show(_showing!);
+      _show(_showing!);
     }
   }
 
@@ -248,10 +252,10 @@ class WebsocketServices extends GetxService {
       _queue.removeWhere((e) => e.type == item.type);
     }
     _queue.add(item);
-    next();
+    _next();
   }
 
-  void show(ToastItem item) {
+  static void _show(ToastItem item) {
     Widget child = Center(
       child: Container(
         height: 61.w,
@@ -282,11 +286,25 @@ class WebsocketServices extends GetxService {
         child: child,
       );
     }
+    if(item.type != null){
+      Get.find<HomeController>().refreshMoneyCoinWidget();
+    }
     showTopToastDialog(
         needBg: false,
         duration: const Duration(seconds: 2),
-        onEnd: onEnd,
+        onEnd: _onEnd,
         child: Container(margin: EdgeInsets.only(top: 44.w), child: child));
+  }
+
+  /// 启动
+  static void resumed() {
+    _resumed = true;
+    _next();
+  }
+
+  /// 暂停
+  static void pause() {
+    _resumed = false;
   }
 
   @override

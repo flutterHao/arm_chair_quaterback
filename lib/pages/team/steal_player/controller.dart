@@ -116,7 +116,7 @@ class StealPlayerController extends GetxController
     }, onError: (e) {
       loadStatus.value = LoadDataStatus.error;
       ErrorUtils.toast(e);
-      Get.back();
+      Get.back(result: false);
     });
   }
 

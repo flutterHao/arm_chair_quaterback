@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/random_other_players_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_player_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/steal_response_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/steal_team_entity.dart';
@@ -309,7 +310,8 @@ class TeamApi {
     return json.map((e) => RandomOtherPlayersEntity.fromJson(e)).toList();
   }
 
-  static Future<void> getNewsEventAward() async {
-    await httpUtil.post(Api.getNewsEventAward);
+  static Future<List<ReceivePropEntity>> getNewsEventAward() async {
+    List json = await httpUtil.post(Api.getNewsEventAward);
+    return json.map((e) => ReceivePropEntity.fromJson(e)).toList();
   }
 }

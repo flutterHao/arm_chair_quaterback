@@ -188,7 +188,7 @@ class PlayerChoose extends GetView<StealPlayerController> {
       onTap: () {
         print('controller.chooseIndex:${controller.chooseIndex}');
         if (controller.chooseIndex == -1) return;
-        Get.back();
+        Get.back(result: true);
       },
       child: Center(
         child: Text(

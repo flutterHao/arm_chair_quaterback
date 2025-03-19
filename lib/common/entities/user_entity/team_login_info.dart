@@ -54,6 +54,13 @@ class TeamLoginInfo {
     return firstWhere?.num ?? 0;
   }
 
+  setMoney(int money){
+    var indexWhere = teamPropList?.indexWhere((e) => e.propId == Constant.propMoneyTickId);
+    if(indexWhere != null && indexWhere != -1){
+      teamPropList![indexWhere].num = money;
+    }
+  }
+
   num getLuckyCoin() {
     var firstWhere = teamPropList
         ?.firstWhereOrNull((e) => e.propId == Constant.propLuckyCoinId);

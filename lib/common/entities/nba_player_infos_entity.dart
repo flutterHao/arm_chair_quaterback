@@ -219,6 +219,9 @@ class NbaPlayerInfosPlayerBaseInfoList {
   late int beforeMarketPriceUpdateTime = 0;
   late String elname = "";
   late int number = 0;
+  late String height = "0";
+  late String weight = "0";
+  late int exp = 0;
   int age = 0;
   double layupWeight = 0;
   double threePointWeight = 0;

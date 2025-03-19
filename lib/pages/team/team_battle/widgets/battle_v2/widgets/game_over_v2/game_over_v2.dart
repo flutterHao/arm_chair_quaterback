@@ -11,7 +11,9 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_v2/widgets/event_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_v2/widgets/game_over_detail.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_v2/widgets/reward_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score_v2/quarter_score_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,9 +28,15 @@ class GameOverV2 extends GetView<GameOverController> {
 
   late TeamBattleV2Controller teamBattleV2Controller;
 
+  late RewardWidget rewardWidget;
+
   @override
   Widget build(BuildContext context) {
     teamBattleV2Controller = Get.find();
+    var type = teamBattleV2Controller.pkResultUpdatedEntity!.eventType;
+    rewardWidget = RewardWidget(
+      type: type,
+    );
     return GetBuilder<GameOverController>(
         init: GameOverController(context),
         builder: (logic) {
@@ -37,7 +45,7 @@ class GameOverV2 extends GetView<GameOverController> {
             child: Container(
               margin: EdgeInsets.only(top: 9.w),
               child: Obx(() {
-                if(controller.seeAllFlag.value){
+                if (controller.seeAllFlag.value) {
                   return _buildAllWidget(context);
                 }
                 return _buildPartWidget(context);
@@ -53,7 +61,7 @@ class GameOverV2 extends GetView<GameOverController> {
         children: [
           _buildSameWidget(context),
           Container(
-            padding: EdgeInsets.only(left: 16.w,right: 16.w,bottom: 15.w),
+            padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 15.w),
             color: AppColors.cFFFFFF,
             child: Text(
               "${teamBattleV2Controller.pkResultUpdatedEntity?.newsContent}",
@@ -74,26 +82,24 @@ class GameOverV2 extends GetView<GameOverController> {
     return Column(
       children: [
         _buildSameWidget(context),
-        Expanded(
-          child: Container(
-            color: AppColors.cFFFFFF,
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Text(
-              "${teamBattleV2Controller.pkResultUpdatedEntity?.newsContent}",
-              maxLines: 4,
-              style: 14.w4(
-                color: AppColors.c000000,
-                height: 1.3,
-                overflow: TextOverflow.ellipsis,
-                fontFamily: FontFamily.fRobotoRegular,
-              ),
+        Container(
+          color: AppColors.cFFFFFF,
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Text(
+            "${teamBattleV2Controller.pkResultUpdatedEntity?.newsContent}",
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: 14.w4(
+              color: AppColors.c000000,
+              height: 1.3,
+              fontFamily: FontFamily.fRobotoRegular,
             ),
           ),
         ),
         Container(
           height: 50.w,
           color: AppColors.cFFFFFF,
-          padding: EdgeInsets.only(top: 10.w,right: 16.w),
+          padding: EdgeInsets.only(top: 10.w, right: 16.w),
           margin: EdgeInsets.only(bottom: 9.w + Utils.getPaddingBottom()),
           child: MtInkWell(
             onTap: () => controller.seeAll(),
@@ -129,174 +135,86 @@ class GameOverV2 extends GetView<GameOverController> {
       child: Column(children: [
         Builder(builder: (context) {
           if (controller.isLeftWin()) {
-            /// 有奖励
-            return MtInkWell(
-              onTap: () {
-                if (teamBattleV2Controller.pkResultUpdatedEntity?.eventType ==
-                    2) {
-                  Get.offNamed(RouteNames.stealPlayer);
-                } else {
-                  controller.getNewsEventAward();
-                }
-              },
-              child: Opacity(
-                opacity: controller.alreadyGetNewsEventAward ? 0.5 : 1.0,
-                child: SizedBox(
-                  height: 118.w,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 105.w,
-                        height: 71.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.w),
-                            color: AppColors.c000000),
-                        clipBehavior: Clip.hardEdge,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            OutlinedText(
-                              text: "EVENT",
-                              textStyle: 42.w5(
-                                  color: AppColors.c000000,
-                                  fontFamily: FontFamily.fOswaldMedium),
-                              strokeColor: AppColors.c4c4c4c,
-                              strokeWidth: 1.w,
-                            ),
-                            Positioned(
-                                top: 0,
-                                right: 0,
-                                child: IconWidget(
-                                  icon: Assets.managerUiMangerNew22,
-                                  iconWidth: 33.w,
-                                )),
-                            Positioned(
-                                bottom: 0,
-                                left: 0,
-                                child: IconWidget(
-                                  icon: Assets.managerUiMangerNew21,
-                                  iconWidth: 33.w,
-                                )),
-                            IconWidget(
-                              icon: teamBattleV2Controller
-                                          .pkResultUpdatedEntity?.eventType ==
-                                      1
-                                  ? Assets.commonUiCommonProp05
-                                  : Assets.managerUiManagerFreegift01,
-                              iconWidth: 58.w,
-                            )
-                          ],
-                        ),
-                      ),
-                      12.hGap,
-                      Expanded(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "FEATURED UPCOMING EVENTS",
-                            style: 16.w5(
-                              color: AppColors.c000000,
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldMedium,
-                            ),
-                          ),
-                          7.vGap,
-                          Text(
-                            "Click trigger",
-                            style: 14.w4(
-                              color: AppColors.c000000.withOpacity(0.5),
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular,
-                            ),
-                          )
-                        ],
-                      )),
-                      IconWidget(
-                        iconWidth: 8.w,
-                        icon: Assets.commonUiCommonIconSystemJumpto,
-                        iconColor: AppColors.c000000,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
+
+            return _buildReward();
           }
 
           /// 无奖励
-          return SizedBox(
-            height: 118.w,
-            child: Row(
-              children: [
-                Container(
-                  width: 105.w,
-                  height: 71.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      color: AppColors.c000000),
-                  clipBehavior: Clip.hardEdge,
-                  child: Stack(
-                    alignment: Alignment.center,
+          return Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+              color: AppColors.cD1D1D1,
+              width: 1.w,
+            ))),
+            child: SizedBox(
+              height: 118.w,
+              child: Row(
+                children: [
+                  Container(
+                    width: 105.w,
+                    height: 71.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.w),
+                        color: AppColors.c000000),
+                    clipBehavior: Clip.hardEdge,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Positioned(
+                            top: 0,
+                            right: 0,
+                            child: IconWidget(
+                              icon: Assets.managerUiMangerNew22,
+                              iconWidth: 33.w,
+                              iconColor: AppColors.c5D5D5D,
+                            )),
+                        Positioned(
+                            bottom: 0,
+                            left: 0,
+                            child: IconWidget(
+                              icon: Assets.managerUiMangerNew21,
+                              iconWidth: 33.w,
+                              iconColor: AppColors.c5D5D5D,
+                            )),
+                        IconWidget(
+                          icon: Assets.managerUiManagerPlayerinfoIcon01,
+                          iconWidth: 35.w,
+                          iconColor: AppColors.c5D5D5D,
+                        )
+                      ],
+                    ),
+                  ),
+                  12.hGap,
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Positioned(
-                          top: 0,
-                          right: 0,
-                          child: IconWidget(
-                            icon: Assets.managerUiMangerNew22,
-                            iconWidth: 33.w,
-                            iconColor: AppColors.c5D5D5D,
-                          )),
-                      Positioned(
-                          bottom: 0,
-                          left: 0,
-                          child: IconWidget(
-                            icon: Assets.managerUiMangerNew21,
-                            iconWidth: 33.w,
-                            iconColor: AppColors.c5D5D5D,
-                          )),
-                      IconWidget(
-                        icon: Assets.managerUiManagerPlayerinfoIcon01,
-                        iconWidth: 35.w,
-                        iconColor: AppColors.c5D5D5D,
+                      Text(
+                        "NO EVENTS",
+                        style: 16.w5(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldMedium,
+                        ),
+                      ),
+                      7.vGap,
+                      Text(
+                        "you lose the game",
+                        style: 14.w4(
+                          color: AppColors.c000000.withOpacity(0.5),
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular,
+                        ),
                       )
                     ],
-                  ),
-                ),
-                12.hGap,
-                Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "NO EVENTS",
-                      style: 16.w5(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium,
-                      ),
-                    ),
-                    7.vGap,
-                    Text(
-                      "you lose the game",
-                      style: 14.w4(
-                        color: AppColors.c000000.withOpacity(0.5),
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular,
-                      ),
-                    )
-                  ],
-                )),
-              ],
+                  )),
+                ],
+              ),
             ),
           );
         }),
-        Divider(
-          color: AppColors.cD1D1D1,
-          height: 1.w,
-        ),
         21.vGap,
         Container(
           width: 343.w,
@@ -419,5 +337,9 @@ class GameOverV2 extends GetView<GameOverController> {
         15.vGap,
       ]),
     );
+  }
+
+  RewardWidget _buildReward() {
+    return rewardWidget;
   }
 }

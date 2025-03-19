@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
@@ -63,6 +64,7 @@ class TeamBattleController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    WebsocketServices.pause();
     step.value = 1;
     _canPop = false;
     meAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
@@ -237,6 +239,7 @@ class TeamBattleController extends GetxController
     subscription?.cancel();
     _timer?.cancel();
     Get.delete<TeamBattleV2Controller>();
+    WebsocketServices.resumed();
     super.onClose();
   }
 }

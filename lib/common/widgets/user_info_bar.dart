@@ -154,11 +154,6 @@ class UserInfoBar extends StatelessWidget {
                           );
                         },
                         onTap: () {
-                          if (kDebugMode) {
-                            // Get.toNamed(RouteNames.teamTeamBattle);
-                            Get.toNamed(RouteNames.stealPlayer);
-                            return;
-                          }
                           if (!enable) {
                             Navigator.pop(context);
                             return;

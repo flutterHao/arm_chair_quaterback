@@ -206,15 +206,15 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     Row(
                       children: [
                         _buildPlayerInfoItem(LangKey.gameName.tr,
-                            "${controller.baseInfo?.age ?? "0"}"),
+                            "${controller.baseInfo?.height ?? "0"}"),
                         33.hGap,
 
                         ///todo
-                        _buildPlayerInfoItem(LangKey.gameNameWt.tr, '0.8'),
+                        _buildPlayerInfoItem(LangKey.gameNameWt.tr, "${controller.baseInfo?.weight ?? "0"}"),
                         33.hGap,
 
                         ///todo
-                        _buildPlayerInfoItem(LangKey.gameNameAge.tr, "0.6"),
+                        _buildPlayerInfoItem(LangKey.gameNameAge.tr, "${controller.baseInfo?.exp ?? "0"}"),
                       ],
                     ),
                     9.vGap,
