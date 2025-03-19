@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -46,7 +48,9 @@ class _WebPageState extends State<WebPage> {
           ),
           backgroundColor: Colors.white,
         ),
-        body: Center(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+            child: Center(
           child: Stack(
             children: [
               InAppWebView(
@@ -54,6 +58,7 @@ class _WebPageState extends State<WebPage> {
                 onWebViewCreated: (controller) async {
                   webViewController = controller;
                 },
+                initialUserScripts: UnmodifiableListView<UserScript>([]),
                 onProgressChanged: (controller, progress) {
                   setState(() {
                     this.progress = progress / 100;
@@ -66,7 +71,7 @@ class _WebPageState extends State<WebPage> {
                   : Container(),
             ],
           ),
-        ),
+        )),
       ),
     );
   }

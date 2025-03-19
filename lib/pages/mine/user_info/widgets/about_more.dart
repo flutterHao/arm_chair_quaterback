@@ -32,26 +32,29 @@ class AboutMoreWidget extends StatelessWidget {
           ),
           4.vGap,
           MtInkWell(
+              onTap: () {
+                Get.to(WebPage('Connect us', Address.connectUsUrl));
+              },
               child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16.w),
-            child: Row(
-              children: [
-                Text(
-                  'Connect us',
-                  style: 14.w5(
-                      fontFamily: FontFamily.fOswaldRegular,
-                      height: 1,
-                      color: AppColors.cA1A1A1),
+                padding: EdgeInsets.symmetric(vertical: 16.w),
+                child: Row(
+                  children: [
+                    Text(
+                      'Connect us',
+                      style: 14.w5(
+                          fontFamily: FontFamily.fOswaldRegular,
+                          height: 1,
+                          color: AppColors.cA1A1A1),
+                    ),
+                    Spacer(),
+                    IconWidget(
+                      icon: Assets.commonUiCommonIconSystemJumpto,
+                      iconWidth: 7.w,
+                      iconColor: AppColors.c666666,
+                    )
+                  ],
                 ),
-                Spacer(),
-                IconWidget(
-                  icon: Assets.commonUiCommonIconSystemJumpto,
-                  iconWidth: 7.w,
-                  iconColor: AppColors.c666666,
-                )
-              ],
-            ),
-          )),
+              )),
           Divider(height: 1, color: AppColors.cE6E6E6),
           MtInkWell(
               onTap: () {

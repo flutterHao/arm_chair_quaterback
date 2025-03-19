@@ -1,23 +1,19 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
-import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
-import 'package:arm_chair_quaterback/common/widgets/clipper/daily_task_bar_clipper.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/clipper/title_bar_clipper.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/top_dialog.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -154,16 +150,17 @@ class UserInfoBar extends StatelessWidget {
                           );
                         },
                         onTap: () {
-                          if (kDebugMode) {
-                            // Get.toNamed(RouteNames.teamTeamBattle);
-                            Get.toNamed(RouteNames.stealPlayer);
-                            return;
-                          }
-                          if (!enable) {
-                            Navigator.pop(context);
-                            return;
-                          }
-                          _showDialog(context, routeId);
+                          Get.toNamed(RouteNames.userInfo);
+                          // if (kDebugMode) {
+                          //   Get.toNamed(RouteNames.teamTeamBattle);
+                          //   Get.toNamed(RouteNames.stealPlayer);
+                          //   return;
+                          // }
+                          // if (!enable) {
+                          //   Navigator.pop(context);
+                          //   return;
+                          // }
+                          // _showDialog(context, routeId);
                         },
                         child: Container(
                           width: 36.w,

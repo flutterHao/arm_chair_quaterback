@@ -57,4 +57,5 @@ class Address {
   ///隐私政策
   static const String privacyPolicyUrl =
       'https://www.armchair.top/reference/privacy-policy';
+  static const String connectUsUrl = 'https://www.armchair.top';
 }
