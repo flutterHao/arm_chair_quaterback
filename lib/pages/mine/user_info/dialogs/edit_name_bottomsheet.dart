@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -9,17 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../../common/constant/font_family.dart';
-
-class EditSignatureBottomsheet extends StatefulWidget {
-  const EditSignatureBottomsheet({super.key});
+class EditNameBottomsheet extends StatefulWidget {
+  const EditNameBottomsheet({super.key});
 
   @override
-  State<EditSignatureBottomsheet> createState() =>
-      _EditSignatureBottomsheetState();
+  State<EditNameBottomsheet> createState() => _EditNameBottomsheetState();
 }
 
-class _EditSignatureBottomsheetState extends State<EditSignatureBottomsheet> {
+class _EditNameBottomsheetState extends State<EditNameBottomsheet> {
   TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -39,7 +37,7 @@ class _EditSignatureBottomsheetState extends State<EditSignatureBottomsheet> {
             children: [
               Center(
                 child: Text(
-                  'Signature',
+                  'Name',
                   style:
                       16.w5(fontFamily: FontFamily.fOswaldRegular, height: 1),
                 ),
@@ -50,7 +48,7 @@ class _EditSignatureBottomsheetState extends State<EditSignatureBottomsheet> {
                 child: MtInkWell(
                     onTap: () {
                       final UserInfoController controller = Get.find();
-                      controller.editSignature.value =
+                      controller.editTeamName.value =
                           textEditingController.text;
                       Get.back();
                     },
@@ -76,7 +74,7 @@ class _EditSignatureBottomsheetState extends State<EditSignatureBottomsheet> {
                   style: 14.w5(fontFamily: FontFamily.fRobotoRegular),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Fill in your personal signature.',
+                    hintText: 'Fill in your personal name.',
                     hintStyle: 14.w5(
                         color: AppColors.c666666,
                         fontFamily: FontFamily.fRobotoRegular),

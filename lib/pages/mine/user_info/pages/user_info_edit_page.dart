@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/birthday_picker_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/edit_avatar_bottomsheet.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/edit_name_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/edit_signature_bottomsheet.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -35,13 +36,6 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
     controller.getEditInfoData();
   }
 
-  void _showBirthdayPicker() {
-    Get.bottomSheet(
-      BirthdayPickerBottomsheet(controller.editBirthday.value),
-      isScrollControlled: true,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return HorizontalDragBackContainer(
@@ -55,39 +49,19 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
           Expanded(
               child: Obx(() => Column(
                     children: [
-                      Container(
-                          height: 66.w,
-                          padding: EdgeInsets.symmetric(horizontal: 22.w),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 66.w,
-                                child: Text(
-                                  'Name',
-                                  style: 14.w5(
-                                      fontFamily: FontFamily.fOswaldRegular),
-                                ),
-                              ),
-                              Expanded(
-                                  child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  controller.editTeamName.value,
-                                  style: 12.w5(
-                                      color: AppColors.cA1A1A1,
-                                      fontFamily: FontFamily.fRobotoRegular),
-                                ),
-                              )),
-                              Container(
-                                  width: 15.w,
-                                  margin: EdgeInsets.only(left: 15.w),
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                    Assets.managerUiMangerNew213,
-                                    width: 15.w,
-                                    color: AppColors.c666666,
-                                  ))
-                            ],
+                      _editItemWidget(
+                          title: 'Name',
+                          value: controller.editTeamName.value,
+                          onTap: () {
+                            Get.bottomSheet(
+                              EditNameBottomsheet(),
+                              isScrollControlled: true,
+                            );
+                          },
+                          icon: Image.asset(
+                            Assets.managerUiMangerNew213,
+                            width: 15.w,
+                            color: AppColors.c666666,
                           )),
                       Divider(color: AppColors.cD1D1D1, height: 1),
                       _editItemWidget(
@@ -97,12 +71,16 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
                                   controller.editBirthday.value),
                               format: 'yyyy-MM-dd'),
                           onTap: () {
-                            _showBirthdayPicker();
+                            Get.bottomSheet(
+                              BirthdayPickerBottomsheet(
+                                  controller.editBirthday.value),
+                              isScrollControlled: true,
+                            );
                           }),
                       Divider(color: AppColors.cD1D1D1, height: 1),
                       _editItemWidget(
                           title: 'Signature',
-                          value: controller.signature.value,
+                          value: controller.editSignature.value,
                           onTap: () {
                             Get.bottomSheet(EditSignatureBottomsheet(),
                                 isScrollControlled: true);
@@ -121,6 +99,7 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
   Widget _editItemWidget({
     required String title,
     required String value,
+    Widget? icon,
     required Function onTap,
   }) {
     return InkWell(
@@ -155,11 +134,12 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
                     width: 15.w,
                     margin: EdgeInsets.only(left: 15.w),
                     alignment: Alignment.center,
-                    child: Image.asset(
-                      Assets.commonUiCommonIconSystemJumpto,
-                      width: 8.w,
-                      color: AppColors.c666666,
-                    ))
+                    child: icon ??
+                        Image.asset(
+                          Assets.commonUiCommonIconSystemJumpto,
+                          width: 8.w,
+                          color: AppColors.c666666,
+                        ))
               ],
             )));
   }

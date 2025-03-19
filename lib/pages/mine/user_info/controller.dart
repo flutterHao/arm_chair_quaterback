@@ -12,7 +12,7 @@ class UserInfoController extends GetxController {
   RxString editTeamName = "".obs;
   RxInt editBirthday = 0.obs;
   RxString editSignature = "".obs;
-  _initData() {
+  initData() {
     update(["user_info"]);
     var team = HomeController.to.userEntiry.teamLoginInfo!.team;
     if (team != null) {
@@ -30,16 +30,17 @@ class UserInfoController extends GetxController {
   }
 
   void saveEditData() async {
-    await UserApi.updateTeamInfo(
+    HomeController.to.userEntiry = await UserApi.updateTeamInfo(
         teamName: editTeamName.value,
         birthday: editBirthday.value,
         signature: editSignature.value);
+    initData();
   }
 
   @override
   void onInit() {
     super.onInit();
-    _initData();
+    initData();
   }
 
   void edit() async {
