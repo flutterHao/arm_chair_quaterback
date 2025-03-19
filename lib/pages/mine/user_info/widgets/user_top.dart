@@ -135,7 +135,7 @@ class _UserTopWidgetState extends State<UserTopWidget> {
               top: 16.w,
               right: 0,
               child: MtInkWell(
-                onTap: () => controller.edit(),
+                onTap: () => controller.goEditPage(),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

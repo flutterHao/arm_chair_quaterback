@@ -1,6 +1,6 @@
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/mine/user_info/pages/user_info_edit_page.dart';
 import 'package:get/get.dart';
 
 class UserInfoController extends GetxController {
@@ -43,8 +43,8 @@ class UserInfoController extends GetxController {
     initData();
   }
 
-  void edit() async {
-    await Get.to(UserInfoEditPage());
+  void goEditPage() async {
+    await Get.toNamed(RouteNames.userInfoEdit);
     update(["user_info"]);
   }
   // @override

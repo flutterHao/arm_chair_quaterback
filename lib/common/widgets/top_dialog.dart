@@ -1,12 +1,11 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -136,18 +135,19 @@ class _TopDialogState extends State<TopDialog>
                                     flex: 3,
                                     child: InkWell(
                                       onTap: () {
-                                        _popAndPushNamed(context,
-                                            RouteNames.picksPersonalCenter,
-                                            useRootNavigator: true,
-                                            arguments: {
-                                              "teamId":
-                                                  Get.find<HomeController>()
-                                                          .userEntiry
-                                                          .teamLoginInfo
-                                                          ?.team
-                                                          ?.teamId ??
-                                                      0
-                                            });
+                                        Get.toNamed(RouteNames.userInfo);
+                                        // _popAndPushNamed(context,
+                                        //     RouteNames.picksPersonalCenter,
+                                        //     useRootNavigator: true,
+                                        //     arguments: {
+                                        //       "teamId":
+                                        //           Get.find<HomeController>()
+                                        //                   .userEntiry
+                                        //                   .teamLoginInfo
+                                        //                   ?.team
+                                        //                   ?.teamId ??
+                                        //               0
+                                        //     });
                                       },
                                       child: Container(
                                         height: 88.w,
