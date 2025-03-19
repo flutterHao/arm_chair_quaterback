@@ -3,31 +3,30 @@ import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/mine/user_info/widgets/avatar_bottomsheet.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/avatar_bottomsheet.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/birthday_picker_bottomsheet.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../common/entities/user_entity/team.dart';
 
-class UserInfoDetailPage extends StatefulWidget {
-  const UserInfoDetailPage({super.key});
+class UserInfoEditPage extends StatefulWidget {
+  const UserInfoEditPage({super.key});
 
   @override
-  State<UserInfoDetailPage> createState() => _UserInfoDetailPageState();
+  State<UserInfoEditPage> createState() => _UserInfoEditPageState();
 }
 
-class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
+class _UserInfoEditPageState extends State<UserInfoEditPage> {
   String signature = '';
   int birthday = 0;
   String teamName = '';
@@ -40,9 +39,9 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
     teamName = team.teamName ?? '-';
   }
 
-  _showPicker() {
+  void _showBirthdayPicker() {
     Get.bottomSheet(
-      WidgetPage(),
+      BirthdayPickerBottomsheet(),
       isScrollControlled: true,
     );
   }
@@ -68,7 +67,7 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                       SizedBox(
                         width: 66.w,
                         child: Text(
-                          'UID',
+                          'Name',
                           style: 14.w5(fontFamily: FontFamily.fOswaldRegular),
                         ),
                       ),
@@ -76,7 +75,7 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                           child: Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          '${HomeController.to.userEntiry.teamLoginInfo!.team!.accountId}',
+                          '${teamName}',
                           style: 12.w5(
                               color: AppColors.cA1A1A1,
                               fontFamily: FontFamily.fRobotoRegular),
@@ -96,7 +95,7 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
               Divider(color: AppColors.cD1D1D1, height: 1),
               InkWell(
                 onTap: () {
-                  _showPicker();
+                  _showBirthdayPicker();
                 },
                 child: Container(
                     height: 66.w,
@@ -114,7 +113,9 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                             child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            '${HomeController.to.userEntiry.teamLoginInfo!.team!.joinLeagueTime}',
+                            DateUtil.formatDate(
+                                DateTime.fromMillisecondsSinceEpoch(birthday),
+                                format: 'yyyy-MM-dd'),
                             style: 12.w5(
                                 color: AppColors.cA1A1A1,
                                 fontFamily: FontFamily.fRobotoRegular),
@@ -149,7 +150,7 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                           child: Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          'l have had my invitation to this world’s festival and thus my l',
+                          signature,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: 12.w5(
@@ -246,79 +247,5 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
             ),
           )),
     );
-  }
-}
-
-class WidgetPage extends StatefulWidget {
-  const WidgetPage({super.key});
-
-  @override
-  State<WidgetPage> createState() => _WidgetPageState();
-}
-
-class _WidgetPageState extends State<WidgetPage> {
-  DateTime? _selectedDate;
-
-  @override
-  Widget build(BuildContext context) {
-    return VerticalDragBackWidget(
-        child: Container(
-      height: 375.w + Utils.getPaddingBottom(),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const DialogTopBtn(),
-          16.vGap,
-          Expanded(
-              child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: DatePickerWidget(
-              looping: false,
-              firstDate: DateTime(1960, 1, 1),
-              lastDate: DateTime.now(),
-              initialDate: DateTime(2000, 1, 1),
-              dateFormat: "yyyy/MM/dd",
-              locale: DatePicker.localeFromString('en'),
-              onChange: (DateTime newDate, _) {
-                _selectedDate = newDate;
-              },
-              pickerTheme: DateTimePickerTheme(
-                pickerHeight: 260.w,
-                itemTextStyle: 16.w5(fontFamily: FontFamily.fOswaldMedium),
-                dividerColor: AppColors.cD2D2D2,
-                dividerThickness: 1,
-                diameterRatio: 5,
-                dividerSpacing: 0,
-                squeeze: 0.8,
-              ),
-            ),
-          )),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            child: MtInkWell(
-                onTap: () {
-                  print(_selectedDate);
-                  Get.back();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10.w)),
-                  height: 50.w,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'confirm'.toUpperCase(),
-                    style: 23.w5(
-                        color: Colors.white,
-                        fontFamily: FontFamily.fOswaldMedium),
-                  ),
-                )),
-          ),
-          30.vGap,
-        ],
-      ),
-    ));
   }
 }
