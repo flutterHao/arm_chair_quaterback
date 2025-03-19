@@ -217,68 +217,68 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                   color: AppColors.cD1D1D1,
                   height: 1,
                 ),
-                ...List.generate(min(4, teamStatsData.length), (index) {
+                ...List.generate(teamStatsData.length, (index) {
                   var item = teamStatsData[index];
                   return _teamStatsItemWidget(item);
                 }),
-                if (teamStatsData.length > 4)
-                  Column(
-                    children: [
-                      Obx(() {
-                        return AnimatedCrossFade(
-                          duration: const Duration(milliseconds: 300),
-                          firstChild: const SizedBox.shrink(),
-                          secondChild: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: expansionList
-                                .map((e) => _teamStatsItemWidget(e))
-                                .toList(),
-                          ),
-                          crossFadeState: _isExpanded.value
-                              ? CrossFadeState.showSecond
-                              : CrossFadeState.showFirst,
-                        );
-                      }),
-                      InkWell(
-                        onTap: () {
-                          _isExpanded.value = !_isExpanded.value;
-                          Future.delayed(const Duration(milliseconds: 100), () {
-                            PrimaryScrollController.of(context).animateTo(
-                                PrimaryScrollController.of(context)
-                                    .position
-                                    .maxScrollExtent,
-                                duration: const Duration(milliseconds: 100),
-                                curve: Curves.easeOut);
-                          });
-                        },
-                        child: Container(
-                          height: 60.w,
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                LangKey.gameButtonUnfold.tr,
-                                style: 16.w7(
-                                    color: AppColors.c262626,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldBold),
-                              ),
-                              4.vGap,
-                              Obx(() {
-                                return IconWidget(
-                                  iconWidth: 9.w,
-                                  icon: Assets.commonUiCommonIconSystemJumpto,
-                                  iconColor: AppColors.c000000,
-                                  rotateAngle: _isExpanded.value ? -90 : 90,
-                                );
-                              })
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                // if (teamStatsData.length > 4)
+                //   Column(
+                //     children: [
+                //       Obx(() {
+                //         return AnimatedCrossFade(
+                //           duration: const Duration(milliseconds: 300),
+                //           firstChild: const SizedBox.shrink(),
+                //           secondChild: Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: expansionList
+                //                 .map((e) => _teamStatsItemWidget(e))
+                //                 .toList(),
+                //           ),
+                //           crossFadeState: _isExpanded.value
+                //               ? CrossFadeState.showSecond
+                //               : CrossFadeState.showFirst,
+                //         );
+                //       }),
+                //       InkWell(
+                //         onTap: () {
+                //           _isExpanded.value = !_isExpanded.value;
+                //           Future.delayed(const Duration(milliseconds: 100), () {
+                //             PrimaryScrollController.of(context).animateTo(
+                //                 PrimaryScrollController.of(context)
+                //                     .position
+                //                     .maxScrollExtent,
+                //                 duration: const Duration(milliseconds: 100),
+                //                 curve: Curves.easeOut);
+                //           });
+                //         },
+                //         child: Container(
+                //           height: 60.w,
+                //           alignment: Alignment.center,
+                //           child: Column(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               Text(
+                //                 LangKey.gameButtonUnfold.tr,
+                //                 style: 16.w7(
+                //                     color: AppColors.c262626,
+                //                     height: 1,
+                //                     fontFamily: FontFamily.fOswaldBold),
+                //               ),
+                //               4.vGap,
+                //               Obx(() {
+                //                 return IconWidget(
+                //                   iconWidth: 9.w,
+                //                   icon: Assets.commonUiCommonIconSystemJumpto,
+                //                   iconColor: AppColors.c000000,
+                //                   rotateAngle: _isExpanded.value ? -90 : 90,
+                //                 );
+                //               })
+                //             ],
+                //           ),
+                //         ),
+                //       )
+                //     ],
+                //   ),
               ],
             ),
           ),
