@@ -71,6 +71,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   int changeDuration = 300;
   bool showReserve = false;
   bool showExChange = false;
+  var showChangeAnimated = false.obs;
   int playerIdOld = 0;
   int playerIdNew = 0;
   int ovrChange = 0;
@@ -150,7 +151,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     ]).then((v) {
       myTeamEntity = v[0] as MyTeamEntity;
       subList = myTeamEntity.teamPlayers.where((e) => e.position == 0).toList();
-      oVROld = getTeamOvr();
+      oVROld = getTeamAvgOvr();
       update();
     });
   }
@@ -243,11 +244,11 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       isShowDialog.value = false;
       isAdd = false;
       //战力变化弹窗
-      var newOvr = getTeamOvr();
+      var newOvr = getTeamAvgOvr();
       if (oVROld != newOvr) {
         await Future.delayed(const Duration(milliseconds: 600));
         await showTopToastDialog(child: PowerChangeDialog(newOvr, oVROld));
-        oVROld = getTeamOvr();
+        oVROld = getTeamAvgOvr();
       }
 
       // animationCtrl.reset();
@@ -330,6 +331,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       changeDuration = 0;
     } else {
       showReserve = true;
+      update();
       List<TeamPlayerInfoEntity> sub = List.from(subList);
       for (var e in result.teamPlayers) {
         if (e.position == 0 && sub.where((m) => m.uuid == e.uuid).isEmpty) {
@@ -559,10 +561,25 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     return cup.ceil();
   }
 
-  int getTeamOvr() {
+  //前7名球员OVR 平均
+  int getTeamAvgOvr() {
+    List<TeamPlayerInfoEntity> list = List.from(myTeamEntity.teamPlayers);
+    list.sort((a, b) {
+      a.buyPlayerScore = Utils.getPlayBaseInfo(a.playerId).playerScore;
+      b.buyPlayerScore = Utils.getPlayBaseInfo(b.playerId).playerScore;
+      return b.buyPlayerScore.compareTo(a.buyPlayerScore);
+    });
     int ovr = 0;
-    for (var e in myTeamEntity.teamPlayers) {
-      ovr += Utils.getPlayBaseInfo(e.playerId).playerScore;
+    for (int i = 0; i < list.length; i++) {
+      if (i < 7) {
+        ovr += list[i].buyPlayerScore;
+      } else {
+        break;
+      }
+    }
+    if (ovr != 0) {
+      int len = min(myTeamEntity.teamPlayers.length, 7);
+      ovr = ovr ~/ len;
     }
     return ovr;
   }
@@ -577,8 +594,14 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       item1 = newPlayer;
       item2 = oldPlayer;
       TeamApi.changeTeamPlayer(item1.uuid, item2.uuid).then((v) {
-        showExChange = false;
-        initData();
+        showChangeAnimated.value = true;
+        Future.delayed(const Duration(milliseconds: 400), () {
+          showExChange = false;
+          update();
+          Future.delayed(const Duration(milliseconds: 300), () {
+            initData();
+          });
+        });
 
         // update();
       });

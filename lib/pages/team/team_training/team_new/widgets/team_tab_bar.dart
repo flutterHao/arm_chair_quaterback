@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2025-03-17 17:01:48
+ * @LastEditTime: 2025-03-19 11:03:35
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
@@ -63,7 +63,7 @@ class TeamTabbar extends GetView<TeamController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "OVR",
+                              "Average OVR",
                               style: 21.w4(
                                 color: AppColors.cFFFFFF,
                                 fontFamily: FontFamily.fOswaldMedium,
@@ -75,7 +75,7 @@ class TeamTabbar extends GetView<TeamController> {
                                 color: AppColors.cFFFFFF,
                                 fontFamily: FontFamily.fOswaldMedium,
                               ),
-                              number: controller.getTeamOvr(),
+                              number: controller.getTeamAvgOvr(),
                             ),
                           ],
                         )
@@ -91,7 +91,7 @@ class TeamTabbar extends GetView<TeamController> {
                             ),
                             12.hGap,
                             Text(
-                              "${controller.myBagList.length}",
+                              "${controller.myBagList.where((e) => e.position < 0).length}",
                               style: 21.w4(
                                   color: isMax
                                       ? AppColors.cE72646

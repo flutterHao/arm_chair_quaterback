@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2025-03-13 15:21:17
+ * @LastEditTime: 2025-03-19 11:14:13
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -240,7 +240,7 @@ class NewsDetailItem extends GetView<NewListController> {
         Text(
           item.content,
           style: TextStyle(
-            fontSize: 16.h,
+            fontSize: 14.sp,
             fontFamily: FontFamily.fRobotoRegular,
             color: AppColors.c000000,
             height: 1.6,

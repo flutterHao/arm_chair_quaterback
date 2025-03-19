@@ -4,6 +4,7 @@
  * @Date: 2024-12-11 18:30:45
  * @LastEditTime: 2025-01-02 12:27:42
  */
+import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:flutter/material.dart';
 
 class SlideTransitionX extends AnimatedWidget {
@@ -64,7 +65,7 @@ class SlideTransitionX extends AnimatedWidget {
       translation: offset,
       transformHitTests: transformHitTests,
       child: position.status == AnimationStatus.reverse
-          ? (showReverse ? child : Container())
+          ? (showReverse ? Opacity(opacity: 0.7, child: child) : Container())
           : child,
     );
   }

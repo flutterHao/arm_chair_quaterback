@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-18 16:11:57
+ * @LastEditTime: 2025-03-19 16:54:01
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/slide_transition_x.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/player_exchange_card.dart';
@@ -84,7 +85,8 @@ class MyTeamWidget extends StatelessWidget {
                       left: 0,
                       right: 0,
                       bottom: 100,
-                      child: Opacity(
+                      child: AnimatedOpacity(
+                        duration: 300.milliseconds,
                         opacity: ctrl.showExChange ? 0 : 1,
                         child: Stack(
                           alignment: Alignment.topCenter,
@@ -112,7 +114,7 @@ class MyTeamWidget extends StatelessWidget {
                                             color: AppColors.cD7283B,
                                           ),
                                           Text(
-                                            "OVR ",
+                                            "Average OVR ",
                                             style: 16.w4(
                                               fontFamily:
                                                   FontFamily.fOswaldMedium,
@@ -121,7 +123,7 @@ class MyTeamWidget extends StatelessWidget {
                                           ),
                                           // 10.hGap,
                                           AnimatedNum(
-                                              number: ctrl.getTeamOvr(),
+                                              number: ctrl.getTeamAvgOvr(),
                                               textStyle: 16.w4(
                                                 fontFamily:
                                                     FontFamily.fOswaldMedium,
@@ -286,37 +288,63 @@ class MyTeamWidget extends StatelessWidget {
                               ),
                       ),
                     ),
-                    if (ctrl.showExChange)
-                      Positioned(
-                        top: 30.w,
-                        left: 14.w,
-                        right: 14.w,
-                        child: Column(
-                          children: [
-                            PlayerExchangeCard(
-                              playerId: ctrl.playerIdOld,
-                              isNew: false,
+                    Positioned(
+                      top: 0.w,
+                      left: 14.w,
+                      right: 14.w,
+                      bottom: 0.w,
+                      child: Visibility(
+                        visible: ctrl.showExChange,
+                        child: Obx(() {
+                          return AnimatedOpacity(
+                            duration: 300.milliseconds,
+                            opacity: ctrl.showExChange ? 1 : 0,
+                            child: Stack(
+                              alignment: Alignment.topCenter,
+                              children: [
+                                Positioned(
+                                  top: 143.w,
+                                  child: Container(
+                                    width: 36.w,
+                                    height: 36.w,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(18.w),
+                                        color: AppColors.c262626),
+                                    child: IconWidget(
+                                      icon: Assets
+                                          .commonUiCommonIconSystemExchange,
+                                      iconWidth: 18.w,
+                                      rotateAngle: 90,
+                                    ),
+                                  ),
+                                ),
+                                AnimatedPositioned(
+                                  duration: 300.milliseconds,
+                                  top: ctrl.showChangeAnimated.value
+                                      ? 185.w
+                                      : 30.w,
+                                  child: PlayerExchangeCard(
+                                    playerId: ctrl.playerIdOld,
+                                    isNew: false,
+                                  ),
+                                ),
+                                AnimatedPositioned(
+                                  duration: 300.milliseconds,
+                                  top: ctrl.showChangeAnimated.value
+                                      ? 30.w
+                                      : 185.w,
+                                  child: PlayerExchangeCard(
+                                    playerId: ctrl.playerIdNew,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Container(
-                              width: 36.w,
-                              height: 36.w,
-                              margin: EdgeInsets.symmetric(vertical: 6.5.w),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18.w),
-                                  color: AppColors.c262626),
-                              child: IconWidget(
-                                icon: Assets.commonUiCommonIconSystemExchange,
-                                iconWidth: 18.w,
-                                rotateAngle: 90,
-                              ),
-                            ),
-                            PlayerExchangeCard(
-                              playerId: ctrl.playerIdNew,
-                            ),
-                          ],
-                        ),
+                          );
+                        }),
                       ),
+                    ),
                   ],
                 ),
               ),
@@ -345,10 +373,22 @@ class PlayerCardWidget extends GetView<TeamController> {
         orElse: () => TeamPlayerInfoEntity());
     return Column(
       children: [
-        PlayerCard(
-          playerId: player.playerId,
-          score: Utils.getPlayBaseInfo(player.playerId).playerScore,
-        ),
+        AnimatedSwitcher(
+            duration: 300.milliseconds,
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              //  var tween = Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
+              return SlideTransitionX(
+                direction: AxisDirection.left,
+                position: animation,
+                showReverse: true,
+                child: child,
+              );
+            },
+            child: PlayerCard(
+              key: Key(player.playerId.toString()),
+              playerId: player.playerId,
+              score: Utils.getPlayBaseInfo(player.playerId).playerScore,
+            )),
         3.5.vGap,
         Text(
           Utils.getPlayBaseInfo(player.playerId).ename,

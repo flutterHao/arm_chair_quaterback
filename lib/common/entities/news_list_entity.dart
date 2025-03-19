@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-26 18:53:41
- * @LastEditTime: 2025-03-06 16:01:47
+ * @LastEditTime: 2025-03-19 17:17:22
  */
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
@@ -96,6 +96,9 @@ class NewsListDetail {
   double? imamgeWidth;
   Map<String, int> emojis = {};
   List<int> myEmoji = [];
+  int eventType = 0;
+  @JSONField(deserialize: false, serialize: false)
+  bool hasRecieve = false;
 
   NewsListDetail();
 

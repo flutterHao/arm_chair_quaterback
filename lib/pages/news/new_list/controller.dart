@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-13 16:29:12
+ * @LastEditTime: 2025-03-19 17:18:05
  */
 import 'dart:async';
 import 'dart:math';
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
@@ -267,5 +268,17 @@ class NewListController extends GetxController {
     //   }
     //   // update(["newsDetail"]);
     // });
+  }
+
+  void newsEventOntap(NewsListDetail item) {
+    if (item.eventType == 2) {
+      Get.offNamed(RouteNames.stealPlayer);
+    } else {
+      if (item.hasRecieve) return;
+      TeamApi.getNewsEventAward().then((_) {
+        item.hasRecieve = true;
+        update(["newsList"]);
+      });
+    }
   }
 }

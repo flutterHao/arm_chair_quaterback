@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-03-18 20:41:14
+ * @LastEditTime: 2025-03-19 12:06:42
  */
 import 'dart:math';
 
@@ -27,7 +27,7 @@ class AnimatedBoxSimple extends StatefulWidget {
 class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
     with TickerProviderStateMixin {
   OpenBoxSimpleController ctrl = Get.find();
-  late AnimationController _controller;
+
   late Animation<double> _compressScaleX;
   late Animation<double> _compressScaleY;
   late Animation<double> _jumpHeight;
@@ -36,20 +36,16 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
   late AnimationController shakeController;
   late Animation<double> shakeAnimation;
   //光影动画
-  late AnimationController _lightController;
-  late Animation<double> lightAnimation;
-  late bool showLight = false;
-  bool isOpen = false;
+  // bool isOpen = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    ctrl.isOpen = false;
+    ctrl.boxAniCtrl = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    _lightController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
 
     //压缩变宽、上升变长、上升复原--下降变长，下降复原、下降压缩
     // 向下压缩变扁变宽
@@ -59,7 +55,7 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
       TweenSequenceItem(tween: ConstantTween(1.0), weight: 40),
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.1), weight: 20),
       TweenSequenceItem(tween: Tween(begin: 1.1, end: 1.0), weight: 20),
-    ]).animate(_controller);
+    ]).animate(ctrl.boxAniCtrl);
 
     _compressScaleY = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.7), weight: 20),
@@ -71,7 +67,7 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
 
       TweenSequenceItem(tween: Tween(begin: 1.1, end: 0.7), weight: 20),
       TweenSequenceItem(tween: Tween(begin: 0.7, end: 1.0), weight: 10),
-    ]).animate(_controller);
+    ]).animate(ctrl.boxAniCtrl);
 
     // 弹射跳起并恢复原形
     _jumpHeight = TweenSequence([
@@ -79,13 +75,13 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
       TweenSequenceItem(tween: Tween(begin: 0.0, end: 150.h), weight: 20),
       TweenSequenceItem(tween: Tween(begin: 150.h, end: 0.0), weight: 10),
       TweenSequenceItem(tween: ConstantTween(0.0), weight: 30),
-    ]).animate(_controller);
+    ]).animate(ctrl.boxAniCtrl);
 
     // 落下渐隐藏消失
     _opacity = TweenSequence([
       TweenSequenceItem(tween: ConstantTween(1.0), weight: 60),
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.0), weight: 40),
-    ]).animate(_controller);
+    ]).animate(ctrl.boxAniCtrl);
 
     shakeAnimation = TweenSequence([
       for (int i = 0; i < 3; i++)
@@ -97,32 +93,15 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
       TweenSequenceItem(tween: ConstantTween(1.0), weight: 60),
     ]).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: ctrl.boxAniCtrl,
         curve: Curves.linear,
       ),
     );
 
-    lightAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: _lightController,
-      curve: Curves.easeInOut,
-    ));
     // ctrl.fallOutAnimatedCtrl.reset();
     Future.delayed(200.milliseconds).then((v) {
       // ctrl.fallOutAnimatedCtrl.reset();
       ctrl.fallOutAnimatedCtrl.forward().then((v) {
-        Future.delayed(const Duration(milliseconds: 500), () {
-          showLight = true;
-          setState(() {});
-          _lightController.forward();
-          _lightController.addListener(() {
-            if (lightAnimation.value == 1.0) {
-              Future.delayed(const Duration(milliseconds: 1000), () {
-                _lightController.reset();
-                _lightController.forward();
-              });
-            }
-          });
-        });
         ctrl.update(["open_box_simple"]);
       });
     });
@@ -130,90 +109,76 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
 
   @override
   void dispose() {
-    _controller.dispose();
-    _lightController.dispose();
+    ctrl.boxAniCtrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (isOpen) return;
-        Log.d("打开宝箱");
-        showLight = false;
-        isOpen = true;
-        setState(() {});
-        _controller.reset();
-        _controller.forward().then((v) {
-          widget.onTap();
-        });
-      },
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          double fallOutScale = 0;
-          if (ctrl.fallOutAnimation.value > 0.9) {
-            fallOutScale = ctrl.fallOutAnimation.value - 1;
-          }
-          return Opacity(
-            opacity: _opacity.value,
-            child: Transform.translate(
-              offset: Offset(0, -_jumpHeight.value),
-              child: Transform.scale(
-                alignment: Alignment.center,
-                scaleX: _compressScaleX.value,
-                scaleY: _compressScaleY.value + fallOutScale * 1.5,
-                child: RotationTransition(
-                    alignment: Alignment.center,
-                    turns: shakeAnimation,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          widget.child,
-                          // if (showLight)
-                          //   AnimatedBuilder(
-                          //       animation: _lightController,
-                          //       builder: (context, child) {
-                          //         return Positioned(
-                          //             top: 50.h,
-                          //             left:
-                          //                 startx + 100.h * lightAnimation.value,
-                          //             child: Opacity(
-                          //               opacity: 1 -
-                          //                   lightAnimation.value *
-                          //                       lightAnimation.value,
-                          //               child: Image.asset(
-                          //                 color: AppColors.cFFFFFF
-                          //                     .withOpacity(0.6),
-                          //                 Assets
-                          //                     .cheerleadersUiCheerleadersBgLight,
-                          //                 width: 120.h,
-                          //               ),
-                          //               // child: Container(
-                          //               //     width: 100.h,
-                          //               //     height: 120.h,
-                          //               //     decoration: BoxDecoration(
-                          //               //         gradient:
-                          //               //             LinearGradient(colors: [
-                          //               //       AppColors.cFFFFFF
-                          //               //           .withOpacity(0.8),
-                          //               //       AppColors.cFFFFFF
-                          //               //           .withOpacity(0.6),
-                          //               //       AppColors.cFFFFFF.withOpacity(0)
-                          //               //     ]))),
-                          //             ));
-                          //       }),
-                        ],
-                      ),
-                    )),
-              ),
+    return AnimatedBuilder(
+      animation: ctrl.boxAniCtrl,
+      builder: (context, child) {
+        double fallOutScale = 0;
+        if (ctrl.fallOutAnimation.value > 0.9) {
+          fallOutScale = ctrl.fallOutAnimation.value - 1;
+        }
+        return Opacity(
+          opacity: _opacity.value,
+          child: Transform.translate(
+            offset: Offset(0, -_jumpHeight.value),
+            child: Transform.scale(
+              alignment: Alignment.center,
+              scaleX: _compressScaleX.value,
+              scaleY: _compressScaleY.value + fallOutScale * 1.5,
+              child: RotationTransition(
+                  alignment: Alignment.center,
+                  turns: shakeAnimation,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        widget.child,
+                        // if (showLight)
+                        //   AnimatedBuilder(
+                        //       animation: _lightController,
+                        //       builder: (context, child) {
+                        //         return Positioned(
+                        //             top: 50.h,
+                        //             left:
+                        //                 startx + 100.h * lightAnimation.value,
+                        //             child: Opacity(
+                        //               opacity: 1 -
+                        //                   lightAnimation.value *
+                        //                       lightAnimation.value,
+                        //               child: Image.asset(
+                        //                 color: AppColors.cFFFFFF
+                        //                     .withOpacity(0.6),
+                        //                 Assets
+                        //                     .cheerleadersUiCheerleadersBgLight,
+                        //                 width: 120.h,
+                        //               ),
+                        //               // child: Container(
+                        //               //     width: 100.h,
+                        //               //     height: 120.h,
+                        //               //     decoration: BoxDecoration(
+                        //               //         gradient:
+                        //               //             LinearGradient(colors: [
+                        //               //       AppColors.cFFFFFF
+                        //               //           .withOpacity(0.8),
+                        //               //       AppColors.cFFFFFF
+                        //               //           .withOpacity(0.6),
+                        //               //       AppColors.cFFFFFF.withOpacity(0)
+                        //               //     ]))),
+                        //             ));
+                        //       }),
+                      ],
+                    ),
+                  )),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -38,7 +38,9 @@ class OpenBoxSimpleController extends GetxController
   // bool isOpen = false; //防止重复点击
   bool isStartting = false;
   var showClick = false.obs;
+  bool isOpen = false;
 
+  late AnimationController boxAniCtrl;
   late AnimationController fallOutAnimatedCtrl;
   late Animation<double> fallOutAnimation;
 
@@ -88,10 +90,11 @@ class OpenBoxSimpleController extends GetxController
     TeamController teamCtrl = Get.find();
     teamCtrl.ovrChange = 0;
     teamCtrl.playerIdOld = 0;
+    teamCtrl.showChangeAnimated.value = false;
     teamCtrl.playerIdNew = playerId;
     var teamPlayers = teamCtrl.myTeamEntity.teamPlayers;
     var lineList = teamPlayers.where((e) => e.position > 0).toList();
-    // var subList = teamPlayers.where((e) => e.position == 0).toList();
+    var subList = teamPlayers.where((e) => e.position == 0).toList();
     // teamCtrl.
     var newNbaInfo = Utils.getPlayBaseInfo(playerId);
 
@@ -109,42 +112,40 @@ class OpenBoxSimpleController extends GetxController
       }
     }
     //如果没有找到，从替补中找
-    // if (teamCtrl.playerIdOld == 0) {
-    //   for (var myPlayer in subList) {
-    //     var oldNbaInfo = Utils.getPlayBaseInfo(myPlayer.playerId);
-    //     var positions = oldNbaInfo.position.split("/");
-    //     if (newNbaInfo.position.contains(positions.first)) {
-    //       if (newNbaInfo.playerScore > oldNbaInfo.playerScore) {
-    //         teamCtrl.playerIdOld = myPlayer.playerId;
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }
-    if (teamCtrl.playerIdOld != 0) {
-      teamCtrl.showExChange = true;
-      teamCtrl.update();
+    if (teamCtrl.playerIdOld == 0) {
+      for (var myPlayer in subList) {
+        var oldNbaInfo = Utils.getPlayBaseInfo(myPlayer.playerId);
+        var positions = oldNbaInfo.position.split("/");
+
+        bool isPositionMatch(String position) =>
+            newNbaInfo.position.contains(position);
+        bool isScoreHigher() => newNbaInfo.playerScore > oldNbaInfo.playerScore;
+
+        if (positions.any(isPositionMatch) && isScoreHigher()) {
+          teamCtrl.playerIdOld = myPlayer.playerId;
+          teamCtrl.ovrChange = newNbaInfo.playerScore - oldNbaInfo.playerScore;
+          break;
+        }
+      }
     }
+    teamCtrl.showExChange = teamCtrl.playerIdOld != 0;
+    teamCtrl.update();
   }
 
   Future clickkBox() async {
     //如果只有一张牌跳过第一步选牌
     showCollect.value = false;
-    if (currentCardPack.playerCards.length == 1) {
-      step = 2;
+    step = 2;
+    update(["open_box_simple"]);
+    await Future.delayed(const Duration(milliseconds: 300));
+    var player = currentCardPack.playerCards.first;
+    player.isOpen.value = true;
+    player.isSelect.value = true;
+    update(["open_box_simple"]);
+    await Future.delayed(const Duration(milliseconds: 500)).then((v) {
+      showCollect.value = true;
       update(["open_box_simple"]);
-      await Future.delayed(const Duration(milliseconds: 500));
-      var player = currentCardPack.playerCards.first;
-      player.isOpen.value = true;
-      player.isSelect.value = true;
-      update(["open_box_simple"]);
-      await Future.delayed(const Duration(milliseconds: 800)).then((v) {
-        showCollect.value = true;
-        update(["open_box_simple"]);
-      });
-    } else {
-      step = 1;
-    }
+    });
 
     update(["open_box_simple"]);
     setCardPosition(Get.context!, 1, duration: 10);
