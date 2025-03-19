@@ -83,8 +83,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   indicatorSize: TabBarIndicatorSize.tab,
                                   indicatorColor: AppColors.cFF7954,
                                   tabs: controller.tabs.map((e) {
-                                    return Tab(
-                                        child: Text(e.tr));
+                                    return Tab(child: Text(e.tr));
                                   }).toList(),
                                 ),
                               ),
@@ -145,11 +144,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   errorWidget: const SizedBox.shrink(),
                 ),
               )),
-          Positioned(
-            top: 23.w,
-            right: 15.w,
-            child: IconWidget(iconWidth: 19.w, icon: Assets.playerUiIconFollow),
-          ),
+          if (false)
+            Positioned(
+              top: 23.w,
+              right: 15.w,
+              child:
+                  IconWidget(iconWidth: 19.w, icon: Assets.playerUiIconFollow),
+            ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -206,15 +207,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     Row(
                       children: [
                         _buildPlayerInfoItem(LangKey.gameName.tr,
-                            "${controller.baseInfo?.height ?? "0"}"),
+                            controller.baseInfo?.height ?? "0"),
                         33.hGap,
-
-                        ///todo
-                        _buildPlayerInfoItem(LangKey.gameNameWt.tr, "${controller.baseInfo?.weight ?? "0"}"),
+                        _buildPlayerInfoItem(LangKey.gameNameWt.tr,
+                            controller.baseInfo?.weight ?? "0"),
                         33.hGap,
-
-                        ///todo
-                        _buildPlayerInfoItem(LangKey.gameNameAge.tr, "${controller.baseInfo?.exp ?? "0"}"),
+                        _buildPlayerInfoItem(LangKey.gameNameAge.tr,
+                            "${controller.baseInfo?.exp == null ? 0 : (DateTime.now().year - controller.baseInfo!.exp)}"),
                       ],
                     ),
                     9.vGap,

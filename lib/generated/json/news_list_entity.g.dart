@@ -286,6 +286,7 @@ extension NewsListDetailExtension on NewsListDetail {
     Map<String, int>? emojis,
     List<int>? myEmoji,
     int? eventType,
+    bool? hasRecieve,
   }) {
     return NewsListDetail()
       ..isLikeInt = isLikeInt ?? this.isLikeInt
@@ -315,6 +316,7 @@ extension NewsListDetailExtension on NewsListDetail {
       ..imamgeWidth = imamgeWidth ?? this.imamgeWidth
       ..emojis = emojis ?? this.emojis
       ..myEmoji = myEmoji ?? this.myEmoji
-      ..eventType = eventType ?? this.eventType;
+      ..eventType = eventType ?? this.eventType
+      ..hasRecieve = hasRecieve ?? this.hasRecieve;
   }
 }

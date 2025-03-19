@@ -609,6 +609,18 @@ NbaPlayerInfosPlayerBaseInfoList $NbaPlayerInfosPlayerBaseInfoListFromJson(
   if (number != null) {
     nbaPlayerInfosPlayerBaseInfoList.number = number;
   }
+  final String? height = jsonConvert.convert<String>(json['height']);
+  if (height != null) {
+    nbaPlayerInfosPlayerBaseInfoList.height = height;
+  }
+  final String? weight = jsonConvert.convert<String>(json['weight']);
+  if (weight != null) {
+    nbaPlayerInfosPlayerBaseInfoList.weight = weight;
+  }
+  final int? exp = jsonConvert.convert<int>(json['exp']);
+  if (exp != null) {
+    nbaPlayerInfosPlayerBaseInfoList.exp = exp;
+  }
   final int? age = jsonConvert.convert<int>(json['age']);
   if (age != null) {
     nbaPlayerInfosPlayerBaseInfoList.age = age;
@@ -660,6 +672,9 @@ Map<String, dynamic> $NbaPlayerInfosPlayerBaseInfoListToJson(
   data['beforeMarketPriceUpdateTime'] = entity.beforeMarketPriceUpdateTime;
   data['elname'] = entity.elname;
   data['number'] = entity.number;
+  data['height'] = entity.height;
+  data['weight'] = entity.weight;
+  data['exp'] = entity.exp;
   data['age'] = entity.age;
   data['layupWeight'] = entity.layupWeight;
   data['threePointWeight'] = entity.threePointWeight;
@@ -696,6 +711,9 @@ extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseI
     int? beforeMarketPriceUpdateTime,
     String? elname,
     int? number,
+    String? height,
+    String? weight,
+    int? exp,
     int? age,
     double? layupWeight,
     double? threePointWeight,
@@ -730,6 +748,9 @@ extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseI
           this.beforeMarketPriceUpdateTime
       ..elname = elname ?? this.elname
       ..number = number ?? this.number
+      ..height = height ?? this.height
+      ..weight = weight ?? this.weight
+      ..exp = exp ?? this.exp
       ..age = age ?? this.age
       ..layupWeight = layupWeight ?? this.layupWeight
       ..threePointWeight = threePointWeight ?? this.threePointWeight
