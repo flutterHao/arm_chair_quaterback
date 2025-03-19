@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/pages/user_info_edit_page.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,13 @@ class UserInfoController extends GetxController {
     editTeamName.value = teamName.value;
     editBirthday.value = birthday.value;
     editSignature.value = signature.value;
+  }
+
+  void saveEditData() async {
+    await UserApi.updateTeamInfo(
+        teamName: editTeamName.value,
+        birthday: editBirthday.value,
+        signature: editSignature.value);
   }
 
   @override

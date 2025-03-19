@@ -15,14 +15,14 @@ import 'package:get/get.dart';
 
 import '../../../../common/widgets/vertival_drag_back_widget.dart';
 
-class AvatarBottomsheet extends StatefulWidget {
-  const AvatarBottomsheet({super.key});
+class EditAvatarBottomsheet extends StatefulWidget {
+  const EditAvatarBottomsheet({super.key});
 
   @override
-  State<AvatarBottomsheet> createState() => _AvatarBottomsheetState();
+  State<EditAvatarBottomsheet> createState() => _EditAvatarBottomsheetState();
 }
 
-class _AvatarBottomsheetState extends State<AvatarBottomsheet> {
+class _EditAvatarBottomsheetState extends State<EditAvatarBottomsheet> {
   final UserInfoController controller = Get.find();
 
   ///默认头像id
@@ -99,7 +99,7 @@ class _AvatarBottomsheetState extends State<AvatarBottomsheet> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: Icon(
-                                              Icons.check,
+                                              Icons.check_rounded,
                                               color: AppColors.cFFFFFF,
                                               size: 20.w,
                                             ),

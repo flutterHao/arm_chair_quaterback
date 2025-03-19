@@ -11,8 +11,8 @@ import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/controller.dart';
-import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/avatar_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/birthday_picker_bottomsheet.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/edit_avatar_bottomsheet.dart';
 import 'package:arm_chair_quaterback/pages/mine/user_info/dialogs/edit_signature_bottomsheet.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -90,92 +90,23 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
                             ],
                           )),
                       Divider(color: AppColors.cD1D1D1, height: 1),
-                      InkWell(
-                        onTap: () {
-                          _showBirthdayPicker();
-                        },
-                        child: Container(
-                            height: 66.w,
-                            padding: EdgeInsets.symmetric(horizontal: 22.w),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 66.w,
-                                  child: Text(
-                                    'Birthday',
-                                    style: 14.w5(
-                                        fontFamily: FontFamily.fOswaldRegular),
-                                  ),
-                                ),
-                                Expanded(
-                                    child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    DateUtil.formatDate(
-                                        DateTime.fromMillisecondsSinceEpoch(
-                                            controller.editBirthday.value),
-                                        format: 'yyyy-MM-dd'),
-                                    style: 12.w5(
-                                        color: AppColors.cA1A1A1,
-                                        fontFamily: FontFamily.fRobotoRegular),
-                                  ),
-                                )),
-                                Container(
-                                    width: 15.w,
-                                    margin: EdgeInsets.only(left: 15.w),
-                                    alignment: Alignment.center,
-                                    child: Image.asset(
-                                      Assets.commonUiCommonIconSystemJumpto,
-                                      width: 8.w,
-                                      color: AppColors.c666666,
-                                    ))
-                              ],
-                            )),
-                      ),
+                      _editItemWidget(
+                          title: 'Birthday',
+                          value: DateUtil.formatDate(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  controller.editBirthday.value),
+                              format: 'yyyy-MM-dd'),
+                          onTap: () {
+                            _showBirthdayPicker();
+                          }),
                       Divider(color: AppColors.cD1D1D1, height: 1),
-                      InkWell(
+                      _editItemWidget(
+                          title: 'Signature',
+                          value: controller.signature.value,
                           onTap: () {
                             Get.bottomSheet(EditSignatureBottomsheet(),
                                 isScrollControlled: true);
-                          },
-                          child: Container(
-                              height: 66.w,
-                              padding: EdgeInsets.symmetric(horizontal: 22.w),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 66.w,
-                                    child: Text(
-                                      'Signature',
-                                      style: 14.w5(
-                                          fontFamily:
-                                              FontFamily.fOswaldRegular),
-                                    ),
-                                  ),
-                                  Expanded(
-                                      child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      controller.signature.value,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: 12.w5(
-                                          color: AppColors.cA1A1A1,
-                                          fontFamily:
-                                              FontFamily.fRobotoRegular),
-                                    ),
-                                  )),
-                                  Container(
-                                      width: 15.w,
-                                      margin: EdgeInsets.only(left: 15.w),
-                                      alignment: Alignment.center,
-                                      child: Image.asset(
-                                        Assets.commonUiCommonIconSystemJumpto,
-                                        width: 8.w,
-                                        color: AppColors.c666666,
-                                      ))
-                                ],
-                              ))),
+                          }),
                       Divider(color: AppColors.cD1D1D1, height: 1),
                       Spacer(),
                       _saveButtonWidget(),
@@ -187,6 +118,52 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
     ));
   }
 
+  Widget _editItemWidget({
+    required String title,
+    required String value,
+    required Function onTap,
+  }) {
+    return InkWell(
+        onTap: () {
+          onTap.call();
+        },
+        child: Container(
+            height: 66.w,
+            padding: EdgeInsets.symmetric(horizontal: 22.w),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 66.w,
+                  child: Text(
+                    title,
+                    style: 14.w5(fontFamily: FontFamily.fOswaldRegular),
+                  ),
+                ),
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: 12.w5(
+                        color: AppColors.cA1A1A1,
+                        fontFamily: FontFamily.fRobotoRegular),
+                  ),
+                )),
+                Container(
+                    width: 15.w,
+                    margin: EdgeInsets.only(left: 15.w),
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      Assets.commonUiCommonIconSystemJumpto,
+                      width: 8.w,
+                      color: AppColors.c666666,
+                    ))
+              ],
+            )));
+  }
+
   Widget _avatarWidget() {
     return Container(
         color: AppColors.cF2F2F2,
@@ -194,9 +171,8 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
         padding: EdgeInsets.only(top: 34.w, bottom: 24.w),
         child: MtInkWell(
             onTap: () async {
-              await Get.bottomSheet(AvatarBottomsheet(),
+              await Get.bottomSheet(EditAvatarBottomsheet(),
                   isScrollControlled: true);
-
               setState(() {});
             },
             child: Container(
@@ -241,7 +217,9 @@ class _UserInfoEditPageState extends State<UserInfoEditPage> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       child: MtInkWell(
-          onTap: () {},
+          onTap: () {
+            controller.saveEditData();
+          },
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.black, borderRadius: BorderRadius.circular(10.w)),

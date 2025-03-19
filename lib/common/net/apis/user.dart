@@ -41,8 +41,15 @@ class UserApi {
     return TeamLoginInfo.fromJson(data);
   }
 
-  static Future<UserEntity> updateTeamInfo() async {
-    await HttpUtil().post(Api.updateTeamInfo);
+  static Future<UserEntity> updateTeamInfo(
+      {required String teamName,
+      required int birthday,
+      required String signature}) async {
+    await HttpUtil().post(Api.updateTeamInfo, data: {
+      "teamName": teamName,
+      "birthday": birthday,
+      "signature": signature
+    });
     return await visitorLogin();
   }
 
