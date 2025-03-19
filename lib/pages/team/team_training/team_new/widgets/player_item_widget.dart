@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2025-03-17 14:41:32
+ * @LastEditTime: 2025-03-19 16:59:22
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -480,10 +480,12 @@ class PlayerCard extends StatelessWidget {
           Positioned(
             top: 5.5.w,
             left: 5.w,
-            child: Text(
+            child: OutlinedText(
+              strokeWidth: 2,
               // text: Utils.formatGrade(grade ?? 'S'),
-              "${Utils.getPlayBaseInfo(playerId).playerScore}",
-              style: 16.w4(height: 0.75, fontFamily: FontFamily.fOswaldBold),
+              text: "${Utils.getPlayBaseInfo(playerId).playerScore}",
+              textStyle:
+                  18.w4(height: 0.75, fontFamily: FontFamily.fOswaldBold),
             ),
           ),
 

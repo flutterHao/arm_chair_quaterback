@@ -21,6 +21,8 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/pages/user_info_edit_page.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_detail2.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
@@ -33,8 +35,6 @@ import 'package:arm_chair_quaterback/pages/picks/picks_history/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/view.dart';
-import 'package:arm_chair_quaterback/pages/team/beauty_chat/widgets/beauty_info_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/beauty_chat/widgets/chat_detail_page.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/illustraction_detail.dart';
 import 'package:arm_chair_quaterback/pages/team/nba_player/widgets/ovr_standing_detail.dart';
@@ -47,7 +47,6 @@ import 'package:arm_chair_quaterback/pages/team/season_pass/pages/select_team.da
 import 'package:arm_chair_quaterback/pages/team/select_player/index.dart';
 import 'package:arm_chair_quaterback/pages/team/steal_player/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_historty/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/star_upgrade_game/star_upgrade_game.dart';
@@ -188,6 +187,10 @@ class AppPages {
           return StealPlayer();
         case RouteNames.selectPlayer:
           return SelectPlayerPage();
+        case RouteNames.userInfo:
+          return UserInfoPage();
+        case RouteNames.userInfoEdit:
+          return UserInfoEditPage();
         default:
           return const SizedBox.shrink();
       }

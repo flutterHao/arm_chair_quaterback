@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2025-03-17 17:14:55
+ * @LastEditTime: 2025-03-19 14:51:45
  */
 import 'dart:math';
 
@@ -360,13 +360,13 @@ class _Stash extends GetView<TeamController> {
                   (e) => Utils.getPlayBaseInfo(e.playerId).position.contains(p))
               .toList();
         }
-      } else {
-        list = list
-            .where((e) => controller.myTeamEntity.teamPlayers
-                .where((a) => a.playerId == e.playerId)
-                .isEmpty)
-            .toList();
       }
+      //队伍不包含这个球员
+      list = list
+          .where((e) => controller.myTeamEntity.teamPlayers
+              .where((a) => a.playerId == e.playerId)
+              .isEmpty)
+          .toList();
 
       if (list.isEmpty) {
         return Container();

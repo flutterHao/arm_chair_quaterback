@@ -1,5 +1,6 @@
+import 'package:arm_chair_quaterback/common/net/apis/user.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/mine/user_info/pages/user_info_edit_page.dart';
 import 'package:get/get.dart';
 
 class UserInfoController extends GetxController {
@@ -8,26 +9,43 @@ class UserInfoController extends GetxController {
   RxString teamName = "".obs;
   RxInt birthday = 0.obs;
   RxString signature = "".obs;
-  _initData() {
-    update(["user_info"]);
+  RxString editTeamName = "".obs;
+  RxInt editBirthday = 0.obs;
+  RxString editSignature = "".obs;
+  initData() {
     var team = HomeController.to.userEntiry.teamLoginInfo!.team;
-    if (team != null) {
-      teamLogo.value = team.teamLogo ?? 1;
-      teamName.value = team.teamName ?? "";
-      birthday.value = team.birthday ?? 0;
-      // birthday.value = team.birthday ?? 1742356465000;
-      signature.value = team.signature ?? "";
-    }
+
+    teamLogo.value = team!.teamLogo ?? 1;
+    teamName.value = team.teamName ?? "";
+    birthday.value = team.birthday ?? 0;
+    signature.value = team.signature ?? "";
+
+    update(["user_info"]);
+  }
+
+  void getEditInfoData() {
+    // editTeamName.value = teamName.value;
+    editBirthday.value = birthday.value;
+    editSignature.value = signature.value;
+  }
+
+  void saveEditData() async {
+    HomeController.to.userEntiry = await UserApi.updateTeamInfo(
+        teamName: editTeamName.value,
+        birthday: editBirthday.value,
+        signature: editSignature.value);
+    editTeamName.value = '';
+    initData();
   }
 
   @override
   void onInit() {
     super.onInit();
-    _initData();
+    initData();
   }
 
-  void edit() async {
-    await Get.to(UserInfoEditPage());
+  void goEditPage() async {
+    await Get.toNamed(RouteNames.userInfoEdit);
     update(["user_info"]);
   }
   // @override

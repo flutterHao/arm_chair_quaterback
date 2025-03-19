@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/event_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
@@ -135,7 +136,7 @@ class NewsListItem extends GetView<NewListController> {
             newsDetail.content,
             maxLines: 4,
             style: TextStyle(
-              fontSize: 16.h,
+              fontSize: 14.sp,
               fontFamily: FontFamily.fRobotoRegular,
               color: AppColors.c000000,
               overflow: TextOverflow.ellipsis,
@@ -178,7 +179,7 @@ class NewsListItem extends GetView<NewListController> {
             newsDetail.content,
             maxLines: 4,
             style: TextStyle(
-              fontSize: 16.h,
+              fontSize: 14.sp,
               fontFamily: FontFamily.fRobotoRegular,
               color: AppColors.c000000,
               overflow: TextOverflow.ellipsis,
@@ -231,7 +232,7 @@ class NewsListItem extends GetView<NewListController> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: subClo,
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             fontFamily: FontFamily.fRobotoRegular,
                             color: AppColors.c000000,
                             height: 19 / 14,
@@ -309,30 +310,43 @@ class NewsListItem extends GetView<NewListController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
-      decoration: BoxDecoration(
-          color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(12.w)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (showMoreNew) _moreNews(),
-          _head(),
-          14.vGap,
-          _buildNewsContent(context),
-          20.vGap,
-          NewsBottomButton(newsDetail),
-          16.vGap,
-          EmojiWidget(
-              emojis: newsDetail.emojis!,
-              myEmojis: newsDetail.myEmoji,
-              type: 1,
-              targetId: newsDetail.id,
-              subgoal: newsDetail.id),
-          _hotComment(),
-          2.vGap,
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+          decoration: BoxDecoration(
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.circular(12.w)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (showMoreNew) _moreNews(),
+              _head(),
+              14.vGap,
+              _buildNewsContent(context),
+              20.vGap,
+              NewsBottomButton(newsDetail),
+              16.vGap,
+              EmojiWidget(
+                  emojis: newsDetail.emojis!,
+                  myEmojis: newsDetail.myEmoji,
+                  type: 1,
+                  targetId: newsDetail.id,
+                  subgoal: newsDetail.id),
+              _hotComment(),
+              2.vGap,
+            ],
+          ),
+        ),
+        if (newsDetail.eventType > 0)
+          NewsEventWidget(
+            type: newsDetail.eventType,
+            hasRecieve: newsDetail.hasRecieve,
+            onTap: () {
+              controller.newsEventOntap(newsDetail);
+            },
+          )
+      ],
     );
   }
 }

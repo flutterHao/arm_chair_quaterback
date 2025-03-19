@@ -5,14 +5,15 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/pages/mine/user_info/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class BirthdayPickerBottomsheet extends StatefulWidget {
-  const BirthdayPickerBottomsheet({super.key});
-
+  const BirthdayPickerBottomsheet(this.initialDate, {super.key});
+  final int initialDate;
   @override
   State<BirthdayPickerBottomsheet> createState() =>
       _BirthdayPickerBottomsheetState();
@@ -20,6 +21,11 @@ class BirthdayPickerBottomsheet extends StatefulWidget {
 
 class _BirthdayPickerBottomsheetState extends State<BirthdayPickerBottomsheet> {
   DateTime? _selectedDate;
+  @override
+  initState() {
+    super.initState();
+    _selectedDate = DateTime.fromMillisecondsSinceEpoch(widget.initialDate);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,8 @@ class _BirthdayPickerBottomsheetState extends State<BirthdayPickerBottomsheet> {
               looping: false,
               firstDate: DateTime(1970, 1, 1),
               lastDate: DateTime.now(),
-              initialDate: DateTime(2000, 1, 1),
+              initialDate:
+                  DateTime.fromMillisecondsSinceEpoch(widget.initialDate),
               dateFormat: "yyyy/MM/dd",
               locale: DatePicker.localeFromString('en'),
               onChange: (DateTime newDate, _) {
@@ -61,7 +68,9 @@ class _BirthdayPickerBottomsheetState extends State<BirthdayPickerBottomsheet> {
             margin: EdgeInsets.symmetric(horizontal: 16.w),
             child: MtInkWell(
                 onTap: () {
-                  print(_selectedDate);
+                  final UserInfoController controller = Get.find();
+                  controller.editBirthday.value =
+                      _selectedDate!.millisecondsSinceEpoch;
                   Get.back();
                 },
                 child: Container(

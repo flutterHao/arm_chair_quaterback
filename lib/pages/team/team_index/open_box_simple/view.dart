@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-18 20:50:30
+ * @LastEditTime: 2025-03-19 16:20:55
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -118,7 +118,9 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                     opacity: 0.5 + controller.fallOutAnimation.value * 0.5,
                     child: AnimatedBoxSimple(
                       onTap: () {
-                        controller.clickkBox();
+                        if (controller.fallOutAnimation.value == 1) {
+                          controller.clickkBox();
+                        }
                       },
                       child: Image.asset(
                         Utils.getBoxImageUrl(item.cardId),
@@ -251,15 +253,19 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
         (e) => item.playerCards.indexOf(e) == controller.selectIndex);
     return Positioned(
         top: 250.h,
-        child: AnimatedScale(
-          duration: 200.milliseconds,
-          alignment: Alignment.bottomCenter,
-          scale: controller.step == 2 ? 0.9 : 0,
-          child: BoxCardWidget(
-            isSmall: false,
-            isFlipped: player!.isOpen.value,
-            onFlip: () {},
-            player: player,
+        child: AnimatedOpacity(
+          duration: 150.milliseconds,
+          opacity: controller.step == 2 ? 1 : 0,
+          child: AnimatedScale(
+            duration: 150.milliseconds,
+            alignment: Alignment.bottomCenter,
+            scale: controller.step == 2 ? 0.9 : 0,
+            child: BoxCardWidget(
+              isSmall: false,
+              isFlipped: player!.isOpen.value,
+              onFlip: () {},
+              player: player,
+            ),
           ),
         ));
   }
@@ -289,16 +295,20 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
       // left: 16.w,
       // right: 16.w,
       child: Obx(() {
-        return CustomButton(
-            width: controller.showCollect.value && controller.step == 2
-                ? 343.w
-                : 0,
-            height: 51.w,
-            text: "COLLECT",
-            fontSize: 23.sp,
-            onPressed: () {
-              Get.back();
-            });
+        return AnimatedOpacity(
+          opacity: controller.showCollect.value && controller.step == 2 ? 1 : 0,
+          duration: 300.milliseconds,
+          child: CustomButton(
+              width: controller.showCollect.value && controller.step == 2
+                  ? 343.w
+                  : 0,
+              height: 51.w,
+              text: "COLLECT",
+              fontSize: 23.sp,
+              onPressed: () {
+                Get.back();
+              }),
+        );
       }),
     );
   }
@@ -390,38 +400,51 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
 
   @override
   Widget build(BuildContext context) {
-    // controller.step = 0;
+    controller.step = 0;
     return GetBuilder<OpenBoxSimpleController>(
         init: OpenBoxSimpleController(),
         id: "open_box_simple",
         builder: (_) {
           // item.playerCards.shuffle();
           return Builder(builder: (context) {
-            return Container(
-              width: 375.w,
-              height: 812.h,
-              color: AppColors.cF2F2F2,
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  _backgroud(),
-                  _rightBottomBackgroud(),
+            return GestureDetector(
+              onTap: () {
+                if (controller.fallOutAnimation.value == 1 &&
+                    controller.step == 0 &&
+                    !controller.isOpen) {
+                  controller.isOpen = true;
+                  controller.boxAniCtrl.reset();
+                  controller.boxAniCtrl.forward().then((v) {
+                    controller.clickkBox();
+                  });
+                }
+              },
+              child: Container(
+                width: 375.w,
+                height: 812.h,
+                color: AppColors.cF2F2F2,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    _backgroud(),
+                    _rightBottomBackgroud(),
 
-                  ///返回
-                  _goBackButton(),
+                    ///返回
+                    _goBackButton(),
 
-                  ///获得展示
-                  // _continueText(context),
-                  _bigCard(),
-                  _collectBt(),
+                    ///获得展示
+                    // _continueText(context),
+                    _bigCard(),
+                    _collectBt(),
 
-                  ///抽卡
-                  _cardWidget(context),
+                    ///抽卡
+                    _cardWidget(context),
 
-                  /// 开宝箱
-                  _openTitle(),
-                  _boxWidget(),
-                ],
+                    /// 开宝箱
+                    _openTitle(),
+                    _boxWidget(),
+                  ],
+                ),
               ),
             );
           });

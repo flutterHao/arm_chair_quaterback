@@ -2,7 +2,7 @@
  * @Description: 球员头像卡片
  * @Author: lihonghao
  * @Date: 2024-11-18 12:23:44
- * @LastEditTime: 2025-03-18 10:59:41
+ * @LastEditTime: 2025-03-19 16:52:53
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -65,24 +65,37 @@ class PlayerCard extends StatelessWidget {
             ),
             if (!ObjectUtil.isEmpty(score))
               Positioned(
-                left: 3.5.w,
-                top: 4.w,
-                child: Text(
-                  Utils.getPlayBaseInfo(playerId).playerScore.toString(),
-                  style: (19 * scale).w4(
-                    color: AppColors.c262626,
-                    height: 0.8,
-                    fontFamily: FontFamily.fOswaldBold,
-                  ),
-                ),
-                // child: Text(
-                //   Utils.getPlayBaseInfo(playerId).playerScore.toString(),
-                //   style: 19.w4(
-                //       fontFamily: FontFamily.fOswaldBold,
-                //       height: 0.8,
-                //       color: AppColors.c262626),
-                // ),
-              ),
+                  left: 3.5.w,
+                  top: 4.w,
+                  child: OutlinedText(
+                    strokeWidth: 2.w,
+                    text:
+                        Utils.getPlayBaseInfo(playerId).playerScore.toString(),
+                    textStyle: (19 * scale).w4(
+                      color: AppColors.c262626,
+                      height: 0.8,
+                      fontFamily: FontFamily.fOswaldMedium,
+                    ),
+                  )),
+            // Positioned(
+            //   left: 3.5.w,
+            //   top: 4.w,
+            //   child: Text(
+            //     Utils.getPlayBaseInfo(playerId).playerScore.toString(),
+            //     style: (19 * scale).w4(
+            //       color: AppColors.c262626,
+            //       height: 0.8,
+            //       fontFamily: FontFamily.fOswaldBold,
+            //     ),
+            //   ),
+            // child: Text(
+            //   Utils.getPlayBaseInfo(playerId).playerScore.toString(),
+            //   style: 19.w4(
+            //       fontFamily: FontFamily.fOswaldBold,
+            //       height: 0.8,
+            //       color: AppColors.c262626),
+            // ),
+            // ),
             Positioned(
               top: 4.w,
               right: 4.w,

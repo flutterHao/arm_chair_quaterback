@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-03-18 09:56:03
+ * @LastEditTime: 2025-03-19 18:07:31
  */
 import 'dart:async';
 
@@ -186,6 +186,7 @@ class HomeController extends GetxController {
     ///检查后端注册状态
     bool isRegister = await UserApi.getTeamByAccountId();
     if (!isRegister) {
+      isLoading = false;
       await Get.to(SelectPlayerPage(), transition: Transition.noTransition);
     }
     isLoading = false;

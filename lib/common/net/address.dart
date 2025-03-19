@@ -46,10 +46,16 @@ class Address {
   static const String wsPubDevUrl = 'ws://47.88.19.59:9003';
   static const String wsPrivateDevUrl = 'ws://10.0.3.38:9005';
 
-  static const String wsBaseUrl =
-  ((kIsWeb && kProfileMode) || kDebugMode) ? wsPrivateDevUrl : wsPublicDevUrl;
+  static const String wsBaseUrl = ((kIsWeb && kProfileMode) || kDebugMode)
+      ? wsPrivateDevUrl
+      : wsPublicDevUrl;
 
   static const String imgBaseUrl =
       "https://seaball-1324211645.cos.ap-guangzhou.myqcloud.com/";
   static const String compressImgBaseUrl = "${imgBaseUrl}compressed/";
+
+  ///隐私政策
+  static const String privacyPolicyUrl =
+      'https://www.armchair.top/reference/privacy-policy';
+  static const String connectUsUrl = 'https://www.armchair.top';
 }

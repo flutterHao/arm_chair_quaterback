@@ -218,6 +218,10 @@ NewsListDetail $NewsListDetailFromJson(Map<String, dynamic> json) {
   if (myEmoji != null) {
     newsListDetail.myEmoji = myEmoji;
   }
+  final int? eventType = jsonConvert.convert<int>(json['eventType']);
+  if (eventType != null) {
+    newsListDetail.eventType = eventType;
+  }
   return newsListDetail;
 }
 
@@ -248,6 +252,7 @@ Map<String, dynamic> $NewsListDetailToJson(NewsListDetail entity) {
   data['imamgeWidth'] = entity.imamgeWidth;
   data['emojis'] = entity.emojis;
   data['myEmoji'] = entity.myEmoji;
+  data['eventType'] = entity.eventType;
   return data;
 }
 
@@ -280,6 +285,7 @@ extension NewsListDetailExtension on NewsListDetail {
     double? imamgeWidth,
     Map<String, int>? emojis,
     List<int>? myEmoji,
+    int? eventType,
   }) {
     return NewsListDetail()
       ..isLikeInt = isLikeInt ?? this.isLikeInt
@@ -308,6 +314,7 @@ extension NewsListDetailExtension on NewsListDetail {
       ..imageHeight = imageHeight ?? this.imageHeight
       ..imamgeWidth = imamgeWidth ?? this.imamgeWidth
       ..emojis = emojis ?? this.emojis
-      ..myEmoji = myEmoji ?? this.myEmoji;
+      ..myEmoji = myEmoji ?? this.myEmoji
+      ..eventType = eventType ?? this.eventType;
   }
 }

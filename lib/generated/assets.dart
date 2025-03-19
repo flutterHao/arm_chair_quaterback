@@ -372,6 +372,7 @@ class Assets {
   static const String newsUiIconBall = 'assets/images/news/ui_icon_ball.png';
   static const String newsUiIconEmoji = 'assets/images/news/ui_icon_emoji.png';
   static const String newsUiIconFire = 'assets/images/news/ui_icon_fire.png';
+  static const String newsUiMangerNew216 = 'assets/images/news/ui_manger_new2_16.png';
   static const String personalUiIconCaps = 'assets/images/personal/ui_icon_caps.png';
   static const String personalUiIconPlayer = 'assets/images/personal/ui_icon_player.png';
   static const String personalUiIconSalary = 'assets/images/personal/ui_icon_salary.png';
