@@ -10,6 +10,7 @@ class SelectPlayerController extends GetxController {
   RxList<String> playerList = RxList();
   _initData() async {
     await Future.wait([
+      CacheApi.getNBAPlayerInfo(),
       CacheApi.getGameConstant(),
       CacheApi.getNBATeamDefine(),
     ]);
