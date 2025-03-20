@@ -8,10 +8,12 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
+import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/net/apis/trade.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
@@ -70,6 +72,12 @@ class SummaryController extends GetxController {
 
   var refreshController = RefreshController();
 
+  List trendTypeList = ['1W', '1M', '3M', '1Y', '3Y', 'ALL'];
+  List<PlayerStrengthRankTrendList> trendList = [];
+  List<PlayerStrengthRankTrendList> showTrendList = [];
+  int selectedIndexType = 0;
+  int differenceScore = 0;
+
   void startCountDown(trendPlayer) {
     timer?.cancel();
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
@@ -115,17 +123,17 @@ class SummaryController extends GetxController {
     getPlayerNews();
   }
 
-  getPlayerNews(){
-    newPage ++;
+  getPlayerNews() {
+    newPage++;
     NewsApi.getPlayerNews(playerId, newPage).then((result) {
-      if(result.isNotEmpty){
+      if (result.isNotEmpty) {
         newsList.addAll(result);
         update([idPlayerNews]);
         refreshController.loadComplete();
-      }else{
+      } else {
         refreshController.loadNoData();
       }
-    },onError: (e){
+    }, onError: (e) {
       refreshController.loadFailed();
     });
   }
@@ -135,7 +143,14 @@ class SummaryController extends GetxController {
     Future.wait([
       CacheApi.getNBATeamDefine(),
       CacheApi.getPickType(),
+      TeamApi.getPlayerTrends(playerId: playerId, day: -1),
     ]).then((result) {
+      trendList = result[2] as List<PlayerStrengthRankTrendList>;
+      if (trendList.length > 7) {
+        showTrendList = trendList.sublist(0, 7);
+      } else {
+        showTrendList = trendList;
+      }
       nbaPlayerBaseInfoEntity = playerDetailController.nbaPlayerBaseInfoEntity;
       if (initTabStr != null) {
         var i = nbaPlayerBaseInfoEntity?.guessInfos.keys
@@ -432,6 +447,42 @@ class SummaryController extends GetxController {
     ];
   }
 
+  ///切换趋势图日期
+  void changeSelectedIndexType(int index) {
+    selectedIndexType = index;
+    switch (selectedIndexType) {
+      case 0:
+        if (trendList.length > 7) {
+          showTrendList = trendList.sublist(0, 7);
+        }
+      case 1:
+        if (trendList.length > 30) {
+          showTrendList = trendList.sublist(0, 30);
+        }
+      case 2:
+        if (trendList.length > 90) {
+          showTrendList = trendList.sublist(0, 90);
+        } else {
+          showTrendList = trendList;
+        }
+      case 3:
+        if (trendList.length > 365) {
+          showTrendList = trendList.sublist(0, 365);
+        } else {
+          showTrendList = trendList;
+        }
+      case 4:
+        if (trendList.length > 365 * 3) {
+          showTrendList = trendList.sublist(0, 365 * 3);
+        } else {
+          showTrendList = trendList;
+        }
+      default:
+        showTrendList = trendList;
+    }
+    update([idPlayerOver]);
+  }
+
   List<String> getStatsKeys() {
     var excludeKeys = ["NICKNAME"];
     return nbaPlayerBaseInfoEntity?.playerRegularMap
@@ -492,6 +543,8 @@ class SummaryController extends GetxController {
     });
     return where;
   }
+
+  static String get idPlayerOver => "id_player_ovr";
 }
 
 class OutCome {

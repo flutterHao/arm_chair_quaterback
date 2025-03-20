@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_strength_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
@@ -23,7 +24,9 @@ import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -1222,6 +1225,7 @@ class SummaryPage extends GetView<SummaryController> {
                         ],
                       ),
                     ),
+                    _buildOvr(),
                     _buildNews(),
                     Obx(() {
                       var picksIndexController =
@@ -1247,6 +1251,300 @@ class SummaryPage extends GetView<SummaryController> {
           );
         }
       },
+    );
+  }
+
+  Widget _buildOvr() {
+    return GetBuilder<SummaryController>(
+        id: SummaryController.idPlayerOver,
+        builder: (logic) {
+          return SliverToBoxAdapter(
+            child: Container(
+              margin: EdgeInsets.only(top: 9.w),
+              decoration: BoxDecoration(
+                color: AppColors.cFFFFFF,
+                borderRadius: BorderRadius.circular(9.w)
+              ),
+              child: Column(
+                children: [
+                  _playerOVRInfoWidget(),
+                  16.vGap,
+                  _playerChartWidget(controller.showTrendList),
+                  _trendTabWidget(),
+                  15.vGap,
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  //趋势图切换
+  Widget _trendTabWidget() {
+    return Padding(
+      padding: EdgeInsets.only(left: 30.w,right: 16.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ...controller.trendTypeList.mapIndexed((index, element) {
+            return InkWell(
+              onTap: () => controller.changeSelectedIndexType(index),
+              child: Container(
+                width: 46.w,
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(bottom: 4.w),
+                foregroundDecoration: BoxDecoration(
+                    border: Border(
+                        bottom: controller.selectedIndexType == index
+                            ? BorderSide(
+                                color: controller.differenceScore >= 0
+                                    ? AppColors.c0FA76C
+                                    : AppColors.cE34D4D,
+                                width: 2.w)
+                            : BorderSide.none)),
+                child: Text(
+                  '${controller.trendTypeList[index]}',
+                  style: 16.w5(
+                      fontFamily: FontFamily.fOswaldRegular,
+                      color: controller.selectedIndexType != index
+                          ? AppColors.cB3B3B3
+                          : controller.differenceScore >= 0
+                              ? AppColors.c0FA76C
+                              : AppColors.cE34D4D),
+                ),
+              ),
+            );
+          })
+        ],
+      ),
+    );
+  }
+
+  ///球员OVR信息
+  Widget _playerOVRInfoWidget() {
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
+        child: IntrinsicHeight(
+            child: Row(
+          children: [
+            Expanded(
+                child: Column(
+              children: [
+                Text(
+                  '${Utils.getPlayBaseInfo(controller.playerId).maxPlayerScore}',
+                  style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
+                ),
+                Text(
+                  'H-OVR',
+                  style: 12.w5(
+                      fontFamily: FontFamily.fRobotoRegular,
+                      color: AppColors.c8A8A8A),
+                )
+              ],
+            )),
+            VerticalDivider(color: AppColors.cD1D1D1),
+            Expanded(
+                child: Column(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${Utils.getPlayBaseInfo(controller.playerId).playerScore}',
+                      style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                    6.hGap,
+                    Column(
+                      children: [
+                        Text('${controller.differenceScore.abs()}',
+                            style: 14.w5(
+                              height: 0.95,
+                              color: controller.differenceScore >= 0
+                                  ? AppColors.c0FA76C
+                                  : AppColors.cE34D4D,
+                              fontFamily: FontFamily.fRobotoRegular,
+                            )),
+                        Transform.rotate(
+                          angle: controller.differenceScore >= 0
+                              ? -pi / 180 * 90
+                              : pi / 180 * 90,
+                          child: Image.asset(
+                            Assets.commonUiCommonIconSystemArrow,
+                            width: 5.w,
+                            height: 8.w,
+                            color: controller.differenceScore >= 0
+                                ? AppColors.c0FA76C
+                                : AppColors.cE34D4D,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                Text(
+                  'OVR',
+                  style: 12.w5(
+                      fontFamily: FontFamily.fRobotoRegular,
+                      color: AppColors.c8A8A8A),
+                )
+              ],
+            )),
+            VerticalDivider(color: AppColors.cD1D1D1),
+            Expanded(
+                child: Column(
+              children: [
+                Text(
+                  '${Utils.getPlayBaseInfo(controller.playerId).minPlayerScore}',
+                  style: 22.w5(fontFamily: FontFamily.fOswaldMedium),
+                ),
+                Text(
+                  'L-OVR',
+                  style: 12.w5(
+                      fontFamily: FontFamily.fRobotoRegular,
+                      color: AppColors.c8A8A8A),
+                )
+              ],
+            )),
+          ],
+        )));
+  }
+
+  Widget _playerChartWidget(List<PlayerStrengthRankTrendList> item) {
+    var data = List.generate(item.length, (index) {
+      return FlSpot(index.toDouble(),
+          item[item.length - index - 1].playerScore.toDouble());
+    });
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Container(
+          height: 154.w,
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Center(
+            child: LineChart(
+              LineChartData(
+                lineTouchData: const LineTouchData(enabled: false),
+                titlesData: FlTitlesData(
+                  show: true,
+                  rightTitles:
+                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  topTitles:
+                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        if (value == 0 || value == item.length - 1) {
+                          String text = '';
+                          if (value.toInt() == item.length - 1) {
+                            text = MyDateUtils.formatDate(
+                                DateTime.fromMillisecondsSinceEpoch(
+                                    item[0].updateTime),
+                                format: 'MM/dd/yy');
+                          } else {
+                            text = MyDateUtils.formatDate(
+                                DateTime.fromMillisecondsSinceEpoch(
+                                    item[item.length - 1].updateTime),
+                                format: 'MM/dd/yy');
+                          }
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            space: 4.w,
+                            child: Text(text,
+                                style: 10.w5(
+                                    fontFamily: FontFamily.fRobotoRegular,
+                                    color: AppColors.c4D4D4D)),
+                          );
+                        } else {
+                          return Container(); // 不显示其它点
+                        }
+                      },
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 24.w,
+                      getTitlesWidget: (value, meta) {
+                        if (value == 1 || value == 50 || value == 100) {
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            space: 4.w,
+                            child: Text('${value.toInt()}',
+                                style:
+                                    10.w5(fontFamily: FontFamily.fRobotoRegular)),
+                          );
+                        } else {
+                          return Container(); // 不显示其它点
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                borderData: FlBorderData(
+                    show: true,
+                    border: Border(
+                        left: BorderSide(color: AppColors.cD1D1D1),
+                        bottom: BorderSide(color: AppColors.cD1D1D1))),
+                minY: 1,
+                maxY: 100,
+                lineBarsData: [
+                  LineChartBarData(
+                      spots: data,
+                      color: controller.differenceScore >= 0
+                          ? AppColors.c0FA76C
+                          : AppColors.cE34D4D,
+                      dotData: FlDotData(
+                        show: true,
+                        getDotPainter: (spot, percent, barData, index) {
+                          // 如果是最后一个点，则返回一个特定样式的点
+                          if (index == data.length - 1) {
+                            return FlDotCirclePainter(
+                                radius: 1.6,
+                                color: controller.differenceScore >= 0
+                                    ? AppColors.c0FA76C
+                                    : AppColors.cE34D4D,
+                                strokeColor: Colors.white,
+                                strokeWidth: 1.6);
+                          } else {
+                            return FlDotCirclePainter(radius: 0);
+                          }
+                        },
+                      ),
+                      barWidth: 2,
+                      isStrokeCapRound: true,
+                      belowBarData: BarAreaData(
+                          show: true,
+                          gradient: LinearGradient(
+                              colors: controller.differenceScore >= 0
+                                  ? [
+                                      AppColors.c0FA76C.withOpacity(0.3),
+                                      AppColors.c0FA76C.withOpacity(0.1)
+                                    ]
+                                  : [
+                                      AppColors.cE34D4D.withOpacity(0.3),
+                                      AppColors.cE34D4D.withOpacity(0.1)
+                                    ])))
+                ],
+                gridData: FlGridData(
+                    show: true,
+                    drawHorizontalLine: true,
+                    getDrawingHorizontalLine: (value) {
+                      return const FlLine(
+                          color: AppColors.cB3B3B3,
+                          strokeWidth: 1,
+                          dashArray: [4, 2]);
+                    },
+                    horizontalInterval: 50,
+                    checkToShowHorizontalLine: (value) {
+                      return true;
+                    },
+                    checkToShowVerticalLine: (value) {
+                      return false;
+                    }),
+              ),
+            ),
+          )),
     );
   }
 
