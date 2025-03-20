@@ -1497,4 +1497,5 @@ class LangKey {
   static const String beginnerGuidePlayerPack = 'beginnerGuidePlayerPack';
   static const String beginnerGuideGameStart = 'beginnerGuideGameStart';
   static const String eventClashInfusion = 'eventClashInfusion';
+  static const String newsTabEmoji = 'newsTabEmoji';
 }

@@ -8,9 +8,9 @@ import 'package:arm_chair_quaterback/common/langs/en_US.dart';
 import 'package:arm_chair_quaterback/common/langs/zh_CN.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/values/values.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 //配置
@@ -103,6 +103,7 @@ class ConfigStore extends GetxController {
   }
 
   int getResourceAlert() {
-    return StorageService.to.getInt(Constant.resourcesShowToday,defaultValue: 0);
+    return StorageService.to
+        .getInt(Constant.resourcesShowToday, defaultValue: 0);
   }
 }
