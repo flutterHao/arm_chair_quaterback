@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-09-12 21:40:32
- * @LastEditTime: 2025-03-05 16:07:16
+ * @LastEditTime: 2025-03-20 11:31:33
  */
 import 'package:flutter/foundation.dart';
 
@@ -27,7 +27,7 @@ class Address {
   static const String privateDevUrl = 'http://10.0.3.38:7007';
 
   static const String httpBaseUrl =
-      ((kIsWeb && kProfileMode) || kDebugMode) ? privateDevUrl : publicDevUrl;
+      ((kIsWeb && kProfileMode) || kDebugMode) ? privateDevUrl : privateDevUrl;
 
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 
@@ -48,7 +48,7 @@ class Address {
 
   static const String wsBaseUrl = ((kIsWeb && kProfileMode) || kDebugMode)
       ? wsPrivateDevUrl
-      : wsPublicDevUrl;
+      : wsPrivateDevUrl;
 
   static const String imgBaseUrl =
       "https://seaball-1324211645.cos.ap-guangzhou.myqcloud.com/";

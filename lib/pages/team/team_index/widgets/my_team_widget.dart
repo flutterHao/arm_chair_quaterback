@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-19 16:54:01
+ * @LastEditTime: 2025-03-19 21:01:41
  */
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -264,24 +266,43 @@ class MyTeamWidget extends StatelessWidget {
                                 ],
                               )
                             : Stack(
-                                alignment: Alignment.center,
+                                alignment: Alignment.topCenter,
                                 children: [
-                                  Image.asset(
-                                    Assets.managerUiMangerNew211,
-                                    width: 375.w,
-                                    height: 41.w,
+                                  // Positioned(
+                                  //   top: 28.w,
+                                  //   child: Image.asset(
+                                  //     Assets.managerUiMangerNew211,
+                                  //     width: 375.w,
+                                  //     height: 41.w,
+                                  //   ),
+                                  // ),
+                                  Positioned(
+                                    top: 28.w,
+                                    left: 0,
+                                    child: BreathingArrows(),
                                   ),
-                                  MtInkWell(
-                                    splashColor: Colors.transparent,
-                                    onTap: () {
-                                      TeamIndexController ctrl = Get.find();
-                                      ctrl.matchBattle();
-                                    },
-                                    child: Image.asset(
-                                      Assets.managerUiMangerNew210,
-                                      width: 120.w,
-                                      height: 76.w,
-                                      fit: BoxFit.fill,
+                                  Positioned(
+                                    top: 28.w,
+                                    right: 0,
+                                    child: BreathingArrows(isRight: true),
+                                  ),
+                                  Positioned(
+                                    top: 12.w,
+                                    left: 111.5.w,
+                                    right: 111.5.w,
+                                    bottom: 12.w,
+                                    child: MtInkWell(
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        TeamIndexController ctrl = Get.find();
+                                        ctrl.matchBattle();
+                                      },
+                                      child: Image.asset(
+                                        Assets.managerUiMangerNew210,
+                                        width: 120.w,
+                                        height: 76.w,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -410,6 +431,111 @@ class PlayerCardWidget extends GetView<TeamController> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class BreathingArrows extends StatefulWidget {
+  final bool isRight;
+
+  const BreathingArrows({super.key, this.isRight = false});
+
+  @override
+  _BreathingArrowsState createState() => _BreathingArrowsState();
+}
+
+class _BreathingArrowsState extends State<BreathingArrows>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  final List<Animation<double>> _positionAnimations = [];
+  final List<Animation<double>> _opacityAnimations = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    // 为每个箭头创建错开的动画
+    for (int i = 0; i < 3; i++) {
+      _positionAnimations.add(
+        Tween<double>(begin: -0.2, end: 0).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: Interval(
+              i * 0.2, // 每个箭头错开20%的时间
+              1.0,
+              curve: Curves.easeInOut,
+            ),
+          ),
+        ),
+      );
+
+      _opacityAnimations.add(
+        Tween<double>(begin: 0.4, end: 0.8).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: Interval(
+              i * 0.2,
+              1.0,
+              curve: Curves.easeInOut,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(3, (index) {
+        return AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Opacity(
+              opacity: _opacityAnimations[index].value,
+              child: Transform.translate(
+                offset: Offset(
+                    (widget.isRight ? -1 : 1) *
+                        _positionAnimations[index].value *
+                        100.w,
+                    0),
+                child: IconWidget(
+                  rotateAngle: widget.isRight ? 180 : 0,
+                  icon: Assets.newsUiIconArrows04, // 替换为你的箭头图片路径
+                  iconHeight: 41.w,
+                  fit: BoxFit.fitHeight,
+                  iconColor: AppColors.ce5e5e5, // 可自定义颜色
+                ),
+              ),
+            );
+          },
+        );
+      }),
+    );
+  }
+}
+
+// 使用示例
+class DemoPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('呼吸箭头')),
+      body: Center(
+        child: BreathingArrows(),
+      ),
     );
   }
 }

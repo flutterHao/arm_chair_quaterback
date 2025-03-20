@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/pages/team/select_player/widgets/select_pla
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class SelectOtherPlayerPage extends StatefulWidget {
   const SelectOtherPlayerPage({super.key});
@@ -24,11 +25,16 @@ class SelectOtherPlayerPage extends StatefulWidget {
 class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
   int playerId = 1155;
   List<RandomOtherPlayersEntity> randomOtherPlayers = [];
+  // final GlobalKey _randomKey = GlobalKey();
+  final GlobalKey _goKey = GlobalKey();
+  int _randomTime = 0;
   @override
   void initState() {
     super.initState();
     playerId = Get.arguments;
     getRandomPlayerItem();
+    // WidgetsBinding.instance.addPostFrameCallback(
+    //     (_) => ShowCaseWidget.of(context).startShowCase([_randomKey]));
   }
 
   Future getRandomPlayerItem() async {
@@ -36,6 +42,7 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
     setState(() {
       randomOtherPlayers = res;
     });
+    _randomTime++;
   }
 
   onLogin() async {
@@ -47,74 +54,83 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SelectBgWidget(
-        body: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-            child: Container(
-          padding: EdgeInsets.only(top: 10.w),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 300.w,
-                  child: Text('select other  player'.toUpperCase(),
-                      style: 35.w5(
-                          height: 1.1, fontFamily: FontFamily.fOswaldMedium)),
-                ),
-                20.vGap,
-                Text(
-                  'KEY player'.toUpperCase(),
-                  style: 24.w5(fontFamily: FontFamily.fOswaldMedium, height: 1),
-                ),
-                14.vGap,
-                SelectPlayerItemWidget(playerId: playerId, isSelect: true),
-                26.vGap,
-                Text(
-                  'OTHER player'.toUpperCase(),
-                  style: 24.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
-                ),
-                10.vGap,
-                _randomPlayerItem(),
-                10.vGap,
-                Text(
-                  'The team is formed, the opponent is matched, and  the game is played',
-                  style: 14.w5(
-                      fontFamily: FontFamily.fRobotoRegular,
-                      color: AppColors.cB3B3B3),
-                ),
-              ],
-            ),
-          ),
-        )),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 20.w),
-          margin: EdgeInsets.only(bottom: 20.w),
-          child: MtInkWell(
-              onTap: () {
-                onLogin();
-              },
+    return ShowCaseWidget(builder: (context) {
+      return SelectBgWidget(
+          body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(10.w)),
-                height: 50.w,
-                alignment: Alignment.center,
-                child: Text(
-                  'GO',
-                  style: 23.w5(
-                      color: Colors.white,
-                      fontFamily: FontFamily.fOswaldMedium),
-                ),
-              )),
-        )
-      ],
-    ));
+            padding: EdgeInsets.only(top: 10.w),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 300.w,
+                    child: Text('select other  player'.toUpperCase(),
+                        style: 35.w5(
+                            height: 1.1, fontFamily: FontFamily.fOswaldMedium)),
+                  ),
+                  20.vGap,
+                  Text(
+                    'KEY player'.toUpperCase(),
+                    style:
+                        24.w5(fontFamily: FontFamily.fOswaldMedium, height: 1),
+                  ),
+                  14.vGap,
+                  SelectPlayerItemWidget(playerId: playerId, isSelect: true),
+                  26.vGap,
+                  Text(
+                    'OTHER player'.toUpperCase(),
+                    style:
+                        24.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+                  ),
+                  10.vGap,
+                  _randomPlayerItem(context),
+                  10.vGap,
+                  Text(
+                    'The team is formed, the opponent is matched, and  the game is played',
+                    style: 14.w5(
+                        fontFamily: FontFamily.fRobotoRegular,
+                        color: AppColors.cB3B3B3),
+                  ),
+                ],
+              ),
+            ),
+          )),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 20.w),
+            margin: EdgeInsets.only(bottom: 20.w),
+            child: MtInkWell(
+                onTap: () {
+                  onLogin();
+                },
+                child: Showcase(
+                  key: _goKey,
+                  description:
+                      'Team is formed now and you will be matched with an opponent for a game',
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10.w)),
+                    height: 50.w,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'GO',
+                      style: 23.w5(
+                          color: Colors.white,
+                          fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                  ),
+                )),
+          )
+        ],
+      ));
+    });
   }
 
-  Widget _randomPlayerItem() {
+  Widget _randomPlayerItem(BuildContext context) {
     return Container(
       height: 218.w,
       decoration: BoxDecoration(
@@ -167,6 +183,11 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
           ),
           MtInkWell(
               onTap: () {
+                if (_randomTime > 5) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) =>
+                      ShowCaseWidget.of(context).startShowCase([_goKey]));
+                  return;
+                }
                 getRandomPlayerItem();
               },
               child: Container(
