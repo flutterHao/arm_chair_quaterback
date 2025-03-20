@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_parent_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/scroll_hide_bottom_bar.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
@@ -25,6 +26,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/constant/getx_builder_ids.dart';
+import '../../common/enums/load_status.dart';
 import 'index.dart';
 
 class HomePage extends StatefulWidget {
@@ -74,7 +76,7 @@ class _HomePageState extends State<HomePage>
               child: Stack(
                 children: [
                   AbsorbPointer(
-                    absorbing: logic.isLoading,
+                    absorbing: logic.isAbsorbPointer.value,
                     child: ScrollHideBottomBar(
                       controller: logic.scrollHideBottomBarController,
                       bottomBar: Column(
@@ -221,7 +223,23 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                   ),
-                  if (controller.isLoading) SplashPage()
+                  //队伍数据加载进度
+                  if (controller.isAbsorbPointer.value)
+                    Center(
+                      child: Center(
+                        child: Container(
+                          width: 30.w,
+                          height: 30.w,
+                          margin: EdgeInsets.only(bottom: 20.w),
+                          child: const CircularProgressIndicator(
+                            color: AppColors.cFFFFFF,
+                            strokeWidth: 3,
+                          ),
+                        ),
+                      ),
+                    ),
+                  //启动页面
+                  if (controller.isLoading) SplashPage(),
                 ],
               ),
             );

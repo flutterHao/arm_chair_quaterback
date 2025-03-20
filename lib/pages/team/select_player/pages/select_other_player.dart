@@ -28,13 +28,14 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
   // final GlobalKey _randomKey = GlobalKey();
   final GlobalKey _goKey = GlobalKey();
   int _randomTime = 0;
+
   @override
   void initState() {
     super.initState();
     playerId = Get.arguments;
     getRandomPlayerItem();
-    // WidgetsBinding.instance.addPostFrameCallback(
-    //     (_) => ShowCaseWidget.of(context).startShowCase([_randomKey]));
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([_goKey]));
   }
 
   Future getRandomPlayerItem() async {
@@ -187,7 +188,7 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
                 if (_randomTime > 5) {
                   WidgetsBinding.instance.addPostFrameCallback((_) =>
                       ShowCaseWidget.of(context).startShowCase([_goKey]));
-                  return;
+                  // return;
                 }
                 getRandomPlayerItem();
               },

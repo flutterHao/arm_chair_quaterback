@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-20 13:49:50
+ * @LastEditTime: 2025-03-20 16:51:33
  */
 import 'dart:math';
 
@@ -50,7 +50,7 @@ class MyTeamWidget extends StatelessWidget {
           alignment: Alignment.topCenter,
           children: [
             Positioned(
-              top: 25,
+              top: 25.w,
               left: 0,
               right: 0,
               child: Container(
@@ -58,10 +58,10 @@ class MyTeamWidget extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   LangKey.gametabTeam.tr,
-                  style: 24.w7(
-                    fontFamily: FontFamily.fOswaldBold,
-                    height: 0.75,
-                  ),
+                  style: 24.w.w7(
+                        fontFamily: FontFamily.fOswaldBold,
+                        height: 0.75,
+                      ),
                 ),
               ),
             ),

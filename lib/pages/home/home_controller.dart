@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-03-20 15:37:19
+ * @LastEditTime: 2025-03-20 16:18:56
  */
 import 'dart:async';
 
@@ -50,7 +50,7 @@ class HomeController extends GetxController {
   ScrollHideBottomBarController scrollHideBottomBarController =
       ScrollHideBottomBarController();
   RxInt tabIndex = 1.obs;
-  RxBool isAbsorbPointer = false.obs;
+  RxBool isAbsorbPointer = true.obs;
   bool isLoading = true;
   LoadDataStatus loadDataStatus = LoadDataStatus.loading;
 
@@ -188,15 +188,18 @@ class HomeController extends GetxController {
     ///检查后端注册状态
     bool isRegister = await UserApi.getTeamByAccountId();
     if (!isRegister) {
-      isLoading = false;
       await Get.to(SelectPlayerPage(), transition: Transition.noTransition);
+      isLoading = false;
+      update();
     }
-    isLoading = false;
-    update();
+    isAbsorbPointer.value = true;
     userEntiry = await UserApi.visitorLogin();
+    update([GetXBuilderIds.idGlobalUserEntityRefresh]);
     TeamIndexController ctrl = Get.find();
     await ctrl.initData();
+    //等待数据加载后隐藏加载页
     isLoading = false;
+    isAbsorbPointer.value = false;
     update();
     if (toSelectPlayer) {
       toSelectPlayer = false;

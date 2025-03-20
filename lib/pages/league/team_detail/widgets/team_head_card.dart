@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:06:38
- * @LastEditTime: 2025-01-07 18:29:06
+ * @LastEditTime: 2025-03-20 16:52:47
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
@@ -57,15 +57,15 @@ class TeamHeadCard extends StatelessWidget {
                     fit: BoxFit.fitHeight,
                   ),
                 ),
-                Positioned(
-                  top: 15.w,
-                  right: 15.w,
-                  child: IconWidget(
-                    iconWidth: 19.w,
-                    icon: Assets.commonUiCommonStatusBarStar,
-                    iconColor: AppColors.cFFFFFF,
-                  ),
-                ),
+                // Positioned(
+                //   top: 15.w,
+                //   right: 15.w,
+                //   child: IconWidget(
+                //     iconWidth: 19.w,
+                //     icon: Assets.commonUiCommonStatusBarStar,
+                //     iconColor: AppColors.cFFFFFF,
+                //   ),
+                // ),
                 Positioned(
                   top: 88.w,
                   child: Text(

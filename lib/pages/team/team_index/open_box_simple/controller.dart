@@ -136,8 +136,8 @@ class OpenBoxSimpleController extends GetxController
       TeamController teamCtrl = Get.find();
       teamCtrl.isAdd = true;
       await teamCtrl.getBagPlayers();
-      var newPlayer = teamCtrl.myBagList
-          .firstWhereOrNull((e) => e.playerId == teamCtrl.playerIdNew);
+      var newPlayer = teamCtrl.myBagList.firstWhereOrNull(
+          (e) => e.playerId == teamCtrl.playerIdNew && e.position == -1);
       if (newPlayer != null) {
         teamCtrl.item2 = newPlayer;
         await teamCtrl.changeTeamPlayer();

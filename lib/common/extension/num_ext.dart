@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 11:33:27
- * @LastEditTime: 2025-01-08 18:10:49
+ * @LastEditTime: 2025-03-20 16:51:21
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -43,7 +43,7 @@ extension NumExt on num {
           // fontSize: toDouble().h,
 
           ///TODO
-          fontSize: kIsWeb ? toDouble() : toDouble().spMin,
+          fontSize: kIsWeb ? toDouble() : toDouble().sp,
           color: color,
           fontFamily: fontFamily);
 
@@ -61,7 +61,7 @@ extension NumExt on num {
           // fontSize: toDouble().h,
 
           ///TODO
-          fontSize: kIsWeb ? toDouble() : toDouble().spMin,
+          fontSize: kIsWeb ? toDouble() : toDouble().sp,
           color: color,
           fontFamily: fontFamily);
 
@@ -74,7 +74,7 @@ extension NumExt on num {
           letterSpacing: 0,
           height: height,
           fontWeight: FontWeight.w700,
-          fontSize: kIsWeb ? toDouble() : toDouble().spMin,
+          fontSize: kIsWeb ? toDouble() : toDouble().sp,
           // fontSize: toDouble().h,
           overflow: overflow,
           color: color,
@@ -91,7 +91,9 @@ extension NumExt on num {
       );
 
   String formatToString([int fractionDigits = 1]) {
-    String stringAsFixed = toStringAsFixed(fractionDigits).replaceAll(RegExp(r'0*$'), '').replaceAll(RegExp(r'\.$'), '');
+    String stringAsFixed = toStringAsFixed(fractionDigits)
+        .replaceAll(RegExp(r'0*$'), '')
+        .replaceAll(RegExp(r'\.$'), '');
     return stringAsFixed;
   }
 
