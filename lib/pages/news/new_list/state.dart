@@ -23,7 +23,6 @@ class NewListState {
   // get title => _title.value;
 
   NewsListEntity newsEntity = NewsListEntity();
-  List<NewsListDetail> newsList = [];
   List<NewsBanner> banners = [];
   NewsListDetail newsDetail = NewsListDetail();
   List<StarsTeamRank> starTeamList = [];

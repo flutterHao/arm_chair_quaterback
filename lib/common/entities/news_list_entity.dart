@@ -98,7 +98,7 @@ class NewsListDetail {
   List<int> myEmoji = [];
   int eventType = 0;
   @JSONField(deserialize: false, serialize: false)
-  bool hasRecieve = false;
+  var hasRecieve = false.obs;
 
   NewsListDetail();
 

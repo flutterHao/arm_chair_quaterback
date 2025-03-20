@@ -338,11 +338,16 @@ class NewsListItem extends GetView<NewListController> {
             ],
           ),
         ),
-        // if (newsDetail.eventType > 0)
-        //   NewsEventWidget(
-        //     type: newsDetail.eventType,
-        //     hasRecieve: newsDetail.hasRecieve,
-        //   )
+        if (newsDetail.eventType > 0)
+          Obx(() {
+            return NewsEventWidget(
+                type: newsDetail.eventType,
+                hasRecieve: newsDetail.hasRecieve.value,
+                onEnd: (v) {
+                  newsDetail.hasRecieve.value = v;
+                  // controller.update(["news_list"]);
+                });
+          })
       ],
     );
   }

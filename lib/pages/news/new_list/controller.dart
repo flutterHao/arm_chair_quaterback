@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-20 10:41:23
+ * @LastEditTime: 2025-03-20 17:47:25
  */
 import 'dart:async';
 import 'dart:math';
@@ -64,7 +64,7 @@ class NewListController extends GetxController {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent -
               scrollController.position.pixels <=
-          800.h * 5) {
+          812.h * 2) {
         getNewsFlow();
       }
     });
@@ -92,9 +92,12 @@ class NewListController extends GetxController {
       state.page++;
     }
     Log.d("加载瀑布流数据page=${state.page}");
-    await NewsApi.newsFlow(state.page, state.pageSize).then((value) {
+    await NewsApi.newsFlow(state.page, state.pageSize).then((value) async {
+      int type = await NewsApi.newsEventTrigger();
+      if (value.isNotEmpty) {
+        value.last.eventType = type;
+      }
       state.newsFlowList.addAll(value);
-      state.newsList = value;
       update(['newsList']);
       Log.d("加载瀑布流数据 ${DateTime.now()}");
     }).whenComplete(() {
@@ -268,19 +271,5 @@ class NewListController extends GetxController {
     //   }
     //   // update(["newsDetail"]);
     // });
-  }
-
-  void newsEventOntap(NewsListDetail item) {
-    if (item.hasRecieve) return;
-    if (item.eventType == 2) {
-      item.hasRecieve = true;
-      Get.toNamed(RouteNames.stealPlayer);
-    } else {
-      TeamApi.getNewsEventAward().then((_) {
-        item.hasRecieve = true;
-        update(["newsList"]);
-      });
-    }
-    item.hasRecieve = true;
   }
 }

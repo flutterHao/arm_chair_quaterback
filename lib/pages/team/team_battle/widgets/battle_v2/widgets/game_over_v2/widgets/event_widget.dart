@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -62,6 +63,7 @@ class _EventWidgetState extends State<EventWidget>
           finish = await Get.toNamed(RouteNames.stealPlayer);
           widget.onEnd?.call(finish);
         } else {
+          WebsocketServices.pause();
           finish = await getNewsEventAward();
           if (finish) {
             overlayEntry = OverlayEntry(builder: (BuildContext context) {
@@ -107,6 +109,9 @@ class _EventWidgetState extends State<EventWidget>
             });
             Overlay.of(Get.context!).insert(overlayEntry!);
           }
+          Future.delayed(const Duration(seconds: 3)).then((v) {
+            WebsocketServices.resumed();
+          });
         }
       },
       child: Row(
