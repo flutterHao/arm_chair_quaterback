@@ -212,7 +212,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         _buildPlayerInfoItem(LangKey.gameNameWt.tr,
                             controller.baseInfo?.weight ?? "0"),
                         33.hGap,
-                        _buildPlayerInfoItem(LangKey.gameNameAge.tr,
+                        _buildPlayerInfoItem(LangKey.gameNameExp.tr,
                             "${controller.baseInfo?.exp == null ? 0 : (DateTime.now().year - controller.baseInfo!.exp)}"),
                       ],
                     ),

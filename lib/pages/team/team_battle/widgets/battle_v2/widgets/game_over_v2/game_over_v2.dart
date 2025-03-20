@@ -1,17 +1,14 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_v2/widgets/event_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_v2/widgets/game_over_detail.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_v2/widgets/reward_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score_v2/quarter_score_widget.dart';
@@ -83,53 +80,56 @@ class GameOverV2 extends GetView<GameOverController> {
     );
   }
 
-  Column _buildPartWidget(BuildContext context) {
-    return Column(
-      children: [
-        _buildSameWidget(context),
-        Container(
-          color: AppColors.cFFFFFF,
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Text(
-            "${teamBattleV2Controller.pkResultUpdatedEntity?.newsContent}",
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: 14.w4(
-              color: AppColors.c000000,
-              height: 1.3,
-              fontFamily: FontFamily.fRobotoRegular,
+  Widget _buildPartWidget(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        children: [
+          _buildSameWidget(context),
+          Container(
+            color: AppColors.cFFFFFF,
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Text(
+              "${teamBattleV2Controller.pkResultUpdatedEntity?.newsContent}",
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: 14.w4(
+                color: AppColors.c000000,
+                height: 1.3,
+                fontFamily: FontFamily.fRobotoRegular,
+              ),
             ),
           ),
-        ),
-        Container(
-          height: 50.w,
-          color: AppColors.cFFFFFF,
-          padding: EdgeInsets.only(top: 10.w, right: 16.w),
-          margin: EdgeInsets.only(bottom: 9.w + Utils.getPaddingBottom()),
-          child: MtInkWell(
-            onTap: () => controller.seeAll(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "SEE ALL",
-                  style: 16.w7(
-                    color: AppColors.c262626,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldBold,
+          Container(
+            height: 50.w,
+            color: AppColors.cFFFFFF,
+            padding: EdgeInsets.only(top: 10.w, right: 16.w),
+            margin: EdgeInsets.only(bottom: 9.w + Utils.getPaddingBottom()),
+            child: MtInkWell(
+              onTap: () => controller.seeAll(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "SEE ALL",
+                    style: 16.w7(
+                      color: AppColors.c262626,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldBold,
+                    ),
                   ),
-                ),
-                6.hGap,
-                IconWidget(
-                  icon: Assets.commonUiCommonIconSystemJumpto,
-                  iconColor: AppColors.c000000,
-                  iconWidth: 5.w,
-                )
-              ],
+                  6.hGap,
+                  IconWidget(
+                    icon: Assets.commonUiCommonIconSystemJumpto,
+                    iconColor: AppColors.c000000,
+                    iconWidth: 5.w,
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
