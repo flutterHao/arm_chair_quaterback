@@ -273,6 +273,7 @@ class OpenBoxSimpleController extends GetxController
   }
 
   Future buyCardPack() async {
+    if (!Utils.canOperate()) return;
     await TeamApi.buyCardPack().then((v) async {
       HomeController.to.updateMoney();
       OpenBoxSimpleController controller = Get.find();

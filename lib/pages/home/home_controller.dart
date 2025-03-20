@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-03-19 18:07:31
+ * @LastEditTime: 2025-03-20 13:01:47
  */
 import 'dart:async';
 
@@ -190,8 +190,8 @@ class HomeController extends GetxController {
       await Get.to(SelectPlayerPage(), transition: Transition.noTransition);
     }
     isLoading = false;
+    update();
     userEntiry = await UserApi.visitorLogin();
-
     update();
     TeamIndexController ctrl = Get.find();
     await ctrl.initData();
