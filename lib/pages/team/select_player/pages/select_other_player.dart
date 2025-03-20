@@ -139,10 +139,11 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
       child: Column(
         children: [
           28.vGap,
-          Container(
+          SizedBox(
             height: 120.w,
             child: ListView.separated(
-              itemCount: randomOtherPlayers.length,
+              itemCount:
+                  randomOtherPlayers.length > 5 ? 5 : randomOtherPlayers.length,
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.symmetric(horizontal: 18.w),
               itemBuilder: (context, index) {

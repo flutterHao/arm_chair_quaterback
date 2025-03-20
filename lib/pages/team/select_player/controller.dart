@@ -20,8 +20,6 @@ class SelectPlayerController extends GetxController {
     }
   }
 
-  void onTap() {}
-
   // @override
   // void onInit() {
   //   super.onInit();

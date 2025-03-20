@@ -1722,13 +1722,7 @@ Map<String, String> en_US = {
       '''Let's buy a player pack and see if we can get a better player.''',
   LangKey.beginnerGuideGameStart: '''Let's get the game started.''',
   LangKey.eventClashInfusion: '''Cash Infusion''',
-};
+  LangKey.newsTabEmoji: "Emoji"
 
-// const Map<String, String> en_US = {
-//   'news': 'NEWS',
-//   'picks': 'PICKS',
-//   'team': 'TEAM',
-//   'leagues': 'LEAGUES',
-//   "gameNameFgm": "FGM",
-//   'gameNameFga': 'FGA'
-// };
+  ///1392
+};
