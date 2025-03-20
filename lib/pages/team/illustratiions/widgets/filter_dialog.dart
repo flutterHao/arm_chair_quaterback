@@ -5,25 +5,20 @@
  * @LastEditTime: 2025-01-17 10:38:50
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class FilterDialog extends GetView<IllustratiionsController> {
   const FilterDialog({super.key});
@@ -138,7 +133,7 @@ class _Position extends GetView<IllustratiionsController> {
       children: [
         30.vGap,
         Text(
-          LangKey.gameTabPosition.tr,
+          LangKey.gameTabPositon.tr,
           style: 19.w4(
             fontFamily: FontFamily.fOswaldMedium,
             height: 0.85,

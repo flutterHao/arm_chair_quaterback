@@ -5,10 +5,9 @@
  * @LastEditTime: 2025-03-15 11:35:59
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -202,7 +201,7 @@ class StarSort extends GetView<TeamController> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const SizedBox.shrink(),
-            Text(LangKey.gameLittleNameStar.tr,
+            Text(LangKey.gameButtonStar.tr,
                 style: 16.w4(
                     fontFamily: controller.sortType.abs() == 1
                         ? FontFamily.fOswaldMedium

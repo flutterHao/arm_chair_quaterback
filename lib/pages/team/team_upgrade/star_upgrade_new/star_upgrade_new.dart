@@ -188,7 +188,7 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
                                           alignment: Alignment.center,
                                           children: [
                                             Text(
-                                              LangKey.gameLittleNameStar.tr
+                                              LangKey.gameButtonStar.tr
                                                   .toUpperCase(),
                                               style: 14.w5(
                                                   color: controller
@@ -258,7 +258,7 @@ class StarUpgradeNew extends GetView<StarUpgradeNewController> {
                                           alignment: Alignment.center,
                                           children: [
                                             Text(
-                                              LangKey.gameLittleNameGrade.tr
+                                              LangKey.gameButtonGrade.tr
                                                   .toUpperCase(),
                                               style: 14.w5(
                                                   color: controller.gradeSort

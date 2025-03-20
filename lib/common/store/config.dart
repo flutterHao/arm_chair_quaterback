@@ -91,10 +91,16 @@ class ConfigStore extends GetxController {
   ///获取远程语言包
   initLanguages() async {
     List resLangs = await CacheApi.getcLanguages();
+    var tt = [];
     await Future.forEach(resLangs, (element) {
       zh_CN[element['key']] = element['zh_CN'];
       en_US[element['key']] = element['en_US'];
+      if (!en_US.containsKey(element['key'])) {
+        tt.add(element['key']);
+      }
+      ;
     });
+    var r = en_US;
     Get.updateLocale(locale);
   }
 

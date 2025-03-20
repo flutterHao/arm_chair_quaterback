@@ -129,7 +129,7 @@ class _Position extends GetView<NbaPlayerController> {
       children: [
         30.vGap,
         Text(
-          LangKey.gameTabPosition.tr,
+          LangKey.gameTabPositon.tr,
           style: 19.w4(
             fontFamily: FontFamily.fOswaldMedium,
             height: 0.85,

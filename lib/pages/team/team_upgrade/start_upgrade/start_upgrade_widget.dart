@@ -4,9 +4,9 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
@@ -269,7 +269,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                       alignment: Alignment.center,
                                       children: [
                                         Text(
-                                          LangKey.gameLittleNameStar.tr,
+                                          LangKey.gameButtonStar.tr,
                                           style: 16.w4(
                                               color: AppColors.c000000,
                                               height: 1,
@@ -333,7 +333,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                       alignment: Alignment.center,
                                       children: [
                                         Text(
-                                          LangKey.gameLittleNameGrade.tr,
+                                          LangKey.gameButtonGrade.tr,
                                           style: 16.w4(
                                               color: AppColors.c000000,
                                               height: 1,

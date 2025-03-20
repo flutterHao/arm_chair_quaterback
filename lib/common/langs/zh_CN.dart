@@ -58,7 +58,7 @@ Map<String, String> zh_CN = {
 
   // 竞猜1级 - 页签标题
   LangKey.pickTabRank: "竞猜排行榜",
-  LangKey.pickTabHistory: "历史记录",
+
   LangKey.pickTabRewards: "竞猜奖励界面",
   LangKey.pickTabMnl: "猜多猜少",
   LangKey.pickButtonMore: "更多",
@@ -164,7 +164,7 @@ Map<String, String> zh_CN = {
   LangKey.pickNameTotalRebounds: "总篮板",
   LangKey.pickNameTotalAssists: "总助攻",
   LangKey.pickNameTotalPNA: "总得分+助攻",
-  LangKey.pickButtonEdit: "编辑注单",
+
   LangKey.pickTipsAdd: "增加下注球员",
   LangKey.pickNameCost: "下注金额",
   LangKey.pickButtonDone: "完成",
@@ -197,7 +197,7 @@ Map<String, String> zh_CN = {
   LangKey.tranMeanTask: "任务",
 
   // 咨询1级 - 页签标题等
-  LangKey.newsTabGame: "赛事",
+
   LangKey.newsTabSchedule: "赛事日程",
   LangKey.newsTabInjuries: "伤病通知",
   LangKey.newsTabDraft: "选秀新闻",
@@ -333,8 +333,7 @@ Map<String, String> zh_CN = {
   LangKey.gameMeanPaintDefence: "内线防守",
   LangKey.gameMeanOutsideDefence: "外线防守",
   LangKey.gameMeanSelectPlayer: "选择球员",
-  LangKey.gameLittleNameStar: "星级",
-  LangKey.gameLittleNameGrade: "评分",
+
   LangKey.gameMeanScriPlayer: "添加训练赛球员",
   LangKey.gameMeanStarUpSuccess: "升星成功率",
   LangKey.gameNamePow: "力量",
@@ -347,7 +346,7 @@ Map<String, String> zh_CN = {
   ///309
   LangKey.gameTabFreeAgency: "自由球员",
   LangKey.gameTabPlayerOvr: "球员排名",
-  LangKey.gameTabPosition: "球员位置",
+
   LangKey.gameTabNbaTeam: "球队",
   LangKey.gameButtonReset: "重置",
   LangKey.gameButtonDelete: "删除",
@@ -360,7 +359,7 @@ Map<String, String> zh_CN = {
   LangKey.pickTipsRank: "赢得 {0} 筹码可以上榜",
   LangKey.pickTipsRankRule: "根据每期排行榜开启和关闭时间段内的盈利决定排名",
   LangKey.pickTabTips: "提示",
-  LangKey.pickTabsAddPick: "增加一个竞猜选择作为组合",
+
   LangKey.gameTipsConsumed: "选中的球员升星结束后会被消耗掉",
   LangKey.gameButtonSkip: "跳过比赛",
   LangKey.gameButtonSeeAll: "查看全部",

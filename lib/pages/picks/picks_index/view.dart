@@ -7,19 +7,18 @@
 
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
@@ -158,7 +157,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                         Expanded(
                                             child: Center(
                                                 child: Text(
-                                          LangKey.pickTabHistory.tr,
+                                          LangKey.picktabHistory.tr,
                                           style: 19.w4(
                                               color: AppColors.cFFFFFF,
                                               height: 1,
@@ -318,7 +317,7 @@ class _TabViewItemPageState extends State<_TabViewItemPage>
                   var value = picksIndexController.choiceSize.value;
                   value += leagueController.choiceSize.value;
                   double bottom = 0;
-                  bottom =  80.w + (value > 0 ? 94.w : 0);
+                  bottom = 80.w + (value > 0 ? 94.w : 0);
                   return AnimatedContainer(
                     margin: EdgeInsets.only(bottom: bottom),
                     duration: const Duration(milliseconds: 300),
