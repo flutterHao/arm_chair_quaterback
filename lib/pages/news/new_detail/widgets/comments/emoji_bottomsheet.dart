@@ -81,8 +81,10 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
                         onTap: () {
                           _sendEmoji(item.key);
                         },
-                        child: Image.asset(item.value,
-                            width: 30.w, height: 30.w, fit: BoxFit.fitWidth),
+                        child: Center(
+                          child: Image.asset(item.value,
+                              width: 30.w, height: 30.w, fit: BoxFit.fitWidth),
+                        ),
                       );
                     },
                   ),

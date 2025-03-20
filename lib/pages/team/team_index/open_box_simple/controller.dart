@@ -88,6 +88,7 @@ class OpenBoxSimpleController extends GetxController
 
     ///判断球员位置ovr是否大于当前值
     TeamController teamCtrl = Get.find();
+    teamCtrl.isAdd = false;
     teamCtrl.ovrChange = 0;
     teamCtrl.playerIdOld = 0;
     teamCtrl.showChangeAnimated.value = false;
@@ -128,16 +129,21 @@ class OpenBoxSimpleController extends GetxController
         }
       }
     }
-    // //如果没有替换，并且替补有空位
-    // if (teamCtrl.playerIdOld == 0) {
-    //   TeamController teamCtrl = Get.find();
-    //   var newPlayer = teamCtrl.myBagList
-    //       .firstWhereOrNull((e) => e.playerId == teamCtrl.playerIdNew);
-
-    //   teamCtrl.changeTeamPlayer();
-    // }
     teamCtrl.showExChange = teamCtrl.playerIdOld != 0;
     teamCtrl.update();
+    // //如果没有替换，并且替补有空位
+    if (teamCtrl.playerIdOld == 0) {
+      TeamController teamCtrl = Get.find();
+      teamCtrl.isAdd = true;
+      await teamCtrl.getBagPlayers();
+      var newPlayer = teamCtrl.myBagList
+          .firstWhereOrNull((e) => e.playerId == teamCtrl.playerIdNew);
+      if (newPlayer != null) {
+        teamCtrl.item2 = newPlayer;
+        await teamCtrl.changeTeamPlayer();
+        teamCtrl.initData();
+      }
+    }
   }
 
   Future clickkBox() async {

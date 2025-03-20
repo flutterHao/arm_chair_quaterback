@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-20 12:27:18
+ * @LastEditTime: 2025-03-20 14:45:56
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -117,13 +117,6 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                   Opacity(
                     opacity: 0.5 + controller.fallOutAnimation.value * 0.5,
                     child: AnimatedBoxSimple(
-                      onTap: () {
-                        // if (Utils.canOperate()) return;
-                        if (controller.fallOutAnimation.value == 1 &&
-                            controller.showClick.value) {
-                          controller.clickkBox();
-                        }
-                      },
                       child: Image.asset(
                         Utils.getBoxImageUrl(item.cardId),
                         width: 150.h * 1.2,
@@ -402,7 +395,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.step = 0;
+    // controller.step = 0;
     return GetBuilder<OpenBoxSimpleController>(
         init: OpenBoxSimpleController(),
         id: "open_box_simple",
@@ -411,6 +404,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
           return Builder(builder: (context) {
             return GestureDetector(
               onTap: () {
+                if (!Utils.canOperate()) return;
                 if (controller.fallOutAnimation.value == 1 &&
                     controller.step == 0 &&
                     !controller.isOpen) {

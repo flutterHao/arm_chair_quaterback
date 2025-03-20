@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2025-03-13 18:25:40
+ * @LastEditTime: 2025-03-20 14:24:48
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -71,7 +71,7 @@ class _EmojiWidgetState extends State<EmojiWidget> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconWidget(iconWidth: 21.w, icon: Constant.emojis[e.key]!),
+                  IconWidget(iconWidth: 18.w, icon: Constant.emojis[e.key]!),
                   3.hGap,
                   Text(
                     "${e.value}",

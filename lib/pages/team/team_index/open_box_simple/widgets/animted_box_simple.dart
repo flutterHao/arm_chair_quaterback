@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-03-19 12:06:42
+ * @LastEditTime: 2025-03-20 14:44:26
  */
 import 'dart:math';
 
@@ -15,10 +15,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AnimatedBoxSimple extends StatefulWidget {
-  const AnimatedBoxSimple(
-      {super.key, required this.child, required this.onTap});
+  const AnimatedBoxSimple({super.key, required this.child});
   final Widget child;
-  final Function onTap;
 
   @override
   State<AnimatedBoxSimple> createState() => _AnimatedBoxSimpleState();

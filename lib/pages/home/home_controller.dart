@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-03-20 13:13:36
+ * @LastEditTime: 2025-03-20 15:37:19
  */
 import 'dart:async';
 
@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.d
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
 import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -51,6 +52,7 @@ class HomeController extends GetxController {
   RxInt tabIndex = 1.obs;
   RxBool isAbsorbPointer = false.obs;
   bool isLoading = true;
+  LoadDataStatus loadDataStatus = LoadDataStatus.loading;
 
   UserEntity userEntiry = UserEntity();
 
@@ -194,6 +196,8 @@ class HomeController extends GetxController {
     userEntiry = await UserApi.visitorLogin();
     TeamIndexController ctrl = Get.find();
     await ctrl.initData();
+    isLoading = false;
+    update();
     if (toSelectPlayer) {
       toSelectPlayer = false;
       ctrl.matchBattle();

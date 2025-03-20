@@ -64,9 +64,6 @@ class _HomePageState extends State<HomePage>
           assignId: true,
           // id: GetXBuilderIds.idGlobalUserEntityRefresh,
           builder: (logic) {
-            if (controller.isLoading) {
-              return SplashPage();
-            }
             return ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(
                 dragDevices: {
@@ -74,146 +71,158 @@ class _HomePageState extends State<HomePage>
                   PointerDeviceKind.mouse,
                 },
               ),
-              child: AbsorbPointer(
-                absorbing: logic.isAbsorbPointer.value,
-                child: ScrollHideBottomBar(
-                  controller: logic.scrollHideBottomBarController,
-                  bottomBar: Column(
-                    children: [
-                      const NewPlayerTip(),
-                      Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.ce5e5e5.withOpacity(0.6),
-                              offset: Offset(0, -5.w),
-                              blurRadius: 9.w,
-                              spreadRadius: 0.w,
-                            )
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Obx(() {
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: controller.tabItems.map((e) {
-                                  int index = controller.tabItems.indexOf(e);
-                                  bool select =
-                                      index == controller.tabIndex.value;
-                                  if (index == 1) {
-                                    return Container(
-                                      width: 74.w,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.cFFFFFF,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(9.w))),
-                                      child: MtInkWell(
-                                        onTap: () {
-                                          // IllustratiionsController illuCtrl =
-                                          // Get.find();
-                                          // if (index == 1 &&
-                                          //     illuCtrl.hasNewPlayer.value) {
-                                          //   TeamIndexController ctrl = Get
-                                          //       .find();
-                                          //   ctrl.goToIllustraction();
-                                          // } else {
-                                          //   controller.onTap(1);
-                                          // }
-                                          controller.onTap(1);
-                                        },
-                                        child: Container(
-                                            height: 66.w,
-                                            padding: EdgeInsets.all(4.w),
-                                            decoration: BoxDecoration(
-                                                color: select
-                                                    ? AppColors.cFFFFFF
-                                                    : AppColors.cFFFFFF,
-                                                borderRadius:
-                                                    BorderRadius.circular(9.w)),
-                                            margin:
-                                                EdgeInsets.only(bottom: 9.w),
+              child: Stack(
+                children: [
+                  AbsorbPointer(
+                    absorbing: logic.isLoading,
+                    child: ScrollHideBottomBar(
+                      controller: logic.scrollHideBottomBarController,
+                      bottomBar: Column(
+                        children: [
+                          // const NewPlayerTip(),
+                          Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.ce5e5e5.withOpacity(0.6),
+                                  offset: Offset(0, -5.w),
+                                  blurRadius: 9.w,
+                                  spreadRadius: 0.w,
+                                )
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Obx(() {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: controller.tabItems.map((e) {
+                                      int index =
+                                          controller.tabItems.indexOf(e);
+                                      bool select =
+                                          index == controller.tabIndex.value;
+                                      if (index == 1) {
+                                        return Container(
+                                          width: 74.w,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.cFFFFFF,
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                          9.w))),
+                                          child: MtInkWell(
+                                            onTap: () {
+                                              // IllustratiionsController illuCtrl =
+                                              // Get.find();
+                                              // if (index == 1 &&
+                                              //     illuCtrl.hasNewPlayer.value) {
+                                              //   TeamIndexController ctrl = Get
+                                              //       .find();
+                                              //   ctrl.goToIllustraction();
+                                              // } else {
+                                              //   controller.onTap(1);
+                                              // }
+                                              controller.onTap(1);
+                                            },
                                             child: Container(
-                                                height: 58.w,
+                                                height: 66.w,
+                                                padding: EdgeInsets.all(4.w),
                                                 decoration: BoxDecoration(
+                                                    color: select
+                                                        ? AppColors.cFFFFFF
+                                                        : AppColors.cFFFFFF,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            5.w),
-                                                    border: Border.all(
-                                                        color:
-                                                            AppColors.cE6E6E6,
-                                                        width: 1)),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.w),
-                                                  child: _barItem(
-                                                      controller.tabItems[1],
-                                                      select,
-                                                      58.w,
-                                                      isCenter: true),
-                                                ))),
-                                      ),
-                                    );
-                                  }
-                                  return Flexible(
-                                    flex: 1,
-                                    child: Container(
-                                      color: AppColors.cFFFFFF,
-                                      child: MtInkWell(
-                                        onTap: () => controller.onTap(index),
-                                        child: _barItem(e, select, 66.w,
-                                            showMessageCount: index == 4),
-                                      ),
-                                    ),
+                                                            9.w)),
+                                                margin: EdgeInsets.only(
+                                                    bottom: 9.w),
+                                                child: Container(
+                                                    height: 58.w,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.w),
+                                                        border: Border.all(
+                                                            color: AppColors
+                                                                .cE6E6E6,
+                                                            width: 1)),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4.w),
+                                                      child: _barItem(
+                                                          controller
+                                                              .tabItems[1],
+                                                          select,
+                                                          58.w,
+                                                          isCenter: true),
+                                                    ))),
+                                          ),
+                                        );
+                                      }
+                                      return Flexible(
+                                        flex: 1,
+                                        child: Container(
+                                          color: AppColors.cFFFFFF,
+                                          child: MtInkWell(
+                                            onTap: () =>
+                                                controller.onTap(index),
+                                            child: _barItem(e, select, 66.w,
+                                                showMessageCount: index == 4),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
                                   );
-                                }).toList(),
-                              );
-                            }),
-                            Container(
-                              height: Utils.getPaddingBottom(),
-                              width: double.infinity,
-                              color: AppColors.cFFFFFF,
-                            )
-                          ],
-                        ),
+                                }),
+                                Container(
+                                  height: Utils.getPaddingBottom(),
+                                  width: double.infinity,
+                                  color: AppColors.cFFFFFF,
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: BlackAppWidget(
-                    const UserInfoBar(),
-                    bodyWidget: Expanded(
-                      child: Stack(
-                        children: [
-                          Column(
+                      child: BlackAppWidget(
+                        const UserInfoBar(),
+                        bodyWidget: Expanded(
+                          child: Stack(
                             children: [
-                              Expanded(
-                                child: PageView(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  controller: controller.pageController,
-                                  children: controller.tabItems
-                                      .map((e) => Center(child: e.tabPage))
-                                      .toList(),
-                                ),
+                              Column(
+                                children: [
+                                  Expanded(
+                                    child: PageView(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      controller: controller.pageController,
+                                      children: controller.tabItems
+                                          .map((e) => Center(child: e.tabPage))
+                                          .toList(),
+                                    ),
+                                  ),
+                                  // Obx(() {
+                                  //   return Container(
+                                  //     height: controller.bottomBarY.value.abs() +
+                                  //         Utils.getPaddingBottom(),
+                                  //   );
+                                  // })
+                                ],
                               ),
-                              // Obx(() {
-                              //   return Container(
-                              //     height: controller.bottomBarY.value.abs() +
-                              //         Utils.getPaddingBottom(),
-                              //   );
-                              // })
+                              // 竞猜选择结果底部弹框
+                              // const BottomGuessTipWidget(
+                              //   needCheckHomeTab: true,
+                              // ),
+                              // 底部tabBar
                             ],
                           ),
-                          // 竞猜选择结果底部弹框
-                          // const BottomGuessTipWidget(
-                          //   needCheckHomeTab: true,
-                          // ),
-                          // 底部tabBar
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  if (controller.isLoading) SplashPage()
+                ],
               ),
             );
           },
@@ -345,50 +354,50 @@ class _HomePageState extends State<HomePage>
 //   }
 // }
 
-class NewPlayerTip extends StatelessWidget {
-  const NewPlayerTip({super.key});
+// class NewPlayerTip extends StatelessWidget {
+//   const NewPlayerTip({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<IllustratiionsController>(
-        // init: IllustratiionsController(),
-        builder: (ctrl) {
-      return Obx(() {
-        return AnimatedScale(
-          duration: 300.milliseconds,
-          scale: ctrl.hasNewPlayer.value ? 1 : 0,
-          child: BubbleBox(
-            arrowOffset: 75.w,
-            color: AppColors.c000000,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 9.w),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Get new player:  ",
-                    style: TextStyle(
-                        fontSize: 16.sp,
-                        color: AppColors.cFFFFFF,
-                        fontFamily: FontFamily.fOswaldMedium),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 1.5.w),
-                    child: AnimatedNum(
-                      milliseconds: 100,
-                      textStyle: TextStyle(
-                          fontSize: 16.sp,
-                          color: AppColors.cFFFFFF,
-                          fontFamily: FontFamily.fRobotoMedium),
-                      number: ctrl.getPlayerCards.length,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      });
-    });
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetBuilder<IllustratiionsController>(
+//         // init: IllustratiionsController(),
+//         builder: (ctrl) {
+//       return Obx(() {
+//         return AnimatedScale(
+//           duration: 300.milliseconds,
+//           scale: ctrl.hasNewPlayer.value ? 1 : 0,
+//           child: BubbleBox(
+//             arrowOffset: 75.w,
+//             color: AppColors.c000000,
+//             child: Container(
+//               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 9.w),
+//               child: Row(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   Text(
+//                     "Get new player:  ",
+//                     style: TextStyle(
+//                         fontSize: 16.sp,
+//                         color: AppColors.cFFFFFF,
+//                         fontFamily: FontFamily.fOswaldMedium),
+//                   ),
+//                   Container(
+//                     margin: EdgeInsets.only(top: 1.5.w),
+//                     child: AnimatedNum(
+//                       milliseconds: 100,
+//                       textStyle: TextStyle(
+//                           fontSize: 16.sp,
+//                           color: AppColors.cFFFFFF,
+//                           fontFamily: FontFamily.fRobotoMedium),
+//                       number: ctrl.getPlayerCards.length,
+//                     ),
+//                   )
+//                 ],
+//               ),
+//             ),
+//           ),
+//         );
+//       });
+//     });
+//   }
+// }
