@@ -35,7 +35,8 @@ class UserInfoController extends GetxController {
         birthday: editBirthday.value,
         signature: editSignature.value);
     editTeamName.value = '';
-    initData();
+    await initData();
+    Get.back();
   }
 
   @override
