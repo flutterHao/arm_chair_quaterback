@@ -1256,15 +1256,15 @@ class SummaryPage extends GetView<SummaryController> {
 
   Widget _buildOvr() {
     return GetBuilder<SummaryController>(
+        tag: getTag(),
         id: SummaryController.idPlayerOver,
         builder: (logic) {
           return SliverToBoxAdapter(
             child: Container(
               margin: EdgeInsets.only(top: 9.w),
               decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.circular(9.w)
-              ),
+                  color: AppColors.cFFFFFF,
+                  borderRadius: BorderRadius.circular(9.w)),
               child: Column(
                 children: [
                   _playerOVRInfoWidget(),
@@ -1282,7 +1282,7 @@ class SummaryPage extends GetView<SummaryController> {
   //趋势图切换
   Widget _trendTabWidget() {
     return Padding(
-      padding: EdgeInsets.only(left: 30.w,right: 16.w),
+      padding: EdgeInsets.only(left: 30.w, right: 16.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -1471,8 +1471,8 @@ class SummaryPage extends GetView<SummaryController> {
                             axisSide: meta.axisSide,
                             space: 4.w,
                             child: Text('${value.toInt()}',
-                                style:
-                                    10.w5(fontFamily: FontFamily.fRobotoRegular)),
+                                style: 10
+                                    .w5(fontFamily: FontFamily.fRobotoRegular)),
                           );
                         } else {
                           return Container(); // 不显示其它点
