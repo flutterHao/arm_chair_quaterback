@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-03-20 13:01:47
+ * @LastEditTime: 2025-03-20 13:13:36
  */
 import 'dart:async';
 
@@ -192,7 +192,6 @@ class HomeController extends GetxController {
     isLoading = false;
     update();
     userEntiry = await UserApi.visitorLogin();
-    update();
     TeamIndexController ctrl = Get.find();
     await ctrl.initData();
     if (toSelectPlayer) {

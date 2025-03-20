@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-15 16:16:37
+ * @LastEditTime: 2025-03-20 13:33:41
  */
 
 import 'dart:async';
@@ -178,7 +178,7 @@ class TeamIndexController extends GetxController
   Future initData() async {
     final trainingCtrl = Get.find<TrainingController>();
     final teamCtrl = Get.find<TeamController>();
-    final illuCtrl = Get.find<IllustratiionsController>();
+    // final illuCtrl = Get.find<IllustratiionsController>();
     final nbaPlayerCtrl = Get.find<NbaPlayerController>();
     await Future.wait([
       getBattleBox(),
@@ -187,7 +187,7 @@ class TeamIndexController extends GetxController
       CacheApi.getCardPackDefine(),
       trainingCtrl.getData(),
       teamCtrl.initData(),
-      illuCtrl.getPlayerCollectInfo(),
+      // illuCtrl.getPlayerCollectInfo(),
       nbaPlayerCtrl.initData(),
     ]).then((v) {
       loadDataSuccess = true;

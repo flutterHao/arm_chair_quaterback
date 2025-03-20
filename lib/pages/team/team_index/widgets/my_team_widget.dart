@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-20 11:49:33
+ * @LastEditTime: 2025-03-20 13:49:50
  */
 import 'dart:math';
 
@@ -455,14 +455,14 @@ class _BreathingArrowsState extends State<BreathingArrows>
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     )..repeat(reverse: true);
 
     // 为每个箭头创建错开的动画
     for (int i = 0; i < 3; i++) {
       _positionAnimations.add(
-        Tween<double>(begin: -0.2, end: 0).animate(
+        Tween<double>(begin: 0, end: 0.2).animate(
           CurvedAnimation(
             parent: _controller,
             curve: Interval(
@@ -475,7 +475,7 @@ class _BreathingArrowsState extends State<BreathingArrows>
       );
 
       _opacityAnimations.add(
-        Tween<double>(begin: 0.4, end: 0.8).animate(
+        Tween<double>(begin: 0.6, end: 1).animate(
           CurvedAnimation(
             parent: _controller,
             curve: Interval(
@@ -513,10 +513,10 @@ class _BreathingArrowsState extends State<BreathingArrows>
                     0),
                 child: IconWidget(
                   rotateAngle: widget.isRight ? 180 : 0,
-                  icon: Assets.newsUiIconArrows04, // 替换为你的箭头图片路径
+                  icon: Assets.managerUiMangerNew217, // 替换为你的箭头图片路径
                   iconHeight: 41.w,
                   fit: BoxFit.fitHeight,
-                  iconColor: AppColors.ce5e5e5, // 可自定义颜色
+                  iconColor: AppColors.cFFFFFF, // 可自定义颜色
                 ),
               ),
             );
