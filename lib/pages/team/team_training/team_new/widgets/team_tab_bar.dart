@@ -63,7 +63,7 @@ class TeamTabbar extends GetView<TeamController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Average OVR",
+                              "OVR",
                               style: 21.w4(
                                 color: AppColors.cFFFFFF,
                                 fontFamily: FontFamily.fOswaldMedium,

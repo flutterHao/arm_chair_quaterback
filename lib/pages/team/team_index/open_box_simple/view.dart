@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-19 16:20:55
+ * @LastEditTime: 2025-03-20 12:27:18
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -118,7 +118,9 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                     opacity: 0.5 + controller.fallOutAnimation.value * 0.5,
                     child: AnimatedBoxSimple(
                       onTap: () {
-                        if (controller.fallOutAnimation.value == 1) {
+                        // if (Utils.canOperate()) return;
+                        if (controller.fallOutAnimation.value == 1 &&
+                            controller.showClick.value) {
                           controller.clickkBox();
                         }
                       },

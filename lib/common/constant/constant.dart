@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-01-17 11:32:10
+ * @LastEditTime: 2025-03-20 12:13:40
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -136,52 +136,27 @@ class Constant {
   static const int playerStarUpWarningId = 10021;
 
   static const Map<String, String> emojis = {
-    "1": Assets.communityEmojiIconAgree,
-    "2": Assets.communityEmojiIconAngel,
-    "3": Assets.communityEmojiIconAngry,
-    "4": Assets.communityEmojiIconAwkwardsmile,
-    "5": Assets.communityEmojiIconBlink,
-    "6": Assets.communityEmojiIconClown,
-    "7": Assets.communityEmojiIconCold,
-    "8": Assets.communityEmojiIconCrying,
-    "9": Assets.communityEmojiIconDemon,
-    "10": Assets.communityEmojiIconDisgust,
-    "11": Assets.communityEmojiIconDistressed,
-    "12": Assets.communityEmojiIconEyeroll,
-    "13": Assets.communityEmojiIconFaint,
-    "14": Assets.communityEmojiIconFear,
-    "15": Assets.communityEmojiIconFire,
-    "16": Assets.communityEmojiIconFirework,
-    "17": Assets.communityEmojiIconFrozen,
-    "18": Assets.communityEmojiIconFunny,
-    "19": Assets.communityEmojiIconGame,
-    "20": Assets.communityEmojiIconGrin,
-    "21": Assets.communityEmojiIconHush,
-    "22": Assets.communityEmojiIconInsidious,
-    "23": Assets.communityEmojiIconKiss,
-    "24": Assets.communityEmojiIconLaugh,
-    "25": Assets.communityEmojiIconLaughing,
-    "26": Assets.communityEmojiIconMask,
-    "27": Assets.communityEmojiIconObserve,
-    "28": Assets.communityEmojiIconRainbow,
-    "29": Assets.communityEmojiIconRealize,
-    "30": Assets.communityEmojiIconRelaxed,
-    "31": Assets.communityEmojiIconRespect,
-    "32": Assets.communityEmojiIconShakehand,
-    "33": Assets.communityEmojiIconShit,
-    "34": Assets.communityEmojiIconSign,
-    "35": Assets.communityEmojiIconSnoring,
-    "36": Assets.communityEmojiIconSpeechless,
-    "37": Assets.communityEmojiIconStay,
-    "38": Assets.communityEmojiIconSweat,
-    "39": Assets.communityEmojiIconThink,
-    "40": Assets.communityEmojiIconTongueout,
-    "41": Assets.communityEmojiIconUncomfortable,
-    "42": Assets.communityEmojiIconUnconvinced,
-    "43": Assets.communityEmojiIconVomiting,
-    "44": Assets.communityEmojiU1f641,
+    "1": Assets.communityEmojiIcon21,
+    "2": Assets.communityEmojiIcon22,
+    "3": Assets.communityEmojiIcon23,
+    "4": Assets.communityEmojiIcon24,
+    "5": Assets.communityEmojiIcon25,
+    "6": Assets.communityEmojiIcon26,
+    "7": Assets.communityEmojiIcon27,
+    "8": Assets.communityEmojiIcon28,
+    "9": Assets.communityEmojiIcon29,
+    "10": Assets.communityEmojiIcon210,
+    "11": Assets.communityEmojiIcon211,
+    "12": Assets.communityEmojiIcon212,
+    "13": Assets.communityEmojiIcon213,
+    "14": Assets.communityEmojiIcon214,
+    "15": Assets.communityEmojiIcon215,
+    "16": Assets.communityEmojiIcon216,
+    "17": Assets.communityEmojiIcon217,
+    // "18": Assets.communityEmojiIcon218,
+    "19": Assets.communityEmojiIcon219,
+    "20": Assets.communityEmojiIcon220,
   };
 
   static const resourcesShowToday = "resources_show_today";
-
 }

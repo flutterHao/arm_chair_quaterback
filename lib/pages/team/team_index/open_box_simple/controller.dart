@@ -128,6 +128,14 @@ class OpenBoxSimpleController extends GetxController
         }
       }
     }
+    // //如果没有替换，并且替补有空位
+    // if (teamCtrl.playerIdOld == 0) {
+    //   TeamController teamCtrl = Get.find();
+    //   var newPlayer = teamCtrl.myBagList
+    //       .firstWhereOrNull((e) => e.playerId == teamCtrl.playerIdNew);
+
+    //   teamCtrl.changeTeamPlayer();
+    // }
     teamCtrl.showExChange = teamCtrl.playerIdOld != 0;
     teamCtrl.update();
   }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-19 21:01:41
+ * @LastEditTime: 2025-03-20 11:49:33
  */
 import 'dart:math';
 
@@ -116,7 +116,7 @@ class MyTeamWidget extends StatelessWidget {
                                             color: AppColors.cD7283B,
                                           ),
                                           Text(
-                                            "Average OVR ",
+                                            "OVR ",
                                             style: 16.w4(
                                               fontFamily:
                                                   FontFamily.fOswaldMedium,
