@@ -338,14 +338,11 @@ class NewsListItem extends GetView<NewListController> {
             ],
           ),
         ),
-        if (newsDetail.eventType > 0)
-          NewsEventWidget(
-            type: newsDetail.eventType,
-            hasRecieve: newsDetail.hasRecieve,
-            onTap: () {
-              controller.newsEventOntap(newsDetail);
-            },
-          )
+        // if (newsDetail.eventType > 0)
+        //   NewsEventWidget(
+        //     type: newsDetail.eventType,
+        //     hasRecieve: newsDetail.hasRecieve,
+        //   )
       ],
     );
   }

@@ -9,7 +9,10 @@ class SelectPlayerController extends GetxController {
   GameConstantEntity? gameConstantEntity;
   RxList<String> playerList = RxList();
   _initData() async {
-    await CacheApi.getGameConstant();
+    await Future.wait([
+      CacheApi.getGameConstant(),
+      CacheApi.getNBATeamDefine(),
+    ]);
     gameConstantEntity = Utils.getGameConstant(10023);
     if (gameConstantEntity != null) {
       playerList.value = gameConstantEntity!.constantValues;

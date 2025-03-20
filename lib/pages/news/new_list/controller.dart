@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-19 18:20:37
+ * @LastEditTime: 2025-03-20 10:41:23
  */
 import 'dart:async';
 import 'dart:math';
@@ -281,5 +281,6 @@ class NewListController extends GetxController {
         update(["newsList"]);
       });
     }
+    item.hasRecieve = true;
   }
 }
