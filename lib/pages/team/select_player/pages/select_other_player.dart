@@ -159,10 +159,10 @@ class _SelectOtherPlayerPageState extends State<SelectOtherPlayerPage> {
                   child: Column(
                     children: [
                       PlayerCard(
-                        playerId: player.playerId,
-                        score:
-                            Utils.getPlayBaseInfo(player.playerId).playerScore,
-                      ),
+                          playerId: player.playerId,
+                          score: Utils.getPlayBaseInfo(player.playerId)
+                              .playerScore,
+                          onTap: () {}),
                       6.vGap,
                       Text(Utils.getPlayBaseInfo(playerId).ename.toUpperCase(),
                           maxLines: 1,
