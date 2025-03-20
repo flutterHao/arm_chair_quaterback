@@ -88,8 +88,12 @@ class _EventWidgetState extends State<EventWidget>
                     print('onEnd------------');
                     if (overlayEntry != null) {
                       var homeController = Get.find<HomeController>();
-                      homeController.userEntiry.teamLoginInfo
-                          ?.setMoney(receivePropEntity?.num ?? 0);
+                      homeController.userEntiry.teamLoginInfo?.setMoney(
+                          (homeController.userEntiry.teamLoginInfo
+                                          ?.getMoney() ??
+                                      0)
+                                  .toInt() +
+                              (receivePropEntity?.num ?? 0));
                       homeController
                           .update([GetXBuilderIds.idMoneyAndCoinWidget]);
                       await Future.delayed(Duration(milliseconds: 500));

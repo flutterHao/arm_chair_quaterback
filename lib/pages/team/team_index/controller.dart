@@ -737,6 +737,7 @@ class TeamIndexController extends GetxController
     freeBoxTimer?.cancel();
     battleBoxTimer?.cancel();
     seasonTimer?.cancel();
+    breathController.dispose();
     super.onClose();
   }
 

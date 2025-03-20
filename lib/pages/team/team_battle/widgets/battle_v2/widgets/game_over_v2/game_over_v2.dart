@@ -38,7 +38,7 @@ class GameOverV2 extends GetView<GameOverController> {
     var type = teamBattleV2Controller.pkResultUpdatedEntity!.eventType;
     rewardWidget = RewardWidget(
       type: type,
-      onEnd: (){
+      onEnd: () {
         awardAlreadyGet = true;
       },
     );
@@ -137,10 +137,9 @@ class GameOverV2 extends GetView<GameOverController> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       color: AppColors.cFFFFFF,
-      child: Column(children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Builder(builder: (context) {
           if (controller.isLeftWin()) {
-
             return _buildReward();
           }
 
@@ -345,7 +344,7 @@ class GameOverV2 extends GetView<GameOverController> {
   }
 
   Widget _buildReward() {
-    if(awardAlreadyGet){
+    if (awardAlreadyGet) {
       return SizedBox.shrink();
     }
     return rewardWidget;
