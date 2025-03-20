@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/values/storage.dart';
@@ -62,7 +63,7 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
                 children: [
                   _usedEmojiWidget(),
                   Text(
-                    'People',
+                    LangKey.newsTabEmoji.tr,
                     style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
                   ),
                   6.vGap,
@@ -125,8 +126,10 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
                   onTap: () {
                     _sendEmoji(item.key);
                   },
-                  child: Image.asset(item.value,
-                      width: 30.w, height: 30.w, fit: BoxFit.fitWidth),
+                  child: Center(
+                    child: Image.asset(item.value,
+                        width: 30.w, height: 30.w, fit: BoxFit.fitWidth),
+                  ),
                 );
               },
             ),
