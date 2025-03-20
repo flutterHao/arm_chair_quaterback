@@ -5,14 +5,11 @@
  * @LastEditTime: 2025-03-13 10:59:22
  */
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
-import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
 import 'package:common_utils/common_utils.dart';
@@ -226,5 +223,10 @@ subgoal 子目标id，如果是新闻则是新闻id，如果是评论则是评�
       "emojiId": emojiId
     });
     return result;
+  }
+
+  static Future<int> newsEventTrigger() async {
+    int type = await httpUtil.post(Api.newsEventTrigger);
+    return type;
   }
 }

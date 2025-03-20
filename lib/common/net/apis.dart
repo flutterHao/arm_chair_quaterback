@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-03-14 19:57:43
+ * @LastEditTime: 2025-03-20 16:59:47
  */
 class Api {
   /// base
@@ -61,6 +61,7 @@ class Api {
   static const String sendEmoji = "$API_BASE_PATH/NBANews/sendEmoji";
   static const String getNewsEventAward =
       "$API_BASE_PATH/NBANews/getNewsEventAward";
+  static const newsEventTrigger = "/p/NBANews/newsEventTrigger";
 
   //Guess
   static const String newsGuess = "$API_BASE_PATH//Guess/getNewsGuess";
