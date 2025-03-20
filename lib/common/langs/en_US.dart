@@ -401,6 +401,1258 @@ Map<String, String> en_US = {
   LangKey.gameNameOREB: "OREB",
   LangKey.gameNamePtsAst: 'PTS+AST',
   LangKey.gameNamPtsReb: 'PTS+REB',
+
+  //386
+  LangKey.gameBigNamePBP: "PTS+REB",
+  LangKey.gameBigNameQuarterScores: "PlAY BY PLAY",
+  LangKey.starupButtonRefresh: "QUARTER SCORES",
+  LangKey.starupButtonGiveUp: "REFRESH",
+  LangKey.starupButtonDrill: "GIVE UP",
+  LangKey.starupButtonRoll: "DRILL",
+  LangKey.starupButtonFinish: "ROLL",
+  LangKey.starupTipsUltra: "FINISH",
+  LangKey.starupTips: "ULTRA",
+  LangKey.starupTabDrill:
+      "Train players to enhance their combat effectiveness and star ratings",
+  LangKey.starupTipsNormal: "DRILL PlAYER",
+  LangKey.starupTipsGreat: "NORMAL",
+  LangKey.starupTipSuperb: "GREAT",
+  LangKey.starupMeanLuckyWheel: "SUPERB",
+  LangKey.matchBonus: "LUCKY WHELL",
+  LangKey.gameNameInjury: "MATCH BONUS",
+  LangKey.ladyTalkHLGM: "INJ",
+  LangKey.ladyTalkZYAF: "Hola! Great manager!",
+  LangKey.ladyTalkYLSS: "I'm Zoey, I finally added you as a friend~",
+  LangKey.ladyTalkWARN: "You shine on the field, that outfit suits you",
+  LangKey.ladyTalkICLE: "Warning!",
+  LangKey.ladyTalkDLFS: "This selfie is so cool! You look full of energy.",
+  LangKey.ladyTalkPSAH:
+      "Don't look at the cheerleaders for more than three seconds",
+  LangKey.ladyTalkSCBP: "Printer's already humming",
+  LangKey.ladyTalkHHTF: "This selfie can be a poster",
+  LangKey.ladyTalkNSBP: "Haha, that's a foul",
+  LangKey.ladyTalkIDLT: "Do you need to sign the bedside poster??",
+  LangKey.ladyTalkYSOM: "I'd love to",
+  LangKey.ladyTalkHSMO: "You stepped on my rainbow tail",
+  LangKey.ladyTalkDHTH: "How's my outfit today?",
+  LangKey.ladyTalkIYWT: "Do hair ties hit your neck?",
+  LangKey.ladyTalkTSMF: "if you want to try",
+  LangKey.ladyTalkAOFA: "This sneaker is my favorite colorway!",
+  LangKey.ladyTalkIWWS: "Any other favorites?",
+  LangKey.ladyTalkTWSM: "I'll withdraw in seven seconds",
+  LangKey.ladyTalkYWCC: "There was a meteor in the sky",
+  LangKey.ladyTalkTCIR: "You'll come and catch it, won't you?",
+  LangKey.ladyTalkCYTO: "This cloth is a bit redundant",
+  LangKey.ladyTalkTONT: "Can you take it off with your mouth?",
+  LangKey.ladyTalkTACF: "Tonight",
+  LangKey.ladyTalkLSGC:
+      "The air conditioning in the training hall is on the fritz",
+  LangKey.ladyTalkITNM:
+      "The league should give you a championship for staying up all night",
+  LangKey.ladyTalkDTIF: "It's time for a new mirror for the team",
+  LangKey.ladyTalkYCMP: "Don't interfere!",
+  LangKey.ladyTalkBCSC: "You're actually calling my AJ37 a plastic slipper?",
+  LangKey.ladyTalkPLLR: "But the color scheme is cool",
+  LangKey.ladyTalkCOYR:
+      "When you're angry, your ponytail looks more like a little rocket.",
+  LangKey.ladyTalkWFBM: "Count on your retinas not growing in vain!",
+  LangKey.ladyTalkBDAY: "Fuel has to be your apology milkshake!",
+  LangKey.ladyTalkRTTF: "The league should give you an award for best defense.",
+  LangKey.ladyTalkWTBT: "Referee, that's a technical foul!",
+  LangKey.ladyTalkNTSS: "So you want to try to break through the defense?",
+  LangKey.ladyTalkSYTR: "Do I need to show you the standard pose in person?",
+  LangKey.ladyTalkYKWS: "See you in the training room~",
+  LangKey.ladyTalkBIGS: "You know why I chose sunflowers?",
+  LangKey.ladyTalkSCTD: "Because it always grows towards the sun",
+  LangKey.ladyTalkWITS:
+      "Some idiot can't tell the difference between gardening and tattooing",
+  LangKey.ladyTalkTAGL: "Who is the sun?",
+  LangKey.ladyTalkISWD: "Take a good look",
+  LangKey.ladyTalkBCWV: "I see water droplets",
+  LangKey.ladyTalkITTW: "Banning cheating with 4K vision",
+  LangKey.ladyTalkDYWS: "Mirrors are fogging up. It's time to wipe them down.",
+  LangKey.ladyTalkAGHL: "Want to come see the real sunflowers in the morning?",
+  LangKey.ladyTalkITYF: "I almost got hit by a falling light sign!",
+  LangKey.ladyTalkBNTI: "I told you not to stand too far to the side",
+  LangKey.ladyTalkITPJ: "The Bulls need to insure your accident",
+  LangKey.ladyTalkBAOT: "It's part of my job~",
+  LangKey.ladyTalkDINP: "Band-Aids are on the third shelf of your locker.",
+  LangKey.ladyTalkHDRB: "Do I need to put the ambulance on speed dial?",
+  LangKey.ladyTalkMALP: "How do you remember it better than I do?",
+  LangKey.ladyTalkSCRE: "My AJ is losing its paint.",
+  LangKey.ladyTalkITYC:
+      "The sneaker care cream you recommend is expired yogurt, right?",
+  LangKey.ladyTalkGIAF: "I told you you couldn't train in a limited edition.",
+  LangKey.ladyTalkCYHS: "Do you want me to give it a funeral?",
+  LangKey.ladyTalkYRDW: "Can you hear it screaming?",
+  LangKey.ladyTalkWYTM:
+      "The ankle guards you recommended last time didn't work at all!",
+  LangKey.ladyTalkSWWC: "Why didn't you tell me you were hurt?",
+  LangKey.ladyTalkDCTV:
+      "There's something wrong with the cheerleading routine.",
+  LangKey.ladyTalkTCBM:
+      "You haven't clicked on my training video in three days!",
+  LangKey.ladyTalkSOSD: "It's a classic Bulls move!",
+  LangKey.ladyTalkGHPI: "so sad",
+  LangKey.ladyTalkITYP: "Now go home and put some ice on it",
+  LangKey.ladyTalkMCMM: "I'll take you to the physical therapy center tomorrow",
+  LangKey.ladyTalkIAOT: "The ballpark maid cares more about me than you do",
+  LangKey.ladyTalkTKSP: "Have you forgotten that I'm afraid of tasers?",
+  LangKey.ladyTalkDTSS:
+      "I'm actually being asked to teach kids the splits at a community event?",
+  LangKey.ladyTalkCCWD: "Diamonds are too shiny for sportswear",
+  LangKey.ladyTalkISDS: "It's easy to catch a cold with this waistless design",
+  LangKey.ladyTalkPBPC: "It's a sponsor's designation",
+  LangKey.ladyTalkYTDK: "How about a polar bear plush costume instead?",
+  LangKey.ladyTalkMMCS: "You'll be doing the splits in kids' class next week",
+  LangKey.ladyTalkANMF:
+      "You actually marked my choreography solution as pending optimization？",
+  LangKey.ladyTalkYCBF: "Audiences need more fireworks",
+  LangKey.ladyTalkSTMH:
+      "just worried you're gonna come back from an old knee injury",
+  LangKey.ladyTalkCOMM:
+      "Last week someone told me my floor moves were too hot.",
+  LangKey.ladyTalkSOSL: "Do you have a crush on my meniscus?",
+  LangKey.ladyTalkYPFD: "Someone's lying.",
+  LangKey.ladyTalkYEMC:
+      "And the best part is, you get to pay for the next date!",
+  LangKey.ladyTalkMSTC: "Did you eat my last bag of chips?",
+  LangKey.ladyTalkCHBB:
+      "I'll make sure triple compensation tomorrow, I promise!",
+  LangKey.ladyTalkIWLE:
+      "The chocolates hidden behind the bookshelf haven't been touched, which is a relief.",
+  LangKey.ladyTalkYKNT: "I want a limited edition!",
+  LangKey.ladyTalkWEDK: "You knew that?",
+  LangKey.ladyTalkPOWS: "What else do you know?",
+  LangKey.ladyTalkWYIM: "The plant on the windowsill has new shoots",
+  LangKey.ladyTalkWFYK: "Why are you ignoring me?",
+  LangKey.ladyTalkISLY: "Waiting for your good morning kiss",
+  LangKey.ladyTalkIBME: "It's stretching like you.",
+  LangKey.ladyTalkYSME: "I'm busy with my morning exercises",
+  LangKey.ladyTalkRRWN: "Did you spy on my morning exercises?",
+  LangKey.ladyTalkDJSI:
+      "There's a strawberry mark on the rim that needs wiping off",
+  LangKey.ladyTalkCRDT:
+      "If water drips into the collar of your jumper, it'll start itching.",
+  LangKey.ladyTalkYRDI: "This is a clue reserved for Mr. Detective",
+  LangKey.ladyTalkFTDR: "Then you're responsible for drying it",
+  LangKey.ladyTalkPBFS: "Fancy trying a double recipe tonight?",
+  LangKey.ladyTalkAYPL:
+      "The plant on the balcony has flowered all of a sudden!",
+  LangKey.ladyTalkPAAH: "Are you a plant language translator?",
+  LangKey.ladyTalkLMSW: "The petals are arranged in the shape of a heart",
+  LangKey.ladyTalkSAIM: "It's all about the love that the master should water",
+  LangKey.ladyTalkYGWD: "I secretly adjust it every morning at dawn",
+  LangKey.ladyTalkSPLB: "You've got water drops on your eyelashes",
+  LangKey.ladyTalkINBI: "The spray can looks like it's bathing a rainbow",
+  LangKey.ladyTalkITRH: "I need to borrow your iris as a magnifying glass.",
+  LangKey.ladyTalkSYTN: "Is that rainbow your hidden candy?",
+  LangKey.ladyTalkMSTO: "See you tonight",
+  LangKey.ladyTalkICGW:
+      "You've been responding to messages more slowly than an old Carter dunk lately....",
+  LangKey.ladyTalkWYTS: "I can't get away from my project",
+  LangKey.ladyTalkSIBW: "Waiting for you to say you miss me",
+  LangKey.ladyTalkYGMC: "So I'm a benchwarmer?",
+  LangKey.ladyTalkTSLM: "You've got milk tea pearls on your collarbone",
+  LangKey.ladyTalkYSSL: "This shirt looks like mine",
+  LangKey.ladyTalkIDSN: ''' You should've said, "I'll lick it off for you."''',
+  LangKey.ladyTalkITAS: "It doesn't say your name on it",
+  LangKey.ladyTalkZMGM: "I'll take a shower",
+  LangKey.ladyTalkBKQZ:
+      "Fancy going to the new cliff restaurant or indoor rock climbing on the weekend?",
+  LangKey.ladyTalkSCHX:
+      "Are you sure you won't be hanging in the air screaming for help?",
+  LangKey.ladyTalkSMZJ: "Remember to bring the knee pads you bought last time",
+  LangKey.ladyTalkRYDG: "Then you have to hold on to the rope",
+  LangKey.ladyTalkMWCT:
+      "At some point, we'll probably go for lava cake, right?",
+  LangKey.ladyTalkZCSC: "I've made a reservation for 7:00 p.m.",
+  LangKey.ladyTalkDZHC: "The chef says he's on the lookout for a taster",
+  LangKey.ladyTalkZJNY: "You'll be punished for reading my memos",
+  LangKey.ladyTalkZHPS:
+      "Then you'll wipe the cream off the corner of my mouth~",
+  LangKey.ladyTalkNRWC: "You actually ate the last slice of pizza!",
+  LangKey.ladyTalkZSDG: "You told me to eat it",
+  LangKey.ladyTalkDZGG: "I have cheesecake in the fridge",
+  LangKey.ladyTalkCMWD: "But you should have heard my stomach protesting!",
+  LangKey.ladyTalkFWQX:
+      "That's going to be smeared with strawberry sauce! I want it now!",
+  LangKey.ladyTalkYSYL: "Who caused me to be in a mood that needed healing?",
+  LangKey.ladyTalkBMXJ: "You said you'd show up at 6:00 last time！",
+  LangKey.ladyTalkSRYT: "I was touched by a cat on the road",
+  LangKey.ladyTalkTHGS: "sorry about that. I should've got that to you sooner.",
+  LangKey.ladyTalkDQBB: "Do I look like someone who's into fairy tales?",
+  LangKey.ladyTalkKQMR: "Your apology should be engraved on a lollipop",
+  LangKey.ladyTalkDLCF: "I've been yelling at you for ten minutes",
+  LangKey.ladyTalkWBLS: "I've been working out how to punish you",
+  LangKey.ladyTalkSWTS: "Does your microwave eat spoons?",
+  LangKey.ladyTalkBDCM: "Did you burn your wrists?",
+  LangKey.ladyTalkNYND: "Do I need to hold your rioting strawberries?",
+  LangKey.ladyTalkDBND: "It's just that the cream bomb defected",
+  LangKey.ladyTalkFSRH: "They say they want to fight you",
+  LangKey.ladyTalkBZXG: "The sunscreen on the balcony is melting",
+  LangKey.ladyTalkDQQH: "Need an emergency airdrop of cold watermelon?",
+  LangKey.ladyTalkXXCZ: "This light looks like the way you swing",
+  LangKey.ladyTalkDTSQ: "The kind with a love fork stuck in it!",
+  LangKey.ladyTalkXRFL: "What if I try swinging on a cloud next time?",
+  LangKey.ladyTalkKTXT: "A little summer treat for you.",
+  LangKey.ladyTalkBJXZ: "The air conditioner stole my blanket during my nap.",
+  LangKey.ladyTalkTPSB: "Do you want me to send you a polar bear?",
+  LangKey.ladyTalkDSYJ:
+      "How many negotiations with the air conditioner have failed?",
+  LangKey.ladyTalkLBLT: "Remember to put sunglasses on it!",
+  LangKey.ladyTalkWNYB: "It always threatens me with cold violence",
+  LangKey.ladyTalkQDYC: "Give me a warm hug~",
+  LangKey.ladyTalkXCWD: "Come on down to the team's new pool!",
+  LangKey.ladyTalkRGHX: "I heard someone messed up the scene",
+  LangKey.ladyTalkSBML: "Do you need artificial respiration?",
+  LangKey.ladyTalkJJZS: "It's me doing the samba~",
+  LangKey.ladyTalkSFZL: "Let me see your first aid license first~",
+  LangKey.ladyTalkJZYS: "You have ten minutes",
+  LangKey.ladyTalkSDNJ:
+      "The angle of the mirrors in the fitting room is killing me!",
+  LangKey.ladyTalkQZBC: "This mirror should be sent to the South Pole",
+  LangKey.ladyTalkQEYD: "That's a nice dress",
+  LangKey.ladyTalkSCWJ: "For the penguins?",
+  LangKey.ladyTalkWMLR: "Does it look like the last scarf I wore?",
+  LangKey.ladyTalkBYXF: "Just between us",
+  LangKey.ladyTalkLYGM:
+      "The rainstorm completely overturned all the plants on the balcony!",
+  LangKey.ladyTalkXZGL: "I heard you can catch a cold from treading wate",
+  LangKey.ladyTalkJCTW: "I'll help you re-tie it if it's loose",
+  LangKey.ladyTalkJZMD: "So now to check my temperature?",
+  LangKey.ladyTalkTNNT: "That's settled",
+  LangKey.ladyTalkMPGL: "tonight~",
+  LangKey.ladyTalkBOLI:
+      "After getting lost for three blocks in Old Town, I finally got an apple!",
+  LangKey.ladyTalkFANG: "The fog on the glass is as thick as your eyelashes",
+  LangKey.ladyTalkKJDC: "The reflections on the glass are gone",
+  LangKey.ladyTalkWXZY: "You will have to get closer to see what's in my eyes",
+  LangKey.ladyTalkJWJB: "You just knew I needed a hug right then",
+  LangKey.ladyTalkDDCM: "I'll see you tonight",
+  LangKey.ladyTalkXXGM:
+      "I discovered an extra carton of strawberry milk in the break room!",
+  LangKey.ladyTalkHXTE: "Don't catch a cold",
+  LangKey.ladyTalkZWSB: "You spin like a swan",
+  LangKey.ladyTalkTYDB: "Not with you around~",
+  LangKey.ladyTalkJTGL: "Want me to do the whole dance for you?",
+  LangKey.ladyTalkNZTC: "When are you coming over today?",
+  LangKey.ladyTalkSGNZ:
+      "The alarm clock shakes the pillow and I want to bury it under the covers",
+  LangKey.ladyTalkTYLJ: "I'll set ten delayed alarms for you",
+  LangKey.ladyTalkLWQQ:
+      "The sun is following your example of staying cosy in bed today",
+  LangKey.ladyTalkTKLC:
+      "You're the one who pulled me out from under the covers",
+  LangKey.ladyTalkXMMR:
+      "It's clearly peeking at the sleepyhead on my eyelashes!",
+  LangKey.ladyTalkRDMS: "All kittens need their beauty sleep, right?",
+  LangKey.ladyTalkTDST: "Just got the hot Americano!",
+  LangKey.ladyTalkSBNS:
+      "And don't worry about burning your tongue – we've all been there!",
+  LangKey.ladyTalkCYCH: "Did you sneak double concentrate into this one?",
+  LangKey.ladyTalkYNED: "Blow on it and it'll stop burning~",
+  LangKey.ladyTalkTJNX: "Guess what? I might bite your ear afterward~",
+  LangKey.ladyTalkYHQH: "I can see you snicker through the screen!",
+  LangKey.ladyTalkDZSP: "I just got slipped a coupon at the grocery store!",
+  LangKey.ladyTalkXMJL:
+      "The third shelf down has a great sale on potato chips!",
+  LangKey.ladyTalkTCGQ: "Have you been pampering yourself like a kitten?",
+  LangKey.ladyTalkMMZM: "I'll run you over with a shopping cart~",
+  LangKey.ladyTalkDSPH:
+      "I'm going to put my paw on your shoulder to smooth out your fur~",
+  LangKey.ladyTalkBTBQ: "Have to carry all these snacks on my back!",
+  LangKey.ladyTalkDZJL:
+      "Help! The bottom of the freezer was dug into last year's Halloween stash of ice cream!",
+  LangKey.ladyTalkBCBL: "Didn't you say you'd leave me a reward?",
+  LangKey.ladyTalkSDZD: "Don't even think about eating ice in this weather",
+  LangKey.ladyTalkNYWA: "My hands were shaking at the first bite~",
+  LangKey.ladyTalkYSMK: "Then hum me a lullaby on the phone~",
+  LangKey.ladyTalkKMBA: "Choose strawberry or chocolate flavor?",
+  LangKey.ladyTalkMBXS: "I dropped my toast slice on the floor!",
+  LangKey.ladyTalkRBNN: "Get the paper towels and salvage the scene!",
+  LangKey.ladyTalkNCXW: "Warm up a glass of milk for you?",
+  LangKey.ladyTalkJDFM: "You seem to be laughing at me!",
+  LangKey.ladyTalkHKJL: "Remember to add honey!",
+  LangKey.ladyTalkCDLX: "Half a slice of bread is burnt",
+  LangKey.ladyTalkSLLB: "Eat it or keep it as a souvenir?",
+  LangKey.ladyTalkDCLS:
+      "While cooking the pasta, I realised the seasoning packet was missing a bag!",
+  LangKey.ladyTalkBXLJ: "Did your cat eat it as a snack?",
+  LangKey.ladyTalkWGDH: "There's some leftover hot sauce in the fridge",
+  LangKey.ladyTalkTLLB: "He's dozing on the couch, innocent as can be",
+  LangKey.ladyTalkHSMT: "The spice almost made me jump to the ceiling!",
+  LangKey.ladyTalkCHHS:
+      "The noodles have been cooked so long they're turning into sea cucumbers",
+  LangKey.ladyTalkJYHM:
+      "Think of it as sea cucumber soup, garnished with chopped scallions",
+  LangKey.ladyTalkMTJQ:
+      "Or add some soy sauce for color and use it as braised noodles",
+  LangKey.ladyTalkJYWW: "Noodles are so photogenic",
+  LangKey.ladyTalkCYLL: "The soy sauce is staining the bowl like a relic...",
+  LangKey.ladyTalkMGBQ:
+      '''Looks like we're going to have "Creative Cuisine" for dinner today...''',
+  LangKey.ladyTalkSTDZ: "Mango ice cream is new to convenience store freezers!",
+  LangKey.ladyTalkEFBJ: "Watch out for sticky tongues！",
+  LangKey.ladyTalkQYDY: "You need wingman support for the second half?",
+  LangKey.ladyTalkHJLJ: "I'm like a fish without oxygen right now!",
+  LangKey.ladyTalkYQHJ: "Calling wingman！",
+  LangKey.ladyTalkBBRT: "Want to follow me home?",
+  LangKey.ladyTalkMNYW: "Just found half a pack of damp fudge!",
+  LangKey.ladyTalkSCND: "Taste it for mummies？",
+  LangKey.ladyTalkJJHC: "It's the half I lost last time, right?",
+  LangKey.ladyTalkNLCL: "You're gonna give me artificial respiration?",
+  LangKey.ladyTalkNVCJ: "You're in charge of fixing it!",
+  LangKey.ladyTalkZJGY: "I'm dying for a reunion scene",
+  LangKey.ladyTalkXCZM: "Ready to stock up on paper towels?",
+  LangKey.ladyTalkYLBH: "Our next meeting will be this dramatic",
+  LangKey.ladyTalkBNZS: "I'm holding back all my tears",
+  LangKey.ladyTalkNMMG: "You're more attractive than the leading man!",
+  LangKey.ladyTalkCXSH: "I just got a bunch of anonymous roses!",
+  LangKey.ladyTalkQBTM: "Do you need to check the florist?",
+  LangKey.ladyTalkPKQT: "Maybe it's Cupid's part-time flower delivery business",
+  LangKey.ladyTalkJFZC: "Surveillance shows a guy in a Pikachu hood!",
+  LangKey.ladyTalkBBTW: "He's a terrible archer!",
+  LangKey.ladyTalkLXLJ: "There's a lollipop inside!",
+  LangKey.ladyTalkZJQD: "This flower should end up in a breakfast oatmeal jar",
+  LangKey.ladyTalkCDAN:
+      "The coffee machine suddenly starts up automatically at 3:00 a.m!",
+  LangKey.ladyTalkKFJS:
+      "Check that the socket hasn't been stepped on by the cat",
+  LangKey.ladyTalkJTJN:
+      "Maybe the machine cares more about the date than we do",
+  LangKey.ladyTalkJNRE: "Dumbass! It's Memorial Day!",
+  LangKey.ladyTalkGZYF: "You actually remembered it was Memorial Day!",
+  LangKey.ladyTalkYSLS: "Found the clothes you left in my closet",
+  LangKey.ladyTalkSGSL: "The pipes in the bathroom suddenly started leaking!",
+  LangKey.ladyTalkXLGL: "Did you dance in the shower and loosen the pipes?",
+  LangKey.ladyTalkKYCH:
+      "Do you want me to get the number of the repairman for you?",
+  LangKey.ladyTalkMJDZ:
+      "I swear I really didn't do a concert in the bathroom this time!",
+  LangKey.ladyTalkYSSD: "I've blocked it with a towel for now",
+  LangKey.ladyTalkTZKA: "Now the whole bathroom is wet~",
+  LangKey.ladyTalkWGTW:
+      "Do I have to cosplay for the party? I only have bunny costumes in my closet",
+  LangKey.ladyTalkJYXB: "Is it too late to buy online?",
+  LangKey.ladyTalkJZJW: "Maybe revamp old clothes and get creative",
+  LangKey.ladyTalkSSTS: "But the party starts tonight.",
+  LangKey.ladyTalkXTED: "Looks like a wounded angel",
+  LangKey.ladyTalkZCMH: "[My roommate said I could borrow her new cat ears.",
+  LangKey.ladyTalkSCKS: "Now everyone says I'm a fortune teller~",
+  LangKey.ladyTalkWMZW:
+      "I called out to you three times today, but you kept looking at your cell phone.",
+  LangKey.ladyTalkZYTS: "I'm texting my mom in a hurry",
+  LangKey.ladyTalkXJKZ: "Did I miss some big hint?",
+  LangKey.ladyTalkMREZ:
+      "Shouldn't I be looking at my new jacket first at a time like this!",
+  LangKey.ladyTalkDLSH:
+      "Someone didn't even notice the plush bear earmuffs I changed",
+  LangKey.ladyTalkGYSH: "Next time you do that, wait for a lawyer's letter",
+  LangKey.ladyTalkYLXC: "I heard someone bad-mouthing you in the break room!",
+  LangKey.ladyTalkXTBS: "Tell me what new vocabulary they're using",
+  LangKey.ladyTalkGQMP: "So your cheeks turn into blowfish when you're angry?",
+  LangKey.ladyTalkZCZY: "It's as old-fashioned as expired oatmeal",
+  LangKey.ladyTalkBGYL: "I'm clearly doing you justice!",
+  LangKey.ladyTalkQCLS: "Sneaking screaming toys into the guy's closet~",
+  LangKey.ladyTalkJLFX: "Record me a video for my wake-up call!",
+  LangKey.ladyTalkDXGH: "What if the coach finds out?",
+  LangKey.ladyTalkZYZJ:
+      "The moment he pops up is ten times more intimidating than a toy!",
+  LangKey.ladyTalkNHBL: "It's just a righteous prank!",
+  LangKey.ladyTalkSJMD:
+      "Do you recognize the girl you just saw at the convenience store?",
+  LangKey.ladyTalkBXQM:
+      "She came to ask for directions and said her cell phone was dead",
+  LangKey.ladyTalkLTDS: "You stood in front of the freezer for ten minutes",
+  LangKey.ladyTalkHHKL:
+      "Is this the old-fashioned way of picking up people now?",
+  LangKey.ladyTalkYRXX: "Buy one get one free on the mango and strawberry duo!",
+  LangKey.ladyTalkMZFL: "Someone seems to be panicking.",
+  LangKey.ladyTalkLQSH:
+      "I'll take you out in the morning to pick out shells for your wind chimes",
+  LangKey.ladyTalkZCMR: "Basketball doesn't lie",
+  LangKey.ladyTalkBZXL:
+      "Ask for the ugliest scallops! The kind that rings like it's cursing!",
+  LangKey.ladyTalkWGXF: "Next time don't smile at strangers",
+  LangKey.ladyTalkCMXX:
+      "The shirt I bought online looks like my sister's school uniform!",
+  LangKey.ladyTalkZNXC: "Did you pick a size too small?",
+  LangKey.ladyTalkLGQT: "Take a picture so I can see the disaster.",
+  LangKey.ladyTalkCSWQ: "Sleeves that fit two fists",
+  LangKey.ladyTalkNCJL: "My roommate said it looked like a supermarket apron",
+  LangKey.ladyTalkCTDS: "Like a giraffe with its neck pinched.",
+  LangKey.ladyTalkZJDY:
+      "I'll take you to the store tomorrow to try on 20 pieces",
+  LangKey.ladyTalkCBQL: "Try cutting the hemline for a plunging neckline",
+  LangKey.ladyTalkCDMB: "The kind where can try ice cream!",
+  LangKey.ladyTalkXCKL: "Now it's completely turned into a rag!",
+  LangKey.ladyTalkSTAN:
+      "Next time I'll make you wear this to pick up a delivery!",
+  LangKey.ladyTalkPXJJ:
+      "Had a super beautiful dream from my nap...the beach is so much fun!",
+  LangKey.ladyTalkXCZY: "Did a crab pinch your toe?",
+  LangKey.ladyTalkBKDW: "Next time I'll have to put a parasol in your dreams",
+  LangKey.ladyTalkDZNM:
+      "The beach was soft as cotton candy, even the shells avoided me",
+  LangKey.ladyTalkFMSS:
+      "ou show up out of the blue with a glass of iced lemon tea?",
+  LangKey.ladyTalkPDYB:
+      "And then I dreamt that the setting sun colored the water into honey",
+  LangKey.ladyTalkYJAX: "It's time for a drone to get a panoramic view.",
+  LangKey.ladyTalkLGHD: "You must have made footprints in the shape of hearts",
+  LangKey.ladyTalkHDYN:
+      "There must be only two little black dots left in the shot",
+  LangKey.ladyTalkXCYQ: "How do you know that?",
+  LangKey.ladyTalkQDLS: "I guess I'll have to take you with me next time",
+  LangKey.ladyTalkRXFT:
+      "The team is so happy with their recent winning streak!",
+  LangKey.ladyTalkLSHB: "You guys get the players' blood pumping every time",
+  LangKey.ladyTalkLLXD: "It feels really good to be on a winning streak.",
+  LangKey.ladyTalkJTTL:
+      "We're still working on new moves from today's training!",
+  LangKey.ladyTalkXYCD: "I'm a little tired from training today",
+  LangKey.ladyTalkTYXY: "Need to be energized~",
+  LangKey.ladyTalkZWYS: "Hate the rain. It's killing our date!",
+  LangKey.ladyTalkYLTW:
+      "That plant on the balcony is getting its fill of water",
+  LangKey.ladyTalkMTLF: "Move it into the rain and do a round dance.",
+  LangKey.ladyTalkDYBZ: "I'm gonna give him a rainstorm haircut tomorrow",
+  LangKey.ladyTalkLMXG: "The dripping rain has given it a beat!",
+  LangKey.ladyTalkYTSB: "Shave his mohawk?",
+  LangKey.ladyTalkTKFX: "After the rain stops...want to go to the park?",
+  LangKey.ladyTalkXXAQ:
+      "Why did you peek at my ins snapshot three times last night?",
+  LangKey.ladyTalkBSTA: "Gathering community safety intelligence",
+  LangKey.ladyTalkGDGZ:
+      "Researching how to hang starbursts to look like your eyelashes",
+  LangKey.ladyTalkDACW:
+      "It's against the law to pay excessive attention to my punchline!",
+  LangKey.ladyTalkTSJG: "Wrong answer!",
+  LangKey.ladyTalkXQLM: "Looks like we're gonna need 24-hour supervision",
+  LangKey.ladyTalkJZSH: "The Snowball Avengers are official!",
+  LangKey.ladyTalkNBBD: "Apply to be an enemy fortress architect",
+  LangKey.ladyTalkZFYX:
+      "Immediately bring a warm baby to act as a human shield!",
+  LangKey.ladyTalkRKKW: "You'll be making white-flag snowmen in a POW camp",
+  LangKey.ladyTalkGYCT: "Did you spill hot cocoa on your scarf?",
+  LangKey.ladyTalkDXLS:
+      "Someone was found to have intentionally stepped on the bushes!",
+  LangKey.ladyTalkFHFT: "That's the pine cone that triggered the earthquake.",
+  LangKey.ladyTalkAXXZ: "Let me paint you a non-slip charm with maple syrup",
+  LangKey.ladyTalkZWMS:
+      "You are penalized for sweeping out snow in the shape of a love heart!",
+  LangKey.ladyTalkZDHL:
+      "Does this count as physical evidence in a sweet assault case?",
+  LangKey.ladyTalkXDSB: "It's really cold!",
+  LangKey.ladyTalkQMSS: "This trick-or-treating operation has failed~",
+  LangKey.ladyTalkGJCH: "Now I need to search you",
+  LangKey.ladyTalkBXBD:
+      "Surrender all chocolate and repent to the pumpkin gods",
+  LangKey.ladyTalkJXBG:
+      "Warning! Laugh track virus may be triggered during search",
+  LangKey.ladyTalkLWFJ:
+      "The priest asked for three additional sandwich cookies",
+  LangKey.ladyTalkZYWZ: "Come to my room right away to confirm",
+  LangKey.ladyTalkFLLG: "Urgently requisition your socks!",
+  LangKey.ladyTalkSDMH: "You can make deer-proof fences out of candy canes",
+  LangKey.ladyTalkDWBH: "Bring a Christmas hat for a hostage swap!",
+  LangKey.ladyTalkXSJH: "The ASPCA will send a protest!",
+  LangKey.ladyTalkSDGQ: "The robber asked for three more giggles!",
+  LangKey.ladyTalkMHTX: "The fireplace is roasting Christmas carols!",
+  LangKey.ladyTalkJZML:
+      "I'll make you a silencer out of marshmallows in a minute!",
+  LangKey.ladyTalkTWGG: "Why don't we pretend to be lost Christmas elves?",
+  LangKey.ladyTalkAQWZ:
+      "Fire Department detects suspect with excessive body heat",
+  LangKey.ladyTalkDDJY: "Navigation shows the nearest safe house in your room",
+  LangKey.ladyTalkZDWJ: "Please wait for the rescue team to arrive!",
+  LangKey.ladyTalkSDSS: "Found the gingerbread man scarf you sent!",
+  LangKey.ladyTalkMSMM: "The Christmas tree suddenly flashed three times",
+  LangKey.ladyTalkXLGY:
+      "Some schmuck is practicing his confessional Morse code",
+  LangKey.ladyTalkMLHJ: "The third time it flashed, I was making a wish",
+  LangKey.ladyTalkSCLB: "He hit the fire alarm with his shaky hand~",
+  LangKey.ladyTalkKLCLW:
+      "Shhh...if you say your wish, it'll turn into a bird and fly away!",
+  LangKey.ladyTalkGJQJ: "Come unwrap your gift!",
+  LangKey.ladyTalkZWKN: "Could you ask Linda for a vacation, please?",
+  LangKey.ladyTalkDRTH: "I'll check on you at noon",
+  LangKey.ladyTalkJCSK:
+      "I'll give you remote activation of the electric blanket mode",
+  LangKey.ladyTalkCNLH:
+      "Just spilled ginger tea on my pajama pants! Now like a wet chihuahua...",
+  LangKey.ladyTalkDSHF: "This kind of superpower is dangerous!",
+  LangKey.ladyTalkBZZS: "There's a replay of last week's game on TV!",
+  LangKey.ladyTalkBMCP: "I should pass you the board at the next timeout",
+  LangKey.ladyTalkCPJG: "Don't yell at the referee for pulling the wound",
+  LangKey.ladyTalkSDTL: "The referee will warn me...",
+  LangKey.ladyTalkXKFJ: "But I sweated and my fever went down",
+  LangKey.ladyTalkPGYP: "I used my new coffee maker this morning!",
+  LangKey.ladyTalkHSNT: "Milk bubbles floating around like drunken dandelions~",
+  LangKey.ladyTalkXKXG: "Suggest renaming it Volcanic Eruption Latte",
+  LangKey.ladyTalkCDFB: "You're the one who added the starry night effect！",
+  LangKey.ladyTalkBDCL: "Triple the price of the menu！",
+  LangKey.ladyTalkZMJW:
+      "actually a shooting star hidden in the bottom of the glass",
+  LangKey.ladyTalkZSFT: "Come coach me this weekend!",
+  LangKey.ladyTalkCWTS:
+      "I just tried that purple rice ball from the convenience store",
+  LangKey.ladyTalkTSKC: "Did the clerk use fountain pen ink as a filling?",
+  LangKey.ladyTalkSDTS:
+      "I suggest they take a group course in color psychology!",
+  LangKey.ladyTalkRLWJ:
+      "I thought I'd swallowed a watercolor tray the moment I bit into it!",
+  LangKey.ladyTalkXPNS: "They didn't consider the human palate at all~",
+  LangKey.ladyTalkGYSQ: "The sandwich tastes like expired Play-Doh",
+  LangKey.ladyTalkJMWD:
+      "Do you need to send in the fire department with a high-pressure hose?",
+  LangKey.ladyTalkLPQS: "Maybe it'll taste cosmic with mustard~",
+  LangKey.ladyTalkZDSW: "I've had two bottles of sparkling water!",
+  LangKey.ladyTalkDEDX: "I just tried!",
+  LangKey.ladyTalkDTWK:
+      "I have to go and try the second new product this week!",
+  LangKey.ladyTalkHSJB:
+      "I was practicing my wink in the elevator mirror and got caught in a horror movie！",
+  LangKey.ladyTalkZADH:
+      "The security room should have a red alert going off by now.",
+  LangKey.ladyTalkJJAN: "Send me the video as a good morning animation.",
+  LangKey.ladyTalkMTCX: "They almost activated the panic button.",
+  LangKey.ladyTalkTBXL: "You must be rolling in laughter every day.",
+  LangKey.ladyTalkCHQK:
+      "Looks like I'm going to come to your house for special training！",
+  LangKey.ladyTalkHALL:
+      "Suddenly there's a pile of melted chocolate in the basket！",
+  LangKey.ladyTalkSWRL: "Is it a dark dish from a suitor?",
+  LangKey.ladyTalkLSTC:
+      "Suggested to file a lost and found with the police station",
+  LangKey.ladyTalkEZJK: "Probably from some kid who stole his mom's snacks.",
+  LangKey.ladyTalkTNQK: "The police will cuff me as a suspected prankster.",
+  LangKey.ladyTalkSXCY:
+      "Now even the locks are glued with suspicious gold leaf paper...",
+  LangKey.ladyTalkYDTP: "Do you want me to drop off a car wash for you?",
+  LangKey.ladyTalkTJPQ:
+      "Congratulations on unlocking the Mobile Dessert Station skin!",
+  LangKey.ladyTalkJSTY: "It's quicker to jump straight into the fountain.",
+  LangKey.ladyTalkQXDZ:
+      "I'll be receiving the Best Contribution to Street Art award.",
+  LangKey.ladyTalkTQSC:
+      "Tonight's walk has been changed to a chocolate cleanup bonanza！",
+  LangKey.ladyTalkTPZD:
+      "The take-out dessert was delivered to the wrong room, and now they all know I'm a sweet tooth monster！",
+  LangKey.ladyTalkSDLK: "Grandpa probably thinks you're sweet-bombing.",
+  LangKey.ladyTalkZDHC:
+      "I'd suggest a remedial geography course for the delivery boy.",
+  LangKey.ladyTalkTXMH: "He knocked on my door with half-melted ice cream.",
+  LangKey.ladyTalkLDQL:
+      "He said the dinosaur sticker on the 902 balcony looked like my order barcode.",
+  LangKey.ladyTalkVIPK:
+      "And the mango puree is running down the door to the seventh floor.",
+  LangKey.ladyTalkSGBZ:
+      "Tomorrow all the fruit stalls in the neighborhood will give you VIP cards！",
+  LangKey.ladyTalkBYNG:
+      "The accident scene should be packaged as a new product sampling session.",
+  LangKey.ladyTalkRDFB:
+      "The property just sent out a notice: no jam brewing in common areas!",
+  LangKey.ladyTalkWHXZ: "The fire escape now smells like a tropical storm.",
+  LangKey.ladyTalkMPGS:
+      "I just did that Netflix kitchen spin to open the cabinet doors...",
+  LangKey.ladyTalkMDWB: "Is there a cereal monster hiding in the cupboard?",
+  LangKey.ladyTalkBZHZ:
+      "You stepped on the cat's tail when you were spinning, right?",
+  LangKey.ladyTalkTHFL:
+      "It's worse than that! The phone slid right into the oatmeal bowl!",
+  LangKey.ladyTalkDCFM: "Instead, my slippers flew into the dishwasher...",
+  LangKey.ladyTalkZGZM: "I ended up with honey jars all over the place.",
+  LangKey.ladyTalkJFKZ: "You have to come and watch me cook this weekend!",
+  LangKey.ladyTalkGJZP: "The storm left me stranded at the 7-11.",
+  LangKey.ladyTalkGGYS:
+      "The bus stop signs are blowing up into abstract paintings.",
+  LangKey.ladyTalkSSLS: "There's no umbrellas in that bucket over there?",
+  LangKey.ladyTalkSBQF: "I'm on my way to deliver the umbrella.",
+  LangKey.ladyTalkGXJY: "Three turned over rainbow umbrellas dancing!",
+  LangKey.ladyTalkWQYY: "Thanks for the airborne support.！",
+  LangKey.ladyTalkTTHD: "I may have to borrow the clerk's apron as a raincoat.",
+  LangKey.ladyTalkFQCK: "Today I bumped into a deserted little rooftop!",
+  LangKey.ladyTalkWSJS: "It's not the abandoned storeroom, is it?",
+  LangKey.ladyTalkBJBX:
+      "Be careful stepping on someone else's stash of whiskey.",
+  LangKey.ladyTalkXBKB: "Half a pencil lead stuck in the lock hole",
+  LangKey.ladyTalkSLYZ: "A 2018 Starbucks cup was found in an old flowerpot.",
+  LangKey.ladyTalkYZCH: "There are two plastic chairs inside.",
+  LangKey.ladyTalkSLZR: "Check under the chair for a confession.",
+  LangKey.ladyTalkWMDD: "Can plastic chairs still seat people?",
+  LangKey.ladyTalkDRZW: "I only found half a takeout order.",
+  LangKey.ladyTalkLFSM: "They live much stronger than my succulents.",
+  LangKey.ladyTalkXZBM:
+      "Bring two sandwiches up tomorrow to claim your exclusive seat?",
+  LangKey.ladyTalkWFSJ:
+      "Administration said please confirm the schedule as soon as possible!",
+  LangKey.ladyTalkWMJL: "Are they even counting lunchtime?",
+  LangKey.ladyTalkMMGZ:
+      "Suggest that next time you write your notification in takeaway solitaire format~",
+  LangKey.ladyTalkELSF:
+      "Attachment naming rules are more complex than Morse code~",
+  LangKey.ladyTalkHYJL: "Don't post invoices as Tetris.",
+  LangKey.ladyTalkXDTZ:
+      "I noticed that the minutes were actually labeled with eight urgent corrections.",
+  LangKey.ladyTalkBJSZ: "Is this some kind of crossword puzzle?",
+  LangKey.ladyTalkKBGT: "Picasso's highlighting, isn't he?",
+  LangKey.ladyTalkCHDG: "There's a smiling dog's head on the last blank line.",
+  LangKey.ladyTalkBWJD: "Reminds me of the rainbow cake I had yesterday.",
+  LangKey.ladyTalkQJJW: "When will you proofread it for me?",
+  LangKey.ladyTalkYYWD: "Your jacket still smells like gym disinfectant.",
+  LangKey.ladyTalkYFRS: "Smelled the same as you did at home this morning...",
+  LangKey.ladyTalkWYXZ:
+      "Auntie Backstage definitely put some of my fabric softener in it.",
+  LangKey.ladyTalkWXNL:
+      "I'm gonna take a shower before I go back to your place next time.",
+  LangKey.ladyTalkZHXZ: "Isn't the point that I miss you?",
+  LangKey.ladyTalkXZWY: "It better be now.",
+  LangKey.ladyTalkYTJL: "I found irregularly shaped dark clouds!",
+  LangKey.ladyTalkLNQT:
+      "Take a picture of it with your cell phone for a cloud chart record?",
+  LangKey.ladyTalkWSTD:
+      "It could be a collision of warm and cold air masses aloft.",
+  LangKey.ladyTalkYCXY: "My hands are too shaky.",
+  LangKey.ladyTalkTQYB: "Rain has started to fall in the distance",
+  LangKey.ladyTalkGCDY: "The weather report lied to me again.",
+  LangKey.ladyTalkJLSD: "Time to close the windows against the rain.",
+  LangKey.ladyTalkJSJQ: "It's the right time to record humidity changes",
+  LangKey.ladyTalkSJDJ: "The downstairs waterer just kicked on.",
+  LangKey.ladyTalkCWSD: "The hygrometer says it's at 80%.",
+  LangKey.ladyTalkWBLD: "It's time to take my hygrometer.",
+  LangKey.ladyTalkSKBZ: "The convenience store microwave just dinged!",
+  LangKey.ladyTalkLNYB:
+      "Suddenly I wondered if you'd tear the rice ball for me?",
+  LangKey.ladyTalkZMXL: "I will left half of it for you to eat on purpose.",
+  LangKey.ladyTalkBYSY: "Maybe even a sesame seed with a smiley face.",
+  LangKey.ladyTalkYZYD:
+      "I'll rub salt on the rim of your coffee cup in retaliation!",
+  LangKey.ladyTalkYFXK: "You're acting like a kindergartener~",
+  LangKey.ladyTalkZSMS:
+      "I straightened my coat and found a dark scent on the cuffs.",
+  LangKey.ladyTalkSSXS:
+      "Like the tactical pen ink flavor you borrowed from me last time?",
+  LangKey.ladyTalkHXWQ: "Suggest checking to see if it's a squirrel.",
+  LangKey.ladyTalkHGJY: "It's a chemical weapons residue test.",
+  LangKey.ladyTalkFFRW:
+      "I don't know! It was your coat that rubbed on my dryer sheets...",
+  LangKey.ladyTalkNZSH: "Then you're an illegal.",
+  LangKey.ladyTalkCWGQ: "I'm starting to think you've got my back.",
+  LangKey.ladyTalkJHKQ:
+      "Even the lockers are starting to give off that vibe...",
+  LangKey.ladyTalkQWPZ:
+      "You can stuff a couple bags of coffee grounds in there to clean the air.",
+  LangKey.ladyTalkXBKL: "We're gonna need an odor barrier.",
+  LangKey.ladyTalkBHJD:
+      "The whole team will think the floor was waxed with Starbucks ingredients?",
+  LangKey.ladyTalkJTCM:
+      "Like applying mint tape to the seat you always sit in?",
+  LangKey.ladyTalkJSSC: "Good morning! Today is travel day!",
+  LangKey.ladyTalkMHXC: "I'm applying to be your very own jet lag researcher.",
+  LangKey.ladyTalkZCCS:
+      "It's about time someone asked through the window for a refill.",
+  LangKey.ladyTalkLSML: "Guess what I had for breakfast?",
+  LangKey.ladyTalkNNSY:
+      "All the blueberries on the windowsill have been stolen.",
+  LangKey.ladyTalkSDKW: "I almost spilled milk on my nightgown.",
+  LangKey.ladyTalkJZJL:
+      "The mirrors were all over me today when I was squatting deep！",
+  LangKey.ladyTalkWTNC: "Did the mirror sneak in an AI coach?",
+  LangKey.ladyTalkXHBF: "How about a bonus double protein shake?",
+  LangKey.ladyTalkJSDR: "It'll just cycle through five more sets of voices.",
+  LangKey.ladyTalkYCJD: "No way!",
+  LangKey.ladyTalkTYYS: "Do you want to video supervise me?",
+  LangKey.ladyTalkGZLS: "I just gave Mr. Alarm Clock a retirement ceremony.",
+  LangKey.ladyTalkCHPT: "I suggest hiring a wall clock as a temporary foreman.",
+  LangKey.ladyTalkXWSD: "Need a rainbow puzzle to relieve your boredom?",
+  LangKey.ladyTalkSGSJ: "It last chimed 3:00 p.m. before it struck...",
+  LangKey.ladyTalkKTXS: "Like a relic from the last century.",
+  LangKey.ladyTalkJJYT: "And now Mr. Air Conditioner is on strike!",
+  LangKey.ladyTalkCSCP:
+      "Immediately initiate an emergency furniture psychology workshop!",
+  LangKey.ladyTalkXZGC: "I'm applying for a referee rematch.",
+  LangKey.ladyTalkZSDD: "Would you like to come over for a seminar?",
+  LangKey.ladyTalkJGZZ:
+      "The entry ticket is to write ten times I'm always right！",
+  LangKey.ladyTalkDGKX: "Want to help me count the pleats on my dress?",
+  LangKey.ladyTalkNYJD: "I just put the cake mix in the oven.",
+  LangKey.ladyTalkTPSQ: "Cream all over the curtains",
+  LangKey.ladyTalkHJJJ:
+      "Curtains may be applying for membership in the dessert community",
+  LangKey.ladyTalkDKQF: "Do I need to be called in as a rescue team?",
+  LangKey.ladyTalkTPYY: "It is now preparing to take off...",
+  LangKey.ladyTalkYQZB: "You have to learn the doughnut language first.",
+  LangKey.ladyTalkBGML: "Want to snack on cream together?",
+  LangKey.ladyTalkYDDH: "I walked the dog until I got lost!",
+  LangKey.ladyTalkWRJK: "You can navigate with clouds as makeshift dog cookies",
+  LangKey.ladyTalkWXLK: "I've sent drones to airdrop the twilight map.",
+  LangKey.ladyTalkZZQM: "He's drooling over the flaming clouds.",
+  LangKey.ladyTalkRLCW: "He just signed a paw print by the mailbox.",
+  LangKey.ladyTalkWDBY: "When are you coming to claim your lost pets?",
+  LangKey.ladyTalkZDSH: "Today is my graduation!",
+  LangKey.ladyTalkLZBB:
+      "Do you want to have a look for the paper by the vending machine?",
+  LangKey.ladyTalkKFJA: "Do people still put out proposal candles?",
+  LangKey.ladyTalkMHQX:
+      "That machine was replaced by a coffee machine a long time ago.",
+  LangKey.ladyTalkLKFJ: "The janitor is patrolling with a fire extinguisher",
+  LangKey.ladyTalkJSFK:
+      "The fat guy who always signs in for me actually has six-pack abs now!",
+  LangKey.ladyTalkTCBS:
+      "That's how the gym's annual pass sales pitch got rolled up.",
+  LangKey.ladyTalkSJCC:
+      "Do you still have the form you said you were going to burn?",
+  LangKey.ladyTalkYXBY: "I almost dropped my cell phone in the lawn.",
+  LangKey.ladyTalkLLLB:
+      "The Dean is presenting it as a case study for the best graduates.",
+  LangKey.ladyTalkYCZD: "My down jacket zipper got stuck for five minutes!",
+  LangKey.ladyTalkNBBZ:
+      "Need remote guidance on fixing your zipper? Engineers on the line",
+  LangKey.ladyTalkYFBN:
+      "Next time I'll sew you a baby-warmer section in your suitcase.",
+  LangKey.ladyTalkRTTY:
+      "I'll just tuck my boarding pass into my collar to keep warm.",
+  LangKey.ladyTalkGBTC: "Desperately need to turn me into a shippable package!",
+  LangKey.ladyTalkYQBT: "There's a little boy dancing to the radio.",
+  LangKey.ladyTalkSHDF: "You should join the impromptu battle",
+  LangKey.ladyTalkCDJL: "Rate him with your hand flower.",
+  LangKey.ladyTalkQDJL: "And this kid stepped on my foot.",
+  LangKey.ladyTalkYWTH: "His mom already asked me to be a choreographer.",
+  LangKey.ladyTalkTSGJ: "Suddenly, delays aren't so bad.",
+  LangKey.ladyTalkDSFS: "The bar is like a library without you!",
+  LangKey.ladyTalkCWST:
+      "The pickup line at the next table is older than the wine list~",
+  LangKey.ladyTalkLYQJ:
+      "Let him try to measure the speed of the Internet with tarot cards.",
+  LangKey.ladyTalkMYMA: "Why don't you tell him you're a router?",
+  LangKey.ladyTalkJGTB: "No way!",
+  LangKey.ladyTalkHSKL:
+      "Now he's talking about building me a cell tower...help!",
+  LangKey.ladyTalkZYTD: "There were peanut shells in the cracks of the bar?",
+  LangKey.ladyTalkQZJB:
+      "It should want to be transplanted to the land of the free.",
+  LangKey.ladyTalkXQBH:
+      "You can blackmail the bartender by taking pictures and filing them.",
+  LangKey.ladyTalkHPHS:
+      "Now it's holding up the grain of salt flag to claim political asylum...",
+  LangKey.ladyTalkXCBL: "He told me it was ancient amber...",
+  LangKey.ladyTalkFSGZ: "You'll have to come with me next time.",
+  LangKey.ladyTalkTBDY:
+      "Little crabs on the beach pinched the lid off my sunscreen!",
+  LangKey.ladyTalkCTDZ: "Clouds stole my sandwich!",
+  LangKey.ladyTalkTXBQ: "Poke it in the stomach with the tip of your parasol.",
+  LangKey.ladyTalkDHJY:
+      "Scatter the remaining chips into a white flag of surrender",
+  LangKey.ladyTalkHOQJ: "Now it's raining mayonnaise flavored...",
+  LangKey.ladyTalkSJGH: "The seagulls have come to mediate with shrimp sticks",
+  LangKey.ladyTalkYFBD:
+      "Sandy rubbed the film from my phone into a hair glass filter...",
+  LangKey.ladyTalkDLYF: "Help! My new T-shirt is a human bandage!",
+  LangKey.ladyTalkTDRH: "You now have a new plunging neckline!",
+  LangKey.ladyTalkSSDS:
+      "You can lubricate the zipper with a little hand cream.",
+  LangKey.ladyTalkDYPR: "Compliance! Fashionista",
+  LangKey.ladyTalkZDSG: "The clerk said it was an XS.",
+  LangKey.ladyTalkYDBD:
+      "You want me to take you to the tailor's for a makeover?",
+  LangKey.ladyTalkSPXG:
+      "Actually, it's not bad for a patent sample of a sports bandage.",
+  LangKey.ladyTalkSMMN:
+      "Puppy prints on the chest are about to be pulled into shaggy dogs",
+  LangKey.ladyTalkKLJM:
+      "I'll show you how to mummify yourself in three seconds.",
+  LangKey.ladyTalkWTDH: "Help！",
+  LangKey.ladyTalkYYJB: "The fire from the stage spray is making my hair wavy!",
+  LangKey.ladyTalkFSXS: "This festival is really great.",
+  LangKey.ladyTalkDGSY: "Wait a minute! Where's my ringlet?",
+  LangKey.ladyTalkTKXS: "Maybe the drums made him run away.",
+  LangKey.ladyTalkXGBT:
+      "It's protesting the fact that you always wear the same perfume.",
+  LangKey.ladyTalkJWJA:
+      "No wonder the security camera was just dripping at my hair!",
+  LangKey.ladyTalkDCDS:
+      "It was funny the way you picked up my papers this morning.",
+  LangKey.ladyTalkTJYY:
+      "They all thought I was deliberately spreading my statements all over the place!",
+  LangKey.ladyTalkSMSK:
+      "You should apply for a stuntman's allowance next time.",
+  LangKey.ladyTalkCWBM:
+      "Looks like we're going to have to take you to magic practice.",
+  LangKey.ladyTalkGPBB: "And drive the finance department crazy?",
+  LangKey.ladyTalkKQZS:
+      "How about you put your license plate in my jacket pocket first?",
+  LangKey.ladyTalkBQLD: "Do you want me to turn myself in now?",
+  LangKey.ladyTalkNRMD: "Help! There's no chocolate ice cream in the freezer.",
+  LangKey.ladyTalkRKKA: "The cashier said a man bought it all.",
+  LangKey.ladyTalkBXSM: "You're gonna have to bribe me with hot cocoa.",
+  LangKey.ladyTalkJZDS: "The fridge at home is overrun with chocolate",
+  LangKey.ladyTalkHLDB: "I knew it was you!",
+  LangKey.ladyTalkTHTJ: "I'm coming back to arrest you now!",
+  LangKey.ladyTalkZDMK: "You're now number one on the most wanted list!",
+  LangKey.ladyTalkCZYQ:
+      "The sound of the automatic door opening and closing is like our kiss.",
+  LangKey.ladyTalkBCST: "Your headphone cord got tangled up with my hair tie!",
+  LangKey.ladyTalkYDLS: "Don't break them up, okay?",
+  LangKey.ladyTalkDDBJ: "Lure them into surrender with a snack.",
+  LangKey.ladyTalkXCQJ: "Is this a moral abduction?",
+  LangKey.ladyTalkSLFQ: "Wait...the vacuum cleaner ate them!",
+  LangKey.ladyTalkWQBT: "I give up.",
+  LangKey.ladyTalkDMZT:
+      "The purple manicure doesn't even look like the promo image!",
+  LangKey.ladyTalkMLBS:
+      "I just realized I used my thumb as a color palette....",
+  LangKey.ladyTalkTSWY: "Is this the latest hazy gradient technique?",
+  LangKey.ladyTalkYSGW: "You can paint a dark cloud with nail polish remover.",
+  LangKey.ladyTalkTQYB2:
+      "The nail salon offered to take me on as a performance art consultant!",
+  LangKey.ladyTalkBWSS: "Nails are like weather reports now~",
+  LangKey.ladyTalkKFBB: "I'll wait for you to try it for me",
+  LangKey.ladyTalkBZWZ: "I think my coffee cup has been kidnapped!",
+  LangKey.ladyTalkMDDX:
+      "Well, I got my coffee cup and my socks in the same box",
+  LangKey.ladyTalkWKGL:
+      "Why don't you order a takeout to replenish your energy?",
+  LangKey.ladyTalkZJCW: "Do you want me to come over and help you now?",
+  LangKey.ladyTalkSSSD: "Finished eating long ago!",
+  LangKey.ladyTalkZJBK: "I need you anytime.",
+  LangKey.ladyTalkWZHJ: "The heaviest box cracked itself!",
+  LangKey.ladyTalkJDBC: "The sock aisle has worked its magic on me...",
+  LangKey.ladyTalkDYCX:
+      "Three extra pairs of striped socks in my shopping bag that I'll never wear.",
+  LangKey.ladyTalkMTDP: "The clerk didn't laugh at you?",
+  LangKey.ladyTalkWZXS: "I'll match them up for you tomorrow",
+  LangKey.ladyTalkXXSY: "He says it's the style of the lost and found section.",
+  LangKey.ladyTalkXXCX: "I feel like it needs to be paired with a bear sweater",
+  LangKey.ladyTalkMYCF: "The left foot hides a small heart embroidery!",
+  LangKey.ladyTalkSKRS:
+      "just realized the sweater I bought last week has actually been worn backwards!",
+  LangKey.ladyTalkSQJX: "I'm philosophizing in the mirror right now",
+  LangKey.ladyTalkWYWN:
+      "I am applying for the position of Chief Quality Assurance Officer!",
+  LangKey.ladyTalkBCXW: "Didn't anyone warn you? I thought you knew all along.",
+  LangKey.ladyTalkBHLL: "Don't make fun of me.",
+  LangKey.ladyTalkTHSS: "The zipper on the new uniform is stuck in the middle!",
+  LangKey.ladyTalkXYQG: "Try lubricating with hand cream.",
+  LangKey.ladyTalkCLCG: "Do I need to bring a crowbar to help you?",
+  LangKey.ladyTalkXXRZ: "Tactical success!",
+  LangKey.ladyTalkXDDF: "Attention rescue teams: do not harm the hostages!",
+  LangKey.ladyTalkZZSH: "Want to come see the new uniforms tonight?",
+  LangKey.ladyTalkHTNQ:
+      "The sponsors are saying that the waistline should stay.",
+  LangKey.ladyTalkBJBZ:
+      "I can't believe the backstage heaters picked today to go on strike.",
+  LangKey.ladyTalkYJWT:
+      "Do you need my training notes to keep you out of the wind?",
+  LangKey.ladyTalkCLHC: "I have one of your coats here.",
+  LangKey.ladyTalkGYSD: "Your tactics are not airtight!",
+  LangKey.ladyTalkLXWD: "Waiting for you in the locker room.",
+  LangKey.ladyTalkNPLL: "It's five below zero outside today?",
+  LangKey.ladyTalkHJLNP:
+      "The steak for dinner was seared for an extra three minutes...",
+  LangKey.ladyTalkJSHD: "It ended up almost jumping into the red wine...",
+  LangKey.ladyTalkBQLN: "Red wine goes well with steak.",
+  LangKey.ladyTalkNPLA: "Next time try steak with ice cream.",
+  LangKey.ladyTalkJWQN: "Ice cream on steak is like falling in love.",
+  LangKey.ladyTalkKTYH: "Remember to teach me how to cut a steak?",
+  LangKey.ladyTalkTFSL: "Again? The air conditioner is broken....",
+  LangKey.ladyTalkWDKF: "Even my hair is heating up now.",
+  LangKey.ladyTalkQTRN: "I'll be right there with the iced coffee.",
+  LangKey.ladyTalkGWMD: "How are the others feeling?",
+  LangKey.ladyTalkYXFS: "Mr. Delivery Man, can I get this order for free?",
+  LangKey.ladyTalkXXKS:
+      "The security guy asked me if I needed a fire hydrant...",
+  LangKey.ladyTalkTLTG: "Watch your spit.",
+  LangKey.ladyTalkWDBC:
+      "Breakfast omelette suddenly does the tango in the pan!",
+  LangKey.ladyTalkJGMF: "A shovel won't stop it from rolling into the spinach~",
+  LangKey.ladyTalkAQXZ:
+      "Looks like we need to put a seal on the bottom of the pot.",
+  LangKey.ladyTalkZGZC: "Is today's dish called Egg and Spinach Love Concerto?",
+  LangKey.ladyTalkKBCS: "Bad morning~",
+  LangKey.ladyTalkYYJL:
+      "The air conditioning in the locker room was blowing me cold!",
+  LangKey.ladyTalkJDBN: "Coach put you guys on extra jumps again?",
+  LangKey.ladyTalkKHXL: "Next time you should wear knee warmers.",
+  LangKey.ladyTalkHLNS: "He says it's a winterization exercise.",
+  LangKey.ladyTalkXDYF: "I don't want to look like a flamingo!",
+  LangKey.ladyTalkCRZD: "Do you remember the new clothes I bought last week?",
+  LangKey.ladyTalkNNYQ: "Security says it looks like the new Incredibles skin.",
+  LangKey.ladyTalkXHCN:
+      "You're like a confused girl who steals her boyfriend's clothes.",
+  LangKey.ladyTalkZJDX: "And he asked me when I'd learn my powers.",
+  LangKey.ladyTalkDCDQ: "This dress seems to have a mind of its own...",
+  LangKey.ladyTalkZNXC2: "I found sunscreen leaking into a canvas in my bag!!",
+  LangKey.ladyTalkXLBB:
+      "Quickly photograph the disaster scene as a poster for an abstract art exhibit!",
+  LangKey.ladyTalkDJSB: "Can I order this limited edition camouflage bag now?",
+  LangKey.ladyTalkXRXD: "Named the ninth elopement of Blazing Sun and Canvas~",
+  LangKey.ladyTalkTXFJ:
+      "It's a limited edition summer makeup removal co-brand!",
+  LangKey.ladyTalkCNYF: "The dress says it wants to take the night off...",
+  LangKey.ladyTalkHYYL:
+      "I went out today and grabbed a random shirt that was a little big~",
+  LangKey.ladyTalkXDBB: "Loose fitting dresses are worn with a slouchy look",
+  LangKey.ladyTalkDXHD: "That's not very easy to move around.",
+  LangKey.ladyTalkBYZY: "I keep worrying about dropping it when I walk though~",
+  LangKey.ladyTalkBCND: "It just feels kind of freeing.",
+  LangKey.ladyTalkPLZP: "I won't wear yours next time.",
+  LangKey.ladyTalkKQLH: "I went out today and took a lot of pictures！",
+  LangKey.ladyTalkHQDN: "That's gonna look great.",
+  LangKey.ladyTalkTLKK: "Looking forward to seeing yourself on camera!",
+  LangKey.ladyTalkZJZP:
+      "I'll pick out which one looks best and send it to you right away.",
+  LangKey.ladyTalkZZZY:
+      "I also think there's a lot of satisfaction in this shoot",
+  LangKey.ladyTalkWDXY: "What do you think of this one?",
+  LangKey.ladyTalkTBZD: "I've got a new suit.",
+  LangKey.ladyTalkHXZD: "I'm sure it's especially good for you.",
+  LangKey.ladyTalkHGNK: "I'd love to know what style it is.",
+  LangKey.ladyTalkHYGX: "I'll show you.",
+  LangKey.ladyTalkSZZX: "It's a very personalized set",
+  LangKey.ladyTalkLGHD2:
+      "I feel like I could go to a runway show in this suit.",
+  LangKey.ladyTalkKDXF: "I passed a flower store today!",
+  LangKey.ladyTalkHDKX: "Flowers do make you feel good, ever buy a bunch?",
+  LangKey.ladyTalkNZKX: "You must be enjoying yourself at the flower store.",
+  LangKey.ladyTalkBXLK: "I feel so good when I hold it~",
+  LangKey.ladyTalkFMLH: "I don't want to come out of there!",
+  LangKey.ladyTalkXLHL:
+      "It feels like the house is going to be filled with the scent of flowers~",
+  LangKey.ladyTalkZXSM: "I'm exhausted from cheerleading practice today!",
+  LangKey.ladyTalkSTHP: "You've worked hard. What do you do in training?？",
+  LangKey.ladyTalkYZCF: "So did anything fun happen?",
+  LangKey.ladyTalkDZCQ: "Repeatedly practicing all kinds of movements~",
+  LangKey.ladyTalkSYRN:
+      "I made everyone laugh by accidentally doing the wrong move...",
+  LangKey.ladyTalkMYDH: "Everyone's working hard!",
+  LangKey.ladyTalkSSFG:
+      "What would I be doing now if I hadn't been a cheerleader?",
+  LangKey.ladyTalkWQBY:
+      "You might be a shining light in some interesting industry!",
+  LangKey.ladyTalkDGLS: "Maybe you'll have a totally unexpected career",
+  LangKey.ladyTalkTSGL: "Like being a teacher?",
+  LangKey.ladyTalkTQSL: "Looks like I'd be a good librarian~",
+  LangKey.ladyTalkKDPZ: "I feel so refreshed after the swim!",
+  LangKey.ladyTalkMYRL:
+      "You should do a limited summer photo shoot in this condition.",
+  LangKey.ladyTalkQSTP: "Is the pool empty now?",
+  LangKey.ladyTalkYGHH: "I just snuck a picture by the pool~",
+  LangKey.ladyTalkYWHL: "Minimal crowds when the sun is at its best~",
+  LangKey.ladyTalkQNDZ:
+      "I could eat an entire ice cream truck after every swim~",
+  LangKey.ladyTalkWDBQ:
+      "I found a Polaroid tucked in my knee pads from last year!",
+  LangKey.ladyTalkWFJQ: "Is that my emoji material?",
+  LangKey.ladyTalkDRBS: "I remember putting it in!",
+  LangKey.ladyTalkGNJL: "Of course not.",
+  LangKey.ladyTalkSZYG: "Well, here's your reward!",
+  LangKey.ladyTalkCNYJ:
+      "Should this one be locked in a locker in the locker room?",
+  LangKey.ladyTalkXHJH: "I'm still trying to decide what dress to wear~",
+  LangKey.ladyTalkBHCC: "You can wear whatever you like.",
+  LangKey.ladyTalkMZDH: "Or you could just go with a classic!",
+  LangKey.ladyTalkBXPT: "I feel that each style has its own charm!",
+  LangKey.ladyTalkKQLX: "But I don't want to be too common!",
+  LangKey.ladyTalkZJJL: "This one looks pretty good!",
+  LangKey.ladyTalkFCHD:
+      "I just heard you're about to get Manager of the Season!",
+  LangKey.ladyTalkZSZC: "You've given so much this season, so happy for you!",
+  LangKey.ladyTalkMYGL: "Thanks to you, I've always had your support",
+  LangKey.ladyTalkYZGZ:
+      "I probably couldn't have done it without your encouragement",
+  LangKey.ladyTalkYJHB: "That's a must. I've always had my eye on you!",
+  LangKey.ladyTalkJLHS: "You're pretty good yourself!",
+  LangKey.ladyTalkYTYF:
+      "You're going to look super handsome when you receive your award!",
+  LangKey.ladyTalkBFCZ:
+      "Warning! All the clothes on the balcony suddenly disappeared!.",
+  LangKey.ladyTalkQGDR: "Were they blown away by the wind?",
+  LangKey.ladyTalkLJCZ: "This isn't a prank, is it?",
+  LangKey.ladyTalkKJTR:
+      "It's not like the clothes are running away from home en masse, is it?",
+  LangKey.ladyTalkSTYL:
+      "The neighbor's corgi does come and pick at the fence a lot!",
+  LangKey.ladyTalkGPSN: "I also saw them sunbathing this morning...",
+  LangKey.ladyTalkXCYH: "Maybe a GPS in my closet next time?",
+  LangKey.ladyTalkPCSW: "What are we going to eat on our next date?",
+  LangKey.ladyTalkZCNW:
+      "Western food feels like it can slow down and enjoy our food~",
+  LangKey.ladyTalkZDHB: "But I also crave Chinese fried rice.",
+  LangKey.ladyTalkXHZC: "I think Western food is good~",
+  LangKey.ladyTalkITKS: "Let's go with Chinese. I'd like a stir-fry~",
+  LangKey.ladyTalkZGSW: "I think so too! Western food then.",
+  LangKey.ladyTalkZSHH: "Okay, Chinese food then!",
+  LangKey.ladyTalkZMYL: "No matter what, it's great to be with you~",
+  LangKey.ladyTalkSLXJ: "The bathroom overhead light went straight on strike!",
+  LangKey.ladyTalkBYLZ: "Is the water heater a remake of The Shining?",
+  LangKey.ladyTalkTBYX: "Did you touch the spare candle?",
+  LangKey.ladyTalkHFSL: "It even comes with a dripping sound effect!",
+  LangKey.ladyTalkXFSP: "I squeezed my handful of moisturizer as conditioner!",
+  LangKey.ladyTalkYSAQ: "And I got shampoo foam in my eyes~",
+  LangKey.ladyTalkBZQM:
+      "Do you need me to be your bathroom safety inspector remotely?",
+  LangKey.ladyTalkMATW: "Can you read the shelf life of body wash now?",
+  LangKey.ladyTalkLSFJ: "The inspector is waltzing with a toilet brush!",
+  LangKey.ladyTalkTKPL: "I managed to make a makeshift hair clip!",
+  LangKey.ladyTalkSBSJ: "The darkness is so scary!",
+  LangKey.ladyTalkTCXL: "I put my work hours down wrong today, so confused!",
+  LangKey.ladyTalkMCDB: "Wow, you are so careless!",
+  LangKey.ladyTalkMYDC: "So did you finally make it?",
+  LangKey.ladyTalkQCXX: "Luckily there was no traffic on the road！",
+  LangKey.ladyTalkZYSJ: "I was out of breath by the time I arrived~",
+  LangKey.ladyTalkZXYD:
+      "I'll definitely be more mindful of my time from now on！",
+  LangKey.ladyTalkSJFM: "You just have to be careful.",
+  LangKey.ladyTalkQDHD: "You can make a memo later, which is great!",
+  LangKey.ladyTalkSZHL: "Yeah, the team has a tight schedule of events",
+  LangKey.ladyTalkYZXM: "I'll set it up right now！",
+  LangKey.ladyTalkKQLZ: "I found a kitten in the dugout!",
+  LangKey.ladyTalkZBZM: "How does it look?",
+  LangKey.ladyTalkYIKA: "What are you going to do?",
+  LangKey.ladyTalkZGYD: "A small one, especially cute, with round eyes~",
+  LangKey.ladyTalkMLWT: "I wanted to take care of it for a while！",
+  LangKey.ladyTalkBPNM: "I went and got some cat food to feed him!",
+  LangKey.ladyTalkHZQG: "He's not afraid of you?",
+  LangKey.ladyTalkBPRL: "So he's still in the dugout?",
+  LangKey.ladyTalkAZHH: "He was a little scared at first",
+  LangKey.ladyTalkYCSL: "Yes, I'm keeping him in a quiet place！",
+  LangKey.ladyTalkNDGX: "We had a bit of a mishap with the show today!",
+  LangKey.ladyTalkHYSM: "But your concern made my day~",
+  LangKey.ladyTalkXCXX: "Do you need any more help?",
+  LangKey.ladyTalkNZTX: "Be careful next time.",
+  LangKey.ladyTalkWYZD: "You're so sweet.",
+  LangKey.ladyTalkBTWA: "I'll keep an eye on it.",
+  LangKey.ladyTalkNHZZ: "By the way.",
+  LangKey.ladyTalkRZGZ: "You're always so focused on the sidelines!",
+  LangKey.ladyTalkWZKN: "I've always been serious about my work",
+  LangKey.ladyTalkDQDM: "Actually, I was watching your show.",
+  LangKey.ladyTalkMYYX: "Your dedication to the team is truly admirable.",
+  LangKey.ladyTalkGXBR: "I hope my little fall didn't distract you too much.",
+  LangKey.ladyTalkFSXG: "You're really good at caring about people.",
+  LangKey.ladyTalkHNLT: "I'm gonna go rest my knee.",
+  LangKey.ladyTalkCCMT: "It's so nice talking to you.",
+  LangKey.ladyTalkPDJX: "Guess what tomorrow is?",
+  LangKey.ladyTalkDGRH: "I wanted a little surprise for my birthday party.",
+  LangKey.ladyTalkNYZG: "How about I make a cake myself?",
+  LangKey.ladyTalkWDBZ: "Have you done this before?",
+  LangKey.ladyTalkWXLD: "I didn't realize you had that skill.",
+  LangKey.ladyTalkZXHD: "I spent a lot of time on this when I was a kid!",
+  LangKey.ladyTalkSDPD: "My favorite thing besides training is baking!",
+  LangKey.ladyTalkTBJX: "Speaking of parties, you're coming, right?",
+  LangKey.ladyTalkBYCG: "I've got a special surprise for you.",
+  LangKey.ladyTalkDRHQ: "If you miss it, I promise you'll regret it.",
+  LangKey.ladyTalkYDMW: "Sure, I'd love to.",
+  LangKey.ladyTalkPDYQ: "I may be busy, but I'll try to be there",
+  LangKey.ladyTalkZHDD: "Great. It's gonna be a fun party!",
+  LangKey.ladyTalkZJZZ: "I'll save you the best piece of cake",
+  LangKey.ladyTalkZHDN: "I know it's been a tough game lately~",
+  LangKey.ladyTalkNZJM: "But I believe you're the best manager.",
+  LangKey.ladyTalkDWZY: "You can turn it around.",
+  LangKey.ladyTalkDGNG: "Thanks for the encouragement. It means a lot.",
+  LangKey.ladyTalkDHLZ: "We'll get through this together.",
+  LangKey.ladyTalkXBXS: "Walked by and saw your office light on.",
+  LangKey.ladyTalkXYJD: "Do you want to try",
+  LangKey.ladyTalkFZYA: "Newly developed decongestant coffee?",
+  LangKey.ladyTalkJSWN: "Need someone to test for side effects?",
+  LangKey.ladyTalkRGNX: "Are you monitoring my hours?",
+  LangKey.ladyTalkZSHY: "If you can",
+  LangKey.ladyTalkGYSN: "I'm just looking for testers.",
+  LangKey.ladyTalkXXNL: "You know where the locker room is, right?",
+  LangKey.ladyTalkZJZT: "Thanks for keeping me on my toes today!",
+  LangKey.ladyTalkDZHN: "I know I haven't been in the best of shape lately.",
+  LangKey.ladyTalkBRTM: "You're doing great. These moves are hard.",
+  LangKey.ladyTalkNZDM: "You're great. Don't let the bad days get to you.",
+  LangKey.ladyTalkYSHH: "Do you really feel that way?",
+  LangKey.ladyTalkZZJG: "Sometimes I feel like I'm just...",
+  LangKey.ladyTalkNSYF: "Standing in the spotlight, doing nothing.",
+  LangKey.ladyTalkTRHL:
+      "You're doing everything right. You're part of the team.",
+  LangKey.ladyTalkZDSC:
+      "You put your passion into every training session, and that's what counts.",
+  LangKey.ladyTalkWLRH: "You're really good at this.",
+  LangKey.ladyTalkDUZY: "It's like you're always there for me no matter what.",
+  LangKey.ladyTalkZGCS: "It means so much to me!",
+  LangKey.ladyTalkWDNH:
+      "The championship celebration is over and the whole city is asleep~",
+  LangKey.ladyTalkZZTZ: "I bet you're still up.",
+  LangKey.ladyTalkDLQM: "Want a real challenge?",
+  LangKey.ladyTalkWBHP:
+      "Are you talking about basketball? Or are you defining the challenge?",
+  LangKey.ladyTalkZDHD: "I've never missed a challenge.",
+  LangKey.ladyTalkTBZY: "The game is - Truth or Dare!",
+  LangKey.ladyTalkYZXS: "Special note, I've never lost!",
+  LangKey.ladyTalkJZMG:
+      "What's the one thing you wanted to say to me but didn't?",
+  LangKey.ladyTalkCLSP:
+      "I memorized every move you made, including the misses.",
+  LangKey.ladyTalkNGNM:
+      "I saved your rehearsal video for those sleepless nights.",
+  LangKey.ladyTalkNZBT: "No wonder you come to every rehearsal.",
+  LangKey.ladyTalkZHYW: "Are you cuter than I thought? Manager",
+  LangKey.ladyTalkRGWF: "final question",
+  LangKey.ladyTalkNHSD: "If I post a picture that gets us all fired",
+  LangKey.ladyTalkWBHF: "Would you delete it immediately?",
+  LangKey.ladyTalkWHBL:
+      "Send it over. I'm gonna count how many freckles you're hiding.",
+  LangKey.ladyTalkNZDW: "Send it. But I'll keep the metadata.",
+  LangKey.ladyTalkOLBU: "You know where I live.",
+  LangKey.ladyTalkBSPS: "This is just between the two of us",
+  LangKey.ladyTalkXYMG: "White's too... plain?",
+  LangKey.ladyTalkJJMG: "A rose in ivory silk, timeless perfection.",
+  LangKey.ladyTalkGSCJ: "Thorns first, then petals... interesting approach.",
+  LangKey.ladyTalkFSDW: "as pure as a theorem, I could stare at it for hours.",
+  LangKey.ladyTalkHYML: "PINK!You really get me!",
+  LangKey.ladyTalkWBGL: "Charming, though lacks depth for grand occasions.",
+  LangKey.ladyTalkWLDY: "Cute? Sweetheart, I radiate heat.",
+  LangKey.ladyTalkHLMY: "Predictable symbolism, try harder next time.",
+  LangKey.ladyTalkLTYY: "Soooo romantic! My cheeks are blushing!",
+  LangKey.ladyTalkBYWH: "Overused, but... the thorns are elegant.",
+  LangKey.ladyTalkHXBY: "Blood-red passion... you're playing with fire.",
+  LangKey.ladyTalkWLMY: "Symbolic weight over aesthetics, noted.",
+  LangKey.ladyTalkWMXT: "Boring! Where's the glitter?",
+  LangKey.ladyTalkWHDB: "Perfect lines,you've framed my soul.",
+  LangKey.ladyTalkWMLS: "Sharp lines... and sharper intentions?",
+  LangKey.ladyTalkMNHG: "Sharper than my morning coffee, perfect for Mondays.",
+  LangKey.ladyTalkTSYD: "So kawaii! It's like a mini crown!",
+  LangKey.ladyTalkSZTF: "Practical, yet delicately ornate.",
+  LangKey.ladyTalkXSGN: "Hairpins? I prefer... loose ends.",
+  LangKey.ladyTalkHKTG: "Ergonomic design, function over form.",
+  LangKey.ladyTalkNDDY: "Cool! Let's be secret agents together!",
+  LangKey.ladyTalkWXHZ: "Utilitarian, but hardly a statement piece.",
+  LangKey.ladyTalkWDYJ: "Mystery looks good on meand you.",
+  LangKey.ladyTalkWDNC:
+      "Shield my eyes from glare, but never from curiosity. Clever.",
+  LangKey.ladyTalkZYDW: "Bitter! Where's my boba tea?!",
+  LangKey.ladyTalkDWXH: "You speak my language,honey~",
+  LangKey.ladyTalkSYDW: "Let it breathe... like anticipation.",
+  LangKey.ladyTalkCJYX: "Terroir decoded? You hold the cipher.",
+  LangKey.ladyTalkSZJS: "Sprinkles!! You're my sugar hero!",
+  LangKey.ladyTalkDZKY: "A fleeting indulgence, but delightful.",
+  LangKey.ladyTalkGXHJ: "Sweetness is... overrated.",
+  LangKey.ladyTalkZBCA:
+      "A sugar crash waiting to happen... but worth every bite.",
+  LangKey.ladyTalkKZJH: "Melty goodness! Let's share~",
+  LangKey.ladyTalkMMPC: "Pleasurable, yet... unrefined.",
+  LangKey.ladyTalkLHTA: "A slow sip... or a dare?",
+  LangKey.ladyTalkUNKH: "Flavonoids boost cognition, acceptable.",
+  LangKey.ladyTalkNYKJ: "Unicorns would’ve been cuter!",
+  LangKey.ladyTalkCZYH: "Irresistible! Pearls mirror your taste.",
+  LangKey.ladyTalkYYGS: "Dangling temptations... you noticed?",
+  LangKey.ladyTalkHFBS: "Elegant angles, impressive.",
+  LangKey.ladyTalkTMXK: "SQUISHY!! I'll name him Mr. Waffles!",
+  LangKey.ladyTalkWJSH: "Whimsical,but not collectible.",
+  LangKey.ladyTalkGLNJ: "Toys are for kids. I prefer... games.",
+  LangKey.ladyTalkBSHZ: "Sorry, I'm more a storm than a sunset.",
+  LangKey.ladyTalkDDSD: "Shiny! Let's do a makeup competition!",
+  LangKey.ladyTalkHSYH: "Bold shades but lack subtlety.",
+  LangKey.ladyTalkMLSY: "A scarlet blade, ready to conquer?",
+  LangKey.ladyTalkZJBL: "A color that survives marathons, my hero.",
+  LangKey.ladyTalkCJSK: "At the bar, I bought her a glass of red wine.",
+  LangKey.ladyTalkPDSS:
+      "She was very forthcoming and asked me to join her for a drink.",
+  LangKey.ladyTalkGXLS:
+      "While recording the record, she got drunk and jumped on me.",
+  LangKey.ladyTalkLZYX:
+      "She was scared by a mouse and jumped into my arms, her hair smelled so good",
+  LangKey.ladyTalkYZYT:
+      "She tugged at my sleeve, her breath a whisper on my neck.",
+  LangKey.ladyTalkZWDS:
+      "She bites the cherry, and my hand shakes, spilling the drink.",
+  LangKey.ladyTalkKHYZ:
+      "Her hands on mine, fastening the corset—my throat tightens.",
+  LangKey.ladyTalkHGJR:
+      "Her lipstick on my throat, my palm slipping on the seat.",
+  LangKey.ladyTalkHZZH:
+      "Her fingertips traced my sweat-slick abs, tensing my muscles.",
+  LangKey.ladyTalkZCLG: "Drunk, she murmurs into my neck, ask where to next?",
+  LangKey.ladyTalkKQXB:
+      "In my car, she bit open my button, seatbelt choking me.",
+  LangKey.ladyTalkJSLA:
+      "Her fingers brushed my collar, the air between us thickening.",
+  LangKey.ladyTalkSQYD: "Wine spills on her silk, she asks me to undo the bow.",
+  LangKey.ladyTalkBYYH:
+      '''Her saree tangled in my belt, she said "Need to get close to undo it."''',
+  LangKey.ladyTalkYWSZ:
+      "Stormy night. Doorbell rings. She appears, soaked, shirt revealing black underwear.",
+  LangKey.ladyTalkCZCH:
+      "She bit the lemon on my fingertip, her tongue leaving sour, wet marks.",
+  LangKey.ladyTalkYZSZ:
+      "The cab braked on a rainy night, and her lipstick mark burned into my throat.",
+  LangKey.ladyTalkCGZR:
+      "She bit the spoon, the cream melting on her lips—intentional.",
+  LangKey.ladyTalkJZHZ:
+      "Her hand lingered on my wrist, the heat of her touch searing.",
+  LangKey.ladyTalkWSYQ:
+      '''She pretended to be drunk, leaving her lipstick on my glass—"The perfect color for kissing."''',
+  LangKey.ladyTalkHXJC:
+      "Her thumb traced my knuckles, a silent invitation in her eyes.",
+  LangKey.ladyTalkSXQX:
+      "She leaned in, her breath catching as our hands brushed.",
+  LangKey.ladyTalkHQAY:
+      "Her lips grazed my ear, the world narrowing to just her scent.",
+  LangKey.ladyTalkJZQM: "Darkness, scuffling—lights on, her strap slips",
+  LangKey.ladyTalkSCZH:
+      "In front of the mirror, she grabbed my hand and pressed it to the corset tie.",
+  LangKey.ladyTalkSBJG:
+      "She took her jacket off on the way home. She's got a great body.",
+  LangKey.ladyTalkDLHJ:
+      "Her breath hitched as she brushed past me, the warmth of her body leaving an imprint on mine.",
+  LangKey.ladyTalkJQJW:
+      "Her fingers brushed the back of my neck, sending a shiver down my spine as she pulled me in.",
+  LangKey.gameInfoResourcesAlert:
+      "Her hand gripped mine, guiding it to the small of her back, before her lips met mine in a soft, urgent kiss.",
+  LangKey.gameInfoLackCoin: "RESOURCES ALERT",
+  LangKey.gameInfolackCash: "Sorry,you don't have enough COINS",
+  LangKey.gameInfoPickCoin: "Sorry,you don't have enough CASH",
+  LangKey.gameInfoTaskCoin: "Make a right pick can get lots of coins.",
+  LangKey.gameInfoNewsGetCoin: "Finish Daily Task can get coins.",
+  LangKey.gameInfoTrainCash: "There some coin hide in news.",
+  LangKey.gameInfoTaskCash: "Start training can get lots of cash.",
+  LangKey.gameInfoDontShow: "Finish Daily Task can get cash.",
+  LangKey.pickMeanTPR: "Do not show the tips today.",
+  LangKey.beginnerWYFP: "Total Points&Rebound",
+  LangKey.beginnerBYT: "WHO'S YOUR FAVORITE PLAYER",
+  LangKey.beginnerKeyP: "BUILD YOUR TEAM",
+  LangKey.beginnerOtherP: "KEY PLAYER",
+  LangKey.beginnerButtonRandom: "OTHER PLAYERS",
+  LangKey.beginnerButtonConfirm: "RANDOM",
+  LangKey.beginnerButtonGo: "CONFIRM",
+  LangKey.gameBeforeMatching: "GO",
+  LangKey.gameBeforeGameStart: "MATCHING",
+  LangKey.gameAfterUpcomingE: "GAME START",
+  LangKey.gameAfterClick: "FEATURED UPCOMING EVENTS",
+  LangKey.gameAfterNoE: "Click to trigger",
+  LangKey.gameAfterYLG: "NO EVENT",
+  LangKey.eventEvents: "You lost the game",
+  LangKey.eventPlayerPoaching: "EVENTS",
+  LangKey.eventSomeonesP: "PLAYER POACHING",
+  LangKey.eventStolenEasy: "{0}'S PLAYERS",
+  LangKey.eventStolenNormal: "EASY",
+  LangKey.eventStolenHard: "NORMAL",
+  LangKey.eventButtonContinue: "HARD",
+  LangKey.eventSuccess: "CONTINUE",
+  LangKey.eventFailed: "SUCCESS",
+  LangKey.playerPackName: "FAILED",
+  LangKey.playerPackButtonBuy: "PLAYER PACK",
+  LangKey.playerPackSIGN: "BUY",
+  LangKey.playerPackButtonCollect: "PLAYER SIGNING",
+  LangKey.playerReplaceCancel: "COLLECT",
+  LangKey.playerReplaceReplace: "CANCEL",
+  LangKey.beginnerGuideGoGame: "REPLACE",
+  LangKey.beginnerGuideReadNews:
+      "Team is formed now and you will be matched with an opponent for a game.",
+  LangKey.beginnerGuideReplace:
+      "Here you can read news about games and find event cards.",
+  LangKey.beginnerGuideSurprise:
+      "We've gained a better player, replace him on the lineup.",
+  LangKey.beginnerGuideWhatE:
+      "In the news module, there are the most up-to-date news and also surprise events, check it out!",
+  LangKey.beginnerGuidePlayerPack: "Let's see what this event is all about.",
+  LangKey.beginnerGuideGameStart:
+      "Let's buy a player pack and see if we can get a better player.",
+  LangKey.eventClashInfusion: "Let's get the game started.",
 };
 
 // const Map<String, String> en_US = {
