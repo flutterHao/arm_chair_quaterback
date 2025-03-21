@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2025-03-21 11:16:55
+ * @LastEditTime: 2025-03-21 12:13:59
  */
 
 import 'dart:math';
@@ -77,7 +77,7 @@ class NewsBottomButton extends GetView<NewListController> {
                         //       : AppColors.c000000,
                         // ),
                         AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 200),
                           transitionBuilder:
                               (Widget child, Animation<double> animation) {
                             return ScaleTransition(
@@ -96,7 +96,7 @@ class NewsBottomButton extends GetView<NewListController> {
                                 ? Assets.iconUiIconLike01
                                 : Assets.iconUiIconLike02,
                             iconColor: detail.isLike.value == 1
-                                ? AppColors.cFF7954
+                                ? AppColors.cE8273D
                                 : AppColors.c000000,
                           ),
                         ),
@@ -106,7 +106,7 @@ class NewsBottomButton extends GetView<NewListController> {
                           style: 14.w4(
                             fontFamily: FontFamily.fRobotoRegular,
                             color: detail.isLike.value == 1
-                                ? AppColors.cFF7954
+                                ? AppColors.cE8273D
                                 : AppColors.c000000,
                           ),
                         ),
@@ -121,8 +121,7 @@ class NewsBottomButton extends GetView<NewListController> {
                   height: 24.w,
                   color: AppColors.ccccccc,
                 ),
-                MtInkWell(
-                  minScale: 0.5,
+                InkWell(
                   onTap: () => controller.unLikeNews(detail),
                   child: Container(
                     width: 37.w,
@@ -130,14 +129,28 @@ class NewsBottomButton extends GetView<NewListController> {
                     child: Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.rotationX(pi),
-                      child: IconWidget(
-                        iconWidth: 18.w,
-                        icon: detail.isLike.value == -1
-                            ? Assets.iconUiIconLike01
-                            : Assets.iconUiIconLike02,
-                        iconColor: detail.isLike.value == -1
-                            ? AppColors.c2D84EF
-                            : AppColors.c000000,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 200),
+                        transitionBuilder:
+                            (Widget child, Animation<double> animation) {
+                          return ScaleTransition(
+                            scale: CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeInOut,
+                            ),
+                            child: child,
+                          );
+                        },
+                        child: IconWidget(
+                          key: ValueKey(detail.isLike.value == -1),
+                          iconWidth: 18.w,
+                          icon: detail.isLike.value == -1
+                              ? Assets.iconUiIconLike01
+                              : Assets.iconUiIconLike02,
+                          iconColor: detail.isLike.value == -1
+                              ? AppColors.c1F8FE5
+                              : AppColors.c000000,
+                        ),
                       ),
                     ),
                   ),
