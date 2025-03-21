@@ -217,7 +217,7 @@ class _TranslationPageState extends State<TranslationPage>
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
-    var shortHeight = 200.h;
+    var shortHeight = (size.height-width)/2;
     var longHeight = shortHeight + width;
     return Container(
       color: AppColors.c000000,
