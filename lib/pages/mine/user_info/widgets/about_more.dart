@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/common/term_user_page.dart';
 import 'package:arm_chair_quaterback/pages/common/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -82,26 +83,29 @@ class AboutMoreWidget extends StatelessWidget {
               )),
           Divider(height: 1, color: AppColors.cE6E6E6),
           MtInkWell(
+              onTap: () {
+                Get.to(TermUserPage());
+              },
               child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16.w),
-            child: Row(
-              children: [
-                Text(
-                  'Term of use',
-                  style: 14.w5(
-                      fontFamily: FontFamily.fOswaldRegular,
-                      height: 1,
-                      color: AppColors.cA1A1A1),
+                padding: EdgeInsets.symmetric(vertical: 16.w),
+                child: Row(
+                  children: [
+                    Text(
+                      'Term of use',
+                      style: 14.w5(
+                          fontFamily: FontFamily.fOswaldRegular,
+                          height: 1,
+                          color: AppColors.cA1A1A1),
+                    ),
+                    Spacer(),
+                    IconWidget(
+                      icon: Assets.commonUiCommonIconSystemJumpto,
+                      iconWidth: 7.w,
+                      iconColor: AppColors.c666666,
+                    )
+                  ],
                 ),
-                Spacer(),
-                IconWidget(
-                  icon: Assets.commonUiCommonIconSystemJumpto,
-                  iconWidth: 7.w,
-                  iconColor: AppColors.c666666,
-                )
-              ],
-            ),
-          )),
+              )),
         ],
       ),
     );
