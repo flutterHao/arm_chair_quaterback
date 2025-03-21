@@ -2,15 +2,15 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2025-03-13 16:24:55
+ * @LastEditTime: 2025-03-21 11:16:55
  */
 
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -67,14 +67,38 @@ class NewsBottomButton extends GetView<NewListController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         7.hGap,
-                        IconWidget(
-                          iconWidth: 18.w,
-                          icon: detail.isLike.value == 1
-                              ? Assets.iconUiIconLike01
-                              : Assets.iconUiIconLike02,
-                          iconColor: detail.isLike.value == 1
-                              ? AppColors.cFF7954
-                              : AppColors.c000000,
+                        // IconWidget(
+                        //   iconWidth: 18.w,
+                        //   icon: detail.isLike.value == 1
+                        //       ? Assets.iconUiIconLike01
+                        //       : Assets.iconUiIconLike02,
+                        //   iconColor: detail.isLike.value == 1
+                        //       ? AppColors.cFF7954
+                        //       : AppColors.c000000,
+                        // ),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            return ScaleTransition(
+                              scale: CurvedAnimation(
+                                parent: animation,
+                                curve: Curves.easeInOut,
+                              ),
+                              child: child,
+                            );
+                          },
+                          child: IconWidget(
+                            key:
+                                ValueKey(detail.isLike.value == 1), // 唯一key触发动画
+                            iconWidth: 18.w,
+                            icon: detail.isLike.value == 1
+                                ? Assets.iconUiIconLike01
+                                : Assets.iconUiIconLike02,
+                            iconColor: detail.isLike.value == 1
+                                ? AppColors.cFF7954
+                                : AppColors.c000000,
+                          ),
                         ),
                         7.hGap,
                         Text(
@@ -92,30 +116,29 @@ class NewsBottomButton extends GetView<NewListController> {
                 ),
                 // if (detail.likes != 0)
 
-                GestureDetector(
-                  onTap: () => controller.likeNews(detail),
-                  child: Container(
-                    width: 1.w,
-                    height: 24.w,
-                    color: AppColors.ccccccc,
-                  ),
+                Container(
+                  width: 1.w,
+                  height: 24.w,
+                  color: AppColors.ccccccc,
                 ),
-                InkWell(
+                MtInkWell(
+                  minScale: 0.5,
                   onTap: () => controller.unLikeNews(detail),
                   child: Container(
                     width: 37.w,
-                    padding: EdgeInsets.only(top: 3.w),
                     alignment: Alignment.center,
-                    // padding: EdgeInsets.symmetric(horizontal: 7.w),
-                    child: IconWidget(
-                      rotateAngle: 180,
-                      iconWidth: 18.w,
-                      icon: detail.isLike.value == -1
-                          ? Assets.iconUiIconLike01
-                          : Assets.iconUiIconLike02,
-                      iconColor: detail.isLike.value == -1
-                          ? AppColors.c2D84EF
-                          : AppColors.c000000,
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationX(pi),
+                      child: IconWidget(
+                        iconWidth: 18.w,
+                        icon: detail.isLike.value == -1
+                            ? Assets.iconUiIconLike01
+                            : Assets.iconUiIconLike02,
+                        iconColor: detail.isLike.value == -1
+                            ? AppColors.c2D84EF
+                            : AppColors.c000000,
+                      ),
                     ),
                   ),
                 ),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-20 17:47:25
+ * @LastEditTime: 2025-03-21 10:39:18
  */
 import 'dart:async';
 import 'dart:math';
@@ -30,6 +30,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:spine_flutter/spine_widget.dart';
 
 import 'index.dart';
 
@@ -51,6 +52,7 @@ class NewListController extends GetxController {
   bool loadDataSuccess = false;
   late StreamSubscription<int> subscription;
   List<PicksPlayerV2> pickPlayerList = [];
+  late SpineWidgetController spineController;
 
   @override
   void onInit() {
@@ -67,6 +69,15 @@ class NewListController extends GetxController {
           812.h * 2) {
         getNewsFlow();
       }
+    });
+
+    spineController = SpineWidgetController(onInitialized: (controller) {
+      // Set the default mixing time between animations
+      controller.animationState.getData().setDefaultMix(0.2);
+      // Set the portal animation on track 0
+      controller.animationState.setAnimationByName(0, "tx_zan", true);
+      // Queue the run animation after the portal animation
+      // spineController.animationState.addAnimationByName(0, "run", true, 0);
     });
   }
 
@@ -92,7 +103,8 @@ class NewListController extends GetxController {
       state.page++;
     }
     Log.d("加载瀑布流数据page=${state.page}");
-    await NewsApi.newsFlow(state.page, state.pageSize).then((value) async {
+    int size = Random().nextInt(2) + 2;
+    await NewsApi.newsFlow(state.page, size).then((value) async {
       int type = await NewsApi.newsEventTrigger();
       if (value.isNotEmpty) {
         value.last.eventType = type;

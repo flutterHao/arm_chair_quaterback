@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 19:00:39
- * @LastEditTime: 2024-12-11 10:14:23
+ * @LastEditTime: 2025-03-21 10:37:07
  */
 import 'dart:ui';
 
@@ -40,7 +40,7 @@ class NewListState {
 
   List<NewsListDetail> newsFlowList = [];
   int page = 0;
-  int pageSize = 5;
+  int pageSize = 3;
   List<NewsListDetail> detailList = [];
 
   // Map<int, Map<String, Color>> teamColorMap = {

@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/event_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/video_player_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -93,7 +94,7 @@ class NewsListItem extends GetView<NewListController> {
           ),
         ),
         13.hGap,
-        InkWell(
+        MtInkWell(
           onTap: () {
             controller.shareNews(newsDetail);
           },
