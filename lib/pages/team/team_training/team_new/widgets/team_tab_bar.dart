@@ -2,10 +2,9 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2025-03-19 11:03:35
+ * @LastEditTime: 2025-03-21 20:04:04
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -13,7 +12,6 @@ import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,8 +21,8 @@ class TeamTabbar extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    bool isMax = controller.myBagList.length >=
-        controller.myTeamEntity.playerBackpackNum;
+    int bagNum = (Utils.getGameConstant(10003)?.constantValue ?? 500).ceil();
+    bool isMax = controller.myBagList.length >= bagNum;
     return SizedBox(
       width: 375.w,
       height: 130.w,
@@ -101,7 +99,7 @@ class TeamTabbar extends GetView<TeamController> {
                             ),
                             SizedBox(height: 4.h),
                             Text(
-                              "/${controller.myTeamEntity.playerBackpackNum}",
+                              "/$bagNum",
                               style: 21.w4(
                                   color: AppColors.cFFFFFF,
                                   height: 0.75,
