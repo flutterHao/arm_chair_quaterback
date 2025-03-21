@@ -89,9 +89,9 @@ class HttpUtil {
     String url = ConfigStore.to.getServiceUrl();
 
     /// 把美服的都转到国服
-    if (url == Address.pubDevUrl) {
-      url = Address.publicDevUrl;
-    }
+    // if (url == Address.pubDevUrl) {
+    //   url = Address.publicDevUrl;
+    // }
     return url;
   }
 
