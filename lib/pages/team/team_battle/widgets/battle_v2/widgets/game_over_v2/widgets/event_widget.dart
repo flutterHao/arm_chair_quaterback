@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/money_income_animation.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -59,6 +60,7 @@ class _EventWidgetState extends State<EventWidget>
   Widget build(BuildContext context) {
     return MtInkWell(
       onTap: () async {
+        if(!Utils.canOperate()) return;
         if (finish) return;
         if (widget.type == 2) {
           SoundServices.to.playSound(Assets.soundStealPlayer);

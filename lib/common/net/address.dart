@@ -27,7 +27,7 @@ class Address {
   static const String privateDevUrl = 'http://10.0.3.38:7007';
 
   static const String httpBaseUrl =
-      ((kIsWeb && kProfileMode) || kDebugMode) ? privateDevUrl : privateDevUrl;
+      ((kIsWeb && kProfileMode) || kDebugMode) ? privateDevUrl : pubDevUrl;
 
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 
@@ -50,7 +50,7 @@ class Address {
 
   static const String wsBaseUrl = ((kIsWeb && kProfileMode) || kDebugMode)
       ? wsPrivateDevUrl
-      : wsPrivateDevUrl;
+      : wsPubDevUrl;
 
   static const String imgBaseUrl =
       "https://seaball-1324211645.cos.ap-guangzhou.myqcloud.com/";
