@@ -499,7 +499,7 @@ class CacheApi {
   }
 
   static Future<Map> getTermOfUse() async {
-    Map json = await HttpUtil().post(Api.cTermOfUse);
-    return json;
+    List list = await HttpUtil().post(Api.cTermOfUse);
+    return list[0];
   }
 }

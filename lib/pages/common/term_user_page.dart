@@ -44,7 +44,11 @@ class _TermUserPageState extends State<TermUserPage> {
             child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
           child: Column(
-            children: [Text(content)],
+            children: [
+              Text(
+                content.replaceAll(r"\n", '\n'),
+              )
+            ],
           ),
         )));
   }
