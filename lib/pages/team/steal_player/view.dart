@@ -33,10 +33,10 @@ class StealPlayer extends GetView<StealPlayerController> {
                     children: [
                       TranslationPage(
                           onEnd: () => controller.translationPageEnd()),
-                      AnimatedOpacity(
-                          opacity: controller.showMatch ? 1 : 0,
-                          duration: Duration(milliseconds: 300),
-                          child: Matching()),
+                      // AnimatedOpacity(
+                      //     opacity: controller.showMatch ? 1 : 0,
+                      //     duration: Duration(milliseconds: 300),
+                      //     child: Matching()),
                     ],
                   );
                 }),

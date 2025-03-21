@@ -121,7 +121,7 @@ class TeamBattleController extends GetxController
   teamMatch() async {
     loadStatus = LoadDataStatus.loading;
     var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
-    var minMatchTimeMs = 1500;
+    var minMatchTimeMs = 3000;
     await Future.wait([
       CacheApi.getGameEvent(),
       CacheApi.getCompetitionVenue(),
@@ -224,7 +224,9 @@ class TeamBattleController extends GetxController
   }
 
   translationPageEnd() {
-    nextStep();
+    Future.delayed(Duration(seconds: 3),(){
+      nextStep();
+    });
   }
 
   void nextAutoNext() {
