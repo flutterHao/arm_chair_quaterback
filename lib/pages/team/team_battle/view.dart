@@ -2,12 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-19 22:04:25
- * @LastEditTime: 2025-02-07 18:34:19
+ * @LastEditTime: 2025-03-20 18:47:00
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/translation_page.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching_v2.dart';
@@ -72,6 +74,9 @@ class TeamBattlePage extends GetView<TeamBattleController> {
         //   );
         // }
         return Obx(() {
+          if (controller.step.value == 2) {
+            SoundServices.to.playSound(Assets.soundGameStart);
+          }
           return Stack(
             alignment: Alignment.center,
             children: [

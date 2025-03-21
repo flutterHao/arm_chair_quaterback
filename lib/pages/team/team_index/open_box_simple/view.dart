@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-03-20 14:45:56
+ * @LastEditTime: 2025-03-20 20:14:52
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/custom_buttom.dart';
@@ -408,6 +409,7 @@ class OpenBoxSimplePage extends GetView<OpenBoxSimpleController> {
                 if (controller.fallOutAnimation.value == 1 &&
                     controller.step == 0 &&
                     !controller.isOpen) {
+                  SoundServices.to.playSound(Assets.soundTearPack);
                   controller.isOpen = true;
                   controller.boxAniCtrl.reset();
                   controller.boxAniCtrl.forward().then((v) {

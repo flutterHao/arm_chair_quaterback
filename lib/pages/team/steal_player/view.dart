@@ -1,6 +1,8 @@
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back/horizontal_drag_back_container.dart';
 import 'package:arm_chair_quaterback/common/widgets/translation_page.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/steal_player/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/steal_player/widgets/player_choose.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching.dart';

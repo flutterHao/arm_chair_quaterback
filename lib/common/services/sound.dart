@@ -2,7 +2,7 @@
  * @Description: 音效控制
  * @Author: lihonghao
  * @Date: 2025-02-07 14:44:38
- * @LastEditTime: 2025-02-27 10:09:45
+ * @LastEditTime: 2025-03-20 18:36:47
  */
 // sound_manager.dart
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -24,6 +24,7 @@ class SoundServices extends GetxService {
 
   Future<void> preloadSounds() async {
     var files = [
+      Assets.soundClick,
       Assets.soundWaitingAward,
       Assets.soundWindowOpen,
       Assets.soundWindowClose,

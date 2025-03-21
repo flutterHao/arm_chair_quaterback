@@ -5,10 +5,9 @@
  * @LastEditTime: 2025-03-19 16:52:53
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
@@ -41,11 +40,15 @@ class PlayerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double scale = 58 / 74;
     return MtInkWell(
-      onTap: () =>
-          onTap?.call() ??
+      onTap: () {
+        if (onTap != null) {
+          onTap!();
+        } else {
           Get.toNamed(RouteNames.picksPlayerDetail,
               arguments:
-                  PlayerDetailPageArguments(playerId, isMyPlayer: false)),
+                  PlayerDetailPageArguments(playerId, isMyPlayer: false));
+        }
+      },
       child: Container(
         width: 74.w * scale,
         height: 93.w * scale,

@@ -7,9 +7,11 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -102,7 +104,7 @@ class StealPlayerController extends GetxController
   translationPageEnd() {
     // showMatch = true;
     // update();
-    Future.delayed(Duration(milliseconds: 3000),(){
+    Future.delayed(Duration(milliseconds: 3000), () {
       ready = true;
       update();
     });
@@ -145,9 +147,15 @@ class StealPlayerController extends GetxController
       if (res.stealPlayer != null) {
         /// success
         stealStatus.value = 1;
+        Future.delayed(const Duration(milliseconds: 1000), () {
+          SoundServices.to.playSound(Assets.soundStealPlayerSuccess);
+        });
       } else {
         ///failed
         stealStatus.value = 2;
+        Future.delayed(const Duration(milliseconds: 1000), () {
+          SoundServices.to.playSound(Assets.soundStealPlayerFail);
+        });
       }
       // 获取被点击 item 的 RenderBox 与全局位置
       final RenderBox renderBox =

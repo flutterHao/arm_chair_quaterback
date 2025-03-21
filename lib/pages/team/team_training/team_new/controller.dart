@@ -9,9 +9,11 @@ import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dar
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/power_change_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/recover_dialog.dart';
@@ -317,13 +319,13 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       for (var e in result.teamPlayers) {
         if (e.position == 0 && subList.where((s) => s.uuid == e.uuid).isEmpty) {
           subList.add(e);
-          listKey.currentState!.insertItem(subList.length - 1);
+          listKey.currentState?.insertItem(subList.length - 1);
         }
       }
     } else if (isDown) {
       int index = subList.indexWhere((element) => element.uuid == item1.uuid);
 
-      listKey.currentState!.removeItem(
+      listKey.currentState?.removeItem(
         index,
         (context, animation) => animatedSubItem(index, animation),
       );
@@ -595,6 +597,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       item2 = oldPlayer;
       TeamApi.changeTeamPlayer(item1.uuid, item2.uuid).then((v) {
         showChangeAnimated.value = true;
+        SoundServices.to.playSound(Assets.soundSubstitute);
         Future.delayed(const Duration(milliseconds: 400), () {
           showExChange = false;
           update();

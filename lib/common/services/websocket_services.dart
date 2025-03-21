@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -256,6 +257,7 @@ class WebsocketServices extends GetxService {
   }
 
   static void _show(ToastItem item) {
+    SoundServices.to.playSound(Assets.soundNotfication);
     Widget child = Center(
       child: Container(
         height: 61.w,
@@ -286,7 +288,7 @@ class WebsocketServices extends GetxService {
         child: child,
       );
     }
-    if(item.type != null){
+    if (item.type != null) {
       Get.find<HomeController>().refreshMoneyCoinWidget();
     }
     showTopToastDialog(

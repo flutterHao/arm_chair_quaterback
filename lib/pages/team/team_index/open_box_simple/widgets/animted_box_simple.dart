@@ -2,12 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-03-20 14:44:26
+ * @LastEditTime: 2025-03-20 19:48:43
  */
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/controller.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +101,7 @@ class _AnimatedBoxSimpleState extends State<AnimatedBoxSimple>
     // ctrl.fallOutAnimatedCtrl.reset();
     Future.delayed(200.milliseconds).then((v) {
       // ctrl.fallOutAnimatedCtrl.reset();
+      SoundServices.to.playSound(Assets.soundCardShowup);
       ctrl.fallOutAnimatedCtrl.forward().then((v) {
         ctrl.update(["open_box_simple"]);
       });
