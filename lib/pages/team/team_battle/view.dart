@@ -94,6 +94,7 @@ class TeamBattlePage extends GetView<TeamBattleController> {
                 TranslationPage(
                   onEnd: () => controller.translationPageEnd(),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "GAME",

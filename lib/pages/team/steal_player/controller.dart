@@ -102,8 +102,8 @@ class StealPlayerController extends GetxController
   }
 
   translationPageEnd() {
-    showMatch = true;
-    update();
+    // showMatch = true;
+    // update();
     Future.delayed(Duration(milliseconds: 3000), () {
       ready = true;
       update();
