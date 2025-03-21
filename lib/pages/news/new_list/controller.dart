@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-21 11:33:59
+ * @LastEditTime: 2025-03-21 19:36:58
  */
 import 'dart:async';
 import 'dart:math';
@@ -97,7 +97,7 @@ class NewListController extends GetxController {
     Log.d("加载瀑布流数据 ${DateTime.now()}");
     isLoading = true;
     if (isRefresh) {
-      state.newsFlowList.clear();
+      // state.newsFlowList.clear();
       state.page = 0;
     } else {
       state.page++;
@@ -109,14 +109,15 @@ class NewListController extends GetxController {
       if (value.isNotEmpty) {
         value.last.eventType = type;
       }
+      if (isRefresh) state.newsFlowList.clear();
       state.newsFlowList.addAll(value);
       update(['newsList']);
       Log.d("加载瀑布流数据 ${DateTime.now()}");
     }).whenComplete(() {
       loadingStatus.value = LoadDataStatus.success;
-      isRefresh
-          ? flowRefreshCtrl.refreshCompleted()
-          : flowRefreshCtrl.loadComplete();
+
+      flowRefreshCtrl.refreshCompleted();
+      flowRefreshCtrl.loadComplete();
       isLoading = false;
     }).catchError((e) {
       loadingStatus.value = LoadDataStatus.error;

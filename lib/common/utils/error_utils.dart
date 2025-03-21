@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-26 18:42:28
- * @LastEditTime: 2025-01-08 14:54:28
+ * @LastEditTime: 2025-03-21 19:32:20
  */
 import 'dart:convert';
 
@@ -78,7 +78,7 @@ class ErrorUtils {
     return defaultErrorString;
   }
 
-  static const String _DEFAULTERRORSTRING = "SERVER ERROR";
+  static const String _DEFAULTERRORSTRING = "SERVER BUSY";
 
   static const String _defaultErrorCodeJsonString = '''[
 	{
