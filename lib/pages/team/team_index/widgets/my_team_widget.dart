@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-03-20 16:51:33
+ * @LastEditTime: 2025-03-20 18:40:24
  */
 import 'dart:math';
 
@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dar
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -294,6 +295,8 @@ class MyTeamWidget extends StatelessWidget {
                                     child: MtInkWell(
                                       splashColor: Colors.transparent,
                                       onTap: () {
+                                        SoundServices.to
+                                            .playSound(Assets.soundGoButton);
                                         TeamIndexController ctrl = Get.find();
                                         ctrl.matchBattle();
                                       },
@@ -415,7 +418,7 @@ class PlayerCardWidget extends GetView<TeamController> {
           Utils.getPlayBaseInfo(player.playerId).ename,
           style: 12.w4(
             fontFamily: FontFamily.fOswaldMedium,
-            height: 0.8,
+            height: 1,
             color: AppColors.cFFFFFF,
           ),
         ),

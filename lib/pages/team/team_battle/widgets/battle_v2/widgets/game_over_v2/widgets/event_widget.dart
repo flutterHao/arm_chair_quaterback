@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/services/websocket_services.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
@@ -60,12 +61,15 @@ class _EventWidgetState extends State<EventWidget>
       onTap: () async {
         if (finish) return;
         if (widget.type == 2) {
+          SoundServices.to.playSound(Assets.soundStealPlayer);
           finish = await Get.toNamed(RouteNames.stealPlayer);
+          SoundServices.to.stopAllSounds();
           widget.onEnd?.call(finish);
         } else {
           WebsocketServices.pause();
           finish = await getNewsEventAward();
           if (finish) {
+            SoundServices.to.playSound(Assets.soundMoneyGet);
             overlayEntry = OverlayEntry(builder: (BuildContext context) {
               var width = 150;
               var size = MediaQuery.of(context).size;

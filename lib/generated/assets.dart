@@ -344,6 +344,7 @@ class Assets {
   static const String managerUiNewManger12 = 'assets/images/manager/ui_new_manger_12.png';
   static const String managerUiNewManger13 = 'assets/images/manager/ui_new_manger_13.png';
   static const String managerUiNewManger14 = 'assets/images/manager/ui_new_manger_14.png';
+  static const String newsLikeTxZan = 'assets/spine/news_like/tx_zan.png';
   static const String newsUiIconArrows04 = 'assets/images/news/ui_icon_arrows_04.png';
   static const String newsUiIconBall = 'assets/images/news/ui_icon_ball.png';
   static const String newsUiIconEmoji = 'assets/images/news/ui_icon_emoji.png';
@@ -409,6 +410,8 @@ class Assets {
   static const String soundBattleEnd = 'assets/sound/BattleEnd.mp3';
   static const String soundBuffBig = 'assets/sound/BuffBig.mp3';
   static const String soundBuffSamll = 'assets/sound/BuffSamll.mp3';
+  static const String soundCardShowup = 'assets/sound/CardShowup.MP3';
+  static const String soundCardTrunOver = 'assets/sound/CardTrunOver.MP3';
   static const String soundClick = 'assets/sound/Click.mp3';
   static const String soundDelete = 'assets/sound/Delete.mp3';
   static const String soundDribbling = 'assets/sound/Dribbling.mp3';
@@ -416,14 +419,18 @@ class Assets {
   static const String soundError = 'assets/sound/Error.mp3';
   static const String soundGameBgm = 'assets/sound/GameBgm.mp3';
   static const String soundGameFail = 'assets/sound/GameFail.mp3';
+  static const String soundGameStart = 'assets/sound/GameStart.mp3';
   static const String soundGamewin = 'assets/sound/Gamewin.mp3';
+  static const String soundGoButton = 'assets/sound/GoButton.mp3';
   static const String soundMoneyBig = 'assets/sound/MoneyBig.mp3';
+  static const String soundMoneyGet = 'assets/sound/MoneyGet.mp3';
   static const String soundMoneySmall = 'assets/sound/MoneySmall.mp3';
   static const String soundNotfication = 'assets/sound/Notfication.mp3';
   static const String soundOpenwindow = 'assets/sound/Openwindow.mp3';
   static const String soundPickConfirm = 'assets/sound/PickConfirm.mp3';
   static const String soundPickReward = 'assets/sound/PickReward.mp3';
   static const String soundPlayerBookLevelUp = 'assets/sound/PlayerBookLevelUp.mp3';
+  static const String soundPlayerGet = 'assets/sound/PlayerGet.mp3';
   static const String soundPropMove = 'assets/sound/PropMove.mp3';
   static const String soundRadaMatch = 'assets/sound/RadaMatch.mp3';
   static const String soundSayNo = 'assets/sound/SayNo.mp3';
@@ -439,6 +446,10 @@ class Assets {
   static const String soundStatsRecoverOne = 'assets/sound/StatsRecoverOne.mp3';
   static const String soundStatusBig = 'assets/sound/StatusBig.mp3';
   static const String soundStatusSmall = 'assets/sound/StatusSmall.mp3';
+  static const String soundStealPlayer = 'assets/sound/StealPlayer.MP3';
+  static const String soundStealPlayerFail = 'assets/sound/StealPlayerFail.MP3';
+  static const String soundStealPlayerSuccess = 'assets/sound/StealPlayerSuccess.MP3';
+  static const String soundSubstitute = 'assets/sound/Substitute.MP3';
   static const String soundTeamLevelUp = 'assets/sound/TeamLevelUp.mp3';
   static const String soundTearPack = 'assets/sound/TearPack.mp3';
   static const String soundTimeOut = 'assets/sound/TimeOut.mp3';
@@ -448,6 +459,7 @@ class Assets {
   static const String soundWindowClose = 'assets/sound/WindowClose.mp3';
   static const String soundWindowOpen = 'assets/sound/WindowOpen.mp3';
   static const String spineLoadingLoading = 'assets/spine/loading/loading.atlas';
+  static const String spineNewsLikeTxZan = 'assets/spine/news_like/tx_zan.atlas';
   static const String spineNv1 = 'assets/spine/nv_1.png';
   static const String teamUICommonGrain = 'assets/images/team/UI_common_grain.png';
   static const String teamUiBattleNews = 'assets/images/team/ui_battle_news.png';

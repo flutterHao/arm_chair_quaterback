@@ -124,6 +124,7 @@ flutter:
     - assets/images/scores/
     - assets/spine/
     - assets/spine/loading/
+    - assets/spine/news_like/
     - assets/images/inbox/
     - assets/sound/
     - assets/images/community/

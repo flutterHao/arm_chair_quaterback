@@ -4,8 +4,10 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/services/sound.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/low_resources_bottomsheet.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box_simple/view.dart';
@@ -133,7 +135,8 @@ class OpenBoxSimpleController extends GetxController
     teamCtrl.update();
     // //如果没有替换，并且替补有空位
     if (teamCtrl.playerIdOld == 0) {
-      TeamController teamCtrl = Get.find();
+      if (teamCtrl.myBagList.where((e) => e.position == 0).length >=
+          teamCtrl.myTeamEntity.benchCount) return;
       teamCtrl.isAdd = true;
       await teamCtrl.getBagPlayers();
       var newPlayer = teamCtrl.myBagList.firstWhereOrNull(
@@ -151,6 +154,7 @@ class OpenBoxSimpleController extends GetxController
     showCollect.value = false;
     step = 2;
     update(["open_box_simple"]);
+    SoundServices.to.playSound(Assets.soundCardTrunOver);
     await Future.delayed(const Duration(milliseconds: 300));
     var player = currentCardPack.playerCards.first;
     player.isOpen.value = true;
