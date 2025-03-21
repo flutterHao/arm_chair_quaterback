@@ -166,9 +166,9 @@ class WSInstance {
     String url = ConfigStore.to.getWsServiceUrl();
 
     /// 把美服的都转到国服
-    if (url == Address.wsPubDevUrl) {
-      url = Address.wsPublicDevUrl;
-    }
+    // if (url == Address.wsPubDevUrl) {
+    //   url = Address.wsPublicDevUrl;
+    // }
     // print('ws url ------ : $url');
     return url;
   }
