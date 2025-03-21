@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/top_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -115,6 +116,9 @@ class UserInfoBar extends StatelessWidget {
                       ),
                       InkWell(
                         onLongPress: () {
+                          if (!kDebugMode) {
+                            return;
+                          }
                           final List<String> servers = [
                             Address.personalDevUrl,
                             // Address.personalDevUrl2,

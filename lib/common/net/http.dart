@@ -19,8 +19,8 @@ class HttpUtil {
   late Dio _dio;
   final CancelToken _cancelToken = CancelToken();
 
-  final int _defaultConnectTimeout = 10 * 1000;
-  final int _defaultReceiveTimeout = 10 * 1000;
+  final int _defaultConnectTimeout = 30 * 1000;
+  final int _defaultReceiveTimeout = 30 * 1000;
 
   Dio get dio => _dio;
 

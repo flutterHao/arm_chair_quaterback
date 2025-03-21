@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2025-03-20 16:18:56
+ * @LastEditTime: 2025-03-21 15:19:06
  */
 import 'dart:async';
 
@@ -46,6 +46,7 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
+  static bool isRegister = false;
   late PageController pageController;
   ScrollHideBottomBarController scrollHideBottomBarController =
       ScrollHideBottomBarController();
@@ -186,7 +187,7 @@ class HomeController extends GetxController {
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
 
     ///检查后端注册状态
-    bool isRegister = await UserApi.getTeamByAccountId();
+    isRegister = await UserApi.getTeamByAccountId();
     if (!isRegister) {
       await Get.to(SelectPlayerPage(), transition: Transition.noTransition);
       isLoading = false;

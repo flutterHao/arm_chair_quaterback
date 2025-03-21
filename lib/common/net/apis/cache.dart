@@ -497,4 +497,9 @@ class CacheApi {
     return stealPlayerRateList =
         list.map((item) => StealPlayerReteEntity.fromJson(item)).toList();
   }
+
+  static Future<Map> getTermOfUse() async {
+    List list = await HttpUtil().post(Api.cTermOfUse);
+    return list[0];
+  }
 }
