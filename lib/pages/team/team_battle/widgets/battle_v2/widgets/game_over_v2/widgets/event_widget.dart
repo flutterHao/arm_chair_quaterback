@@ -44,6 +44,7 @@ class EventWidget extends StatefulWidget {
 class _EventWidgetState extends State<EventWidget>
     with SingleTickerProviderStateMixin {
   bool finish = false;
+  bool canClick = true;
   GlobalKey? globalKey;
   OverlayEntry? overlayEntry;
   ReceivePropEntity? receivePropEntity;
@@ -60,8 +61,12 @@ class _EventWidgetState extends State<EventWidget>
   Widget build(BuildContext context) {
     return MtInkWell(
       onTap: () async {
-        if(!Utils.canOperate()) return;
         if (finish) return;
+        if (!canClick) return;
+        canClick = false;
+        Future.delayed(const Duration(seconds: 3)).then((v) {
+          canClick = true;
+        });
         if (widget.type == 2) {
           SoundServices.to.playSound(Assets.soundStealPlayer);
           finish = await Get.toNamed(RouteNames.stealPlayer);
@@ -116,6 +121,9 @@ class _EventWidgetState extends State<EventWidget>
             Overlay.of(Get.context!).insert(overlayEntry!);
           }
           Future.delayed(const Duration(seconds: 3)).then((v) {
+            if (overlayEntry != null) {
+              overlayEntry?.remove();
+            }
             WebsocketServices.resumed();
           });
         }
