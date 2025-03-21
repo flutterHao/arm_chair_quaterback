@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/steal_player/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/big_player_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -325,6 +326,7 @@ class PlayerChoose extends GetView<StealPlayerController> {
           onTap: () => controller.onItemTap(
               player, playBaseInfo, index, itemKey, screenSize),
           child: _buildCard(playBaseInfo, player),
+          // child: BigPlayerCard(playerId: player.playerId),
         ),
         5.vGap,
         Opacity(
@@ -483,7 +485,7 @@ class PlayerChoose extends GetView<StealPlayerController> {
               ],
             )),
         Positioned(
-            top: 101.w,
+            top: 108.w,
             left: 0,
             right: 0,
             child: Column(
@@ -501,7 +503,7 @@ class PlayerChoose extends GetView<StealPlayerController> {
                     fontFamily: FontFamily.fOswaldBold,
                   ),
                 ),
-                4.vGap,
+                15.vGap,
                 Row(
                   children: [
                     Expanded(
@@ -521,14 +523,19 @@ class PlayerChoose extends GetView<StealPlayerController> {
                             fontFamily: FontFamily.fRobotoRegular,
                           ),
                         ),
-                        5.hGap,
+                        8.hGap,
                       ],
                     )),
+                    Container(
+                      height: 10.w,
+                      width: 1.w,
+                      color: AppColors.cB3B3B3,
+                    ),
                     Expanded(
                         child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        5.hGap,
+                        8.hGap,
                         Text(
                           playBaseInfo.position,
                           style: 10.w4(
