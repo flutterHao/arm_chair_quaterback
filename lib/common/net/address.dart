@@ -21,7 +21,7 @@ class Address {
   static const String publicDevUrl = 'http://seanba-te.ftxgame.com';
 
   ///海外外网测试地址
-  static const String pubDevUrl = 'http://47.88.19.59:7007';
+  static const String pubDevUrl = 'http://47.253.46.125:7007';
 
   ///内网测试地址
   static const String privateDevUrl = 'http://10.0.3.38:7007';
@@ -43,7 +43,9 @@ class Address {
   static const String wsPublicDevUrl = 'ws://seanba-te.ftxgame.com:9003';
 
   ///海外外网测试地址
-  static const String wsPubDevUrl = 'ws://47.88.19.59:9003';
+  static const String wsPubDevUrl = 'ws://47.253.46.125:9005';
+
+  ///内网测试地址
   static const String wsPrivateDevUrl = 'ws://10.0.3.38:9005';
 
   static const String wsBaseUrl = ((kIsWeb && kProfileMode) || kDebugMode)

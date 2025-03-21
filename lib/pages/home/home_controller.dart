@@ -196,7 +196,7 @@ class HomeController extends GetxController {
     userEntiry = await UserApi.visitorLogin();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
     TeamIndexController ctrl = Get.find();
-    await ctrl.initData();
+    ctrl.initData();
     //等待数据加载后隐藏加载页
     isLoading = false;
     isAbsorbPointer.value = false;
