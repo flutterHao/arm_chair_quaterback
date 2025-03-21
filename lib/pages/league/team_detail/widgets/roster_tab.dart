@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:05:31
- * @LastEditTime: 2025-01-24 17:42:15
+ * @LastEditTime: 2025-03-21 17:10:26
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/langs/lang_key.dart';
@@ -38,6 +38,7 @@ class _RosterTabState extends State<RosterTab>
     super.build(context);
     return GetBuilder<TeamDetailController>(
         tag: Get.arguments.toString(),
+        id: "stats",
         builder: (controller) {
           avgAge = 0;
           for (var element in controller.statPlayerList) {

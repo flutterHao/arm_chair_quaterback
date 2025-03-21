@@ -67,6 +67,7 @@ class _StatsTabState extends State<StatsTab>
     };
     return GetBuilder<TeamDetailController>(
         tag: Get.arguments.toString(),
+        id: "stats",
         builder: (controller) {
           return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
