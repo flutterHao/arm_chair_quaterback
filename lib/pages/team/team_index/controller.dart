@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-03-20 13:33:41
+ * @LastEditTime: 2025-03-21 12:19:04
  */
 
 import 'dart:async';
@@ -181,7 +181,7 @@ class TeamIndexController extends GetxController
     // final illuCtrl = Get.find<IllustratiionsController>();
     final nbaPlayerCtrl = Get.find<NbaPlayerController>();
     await Future.wait([
-      getBattleBox(),
+      // getBattleBox(),
       CacheApi.getGameConstant(),
       CacheApi.getPropDefine(),
       CacheApi.getCardPackDefine(),
