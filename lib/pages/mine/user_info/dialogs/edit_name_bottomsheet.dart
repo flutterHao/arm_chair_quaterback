@@ -73,7 +73,7 @@ class _EditNameBottomsheetState extends State<EditNameBottomsheet> {
                   controller: textEditingController,
                   cursorColor: Colors.black,
                   maxLines: 9,
-                  maxLength: 150,
+                  maxLength: 15,
                   style: 14.w5(fontFamily: FontFamily.fRobotoRegular),
                   onChanged: (value) {
                     setState(() {
