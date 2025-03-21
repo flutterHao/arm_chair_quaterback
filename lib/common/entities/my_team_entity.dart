@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:54:59
- * @LastEditTime: 2024-12-16 11:10:07
+ * @LastEditTime: 2025-03-21 19:59:33
  */
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
@@ -20,7 +20,7 @@ class MyTeamEntity {
   late int salary = 0;
   late int salaryCap = 1;
   late int benchCount = 0;
-  late int playerBackpackNum = 50;
+  late int playerBackpackNum = 500;
 
   MyTeamEntity();
 
