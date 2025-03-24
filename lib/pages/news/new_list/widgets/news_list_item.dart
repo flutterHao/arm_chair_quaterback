@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/event_widget.dart';
@@ -48,10 +49,11 @@ class NewsListItem extends GetView<NewListController> {
   }
 
   Widget _head() {
+    String icon = controller.getNewsSourceImage(newsDetail.source);
     return Row(
       children: [
         ImageWidget(
-          url: controller.getNewsSourceImage(newsDetail.source),
+          url: icon,
           width: 32.w,
           height: 32.w,
           fit: BoxFit.cover,
@@ -119,6 +121,10 @@ class NewsListItem extends GetView<NewListController> {
   // 新闻内容部分
   Widget _buildNewsContent(BuildContext context) {
     // newsDetail.type = 2;
+    if (newsDetail.imgList.isNotEmpty && newsDetail.imgUrl.isEmpty) {
+      newsDetail.imgUrl = newsDetail.imgList.first;
+      NewsApi.getImageWith(newsDetail);
+    }
     if (newsDetail.type == 0) {
       return Column(
         ///无图
@@ -198,7 +204,7 @@ class NewsListItem extends GetView<NewListController> {
         fontFamily: FontFamily.fOswaldMedium,
       );
       int col = Utils.calculateActualLines(newsDetail.title,
-          343.w - (newsDetail.imamgeWidth ?? 0) - 20.w, titleStyle);
+          343.w - (newsDetail.imamgeWidth ?? 100.w) - 20.w, titleStyle);
 
       int subClo = 4 - col;
       return Column(

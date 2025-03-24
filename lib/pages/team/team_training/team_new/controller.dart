@@ -145,10 +145,10 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     await Future.wait([
       TeamApi.getMyTeamPlayer(teamId),
       getBagPlayers(),
-      // CacheApi.getPlayerStatusConfig(),
-      // CacheApi.getStarUpDefine(),
-      // CacheApi.getGradeInStamina(),
-      // CacheApi.getCupDefine(),
+      CacheApi.getPlayerStatusConfig(),
+      CacheApi.getStarUpDefine(),
+      CacheApi.getGradeInStamina(),
+      CacheApi.getCupDefine(),
       CacheApi.getNBAPlayerInfo(),
     ]).then((v) {
       myTeamEntity = v[0] as MyTeamEntity;

@@ -179,7 +179,7 @@ class TeamIndexController extends GetxController
     final trainingCtrl = Get.find<TrainingController>();
     final teamCtrl = Get.find<TeamController>();
     // final illuCtrl = Get.find<IllustratiionsController>();
-    final nbaPlayerCtrl = Get.find<NbaPlayerController>();
+    // final nbaPlayerCtrl = Get.find<NbaPlayerController>();
     await Future.wait([
       // getBattleBox(),
       CacheApi.getGameConstant(),
@@ -188,7 +188,7 @@ class TeamIndexController extends GetxController
       trainingCtrl.getData(),
       teamCtrl.initData(),
       // illuCtrl.getPlayerCollectInfo(),
-      nbaPlayerCtrl.initData(),
+      // nbaPlayerCtrl.initData(),
     ]).then((v) {
       loadDataSuccess = true;
       isLoading = false;

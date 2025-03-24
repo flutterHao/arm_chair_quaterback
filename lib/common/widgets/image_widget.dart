@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2025-03-05 14:43:14
+ * @LastEditTime: 2025-03-24 10:07:04
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
@@ -129,7 +129,7 @@ class ImageWidget extends StatelessWidget {
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:
-            // Log.e("$url load failed");
+            Log.e("$url load failed");
             return error;
           case LoadState.loading:
             // return SizedBox(

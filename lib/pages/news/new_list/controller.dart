@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-21 19:36:58
+ * @LastEditTime: 2025-03-24 11:56:13
  */
 import 'dart:async';
 import 'dart:math';
@@ -88,8 +88,10 @@ class NewListController extends GetxController {
   }
 
   void _initData() {
-    CacheApi.getNewsSourceList();
-    getNewsFlow(isRefresh: true);
+    Future.wait([CacheApi.getNewsSourceList(), getNewsFlow(isRefresh: true)])
+        .then((value) {
+      update(['newsList']);
+    });
   }
 
   Future getNewsFlow({bool isRefresh = false}) async {

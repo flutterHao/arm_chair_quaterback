@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2025-03-19 11:14:13
+ * @LastEditTime: 2025-03-24 11:51:25
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -219,7 +219,7 @@ class NewsDetailItem extends GetView<NewListController> {
             fontFamily: FontFamily.fOswaldMedium,
           ),
         ),
-        ObjectUtil.isNotEmpty(item.imgUrl)
+        ObjectUtil.isNotEmpty(item.imgUrl) && item.imgList.isEmpty
             ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.w),
                 child: ImageWidget(
@@ -266,7 +266,7 @@ class NewsDetailItem extends GetView<NewListController> {
                 url: item.imgList[index],
                 width: item.type == 1 ? 343.w : item.imamgeWidth,
                 height: item.imageHeight,
-                // fit: BoxFit.fitWidth,
+                fit: BoxFit.fitWidth,
                 borderRadius: BorderRadius.circular(9.w),
               );
             }),

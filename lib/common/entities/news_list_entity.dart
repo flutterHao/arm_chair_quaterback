@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-26 18:53:41
- * @LastEditTime: 2025-03-19 17:17:22
+ * @LastEditTime: 2025-03-24 11:14:50
  */
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
@@ -107,14 +107,13 @@ class NewsListDetail {
   factory NewsListDetail.fromJson(Map<String, dynamic> json) {
     NewsListDetail newsDetail = $NewsListDetailFromJson(json);
     newsDetail.imgList = newsDetail.imgList.map((element) {
-      if (!element.contains(Address.imgBaseUrl)) {
+      if (!element.contains("https://")) {
         return element = element.contains(".gif")
             ? Address.imgBaseUrl + element
             : Address.compressImgBaseUrl + element;
       }
       return element;
     }).toList();
-
     newsDetail.reviewsCount.value = newsDetail.reviewsCountInt;
     newsDetail.isLike.value = newsDetail.isLikeInt;
     return newsDetail;

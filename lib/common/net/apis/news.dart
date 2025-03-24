@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2025-03-13 10:59:22
+ * @LastEditTime: 2025-03-24 14:22:48
  */
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
@@ -30,7 +30,9 @@ class NewsApi {
 
   static Future<NewsListDetail> getNewsDetail(id) async {
     var json = await HttpUtil().post(Api.getNewsDetail, data: {"newsId": id});
-    return NewsListDetail.fromJson(json);
+    var item = NewsListDetail.fromJson(json);
+    NewsApi.getImageWith(item);
+    return item;
   }
 
   static Future<bool> newsLike(int id) async {
@@ -119,7 +121,7 @@ class NewsApi {
         .post(Api.newsFlow, data: {"page": page, "limit": limit});
     var details = list.map((e) async {
       var item = NewsListDetail.fromJson(e);
-      getImageWith(item);
+
       return item;
     }).toList();
     return Future.wait(details);
@@ -138,20 +140,32 @@ class NewsApi {
   }
 
   static void getImageWith(NewsListDetail item) {
+    if (ObjectUtil.isEmpty(item.imgUrl) && item.imgList.isNotEmpty) {
+      item.imgUrl = item.imgList.first;
+    }
     if (ObjectUtil.isNotEmpty(item.imgUrl)) {
       final uri = Uri.parse(item.imgUrl);
-      double? h = double.tryParse(uri.queryParameters["height"] ?? '');
-      double? w = double.tryParse(uri.queryParameters["width"] ?? '');
-      if (ObjectUtil.isNotEmpty(h) && ObjectUtil.isNotEmpty(w)) {
+      double? h = double.tryParse(
+          (uri.queryParameters["height"] ?? uri.queryParameters["h"]) ?? '');
+      double? w = double.tryParse(
+          (uri.queryParameters["width"] ?? uri.queryParameters["w"]) ?? '');
+      if (ObjectUtil.isNotEmpty(w)) {
+        //大图
         if (w! > 250.w) {
           item.type = 1;
-          item.imageHeight = h! / w * 343.w;
-        } else {
+          if (ObjectUtil.isNotEmpty(h)) {
+            item.imageHeight = h! / w * 343.w;
+          }
+        }
+        //小图
+        else {
           if (item.imgUrl.contains(".gif")) {
             item.type = 1;
           } else {
-            item.type = w > h! ? 2 : 3;
-            item.imamgeWidth = w / h * 97.w;
+            item.type = 2;
+            if (ObjectUtil.isNotEmpty(h)) {
+              item.imamgeWidth = w / h! * 97.w;
+            }
           }
         }
       }
