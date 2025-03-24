@@ -35,8 +35,6 @@
 	<string>We need to save pictures to your photo album.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo album to save or select pictures.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>We need your permission to send you notifications about important updates.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

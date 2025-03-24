@@ -96,12 +96,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                                 ],
                               ),
                             ),
-                            secondChild: Positioned(
-                                top: 0,
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: GameOverV2()));
+                            secondChild: GameOverV2());
                         return Stack(
                           children: [
                             SingleChildScrollView(
