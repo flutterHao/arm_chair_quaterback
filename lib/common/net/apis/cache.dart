@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/app_image_version_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_pass_reward_entity.dart';
@@ -39,6 +42,7 @@ import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dar
 import 'package:arm_chair_quaterback/common/entities/wheel_reward_type_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
+import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 
 class CacheApi {
@@ -133,10 +137,20 @@ class CacheApi {
     if (playerInfo != null) {
       return playerInfo!;
     }
-    var json = await httpUtil.post(Api.getNBAPlayerInfo);
-    playerInfo = NbaPlayerInfosEntity.fromJson(json);
-    return playerInfo!;
-    // return playerInfo;
+    if (StorageService.to.getString(Constant.nbaPlayerInfo).isNotEmpty) {
+      // 如果本地有数据，直接从本地获取,异步更新数据
+      var localData = StorageService.to.getString(Constant.nbaPlayerInfo);
+      playerInfo = NbaPlayerInfosEntity.fromJson(jsonDecode(localData));
+      httpUtil.post(Api.getNBAPlayerInfo).then((json) {
+        playerInfo = NbaPlayerInfosEntity.fromJson(json);
+      });
+      return playerInfo!;
+    } else {
+      var json = await httpUtil.post(Api.getNBAPlayerInfo);
+      StorageService.to.setString(Constant.nbaPlayerInfo, jsonEncode(json));
+      playerInfo = NbaPlayerInfosEntity.fromJson(json);
+      return playerInfo!;
+    }
   }
 
   ///

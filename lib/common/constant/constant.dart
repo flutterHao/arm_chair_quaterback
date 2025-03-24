@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-03-20 12:13:40
+ * @LastEditTime: 2025-03-24 15:36:48
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -159,4 +159,5 @@ class Constant {
   };
 
   static const resourcesShowToday = "resources_show_today";
+  static const String nbaPlayerInfo = "nba_player_info"; // 球员信息
 }
