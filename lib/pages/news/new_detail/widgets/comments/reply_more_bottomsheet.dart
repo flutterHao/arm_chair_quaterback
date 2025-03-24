@@ -1,10 +1,8 @@
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/extension/num_ext.dart';
-import 'package:arm_chair_quaterback/common/services/storage.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/values/storage.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
@@ -17,7 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ReplyMoreBottomsheet extends StatelessWidget {
-  const ReplyMoreBottomsheet(
+  ReplyMoreBottomsheet(
       {super.key,
       required this.sendEmoji,
       this.onReply,
@@ -27,7 +25,7 @@ class ReplyMoreBottomsheet extends StatelessWidget {
   final Function(String) sendEmoji;
   final Function? onReply; //回复
   final Function? onQuote; ////引用
-
+  final List<String> fixEmojiList = ['2', '11', '1', '3', '6', '15', '9'];
   _textButtom(String icon, String text, Function() onTap,
       {Color color = Colors.black}) {
     return InkWell(
@@ -106,7 +104,7 @@ class ReplyMoreBottomsheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> storageEmojy = StorageService.to.getList(STORAGE_USED_EMOJI);
+    // List<String> storageEmojy = StorageService.to.getList(STORAGE_USED_EMOJI);
 
     return VerticalDragBackWidget(
         child: Container(
@@ -129,15 +127,19 @@ class ReplyMoreBottomsheet extends StatelessWidget {
                 Expanded(
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemCount: storageEmojy.length,
+                    // itemCount: storageEmojy.length,
+                    itemCount: fixEmojiList.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) {
                       return 10.hGap;
                     },
                     itemBuilder: (context, index) {
+                      // var item = Constant.emojis.entries.firstWhere(
+                      //     (element) => element.key == storageEmojy[index]);
                       var item = Constant.emojis.entries.firstWhere(
-                          (element) => element.key == storageEmojy[index]);
+                          (element) => element.key == fixEmojiList[index]);
+
                       return MtInkWell(
                           onTap: () {
                             Get.back();

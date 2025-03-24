@@ -21,6 +21,8 @@ class EmojiBottomsheet extends StatefulWidget {
 
 class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
   List<String> usedEmojiList = [];
+
+  List<String> fixEmojiList = ['2', '11', '1', '3', '6', '13', '15', '9'];
   @override
   initState() {
     super.initState();
@@ -61,7 +63,7 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _usedEmojiWidget(),
+                  _usedEmojiWidget(fixEmojiList),
                   Text(
                     LangKey.newsTabEmoji.tr,
                     style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
@@ -99,9 +101,9 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
     ));
   }
 
-  Widget _usedEmojiWidget() {
+  Widget _usedEmojiWidget(List<String> emojiList) {
     return Visibility(
-        visible: usedEmojiList.isNotEmpty,
+        visible: emojiList.isNotEmpty,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -118,10 +120,10 @@ class _EmojiBottomsheetState extends State<EmojiBottomsheet> {
                   maxCrossAxisExtent: 37.w,
                   crossAxisSpacing: 6.w,
                   mainAxisSpacing: 6.w),
-              itemCount: usedEmojiList.length > 16 ? 16 : usedEmojiList.length,
+              itemCount: emojiList.length > 16 ? 16 : emojiList.length,
               itemBuilder: (BuildContext context, int index) {
-                var item = Constant.emojis.entries.firstWhere(
-                    (element) => element.key == usedEmojiList[index]);
+                var item = Constant.emojis.entries
+                    .firstWhere((element) => element.key == emojiList[index]);
                 return MtInkWell(
                   onTap: () {
                     _sendEmoji(item.key);
