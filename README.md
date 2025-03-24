@@ -22,4 +22,4 @@ flutter build appbundle  --split-debug-info=./symbols --obfuscate
 flutter build appbundle  --split-debug-info=./symbols --obfuscate --split-per-abi
 
 上传调试符号
-firebase crashlytics:symbols:upload --app=1:312389703114:android:dbe6d6e9cfb459d121eb33 PATH/TO/symbols
+firebase crashlytics:symbols:upload --app=1:312389703114:android:dbe6d6e9cfb459d121eb33 ./symbols
