@@ -18,6 +18,8 @@ import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/routers/pages.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
@@ -188,7 +190,7 @@ class HomeController extends GetxController {
 
     ///检查后端注册状态
     isRegister = await UserApi.getTeamByAccountId();
-    if (!isRegister) {
+    if (!isRegister && !AppPages.history.contains(RouteNames.selectPlayer)) {
       await Get.to(SelectPlayerPage(), transition: Transition.noTransition);
       isLoading = false;
       update();
