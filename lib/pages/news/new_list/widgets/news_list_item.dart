@@ -63,7 +63,7 @@ class NewsListItem extends GetView<NewListController> {
         Container(
           constraints: BoxConstraints(maxWidth: 120.w),
           child: Text(
-            newsDetail.source,
+            controller.getNewsSource(newsDetail.source).sourceEnName,
             overflow: TextOverflow.ellipsis,
             style: 14.w4(
               color: AppColors.c000000,

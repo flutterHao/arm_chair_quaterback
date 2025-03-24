@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2025-03-24 11:56:13
+ * @LastEditTime: 2025-03-24 18:33:31
  */
 import 'dart:async';
 import 'dart:math';
@@ -10,6 +10,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
@@ -201,10 +202,21 @@ class NewListController extends GetxController {
     });
   }
 
+  NewsSourceEntity getNewsSource(String source) {
+    for (var element in CacheApi.newsSourceList) {
+      if (element.sourceName.toLowerCase() == source.toLowerCase() ||
+          element.sourceEnName.toLowerCase() == source.toLowerCase()) {
+        return element;
+      }
+    }
+    return NewsSourceEntity();
+  }
+
   String getNewsSourceImage(String source) {
     String url = ConfigStore.to.getServiceUrl();
     for (var element in CacheApi.newsSourceList) {
-      if (element.sourceEnName == source) {
+      if (element.sourceName.toLowerCase() == source.toLowerCase() ||
+          element.sourceEnName.toLowerCase() == source.toLowerCase()) {
         return "$url/image/icon/${element.sourceIcon}.png";
       }
     }
