@@ -206,7 +206,7 @@ class _TranslationPageState extends State<TranslationPage>
         });
       }
     });
-    Future.delayed(Duration.zero, () {
+    Future.delayed(Duration(milliseconds: 400), () {
       animationController.forward().then((_) {
         widget.onEnd?.call();
       });
@@ -217,7 +217,7 @@ class _TranslationPageState extends State<TranslationPage>
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
-    var shortHeight = (size.height-width)/2;
+    var shortHeight = (size.height - width) / 2;
     var longHeight = shortHeight + width;
     return Container(
       color: AppColors.c000000,

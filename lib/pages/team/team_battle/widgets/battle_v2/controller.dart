@@ -419,7 +419,7 @@ class TeamBattleV2Controller extends GetxController
     if (superSpeedMan && quarter.value == 4) {
       superSpeedMan = false;
       update([idFastForward]);
-      gameSpeed = 1;
+      gameSpeed = 2;
     }
     liveTextTabIndex.value = quarter.value - 1;
     // update([idLiveText]);
@@ -522,10 +522,18 @@ class TeamBattleV2Controller extends GetxController
     var offsetEvent = OffsetEvent(event, offset, winInfo.homeWin);
     winRateController.addPoint(offsetEvent);
 
-    if (eventOnScreenMap.containsKey(key)) {
-      eventOnScreenMap[key]!.add(event);
-    } else {
-      eventOnScreenMap[key] = [event];
+    if(!superSpeedMan) {
+      if (eventOnScreenMap.containsKey(key)) {
+        eventOnScreenMap[key]!.add(event);
+      } else {
+        eventOnScreenMap[key] = [event];
+      }
+    }else{
+      print('eventOnScreenMap[key]?.isEmpty:${eventOnScreenMap.containsKey(key)},${eventOnScreenMap[key]?.isEmpty}');
+      if(!eventOnScreenMap.containsKey(key) || eventOnScreenMap[key]?.isEmpty == true){
+        eventOnScreenMap[key] = eventCacheMap[key]??[];
+        update([idLiveText]);
+      }
     }
 
     if (gameEvent.headLine != "0") {
@@ -561,7 +569,7 @@ class TeamBattleV2Controller extends GetxController
     } else {
       update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
       Future.delayed(Duration.zero, () {
-        if (!isClosed && (liveTextTabIndex.value + 1) == quarter.value) {
+        if (!isClosed && liveTextScrollController.hasClients) {
           liveTextScrollController.animateTo(
               ((eventOnScreenMap[key] ?? []).length * 44.w),
               duration: Duration(milliseconds: (800 / gameSpeed).toInt()),

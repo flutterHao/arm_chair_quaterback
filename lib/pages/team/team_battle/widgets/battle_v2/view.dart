@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/wi
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_header.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/game_leader_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/game_over_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_animation_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over_v2/game_over_v2.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_players.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_widget.dart';
@@ -64,6 +65,43 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                     Expanded(
                       child: Builder(builder: (c) {
                         var isGameOver = controller.isGameOver.value;
+                        return GameOverAnimationWidget(
+                            status: isGameOver,
+                            firstChild: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                      borderRadius: BorderRadius.zero,
+                                      child: GameCourtWidget(
+                                        needCountDown: true,
+                                        height: Utils.getMaxWidth(context) *
+                                            156.w /
+                                            375.w,
+                                      )),
+                                  const GamePlayersWidget(),
+                                  const LiveTextWidget(),
+                                  WinRateWidget(controller.winRateController),
+                                  GetBuilder<TeamBattleV2Controller>(
+                                      id: TeamBattleV2Controller.idQuarterScore,
+                                      builder: (_) {
+                                        return QuarterScoreWidget();
+                                      }),
+                                  GameLeaderWidget(
+                                    controller: controller.gameLeaderController,
+                                  ),
+                                  TeamStatsWidget(
+                                    controller: controller.teamStatsController,
+                                  ),
+                                  20.vGap,
+                                ],
+                              ),
+                            ),
+                            secondChild: Positioned(
+                                top: 0,
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: GameOverV2()));
                         return Stack(
                           children: [
                             SingleChildScrollView(

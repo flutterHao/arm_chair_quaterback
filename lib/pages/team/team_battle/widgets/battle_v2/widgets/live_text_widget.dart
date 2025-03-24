@@ -144,10 +144,11 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                     var itemCount = list.length;
                     var currentTabIsLast =
                         (value + 1) == controller.quarter.value;
-                    var addSize =
-                        (currentTabIsLast && !controller.isGameOver.value
-                            ? 1
-                            : 0);
+                    var addSize = (currentTabIsLast &&
+                            !controller.isGameOver.value &&
+                            !controller.superSpeedMan
+                        ? 1
+                        : 0);
                     return MediaQuery.removePadding(
                       removeTop: true,
                       context: context,
@@ -163,8 +164,9 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                           itemBuilder: (context, i) {
                             if (i == 0 &&
                                 currentTabIsLast &&
-                                !controller.isGameOver.value) {
-                              if (itemCount == 0 || controller.superSpeedMan) {
+                                !controller.isGameOver.value &&
+                                !controller.superSpeedMan) {
+                              if (itemCount == 0) {
                                 return SizedBox(
                                   height: 44.w * 5,
                                   child: const Center(

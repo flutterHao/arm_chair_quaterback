@@ -122,6 +122,8 @@ class TeamBattleController extends GetxController
     loadStatus = LoadDataStatus.loading;
     var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
     var minMatchTimeMs = 2000;
+    _timer?.cancel();
+    _timer = Timer(const Duration(seconds: 6), timeout);
     await Future.wait([
       CacheApi.getGameEvent(),
       CacheApi.getCompetitionVenue(),
@@ -132,8 +134,6 @@ class TeamBattleController extends GetxController
       CacheApi.getDanMaKu(),
     ]).then((result) {
       // teamInfoEntity = result[4];
-      _timer?.cancel();
-      _timer = Timer(const Duration(seconds: 5), timeout);
       subscription = WSInstance.teamMatch().listen((result) {
         // developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
         // print('result.serviceId--${result.serviceId}--:${result.payload}');
