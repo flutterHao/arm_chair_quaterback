@@ -179,7 +179,7 @@ class UserInfoBar extends StatelessWidget {
                               borderRadius: BorderRadius.circular(18.w),
                               child: UserAvatarWidget(
                                 url: Utils.getAvatarUrl(
-                                    info.team?.teamLogo ?? 0),
+                                    info.team?.teamLogo ?? 1),
                                 width: 36.w,
                                 height: 36.w,
                               ),
@@ -210,7 +210,7 @@ class UserInfoBar extends StatelessWidget {
 
 class MoneyAndCoinWidget extends StatelessWidget {
   ///不要加const，会导致widget不刷新
-  MoneyAndCoinWidget({super.key, this.home = false});
+  const MoneyAndCoinWidget({super.key, this.home = false});
 
   final bool home;
 
